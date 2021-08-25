@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import coil.annotation.ExperimentalCoilApi
+import com.kasuminotes.ui.app.about.About
 import com.kasuminotes.ui.app.chara.Chara
 import com.kasuminotes.ui.app.equip.Equip
 import com.kasuminotes.ui.app.home.Home
@@ -38,7 +39,8 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     appViewModel::navigateTo,
                     appViewModel::navigateToChara,
                     appViewModel::navigateToImages,
-                    appViewModel::navigateToEditor
+                    appViewModel::navigateToEditor,
+                    appViewModel::navigateToAbout
                 )
             }
             composable("chara") {
@@ -76,6 +78,12 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     userState,
                     appViewModel::userEditorBack,
                     appViewModel::confirmNewUserProfiles
+                )
+            }
+            composable("about") {
+                About(
+                    appViewModel::popBackStack,
+                    appViewModel::linkTo
                 )
             }
         }

@@ -8,22 +8,14 @@ import androidx.compose.ui.res.stringResource
 import com.kasuminotes.R
 
 @Composable
-fun IsAlreadyLatestDialog(
-    onConfirm: () -> Unit,
-    onReDownload: () -> Unit,
-) {
+fun IsLatestAppDialog(onConfirm: () -> Unit) {
     AlertDialog(
         onDismissRequest = onConfirm,
         title = { Text(stringResource(R.string.check_complete)) },
-        text = { Text(stringResource(R.string.is_already_latest)) },
+        text = { Text(stringResource(R.string.is_latest_app)) },
         confirmButton = {
             TextButton(onClick = onConfirm) {
                 Text(stringResource(R.string.confirm))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onReDownload) {
-                Text(stringResource(R.string.re_download))
             }
         }
     )

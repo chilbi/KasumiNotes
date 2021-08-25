@@ -5,22 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.common.DbServer
 import com.kasuminotes.common.DownloadState
-import com.kasuminotes.data.MaxUserData
-import com.kasuminotes.data.UserProfile
+import com.kasuminotes.data.AppReleaseInfo
 import com.kasuminotes.db.AppDatabase
-import com.kasuminotes.db.getAllUser
 import com.kasuminotes.db.getBackupUserDataList
-import com.kasuminotes.db.getMaxUserData
-import com.kasuminotes.db.getUserName
-import com.kasuminotes.db.getUserProfileList
 import com.kasuminotes.db.initDatabase
 import com.kasuminotes.db.initQuestDropData
 import com.kasuminotes.db.putUserDataList
 import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.ui.app.DefaultUserId
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
@@ -32,6 +25,8 @@ class DbState(
     private var downloadingDbServer: DbServer? = null
     private var downloadingDbVersion: String? = null
 
+    var appAutoUpdate by mutableStateOf(appRepository.getAppAutoUpdate())
+        private set
     var dbAutoUpdate by mutableStateOf(appRepository.getDbAutoUpdate())
         private set
     var dbServer by mutableStateOf(appRepository.getDbServer())
@@ -40,9 +35,15 @@ class DbState(
         private set
     var newDbVersion by mutableStateOf<String?>(null)
         private set
+    var newAppReleaseInfo by mutableStateOf<AppReleaseInfo?>(null)
+        private set
     var lastVersionFetching by mutableStateOf(false)
         private set
-    var isAlreadyLatest by mutableStateOf(false)
+    var latestAppURLFetching by mutableStateOf(false)
+        private set
+    var isLastDb by mutableStateOf(false)
+        private set
+    var isLatestApp by mutableStateOf(false)
         private set
     var downloadState by mutableStateOf<DownloadState?>(null)
         private set
@@ -54,9 +55,10 @@ class DbState(
     init {
         updateDbState(dbServer, dbVersion)
         if (dbAutoUpdate) {
-            scope.launch {
-                autoFetchLastDbVersion(false)
-            }
+            autoFetchLastDbVersion(false)
+        }
+        if (appAutoUpdate) {
+            autoFetchLatestAppURL(false)
         }
     }
 
@@ -82,19 +84,41 @@ class DbState(
         newDbVersion = null
     }
 
-    fun cancelUpdate() {
+    fun updateApp(info: AppReleaseInfo) {
+        scope.launch {
+            appRepository.downloadApp(info)
+            newAppReleaseInfo = null
+        }
+    }
+
+    fun cancelUpdateDb() {
         newDbVersion = null
+    }
+
+    fun cancelUpdateApp() {
+        newAppReleaseInfo = null
     }
 
     fun fetchLastDbVersion() = autoFetchLastDbVersion(true)
 
-    fun confirmIsAlreadyLatest() {
-        isAlreadyLatest = false
+    fun fetchLatestAppURL() = autoFetchLatestAppURL(true)
+
+    fun confirmIsLastDb() {
+        isLastDb = false
+    }
+
+    fun confirmIsLatestApp() {
+        isLatestApp = false
     }
 
     fun reDownload() {
-        isAlreadyLatest = false
+        isLastDb = false
         downloadDbFile(dbServer, "0")
+    }
+
+    fun toggleAppAutoUpdate() {
+        appAutoUpdate = !appAutoUpdate
+        appRepository.setAppAutoUpdate(appAutoUpdate)
     }
 
     fun toggleDbAutoUpdate() {
@@ -102,7 +126,7 @@ class DbState(
         appRepository.setDbAutoUpdate(dbAutoUpdate)
     }
 
-    private fun autoFetchLastDbVersion(mutableIsAlreadyLatest: Boolean) {
+    private fun autoFetchLastDbVersion(mutableIsLastDb: Boolean) {
         if (!lastVersionFetching) {
             scope.launch {
                 try {
@@ -111,11 +135,30 @@ class DbState(
                     lastVersionFetching = false
                     if (lastDbVersion != dbVersion) {
                         newDbVersion = lastDbVersion
-                    } else if (mutableIsAlreadyLatest) {
-                        isAlreadyLatest = true
+                    } else if (mutableIsLastDb) {
+                        isLastDb = true
                     }
                 } catch (e: Throwable) {
                     lastVersionFetching = false
+                }
+            }
+        }
+    }
+
+    private fun autoFetchLatestAppURL(mutableIsLatestApp: Boolean) {
+        if (!latestAppURLFetching) {
+            scope.launch {
+                try {
+                    latestAppURLFetching = true
+                    val info = appRepository.fetchLatestAppReleaseInfo()
+                    latestAppURLFetching = false
+                    if (info != null) {
+                        newAppReleaseInfo = info
+                    } else if (mutableIsLatestApp) {
+                        isLatestApp = true
+                    }
+                } catch (e: Throwable) {
+                    latestAppURLFetching = false
                 }
             }
         }

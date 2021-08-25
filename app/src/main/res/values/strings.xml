@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">香澄笔记</string>
+    <string name="about_app">关于香澄笔记</string>
     <string name="download_database">下载数据库</string>
     <string name="download_loading">连接资源中…</string>
     <string name="downloading">%1$.1fKB/%2$.1fKB 下载中…</string>
@@ -11,11 +12,13 @@
     <string name="retry">重试</string>
     <string name="update">更新</string>
     <string name="save">保存</string>
-    <string name="update_database">更新数据库</string>
-    <string name="update_message">检测到新的数据库版本\n(v%s)\n是否马上更新？</string>
+    <string name="update_db">更新数据库</string>
+    <string name="update_db_message">检测到新的数据库版本\n(v%s)\n是否马上更新？</string>
+    <string name="update_app">香澄笔记 v%s</string>
     <string name="later">稍后</string>
     <string name="check_complete">检测完成</string>
-    <string name="is_already_latest">已经是最新版本的数据库</string>
+    <string name="is_last_db">已经是最新版本的数据库</string>
+    <string name="is_latest_app">已经是最新版本的应用</string>
     <string name="re_download">重新下载</string>
     <string name="auto_update">自动检测更新</string>
     <string name="switch_user">切换用户</string>

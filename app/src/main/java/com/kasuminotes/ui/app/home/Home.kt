@@ -18,7 +18,8 @@ fun Home(
     onNavigateTo: (Int) -> Unit,
     onNavigateToChara: (UserProfile) -> Unit,
     onNavigateToImages: (allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) -> Unit,
-    onNavigateToEditor: (allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) -> Unit
+    onNavigateToEditor: (allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) -> Unit,
+    onAboutClick: () -> Unit
 ) {
     HomeScaffold(
         uiState,
@@ -30,7 +31,8 @@ fun Home(
         },
         onImageChange = {
             onNavigateToImages(null, dbState.userState.charaListState.profiles)
-        }
+        },
+        onAboutClick = onAboutClick
     )
 
     val userState = dbState.userState
@@ -44,16 +46,28 @@ fun Home(
             )
         }
         dbState.newDbVersion != null -> {
-            UpdateDialog(
+            UpdateDbDialog(
                 dbState.newDbVersion!!,
                 dbState::updateDb,
-                dbState::cancelUpdate
+                dbState::cancelUpdateDb
             )
         }
-        dbState.isAlreadyLatest -> {
-            IsAlreadyLatestDialog(
-                dbState::confirmIsAlreadyLatest,
+        dbState.newAppReleaseInfo != null -> {
+            UpdateAppDialog(
+                dbState.newAppReleaseInfo!!,
+                dbState::updateApp,
+                dbState::cancelUpdateApp
+            )
+        }
+        dbState.isLastDb -> {
+            IsLastDbDialog(
+                dbState::confirmIsLastDb,
                 dbState::reDownload
+            )
+        }
+        dbState.isLatestApp -> {
+            IsLatestAppDialog(
+                dbState::confirmIsLatestApp
             )
         }
         userState.allProfiles != null -> {

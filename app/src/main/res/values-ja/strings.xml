@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">カスミノート</string>
+    <string name="about_app">カスミノートについて</string>
     <string name="download_database">データベースをダウンロード</string>
     <string name="download_loading">資源接続中…</string>
     <string name="downloading">%1$.1fKB/%2$.1fKB ダウンロード中…</string>
@@ -11,11 +12,13 @@
     <string name="retry">やり直し</string>
     <string name="update">アップデート</string>
     <string name="save">保存</string>
-    <string name="update_database">データベースをアップデート</string>
-    <string name="update_message">新しいバージョンのデータベースがありますので\n(v%s)\nすぐにアップデートしますか？</string>
+    <string name="update_db">データベースをアップデート</string>
+    <string name="update_db_message">新しいバージョンのデータベースがありますので\n(v%s)\nすぐにアップデートしますか？</string>
+    <string name="update_app">カスミノート v%s</string>
     <string name="later">あとで</string>
     <string name="check_complete">チェック完了</string>
-    <string name="is_already_latest">データベースのバージョンはもう最新です</string>
+    <string name="is_last_db">データベースのバージョンは最新なのです</string>
+    <string name="is_latest_app">アプリのバージョンは最新なのです</string>
     <string name="re_download">初めからダウンロード</string>
     <string name="auto_update">オートアップデート</string>
     <string name="switch_user">ユーザーを切り替える</string>

@@ -1,10 +1,13 @@
 package com.kasuminotes.ui.app
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
+import com.kasuminotes.MainActivity
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UserProfile
@@ -54,6 +57,10 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         } else if (selectedIndex == 0) {
             navController.popBackStack()
         }
+    }
+
+    fun navigateToAbout() {
+        navController.navigate("about")
     }
 
     fun navigateToChara(userProfile: UserProfile) {
@@ -152,5 +159,11 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             navController.popBackStack()
             dbState.userState.charaListState.destroy()
         }
+    }
+
+    fun linkTo(uriString: String) {
+        val mainActivity = MainActivity.instance
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uriString))
+        mainActivity.startActivity(intent)
     }
 }

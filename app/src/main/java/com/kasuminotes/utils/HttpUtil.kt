@@ -2,6 +2,7 @@ package com.kasuminotes.utils
 
 import com.kasuminotes.BuildConfig
 import com.kasuminotes.common.DownloadState
+import com.kasuminotes.data.AppReleaseInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.Call
@@ -15,8 +16,7 @@ import java.io.FileOutputStream
 import java.io.InputStream
 
 object HttpUtil {
-    private val userAgent =
-        "kasumiNotes/${BuildConfig.VERSION_NAME} ${System.getProperty("http.agent")}"
+    private val userAgent = "kasumiNotes/${BuildConfig.VERSION_NAME} ${System.getProperty("http.agent")}"
 
     private fun decompress(brFile: File): File {
         var fis: FileInputStream? = null
@@ -84,7 +84,6 @@ object HttpUtil {
         }
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     @Throws(Throwable::class)
     fun fetchLastDbVersion(url: String): String {
         var call: Call? = null
@@ -99,9 +98,44 @@ object HttpUtil {
             response = call.execute()
             val body = response.body ?: throw Exception("body is null")
             val pattern = "\"TruthVersion\"\\s*:\\s*\"(\\d+)\""
-            val matchResult =
-                Regex(pattern).find(body.string()) ?: throw Exception("regex match error")
+            val matchResult = Regex(pattern).find(body.string()) ?: throw Exception("regex match error")
             return matchResult.groupValues[1]
+        } catch (e: Throwable) {
+            call?.cancel()
+            throw e
+        } finally {
+            response?.close()
+        }
+    }
+
+    @Throws(Throwable::class)
+    fun fetchLatestAppReleaseInfo(url: String): AppReleaseInfo? {
+        var call: Call? = null
+        var response: Response? = null
+        try {
+            val client = OkHttpClient.Builder().build()
+            val request = Request.Builder()
+                .url(url)
+                .header("User-Agent", userAgent)
+                .build()
+            call = client.newCall(request)
+            response = call.execute()
+            val body = response.body ?: throw Exception("body is null")
+            val bodyString = body.string()
+            val versionNamePattern = "\"tag_name\"\\s*:\\s*\"v([^\"]+)\""
+            val versionNameMatchResult = Regex(versionNamePattern).find(bodyString) ?: throw Exception("regex match error")
+            val versionName = versionNameMatchResult.groupValues[1]
+            return if (versionName != BuildConfig.VERSION_NAME) {
+                val downloadURLPattern = "\"browser_download_url\"\\s*:\\s*\"([^\"]+)\""
+                val downloadURLMatchResult = Regex(downloadURLPattern).find(bodyString) ?: throw Exception("regex match error")
+                val downloadURL = downloadURLMatchResult.groupValues[1]
+                val descriptionPattern = "\"body\"\\s*:\\s*\"([^\"]+)\""
+                val descriptionMatchResult = Regex(descriptionPattern).find(bodyString) ?: throw Exception("regex match error")
+                val description = descriptionMatchResult.groupValues[1]
+                return AppReleaseInfo(versionName, downloadURL, description)
+            } else {
+                null
+            }
         } catch (e: Throwable) {
             call?.cancel()
             throw e

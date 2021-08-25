@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import com.kasuminotes.R
 
 @Composable
-fun UpdateDialog(
+fun UpdateDbDialog(
     newDbVersion: String,
     onUpdate: (newDbVersion: String) -> Unit,
     onCancel: () -> Unit
@@ -16,10 +16,10 @@ fun UpdateDialog(
     AlertDialog(
         onDismissRequest = onCancel,
         title = {
-            Text(stringResource(R.string.update_database))
+            Text(stringResource(R.string.update_db))
         },
         text = {
-            Text(stringResource(R.string.update_message, newDbVersion))
+            Text(stringResource(R.string.update_db_message, newDbVersion))
         },
         confirmButton = {
             TextButton(onClick = { onUpdate(newDbVersion) }) {

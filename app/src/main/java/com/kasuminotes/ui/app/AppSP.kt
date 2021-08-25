@@ -38,6 +38,7 @@ private class SP<T>(val key: String, val defValue: T) {
 const val DefaultUserId = 101431
 
 var Context.userIdSP by SP("USER_ID", DefaultUserId)
+var Context.appAutoUpdateSP by SP("APP_AUTO_UPDATE", false)
 var Context.dbAutoUpdateSP by SP("DB_AUTO_UPDATE", false)
 var Context.dbServerSP by SP("DB_SERVER", DbServer.CN.name)
 var Context.dbVersionCNSP by SP("DB_VERSION_CN", "0")

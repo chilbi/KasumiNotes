@@ -98,8 +98,10 @@ fun HomeDrawer(
     maxUserData: MaxUserData?,
     dbServer: DbServer,
     dbVersion: String,
+    appAutoUpdate: Boolean,
     dbAutoUpdate: Boolean,
     lastVersionFetching: Boolean,
+    latestAppURLFetching: Boolean,
     language: Language,
     darkTheme: ToggleableState,
     onImageChange: () -> Unit,
@@ -108,7 +110,10 @@ fun HomeDrawer(
     onLastDbVersionFetch: () -> Unit,
     onDbAutoUpdateToggle: () -> Unit,
     onLanguageChange: (Language) -> Unit,
-    onDarkThemeToggle: () -> Unit
+    onDarkThemeToggle: () -> Unit,
+    onLatestAppURLFetch: () -> Unit,
+    onAppAutoUpdateToggle: () -> Unit,
+    onAboutClick: () -> Unit
 ) {
     val color = MaterialTheme.colors.surface
     val elevationOverlay = LocalElevationOverlay.current
@@ -157,7 +162,13 @@ fun HomeDrawer(
 
         Divider(Modifier.padding(16.dp))
 
-        AppMenuList()
+        AppMenuList(
+            appAutoUpdate,
+            latestAppURLFetching,
+            onLatestAppURLFetch,
+            onAppAutoUpdateToggle,
+            onAboutClick
+        )
     }
 }
 
@@ -350,15 +361,15 @@ private fun DatabaseMenuList(
     }
 
     ListItem(
-        modifier = Modifier.clickable { onLastDbVersionFetch() },
+        modifier = Modifier.clickable(onClick = onLastDbVersionFetch),
         icon = { Icon(Icons.Filled.DonutSmall, null) },
-        trailing = { SyncIcon(enable = lastVersionFetching) }
+        trailing = { SyncIcon(lastVersionFetching) }
     ) {
         Text("v$dbVersion")
     }
 
     ListItem(
-        modifier = Modifier.clickable { onDbAutoUpdateToggle() },
+        modifier = Modifier.clickable(onClick = onDbAutoUpdateToggle),
         icon = { Icon(Icons.Filled.Update, null) },
         trailing = { Switch(checked = dbAutoUpdate, onCheckedChange = null) }
     ) {
@@ -399,7 +410,7 @@ private fun DisplayMenuList(
     }
 
     ListItem(
-        modifier = Modifier.clickable { onDarkThemeToggle() },
+        modifier = Modifier.clickable(onClick = onDarkThemeToggle),
         icon = { Icon(Icons.Filled.Brightness4, null) },
         trailing = { TriStateCheckbox(state = darkTheme, onClick = null) }
     ) {
@@ -417,19 +428,33 @@ private fun DisplayMenuList(
 
 @ExperimentalMaterialApi
 @Composable
-private fun AppMenuList() {
+private fun AppMenuList(
+    appAutoUpdate: Boolean,
+    latestAppURLFetching: Boolean,
+    onLatestAppURLFetch: () -> Unit,
+    onAppAutoUpdateToggle: () -> Unit,
+    onAboutClick: () -> Unit
+) {
     MenuCaption(stringResource(R.string.app))
 
     ListItem(
-        modifier = Modifier.clickable(enabled = false) { /*TODO fetch app latest version*/ },
+        modifier = Modifier.clickable(onClick = onLatestAppURLFetch),
         icon = { Icon(Icons.Filled.Android, null) },
-        trailing = { SyncIcon(false) }
+        trailing = { SyncIcon(latestAppURLFetching) }
     ) {
         Text("v${BuildConfig.VERSION_NAME}")
     }
 
     ListItem(
-        modifier = Modifier.clickable(enabled = false) { /*TODO open about page*/ },
+        modifier = Modifier.clickable(onClick = onAppAutoUpdateToggle),
+        icon = { Icon(Icons.Filled.Update, null) },
+        trailing = { Switch(checked = appAutoUpdate, onCheckedChange = null) }
+    ) {
+        Text(stringResource(R.string.auto_update))
+    }
+
+    ListItem(
+        modifier = Modifier.clickable(onClick = onAboutClick),
         icon = { Icon(Icons.Filled.Info, null) },
         trailing = { Icon(Icons.Filled.ArrowForward, null) }
     ) {

@@ -24,6 +24,9 @@ object UrlUtil {
     private const val ICON_EQUIPMENT_URL = "$API_URL/icon/equipment/%d.webp"
     private const val ICON_ITEM_URL = "$API_URL/icon/item/%d.webp"
 
+    // App Release URL
+    const val APP_RELEASE_URL = "https://api.github.com/repos/chilbi/KasumiNotes/releases/latest"
+
     val dbFileNameMap = mapOf(DbServer.CN to DB_FILE_NAME_CN, DbServer.JP to DB_FILE_NAME_JP)
     val dbFileUrlMap = mapOf(DbServer.CN to DB_FILE_URL_CN, DbServer.JP to DB_FILE_URL_JP)
     val lastVersionUrl =

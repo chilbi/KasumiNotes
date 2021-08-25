@@ -29,7 +29,8 @@ fun HomeScaffold(
     onNavigateTo: (Int) -> Unit,
     onCharaClick: (UserProfile) -> Unit,
     onCharaEdit: () -> Unit,
-    onImageChange: () -> Unit
+    onImageChange: () -> Unit,
+    onAboutClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
@@ -80,8 +81,10 @@ fun HomeScaffold(
                 userState.maxUserData,
                 dbState.dbServer,
                 dbState.dbVersion,
+                dbState.appAutoUpdate,
                 dbState.dbAutoUpdate,
                 dbState.lastVersionFetching,
+                dbState.latestAppURLFetching,
                 uiState.language,
                 uiState.darkTheme,
                 onImageChange,
@@ -90,7 +93,10 @@ fun HomeScaffold(
                 dbState::fetchLastDbVersion,
                 dbState::toggleDbAutoUpdate,
                 uiState::changeLanguage,
-                uiState::toggleDarkTheme
+                uiState::toggleDarkTheme,
+                dbState::fetchLatestAppURL,
+                dbState::toggleAppAutoUpdate,
+                onAboutClick
             )
         },
         content = { contentPadding ->

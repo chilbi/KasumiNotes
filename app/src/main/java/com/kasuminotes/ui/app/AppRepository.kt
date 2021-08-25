@@ -1,6 +1,8 @@
 package com.kasuminotes.ui.app
 
+import android.app.DownloadManager
 import android.content.Context
+import android.net.Uri
 import androidx.compose.ui.state.ToggleableState
 import com.kasuminotes.MainActivity
 import com.kasuminotes.MainApplication
@@ -9,6 +11,7 @@ import com.kasuminotes.common.ImageVariant
 import com.kasuminotes.common.Language
 import com.kasuminotes.common.QuestMode
 import com.kasuminotes.common.QuestType
+import com.kasuminotes.data.AppReleaseInfo
 import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.utils.HttpUtil
 //import com.kasuminotes.utils.LocaleUtil
@@ -30,6 +33,12 @@ class AppRepository(
 
     fun setUserId(value: Int) {
         context.userIdSP = value
+    }
+
+    fun getAppAutoUpdate() = context.appAutoUpdateSP
+
+    fun setAppAutoUpdate(appAutoUpdate: Boolean) {
+        context.appAutoUpdateSP = appAutoUpdate
     }
 
     fun getDbAutoUpdate() = context.dbAutoUpdateSP
@@ -136,8 +145,29 @@ class AppRepository(
         HttpUtil.fetchLastDbVersion(UrlUtil.lastVersionUrl[server]!!)
     }
 
+    suspend fun fetchLatestAppReleaseInfo(): AppReleaseInfo? = withContext(ioDispatcher) {
+        HttpUtil.fetchLatestAppReleaseInfo(UrlUtil.APP_RELEASE_URL)
+    }
+
     fun downloadTempDbFile(server: DbServer) = HttpUtil.downloadDbFile(
         UrlUtil.dbFileUrlMap[server]!!,
         context.getDatabasePath("temp_${UrlUtil.dbFileNameMap[server]!!}.br")
     ).flowOn(ioDispatcher)
+
+    suspend fun downloadApp(info: AppReleaseInfo) = withContext(ioDispatcher) {
+        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val request = DownloadManager.Request(Uri.parse(info.downloadURL)).apply {
+            setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            setMimeType("application/vnd.android.package-archive")
+            setDestinationInExternalFilesDir(
+                context,
+                context.filesDir.absolutePath,
+                "kasuminotes-release-${info.versionName}.apk"
+            )
+        }
+        val file = File("${context.filesDir.absolutePath}/kasuminotes-release-${info.versionName}.apk")
+        if (file.exists()) file.delete()
+        val downloadId = downloadManager.enqueue(request)
+        MainActivity.instance.listenerDownload(downloadId)
+    }
 }
