@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.KasumiNotes" parent="Theme">
+        <item name="backgroundColor">@color/black_night</item>
+        <item name="colorSurface">@color/black_night</item>
+        <item name="colorError">@color/error_night</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnError">@color/black</item>
+    </style>
+
+    <style name="Theme.SplashTheme" parent="Theme.KasumiNotes">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+</resources>

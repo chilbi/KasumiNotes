@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="?attr/colorSurface" />
+    <item android:gravity="center"
+        android:width="341dp"
+        android:height="256dp"
+        tools:targetApi="m"
+        tools:ignore="UnusedAttribute">
+        <bitmap
+            android:gravity="fill_horizontal|fill_vertical"
+            android:src="@drawable/splash" />
+    </item>
+</layer-list>

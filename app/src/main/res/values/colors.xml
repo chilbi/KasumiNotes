@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#FF5F96F5</color>
+    <color name="primary_variant">#FF5B88E6</color>
+    <color name="secondary">#FFF55F96</color>
+    <color name="secondary_variant">#FFF2397E</color>
+    <color name="error">#FFB00020</color>
+    <color name="error_night">#FFCF6679</color>
+    <color name="black_night">#FF121212</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="immersive_sys_ui">#33000000</color>
+    <color name="ic_launcher_background">@color/white</color>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_variant</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="android:statusBarColor">@color/immersive_sys_ui</item>
+        <item name="android:navigationBarColor">@color/black_night</item>
+<!--        <item name="android:configChanges">orientation|keyboardHidden|screenSize|locale</item>-->
+        <item name="android:screenOrientation">portrait</item>
+    </style>
+
+    <style name="Theme.KasumiNotes" parent="Theme">
+        <item name="backgroundColor">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOnError">@color/white</item>
+    </style>
+
+    <style name="Theme.SplashTheme" parent="Theme.KasumiNotes">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+</resources>
