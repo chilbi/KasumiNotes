@@ -84,7 +84,7 @@ fun HomeScaffold(
                 dbState.appAutoUpdate,
                 dbState.dbAutoUpdate,
                 dbState.lastVersionFetching,
-                dbState.latestAppURLFetching,
+                dbState.latestAppReleaseInfoFetching,
                 uiState.language,
                 uiState.darkTheme,
                 onImageChange,
@@ -94,7 +94,7 @@ fun HomeScaffold(
                 dbState::toggleDbAutoUpdate,
                 uiState::changeLanguage,
                 uiState::toggleDarkTheme,
-                dbState::fetchLatestAppURL,
+                dbState::fetchLatestAppReleaseInfo,
                 dbState::toggleAppAutoUpdate,
                 onAboutClick
             )

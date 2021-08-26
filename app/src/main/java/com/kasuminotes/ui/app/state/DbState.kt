@@ -39,7 +39,7 @@ class DbState(
         private set
     var lastVersionFetching by mutableStateOf(false)
         private set
-    var latestAppURLFetching by mutableStateOf(false)
+    var latestAppReleaseInfoFetching by mutableStateOf(false)
         private set
     var isLastDb by mutableStateOf(false)
         private set
@@ -58,7 +58,7 @@ class DbState(
             autoFetchLastDbVersion(false)
         }
         if (appAutoUpdate) {
-            autoFetchLatestAppURL(false)
+            autoFetchLatestAppReleaseInfo(false)
         }
     }
 
@@ -101,7 +101,7 @@ class DbState(
 
     fun fetchLastDbVersion() = autoFetchLastDbVersion(true)
 
-    fun fetchLatestAppURL() = autoFetchLatestAppURL(true)
+    fun fetchLatestAppReleaseInfo() = autoFetchLatestAppReleaseInfo(true)
 
     fun confirmIsLastDb() {
         isLastDb = false
@@ -145,20 +145,20 @@ class DbState(
         }
     }
 
-    private fun autoFetchLatestAppURL(mutableIsLatestApp: Boolean) {
-        if (!latestAppURLFetching) {
+    private fun autoFetchLatestAppReleaseInfo(mutableIsLatestApp: Boolean) {
+        if (!latestAppReleaseInfoFetching) {
             scope.launch {
                 try {
-                    latestAppURLFetching = true
+                    latestAppReleaseInfoFetching = true
                     val info = appRepository.fetchLatestAppReleaseInfo()
-                    latestAppURLFetching = false
+                    latestAppReleaseInfoFetching = false
                     if (info != null) {
                         newAppReleaseInfo = info
                     } else if (mutableIsLatestApp) {
                         isLatestApp = true
                     }
                 } catch (e: Throwable) {
-                    latestAppURLFetching = false
+                    latestAppReleaseInfoFetching = false
                 }
             }
         }

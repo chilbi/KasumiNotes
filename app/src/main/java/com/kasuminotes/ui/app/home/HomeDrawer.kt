@@ -101,7 +101,7 @@ fun HomeDrawer(
     appAutoUpdate: Boolean,
     dbAutoUpdate: Boolean,
     lastVersionFetching: Boolean,
-    latestAppURLFetching: Boolean,
+    latestAppReleaseInfoFetching: Boolean,
     language: Language,
     darkTheme: ToggleableState,
     onImageChange: () -> Unit,
@@ -111,7 +111,7 @@ fun HomeDrawer(
     onDbAutoUpdateToggle: () -> Unit,
     onLanguageChange: (Language) -> Unit,
     onDarkThemeToggle: () -> Unit,
-    onLatestAppURLFetch: () -> Unit,
+    onLatestAppReleaseInfoFetch: () -> Unit,
     onAppAutoUpdateToggle: () -> Unit,
     onAboutClick: () -> Unit
 ) {
@@ -164,8 +164,8 @@ fun HomeDrawer(
 
         AppMenuList(
             appAutoUpdate,
-            latestAppURLFetching,
-            onLatestAppURLFetch,
+            latestAppReleaseInfoFetching,
+            onLatestAppReleaseInfoFetch,
             onAppAutoUpdateToggle,
             onAboutClick
         )
@@ -430,17 +430,17 @@ private fun DisplayMenuList(
 @Composable
 private fun AppMenuList(
     appAutoUpdate: Boolean,
-    latestAppURLFetching: Boolean,
-    onLatestAppURLFetch: () -> Unit,
+    latestAppReleaseInfoFetching: Boolean,
+    onLatestAppReleaseInfoFetch: () -> Unit,
     onAppAutoUpdateToggle: () -> Unit,
     onAboutClick: () -> Unit
 ) {
     MenuCaption(stringResource(R.string.app))
 
     ListItem(
-        modifier = Modifier.clickable(onClick = onLatestAppURLFetch),
+        modifier = Modifier.clickable(onClick = onLatestAppReleaseInfoFetch),
         icon = { Icon(Icons.Filled.Android, null) },
-        trailing = { SyncIcon(latestAppURLFetching) }
+        trailing = { SyncIcon(latestAppReleaseInfoFetching) }
     ) {
         Text("v${BuildConfig.VERSION_NAME}")
     }

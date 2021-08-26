@@ -162,8 +162,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun linkTo(uriString: String) {
-        val mainActivity = MainActivity.instance
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uriString))
-        mainActivity.startActivity(intent)
+        MainActivity.instance.startActivity(intent)
     }
 }
