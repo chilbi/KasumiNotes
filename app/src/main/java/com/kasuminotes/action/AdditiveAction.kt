@@ -1,11 +1,35 @@
 package com.kasuminotes.action
 
+import androidx.annotation.StringRes
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
+import kotlin.math.ceil
 
-fun SkillAction.getAdditive(actions: List<SkillAction>): D {
+fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
     val modifyAction = actions.find { it.actionId == actionDetail1 }!!
     var isAdd = true
+
+    val max = if (actionValue4 == 0.0 && actionValue5 == 0.0) {
+        null
+    } else {
+        if (actionValue5 == 0.0) {
+            if (modifyAction.actionType == 1 && actionDetail2 == 6) {
+                D.Text("${(actionValue4 * 100).toNumStr()}%")
+            } else if (modifyAction.actionType == 10 && (modifyAction.actionDetail1 == 141 || modifyAction.actionValue1 == 2.0)) {
+                D.Text("${actionValue4.toNumStr()}%")
+            } else if (modifyAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
+                D.Text((-actionValue4).toNumStr())
+            } else {
+                D.Text(actionValue4.toNumStr())
+            }
+        } else {
+            if (actionValue4 > 0.0 && actionValue5 > 0.0) {
+                D.Text(ceil(actionValue4 + actionValue5 * skillLevel).toNumStr())
+            } else {
+                D.Text(ceil((-actionValue4) + (-actionValue5) * skillLevel).toNumStr())
+            }
+        }
+    }
 
     val factor = if (actionValue3 == 0.0) {
         if (modifyAction.actionType == 1 && actionDetail2 == 6) {
@@ -168,17 +192,45 @@ fun SkillAction.getAdditive(actions: List<SkillAction>): D {
         else -> D.Unknown
     }
 
-    return if (isAdd) {
-        D.Format(
-            if (actionType == 26) R.string.action_additive_content1_formula2
-            else R.string.action_multiple_content1_formula2,
-            arrayOf(content, formula)
-        )
+    @StringRes
+    val actionRes: Int
+    @StringRes
+    var maxRes: Int? = null
+
+    if (actionType == 26) {
+        if (isAdd) {
+            actionRes = R.string.action_additive_content1_formula2
+            if (max != null) {
+                maxRes = R.string.action_additive_max1
+            }
+        } else {
+            actionRes = R.string.action_additive_reduce_content1_formula2
+            if (max != null) {
+                maxRes = R.string.action_additive_reduce_max1
+            }
+        }
     } else {
-        D.Format(
-            if (actionType == 26) R.string.action_additive_reduce_content1_formula2
-            else R.string.action_multiple_reduce_content1_formula2,
-            arrayOf(content, formula)
+        if (isAdd) {
+            actionRes = R.string.action_multiple_content1_formula2
+            if (max != null) {
+                maxRes = R.string.action_multiple_max1
+            }
+        } else {
+            actionRes = R.string.action_multiple_reduce_content1_formula2
+            if (max != null) {
+                maxRes = R.string.action_multiple_reduce_max1
+            }
+        }
+    }
+
+    return if (maxRes == null) {
+        D.Format(actionRes, arrayOf(content, formula))
+    } else{
+        D.Join(
+            arrayOf(
+                D.Format(actionRes, arrayOf(content, formula)),
+                D.Format(maxRes, arrayOf(max!!))
+            )
         )
     }
 }

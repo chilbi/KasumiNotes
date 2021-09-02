@@ -99,7 +99,7 @@ class ActionBuilder(
             21 -> getNoDamage(skillLevel)
             22 -> getPattern()
             23 -> D.Unknown//Branch
-            26, 27 -> getAdditive(actions)
+            26, 27 -> getAdditive(skillLevel, actions)
             28 -> D.Unknown//Branch
             30 -> getDestroy()
             32 -> getLifeSteal(skillLevel)

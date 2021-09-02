@@ -157,6 +157,10 @@
     <string name="action_multiple_content1_formula2">使%1$s增加%2$s倍。</string>
     <string name="action_additive_reduce_content1_formula2">使%1$s减少%2$s。</string>
     <string name="action_multiple_reduce_content1_formula2">使%1$s减少%2$s倍。</string>
+    <string name="action_additive_max1">最多增加%s。</string>
+    <string name="action_multiple_max1">最多增加%s倍。</string>
+    <string name="action_additive_reduce_max1">最多减少%s。</string>
+    <string name="action_multiple_reduce_max1">最多减少%s倍。</string>
     <string name="action_focus_target1">以%s为中心</string>
     <string name="action_darkness_formula1">使物理攻击命中率降低%s。</string>
     <string name="action_life_steal_target1_formula2">赋予%1$s下次攻击提升%2$sHP吸收效果。</string>
