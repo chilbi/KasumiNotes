@@ -108,49 +108,36 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
                 }
             }
         }
-        // アオイ（編入生）
-        512 -> {
+        // アオイ、アオイ（編入生）、ミツキ（オーエド）
+        in 500..599 -> {
             val target = getTarget(depend)
-            if (actionDetail2 != 0) {
+            val state = when (actionDetail1 - 500) {
+                0 -> D.Format(R.string.burn)
+                1 -> D.Format(R.string.curse)
+                2 -> D.Format(R.string.poison)
+                3 -> D.Format(R.string.fierce_poison)
+                12 -> D.Format(R.string.poison_or_fierce_poison)
+                else -> D.Unknown
+            }
+            var trueBranch = actionDetail2
+            var falseBranch = actionDetail3
+            if (actionId == 104001201) {// TODO アオイ Main1+ 谜之顺序
+                trueBranch = actionDetail3
+                falseBranch = actionDetail2
+            }
+            if (trueBranch != 0) {
                 branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_fierce_poison_target1,
-                        arrayOf(target)
+                    trueBranch to D.Format(
+                        R.string.action_branch_target1_state2,
+                        arrayOf(target, state)
                     )
                 )
             }
-            if (actionDetail3 != 0) {
+            if (falseBranch != 0) {
                 branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_fierce_poison_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
-        }
-        // アオイ
-        502 -> {
-            val target = getTarget(depend)
-            // TODO アオイ Main1+ 谜之顺序
-            var d2 = actionDetail2
-            var d3 = actionDetail3
-            if (actionId == 104001201) {
-                d2 = actionDetail3
-                d3 = actionDetail2
-            }
-            if (d2 != 0) {
-                branch.add(
-                    d2 to D.Format(
-                        R.string.action_branch_poison_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
-            if (d3 != 0) {
-                branch.add(
-                    d3 to D.Format(
-                        R.string.action_branch_not_poison_target1,
-                        arrayOf(target)
+                    falseBranch to D.Format(
+                        R.string.action_branch_not_target1_state2,
+                        arrayOf(target, state)
                     )
                 )
             }
@@ -158,19 +145,20 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
         // イオ
         300 -> {
             val target = getTarget(depend)
+            val state = D.Format(R.string.charm)
             if (actionDetail2 != 0) {
                 branch.add(
                     actionDetail2 to D.Format(
-                        R.string.action_branch_charm_target1,
-                        arrayOf(target)
+                        R.string.action_branch_target1_state2,
+                        arrayOf(target, state)
                     )
                 )
             }
             if (actionDetail3 != 0) {
                 branch.add(
                     actionDetail3 to D.Format(
-                        R.string.action_branch_not_charm_target1,
-                        arrayOf(target)
+                        R.string.action_branch_not_target1_state2,
+                        arrayOf(target, state)
                     )
                 )
             }

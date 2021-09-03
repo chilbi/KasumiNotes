@@ -148,6 +148,7 @@
     <string name="action_speed_target1_formula2_time3">%1$sの行動速度を本来の%2$sにする、効果時間%3$s秒。</string>
     <string name="action_abnormal_target1_content2_time3">%1$sを%2$s状態にする、効果時間%3$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_time4">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、効果時間%4$s秒。</string>
+    <string name="action_abnormal_target1_content2_formula3_percent4_time5">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、毎秒%2$sダメージが初期値の%4$sずつアップする、効果時間%5$s秒。</string>
     <string name="action_state_target1_content2_time3">%1$sに%2$s状態を付与する、効果時間%3$s秒。</string>
     <string name="action_haulin_oneself_target1_formula2">%1$sを目の前%2$s距離まで引き寄せる。</string>
     <string name="action_haulin_target1_formula2">%1$sを%2$s距離引き寄せる。</string>
@@ -204,12 +205,8 @@
     <string name="action_branch_not_counter1_above2">【%1$s】の数が%2$s以上でない場合、</string>
     <string name="action_branch_hp_target1_above2">%1$sの残りＨＰが%2$s以上の場合、</string>
     <string name="action_branch_hp_not_target1_above2">%1$sの残りＨＰが%2$s未満の場合、</string>
-    <string name="action_branch_charm_target1">%sが誘惑状態の場合、</string>
-    <string name="action_branch_not_charm_target1">%sが誘惑状態でない場合、</string>
-    <string name="action_branch_poison_target1">%sが毒状態の場合、</string>
-    <string name="action_branch_not_poison_target1">%sが毒状態でない場合、</string>
-    <string name="action_branch_fierce_poison_target1">%sが毒か猛毒状態の場合、</string>
-    <string name="action_branch_not_fierce_poison_target1">%sが毒か猛毒状態でない場合、</string>
+    <string name="action_branch_target1_state2">%1$sが%2$s状態の場合、</string>
+    <string name="action_branch_not_target1_state2">%1$sが%2$s状態でない場合、</string>
     <string name="action_branch_speed_up_target1">%sが行動速度アップ状態の場合、</string>
     <string name="action_branch_not_speed_up_target1">%sが行動速度アップ状態でない場合、</string>
     <string name="action_branch_akinesia_target1">%sがこのスキル発動時既に行動不能状態の場合、</string>
@@ -307,6 +304,8 @@
     <string name="burn">火傷</string>
     <string name="curse">呪い</string>
     <string name="fierce_poison">猛毒</string>
+    <string name="beshrew">呪詛</string>
+    <string name="poison_or_fierce_poison">毒か猛毒</string>
     <string name="numbness">麻痺</string>
     <string name="freeze">凍結</string>
     <string name="fetter">束縛</string>

@@ -105,13 +105,7 @@ fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
         9 -> if (actionDetail2 == 3) D.Format(R.string.additive_time)
         else D.Join(
             arrayOf(
-                when (modifyAction.actionDetail1) {
-                    1 -> D.Format(R.string.poison)
-                    2 -> D.Format(R.string.burn)
-                    3 -> D.Format(R.string.curse)
-                    4 -> D.Format(R.string.fierce_poison)
-                    else -> D.Unknown
-                },
+                getAbnormalDamageContent(modifyAction.actionDetail1),
                 D.Format(R.string.additive_damage)
             )
         )

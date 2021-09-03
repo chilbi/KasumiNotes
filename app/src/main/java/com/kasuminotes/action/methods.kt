@@ -92,6 +92,17 @@ fun getAbnormalContent(detail: Int): D {
     }
 }
 
+fun getAbnormalDamageContent(detail: Int): D {
+    return when (detail) {
+        1 -> D.Format(R.string.poison)
+        2 -> D.Format(R.string.burn)
+        3 -> D.Format(R.string.curse)
+        4 -> D.Format(R.string.fierce_poison)
+        5 -> D.Format(R.string.beshrew)
+        else -> D.Unknown
+    }
+}
+
 fun getStatusContent(detail: Int): D {
     return when (detail) {
         1 -> D.Format(R.string.atk)

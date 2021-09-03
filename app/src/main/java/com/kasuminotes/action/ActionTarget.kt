@@ -15,13 +15,14 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
             }
         } else if (
             depend.actionType == 23 &&
-            depend.targetCount == 99 &&
+            depend.targetCount == 99/* &&
             (
                 depend.actionDetail1 == 100 ||//レム
                 depend.actionDetail1 == 300 ||//イオ
+                depend.actionDetail1 == 501 ||//ミツキ（オーエド）
                 depend.actionDetail1 == 502 ||//アオイ
                 depend.actionDetail1 in 900..999//レイ（ハロウィン）
-            )
+            )*/
         ) {
             D.Format(R.string.target_eligible)
         } else if (depend.depend != null) {
@@ -86,7 +87,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                             arrayOf(getAssignment())
                         )
                     } else {
-                        if (actionType == 23 && (actionDetail1 == 100 || actionDetail1 in 900..999)) {//レム、レイ（ハロウィン）
+                        if (actionType == 23/* && (actionDetail1 == 100 || actionDetail1 == 501 || actionDetail1 in 900..999)*/) {//レム、レイ（ハロウィン）、ミツキ（オーエド）
                             D.Join(
                                 arrayOf(
                                     D.Format(R.string.target_front),
@@ -129,7 +130,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                             arrayOf(getAssignment())
                         )
                     } else {
-                        if (actionType == 23 && (actionDetail1 == 300 || actionDetail1 == 502)) {// イオ、アオイ
+                        if (actionType == 23/* && (actionDetail1 == 300 || actionDetail1 == 502)*/) {// イオ、アオイ
                             D.Join(
                                 arrayOf(
                                     D.Format(
