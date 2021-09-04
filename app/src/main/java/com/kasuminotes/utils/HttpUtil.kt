@@ -132,7 +132,7 @@ object HttpUtil {
                 val descriptionPattern = "\"body\"\\s*:\\s*\"([^\"]+)\""
                 val descriptionMatchResult = Regex(descriptionPattern).find(bodyString) ?: throw Exception("regex match error")
                 val description = descriptionMatchResult.groupValues[1]
-                return AppReleaseInfo(versionName, downloadURL, description)
+                AppReleaseInfo(versionName, downloadURL, description)
             } else {
                 null
             }

@@ -193,6 +193,7 @@ private fun UserImage(
     }
 }
 
+@ExperimentalCoilApi
 @ExperimentalMaterialApi
 @Composable
 private fun UserHeader(

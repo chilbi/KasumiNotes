@@ -19,13 +19,13 @@ import com.kasuminotes.ui.app.App
 import com.kasuminotes.utils.LocaleUtil
 import com.kasuminotes.utils.ProvideImageLoader
 
+@ExperimentalCoilApi
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 class MainActivity : ComponentActivity() {
     private var broadcastReceiver: BroadcastReceiver? = null
 
-    @ExperimentalCoilApi
-    @ExperimentalAnimationApi
-    @ExperimentalMaterialApi
-    @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         instance = this
