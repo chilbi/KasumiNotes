@@ -237,8 +237,8 @@ class CharaListState {
             if (searchText.isEmpty() && atkType == AtkType.All && position == Position.All) {
                 originProfiles
             } else {
-                originProfiles.filter { data ->
-                    data.unitData.let {
+                originProfiles.filter { userProfile ->
+                    userProfile.getRealUnitData(userProfile.userData.rarity).let {
                         val searchTextMatch = searchText.isEmpty() || (
                             it.unitId.toString() + it.unitName + it.kana + it.actualName
                             ).contains(searchText)
@@ -254,15 +254,15 @@ class CharaListState {
     }
 
     private fun sort(list: List<UserProfile>, order: OrderBy, desc: Boolean): List<UserProfile> {
-        val selector: (UserProfile) -> Int? = { data ->
+        val selector: (UserProfile) -> Int? = { userProfile ->
             when (order) {
-                OrderBy.StartTime -> data.unitData.startTimeInt
-                OrderBy.ID -> data.unitData.unitId
-                OrderBy.Rarity -> data.userData.rarity
-                OrderBy.SearchAreaWidth -> data.unitData.searchAreaWidth
-                OrderBy.Age -> data.unitData.age.toIntOrNull() ?: 9999
-                OrderBy.Height -> data.unitData.height.toIntOrNull() ?: 9999
-                OrderBy.Weight -> data.unitData.weight.toIntOrNull() ?: 9999
+                OrderBy.StartTime -> userProfile.unitData.startTimeInt
+                OrderBy.ID -> userProfile.unitData.unitId
+                OrderBy.Rarity -> userProfile.userData.rarity
+                OrderBy.SearchAreaWidth -> userProfile.unitData.searchAreaWidth
+                OrderBy.Age -> userProfile.unitData.age.toIntOrNull() ?: 9999
+                OrderBy.Height -> userProfile.unitData.height.toIntOrNull() ?: 9999
+                OrderBy.Weight -> userProfile.unitData.weight.toIntOrNull() ?: 9999
             }
         }
         return if (desc) {

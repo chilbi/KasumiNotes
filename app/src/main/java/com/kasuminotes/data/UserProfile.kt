@@ -17,8 +17,17 @@ data class UserProfile(
     var unitAttackPatternList: List<UnitAttackPattern> = emptyList(),
     var unitSkillData: UnitSkillData? = null,
     var exSkillData: ExSkillData? = null,
-    var promotionBonusList: List<PromotionBonus> = emptyList()
+    var promotionBonusList: List<PromotionBonus> = emptyList(),
+    var unitConversionData: UnitConversionData? = null
 ) {
+    private fun shouldConverted(rarity: Int): Boolean = unitConversionData != null && rarity > 5
+
+    fun getRealUnitData(rarity: Int): UnitData = if (shouldConverted(rarity)) unitConversionData!!.unitData else unitData
+
+    fun getRealUnitAttackPatternList(rarity: Int): List<UnitAttackPattern> = if (shouldConverted(rarity)) unitConversionData!!.unitAttackPatternList else unitAttackPatternList
+
+    fun getRealUnitSkillData(rarity: Int): UnitSkillData? = if (shouldConverted(rarity)) unitConversionData!!.unitSkillData else unitSkillData
+
     fun getEquipMaxLevel(slot: Int): Int = unitPromotion?.getEquip(slot)?.maxEnhanceLevel ?: 0
 
     fun getProperty(data: UserData): Property {
@@ -33,7 +42,9 @@ data class UserProfile(
             val uniqueLevel = data.uniqueLevel - 1
             val equipsLevel = data.equipsLevel
 
-            val exSkillProperty = exSkillData!!.getProperty(data.rarity, data.exLevel)
+            val realExSkillData = if (shouldConverted(data.rarity)) unitConversionData!!.exSkillData else exSkillData
+
+            val exSkillProperty = realExSkillData!!.getProperty(data.rarity, data.exLevel)
 
             val promotionBonusProperty = promotionBonusList.find {
                 it.promotionLevel == data.promotionLevel

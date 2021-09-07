@@ -37,7 +37,7 @@ fun CharaScaffold(
 ) {
     val userProfile = charaState.userProfile!!
     val userData = charaState.userData!!
-    val unitData = userProfile.unitData
+    val unitData = userProfile.getRealUnitData(userData.rarity)
 
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
@@ -115,8 +115,8 @@ fun CharaScaffold(
                 userProfile.sharedProfiles,
                 userProfile.uniqueData,
                 userProfile.promotions,
-                userProfile.unitAttackPatternList,
-                userProfile.unitSkillData,
+                userProfile.getRealUnitAttackPatternList(userData.rarity),
+                userProfile.getRealUnitSkillData(userData.rarity),
                 charaState.property,
                 onEquipClick = { onEquipClick(it, null) },
                 onUniqueClick = onUniqueClick,

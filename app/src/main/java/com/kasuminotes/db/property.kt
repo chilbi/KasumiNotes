@@ -210,16 +210,8 @@ WHERE unit_id=$unitId"""
 }
 
 suspend fun AppDatabase.getPromotionBonusList(unitId: Int): List<PromotionBonus> {
-
     return withIOContext {
-        val existsTable = use {
-            rawQuery("SELECT count(*) FROM sqlite_master WHERE type=\"table\" AND name = \"promotion_bonus\"", null).use {
-                it.moveToFirst()
-                it.getInt(0) > 0
-            }
-        }
-
-        if (existsTable) {
+        if (existsTable("promotion_bonus")) {
             val sql = "SELECT ${PromotionBonus.getFields()} FROM promotion_bonus WHERE unit_id=$unitId"
             use {
                 rawQuery(sql, null). use {

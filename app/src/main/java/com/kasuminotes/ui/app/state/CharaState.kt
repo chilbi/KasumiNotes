@@ -309,6 +309,21 @@ class CharaState(
             },
             async {
                 db.getPromotionBonusList(unitData.unitId)
+            },
+            async {
+                unitConversionData?.let {
+                    db.getUnitAttackPatternList(it.convertedUnitId)
+                }
+            },
+            async {
+                unitConversionData?.let {
+                    db.getUnitSkillData(it.convertedUnitId)
+                }
+            },
+            async {
+                unitConversionData?.let {
+                    db.getExSkillData(it.convertedUnitId)
+                }
             }
         )
         unitRarity = list[0] as UnitRarity
@@ -324,6 +339,12 @@ class CharaState(
         exSkillData = list[8] as ExSkillData
         @Suppress("UNCHECKED_CAST")
         promotionBonusList = list[9] as List<PromotionBonus>
+        if (unitConversionData != null) {
+            @Suppress("UNCHECKED_CAST")
+            unitConversionData!!.unitAttackPatternList = list[10] as List<UnitAttackPattern>
+            unitConversionData!!.unitSkillData = list[11] as UnitSkillData
+            unitConversionData!!.exSkillData = list[12] as ExSkillData
+        }
     }
 
     private suspend fun UserProfile.loadStory(db: AppDatabase) = withContext(defaultDispatcher) {
