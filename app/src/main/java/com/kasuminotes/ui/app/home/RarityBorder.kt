@@ -20,9 +20,9 @@ fun Modifier.rarityBorder(rankRarity: Int): Modifier {
 
 fun Modifier.rarityBorder(
     rarityColors: RarityColors,
-    outlineWidth: Dp = 0.75.dp,
-    borderWidth: Dp = 2.5.dp,
-    inlineWidth: Dp = 0.25.dp,
+    outlineWidth: Dp = 0.75f.dp,
+    borderWidth: Dp = 2.5f.dp,
+    inlineWidth: Dp = 0.25f.dp,
 ): Modifier {
     return this
         .fillMaxSize()

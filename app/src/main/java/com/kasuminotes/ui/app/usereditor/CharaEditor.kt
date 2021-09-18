@@ -65,7 +65,6 @@ import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
 import com.kasuminotes.ui.components.SliderPlus
 import com.kasuminotes.ui.components.imageSize
-import com.kasuminotes.ui.theme.DarkSuccess
 import com.kasuminotes.ui.theme.DarkWarning
 import com.kasuminotes.ui.theme.RaritiesColors
 import com.kasuminotes.ui.theme.rankRarity
@@ -131,7 +130,7 @@ fun CharaEditor(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = if (isEmpty) onConfirm else toggleVisibleEditor,
-                backgroundColor = if (isEmpty) DarkSuccess else DarkWarning,
+                backgroundColor = if (isEmpty) MaterialTheme.colors.primary else MaterialTheme.colors.secondary,
                 contentColor = Color.White
             ) {
                 Icon(
