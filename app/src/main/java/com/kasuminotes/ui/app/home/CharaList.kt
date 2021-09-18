@@ -25,7 +25,6 @@ import com.kasuminotes.ui.app.state.CharaImageState
 fun CharaList(
     charaImageState: CharaImageState,
     derivedProfiles: List<UserProfile>,
-    contentPadding: PaddingValues,
     onCharaClick: (UserProfile) -> Unit
 ) {
     val infiniteTransition = rememberInfiniteTransition()
@@ -36,8 +35,8 @@ fun CharaList(
             animation = keyframes {
                 durationMillis = 4500
                 0.0f at 0 with FastOutSlowInEasing
-                0.0f at 1850 with FastOutSlowInEasing
-                1.0f at 2650 with FastOutSlowInEasing
+                0.0f at 1750 with FastOutSlowInEasing
+                1.0f at 2750 with FastOutSlowInEasing
                 1.0f at 4500 with FastOutSlowInEasing
             },
             repeatMode = RepeatMode.Reverse
@@ -46,8 +45,7 @@ fun CharaList(
 
     LazyVerticalGrid(
         cells = GridCells.Fixed(charaImageState.cellCount),
-        modifier = Modifier.padding(4.dp),
-        contentPadding = contentPadding
+        contentPadding = PaddingValues(4.dp)
     ) {
         items(derivedProfiles) { userProfile ->
             CharaItem(

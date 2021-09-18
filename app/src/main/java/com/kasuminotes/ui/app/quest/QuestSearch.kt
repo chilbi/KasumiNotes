@@ -160,71 +160,71 @@ fun QuestSearch(
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
         content = { contentPadding ->
-            Crossfade(targetState = visitIndex) { state ->
-                when (state) {
-                    0 -> {
-                        when {
-                            questDataList == null -> {
-                                Box(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    CircularProgressIndicator()
+            Box(Modifier.padding(contentPadding)) {
+                Crossfade(targetState = visitIndex) { state ->
+                    when (state) {
+                        0 -> {
+                            when {
+                                questDataList == null -> {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = 4.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        CircularProgressIndicator()
+                                    }
                                 }
-                            }
-                            questDataList.isEmpty() -> {
-                                NoDataText()
-                            }
-                            else -> {
-                                LazyColumn(contentPadding = contentPadding) {
-                                    items(questDataList) { questData ->
-                                        QuestDropItem(
-                                            questData = questData,
-                                            selectedList = searchedList,
-                                        )
+                                questDataList.isEmpty() -> {
+                                    NoDataText()
+                                }
+                                else -> {
+                                    LazyColumn {
+                                        items(questDataList) { questData ->
+                                            QuestDropItem(
+                                                questData = questData,
+                                                selectedList = searchedList,
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    1 -> {
-                        LazyColumn(contentPadding = contentPadding) {
-                            items(equipMaterialPairList ?: emptyList()) { pair ->
-                                EquipPairItem(
-                                    rarity = pair.first,
-                                    equips = pair.second,
-                                    searches = searches,
-                                    onSearchesChange = onSearchesChange
-                                )
-                            }
-                        }
-                    }
-                    2 -> {
-                        Column(
-                            Modifier
-                                .padding(contentPadding)
-                                .verticalScroll(rememberScrollState())
-                        ) {
-                            if (memoryPieces != null) {
-                                val normalPieces = memoryPieces[0]
-                                val purePieces = memoryPieces[1]
-
-                                PiecesItem(
-                                    label = stringResource(R.string.memory_piece),
-                                    color = RaritiesColors.getRarityColors(3).middle,
-                                    pieces = normalPieces,
-                                    searches = searches,
-                                    onSearchesChange = onSearchesChange
-                                )
-
-                                if (purePieces.isNotEmpty()) {
-                                    PiecesItem(
-                                        label = stringResource(R.string.pure_memory_piece),
-                                        color = RaritiesColors.getRarityColors(4).middle,
-                                        pieces = purePieces,
+                        1 -> {
+                            LazyColumn {
+                                items(equipMaterialPairList ?: emptyList()) { pair ->
+                                    EquipPairItem(
+                                        rarity = pair.first,
+                                        equips = pair.second,
                                         searches = searches,
                                         onSearchesChange = onSearchesChange
                                     )
+                                }
+                            }
+                        }
+                        2 -> {
+                            Column(Modifier.verticalScroll(rememberScrollState())) {
+                                if (memoryPieces != null) {
+                                    val normalPieces = memoryPieces[0]
+                                    val purePieces = memoryPieces[1]
+
+                                    PiecesItem(
+                                        label = stringResource(R.string.memory_piece),
+                                        color = RaritiesColors.getRarityColors(3).middle,
+                                        pieces = normalPieces,
+                                        searches = searches,
+                                        onSearchesChange = onSearchesChange
+                                    )
+
+                                    if (purePieces.isNotEmpty()) {
+                                        PiecesItem(
+                                            label = stringResource(R.string.pure_memory_piece),
+                                            color = RaritiesColors.getRarityColors(4).middle,
+                                            pieces = purePieces,
+                                            searches = searches,
+                                            onSearchesChange = onSearchesChange
+                                        )
+                                    }
                                 }
                             }
                         }

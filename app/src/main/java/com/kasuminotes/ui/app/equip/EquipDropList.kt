@@ -3,12 +3,14 @@ package com.kasuminotes.ui.app.equip
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.common.QuestType
@@ -34,9 +36,7 @@ fun EquipDropList(
     onMin37Toggle: () -> Unit
 ) {
     Column {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             ColumnLabel(stringResource(R.string.obtain_place))
 
             Spacer(Modifier.weight(1f))
@@ -59,7 +59,11 @@ fun EquipDropList(
 
         when {
             questDataList == null -> {
-                CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally))
+                CircularProgressIndicator(
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 4.dp)
+                )
             }
             questDataList.isEmpty() -> {
                 NoDataText()

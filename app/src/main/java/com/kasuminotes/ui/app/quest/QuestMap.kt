@@ -1,5 +1,7 @@
 package com.kasuminotes.ui.app.quest
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -94,13 +96,15 @@ fun QuestMap(
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
         content = { contentPadding ->
-            LazyColumn(contentPadding = contentPadding) {
-                items(questDataList ?: emptyList()) { questData ->
-                    QuestDropItem(
-                        questData = questData,
-                        selectedList = highlightList,
-                        onSelected = onHighlightListChange
-                    )
+            Box(Modifier.padding(contentPadding)) {
+                LazyColumn {
+                    items(questDataList ?: emptyList()) { questData ->
+                        QuestDropItem(
+                            questData = questData,
+                            selectedList = highlightList,
+                            onSelected = onHighlightListChange
+                        )
+                    }
                 }
             }
         }

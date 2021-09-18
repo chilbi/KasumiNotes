@@ -79,15 +79,17 @@ fun QuestEquip(
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
         content = { contentPadding ->
-            LazyColumn(contentPadding = contentPadding) {
-                items(equipmentPairList ?: emptyList()) { pair ->
-                    val equips = pair.second.filter { equipTypes.contains(it.type) }
-                    if (equips.isNotEmpty()) {
-                        EquipmentPairItem(
-                            rarity = pair.first,
-                            equips = equips,
-                            onEquipClick = onEquipClick
-                        )
+            Box(Modifier.padding(contentPadding)) {
+                LazyColumn {
+                    items(equipmentPairList ?: emptyList()) { pair ->
+                        val equips = pair.second.filter { equipTypes.contains(it.type) }
+                        if (equips.isNotEmpty()) {
+                            EquipmentPairItem(
+                                rarity = pair.first,
+                                equips = equips,
+                                onEquipClick = onEquipClick
+                            )
+                        }
                     }
                 }
             }
