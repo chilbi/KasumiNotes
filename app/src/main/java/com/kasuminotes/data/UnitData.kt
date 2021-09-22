@@ -27,8 +27,8 @@ data class UnitData(
 ) {
     val position = when {
         searchAreaWidth < 300 -> 1
-        searchAreaWidth > 600 -> 3
-        else -> 2
+        searchAreaWidth < 600 -> 2
+        else -> 3
     }
 
     val hasUnique: Boolean get() = equipId != 0
