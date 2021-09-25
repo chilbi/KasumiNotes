@@ -250,7 +250,7 @@ LEFT JOIN chara_data AS cd ON SUBSTR(ud.user_id,1,4)=SUBSTR(cd.unit_id,1,4)"""
 }
 
 fun AppDatabase.existsTable(tableName: String): Boolean {
-    val sql = "SELECT count(*) FROM sqlite_master WHERE type=\"table\" AND name = \"$tableName\""
+    val sql = "SELECT count(*) FROM sqlite_master WHERE type=\"table\" AND name=\"$tableName\""
     return use {
         rawQuery(sql, null).use {
             it.moveToFirst()

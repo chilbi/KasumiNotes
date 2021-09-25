@@ -30,11 +30,14 @@ suspend fun AppDatabase.initDatabase(defaultUserId: Int, dbServer: DbServer) = s
 
     // TODO 雪菲专武实装的话，就删除该代码片段
     // 删除雪菲的专武
-    if (dbServer == DbServer.JP) {
-        try {
+    try {
+        val hasUnique = rawQuery("SELECT equip_id FROM unit_unique_equip WHERE unit_id=106401", null).use {
+                it.moveToFirst()
+            }
+        if (!hasUnique) {
             execSQL("UPDATE unit_skill_data SET main_skill_evolution_1=0 WHERE unit_id=106401")
-        } catch (e: Throwable) {}
-    }
+        }
+    } catch (e: Throwable) {}
 
     execSQL(
 """CREATE TABLE `chara_data`(

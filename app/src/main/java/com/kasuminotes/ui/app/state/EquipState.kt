@@ -114,6 +114,7 @@ class EquipState(
     }
 
     fun changeSearchList(materialId: Int) {
+        var hasChanged = true
         val searchedList: List<Int>? = if (searchList == null) {
             listOf(materialId)
         } else {
@@ -123,19 +124,23 @@ class EquipState(
                 } else {
                     searchList!!.filter { it != materialId }
                 }
-            } else {
+            } else if (searchList!!.size < 3) { // TODO 提示最多选3个
                 val list = searchList!!.toMutableList()
                 list.add(materialId)
                 list
+            } else {
+                hasChanged = false
+                searchList
             }
         }
-
-        if (searchedList == null) {
-            searchList = null
-            questDataList = null
-        } else {
-            searchList = searchedList
-            changeQuestDataList(searchedList)
+        if (hasChanged) {
+            if (searchedList == null) {
+                searchList = null
+                questDataList = null
+            } else {
+                searchList = searchedList
+                changeQuestDataList(searchedList)
+            }
         }
     }
 
