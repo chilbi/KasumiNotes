@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -70,20 +71,21 @@ fun UserImages(
         onOrderByChange = listState::changeOrderBy,
         onBack = onBack,
         content = { contentPadding ->
-            LazyVerticalGrid(
-                cells = GridCells.Fixed(4),
-                modifier = Modifier.padding(4.dp),
-                contentPadding = contentPadding
-            ) {
-                items(listState.derivedProfiles) { userProfile ->
-                    SizedBox(1f, true) {
-                        PlaceImage(
-                            url = UrlUtil.getUnitIconUrl(userProfile.unitData.unitId, 3),
-                            shape = CircleShape,
-                            modifier = Modifier.clickable {
-                                selectedItem = userProfile
-                            }
-                        )
+            Box(Modifier.padding(contentPadding)) {
+                LazyVerticalGrid(
+                    cells = GridCells.Fixed(4),
+                    contentPadding = PaddingValues(4.dp)
+                ) {
+                    items(listState.derivedProfiles) { userProfile ->
+                        SizedBox(1f, true) {
+                            PlaceImage(
+                                url = UrlUtil.getUnitIconUrl(userProfile.unitData.unitId, 3),
+                                shape = CircleShape,
+                                modifier = Modifier.clickable {
+                                    selectedItem = userProfile
+                                }
+                            )
+                        }
                     }
                 }
             }

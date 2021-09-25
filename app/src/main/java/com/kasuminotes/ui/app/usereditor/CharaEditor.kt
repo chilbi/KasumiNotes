@@ -191,25 +191,26 @@ fun CharaEditor(
                 )
             )
 
-            LazyVerticalGrid(
-                cells = GridCells.Fixed(4),
-                modifier = Modifier.padding(4.dp),
-                contentPadding = contentPadding
-            ) {
-                items(profiles) { userProfile ->
-                    val unitId = userProfile.unitData.unitId
-                    val locked = lockedChara.contains(unitId)
-                    val selected = selectedChara.contains(unitId)
+            Box(Modifier.padding(contentPadding)) {
+                LazyVerticalGrid(
+                    cells = GridCells.Fixed(4),
+                    contentPadding = PaddingValues(4.dp)
+                ) {
+                    items(profiles) { userProfile ->
+                        val unitId = userProfile.unitData.unitId
+                        val locked = lockedChara.contains(unitId)
+                        val selected = selectedChara.contains(unitId)
 
-                    SelectableCharaItem(
-                        unitId,
-                        userProfile,
-                        layerAlpha,
-                        locked,
-                        selected,
-                        charaImageState,
-                        listState::selectChara
-                    )
+                        SelectableCharaItem(
+                            unitId,
+                            userProfile,
+                            layerAlpha,
+                            locked,
+                            selected,
+                            charaImageState,
+                            listState::selectChara
+                        )
+                    }
                 }
             }
         }
