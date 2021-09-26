@@ -377,12 +377,12 @@ private fun EditorDialog(
     onClose: () -> Unit,
     onDelete: () -> Unit,
     onConfirm: (
-        rarity: Int,
-        charaLevel: Int,
-        loveLevel: Int,
-        uniqueLevel: Int,
-        promotionLevel: Int,
-        unlockSlot: Int
+        rarity: Int?,
+        charaLevel: Int?,
+        loveLevel: Int?,
+        uniqueLevel: Int?,
+        promotionLevel: Int?,
+        unlockSlot: Int?
     ) -> Unit
 ) {
     Dialog(onClose) {
@@ -461,12 +461,12 @@ private fun EditorDialogContent(
     maxPromotionLevel: Int,
     onClose: () -> Unit,
     onConfirm: (
-        rarity: Int,
-        charaLevel: Int,
-        loveLevel: Int,
-        uniqueLevel: Int,
-        promotionLevel: Int,
-        unlockSlot: Int
+        rarity: Int?,
+        charaLevel: Int?,
+        loveLevel: Int?,
+        uniqueLevel: Int?,
+        promotionLevel: Int?,
+        unlockSlot: Int?
     ) -> Unit
 ) {
     var rarity by remember { mutableStateOf(6) }
@@ -476,12 +476,21 @@ private fun EditorDialogContent(
     var promotionLevel by remember { mutableStateOf(maxPromotionLevel) }
     var unlockSlot by remember { mutableStateOf(6) }
 
+    var rarityChecked by remember { mutableStateOf(true) }
+    var charaLevelChecked by remember { mutableStateOf(true) }
+    var loveLevelChecked by remember { mutableStateOf(true) }
+    var uniqueLevelChecked by remember { mutableStateOf(true) }
+    var promotionLevelChecked by remember { mutableStateOf(true) }
+    var unlockSlotChecked by remember { mutableStateOf(true) }
+
     Column(Modifier.padding(4.dp)) {
         SliderPlus(
             value = rarity,
             minValue = 1,
             maxValue = 6,
-            onValueChange = { rarity = it }
+            onValueChange = { rarity = it },
+            checked = rarityChecked,
+            onCheckedChange = { rarityChecked = it }
         ) {
             LabelImage(
                 if (rarity > 5) R.drawable.star_large_6
@@ -493,7 +502,9 @@ private fun EditorDialogContent(
             value = loveLevel,
             minValue = 0,
             maxValue = 12,
-            onValueChange = { loveLevel = it }
+            onValueChange = { loveLevel = it },
+            checked = loveLevelChecked,
+            onCheckedChange = { loveLevelChecked = it}
         ) {
             LabelImage(R.drawable.love_level)
         }
@@ -502,7 +513,9 @@ private fun EditorDialogContent(
             value = uniqueLevel,
             minValue = 0,
             maxValue = maxUniqueLevel,
-            onValueChange = { uniqueLevel = it }
+            onValueChange = { uniqueLevel = it },
+            checked = uniqueLevelChecked,
+            onCheckedChange = { uniqueLevelChecked = it}
         ) {
             LabelImage(R.drawable.unique_large)
         }
@@ -511,7 +524,9 @@ private fun EditorDialogContent(
             value = charaLevel,
             minValue = 1,
             maxValue = maxCharaLevel,
-            onValueChange = { charaLevel = it }
+            onValueChange = { charaLevel = it },
+            checked = charaLevelChecked,
+            onCheckedChange = { charaLevelChecked = it },
         ) {
             LabelText(stringResource(R.string.level))
         }
@@ -522,7 +537,9 @@ private fun EditorDialogContent(
             value = promotionLevel,
             minValue = 1,
             maxValue = maxPromotionLevel,
-            onValueChange = { promotionLevel = it }
+            onValueChange = { promotionLevel = it },
+            checked = promotionLevelChecked,
+            onCheckedChange = { promotionLevelChecked = it }
         ) {
             LabelText(
                 text = stringResource(R.string.rank),
@@ -534,7 +551,9 @@ private fun EditorDialogContent(
             value = unlockSlot,
             minValue = 0,
             maxValue = 6,
-            onValueChange = { unlockSlot = it }
+            onValueChange = { unlockSlot = it },
+            checked = unlockSlotChecked,
+            onCheckedChange = { unlockSlotChecked = it }
         ) {
             LabelText(
                 text = stringResource(R.string.slot),
@@ -554,12 +573,12 @@ private fun EditorDialogContent(
             onClick = {
                 onClose()
                 onConfirm(
-                    rarity,
-                    charaLevel,
-                    loveLevel,
-                    uniqueLevel,
-                    promotionLevel,
-                    unlockSlot
+                    if (rarityChecked) rarity else null,
+                    if (charaLevelChecked) charaLevel else null,
+                    if (loveLevelChecked) loveLevel else null,
+                    if (uniqueLevelChecked) uniqueLevel else null,
+                    if (promotionLevelChecked) promotionLevel else null,
+                    if (unlockSlotChecked) unlockSlot else null
                 )
             },
         ) {

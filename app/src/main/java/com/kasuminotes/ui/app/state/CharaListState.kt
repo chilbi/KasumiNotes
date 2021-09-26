@@ -129,12 +129,12 @@ class CharaListState {
     }
 
     fun modifyProfiles(
-        rarity: Int,
-        charaLevel: Int,
-        loveLevel: Int,
-        uniqueLevel: Int,
-        promotionLevel: Int,
-        unlockSlot: Int
+        rarity: Int?,
+        charaLevel: Int?,
+        loveLevel: Int?,
+        uniqueLevel: Int?,
+        promotionLevel: Int?,
+        unlockSlot: Int?
     ) {
         var equip1Level = -1
         var equip2Level = -1
@@ -143,23 +143,25 @@ class CharaListState {
         var equip5Level = -1
         var equip6Level = -1
 
-        if (unlockSlot > 0) {
-            equip2Level = 5
-        }
-        if (unlockSlot > 1) {
-            equip4Level = 5
-        }
-        if (unlockSlot > 2) {
-            equip6Level = 5
-        }
-        if (unlockSlot > 3) {
-            equip5Level = 5
-        }
-        if (unlockSlot > 4) {
-            equip3Level = 5
-        }
-        if (unlockSlot > 5) {
-            equip1Level = 5
+        if (unlockSlot != null) {
+            if (unlockSlot > 0) {
+                equip2Level = 5
+            }
+            if (unlockSlot > 1) {
+                equip4Level = 5
+            }
+            if (unlockSlot > 2) {
+                equip6Level = 5
+            }
+            if (unlockSlot > 3) {
+                equip5Level = 5
+            }
+            if (unlockSlot > 4) {
+                equip3Level = 5
+            }
+            if (unlockSlot > 5) {
+                equip1Level = 5
+            }
         }
 
         val newLocked = lockedChara.toMutableList()
@@ -172,22 +174,44 @@ class CharaListState {
             val userData = userProfile.userData
             val unitData = userProfile.unitData
 
-            val newRarity = if (rarity > unitData.maxRarity) unitData.maxRarity else rarity
-            val newLoveLevel = if (unitData.maxRarity < 6 && loveLevel > 8) 8 else loveLevel
-            val newUniqueLevel = if (unitData.hasUnique) uniqueLevel else 0
+            val newRarity = if (rarity == null) {
+                userData.rarity
+            } else {
+                if (rarity > unitData.maxRarity) unitData.maxRarity else rarity
+            }
+            val newCharaLevel = charaLevel ?: userData.charaLevel
+            val newLoveLevel = if (loveLevel == null) {
+                userData.loveLevel
+            } else {
+                if (unitData.maxRarity < 6 && loveLevel > 8) 8 else loveLevel
+            }
+            val newUniqueLevel = if (uniqueLevel == null) {
+                userData.uniqueLevel
+            } else {
+                if (unitData.hasUnique) uniqueLevel else 0
+            }
+            val newPromotionLevel = promotionLevel ?: userData.promotionLevel
+            if (unlockSlot == null) {
+                equip1Level = userData.equip1Level
+                equip2Level = userData.equip2Level
+                equip3Level = userData.equip3Level
+                equip4Level = userData.equip4Level
+                equip5Level = userData.equip5Level
+                equip6Level = userData.equip6Level
+            }
 
             userProfile.userData = UserData(
                 userData.userId,
                 userData.unitId,
                 newRarity,
-                charaLevel,
+                newCharaLevel,
                 newLoveLevel,
                 newUniqueLevel,
-                promotionLevel,
-                charaLevel,
-                charaLevel,
-                charaLevel,
-                charaLevel,
+                newPromotionLevel,
+                newCharaLevel,
+                newCharaLevel,
+                newCharaLevel,
+                newCharaLevel,
                 equip1Level,
                 equip2Level,
                 equip3Level,

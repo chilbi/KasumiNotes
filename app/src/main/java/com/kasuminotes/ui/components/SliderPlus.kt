@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Slider
@@ -29,6 +30,8 @@ fun SliderPlus(
     minValue: Int,
     maxValue: Int,
     onValueChange: (Int) -> Unit,
+    checked: Boolean? = null,
+    onCheckedChange: ((Boolean) -> Unit)? = null,
     label: @Composable () -> Unit
 ) {
     Row(
@@ -73,6 +76,10 @@ fun SliderPlus(
             enabled = value < maxValue
         ) {
             Icon(Icons.Filled.Add, null)
+        }
+
+        if (checked != null) {
+            Checkbox(checked, onCheckedChange)
         }
     }
 }
