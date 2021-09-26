@@ -50,6 +50,7 @@ fun EquipDropList(
                     )
                 }
             }
+
             if (visibleMin37) {
                 Toggle37Button(min37, onMin37Toggle)
             }

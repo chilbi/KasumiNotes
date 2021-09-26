@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -106,10 +104,7 @@ fun QuestSearch(
                 actions = {
                     QuestType.values().forEach { type ->
                         val checked = searchTypes.contains(type)
-                        IconToggleButton(
-                            checked = checked,
-                            onCheckedChange = { onSearchTypesChange(type) }
-                        ) {
+                        IconToggleButton(checked = checked, onCheckedChange = { onSearchTypesChange(type) }) {
                             QuestLabel(
                                 questType = type,
                                 checked = checked

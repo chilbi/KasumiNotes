@@ -29,7 +29,7 @@ fun QuestLabel(
     Box(
         modifier
             .background(
-                color = if (checked) questType.color else Color.White.copy(0.35f),
+                color = if (checked) questType.color else MaterialTheme.colors.onSurface.copy(0.35f),
                 shape = shape
             )
             .padding(padding),
