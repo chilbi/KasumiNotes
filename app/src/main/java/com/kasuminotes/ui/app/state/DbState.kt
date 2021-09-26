@@ -113,7 +113,7 @@ class DbState(
 
     fun reDownload() {
         isLastDb = false
-        downloadDbFile(dbServer, "0")
+        downloadDbFile(dbServer, dbVersion)
     }
 
     fun toggleAppAutoUpdate() {
@@ -214,7 +214,6 @@ class DbState(
             downloadingDbVersion = null
             syncDbServerVersion(server, lastDbVersion)
             downloadState = null
-
             questInitializing = true
             db.initQuestDropData()
             questInitializing = false
