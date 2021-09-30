@@ -2,8 +2,8 @@
 buildscript {
     ext {
         kasuminotes_version = '0.8.2'
-        compose_version = '1.1.0-alpha04'
-        kotlin_version = '1.5.30'
+        compose_version = '1.1.0-alpha05'
+        kotlin_version = '1.5.31'
     }
     repositories {
         google()

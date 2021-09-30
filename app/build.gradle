@@ -79,7 +79,7 @@ dependencies {
     // activity-compose
     implementation 'androidx.activity:activity-compose:1.3.1'
     // appcompat
-    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
     // material
     implementation 'com.google.android.material:material:1.3.0'
     // palette
@@ -96,14 +96,14 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
     // lifecycle-viewmodel-compose
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-beta01'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-rc01'
     // lifecycle-viewmodel-ktx
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-beta01'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-rc01'
 
     // core-ktx
     implementation "androidx.core:core-ktx:1.6.0"
     // navigation-compose
-    implementation 'androidx.navigation:navigation-compose:2.4.0-alpha09'
+    implementation 'androidx.navigation:navigation-compose:2.4.0-alpha10'
 
     // Accompanist Coil Insets
     implementation 'io.coil-kt:coil-compose:1.3.2'
@@ -112,7 +112,7 @@ dependencies {
     // okhttp
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
     // commons-compress
-    implementation 'org.apache.commons:commons-compress:1.19'
+    implementation 'org.apache.commons:commons-compress:1.21'
     // brotli
     implementation 'org.brotli:dec:0.1.2'
 
