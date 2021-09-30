@@ -331,12 +331,10 @@
     <string name="count_state1">【%s】の数</string>
     <string name="damaged_count">ダメージを与えた敵の数</string>
     <string name="damaged_amount">ダメージの量</string>
-    <string name="self_atk">自分の物理攻撃力</string>
-    <string name="self_magic_str">自分の魔法攻撃力</string>
-    <string name="self_def">自分の物理防御力</string>
-    <string name="self_magic_def">自分の魔法防御力</string>
     <string name="rear_friendly_count">後方にいる味方の数</string>
+    <string name="hp_lost_ratio">損失したＨＰ割合</string>
     <string name="counter_num1">カウンター%s</string>
+    <string name="of">の</string>
 
     <string name="additive_time">効果時間</string>
     <string name="additive_damage">ダメージ量</string>

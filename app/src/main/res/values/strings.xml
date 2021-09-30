@@ -331,12 +331,10 @@
     <string name="count_state1">【%s】的数量</string>
     <string name="damaged_count">受到伤害的敌人数量</string>
     <string name="damaged_amount">伤害量</string>
-    <string name="self_atk">自身的物理攻击力</string>
-    <string name="self_magic_str">自身的魔法攻击力</string>
-    <string name="self_def">自身的物理防御力</string>
-    <string name="self_magic_def">自身的魔法防御力</string>
     <string name="rear_friendly_count">在后方的己方数量</string>
+    <string name="hp_lost_ratio">损失的HP比例</string>
     <string name="counter_num1">计数器%s</string>
+    <string name="of">的</string>
 
     <string name="additive_time">效果时间</string>
     <string name="additive_damage">伤害量</string>
