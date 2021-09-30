@@ -3,7 +3,6 @@ package com.kasuminotes.ui.app.equip
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -27,20 +26,18 @@ import com.kasuminotes.utils.UrlUtil
 fun UniqueCraftList(
     craftList: List<UniqueCraft>,
     onEnhanceLevelChange: (Int) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     BgBorderColumn(modifier) {
         ColumnLabel(stringResource(R.string.synthetic_material))
 
         Column(
             Modifier
-                .padding(4.dp)
                 .verticalScroll(rememberScrollState())
+                .padding(4.dp)
         ) {
             craftList.forEach { craftItem ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     CraftItem(
                         imageUrl = UrlUtil.getEquipIconUrl(craftItem.heartId),
                         consumeSum = craftItem.heartSum,

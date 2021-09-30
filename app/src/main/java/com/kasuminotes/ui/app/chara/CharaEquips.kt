@@ -1,6 +1,7 @@
 package com.kasuminotes.ui.app.chara
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,9 +45,8 @@ fun CharaEquips(
     val maxPromotionLevel = promotions.size
 
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 4.dp, end = 4.dp, bottom = 4.dp),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(start = 4.dp, end = 4.dp, bottom = 4.dp),
         state = state
     ) {
         item {
