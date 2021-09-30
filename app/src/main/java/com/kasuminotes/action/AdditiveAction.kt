@@ -75,7 +75,7 @@ fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
                 0 -> D.Format(R.string.hp_remanent)
                 1 -> D.Format(R.string.hp_lost)
                 2 -> D.Format(R.string.overthrow_count)
-                4 -> D.Format(R.string.count_target1, arrayOf(getTarget(null)))
+                4 -> D.Format(R.string.count_target1, arrayOf(getTarget(depend)))
                 5 -> D.Format(R.string.damaged_count)
                 6 -> D.Format(R.string.damaged_amount)
                 7 -> D.Join(arrayOf(getTarget(depend), D.Format(R.string.of), D.Format(R.string.atk)))
