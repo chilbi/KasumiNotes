@@ -23,7 +23,9 @@ import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.FloatingActionButton
@@ -45,6 +47,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -52,6 +55,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.common.ImageVariant
@@ -70,6 +74,7 @@ import com.kasuminotes.ui.theme.RaritiesColors
 import com.kasuminotes.ui.theme.rankRarity
 import com.kasuminotes.utils.UrlUtil
 
+@ExperimentalComposeUiApi
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
@@ -367,6 +372,7 @@ private fun RowScope.ToggleButton(
     }
 }
 
+@ExperimentalComposeUiApi
 @ExperimentalCoilApi
 @Composable
 private fun EditorDialog(
@@ -385,13 +391,22 @@ private fun EditorDialog(
         unlockSlot: Int?
     ) -> Unit
 ) {
-    Dialog(onClose) {
+    Dialog(
+        onDismissRequest = onClose,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
         Surface(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
             shape = MaterialTheme.shapes.medium,
             elevation = 16.dp
         ) {
-            Column(Modifier.padding(horizontal = 8.dp, vertical = 4.dp)) {
+            Column(
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
                 EditorDialogTitle(selectedChara.size) {
                     onClose()
                     onDelete()

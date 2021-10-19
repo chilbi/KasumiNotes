@@ -13,6 +13,23 @@ class Property(init: (Int) -> Double = { 0.0 }) {
     }
 
     private val arr = DoubleArray(size, init)
+//    val hp: Double get() = arr[0]
+    val atk: Double get() = arr[1]
+//    val def: Double get() = arr[2]
+    val magicStr: Double get() = arr[3]
+//    val magicDef: Double get() = arr[4]
+//    val physicalCritical: Double get() = arr[5]
+//    val magicCritical: Double get() = arr[6]
+//    val dodge: Double get() = arr[7]
+//    val lifeSteal: Double get() = arr[8]
+//    val waveHpRecovery: Double get() = arr[9]
+//    val waveEnergyRecovery: Double get() = arr[10]
+//    val physicalPenetrate: Double get() = arr[11]
+//    val magicPenetrate: Double get() = arr[12]
+//    val energyRecoveryRate: Double get() = arr[13]
+//    val hpRecoveryRate: Double get() = arr[14]
+//    val energyReduceRate: Double get() = arr[15]
+//    val accuracy: Double get() = arr[16]
 
     operator fun get(index: Int) = arr[index]
 
@@ -39,7 +56,7 @@ class Property(init: (Int) -> Double = { 0.0 }) {
     }
 
     companion object {
-         const val size = 17
+        const val size = 17
 
         fun getStrRes(index: Int): Int = when (index) {
             0 -> R.string.hp
@@ -93,21 +110,3 @@ class Property(init: (Int) -> Double = { 0.0 }) {
         }
     }
 }
-
-//val Property.hp: Double get() = this[0]
-val Property.atk: Double get() = this[1]
-//val Property.def: Double get() = this[2]
-val Property.magicStr: Double get() = this[3]
-//val Property.magicDef: Double get() = this[4]
-//val Property.physicalCritical: Double get() = this[5]
-//val Property.magicCritical: Double get() = this[6]
-//val Property.dodge: Double get() = this[7]
-//val Property.lifeSteal: Double get() = this[8]
-//val Property.waveHpRecovery: Double get() = this[9]
-//val Property.waveEnergyRecovery: Double get() = this[10]
-//val Property.physicalPenetrate: Double get() = this[11]
-//val Property.magicPenetrate: Double get() = this[12]
-//val Property.energyRecoveryRate: Double get() = this[13]
-//val Property.hpRecoveryRate: Double get() = this[14]
-//val Property.energyReduceRate: Double get() = this[15]
-//val Property.accuracy: Double get() = this[16]

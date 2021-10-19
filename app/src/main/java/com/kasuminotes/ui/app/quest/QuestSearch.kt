@@ -174,7 +174,7 @@ fun QuestSearch(
                                     NoDataText()
                                 }
                                 else -> {
-                                    LazyColumn {
+                                    LazyColumn(contentPadding = PaddingValues(4.dp)) {
                                         items(questDataList) { questData ->
                                             QuestDropItem(
                                                 questData = questData,
@@ -186,7 +186,7 @@ fun QuestSearch(
                             }
                         }
                         1 -> {
-                            LazyColumn {
+                            LazyColumn(contentPadding = PaddingValues(4.dp)) {
                                 items(equipMaterialPairList ?: emptyList()) { pair ->
                                     EquipPairItem(
                                         rarity = pair.first,
@@ -198,7 +198,11 @@ fun QuestSearch(
                             }
                         }
                         2 -> {
-                            Column(Modifier.verticalScroll(rememberScrollState())) {
+                            Column(
+                                modifier = Modifier
+                                    .verticalScroll(rememberScrollState())
+                                    .padding(4.dp)
+                            ) {
                                 if (memoryPieces != null) {
                                     val normalPieces = memoryPieces[0]
                                     val purePieces = memoryPieces[1]
@@ -421,6 +425,9 @@ private fun BoxScope.SelectableItem(
             )
             .padding(4.dp)
     ) {
-        PlaceImage(url)
+        PlaceImage(
+            url = url,
+            shape = MaterialTheme.shapes.small
+        )
     }
 }

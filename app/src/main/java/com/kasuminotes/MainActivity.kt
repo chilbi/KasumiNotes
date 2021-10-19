@@ -12,6 +12,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.core.view.WindowCompat
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
     private var broadcastReceiver: BroadcastReceiver? = null
 
     @Suppress("EXPERIMENTAL_ANNOTATION_ON_OVERRIDE_WARNING")
+    @ExperimentalComposeUiApi
     @ExperimentalCoilApi
     @ExperimentalAnimationApi
     @ExperimentalMaterialApi

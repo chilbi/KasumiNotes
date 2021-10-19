@@ -28,13 +28,13 @@ fun UniqueCraftList(
     onEnhanceLevelChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    BgBorderColumn(modifier) {
-        ColumnLabel(stringResource(R.string.synthetic_material))
+    BgBorderColumn(modifier, 0.dp) {
+        ColumnLabel(stringResource(R.string.synthetic_material), 8.dp)
 
         Column(
             Modifier
                 .verticalScroll(rememberScrollState())
-                .padding(4.dp)
+                .padding(4.dp, 0.dp, 8.dp, 4.dp)
         ) {
             craftList.forEach { craftItem ->
                 Row(verticalAlignment = Alignment.CenterVertically) {

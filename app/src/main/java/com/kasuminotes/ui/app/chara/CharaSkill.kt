@@ -47,8 +47,6 @@ import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitData
 import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.data.UserData
-import com.kasuminotes.data.atk
-import com.kasuminotes.data.magicStr
 import com.kasuminotes.ui.components.BgBorderColumn
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.Infobar

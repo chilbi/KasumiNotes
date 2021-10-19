@@ -3,8 +3,6 @@ package com.kasuminotes.action
 import androidx.annotation.StringRes
 import com.kasuminotes.R
 import com.kasuminotes.data.Property
-import com.kasuminotes.data.atk
-import com.kasuminotes.data.magicStr
 import java.text.NumberFormat
 import kotlin.math.ceil
 import kotlin.math.floor

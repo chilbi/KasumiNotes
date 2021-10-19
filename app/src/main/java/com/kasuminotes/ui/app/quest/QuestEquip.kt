@@ -1,6 +1,7 @@
 package com.kasuminotes.ui.app.quest
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -80,7 +81,7 @@ fun QuestEquip(
         isFloatingActionButtonDocked = true,
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
-                LazyColumn {
+                LazyColumn(contentPadding = PaddingValues(4.dp)) {
                     items(equipmentPairList ?: emptyList()) { pair ->
                         val equips = pair.second.filter { equipTypes.contains(it.type) }
                         if (equips.isNotEmpty()) {
