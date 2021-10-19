@@ -134,6 +134,7 @@ fun getStateContent(detail: Int): D {
         90 -> D.Format(R.string.state_tiger_claw)
         92 -> D.Format(R.string.state_holly_night_brilliance)
         97 -> D.Format(R.string.state_ice_dragon_seal)
+        106 -> D.Format(R.string.state_strength_seal)
         else -> D.Unknown
     }
 }

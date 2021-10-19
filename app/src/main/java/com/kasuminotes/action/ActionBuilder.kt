@@ -125,6 +125,7 @@ class ActionBuilder(
             71 -> getKnightGuard(skillLevel, property)
             75 -> getHitCount()
             79 -> D.Unknown//getPoisonDamageByBehaviour()
+            83 -> getGuildOfStrength()
             else -> getUnknown()
         }
     }
