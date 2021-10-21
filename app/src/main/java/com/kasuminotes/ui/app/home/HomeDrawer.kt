@@ -64,6 +64,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -179,7 +180,10 @@ private fun UserImage(
     backgroundColor: Color
 ) {
     Box(StillSizeModify) {
-        PlaceImage(UrlUtil.getUserStillUrl(userId))
+        PlaceImage(
+            url = UrlUtil.getUserStillUrl(userId),
+            shape = RectangleShape
+        )
         Box(
             Modifier
                 .matchParentSize()

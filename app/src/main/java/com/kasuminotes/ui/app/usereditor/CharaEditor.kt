@@ -252,8 +252,7 @@ private fun SelectableCharaItem(
                     url = charaImageState.getImageUrl(unitId, 3),
                     modifier = Modifier.clickable {
                         onSelect(unitId)
-                    },
-                    shape = MaterialTheme.shapes.small
+                    }
                 )
             }
         } else {
@@ -460,10 +459,7 @@ private fun SelectedCharaList(selectedChara: List<Int>) {
                     .size(48.dp)
                     .padding(4.dp)
             ) {
-                PlaceImage(
-                    url = UrlUtil.getUnitIconUrl(unitId, 3),
-                    shape = MaterialTheme.shapes.small
-                )
+                PlaceImage(UrlUtil.getUnitIconUrl(unitId, 3))
             }
         }
     }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.utils.UrlUtil
 
@@ -16,7 +17,10 @@ fun StillBox(
     content: @Composable BoxScope.() -> Unit = {}
 ) {
     Box(modifier) {
-        PlaceImage(url = UrlUtil.getUnitStillUrl(unitId, rarity))
+        PlaceImage(
+            url = UrlUtil.getUnitStillUrl(unitId, rarity),
+            shape = RectangleShape
+        )
 
         content()
     }

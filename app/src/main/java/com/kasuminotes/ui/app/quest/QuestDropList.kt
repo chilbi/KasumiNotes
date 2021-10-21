@@ -130,9 +130,8 @@ private fun RewardItem(
         ) {
             Box(Modifier.size(40.dp)) {
                 PlaceImage(
-                    url = if (rewardData.rewardType == 4) UrlUtil.getEquipIconUrl(rewardData.rewardId)
-                    else UrlUtil.getItemIconUrl(rewardData.rewardId),
-                    shape = MaterialTheme.shapes.small
+                    if (rewardData.rewardType == 4) UrlUtil.getEquipIconUrl(rewardData.rewardId)
+                    else UrlUtil.getItemIconUrl(rewardData.rewardId)
                 )
             }
             Text(

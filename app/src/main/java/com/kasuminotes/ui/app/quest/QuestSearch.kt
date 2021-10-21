@@ -425,9 +425,6 @@ private fun BoxScope.SelectableItem(
             )
             .padding(4.dp)
     ) {
-        PlaceImage(
-            url = url,
-            shape = MaterialTheme.shapes.small
-        )
+        PlaceImage(url)
     }
 }
