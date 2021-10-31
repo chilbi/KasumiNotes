@@ -243,6 +243,7 @@
     <string name="content_attack_hit_target1">自分の攻撃が当たる度に、%s</string>
     <string name="content_attack_critical_target1">自分の攻撃がクリティカルでダメージを与える度に、%s</string>
     <string name="content_status_up_target1">自分がステータスアップ効果を受ける度に、%s</string>
+    <string name="content_initial_value1">初期値の%s</string>
 
     <string name="state_omemechan">オメメちゃん</string>
     <string name="state_light_shield">光の盾</string>

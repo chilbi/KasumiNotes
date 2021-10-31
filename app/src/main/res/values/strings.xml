@@ -243,6 +243,7 @@
     <string name="content_attack_hit_target1">每当自身的攻击命中时，就会为%s</string>
     <string name="content_attack_critical_target1">每当自身的攻击暴击时，就会为%s</string>
     <string name="content_status_up_target1">每当自身受到状态提升时，就会为%s</string>
+    <string name="content_initial_value1">初始值的%s</string>
 
     <string name="state_omemechan">小眼睛</string>
     <string name="state_light_shield">光之盾</string>

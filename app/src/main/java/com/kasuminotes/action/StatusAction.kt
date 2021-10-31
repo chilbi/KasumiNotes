@@ -17,7 +17,15 @@ fun SkillAction.getStatus(skillLevel: Int): D {
 
     val formula = when (value1) {
         1.0 -> getBaseLvFormula(actionValue2, actionValue3, skillLevel)
-        2.0 -> D.Text("${actionValue2.roundToInt()}%")
+        2.0 -> {
+            val percent = D.Text("${actionValue2.roundToInt()}%")
+            if (actionDetail1 < 50) {
+                D.Format(R.string.content_initial_value1, arrayOf(percent))
+            }
+            else {
+                percent
+            }
+        }
         else -> D.Unknown
     }
 
