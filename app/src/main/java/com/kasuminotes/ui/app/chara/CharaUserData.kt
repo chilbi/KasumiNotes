@@ -1,32 +1,30 @@
 package com.kasuminotes.ui.app.chara
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
+import com.kasuminotes.R
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UserData
-import com.kasuminotes.ui.components.BadgedButtonDialog
-import com.kasuminotes.ui.components.LabelText
-import com.kasuminotes.ui.components.SliderPlus
+import com.kasuminotes.ui.components.DraggableImageIcon
+import com.kasuminotes.ui.components.ImageIcon
+import com.kasuminotes.ui.theme.GrayFilter
+import com.kasuminotes.utils.UrlUtil
 
 @ExperimentalCoilApi
 @ExperimentalMaterialApi
@@ -48,7 +46,8 @@ fun CharaUserData(
     onUniqueLevelChange: (Int) -> Unit,
     onLoveLevelChange: (Int) -> Unit,
     onPromotionLevelChange: (Int) -> Unit,
-    onSkillLevelChange: (value: Int, labelText: String) -> Unit
+    onSkillLevelChange: (value: Int, labelText: String) -> Unit,
+    onLvLimitBreakChange: (maxCharaLevel: Int) -> Unit
 ) {
     Column(Modifier.padding(8.dp)) {
         CharaStatus(
@@ -64,113 +63,112 @@ fun CharaUserData(
             onRarityChange,
             onUniqueLevelChange,
             onLoveLevelChange,
-            onPromotionLevelChange
+            onPromotionLevelChange,
+            onSkillLevelChange
         )
 
         Row(
-            Modifier
+            modifier = Modifier
                 .fillMaxWidth()
-                .height(IntrinsicSize.Min)
+                .padding(horizontal = 4.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            SkillColumn(Alignment.Start) {
-                SkillBadgeButtonDialog(
-                    labelText = "UB",
-                    level = userData.ubLevel,
-                    originLevel = originUserData.ubLevel,
-                    maxLevel = userData.charaLevel,
-                    onLevelChange = onSkillLevelChange
-                )
+            Column(horizontalAlignment = Alignment.Start) {
+                Box(Modifier.padding(start = 24.dp)) {
+                    ImageIcon(
+                        url = UrlUtil.getItemIconUrl(41000),
+                        onClick = { onLvLimitBreakChange(maxUserData.maxCharaLevel) },
+                        colorFilter = if (userData.lvLimitBreak > 0) null else GrayFilter
+                    )
+                }
 
-                SkillBadgeButtonDialog(
-                    labelText = "EX",
-                    level = userData.exLevel,
-                    originLevel = originUserData.exLevel,
-                    maxLevel = userData.charaLevel,
-                    onLevelChange = onSkillLevelChange
-                )
+                Spacer(Modifier.height(56.dp))
+
+                Box(Modifier.padding(start = 24.dp)) {
+                    UniqueEquipIcon(
+                        uniqueLevel = userData.uniqueLevel,
+                        uniqueData = uniqueData,
+                        onClick = onUniqueClick,
+                        onChange = onUniqueChange
+                    )
+                }
             }
 
             CharaEquipSlots(
                 userData,
                 originUserData,
                 unitPromotion,
-                uniqueData,
                 onEquipClick,
-                onUniqueClick,
-                onEquipChange,
-                onUniqueChange
+                onEquipChange
             )
-
-            SkillColumn(Alignment.End) {
-                SkillBadgeButtonDialog(
-                    labelText = "Main 1",
-                    level = userData.skill1Level,
-                    originLevel = originUserData.skill1Level,
-                    maxLevel = userData.charaLevel,
-                    onLevelChange = onSkillLevelChange
+            
+            Column(horizontalAlignment = Alignment.End) {
+                Box(Modifier.padding(end = 24.dp)) {
+                    ImageIcon(
+                        painter = painterResource(R.drawable.item_00000),
+                        loading = false,
+                        enabled = false
+                    )
+                }
+                Spacer(Modifier.height(4.dp))
+                ImageIcon(
+                    painter = painterResource(R.drawable.item_00000),
+                    loading = false,
+                    enabled = false
                 )
-
-                SkillBadgeButtonDialog(
-                    labelText = "Main 2",
-                    level = userData.skill2Level,
-                    originLevel = originUserData.skill2Level,
-                    maxLevel = userData.charaLevel,
-                    onLevelChange = onSkillLevelChange
-                )
+                Spacer(Modifier.height(4.dp))
+                Box(Modifier.padding(end = 24.dp)) {
+                    ImageIcon(
+                        painter = painterResource(R.drawable.item_00000),
+                        loading = false,
+                        enabled = false
+                    )
+                }
             }
         }
     }
 }
 
-@Composable
-private fun RowScope.SkillColumn(
-    horizontalAlignment: Alignment.Horizontal,
-    content: @Composable ColumnScope.() -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight(),
-        horizontalAlignment = horizontalAlignment,
-        verticalArrangement = Arrangement.SpaceBetween,
-        content = content
-    )
-}
 
-@ExperimentalMaterialApi
+@ExperimentalCoilApi
 @Composable
-private fun SkillBadgeButtonDialog(
-    labelText: String,
-    level: Int,
-    originLevel: Int,
-    maxLevel: Int,
-    onLevelChange: (value: Int, labelText: String) -> Unit
+private fun UniqueEquipIcon(
+    uniqueLevel: Int,
+    uniqueData: UniqueData?,
+    onClick: (UniqueData) -> Unit,
+    onChange: (equip: Boolean) -> Unit
 ) {
-    BadgedButtonDialog(
-        value = level,
-        originValue = originLevel,
-        label = {
-            LabelText(
-                text = labelText,
-                background = MaterialTheme.colors.secondary
-            )
-        }
-    ) {
-        Surface(
-            shape = CircleShape,
-            elevation = 16.dp
-        ) {
-            SliderPlus(
-                value = level,
-                minValue = 1,
-                maxValue = maxLevel,
-                onValueChange = { onLevelChange(it, labelText) }
-            ) {
-                LabelText(
-                    text = labelText,
-                    background = MaterialTheme.colors.secondary
-                )
+    if (uniqueData == null) {
+        ImageIcon(
+            painter = painterResource(R.drawable.unique_0),
+            loading = false,
+            enabled = false,
+        )
+    } else {
+        val isEquipped = uniqueLevel > 0
+
+        DraggableImageIcon(
+            url = UrlUtil.getEquipIconUrl(uniqueData.equipmentId),
+            onClick = { if (isEquipped) onClick(uniqueData) else onChange(true) },
+            onDragged = { onChange(!isEquipped) },
+            colorFilter = if (isEquipped) null else GrayFilter
+        )/* {
+            if (isEquipped) {
+                Box(
+                    Modifier
+                        .align(Alignment.BottomEnd)
+                        .wrapContentSize()
+                        .background(Color(0x66000000), MaterialTheme.shapes.small)
+                        .padding(horizontal = 4.dp)
+                ) {
+                    Text(
+                        text = uniqueLevel.toString(),
+                        color = Color.White,
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
-        }
+        }*/
     }
 }

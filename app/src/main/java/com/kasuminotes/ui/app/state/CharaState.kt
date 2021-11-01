@@ -57,27 +57,30 @@ class CharaState(
     var saveVisible by mutableStateOf(false)
         private set
 
-    fun selectUserProfile(value: UserProfile, profiles: List<UserProfile>) {
+    fun selectUserProfile(data: UserProfile, profiles: List<UserProfile>, maxCharaLevel: Int) {
         restore()
 
-        userProfile = value
-        userData = value.userData
+        if (data.userData.charaLevel > maxCharaLevel) {
+            data.userData = data.userData.copy(lvLimitBreak = 10)
+        }
+        userProfile = data
+        userData = data.userData
         saveVisible = false
 
         if (
-            value.unitRarity == null ||
-            value.unitPromotionStatus == null ||
-            value.unitPromotion == null ||
-            value.charaStoryStatus == null ||
-            value.unitSkillData == null ||
-            value.exSkillData == null
+            data.unitRarity == null ||
+            data.unitPromotionStatus == null ||
+            data.unitPromotion == null ||
+            data.charaStoryStatus == null ||
+            data.unitSkillData == null ||
+            data.exSkillData == null
         ) {
             scope.launch(defaultDispatcher) {
                 val db = appRepository.getDatabase()
 
-                value.loadAll(db)
+                data.loadAll(db)
 
-                val sharedChara = value.charaStoryStatus!!.sharedChara
+                val sharedChara = data.charaStoryStatus!!.sharedChara
 
                 if (sharedChara.isNotEmpty()) {
                     val sharedProfiles = profiles
@@ -88,24 +91,38 @@ class CharaState(
                         async { item.loadStory(db) }
                     }.awaitAll()
 
-                    value.sharedProfiles = sharedProfiles
+                    data.sharedProfiles = sharedProfiles
                 }
 
-                backupUnitRarity = value.unitRarity
-                backupUnitPromotionStatus = value.unitPromotionStatus
-                backupUnitPromotion = value.unitPromotion
+                backupUnitRarity = data.unitRarity
+                backupUnitPromotionStatus = data.unitPromotionStatus
+                backupUnitPromotion = data.unitPromotion
 
-                property = value.getProperty(value.userData)
+                property = data.getProperty(data.userData)
                 originProperty = property
             }
         } else {
-            backupUnitRarity = value.unitRarity
-            backupUnitPromotionStatus = value.unitPromotionStatus
-            backupUnitPromotion = value.unitPromotion
+            backupUnitRarity = data.unitRarity
+            backupUnitPromotionStatus = data.unitPromotionStatus
+            backupUnitPromotion = data.unitPromotion
 
-            property = value.getProperty(value.userData)
+            property = data.getProperty(data.userData)
             originProperty = property
         }
+    }
+
+    fun changeLvLimitBreak(maxCharaLevel: Int) {
+        val lvLimitBreak = if (userData!!.lvLimitBreak > 0) 0 else 10
+        val value = maxCharaLevel + lvLimitBreak
+        userData = userData!!.copy(
+            charaLevel = value,
+            ubLevel = value,
+            skill1Level = value,
+            skill2Level = value,
+            exLevel = value,
+            lvLimitBreak = lvLimitBreak
+        )
+        changeState()
     }
 
     fun changeCharaLevel(value: Int) {

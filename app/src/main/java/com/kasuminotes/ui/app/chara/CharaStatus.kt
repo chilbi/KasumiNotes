@@ -50,7 +50,8 @@ fun CharaStatus(
     onRarityChange: (Int) -> Unit,
     onUniqueLevelChange: (Int) -> Unit,
     onLoveLevelChange: (Int) -> Unit,
-    onPromotionLevelChange: (Int) -> Unit
+    onPromotionLevelChange: (Int) -> Unit,
+    onSkillLevelChange: (value: Int, labelText: String) -> Unit
 ) {
     Row(
         modifier = modifier,
@@ -62,16 +63,62 @@ fun CharaStatus(
             label = { LabelText(stringResource(R.string.level)) }
         ) {
             Surface(
-                shape = CircleShape,
+                shape = MaterialTheme.shapes.small,
                 elevation = 16.dp
             ) {
-                SliderPlus(
-                    value = userData.charaLevel,
-                    minValue = 1,
-                    maxValue = maxUserData.maxCharaLevel,
-                    onValueChange = onCharaLevelChange
-                ) {
-                    LabelText(stringResource(R.string.level))
+                Column {
+                    SliderPlus(
+                        value = userData.charaLevel,
+                        minValue = 1,
+                        maxValue = maxUserData.maxCharaLevel + userData.lvLimitBreak,
+                        onValueChange = onCharaLevelChange
+                    ) {
+                        LabelText(stringResource(R.string.level))
+                    }
+                    SliderPlus(
+                        value = userData.ubLevel,
+                        minValue = 1,
+                        maxValue = userData.charaLevel,
+                        onValueChange = { onSkillLevelChange(it, "UB") }
+                    ) {
+                        LabelText(
+                            text = "UB",
+                            background = MaterialTheme.colors.secondary
+                        )
+                    }
+                    SliderPlus(
+                        value = userData.skill1Level,
+                        minValue = 1,
+                        maxValue = userData.charaLevel,
+                        onValueChange = { onSkillLevelChange(it, "Main 1") }
+                    ) {
+                        LabelText(
+                            text = "Main 1",
+                            background = MaterialTheme.colors.secondary
+                        )
+                    }
+                    SliderPlus(
+                        value = userData.skill2Level,
+                        minValue = 1,
+                        maxValue = userData.charaLevel,
+                        onValueChange = { onSkillLevelChange(it, "Main 2") }
+                    ) {
+                        LabelText(
+                            text = "Main 2",
+                            background = MaterialTheme.colors.secondary
+                        )
+                    }
+                    SliderPlus(
+                        value = userData.exLevel,
+                        minValue = 1,
+                        maxValue = userData.charaLevel,
+                        onValueChange = { onSkillLevelChange(it, "EX") }
+                    ) {
+                        LabelText(
+                            text = "EX",
+                            background = MaterialTheme.colors.secondary
+                        )
+                    }
                 }
             }
         }

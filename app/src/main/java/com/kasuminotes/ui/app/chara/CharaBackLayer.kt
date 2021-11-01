@@ -82,6 +82,7 @@ fun CharaBackLayer(
     onLoveLevelChange: (Int) -> Unit,
     onPromotionLevelChange: (Int) -> Unit,
     onSkillLevelChange: (value: Int, labelText: String) -> Unit,
+    onLvLimitBreakChange: (maxCharaLevel: Int) -> Unit,
     onCancel: () -> Unit,
     onSave: () -> Unit
 ) {
@@ -122,7 +123,8 @@ fun CharaBackLayer(
             onUniqueLevelChange,
             onLoveLevelChange,
             onPromotionLevelChange,
-            onSkillLevelChange
+            onSkillLevelChange,
+            onLvLimitBreakChange,
         )
 
         PropertyTable(

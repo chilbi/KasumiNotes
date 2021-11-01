@@ -19,7 +19,8 @@ data class UserData(
     val equip3Level: Int,
     val equip4Level: Int,
     val equip5Level: Int,
-    val equip6Level: Int
+    val equip6Level: Int,
+    val lvLimitBreak: Int = 0
 ) {
     val rankRarity: Int
         get() = promotionLevel.rankRarity

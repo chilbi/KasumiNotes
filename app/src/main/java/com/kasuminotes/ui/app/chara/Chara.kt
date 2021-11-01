@@ -102,6 +102,7 @@ fun Chara(
                 onLoveLevelChange = charaState::changeLoveLevel,
                 onPromotionLevelChange = charaState::changePromotionLevel,
                 onSkillLevelChange = charaState::changeSkillLevel,
+                onLvLimitBreakChange = charaState::changeLvLimitBreak,
 
                 onCancel = charaState::cancel,
                 onSave = charaState::save
@@ -121,7 +122,11 @@ fun Chara(
                 onEquipClick = { onEquipClick(it, null) },
                 onUniqueClick = onUniqueClick,
                 onCharaClick = {
-                    charaState.selectUserProfile(it, userProfile.sharedProfiles.plus(userProfile))
+                    charaState.selectUserProfile(
+                        it,
+                        userProfile.sharedProfiles.plus(userProfile),
+                        maxUserData.maxCharaLevel
+                    )
                 },
                 onToggle = {
                     scope.launch {

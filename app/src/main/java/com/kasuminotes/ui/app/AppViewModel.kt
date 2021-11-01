@@ -66,7 +66,8 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     fun navigateToChara(userProfile: UserProfile) {
         charaState.selectUserProfile(
             userProfile,
-            dbState.userState.charaListState.profiles
+            dbState.userState.charaListState.profiles,
+            dbState.userState.maxUserData!!.maxCharaLevel
         )
         navController.navigate("chara")
     }
