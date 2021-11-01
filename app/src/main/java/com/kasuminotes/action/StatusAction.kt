@@ -7,7 +7,7 @@ import kotlin.math.roundToInt
 fun SkillAction.getStatus(skillLevel: Int): D {
     val value1: Double
     val isBuff: Boolean
-    if (actionDetail1 == 141) {
+    if (actionDetail1 > 140) {//141,171
         value1 = 2.0
         isBuff = true
     } else{
@@ -19,12 +19,8 @@ fun SkillAction.getStatus(skillLevel: Int): D {
         1.0 -> getBaseLvFormula(actionValue2, actionValue3, skillLevel)
         2.0 -> {
             val percent = D.Text("${actionValue2.roundToInt()}%")
-            if (actionDetail1 < 50) {
-                D.Format(R.string.content_initial_value1, arrayOf(percent))
-            }
-            else {
-                percent
-            }
+            if (actionDetail1 < 50) D.Format(R.string.content_initial_value1, arrayOf(percent))
+            else percent
         }
         else -> D.Unknown
     }

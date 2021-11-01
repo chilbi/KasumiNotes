@@ -117,6 +117,9 @@ fun getStatusContent(detail: Int): D {
         12 -> D.Format(R.string.magic_critical_damage)
         13 -> D.Format(R.string.accuracy)
         14 -> D.Format(R.string.received_critical_damage)
+        15 -> D.Format(R.string.received_damage)
+        16 -> D.Format(R.string.received_physical_damage)
+        17 -> D.Format(R.string.received_magic_damage)
         else -> D.Unknown
     }
 }
@@ -135,6 +138,7 @@ fun getStateContent(detail: Int): D {
         92 -> D.Format(R.string.state_holly_night_brilliance)
         97 -> D.Format(R.string.state_ice_dragon_seal)
         106 -> D.Format(R.string.state_strength_seal)
+        107 -> D.Format(R.string.state_dragon_eye)
         else -> D.Unknown
     }
 }

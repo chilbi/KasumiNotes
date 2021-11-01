@@ -14,7 +14,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                 depend.getFocus().append(getTarget(null))
             }
         } else if (
-            depend.actionType == 23 &&
+            (depend.actionType == 23 || depend.actionType == 28) &&
             depend.targetCount == 99/* &&
             (
                 depend.actionDetail1 == 100 ||//レム
@@ -125,21 +125,14 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
             } else if (targetArea == 2) {
                 if (targetCount == 99) {
                     if ((targetRange == -1 || targetRange >= 2160)) {
-                        D.Format(
+                        val allTarget = D.Format(
                             R.string.target_all_content1,
                             arrayOf(getAssignment())
                         )
-                    } else {
-                        if (actionType == 23/* && (actionDetail1 == 300 || actionDetail1 == 502)*/) {// イオ、アオイ
+                        if (actionType == 23 || actionType == 28) {//ホマレ
                             D.Join(
                                 arrayOf(
-                                    D.Format(
-                                        R.string.target_range1_content2,
-                                        arrayOf(
-                                            D.Text(targetRange.toString()),
-                                            getAssignment()
-                                        )
-                                    ),
+                                    allTarget,
                                     D.Format(
                                         R.string.target_any_content1,
                                         arrayOf(getAssignment())
@@ -147,13 +140,28 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                                 )
                             )
                         } else {
-                            D.Format(
-                                R.string.target_all_range1_content2,
+                            allTarget
+                        }
+                    } else {
+                        val rangeTarget = D.Format(
+                            R.string.target_all_range1_content2,
+                            arrayOf(
+                                D.Text(targetRange.toString()),
+                                getAssignment()
+                            )
+                        )
+                        if (actionType == 23/* && (actionDetail1 == 300 || actionDetail1 == 502)*/) {// イオ、アオイ
+                            D.Join(
                                 arrayOf(
-                                    D.Text(targetRange.toString()),
-                                    getAssignment()
+                                    rangeTarget,
+                                    D.Format(
+                                        R.string.target_any_content1,
+                                        arrayOf(getAssignment())
+                                    )
                                 )
                             )
+                        } else {
+                            rangeTarget
                         }
                     }
                 } else if (targetCount == 1 && (targetRange == -1 || targetRange >= 2160)) {

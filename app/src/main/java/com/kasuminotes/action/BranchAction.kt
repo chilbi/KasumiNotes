@@ -14,9 +14,13 @@ fun SkillAction.getBranch(): Array<Pair<Int, D>> {
 }
 
 fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
-    val branch = mutableListOf<Pair<Int, D>>()
+    var branch = mutableListOf<Pair<Int, D>>()
 
     when (actionDetail1) {
+        // ホマレ
+        in 6000..6999 -> {
+            branch = getStateBranch(actionDetail1 - 6000, actionValue3)
+        }
         // タマキ、ミサト（サマー）
         1300 -> {
             val target = getTarget(depend)
@@ -69,44 +73,7 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
         }
         // ルナ、クリスティーナ（クリスマス）
         in 600..699 -> {
-            val state = getStateContent(actionDetail1 % 100)
-            val target = getTarget(depend)
-            if (actionValue3 == 0.0 || actionValue3 == 1.0) {
-                if (actionDetail2 != 0) {
-                    branch.add(
-                        actionDetail2 to D.Format(
-                            R.string.action_branch_have_target1_state2,
-                            arrayOf(target, state)
-                        )
-                    )
-                }
-                if (actionDetail3 != 0) {
-                    branch.add(
-                        actionDetail3 to D.Format(
-                            R.string.action_branch_not_have_target1_state2,
-                            arrayOf(target, state)
-                        )
-                    )
-                }
-            } else {
-                val above = D.Text(actionValue3.toNumStr())
-                if (actionDetail2 != 0) {
-                    branch.add(
-                        actionDetail2 to D.Format(
-                            R.string.action_branch_target1_state2_above3,
-                            arrayOf(target, state, above)
-                        )
-                    )
-                }
-                if (actionDetail3 != 0) {
-                    branch.add(
-                        actionDetail3 to D.Format(
-                            R.string.action_branch_not_target1_state2_above3,
-                            arrayOf(target, state, above)
-                        )
-                    )
-                }
-            }
+            branch = getStateBranch(actionDetail1 - 600, actionValue3)
         }
         // アオイ、アオイ（編入生）、ミツキ（オーエド）
         in 500..599 -> {
@@ -209,7 +176,7 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
 }
 
 fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
-    val branch = mutableListOf<Pair<Int, D>>()
+    var branch = mutableListOf<Pair<Int, D>>()
 
     when (actionDetail1) {
         // アリサ、カヤ、スズナ（サマー）、ルカ（サマー）、クロエ（聖学祭）
@@ -272,6 +239,10 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
                 )
             }
         }
+        // ホマレ
+        721 -> {
+            branch = getStateBranch(actionValue3.toInt(), actionValue4)
+        }
         // マコト（サマー）、アンナ（サマー）
         700 -> {
             if (actionDetail2 != 0) {
@@ -283,44 +254,7 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         }
         // レイ、ルナ、クリスティーナ（クリスマス）、チエル（聖学祭）
         in 600..699 -> {
-            val state = getStateContent(actionDetail1 % 100)
-            val target = getTarget(depend)
-            if (actionValue3 == 0.0 || actionValue3 == 1.0) {
-                if (actionDetail2 != 0) {
-                    branch.add(
-                        actionDetail2 to D.Format(
-                            R.string.action_branch_have_target1_state2,
-                            arrayOf(target, state)
-                        )
-                    )
-                }
-                if (actionDetail3 != 0) {
-                    branch.add(
-                        actionDetail3 to D.Format(
-                            R.string.action_branch_not_have_target1_state2,
-                            arrayOf(target, state)
-                        )
-                    )
-                }
-            } else {
-                val above = D.Text(actionValue3.toNumStr())
-                if (actionDetail2 != 0) {
-                    branch.add(
-                        actionDetail2 to D.Format(
-                            R.string.action_branch_target1_state2_above3,
-                            arrayOf(target, state, above)
-                        )
-                    )
-                }
-                if (actionDetail3 != 0) {
-                    branch.add(
-                        actionDetail3 to D.Format(
-                            R.string.action_branch_not_target1_state2_above3,
-                            arrayOf(target, state, above)
-                        )
-                    )
-                }
-            }
+            branch = getStateBranch(actionDetail1 - 600, actionValue3)
         }
         // ミフユ
         100 -> {
@@ -382,4 +316,47 @@ fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
         actionDetail2 to D.Format(R.string.action_exists_field_branch_content1, arrayOf(content)),
         actionDetail3 to D.Format(R.string.action_not_exists_field_branch_content1, arrayOf(content))
     )
+}
+
+private fun SkillAction.getStateBranch(stateId: Int, stateCount: Double): MutableList<Pair<Int, D>> {
+    val branch = mutableListOf<Pair<Int, D>>()
+    val state = getStateContent(stateId)
+    val target = getTarget(depend)
+    if (stateCount == 0.0 || stateCount == 1.0) {
+        if (actionDetail2 != 0) {
+            branch.add(
+                actionDetail2 to D.Format(
+                    R.string.action_branch_have_target1_state2,
+                    arrayOf(target, state)
+                )
+            )
+        }
+        if (actionDetail3 != 0) {
+            branch.add(
+                actionDetail3 to D.Format(
+                    R.string.action_branch_not_have_target1_state2,
+                    arrayOf(target, state)
+                )
+            )
+        }
+    } else {
+        val above = D.Text(stateCount.toNumStr())
+        if (actionDetail2 != 0) {
+            branch.add(
+                actionDetail2 to D.Format(
+                    R.string.action_branch_target1_state2_above3,
+                    arrayOf(target, state, above)
+                )
+            )
+        }
+        if (actionDetail3 != 0) {
+            branch.add(
+                actionDetail3 to D.Format(
+                    R.string.action_branch_not_target1_state2_above3,
+                    arrayOf(target, state, above)
+                )
+            )
+        }
+    }
+    return branch
 }
