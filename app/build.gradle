@@ -103,7 +103,7 @@ dependencies {
     // core-ktx
     implementation "androidx.core:core-ktx:1.7.0"
     // navigation-compose
-    implementation 'androidx.navigation:navigation-compose:2.4.0-beta01'
+    implementation 'androidx.navigation:navigation-compose:2.4.0-beta02'
 
     // Accompanist Coil Insets
     implementation 'io.coil-kt:coil-compose:1.4.0'
