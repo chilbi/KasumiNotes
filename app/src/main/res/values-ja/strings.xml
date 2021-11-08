@@ -200,10 +200,10 @@
     <string name="action_not_exists_field_branch_content1">%sのフィールド展開中でない場合、</string>
     <string name="action_branch_have_target1_state2">%1$sが【%2$s】を持っている場合、</string>
     <string name="action_branch_not_have_target1_state2">%1$sが【%2$s】を持っていない場合、</string>
-    <string name="action_branch_target1_state2_above3">%1$sの【%2$s】の数が%3$s以上の場合、</string>
-    <string name="action_branch_not_target1_state2_above3">%1$sの【%2$s】の数が%3$s以上でない場合、</string>
-    <string name="action_branch_counter1_above2">【%1$s】の数が%2$s以上の場合、</string>
-    <string name="action_branch_not_counter1_above2">【%1$s】の数が%2$s以上でない場合、</string>
+    <string name="action_branch_target1_state2_above3">%1$sの【%2$s】の数が≧%3$sの場合、</string>
+    <string name="action_branch_not_target1_state2_above3">%1$sの【%2$s】の数が＜%3$sの場合、</string>
+    <string name="action_branch_counter1_above2">【%1$s】の数が≧%2$sの場合、</string>
+    <string name="action_branch_not_counter1_above2">【%1$s】の数が＜%2$sの場合、</string>
     <string name="action_branch_hp_target1_above2">%1$sの残りＨＰが%2$s以上の場合、</string>
     <string name="action_branch_hp_not_target1_above2">%1$sの残りＨＰが%2$s未満の場合、</string>
     <string name="action_branch_target1_state2">%1$sが%2$s状態の場合、</string>

@@ -182,7 +182,7 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         // アリサ、カヤ、スズナ（サマー）、ルカ（サマー）、クロエ（聖学祭）
         in 1200..1299 -> {
             val counter = D.Format(R.string.counter_num1, arrayOf(D.Text((actionDetail1 / 10 % 10).toString())))
-            val above = D.Text(actionValue3.toNumStr())
+            val above = D.Text((actionDetail1 % 10).toString())
             if (actionDetail2 != 0) {
                 branch.add(
                     actionDetail2 to D.Format(

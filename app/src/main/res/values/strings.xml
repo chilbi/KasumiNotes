@@ -200,10 +200,10 @@
     <string name="action_not_exists_field_branch_content1">%s的领域没有展开时，</string>
     <string name="action_branch_have_target1_state2">%1$s持有【%2$s】时，</string>
     <string name="action_branch_not_have_target1_state2">%1$s未持有【%2$s】时，</string>
-    <string name="action_branch_target1_state2_above3">%1$s的【%2$s】的数量大于%3$s时，</string>
-    <string name="action_branch_not_target1_state2_above3">%1$s的【%2$s】的数量非大于%3$s时，</string>
-    <string name="action_branch_counter1_above2">【%1$s】的数量大于%2$s时，</string>
-    <string name="action_branch_not_counter1_above2">【%1$s】的数量没有大于%2$s时，</string>
+    <string name="action_branch_target1_state2_above3">%1$s的【%2$s】的数量≧%3$s时，</string>
+    <string name="action_branch_not_target1_state2_above3">%1$s的【%2$s】的数量＜%3$s时，</string>
+    <string name="action_branch_counter1_above2">【%1$s】的数量≧%2$s时，</string>
+    <string name="action_branch_not_counter1_above2">【%1$s】的数量＜%2$s时，</string>
     <string name="action_branch_hp_target1_above2">%1$s的残余的HP高于%2$s以上时，</string>
     <string name="action_branch_hp_not_target1_above2">%1$s的残余的HP不满%2$s时，</string>
     <string name="action_branch_target1_state2">%1$s已陷入%2$s状态时，</string>
