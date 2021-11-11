@@ -298,6 +298,7 @@
     <string name="formula_atk1_type2_result3">{ %1$s × %2$s } = %3$s</string>
     <string name="formula_m1_m2">{ %1$s × %2$s }</string>
     <string name="formula_m1_m2_m3">{ %1$s × %2$s × %3$s }</string>
+    <string name="formula_m1_m2_m3_m4">{ %1$s × %2$s × %3$s × %4$s }</string>
     <string name="sub_formula_base1_lv2">(%1$s + %2$s × スキルLv)</string>
 
     <string name="move_speed">移動速度</string>

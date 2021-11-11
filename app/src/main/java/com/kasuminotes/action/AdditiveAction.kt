@@ -7,6 +7,11 @@ import kotlin.math.ceil
 
 fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
     val modifyAction = actions.find { it.actionId == actionDetail1 }!!
+    val nestModifyAction = if (modifyAction.actionType == 26 || modifyAction.actionType == 27) {
+        actions.find { it.actionId == modifyAction.actionDetail1 }!!
+    } else {
+        null
+    }
     var isAdd = true
 
     val max = if (actionValue4 == 0.0 && actionValue5 == 0.0) {
@@ -62,7 +67,61 @@ fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
         }
     }
 
-    val coefficient = when {
+    val coefficient = getCoefficient()
+
+    val content = getAdditiveContent(nestModifyAction ?: modifyAction)
+
+    val formula = if (nestModifyAction == null) {
+        getAdditiveFormula(modifyAction, factor, coefficient, null)
+    } else {
+        modifyAction.getAdditiveFormula(nestModifyAction, factor, coefficient, modifyAction.getCoefficient())
+    }
+
+    @StringRes
+    val actionRes: Int
+    @StringRes
+    var maxRes: Int? = null
+
+    if (actionType == 26) {
+        if (isAdd) {
+            actionRes = R.string.action_additive_content1_formula2
+            if (max != null) {
+                maxRes = R.string.action_additive_max1
+            }
+        } else {
+            actionRes = R.string.action_additive_reduce_content1_formula2
+            if (max != null) {
+                maxRes = R.string.action_additive_reduce_max1
+            }
+        }
+    } else {
+        if (isAdd) {
+            actionRes = R.string.action_multiple_content1_formula2
+            if (max != null) {
+                maxRes = R.string.action_multiple_max1
+            }
+        } else {
+            actionRes = R.string.action_multiple_reduce_content1_formula2
+            if (max != null) {
+                maxRes = R.string.action_multiple_reduce_max1
+            }
+        }
+    }
+
+    return if (maxRes == null) {
+        D.Format(actionRes, arrayOf(content, formula))
+    } else{
+        D.Join(
+            arrayOf(
+                D.Format(actionRes, arrayOf(content, formula)),
+                D.Format(maxRes, arrayOf(max!!))
+            )
+        )
+    }
+}
+
+private fun SkillAction.getCoefficient(): D {
+    return when {
         actionValue1 > 100.0 -> {
             D.Format(R.string.count_state1, arrayOf(getStateContent((actionValue1 % 100).toInt())))
         }
@@ -88,8 +147,10 @@ fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
             }
         }
     }
+}
 
-    val content = when (modifyAction.actionType) {
+private fun SkillAction.getAdditiveContent(modifyAction: SkillAction): D {
+    return when (modifyAction.actionType) {
         1 -> D.Format(
             if (actionDetail2 == 6) R.string.additive_critical_damage
             else R.string.additive_damage
@@ -142,90 +203,48 @@ fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
         )
         else -> D.Unknown
     }
+}
 
-    val formula = when (modifyAction.actionType) {
+private fun SkillAction.getAdditiveFormula(modifyAction: SkillAction, factor: D, coefficient: D, nestCoefficient: D?): D {
+    val otherFactor = when (modifyAction.actionType) {
         1 -> when (actionDetail2) {
-            1, 6 -> D.Format(R.string.formula_m1_m2, arrayOf(factor, coefficient))
-            2 -> D.Format(R.string.formula_m1_m2_m3, arrayOf(factor, D.Format(R.string.skill_level), coefficient))
-            3 -> D.Format(R.string.formula_m1_m2_m3, arrayOf(factor, getAtkType(modifyAction.actionDetail1), coefficient))
+            1, 6 -> null
+            2 -> D.Format(R.string.skill_level)
+            3 -> getAtkType(modifyAction.actionDetail1)
             else -> D.Unknown
         }
         4 -> when (actionDetail2) {
-            2 -> D.Format(R.string.formula_m1_m2, arrayOf(factor, coefficient))
-            3 -> D.Format(R.string.formula_m1_m2_m3, arrayOf(factor, D.Format(R.string.skill_level), coefficient))
-            4 -> D.Format(R.string.formula_m1_m2_m3, arrayOf(factor, getAtkType(modifyAction.actionDetail1), coefficient))
+            2 -> null
+            3 -> D.Format(R.string.skill_level)
+            4 -> getAtkType(modifyAction.actionDetail1)
             else -> D.Unknown
         }
         6, 9, 38 -> when (actionDetail2) {
-            1, 3 -> D.Format(R.string.formula_m1_m2, arrayOf(factor, coefficient))
-            2 -> D.Format(R.string.formula_m1_m2_m3, arrayOf(factor, D.Format(R.string.skill_level), coefficient))
+            1, 3 -> null
+            2 -> D.Format(R.string.skill_level)
             else -> D.Unknown
         }
-        8, 35 -> D.Format(R.string.formula_m1_m2, arrayOf(factor, coefficient))
-//        9 -> when (actionDetail2) {
-//            1, 3 -> D.Format(R.string.formula_m1_m2, arrayOf(factor, coefficient))
-//            2 -> D.Format(R.string.formula_m1_m2_m3, arrayOf(factor, D.Format(R.string.skill_level), coefficient))
-//            else -> D.Unknown
-//        }
+        8, 16, 35 -> null
         10 -> when (actionDetail2) {
-            2, 4 -> D.Format(R.string.formula_m1_m2, arrayOf(factor, coefficient))
-            3 -> D.Format(R.string.formula_m1_m2_m3, arrayOf(factor, D.Format(R.string.skill_level), coefficient))
+            2, 4 -> null
+            3 -> D.Format(R.string.skill_level)
             else -> D.Unknown
         }
-        16 -> D.Format(R.string.formula_m1_m2, arrayOf(factor, coefficient))
-//        38 -> when (actionDetail2) {
-//            1, 3 -> D.Format(R.string.formula_m1_m2, arrayOf(factor, coefficient))
-//            2 -> D.Format(R.string.formula_m1_m2_m3, arrayOf(factor, D.Format(R.string.skill_level), coefficient))
-//            else -> D.Unknown
-//        }
         48 -> when (actionDetail2) {
-            1, 5 -> D.Format(R.string.formula_m1_m2, arrayOf(factor, coefficient))
-            2 -> D.Format(R.string.formula_m1_m2_m3, arrayOf(factor, D.Format(R.string.skill_level), coefficient))
-            3 -> D.Format(R.string.formula_m1_m2_m3, arrayOf(factor, getAtkType(modifyAction.actionDetail1), coefficient))
+            1, 5 -> null
+            2 -> D.Format(R.string.skill_level)
+            3 -> getAtkType(modifyAction.actionDetail1)
             else -> D.Unknown
         }
         else -> D.Unknown
     }
-
-    @StringRes
-    val actionRes: Int
-    @StringRes
-    var maxRes: Int? = null
-
-    if (actionType == 26) {
-        if (isAdd) {
-            actionRes = R.string.action_additive_content1_formula2
-            if (max != null) {
-                maxRes = R.string.action_additive_max1
-            }
-        } else {
-            actionRes = R.string.action_additive_reduce_content1_formula2
-            if (max != null) {
-                maxRes = R.string.action_additive_reduce_max1
-            }
-        }
-    } else {
-        if (isAdd) {
-            actionRes = R.string.action_multiple_content1_formula2
-            if (max != null) {
-                maxRes = R.string.action_multiple_max1
-            }
-        } else {
-            actionRes = R.string.action_multiple_reduce_content1_formula2
-            if (max != null) {
-                maxRes = R.string.action_multiple_reduce_max1
-            }
-        }
-    }
-
-    return if (maxRes == null) {
-        D.Format(actionRes, arrayOf(content, formula))
-    } else{
-        D.Join(
-            arrayOf(
-                D.Format(actionRes, arrayOf(content, formula)),
-                D.Format(maxRes, arrayOf(max!!))
-            )
-        )
-    }
+    val nonNullElements = listOfNotNull(factor, otherFactor, coefficient, nestCoefficient).toTypedArray()
+    return D.Format(
+        when (nonNullElements.size) {
+            2 -> R.string.formula_m1_m2
+            3 -> R.string.formula_m1_m2_m3
+            else -> R.string.formula_m1_m2_m3_m4
+        },
+        nonNullElements
+    )
 }
