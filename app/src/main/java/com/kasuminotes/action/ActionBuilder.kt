@@ -30,8 +30,8 @@ class ActionBuilder(
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
                 remove.add(modifyIndex)
             }
-            // Additive
-            if (action.actionType == 26 || action.actionType == 27) {
+            // Modify
+            if (arrayOf(26, 27, 74).contains(action.actionType)) {
                 remove.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
                 origin[modifyIndex] = origin[modifyIndex].append(origin[index])
@@ -103,7 +103,7 @@ class ActionBuilder(
             21 -> getNoDamage(skillLevel)
             22 -> getPattern()
             23 -> D.Unknown//Branch
-            26, 27 -> getAdditive(skillLevel, actions)
+            26, 27, 74 -> getModify(skillLevel, actions)
             28 -> D.Unknown//Branch
             30 -> getDestroy()
             32 -> getLifeSteal(skillLevel)
@@ -128,7 +128,7 @@ class ActionBuilder(
             61 -> getFear()
             71 -> getKnightGuard(skillLevel, property)
             75 -> getHitCount()
-            79 -> D.Unknown//getPoisonDamageByBehaviour()
+            79 -> D.Unknown//PoisonDamageByBehaviour
             83 -> getGuildOfStrength()
             else -> getUnknown()
         }

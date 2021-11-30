@@ -5,10 +5,10 @@ import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 import kotlin.math.ceil
 
-fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
-    val modifyAction = actions.find { it.actionId == actionDetail1 }!!
-    val nestModifyAction = if (modifyAction.actionType == 26 || modifyAction.actionType == 27) {
-        actions.find { it.actionId == modifyAction.actionDetail1 }!!
+fun SkillAction.getModify(skillLevel: Int, actions: List<SkillAction>): D {
+    val targetAction = actions.find { it.actionId == actionDetail1 }!!
+    val nestTargetAction = if (targetAction.actionType == 26 || targetAction.actionType == 27) {
+        actions.find { it.actionId == targetAction.actionDetail1 }!!
     } else {
         null
     }
@@ -18,11 +18,11 @@ fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
         null
     } else {
         if (actionValue5 == 0.0) {
-            if (modifyAction.actionType == 1 && actionDetail2 == 6) {
+            if (targetAction.actionType == 1 && actionDetail2 == 6) {
                 D.Text("${(actionValue4 * 100).toNumStr()}%")
-            } else if (modifyAction.actionType == 10 && (modifyAction.actionDetail1 == 141 || modifyAction.actionValue1 == 2.0)) {
+            } else if (targetAction.actionType == 10 && (targetAction.actionDetail1 == 141 || targetAction.actionValue1 == 2.0)) {
                 D.Text("${actionValue4.toNumStr()}%")
-            } else if (modifyAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
+            } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
                 D.Text((-actionValue4).toNumStr())
             } else {
                 D.Text(actionValue4.toNumStr())
@@ -36,12 +36,12 @@ fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
         }
     }
 
-    val factor = if (actionValue3 == 0.0) {
-        if (modifyAction.actionType == 1 && actionDetail2 == 6) {
+    val constantVariable = if (actionValue3 == 0.0) {
+        if (targetAction.actionType == 1 && actionDetail2 == 6) {
             D.Text("${(actionValue2 * 100).toNumStr()}%")
-        } else if (modifyAction.actionType == 10 && (modifyAction.actionDetail1 == 141 || modifyAction.actionValue1 == 2.0)) {
+        } else if (targetAction.actionType == 10 && (targetAction.actionDetail1 == 141 || targetAction.actionValue1 == 2.0)) {
             D.Text("${actionValue2.toNumStr()}%")
-        } else if (modifyAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
+        } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
             D.Text((-actionValue2).toNumStr())
         } else {
             D.Text(actionValue2.toNumStr())
@@ -67,14 +67,14 @@ fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
         }
     }
 
-    val coefficient = getCoefficient()
+    val independentVariable = getModifyIndependentVariable()
 
-    val content = getAdditiveContent(nestModifyAction ?: modifyAction)
+    val content = getModifyContent(nestTargetAction ?: targetAction)
 
-    val formula = if (nestModifyAction == null) {
-        getAdditiveFormula(modifyAction, factor, coefficient, null)
+    val formula = if (nestTargetAction == null) {
+        getModifyFormula(targetAction, constantVariable, independentVariable, null)
     } else {
-        modifyAction.getAdditiveFormula(nestModifyAction, factor, coefficient, modifyAction.getCoefficient())
+        targetAction.getModifyFormula(nestTargetAction, constantVariable, independentVariable, targetAction.getModifyIndependentVariable())
     }
 
     @StringRes
@@ -82,45 +82,37 @@ fun SkillAction.getAdditive(skillLevel: Int, actions: List<SkillAction>): D {
     @StringRes
     var maxRes: Int? = null
 
-    if (actionType == 26) {
-        if (isAdd) {
-            actionRes = R.string.action_additive_content1_formula2
-            if (max != null) {
-                maxRes = R.string.action_additive_max1
-            }
-        } else {
-            actionRes = R.string.action_additive_reduce_content1_formula2
-            if (max != null) {
-                maxRes = R.string.action_additive_reduce_max1
+    when (actionType) {
+        26 -> {
+            if (isAdd) {
+                actionRes = R.string.action_additive_content1_formula2
+                if (max != null) {
+                    maxRes = R.string.action_additive_max1
+                }
+            } else {
+                actionRes = R.string.action_reduce_content1_formula2
+                if (max != null) {
+                    maxRes = R.string.action_reduce_max1
+                }
             }
         }
-    } else {
-        if (isAdd) {
+        27 -> {
             actionRes = R.string.action_multiple_content1_formula2
-            if (max != null) {
-                maxRes = R.string.action_multiple_max1
-            }
-        } else {
-            actionRes = R.string.action_multiple_reduce_content1_formula2
-            if (max != null) {
-                maxRes = R.string.action_multiple_reduce_max1
-            }
+        }
+        else -> {// 74
+            actionRes = R.string.action_divide_content1_formula2
         }
     }
 
+    val result = D.Format(actionRes, arrayOf(content, formula))
     return if (maxRes == null) {
-        D.Format(actionRes, arrayOf(content, formula))
+        result
     } else{
-        D.Join(
-            arrayOf(
-                D.Format(actionRes, arrayOf(content, formula)),
-                D.Format(maxRes, arrayOf(max!!))
-            )
-        )
+        result.append(D.Format(maxRes, arrayOf(max!!)))
     }
 }
 
-private fun SkillAction.getCoefficient(): D {
+private fun SkillAction.getModifyIndependentVariable(): D {
     return when {
         actionValue1 > 100.0 -> {
             D.Format(R.string.count_state1, arrayOf(getStateContent((actionValue1 % 100).toInt())))
@@ -149,16 +141,17 @@ private fun SkillAction.getCoefficient(): D {
     }
 }
 
-private fun SkillAction.getAdditiveContent(modifyAction: SkillAction): D {
-    return when (modifyAction.actionType) {
+private fun SkillAction.getModifyContent(targetAction: SkillAction): D {
+    return when (targetAction.actionType) {
         1 -> D.Format(
             if (actionDetail2 == 6) R.string.additive_critical_damage
             else R.string.additive_damage
         )
+        3 -> D.Format(R.string.additive_distance)
         4 -> D.Format(R.string.additive_hp_recovery)
         6 -> if (actionDetail2 == 3) D.Format(R.string.additive_time)
         else D.Format(
-            when (modifyAction.actionDetail1) {
+            when (targetAction.actionDetail1) {
                 1, 2, 5 -> R.string.additive_barrier_guard
                 else -> R.string.additive_barrier_drain
             }
@@ -167,56 +160,62 @@ private fun SkillAction.getAdditiveContent(modifyAction: SkillAction): D {
         9 -> if (actionDetail2 == 3) D.Format(R.string.additive_time)
         else D.Join(
             arrayOf(
-                getAbnormalDamageContent(modifyAction.actionDetail1),
+                getAbnormalDamageContent(targetAction.actionDetail1),
                 D.Format(R.string.additive_damage)
             )
         )
         10 -> if (actionDetail2 == 4) D.Format(R.string.additive_time)
         else D.Format(
-            if (modifyAction.actionDetail1 == 141 || modifyAction.actionDetail1 % 10 == 0) R.string.additive_up_amount_content1
+            if (targetAction.actionDetail1 == 141 || targetAction.actionDetail1 % 10 == 0) R.string.additive_up_amount_content1
             else R.string.additive_down_amount_content1,
-            arrayOf(getStatusContent(modifyAction.actionDetail1 / 10))
+            arrayOf(getStatusContent(targetAction.actionDetail1 / 10))
         )
         16 -> D.Format(R.string.additive_energy_recovery)
         35 -> when (actionDetail2) {
             4 -> D.Format(
                 if (actionValue2 > 0.0) R.string.additive_mark_add_state1 else R.string.additive_mark_consume_state1,
-                arrayOf(getStateContent(modifyAction.actionValue2.toInt()))
+                arrayOf(getStateContent(targetAction.actionValue2.toInt()))
             )
             3 -> D.Format(R.string.additive_time)
             1 -> D.Format(
                 R.string.additive_mark_max_state1,
-                arrayOf(getStateContent(modifyAction.actionValue2.toInt()))
+                arrayOf(getStateContent(targetAction.actionValue2.toInt()))
             )
             else -> D.Unknown
         }
         38 -> if (actionDetail2 == 3) D.Format(R.string.additive_time)
         else D.Format(
-            if (modifyAction.actionDetail1 % 10 == 0) R.string.additive_up_amount_content1
+            if (targetAction.actionDetail1 % 10 == 0) R.string.additive_up_amount_content1
             else R.string.additive_down_amount_content1,
-            arrayOf(getStatusContent(modifyAction.actionDetail1 / 10))
+            arrayOf(getStatusContent(targetAction.actionDetail1 / 10))
         )
         48 -> if (actionDetail2 == 5) D.Format(R.string.additive_time)
         else D.Format(
-            if (modifyAction.actionDetail2 == 1) R.string.additive_hp_regeneration
+            if (targetAction.actionDetail2 == 1) R.string.additive_hp_regeneration
             else R.string.additive_energy_regeneration
         )
         else -> D.Unknown
     }
 }
 
-private fun SkillAction.getAdditiveFormula(modifyAction: SkillAction, factor: D, coefficient: D, nestCoefficient: D?): D {
-    val otherFactor = when (modifyAction.actionType) {
+private fun SkillAction.getModifyFormula(
+    targetAction: SkillAction,
+    constantVariable: D,
+    independentVariable: D,
+    nestIndependentVariable: D?
+): D {
+    val otherConstantVariable = when (targetAction.actionType) {
         1 -> when (actionDetail2) {
             1, 6 -> null
             2 -> D.Format(R.string.skill_level)
-            3 -> getAtkType(modifyAction.actionDetail1)
+            3 -> getAtkType(targetAction.actionDetail1)
             else -> D.Unknown
         }
+        3 -> null
         4 -> when (actionDetail2) {
             2 -> null
             3 -> D.Format(R.string.skill_level)
-            4 -> getAtkType(modifyAction.actionDetail1)
+            4 -> getAtkType(targetAction.actionDetail1)
             else -> D.Unknown
         }
         6, 9, 38 -> when (actionDetail2) {
@@ -233,12 +232,14 @@ private fun SkillAction.getAdditiveFormula(modifyAction: SkillAction, factor: D,
         48 -> when (actionDetail2) {
             1, 5 -> null
             2 -> D.Format(R.string.skill_level)
-            3 -> getAtkType(modifyAction.actionDetail1)
+            3 -> getAtkType(targetAction.actionDetail1)
             else -> D.Unknown
         }
         else -> D.Unknown
     }
-    val nonNullElements = listOfNotNull(factor, otherFactor, coefficient, nestCoefficient).toTypedArray()
+    val nonNullElements = listOfNotNull(
+        constantVariable, otherConstantVariable, independentVariable, nestIndependentVariable
+    ).toTypedArray()
     return D.Format(
         when (nonNullElements.size) {
             2 -> R.string.formula_m1_m2

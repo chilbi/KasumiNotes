@@ -155,13 +155,11 @@
     <string name="action_knockback_target1_formula2">%1$sを%2$s距離吹き飛ばす。</string>
     <string name="action_diaup_target1_formula2">%1$sを%2$s高度吹き飛ばす。</string>
     <string name="action_additive_content1_formula2">%1$sを%2$s増加させる。</string>
-    <string name="action_multiple_content1_formula2">%1$sを%2$s倍増加させる。</string>
-    <string name="action_additive_reduce_content1_formula2">%1$sを%2$s減少させる。</string>
-    <string name="action_multiple_reduce_content1_formula2">%1$sを%2$s倍減少させる。</string>
+    <string name="action_reduce_content1_formula2">%1$sを%2$s減少させる。</string>
+    <string name="action_multiple_content1_formula2">%1$sを基礎値の%2$s倍にする。</string>
+    <string name="action_divide_content1_formula2">%1$sを基礎値の%2$s分の一にする。</string>
     <string name="action_additive_max1">最大%sまで増加させる。</string>
-    <string name="action_multiple_max1">最大%s倍まで増加させる。</string>
-    <string name="action_additive_reduce_max1">最大%sまで減少させる。</string>
-    <string name="action_multiple_reduce_max1">最大%s倍まで減少させる。</string>
+    <string name="action_reduce_max1">最大%sまで減少させる。</string>
     <string name="action_focus_target1">%sを中心とした</string>
     <string name="action_darkness_formula1">物理攻撃の命中率を%sダウンさせる。</string>
     <string name="action_life_steal_target1_formula2">%1$sの次の攻撃に%2$sＨＰ吸収をアップさせる効果を付与する。</string>
@@ -358,4 +356,5 @@
     <string name="additive_mark_add_state1">【%s】の追加数</string>
     <string name="additive_mark_consume_state1">【%s】の消費数</string>
     <string name="additive_mark_max_state1">【%s】の最大追加数</string>
+    <string name="additive_distance">距離</string>
 </resources>
