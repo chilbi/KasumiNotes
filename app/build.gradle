@@ -79,7 +79,7 @@ dependencies {
     // activity-compose
     implementation 'androidx.activity:activity-compose:1.4.0'
     // appcompat
-    implementation 'androidx.appcompat:appcompat:1.4.0-rc01'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
     // material
     implementation 'com.google.android.material:material:1.4.0'
     // palette
@@ -107,10 +107,10 @@ dependencies {
 
     // Accompanist Coil Insets
     implementation 'io.coil-kt:coil-compose:1.4.0'
-    implementation 'com.google.accompanist:accompanist-insets:0.20.0'
+    implementation 'com.google.accompanist:accompanist-insets:0.20.2'
 
     // okhttp
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
     // commons-compress
     implementation 'org.apache.commons:commons-compress:1.21'
     // brotli
