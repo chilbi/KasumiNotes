@@ -1,6 +1,5 @@
 package com.kasuminotes.ui.app.chara
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -26,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.CharaStoryStatus
 import com.kasuminotes.data.EquipData
@@ -42,8 +40,6 @@ import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.TabsPanel
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
-@ExperimentalAnimationApi
 @Composable
 fun CharaFrontLayer(
     userData: UserData,
@@ -138,7 +134,6 @@ fun CharaFrontLayer(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun SurfaceAndFloating(
     unitId: Int,

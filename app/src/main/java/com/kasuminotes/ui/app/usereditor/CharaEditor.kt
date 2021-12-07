@@ -6,7 +6,6 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -47,7 +46,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -56,7 +54,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.common.ImageVariant
 import com.kasuminotes.data.UserProfile
@@ -74,9 +71,6 @@ import com.kasuminotes.ui.theme.RaritiesColors
 import com.kasuminotes.ui.theme.rankRarity
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalComposeUiApi
-@ExperimentalCoilApi
-@ExperimentalFoundationApi
 @Composable
 fun CharaEditor(
     userState: UserState,
@@ -234,7 +228,6 @@ fun CharaEditor(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun SelectableCharaItem(
     unitId: Int,
@@ -371,8 +364,6 @@ private fun RowScope.ToggleButton(
     }
 }
 
-@ExperimentalComposeUiApi
-@ExperimentalCoilApi
 @Composable
 private fun EditorDialog(
     maxCharaLevel: Int,
@@ -449,7 +440,6 @@ private fun EditorDialogTitle(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun SelectedCharaList(selectedChara: List<Int>) {
     LazyRow(contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)) {

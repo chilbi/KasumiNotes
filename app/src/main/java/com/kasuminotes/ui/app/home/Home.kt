@@ -1,16 +1,10 @@
 package com.kasuminotes.ui.app.home
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.DbState
 import com.kasuminotes.ui.app.state.UiState
 
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
 @Composable
 fun Home(
     uiState: UiState,

@@ -16,10 +16,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import kotlin.math.absoluteValue
 
-@ExperimentalCoilApi
 @Composable
 fun DraggableImageIcon(
     url: String,

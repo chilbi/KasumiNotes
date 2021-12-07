@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
 @Composable
 fun StillBox(
     unitId: Int,

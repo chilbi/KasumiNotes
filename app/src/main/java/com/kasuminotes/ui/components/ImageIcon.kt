@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 
@@ -52,7 +51,6 @@ fun ImageIcon(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 fun ImageIcon(
     url: String,

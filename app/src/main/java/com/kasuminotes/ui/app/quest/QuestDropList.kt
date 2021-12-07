@@ -20,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.QuestData
 import com.kasuminotes.data.RewardData
@@ -33,7 +32,6 @@ import com.kasuminotes.ui.theme.selected
 import com.kasuminotes.utils.Helper
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
 @Composable
 fun QuestDropList(
     questDataList: List<QuestData>,
@@ -49,7 +47,6 @@ fun QuestDropList(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 fun QuestDropItem(
     questData: QuestData,
@@ -103,7 +100,6 @@ fun QuestDropItem(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun RewardItem(
     rewardData: RewardData,

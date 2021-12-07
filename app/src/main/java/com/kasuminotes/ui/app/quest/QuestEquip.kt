@@ -28,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipInfo
 import com.kasuminotes.ui.components.ImageIcon
@@ -39,7 +38,6 @@ import com.kasuminotes.ui.components.VerticalGridCells
 import com.kasuminotes.ui.theme.RaritiesColors
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
 @Composable
 fun QuestEquip(
     equipmentPairList: List<Pair<Int, List<EquipInfo>>>?,
@@ -137,7 +135,6 @@ private fun FilterButton(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 fun EquipmentPairItem(
     rarity: Int,

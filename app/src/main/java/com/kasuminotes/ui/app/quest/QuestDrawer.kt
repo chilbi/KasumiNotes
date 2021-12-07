@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
@@ -21,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import com.kasuminotes.R
 import com.kasuminotes.common.QuestMode
 
-@ExperimentalMaterialApi
 @Composable
 fun QuestDrawer(
     questMode: QuestMode,

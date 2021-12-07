@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.kasuminotes.ui.theme.place
@@ -48,7 +47,6 @@ fun BoxScope.PlaceImage(
     )
 }
 
-@ExperimentalCoilApi
 @Composable
 fun BoxScope.PlaceImage(
     url: String,

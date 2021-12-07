@@ -1,6 +1,5 @@
 package com.kasuminotes.ui.app.usereditor
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,7 +34,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.UserState
@@ -45,8 +43,6 @@ import com.kasuminotes.ui.components.selectedBg
 import com.kasuminotes.ui.theme.selected
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
-@ExperimentalFoundationApi
 @Composable
 fun UserImages(
     userState: UserState,
@@ -107,7 +103,6 @@ fun UserImages(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun ImagesDialog(
     unitId: Int,

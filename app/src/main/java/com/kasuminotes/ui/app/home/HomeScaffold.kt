@@ -1,9 +1,7 @@
 package com.kasuminotes.ui.app.home
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -15,16 +13,12 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.BottomBar
 import com.kasuminotes.ui.app.state.DbState
 import com.kasuminotes.ui.app.state.UiState
 import kotlinx.coroutines.launch
 
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
 @Composable
 fun HomeScaffold(
     uiState: UiState,

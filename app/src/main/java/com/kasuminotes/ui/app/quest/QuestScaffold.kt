@@ -3,7 +3,6 @@ package com.kasuminotes.ui.app.quest
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomDrawer
 import androidx.compose.material.BottomDrawerValue
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -13,13 +12,10 @@ import androidx.compose.material.rememberBottomDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.common.QuestMode
 import com.kasuminotes.ui.app.state.QuestState
 import kotlinx.coroutines.launch
 
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
 @Composable
 fun QuestScaffold(
     questState: QuestState,

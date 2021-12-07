@@ -311,6 +311,7 @@
     <string name="curse">呪い</string>
     <string name="fierce_poison">猛毒</string>
     <string name="beshrew">呪詛</string>
+    <string name="curse_or_beshrew">呪いか呪詛</string>
     <string name="poison_or_fierce_poison">毒か猛毒</string>
     <string name="numbness">麻痺</string>
     <string name="freeze">凍結</string>

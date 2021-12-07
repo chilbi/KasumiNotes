@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.QuestData
@@ -22,7 +21,6 @@ import com.kasuminotes.ui.components.NoDataText
 import com.kasuminotes.ui.components.SortIconButton
 import com.kasuminotes.ui.components.Toggle37Button
 
-@ExperimentalCoilApi
 @Composable
 fun EquipDropList(
     questTypes: Array<QuestType>,

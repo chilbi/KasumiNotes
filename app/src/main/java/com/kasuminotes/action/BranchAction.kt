@@ -83,6 +83,8 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
                 1 -> D.Format(R.string.curse)
                 2 -> D.Format(R.string.poison)
                 3 -> D.Format(R.string.fierce_poison)
+                4 -> D.Format(R.string.beshrew)
+                11 -> D.Format(R.string.curse_or_beshrew)
                 12 -> D.Format(R.string.poison_or_fierce_poison)
                 else -> D.Unknown
             }

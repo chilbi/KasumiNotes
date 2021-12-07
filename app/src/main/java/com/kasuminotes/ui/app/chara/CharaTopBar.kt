@@ -16,12 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.ui.components.ImmersiveBackButton
 import com.kasuminotes.ui.components.StillBox
 import com.kasuminotes.ui.theme.ImmersiveSysUi
 
-@ExperimentalCoilApi
 @Composable
 fun CharaTopBar(
     unitId: Int,

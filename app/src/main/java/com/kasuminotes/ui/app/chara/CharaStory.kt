@@ -1,6 +1,5 @@
 package com.kasuminotes.ui.app.chara
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.CharaStoryStatus
 import com.kasuminotes.data.Property
@@ -32,8 +30,6 @@ import com.kasuminotes.ui.components.TabsPanel
 import com.kasuminotes.ui.components.UnderlineLabelColumn
 import com.kasuminotes.ui.components.UnderlineStyle
 
-@ExperimentalCoilApi
-@ExperimentalAnimationApi
 @Composable
 fun CharaStory(
     userData: UserData,

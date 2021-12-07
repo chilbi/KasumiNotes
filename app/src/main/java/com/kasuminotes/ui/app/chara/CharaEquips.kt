@@ -21,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.UniqueData
@@ -33,7 +32,6 @@ import com.kasuminotes.ui.theme.UniqueColor
 import com.kasuminotes.ui.theme.rankRarity
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
 @Composable
 fun CharaEquips(
     uniqueData: UniqueData?,
@@ -70,7 +68,6 @@ fun CharaEquips(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun EquipItem(
     unitPromotion: UnitPromotion,
@@ -98,7 +95,6 @@ private fun EquipItem(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun UniqueEquipItem(
     uniqueData: UniqueData?,
@@ -141,7 +137,6 @@ private fun UniqueEquipItem(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun EquipIcon(
     equipData: EquipData?,
@@ -161,7 +156,6 @@ private fun EquipIcon(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun UniqueEquipIcon(
     uniqueData: UniqueData?,

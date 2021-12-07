@@ -9,13 +9,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.UnitPromotion
@@ -26,8 +24,6 @@ import com.kasuminotes.ui.components.ImageIcon
 import com.kasuminotes.ui.theme.GrayFilter
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
 @Composable
 fun CharaEquipSlots(
     userData: UserData,
@@ -105,8 +101,6 @@ fun CharaEquipSlots(
     }
 }
 
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
 @Composable
 private fun EquipIcon(
     equipLevel: Int,

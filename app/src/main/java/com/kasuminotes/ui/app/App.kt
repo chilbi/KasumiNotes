@@ -1,14 +1,9 @@
 package com.kasuminotes.ui.app
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.ui.app.about.About
 import com.kasuminotes.ui.app.chara.Chara
 import com.kasuminotes.ui.app.equip.Equip
@@ -18,11 +13,6 @@ import com.kasuminotes.ui.app.usereditor.CharaEditor
 import com.kasuminotes.ui.app.usereditor.UserImages
 import com.kasuminotes.ui.theme.KasumiNotesTheme
 
-@ExperimentalComposeUiApi
-@ExperimentalCoilApi
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
 @Composable
 fun App(appViewModel: AppViewModel = viewModel()) {
     val uiState = appViewModel.uiState

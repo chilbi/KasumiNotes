@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -37,7 +36,6 @@ import com.kasuminotes.ui.components.SliderPlus
 import com.kasuminotes.ui.theme.RaritiesColors
 import com.kasuminotes.ui.theme.rankRarity
 
-@ExperimentalMaterialApi
 @Composable
 fun CharaStatus(
     userData: UserData,

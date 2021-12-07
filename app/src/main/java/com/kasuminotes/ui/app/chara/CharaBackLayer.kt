@@ -1,7 +1,6 @@
 package com.kasuminotes.ui.app.chara
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -37,7 +35,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.MaxUserData
@@ -56,9 +53,6 @@ import com.kasuminotes.ui.components.StillSizeModify
 import com.kasuminotes.ui.components.bgBorder
 import com.kasuminotes.ui.theme.ImmersiveSysUi
 
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
 @Composable
 fun CharaBackLayer(
     userData: UserData,
@@ -140,7 +134,6 @@ fun CharaBackLayer(
     }
 }
 
-@ExperimentalAnimationApi
 @Composable
 private fun AlertMessage(
     userId: Int,

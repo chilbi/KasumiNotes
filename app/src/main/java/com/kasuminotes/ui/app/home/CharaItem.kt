@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.kasuminotes.R
@@ -32,7 +31,6 @@ import com.kasuminotes.ui.components.SizedBox
 import com.kasuminotes.ui.theme.Rounded8
 import com.kasuminotes.ui.theme.ShadowColor
 
-@ExperimentalCoilApi
 @Composable
 fun CharaItem(
     userProfile: UserProfile,
@@ -109,7 +107,6 @@ private fun RarityBorderShadow() {
     )
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun BoxScope.CharaImage(
     isPlate: Boolean,

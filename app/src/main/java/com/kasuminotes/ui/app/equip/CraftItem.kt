@@ -15,13 +15,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.selectedBg
 import com.kasuminotes.ui.theme.selected
 
-@ExperimentalCoilApi
 @Composable
 fun CraftItem(
     imageUrl: String,

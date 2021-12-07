@@ -22,15 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.QuestData
 import com.kasuminotes.ui.components.ImmersiveTopAppBar
 import com.kasuminotes.ui.components.Pagination
-import com.kasuminotes.ui.components.SortIconButton
 
-@ExperimentalCoilApi
 @Composable
 fun QuestMap(
     questDataList: List<QuestData>?,

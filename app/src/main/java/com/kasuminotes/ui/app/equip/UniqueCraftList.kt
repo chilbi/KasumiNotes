@@ -14,14 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.UniqueCraft
 import com.kasuminotes.ui.components.BgBorderColumn
 import com.kasuminotes.ui.components.ColumnLabel
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
 @Composable
 fun UniqueCraftList(
     craftList: List<UniqueCraft>,

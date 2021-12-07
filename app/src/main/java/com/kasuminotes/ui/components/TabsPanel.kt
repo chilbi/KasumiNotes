@@ -2,7 +2,6 @@ package com.kasuminotes.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
@@ -26,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 
-@ExperimentalAnimationApi
 @Composable
 fun TabsPanel(
     size: Int,
@@ -55,7 +53,6 @@ fun TabsPanel(
     )
 }
 
-@ExperimentalAnimationApi
 @Composable
 fun TabsPanel(
     size: Int,
@@ -119,7 +116,6 @@ fun TabsPanel(
     }
 }
 
-@ExperimentalAnimationApi
 @Composable
 private fun TabPanel(
     index: Int,

@@ -44,7 +44,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.EquipInfo
@@ -64,7 +63,6 @@ import com.kasuminotes.ui.theme.place
 import com.kasuminotes.ui.theme.selected
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
 @Composable
 fun QuestSearch(
     visitIndex: Int,
@@ -234,7 +232,6 @@ fun QuestSearch(
     )
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun SearchSet(
     visitIndex: Int,
@@ -268,7 +265,6 @@ private fun SearchSet(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun SearchSetMenu(
     visitIndex: Int,
@@ -352,7 +348,6 @@ private fun SearchSetMenu(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 fun EquipPairItem(
     rarity: Int,
@@ -378,7 +373,6 @@ fun EquipPairItem(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun PiecesItem(
     label: String,
@@ -402,7 +396,6 @@ private fun PiecesItem(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun BoxScope.SelectableItem(
     selected: Boolean,

@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.Badge
 import androidx.compose.material.BadgedBox
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -12,7 +11,6 @@ import androidx.compose.ui.unit.sp
 import com.kasuminotes.ui.theme.Negative
 import com.kasuminotes.ui.theme.Positive
 
-@ExperimentalMaterialApi
 @Composable
 fun DiffBadgedBox(
     value: Int,

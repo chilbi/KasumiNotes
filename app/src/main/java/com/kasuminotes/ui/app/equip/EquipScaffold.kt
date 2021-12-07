@@ -10,7 +10,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.navigationBarsHeight
 import com.kasuminotes.data.Property
 import com.kasuminotes.ui.app.state.DbState
@@ -18,7 +17,6 @@ import com.kasuminotes.ui.app.state.EquipState
 import com.kasuminotes.ui.components.BgBorderColumn
 import com.kasuminotes.ui.components.MultiLineText
 
-@ExperimentalCoilApi
 @Composable
 fun EquipScaffold(
     dbState: DbState,

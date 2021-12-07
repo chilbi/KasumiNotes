@@ -29,7 +29,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.DrawerDefaults
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.ListItem
@@ -75,7 +74,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.navigationBarsPadding
 import com.kasuminotes.BuildConfig
@@ -90,8 +88,6 @@ import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
 @Composable
 fun HomeDrawer(
     userId: Int,
@@ -173,7 +169,6 @@ fun HomeDrawer(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun UserImage(
     userId: Int,
@@ -197,8 +192,6 @@ private fun UserImage(
     }
 }
 
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
 @Composable
 private fun UserHeader(
     userId: Int,
@@ -330,7 +323,6 @@ private fun MenuCaption(text: String) {
     )
 }
 
-@ExperimentalMaterialApi
 @Composable
 private fun DatabaseMenuList(
     dbServer: DbServer,
@@ -382,7 +374,6 @@ private fun DatabaseMenuList(
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 private fun DisplayMenuList(
     language: Language,
@@ -431,7 +422,6 @@ private fun DisplayMenuList(
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 private fun AppMenuList(
     appAutoUpdate: Boolean,
@@ -467,7 +457,6 @@ private fun AppMenuList(
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 private fun ListItemWithDropdownMenu(
     iconVector: ImageVector,

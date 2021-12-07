@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
@@ -37,7 +36,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.User
 import com.kasuminotes.ui.app.DefaultUserId
@@ -45,8 +43,6 @@ import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
 @Composable
 fun LogInDialog(
     userList: List<User>,
@@ -104,7 +100,6 @@ private fun LogInTitle() {
     )
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun UserItem(
     user: User,

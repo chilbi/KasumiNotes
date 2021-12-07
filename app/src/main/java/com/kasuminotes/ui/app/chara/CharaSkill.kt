@@ -36,7 +36,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.BuildConfig
 import com.kasuminotes.R
 import com.kasuminotes.data.Property
@@ -64,7 +63,6 @@ import com.kasuminotes.ui.theme.LightWarning
 import com.kasuminotes.utils.UrlUtil
 import kotlin.math.roundToInt
 
-@ExperimentalCoilApi
 @Composable
 fun CharaSkill(
     userData: UserData,
@@ -161,7 +159,6 @@ private fun SkillLabel(text: String) {
     )
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun AttackPattern(
     hasUnique: Boolean,
@@ -209,7 +206,6 @@ private fun AttackPattern(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun PatternItem(
     loopLabel: String?,
@@ -255,7 +251,6 @@ private fun PatternItem(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun SkillDetail(
     label: String,

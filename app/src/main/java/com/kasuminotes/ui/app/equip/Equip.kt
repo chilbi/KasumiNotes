@@ -2,13 +2,11 @@ package com.kasuminotes.ui.app.equip
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.data.Property
 import com.kasuminotes.ui.app.state.DbState
 import com.kasuminotes.ui.app.state.EquipState
 
-@ExperimentalCoilApi
 @Composable
 fun Equip(
     dbState: DbState,

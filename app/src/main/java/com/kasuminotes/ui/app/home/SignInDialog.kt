@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentColor
@@ -33,15 +32,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.R
 import com.kasuminotes.ui.components.ImageIcon
 import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.theme.place
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
 @Composable
 fun SignInDialog(
     newUserId: Int?,
@@ -109,7 +105,6 @@ private fun SignInTitle() {
     )
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun SignInImage(
     newUserId: Int?,

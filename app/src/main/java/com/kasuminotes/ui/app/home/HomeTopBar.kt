@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.OrderBy
@@ -20,7 +19,6 @@ import com.kasuminotes.ui.components.ImmersiveTopAppBar
 import com.kasuminotes.ui.components.SearchBar
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
 @Composable
 fun HomeTopBar(
     userId: Int,

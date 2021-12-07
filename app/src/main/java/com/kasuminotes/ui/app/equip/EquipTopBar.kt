@@ -3,13 +3,11 @@ package com.kasuminotes.ui.app.equip
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.ImmersiveTopAppBar
 import com.kasuminotes.utils.UrlUtil
 
-@ExperimentalCoilApi
 @Composable
 fun EquipTopBar(
     equipmentId: Int,
