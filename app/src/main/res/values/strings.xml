@@ -170,8 +170,8 @@
     <string name="action_accumulative_damage_formula1_tier2">每当对敌人进行攻击，对该敌人造成的伤害便会提升%1$s。此效果最多叠加%2$s次。</string>
     <string name="action_barrier_guard_target1_formula2_content3_time4">对%1$s展开可无效%2$s%3$s伤害的护盾，效果时间%4$s秒。</string>
     <string name="action_barrier_drain_target1_formula2_content3_time4">对%1$s展开可吸收%2$s%3$s伤害的护盾，效果时间%4$s秒。</string>
-    <string name="action_damage_field_target1_range2_formula3_content4_time5">以%1$s为中心、展开对%2$s范围内所有敌人每秒造成%3$s%4$s伤害的领域，效果时间%5$s秒。</string>
-    <string name="action_field_target1_range2_content3_time4">以%1$s为中心、展开%2$s范围内%3$s的领域，效果时间%4$s秒。</string>
+    <string name="action_damage_field_target1_range2_formula3_content4_time5">以%1$s为中心，展开对%2$s范围内所有敌人每秒造成%3$s%4$s伤害的领域，效果时间%5$s秒。</string>
+    <string name="action_field_target1_range2_content3_time4">以%1$s为中心，展开%2$s范围内%3$s的领域，效果时间%4$s秒。</string>
     <string name="action_wave_start_idle_time1">战斗开始%s秒后入场。</string>
     <string name="action_mode_pattern1">切换到行动模式%s。</string>
     <string name="action_mode_pattern1_time2">切换到行动模式%1$s，效果时间%2$s秒。</string>
@@ -310,8 +310,8 @@
     <string name="burn">火伤</string>
     <string name="curse">诅咒</string>
     <string name="fierce_poison">猛毒</string>
-    <string name="beshrew">咒诅</string>
-    <string name="curse_or_beshrew">诅咒或咒诅</string>
+    <string name="beshrew">恶咒</string>
+    <string name="curse_or_beshrew">诅咒或恶咒</string>
     <string name="poison_or_fierce_poison">中毒或猛毒</string>
     <string name="numbness">麻痹</string>
     <string name="freeze">冻结</string>

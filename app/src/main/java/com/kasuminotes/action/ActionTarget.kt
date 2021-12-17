@@ -14,21 +14,12 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                 depend.getFocus().append(getTarget(null))
             }
         } else if (
-            (depend.actionType == 23 || depend.actionType == 28) &&
-            depend.targetCount == 99/* &&
-            (
-                depend.actionDetail1 == 100 ||//レム
-                depend.actionDetail1 == 300 ||//イオ
-                depend.actionDetail1 == 501 ||//ミツキ（オーエド）
-                depend.actionDetail1 == 502 ||//アオイ
-                depend.actionDetail1 in 900..999//レイ（ハロウィン）
-            )*/
+            (depend.actionType == 23 || depend.actionType == 28) && depend.targetCount == 99
         ) {
             D.Format(R.string.target_eligible)
         } else if (depend.depend != null) {
             depend.getTarget(depend.depend)
         } else {
-            //D.Unknown
             depend.getTarget(null)
         }
     }
@@ -87,7 +78,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                             arrayOf(getAssignment())
                         )
                     } else {
-                        if (actionType == 23/* && (actionDetail1 == 100 || actionDetail1 == 501 || actionDetail1 in 900..999)*/) {//レム、レイ（ハロウィン）、ミツキ（オーエド）
+                        if (actionType == 23) {//レム、レイ（ハロウィン）、ミツキ（オーエド）
                             D.Join(
                                 arrayOf(
                                     D.Format(R.string.target_front),
@@ -150,7 +141,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                                 getAssignment()
                             )
                         )
-                        if (actionType == 23/* && (actionDetail1 == 300 || actionDetail1 == 502)*/) {// イオ、アオイ
+                        if (actionType == 23) {// イオ、アオイ
                             D.Join(
                                 arrayOf(
                                     rangeTarget,
@@ -342,19 +333,6 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
             )
         }
         10 -> {
-//            if (
-//                (targetArea == 1 || targetArea == 2) &&
-//                targetCount == 1 &&
-//                (targetRange == -1 || targetRange >= 2160)
-//            ) {
-//                if (targetAssignment == 1) {
-//                    D.Format(R.string.target_forefront_enemy)
-//                } else {
-//                    D.Format(R.string.target_forefront_friendly)
-//                }
-//            } else {
-//                D.Unknown
-//            }
             if (targetAssignment == 1) {
                 D.Format(R.string.target_forefront_enemy)
             } else {
