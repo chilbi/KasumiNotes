@@ -21,8 +21,8 @@ class ActionBuilder(
         }
 
         actions.forEachIndexed { index, action ->
-            // Focus
-            if (action.actionType == 7) {
+            // Focus, 94Unknown
+            if (action.actionType == 7 || action.actionType == 94) {
                 remove.add(index)
             }
             // AbnormalField
@@ -87,7 +87,7 @@ class ActionBuilder(
             3 -> getKnock()
             4 -> getHeal(skillLevel, property)
             6 -> getBarrier(skillLevel)
-            7 -> D.Unknown//getFocus()
+            7 -> D.Unknown//Focus
             8 -> getAbnormal()
             9 -> getAbnormalDamage(skillLevel)
             10 -> getStatus(skillLevel)
@@ -102,9 +102,8 @@ class ActionBuilder(
             20 -> getProvoke(skillLevel)
             21 -> getNoDamage(skillLevel)
             22 -> getPattern()
-            23 -> D.Unknown//Branch
+            23, 28, 42, 53 -> D.Unknown//Branch
             26, 27, 74 -> getModify(skillLevel, actions)
-            28 -> D.Unknown//Branch
             30 -> getDestroy()
             32 -> getLifeSteal(skillLevel)
             33 -> getShieldCounter(skillLevel)
@@ -114,13 +113,11 @@ class ActionBuilder(
             37 -> getHealField(skillLevel, property)
             38 -> getStatusField(skillLevel)
             39 -> getAbnormalField(skillLevel, actions)
-            42 -> D.Unknown//StrikedBranch
             44 -> getWaveStartIdle()
             45 -> getSkillCounter()
             46 -> getRatioDamage()
             48 -> getRegeneration(skillLevel, property)
             50 -> getSustain(skillLevel)
-            53 -> D.Unknown//ExistsFieldBranch
             56 -> getBlind()
             57 -> getCountDown()
             58 -> getRelieveField()
