@@ -181,6 +181,10 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
     var branch = mutableListOf<Pair<Int, D>>()
 
     when (actionDetail1) {
+        // ルカ（ニューイヤー）
+        in 6000..6999 -> {
+            branch = getStateBranch(actionDetail1 - 6000, actionValue3)
+        }
         // アリサ、カヤ、スズナ（サマー）、ルカ（サマー）、クロエ（聖学祭）
         in 1200..1299 -> {
             val counter = D.Format(R.string.counter_num1, arrayOf(D.Text((actionDetail1 / 10 % 10).toString())))

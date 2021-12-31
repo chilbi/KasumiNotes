@@ -242,6 +242,7 @@
     <string name="content_attack_critical_target1">每当自身的攻击暴击时，就会为%s</string>
     <string name="content_status_up_target1">每当自身受到状态提升时，就会为%s</string>
     <string name="content_initial_value1">初始值的%s</string>
+    <string name="content_lower_defense">物理、魔法防御力中较低一方的防御力作为防御的</string>
 
     <string name="state_omemechan">小眼睛</string>
     <string name="state_light_shield">光之盾</string>
@@ -256,6 +257,7 @@
     <string name="state_ice_dragon_seal">冰龙之印</string>
     <string name="state_strength_seal">力之魔字</string>
     <string name="state_dragon_eye">龙眼</string>
+    <string name="state_sword_seal">剑之刻印</string>
 
     <string name="target_self">自身</string>
     <string name="target_enemy">敌人</string>

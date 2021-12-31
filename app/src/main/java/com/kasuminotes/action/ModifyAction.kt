@@ -114,6 +114,9 @@ fun SkillAction.getModify(skillLevel: Int, actions: List<SkillAction>): D {
 
 private fun SkillAction.getModifyIndependentVariable(): D {
     return when {
+        actionValue1 > 2000.0 -> {
+            D.Format(R.string.count_state1, arrayOf(getStateContent((actionValue1 % 1000).toInt())))
+        }
         actionValue1 > 100.0 -> {
             D.Format(R.string.count_state1, arrayOf(getStateContent((actionValue1 % 100).toInt())))
         }
