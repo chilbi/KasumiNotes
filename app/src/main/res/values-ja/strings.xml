@@ -202,8 +202,8 @@
     <string name="action_branch_not_target1_state2_above3">%1$sの【%2$s】の数が＜%3$sの場合、</string>
     <string name="action_branch_counter1_above2">【%1$s】の数が≧%2$sの場合、</string>
     <string name="action_branch_not_counter1_above2">【%1$s】の数が＜%2$sの場合、</string>
-    <string name="action_branch_hp_target1_above2">%1$sの残りＨＰが%2$s以上の場合、</string>
-    <string name="action_branch_hp_not_target1_above2">%1$sの残りＨＰが%2$s未満の場合、</string>
+    <string name="action_branch_hp_target1_above2">%1$sの残りＨＰが≧%2$sの場合、</string>
+    <string name="action_branch_hp_not_target1_above2">%1$sの残りＨＰが＜%2$sの場合、</string>
     <string name="action_branch_target1_state2">%1$sが%2$s状態の場合、</string>
     <string name="action_branch_not_target1_state2">%1$sが%2$s状態でない場合、</string>
     <string name="action_branch_speed_up_target1">%sが行動速度アップ状態の場合、</string>

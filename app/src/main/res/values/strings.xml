@@ -202,8 +202,8 @@
     <string name="action_branch_not_target1_state2_above3">%1$s的【%2$s】的数量＜%3$s时，</string>
     <string name="action_branch_counter1_above2">【%1$s】的数量≧%2$s时，</string>
     <string name="action_branch_not_counter1_above2">【%1$s】的数量＜%2$s时，</string>
-    <string name="action_branch_hp_target1_above2">%1$s的残余的HP高于%2$s以上时，</string>
-    <string name="action_branch_hp_not_target1_above2">%1$s的残余的HP不满%2$s时，</string>
+    <string name="action_branch_hp_target1_above2">%1$s的残余的HP≧%2$s时，</string>
+    <string name="action_branch_hp_not_target1_above2">%1$s的残余的HP＜%2$s时，</string>
     <string name="action_branch_target1_state2">%1$s已陷入%2$s状态时，</string>
     <string name="action_branch_not_target1_state2">%1$s未陷入%2$s状态时，</string>
     <string name="action_branch_speed_up_target1">%s已处于加速状态时，</string>
