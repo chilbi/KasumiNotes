@@ -208,16 +208,23 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                         }
                     }
                 } else if (targetCount == 1) {
-                    if (targetRange >= 2160 && targetNumber > 0) {
-                        if (targetNumber == 1 && targetAssignment == 2) {
-                            D.Format(R.string.target_nearest_friendly)
+                    if (targetRange >= 2160) {
+                        if (targetNumber > 0) {
+                            if (targetNumber == 1 && targetAssignment == 2) {
+                                D.Format(R.string.target_nearest_friendly)
+                            } else {
+                                D.Format(
+                                    R.string.target_near_number1_content2,
+                                    arrayOf(
+                                        D.Text((targetNumber + 1).toString()),
+                                        getAssignment()
+                                    )
+                                )
+                            }
                         } else {
                             D.Format(
-                                R.string.target_near_number1_content2,
-                                arrayOf(
-                                    D.Text((targetNumber + 1).toString()),
-                                    getAssignment()
-                                )
+                                R.string.target_one_content1,
+                                arrayOf(getAssignment())
                             )
                         }
                     } else if (targetRange == 0 && targetNumber == 0) {
