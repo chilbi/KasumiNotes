@@ -41,7 +41,7 @@ data class UnitAttackPattern(
             val skillData: SkillData?
 
             if (atkPattern < 2000) {
-                if (hasUnique && n == 1) {
+                if (hasUnique && n == 1 && unitSkillData.mainSkillEvolutionList.isNotEmpty()) {
                     atkLabel = "Main 1+"
                     skillData = unitSkillData.mainSkillEvolutionList.getOrNull(0)
                 } else {
@@ -49,7 +49,7 @@ data class UnitAttackPattern(
                     skillData = unitSkillData.mainSkillList.getOrNull(n - 1)
                 }
             } else {
-                if (hasUnique && n == 1) {
+                if (hasUnique && n == 1 && unitSkillData.spSkillEvolutionList.isNotEmpty()) {
                     atkLabel = "SP 1+"
                     skillData = unitSkillData.spSkillEvolutionList.getOrNull(0)
                 } else {

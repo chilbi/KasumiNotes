@@ -190,6 +190,7 @@
     <string name="action_change_mark_consume_target1_state2">消费掉%1$s的【%2$s】。</string>
     <string name="action_knight_guard_target1_formula2_time3">赋予%1$s【骑士之加护】。当HP归零时，不会被击倒而是消耗掉【骑士之加护】同时HP回复%2$s。效果时间%3$s秒。</string>
     <string name="action_shield_counter_target1_content2_add3_max4_consume5_formula6">为%1$s追加%3$s个【%2$s】，最多可以追加%4$s个。【%2$s】每无效1次伤害就会消耗%5$s个，同时对进攻的敌人造成%6$s伤害。</string>
+    <string name="action_injured_energy1">由此技能造成伤害的TP回复量变为原来的%s倍。</string>
     <string name="action_hit_count_target1_time2_count3">%1$s在%2$s秒内，每当造成%3$s次伤害时，</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$s追加%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。</string>
     <string name="action_strength_target1_formula2_time3">刻有【力之魔字】的期间，%1$s的行动速度提升%2$s，效果时间%3$s秒。（此技能的效果可以和其它行动速度变化技能叠加）</string>
@@ -255,8 +256,10 @@
     <string name="state_tiger_claw">虎之爪</string>
     <string name="state_holly_night_brilliance">圣夜光辉</string>
     <string name="state_ice_dragon_seal">冰龙之印</string>
+    <string name="state_study_time">学习的时间</string>
     <string name="state_strength_seal">力之魔字</string>
     <string name="state_dragon_eye">龙眼</string>
+    <string name="state_physical_vulnerability">物理易伤</string>
     <string name="state_sword_seal">剑之刻印</string>
 
     <string name="target_self">自身</string>

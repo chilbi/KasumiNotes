@@ -73,6 +73,15 @@ class ActionBuilder(
                     }
                 }
             }
+            //InjuredEnergy
+            if (action.actionType == 92) {
+                remove.add(index)
+                rawDepends.forEachIndexed { dependIndex, dependActionId ->
+                    if (dependActionId == action.actionId) {
+                        origin[dependIndex] = origin[dependIndex].append(action.getInjuredEnergy())
+                    }
+                }
+            }
         }
 
         return if (remove.isEmpty()) origin
@@ -127,6 +136,7 @@ class ActionBuilder(
             75 -> getHitCount()
             79 -> D.Unknown//PoisonDamageByBehaviour
             83 -> getGuildOfStrength()
+            92 -> D.Unknown//InjuredEnergy
             else -> getUnknown()
         }
     }
@@ -137,13 +147,15 @@ class ActionBuilder(
 //    15, "シノブ、ネネカ、チカ、チカ（クリスマス）、スズメ（サマー）",
 //
 //    23, "ぺコリーヌ（プリンセス）、レイ（ハロウィン）、クリスティーナ（クリスマス）、ミサト（サマー）、マコト（サマー）",
-//    23, "イオ、タマキ、アン、レム、ルナ、アオイ、アオイ（編入生）、カヤ（タイムトラベル）、ミツキ（オーエド）、ホマレ,ミサキ",
+//    23, "イオ、タマキ、アン、レム、ルナ、アオイ、アオイ（編入生）、カヤ（タイムトラベル）、ミツキ（オーエド）、ホマレ、ミサキ",
+//    23, "キャル（オーバーロード）",
 //
 //    28, "クロエ（聖学祭）、チエル（聖学祭）、リノ（ワンダー）、スズナ（サマー）、マコト（サマー）、ルカ（サマー）、アンナ（サマー）",
 //    28, "レイ、カヤ、スズメ、エリコ、ニノン、ミフユ、アリサ、ルナ、シノブ（ハロウィン）、クリスティーナ（クリスマス）",
 //    28, "ぺコリーヌ（ニューイヤー）、ホマレ、ルカ（ニューイヤー）、ぺコリーヌ（オーバーロード）",
 //
 //    35, "アン、レイ、シェフィ、チエル、ルナ、マツリ（ハロウィン）、クリスティーナ（クリスマス）、カリン、ホマレ",
+//    35, "ラビリスタ（オーバーロード）、ユニ（聖学祭）",
 //
 //    45, "カヤ、アリサ、シェフィ、クロエ（聖学祭）、チカ（サマー）、スズナ（サマー）、ルカ（サマー）",
 //

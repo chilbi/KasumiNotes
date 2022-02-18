@@ -21,6 +21,27 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
         in 6000..6999 -> {
             branch = getStateBranch(actionDetail1 - 6000, actionValue3)
         }
+        // キャル（オーバーロード）
+        1600 -> {
+            val target = getTarget(depend)
+            val state = D.Format(R.string.fear)
+            if (actionDetail2 != 0) {
+                branch.add(
+                    actionDetail2 to D.Format(
+                        R.string.action_branch_target1_state2,
+                        arrayOf(target, state)
+                    )
+                )
+            }
+            if (actionDetail3 != 0) {
+                branch.add(
+                    actionDetail3 to D.Format(
+                        R.string.action_branch_not_target1_state2,
+                        arrayOf(target, state)
+                    )
+                )
+            }
+        }
         // タマキ、ミサト（サマー）
         1300 -> {
             val target = getTarget(depend)
