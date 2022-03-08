@@ -114,7 +114,12 @@ data class UserProfile(
 
         if (loveLevel < 2) return result
 
-        val unlockCount = Helper.getStoryUnlockCount(status.size, loveLevel, maxRarity)
+        val unlockCount = Helper.getStoryUnlockCount(
+            status.size,
+            loveLevel,
+            maxRarity,
+            Helper.getStoryDiffCount(status.size, maxRarity)
+        )
 
         var i = 0
         while (i < unlockCount) {

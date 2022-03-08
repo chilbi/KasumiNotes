@@ -6,11 +6,20 @@ import kotlin.math.max
 import kotlin.math.min
 
 object Helper {
-    fun getStoryUnlockCount(statusSize: Int, loveLevel: Int, maxRarity: Int): Int {
-        return if (maxRarity > 5 && statusSize < 9) {
-            if (loveLevel < 9) loveLevel / 2 - 1 else loveLevel - 5
+    fun getStoryDiffCount(statusSize: Int, maxRarity: Int): Int {
+        val maxSize = if (maxRarity < 6) {
+            if (statusSize < 5)  4 else 8
         } else {
-            (if (statusSize < 4) loveLevel / 2 else loveLevel) - 1
+            if (statusSize < 9) 8 else 12
+        }
+        return maxSize - statusSize
+    }
+
+    fun getStoryUnlockCount(statusSize: Int, loveLevel: Int, maxRarity: Int, diffCount: Int): Int {
+        return if (maxRarity > 5 && statusSize < 9) {
+            if (loveLevel < 9) loveLevel / 2 - diffCount else loveLevel - 4 - diffCount
+        } else {
+            (if (statusSize < 5) loveLevel / 2 else loveLevel) - diffCount
         }
     }
 

@@ -7,6 +7,7 @@ data class StoryItem(
     private val rarity: Int,
     private val unitName: String,
     val status: List<Property>?,
+    val diffCount: Int,
     val unlockCount: Int
 ) {
     val iconUrl: String by lazy {

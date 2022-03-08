@@ -81,6 +81,7 @@ fun CharaStory(
                 val storyItem = stories[index]
                 StoryProperties(
                     status = storyItem.status,
+                    diffCount = storyItem.diffCount,
                     unlockCount = storyItem.unlockCount,
                     state = state
                 )
@@ -92,6 +93,7 @@ fun CharaStory(
 @Composable
 private fun StoryProperties(
     status: List<Property>?,
+    diffCount: Int,
     unlockCount: Int,
     state: ScrollState
 ) {
@@ -105,7 +107,7 @@ private fun StoryProperties(
     ) {
         status.forEachIndexed { index, property ->
             StoryProperty(
-                label = stringResource(R.string.story_d, index + 2),
+                label = stringResource(R.string.story_d, index + 1 + diffCount),
                 unlock = index < unlockCount,
                 property = property
             )

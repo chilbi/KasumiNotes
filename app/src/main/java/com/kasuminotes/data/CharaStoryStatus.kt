@@ -18,13 +18,15 @@ data class CharaStoryStatus(
             if (index > 0) {
                 val userProfile = sharedProfiles[index - 1]
                 val sharedStatus = userProfile.charaStoryStatus?.status
+                val diffCount = Helper.getStoryDiffCount(sharedStatus?.size ?: 0, userProfile.unitData.maxRarity)
                 val unlockCount = if (sharedStatus == null) {
                     0
                 } else {
                     Helper.getStoryUnlockCount(
                         sharedStatus.size,
                         userProfile.userData.loveLevel,
-                        userProfile.unitData.maxRarity
+                        userProfile.unitData.maxRarity,
+                        diffCount
                     )
                 }
                 StoryItem(
@@ -32,15 +34,19 @@ data class CharaStoryStatus(
                     userProfile.userData.rarity,
                     userProfile.unitData.unitName,
                     sharedStatus,
+                    diffCount,
                     unlockCount
                 )
             } else {
+                val diffCount = Helper.getStoryDiffCount(status.size, maxRarity)
+                val unlockCount = Helper.getStoryUnlockCount(status.size, loveLevel, maxRarity, diffCount)
                 StoryItem(
                     unitId,
                     rarity,
                     unitName,
                     status,
-                    Helper.getStoryUnlockCount(status.size, loveLevel, maxRarity)
+                    diffCount,
+                    unlockCount
                 )
             }
         }
