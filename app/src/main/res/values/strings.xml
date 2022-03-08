@@ -221,6 +221,10 @@
     <string name="action_branch_magic_target1">%s是使用魔法攻击的角色时，</string>
     <string name="action_branch_success_odds1">%s概率成功，成功时，</string>
     <string name="action_branch_failure_odds1">%s概率失败，失败时，</string>
+    <string name="action_branch_exist_ore_dragon">矿石飞龙已存在己方场上时，</string>
+    <string name="action_branch_not_exist_ore_dragon">矿石飞龙不存在己方场上时，</string>
+    <string name="action_branch_def_down_target1">%s在此技能发动时已处于魔法防御下降状态时，</string>
+    <string name="action_branch_not_def_down_target1">%s在此技能发动时未处于魔法防御下降状态时，</string>
     <string name="action_summon_target1_distance2_content3">在%1$s的前方%2$s距离，%3$s。</string>
     <string name="action_summon_target1_content2">在%1$s身边，%2$s。</string>
 
@@ -231,6 +235,7 @@
     <string name="summon_408401">咏唱召唤一个能使用魔法攻击的精灵</string>
     <string name="summon_408402">咏唱召唤一个能回复残余HP比例最低的一名己方角色的HP的精灵</string>
     <string name="summon_408403">咏唱召唤一个能回复己方全体TP的精灵</string>
+    <string name="summon_418101">召唤矿石飞龙</string>
 
     <string name="content_regeneration_hp_formula1">所有己方每秒HP回复%s</string>
     <string name="content_buff_target1_content2_formula3">所有%1$s的%2$s提升%3$s</string>

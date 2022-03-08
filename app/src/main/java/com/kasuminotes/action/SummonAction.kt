@@ -14,6 +14,7 @@ fun SkillAction.getSummon(): D {
         408401 -> D.Format(R.string.summon_408401)//チカ（クリスマス）
         408402 -> D.Format(R.string.summon_408402)//チカ（クリスマス）
         408403 -> D.Format(R.string.summon_408403)//チカ（クリスマス）
+        418101 -> D.Format(R.string.summon_418101)//ランファ
         else -> D.Text(description)
     }
 

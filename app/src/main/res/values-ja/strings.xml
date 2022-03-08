@@ -221,6 +221,10 @@
     <string name="action_branch_magic_target1">%sが魔法攻撃をするキャラの場合、</string>
     <string name="action_branch_success_odds1">%s確率で成功する、成功の場合、</string>
     <string name="action_branch_failure_odds1">%s確率で失敗する、失敗の場合、</string>
+    <string name="action_branch_exist_ore_dragon">ネフライトワイバーンが味方にいる場合、</string>
+    <string name="action_branch_not_exist_ore_dragon">ネフライトワイバーンが味方にいない場合、</string>
+    <string name="action_branch_def_down_target1">%sがこのスキル発動時既に魔法防御力ダウン状態の場合、</string>
+    <string name="action_branch_not_def_down_target1">%sがこのスキル発動時既に魔法防御力ダウン状態でない場合、</string>
     <string name="action_summon_target1_distance2_content3">%1$sの前%2$s距離に、%3$s。</string>
     <string name="action_summon_target1_content2">%1$sのそばに、%2$s。</string>
 
@@ -231,6 +235,7 @@
     <string name="summon_408401">魔法攻撃を行う精霊を唱喚する</string>
     <string name="summon_408402">最も残りＨＰ割合が低い味方１キャラのＨＰを回復する精霊を唱喚する</string>
     <string name="summon_408403">味方全体のＴＰを回復する精霊を唱喚する</string>
+    <string name="summon_418101">ネフライトワイバーンを召喚する</string>
 
     <string name="content_regeneration_hp_formula1">の味方すべてを毎秒ＨＰを%s回復する</string>
     <string name="content_buff_target1_content2_formula3">の%1$sすべての%2$sを%3$sアップさせる</string>

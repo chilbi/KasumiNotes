@@ -206,6 +206,26 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         in 6000..6999 -> {
             branch = getStateBranch(actionDetail1 - 6000, actionValue3)
         }
+        // キャル（サマー）
+        1700 -> {
+            val target = getTarget(depend)
+            if (actionDetail2 != 0) {
+                branch.add(
+                    actionDetail2 to D.Format(
+                        R.string.action_branch_def_down_target1,
+                        arrayOf(target)
+                    )
+                )
+            }
+            if (actionDetail3 != 0) {
+                branch.add(
+                    actionDetail3 to D.Format(
+                        R.string.action_branch_not_def_down_target1,
+                        arrayOf(target)
+                    )
+                )
+            }
+        }
         // アリサ、カヤ、スズナ（サマー）、ルカ（サマー）、クロエ（聖学祭）
         in 1200..1299 -> {
             val counter = D.Format(R.string.counter_num1, arrayOf(D.Text((actionDetail1 / 10 % 10).toString())))
@@ -269,6 +289,15 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         // ホマレ
         721 -> {
             branch = getStateBranch(actionValue3.toInt(), actionValue4)
+        }
+        // ランファ
+        720 -> {
+            if (actionDetail2 != 0) {
+                branch.add(actionDetail2 to D.Format(R.string.action_branch_exist_ore_dragon))
+            }
+            if (actionDetail3 != 0) {
+                branch.add(actionDetail3 to D.Format(R.string.action_branch_not_exist_ore_dragon))
+            }
         }
         // マコト（サマー）、アンナ（サマー）
         700 -> {
