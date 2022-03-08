@@ -45,6 +45,7 @@ fun CharaStory(
             charaStoryStatus?.getStoryList(
                 unitData.unitId,
                 userData.rarity,
+                unitData.maxRarity,
                 userData.loveLevel,
                 unitData.unitName,
                 sharedProfiles

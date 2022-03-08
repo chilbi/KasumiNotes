@@ -6,8 +6,12 @@ import kotlin.math.max
 import kotlin.math.min
 
 object Helper {
-    fun getStoryUnlockCount(statusSize: Int, loveLevel: Int): Int {
-        return (if (statusSize < 7) loveLevel / 2 else loveLevel) - 1
+    fun getStoryUnlockCount(statusSize: Int, loveLevel: Int, maxRarity: Int): Int {
+        return if (maxRarity > 5 && statusSize < 9) {
+            if (loveLevel < 9) loveLevel / 2 - 1 else loveLevel - 5
+        } else {
+            (if (statusSize < 4) loveLevel / 2 else loveLevel) - 1
+        }
     }
 
     fun getEquipRarityString(equipId: Int): String {

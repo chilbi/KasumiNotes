@@ -72,7 +72,7 @@ data class UserProfile(
                 }
 
                 // selfCharaStoryStatus
-                value += getStoryValue(index, data.loveLevel, charaStoryStatus!!.status)
+                value += getStoryValue(index, data.loveLevel, charaStoryStatus!!.status, unitData.maxRarity)
 
                 // sharedCharaStoryStatus
                 if (sharedProfiles.isNotEmpty()) {
@@ -80,7 +80,8 @@ data class UserProfile(
                         value += getStoryValue(
                             index,
                             item.userData.loveLevel,
-                            item.charaStoryStatus!!.status
+                            item.charaStoryStatus!!.status,
+                            item.unitData.maxRarity
                         )
                     }
                 }
@@ -108,12 +109,12 @@ data class UserProfile(
         return ceil(equipData.growthProperty[index] * level) + equipData.baseProperty[index]
     }
 
-    private fun getStoryValue(index: Int, loveLevel: Int, status: List<Property>): Double {
+    private fun getStoryValue(index: Int, loveLevel: Int, status: List<Property>, maxRarity: Int): Double {
         var result = 0.0
 
         if (loveLevel < 2) return result
 
-        val unlockCount = Helper.getStoryUnlockCount(status.size, loveLevel)
+        val unlockCount = Helper.getStoryUnlockCount(status.size, loveLevel, maxRarity)
 
         var i = 0
         while (i < unlockCount) {

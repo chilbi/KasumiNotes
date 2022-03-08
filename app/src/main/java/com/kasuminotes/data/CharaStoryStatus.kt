@@ -9,6 +9,7 @@ data class CharaStoryStatus(
     fun getStoryList(
         unitId: Int,
         rarity: Int,
+        maxRarity: Int,
         loveLevel: Int,
         unitName: String,
         sharedProfiles: List<UserProfile>
@@ -20,7 +21,11 @@ data class CharaStoryStatus(
                 val unlockCount = if (sharedStatus == null) {
                     0
                 } else {
-                    Helper.getStoryUnlockCount(sharedStatus.size, userProfile.userData.loveLevel)
+                    Helper.getStoryUnlockCount(
+                        sharedStatus.size,
+                        userProfile.userData.loveLevel,
+                        userProfile.unitData.maxRarity
+                    )
                 }
                 StoryItem(
                     userProfile.unitData.unitId,
@@ -35,7 +40,7 @@ data class CharaStoryStatus(
                     rarity,
                     unitName,
                     status,
-                    Helper.getStoryUnlockCount(status.size, loveLevel)
+                    Helper.getStoryUnlockCount(status.size, loveLevel, maxRarity)
                 )
             }
         }
