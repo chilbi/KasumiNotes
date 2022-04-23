@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlin.math.min
 
 class EquipState(
     private val appRepository: AppRepository,
@@ -194,9 +195,16 @@ class EquipState(
         list.add(UniqueCraft(110, 140001, 10, memoryId, 10))
         list.add(UniqueCraft(130, 140001, 10, memoryId, 10))
         var unlockLevel = 140
-        while (unlockLevel <= maxUnlockLevel) {
+        val craft15Level = min(maxUnlockLevel, 230)
+        while (unlockLevel <= craft15Level) {
             list.add(UniqueCraft(unlockLevel, 140001, 10, memoryId, 15))
             unlockLevel += 10
+        }
+        if (maxUnlockLevel > 230) {
+            while (unlockLevel <= maxUnlockLevel) {
+                list.add(UniqueCraft(unlockLevel, 140001, 10, memoryId, 5))
+                unlockLevel += 10
+            }
         }
         uniqueCraftList = list
     }
