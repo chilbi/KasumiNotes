@@ -193,6 +193,7 @@
     <string name="action_mark_content1_state2_add3_max4_time5">%1$sに【%2$s】が%3$sつ追加されるようになる、最大%4$sまで追加される、効果時間%5$s秒。</string>
     <string name="action_strength_target1_formula2_time3">【力の魔字】が刻まれている間、%1$sの行動速度を%2$sアップ、効果時間%3$s秒。（このスキルの効果は他の行動速度変化スキルと重複する）</string>
     <string name="action_injured_energy1">このスキルによるダメージではＴＰ回復量は本来の%s倍になる。</string>
+    <string name="action_hiding_target1_time2">%1$sを隠密状態にする、効果時間%2$s秒。</string>
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>
     <string name="action_striked_branch_time1">%s秒のモーションの間に攻撃された場合、</string>
     <string name="action_exists_field_branch_content1">%sのフィールド展開中場合、</string>
@@ -250,6 +251,7 @@
     <string name="content_initial_value1">初期値の%s</string>
     <string name="content_lower_defense">低い側の防御力で防御する</string>
 
+    <string name="state_hiding">隠密</string>
     <string name="state_omemechan">オメメちゃん</string>
     <string name="state_light_shield">光の盾</string>
     <string name="state_servant_intensive">英霊の加護</string>

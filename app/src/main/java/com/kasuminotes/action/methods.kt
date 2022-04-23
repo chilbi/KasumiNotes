@@ -126,6 +126,7 @@ fun getStatusContent(detail: Int): D {
 
 fun getStateContent(detail: Int): D {
     return when (detail) {
+        1 -> D.Format(R.string.state_hiding)
         2 -> D.Format(R.string.state_omemechan)
         4 -> D.Format(R.string.state_light_shield)
         50 -> D.Format(R.string.state_servant_intensive)

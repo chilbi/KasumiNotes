@@ -131,12 +131,14 @@ class ActionBuilder(
             57 -> getCountDown()
             58 -> getRelieveField()
             60, 77 -> getMark()
+            72 -> getCutDamage()
             61 -> getFear()
             71 -> getKnightGuard(skillLevel, property)
             75 -> getHitCount()
             79 -> D.Unknown//PoisonDamageByBehaviour
             83 -> getGuildOfStrength()
             92 -> D.Unknown//InjuredEnergy
+            95 -> getHiding()
             else -> getUnknown()
         }
     }
@@ -153,6 +155,7 @@ class ActionBuilder(
 //    28, "クロエ（聖学祭）、チエル（聖学祭）、リノ（ワンダー）、スズナ（サマー）、マコト（サマー）、ルカ（サマー）、アンナ（サマー）",
 //    28, "レイ、カヤ、スズメ、エリコ、ニノン、ミフユ、アリサ、ルナ、シノブ（ハロウィン）、クリスティーナ（クリスマス）",
 //    28, "ぺコリーヌ（ニューイヤー）、ホマレ、ルカ（ニューイヤー）、ぺコリーヌ（オーバーロード）、ランファ、キャル（サマー）",
+//    28, "イノリ（怪盗）",
 //
 //    35, "アン、レイ、シェフィ、チエル、ルナ、マツリ（ハロウィン）、クリスティーナ（クリスマス）、カリン、ホマレ",
 //    35, "ラビリスタ（オーバーロード）、ユニ（聖学祭）",

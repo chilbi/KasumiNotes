@@ -226,6 +226,10 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
                 )
             }
         }
+        // イノリ（怪盗）
+        1601 -> {
+            branch = getStateBranch(actionDetail1 - 1600, actionValue3)
+        }
         // アリサ、カヤ、スズナ（サマー）、ルカ（サマー）、クロエ（聖学祭）
         in 1200..1299 -> {
             val counter = D.Format(R.string.counter_num1, arrayOf(D.Text((actionDetail1 / 10 % 10).toString())))
