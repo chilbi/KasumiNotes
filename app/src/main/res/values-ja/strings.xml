@@ -238,13 +238,13 @@
     <string name="summon_408403">味方全体のＴＰを回復する精霊を唱喚する</string>
     <string name="summon_418101">ネフライトワイバーンを召喚する</string>
 
-    <string name="content_regeneration_hp_formula1">の味方すべてを毎秒ＨＰを%s回復する</string>
+    <string name="content_regeneration_content1_formula2">の味方すべての%1$sを毎秒%2$s回復する</string>
     <string name="content_buff_target1_content2_formula3">の%1$sすべての%2$sを%3$sアップさせる</string>
     <string name="content_debuff_target1_content2_formula3">の%1$sすべての%2$sを%3$sダウンさせる</string>
     <string name="content_poison_damage_by_behaviour_formula1">の敵すべてを行動する度に%sダメージを与える毒状態にする</string>
     <string name="content_speed_formula1">の敵すべての行動速度を本来の%sにする</string>
     <string name="content_abnormal1">の敵すべてを%s状態にする</string>
-    <string name="content_attack_hit_enemy_target1">%sが、自分の攻撃が当たる度に、その対象</string>
+    <string name="content_attack_hit_enemy_target1">自分の攻撃が%sの中の任意１キャラを当たる度に、命中された対象</string>
     <string name="content_attack_hit_target1">自分の攻撃が当たる度に、%s</string>
     <string name="content_attack_critical_target1">自分の攻撃がクリティカルでダメージを与える度に、%s</string>
     <string name="content_status_up_target1">自分がステータスアップ効果を受ける度に、%s</string>
@@ -266,8 +266,9 @@
     <string name="state_study_time">学びの時間</string>
     <string name="state_strength_seal">力の魔字</string>
     <string name="state_dragon_eye">龍眼</string>
-    <string name="state_physical_vulnerability">物理ダメージ受けやすい</string>
+    <string name="state_overload_structure">オーバーロードストラクチャ</string>
     <string name="state_sword_seal">剣の刻印</string>
+    <string name="state_soul_anchor_seal">霊錨の刻印</string>
 
     <string name="target_self">自分</string>
     <string name="target_enemy">敵</string>

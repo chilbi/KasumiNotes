@@ -139,6 +139,7 @@ class ActionBuilder(
             83 -> getGuildOfStrength()
             92 -> D.Unknown//InjuredEnergy
             95 -> getHiding()
+            96 -> getEnergyField(skillLevel)
             else -> getUnknown()
         }
     }

@@ -208,7 +208,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                         }
                     }
                 } else if (targetCount == 1) {
-                    if (targetRange >= 2160) {
+                    if (targetRange == -1 || targetRange >= 2160) {
                         if (targetNumber > 0) {
                             if (targetNumber == 1 && targetAssignment == 2) {
                                 D.Format(R.string.target_nearest_friendly)

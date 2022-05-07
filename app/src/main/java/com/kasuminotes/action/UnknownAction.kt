@@ -5,28 +5,29 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getUnknown(): D {
     val str = StringBuilder()
-    str.append("action_type=$actionType")
-    str.append(", action_id=$actionId")
+    str.append("\naction(type=$actionType")
+    str.append(", id=$actionId")
     if (depend != null) {
-        str.append(", depend_id=${depend!!.actionId}")
+        str.append(", depend=${depend!!.actionId}")
     }
-    str.append("; ")
-    str.append("details($actionDetail1, $actionDetail2, $actionDetail3); ")
+    str.append(");\n")
+    str.append("details($actionDetail1, $actionDetail2, $actionDetail3);\n")
     str.append(
         arrayOf(actionValue1, actionValue2, actionValue3, actionValue4, actionValue5, actionValue6, actionValue7)
-            .joinToString(", ", "values(", "); ") {
+            .joinToString(", ", "values(", ");\n") {
                 it.toNumStr()
             }
     )
-    str.append("target(type=$targetType")
-    str.append(", assignment=$targetAssignment")
-    str.append(", area=$targetArea")
-    str.append(", count=$targetCount")
-    str.append(", range=$targetRange")
-    str.append(", number=$targetNumber")
-    str.append(")")
+//    str.append("target(type=$targetType")
+//    str.append(", assignment=$targetAssignment")
+//    str.append(", area=$targetArea")
+//    str.append(", count=$targetCount")
+//    str.append(", range=$targetRange")
+//    str.append(", number=$targetNumber")
+//    str.append(")")
+    str.append("target=\"${getStringDescription(getTarget(depend))}\"")
     if (description.isNotEmpty()) {
-        str.append("; description=$description")
+        str.append(";\ndescription=\"$description\"")
     }
 
     return D.Format(

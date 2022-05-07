@@ -141,8 +141,9 @@ fun getStateContent(detail: Int): D {
         98 -> D.Format(R.string.state_study_time)
         106 -> D.Format(R.string.state_strength_seal)
         107 -> D.Format(R.string.state_dragon_eye)
-        111 -> D.Format(R.string.state_physical_vulnerability)
+        111 -> D.Format(R.string.state_overload_structure)
         112 -> D.Format(R.string.state_sword_seal)
+        113 -> D.Format(R.string.state_soul_anchor_seal)
         else -> D.Unknown
     }
 }

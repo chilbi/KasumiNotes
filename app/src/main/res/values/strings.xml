@@ -238,13 +238,13 @@
     <string name="summon_408403">咏唱召唤一个能回复己方全体TP的精灵</string>
     <string name="summon_418101">召唤矿石飞龙</string>
 
-    <string name="content_regeneration_hp_formula1">所有己方每秒HP回复%s</string>
+    <string name="content_regeneration_content1_formula2">所有己方的%1$s每秒回复%2$s</string>
     <string name="content_buff_target1_content2_formula3">所有%1$s的%2$s提升%3$s</string>
     <string name="content_debuff_target1_content2_formula3">所有%1$s的%2$s下降%3$s</string>
     <string name="content_poison_damage_by_behaviour_formula1">所有敌人陷入每当行动时就会受到%s伤害的中毒状态</string>
     <string name="content_speed_formula1">所有敌人的行动速度变为原来的%s</string>
     <string name="content_abnormal1">所有敌人陷入%s状态</string>
-    <string name="content_attack_hit_enemy_target1">对%s赋予效果，每当自身的攻击命中时，就会为命中的目标</string>
+    <string name="content_attack_hit_enemy_target1">每当自身的攻击命中%s中任意一名时，就会为被命中的该目标</string>
     <string name="content_attack_hit_target1">每当自身的攻击命中时，就会为%s</string>
     <string name="content_attack_critical_target1">每当自身的攻击暴击时，就会为%s</string>
     <string name="content_status_up_target1">每当自身受到状态提升时，就会为%s</string>
@@ -266,8 +266,9 @@
     <string name="state_study_time">学习的时间</string>
     <string name="state_strength_seal">力之魔字</string>
     <string name="state_dragon_eye">龙眼</string>
-    <string name="state_physical_vulnerability">物理易伤</string>
+    <string name="state_overload_structure">超载结构</string>
     <string name="state_sword_seal">剑之刻印</string>
+    <string name="state_soul_anchor_seal">灵锚之刻印</string>
 
     <string name="target_self">自身</string>
     <string name="target_enemy">敌人</string>
