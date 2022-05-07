@@ -10,7 +10,7 @@ enum class OrderBy : ResId {
     },
     ID {
         @StringRes
-        override val resId = R.string.id
+        override val resId = R.string.chara_id
     },
     Rarity {
         @StringRes

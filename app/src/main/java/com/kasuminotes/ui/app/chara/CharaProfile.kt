@@ -39,8 +39,6 @@ fun CharaProfile(
             .padding(4.dp)
     ) {
         BgBorderColumn {
-            InfobarFullWidth(R.string.id, unitData.unitId.toString())
-
             InfobarFullWidth(R.string.actual_name, unitData.actualName)
 
             InfobarFullWidth(R.string.kana, unitData.kana)
@@ -50,6 +48,8 @@ fun CharaProfile(
             InfobarFullWidth(R.string.guild, unitData.guild)
 
             InfobarFullWidth(R.string.favorite, unitData.favorite)
+
+            InfobarFullWidth(R.string.race, unitData.race)
 
             Row {
                 InfobarHalfWidth(R.string.height, unitData.height)
@@ -69,7 +69,7 @@ fun CharaProfile(
             Row {
                 InfobarHalfWidth(R.string.blood_type, unitData.bloodType)
 
-                InfobarHalfWidth(R.string.race, unitData.race)
+                InfobarHalfWidth(R.string.chara_id, (unitData.unitId / 100).toString())
             }
         }
 

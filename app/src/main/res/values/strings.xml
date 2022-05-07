@@ -67,7 +67,7 @@
     <string name="asc">升序</string>
     <string name="desc">降序</string>
     <string name="start_time">更新日</string>
-    <string name="id">ID</string>
+    <string name="chara_id">角色ID</string>
     <string name="rarity">星数</string>
     <string name="search_area_width">攻击距离</string>
 

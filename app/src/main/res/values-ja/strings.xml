@@ -67,7 +67,7 @@
     <string name="asc">昇順</string>
     <string name="desc">降順</string>
     <string name="start_time">更新日</string>
-    <string name="id">ID</string>
+    <string name="chara_id">キャラID</string>
     <string name="rarity">★の数</string>
     <string name="search_area_width">攻撃距離</string>
 
