@@ -12,18 +12,25 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.kasuminotes.R
+import com.kasuminotes.common.OrderBy
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.CharaImageState
 import com.kasuminotes.ui.components.PlaceImage
@@ -33,9 +40,10 @@ import com.kasuminotes.ui.theme.ShadowColor
 
 @Composable
 fun CharaItem(
+    layerAlpha: State<Float>,
+    orderBy: OrderBy,
     userProfile: UserProfile,
     charaImageState: CharaImageState,
-    layerAlpha: State<Float>,
     onCharaClick: (UserProfile) -> Unit
 ) {
     SizedBox(
@@ -90,6 +98,24 @@ fun CharaItem(
                 charaImageState.uniqueId
             )
         }
+
+        Caption(userProfile.getStringOf(orderBy), layerAlpha, charaImageState)
+    }
+}
+
+@Composable
+private fun BoxScope.Caption(text: String, layerAlpha: State<Float>, charaImageState: CharaImageState) {
+    if (text.isNotEmpty()) {
+        Text(
+            text = text,
+            modifier = Modifier
+                .padding(4.dp, 2.dp)
+                .align(Alignment.TopEnd)
+                .graphicsLayer { alpha = layerAlpha.value },
+            color = Color.White,
+            fontSize = if (charaImageState.isIcon) 12.sp else if (charaImageState.isPlate) 14.sp else 16.sp,
+            style = TextStyle(shadow = Shadow(offset = Offset(1.0f, 1.0f), blurRadius = 1.5f))
+        )
     }
 }
 

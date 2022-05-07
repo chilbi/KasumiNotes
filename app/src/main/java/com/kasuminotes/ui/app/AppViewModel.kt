@@ -153,7 +153,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
 
     fun confirmNewUserProfiles() {
         if (dbState.userState.allProfiles == null) {
-            dbState.userState.changeProfiles()
+            dbState.userState.confirmEditedProfiles()
             navController.popBackStack()
         } else {
             dbState.userState.changeNewProfiles()

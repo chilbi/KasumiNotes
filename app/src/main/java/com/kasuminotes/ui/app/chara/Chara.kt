@@ -68,7 +68,7 @@ fun Chara(
                 userProfile.unitPromotion,
                 userProfile.uniqueData,
                 charaState.property,
-                charaState.originProperty,
+                userProfile.property ?: charaState.property,
                 userProfile.userData,
                 charaState.saveVisible,
                 statusBarHeight,

@@ -1,13 +1,11 @@
 package com.kasuminotes.db
 
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
-import java.io.Closeable
 import java.lang.Exception
 import java.util.concurrent.atomic.AtomicInteger
 

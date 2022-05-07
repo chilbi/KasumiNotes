@@ -8,7 +8,7 @@ enum class OrderBy : ResId {
         @StringRes
         override val resId = R.string.start_time
     },
-    ID {
+    CharaId {
         @StringRes
         override val resId = R.string.chara_id
     },
@@ -32,4 +32,40 @@ enum class OrderBy : ResId {
         @StringRes
         override val resId = R.string.weight
     }
+//    Hp {
+//        @StringRes
+//        override val resId = R.string.hp
+//    },
+//    Atk {
+//        @StringRes
+//        override val resId = R.string.atk
+//    },
+//    MagicStr {
+//        @StringRes
+//        override val resId = R.string.magic_str
+//    },
+//    Def {
+//        @StringRes
+//        override val resId = R.string.def
+//    },
+//    MagicDef {
+//        @StringRes
+//        override val resId = R.string.magic_def
+//    },
+//    PhysicalCritical {
+//        @StringRes
+//        override val resId = R.string.physical_critical
+//    },
+//    MagicCritical {
+//        @StringRes
+//        override val resId = R.string.magic_critical
+//    },
+//    EnergyRecoveryRate {
+//        @StringRes
+//        override val resId = R.string.energy_recovery_rate
+//    },
+//    EnergyReduceRate {
+//        @StringRes
+//        override val resId = R.string.energy_reduce_rate
+//    }
 }

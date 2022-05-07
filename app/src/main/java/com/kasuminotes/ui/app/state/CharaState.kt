@@ -3,38 +3,20 @@ package com.kasuminotes.ui.app.state
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.kasuminotes.data.CharaStoryStatus
-import com.kasuminotes.data.ExSkillData
-import com.kasuminotes.data.PromotionBonus
 import com.kasuminotes.data.Property
-import com.kasuminotes.data.UniqueData
-import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UnitPromotionStatus
 import com.kasuminotes.data.UnitRarity
-import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
-import com.kasuminotes.db.AppDatabase
-import com.kasuminotes.db.getCharaStoryStatus
-import com.kasuminotes.db.getExSkillData
-import com.kasuminotes.db.getPromotionBonusList
-import com.kasuminotes.db.getPromotions
-import com.kasuminotes.db.getUniqueData
-import com.kasuminotes.db.getUnitAttackPatternList
-import com.kasuminotes.db.getUnitPromotion
 import com.kasuminotes.db.getUnitPromotionStatus
 import com.kasuminotes.db.getUnitRarity
-import com.kasuminotes.db.getUnitSkillData
 import com.kasuminotes.db.putUserData
 import com.kasuminotes.ui.app.AppRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class CharaState(
     private val appRepository: AppRepository,
@@ -52,14 +34,11 @@ class CharaState(
         private set
     var property by mutableStateOf(Property())
         private set
-    var originProperty by mutableStateOf(property)
-        private set
     var saveVisible by mutableStateOf(false)
         private set
 
     fun selectUserProfile(data: UserProfile, profiles: List<UserProfile>, maxCharaLevel: Int) {
         restore()
-
         if (data.userData.charaLevel > maxCharaLevel) {
             data.userData = data.userData.copy(lvLimitBreak = 10)
         }
@@ -67,47 +46,15 @@ class CharaState(
         userData = data.userData
         saveVisible = false
 
-        if (
-            data.unitRarity == null ||
-            data.unitPromotionStatus == null ||
-            data.unitPromotion == null ||
-            data.charaStoryStatus == null ||
-            data.unitSkillData == null ||
-            data.exSkillData == null
-        ) {
+        if (data.property != null) {
+            initData(data)
+        } else {
             scope.launch(defaultDispatcher) {
                 val db = appRepository.getDatabase()
+                data.load(db, profiles, defaultDispatcher)
 
-                data.loadAll(db)
-
-                val sharedChara = data.charaStoryStatus!!.sharedChara
-
-                if (sharedChara.isNotEmpty()) {
-                    val sharedProfiles = profiles
-                        .filter { sharedChara.contains(it.unitData.unitId) }
-                        .sortedByDescending { it.unitData.unitId }
-
-                    sharedProfiles.map { item ->
-                        async { item.loadStory(db) }
-                    }.awaitAll()
-
-                    data.sharedProfiles = sharedProfiles
-                }
-
-                backupUnitRarity = data.unitRarity
-                backupUnitPromotionStatus = data.unitPromotionStatus
-                backupUnitPromotion = data.unitPromotion
-
-                property = data.getProperty(data.userData)
-                originProperty = property
+                initData(data)
             }
-        } else {
-            backupUnitRarity = data.unitRarity
-            backupUnitPromotionStatus = data.unitPromotionStatus
-            backupUnitPromotion = data.unitPromotion
-
-            property = data.getProperty(data.userData)
-            originProperty = property
         }
     }
 
@@ -245,7 +192,7 @@ class CharaState(
         }
 
         userProfile!!.userData = userData!!
-        originProperty = userProfile!!.getProperty(userData!!)
+        userProfile!!.calcProperty()
         saveVisible = false
 
         scope.launch(defaultDispatcher) {
@@ -277,96 +224,17 @@ class CharaState(
         }
     }
 
+    private fun initData(data: UserProfile) {
+        backupUnitRarity = data.unitRarity
+        backupUnitPromotionStatus = data.unitPromotionStatus
+        backupUnitPromotion = data.unitPromotion
+
+        data.calcProperty()
+        property = data.property!!
+    }
+
     private fun changeState() {
         saveVisible = userData != userProfile!!.userData
         property = userProfile!!.getProperty(userData!!)
-    }
-
-    private suspend fun UserProfile.loadAll(db: AppDatabase) = withContext(defaultDispatcher) {
-        val list = awaitAll(
-            async {
-                db.getUnitRarity(
-                    unitData.unitId,
-                    userData.rarity
-                )
-            },
-            async {
-                db.getUnitPromotionStatus(
-                    unitData.unitId,
-                    userData.promotionLevel
-                )
-            },
-            async {
-                db.getUnitPromotion(
-                    unitData.unitId,
-                    userData.promotionLevel
-                )
-            },
-            async {
-                db.getUniqueData(unitData.equipId)
-            },
-            async {
-                if (charaStoryStatus == null) {
-                    db.getCharaStoryStatus(unitData.unitId)
-                } else {
-                    charaStoryStatus
-                }
-            },
-            async {
-                db.getPromotions(unitData.unitId)
-            },
-            async {
-                db.getUnitAttackPatternList(unitData.unitId)
-            },
-            async {
-                db.getUnitSkillData(unitData.unitId)
-            },
-            async {
-                db.getExSkillData(unitData.unitId)
-            },
-            async {
-                db.getPromotionBonusList(unitData.unitId)
-            },
-            async {
-                unitConversionData?.let {
-                    db.getUnitAttackPatternList(it.convertedUnitId)
-                }
-            },
-            async {
-                unitConversionData?.let {
-                    db.getUnitSkillData(it.convertedUnitId)
-                }
-            },
-            async {
-                unitConversionData?.let {
-                    db.getExSkillData(it.convertedUnitId)
-                }
-            }
-        )
-        unitRarity = list[0] as UnitRarity
-        unitPromotionStatus = list[1] as UnitPromotionStatus
-        unitPromotion = list[2] as UnitPromotion
-        uniqueData = list[3] as UniqueData?
-        charaStoryStatus = list[4] as CharaStoryStatus
-        @Suppress("UNCHECKED_CAST")
-        promotions = list[5] as List<UnitPromotion>
-        @Suppress("UNCHECKED_CAST")
-        unitAttackPatternList = list[6] as List<UnitAttackPattern>
-        unitSkillData = list[7] as UnitSkillData
-        exSkillData = list[8] as ExSkillData
-        @Suppress("UNCHECKED_CAST")
-        promotionBonusList = list[9] as List<PromotionBonus>
-        if (unitConversionData != null) {
-            @Suppress("UNCHECKED_CAST")
-            unitConversionData!!.unitAttackPatternList = list[10] as List<UnitAttackPattern>
-            unitConversionData!!.unitSkillData = list[11] as UnitSkillData
-            unitConversionData!!.exSkillData = list[12] as ExSkillData
-        }
-    }
-
-    private suspend fun UserProfile.loadStory(db: AppDatabase) = withContext(defaultDispatcher) {
-        if (charaStoryStatus == null) {
-            charaStoryStatus = db.getCharaStoryStatus(unitData.unitId)
-        }
     }
 }

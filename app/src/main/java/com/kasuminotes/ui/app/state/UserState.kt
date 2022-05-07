@@ -15,7 +15,6 @@ import com.kasuminotes.db.getMaxUserData
 import com.kasuminotes.db.getUserList
 import com.kasuminotes.db.getUserName
 import com.kasuminotes.db.getUserProfileList
-import com.kasuminotes.db.putUserData
 import com.kasuminotes.db.putUserDataList
 import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.ui.app.DefaultUserId
@@ -161,7 +160,7 @@ class UserState(
         }
     }
 
-    fun changeProfiles() {
+    fun confirmEditedProfiles() {
         val user = userId
         val lockedChara = charaListState.lockedChara
 
@@ -243,10 +242,8 @@ class UserState(
 
     fun updateStateFromDb(db: AppDatabase) {
         scope.launch {
-            val users = if (allUser.isEmpty()) {
+            val users = allUser.ifEmpty {
                 allUser = db.getAllUser()
-                allUser
-            } else {
                 allUser
             }
             var user = userId

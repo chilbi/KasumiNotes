@@ -101,6 +101,7 @@ fun HomeScaffold(
                 CharaList(
                     uiState.charaImageState,
                     listState.derivedProfiles,
+                    listState.orderBy,
                     onCharaClick
                 )
             }

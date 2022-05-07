@@ -31,6 +31,8 @@ class CharaListState {
     var selectedChara by mutableStateOf<List<Int>>(emptyList())
         private set
 
+//    private var isLoaded = false
+
     fun changeToImages(allUserProfile: List<UserProfile>) {
         backupProfiles = profiles
 
@@ -226,6 +228,7 @@ class CharaListState {
     }
 
     fun changeProfiles(value: List<UserProfile>) {
+//        isLoaded = false
         profiles = value
         derivedProfiles = derived(profiles)
     }
@@ -278,21 +281,38 @@ class CharaListState {
     }
 
     private fun sort(list: List<UserProfile>, order: OrderBy, desc: Boolean): List<UserProfile> {
-        val selector: (UserProfile) -> Int? = { userProfile ->
-            when (order) {
-                OrderBy.StartTime -> userProfile.unitData.startTimeInt
-                OrderBy.ID -> userProfile.unitData.unitId
-                OrderBy.Rarity -> userProfile.userData.rarity
-                OrderBy.SearchAreaWidth -> userProfile.unitData.searchAreaWidth
-                OrderBy.Age -> userProfile.unitData.age.toIntOrNull() ?: 9999
-                OrderBy.Height -> userProfile.unitData.height.toIntOrNull() ?: 9999
-                OrderBy.Weight -> userProfile.unitData.weight.toIntOrNull() ?: 9999
-            }
-        }
-        return if (desc) {
-            list.sortedByDescending(selector)
-        } else {
-            list.sortedBy(selector)
-        }
+        return if (desc) list.sortedByDescending { it.getIntOf(order) }
+        else list.sortedBy { it.getIntOf(order) }
+//        return if (isLoaded) {
+//            if (desc) list.sortedByDescending { it.getIntOf(order) }
+//            else list.sortedBy { it.getIntOf(order) }
+//        } else {
+//            when (order) {
+//                OrderBy.StartTime,
+//                OrderBy.CharaId,
+//                OrderBy.Rarity,
+//                OrderBy.SearchAreaWidth,
+//                OrderBy.Age,
+//                OrderBy.Height,
+//                OrderBy.Weight -> {
+//                    if (desc) list.sortedByDescending { it.getIntOf(order) }
+//                    else list.sortedBy { it.getIntOf(order) }
+//                }
+//                else -> {
+//                    scope.launch(defaultDispatcher) {
+//                        val db = appRepository.getDatabase()
+//                        profiles.map {
+//                            async {
+//                                it.load(db, profiles, defaultDispatcher)
+//                                it.calcProperty()
+//                            }
+//                        }.awaitAll()
+//                        isLoaded = true
+//                        derivedProfiles = sort(list, order, desc)
+//                    }
+//                    list
+//                }
+//            }
+//        }
     }
 }

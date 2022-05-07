@@ -56,6 +56,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.kasuminotes.R
 import com.kasuminotes.common.ImageVariant
+import com.kasuminotes.common.OrderBy
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.home.CharaItem
 import com.kasuminotes.ui.app.state.CharaImageState
@@ -201,9 +202,10 @@ fun CharaEditor(
                         val selected = selectedChara.contains(unitId)
 
                         SelectableCharaItem(
+                            layerAlpha,
+                            listState.orderBy,
                             unitId,
                             userProfile,
-                            layerAlpha,
                             locked,
                             selected,
                             charaImageState,
@@ -230,9 +232,10 @@ fun CharaEditor(
 
 @Composable
 private fun SelectableCharaItem(
+    layerAlpha: State<Float>,
+    orderBy: OrderBy,
     unitId: Int,
     userProfile: UserProfile,
-    layerAlpha: State<Float>,
     locked: Boolean,
     selected: Boolean,
     charaImageState: CharaImageState,
@@ -250,9 +253,10 @@ private fun SelectableCharaItem(
             }
         } else {
             CharaItem(
+                layerAlpha,
+                orderBy,
                 userProfile,
                 charaImageState,
-                layerAlpha,
                 onCharaClick = { onSelect(unitId) }
             )
         }

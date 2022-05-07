@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import com.kasuminotes.common.OrderBy
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.CharaImageState
 
@@ -19,6 +20,7 @@ import com.kasuminotes.ui.app.state.CharaImageState
 fun CharaList(
     charaImageState: CharaImageState,
     derivedProfiles: List<UserProfile>,
+    orderBy: OrderBy,
     onCharaClick: (UserProfile) -> Unit
 ) {
     val infiniteTransition = rememberInfiniteTransition()
@@ -43,9 +45,10 @@ fun CharaList(
     ) {
         items(derivedProfiles) { userProfile ->
             CharaItem(
+                layerAlpha,
+                orderBy,
                 userProfile,
                 charaImageState,
-                layerAlpha,
                 onCharaClick
             )
         }
