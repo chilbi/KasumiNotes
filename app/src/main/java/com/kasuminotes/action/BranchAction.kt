@@ -316,6 +316,26 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         in 600..699 -> {
             branch = getStateBranch(actionDetail1 - 600, actionValue3)
         }
+        // カヤ（タイムトラベル）
+        101 -> {
+            val target = getTarget(depend)
+            if (actionDetail2 != 0) {
+                branch.add(
+                    actionDetail2 to D.Format(
+                        R.string.action_branch_speed_up_target1,
+                        arrayOf(target)
+                    )
+                )
+            }
+            if (actionDetail3 != 0) {
+                branch.add(
+                    actionDetail3 to D.Format(
+                        R.string.action_branch_not_speed_up_target1,
+                        arrayOf(target)
+                    )
+                )
+            }
+        }
         // ミフユ
         100 -> {
             val target = getTarget(depend)
