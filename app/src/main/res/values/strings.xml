@@ -359,6 +359,7 @@
     <string name="additive_time">效果时间</string>
     <string name="additive_damage">伤害量</string>
     <string name="additive_critical_damage">暴击伤害量</string>
+    <string name="additive_hp_decrement">HP的减少量</string>
     <string name="additive_hp_recovery">HP的回复量</string>
     <string name="additive_energy_recovery">TP的回复量</string>
     <string name="additive_hp_regeneration">HP的持续回复量</string>

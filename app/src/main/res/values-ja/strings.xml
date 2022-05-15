@@ -359,6 +359,7 @@
     <string name="additive_time">効果時間</string>
     <string name="additive_damage">ダメージ量</string>
     <string name="additive_critical_damage">クリティカル時のダメージ量</string>
+    <string name="additive_hp_decrement">ＨＰの減らす量</string>
     <string name="additive_hp_recovery">ＨＰの回復量</string>
     <string name="additive_energy_recovery">ＴＰの回復量</string>
     <string name="additive_hp_regeneration">継続ＨＰ回復量</string>
