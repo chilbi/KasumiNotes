@@ -269,6 +269,7 @@
     <string name="state_overload_structure">超载结构</string>
     <string name="state_sword_seal">剑之刻印</string>
     <string name="state_soul_anchor_seal">灵锚之刻印</string>
+    <string name="state_happy_times">幸福时光</string>
 
     <string name="target_self">自身</string>
     <string name="target_enemy">敌人</string>
@@ -288,6 +289,7 @@
     <string name="target_random_one_content1">随机一名%s</string>
     <string name="target_random_count1_content2">随机%1$s名%2$s</string>
     <string name="target_most_content1_extent2_target3">%1$s最%2$s的一名%3$s角色</string>
+    <string name="target_without_self_content1_extent2_count3_target4">自身以外的%1$s最%2$s的%3$s名%4$s角色</string>
     <string name="target_highest_atk_or_magic_str_content1">物理攻击力或者魔法攻击力最高的一名%s</string>
     <string name="target_all_atk_content1">使用物理攻击的所有%s角色</string>
     <string name="target_all_magic_str_content1">使用魔法攻击的所有%s角色</string>

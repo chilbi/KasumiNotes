@@ -144,6 +144,7 @@ fun getStateContent(detail: Int): D {
         111 -> D.Format(R.string.state_overload_structure)
         112 -> D.Format(R.string.state_sword_seal)
         113 -> D.Format(R.string.state_soul_anchor_seal)
+        115 -> D.Format(R.string.state_happy_times)
         else -> D.Unknown
     }
 }

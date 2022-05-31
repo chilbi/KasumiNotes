@@ -239,7 +239,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                 D.Unknown
             }
         }
-        2 -> {
+        2, 8 -> {
             val random = if (targetCount == 1) {
                 D.Format(
                     R.string.target_random_one_content1,
@@ -477,6 +477,17 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
             D.Format(
                 R.string.target_highest_atk_or_magic_str_content1,
                 arrayOf(getAssignment())
+            )
+        }
+        41 -> {
+            D.Format(
+                R.string.target_without_self_content1_extent2_count3_target4,
+                arrayOf(
+                    D.Format(R.string.energy),
+                    D.Format(R.string.target_low),
+                    D.Text(targetCount.toString()),
+                    getAssignment()
+                )
             )
         }
         else -> D.Unknown
