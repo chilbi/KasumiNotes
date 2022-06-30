@@ -7,7 +7,7 @@ import kotlin.math.roundToInt
 fun SkillAction.getStatus(skillLevel: Int): D {
     val value1: Double
     val isBuff: Boolean
-    if (actionDetail1 > 140) {//141,171
+    if (actionDetail1 > 100) {//110,141,171
         value1 = 2.0
         isBuff = true
     } else{

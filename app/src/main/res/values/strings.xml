@@ -251,6 +251,7 @@
     <string name="content_initial_value1">初始值的%s</string>
     <string name="content_lower_defense">物理、魔法防御力中较低一方的防御力作为防御的</string>
 
+    <string name="state_unknown">标记%s</string>
     <string name="state_hiding">隐密</string>
     <string name="state_omemechan">小眼睛</string>
     <string name="state_light_shield">光之盾</string>
@@ -269,7 +270,8 @@
     <string name="state_overload_structure">超载结构</string>
     <string name="state_sword_seal">剑之刻印</string>
     <string name="state_soul_anchor_seal">灵锚之刻印</string>
-    <string name="state_happy_times">幸福时光</string>
+    <string name="state_happy_times">幸福的时刻</string>
+    <string name="state_water_blade_intensive">水刃的加护</string>
 
     <string name="target_self">自身</string>
     <string name="target_enemy">敌人</string>

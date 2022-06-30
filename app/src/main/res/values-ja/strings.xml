@@ -251,6 +251,7 @@
     <string name="content_initial_value1">初期値の%s</string>
     <string name="content_lower_defense">低い側の防御力で防御する</string>
 
+    <string name="state_unknown">マーク%s</string>
     <string name="state_hiding">隠密</string>
     <string name="state_omemechan">オメメちゃん</string>
     <string name="state_light_shield">光の盾</string>
@@ -270,6 +271,7 @@
     <string name="state_sword_seal">剣の刻印</string>
     <string name="state_soul_anchor_seal">霊錨の刻印</string>
     <string name="state_happy_times">至福のひと時</string>
+    <string name="state_water_blade_intensive">水刃の加護</string>
 
     <string name="target_self">自分</string>
     <string name="target_enemy">敵</string>

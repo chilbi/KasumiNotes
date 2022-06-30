@@ -145,7 +145,8 @@ fun getStateContent(detail: Int): D {
         112 -> D.Format(R.string.state_sword_seal)
         113 -> D.Format(R.string.state_soul_anchor_seal)
         115 -> D.Format(R.string.state_happy_times)
-        else -> D.Unknown
+        116 -> D.Format(R.string.state_water_blade_intensive)
+        else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
 }
 
