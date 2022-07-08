@@ -39,6 +39,14 @@ suspend fun AppDatabase.initDatabase(defaultUserId: Int, dbServer: DbServer) = s
         }
     } catch (e: Throwable) {}
 
+    // 修改unique_equip_enhance_rate表为unique_equipment_enhance_rate
+    if (existsTable("unique_equip_enhance_rate")) {
+        try {
+            execSQL("DROP TABLE unique_equipment_enhance_rate")
+            execSQL("ALTER TABLE unique_equip_enhance_rate RENAME TO unique_equipment_enhance_rate")
+        } catch (e: Throwable) {}
+    }
+
     execSQL(
 """CREATE TABLE `chara_data`(
 'unit_id' INTEGER NOT NULL,
