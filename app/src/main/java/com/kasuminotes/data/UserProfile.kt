@@ -55,7 +55,7 @@ data class UserProfile(
 
             val promotionBonusProperty = promotionBonusList.find {
                 it.promotionLevel == data.promotionLevel
-            }?.baseProperty ?: Property()
+            }?.bonusProperty ?: Property()
 
             Property { index ->
                 // unitRarity
