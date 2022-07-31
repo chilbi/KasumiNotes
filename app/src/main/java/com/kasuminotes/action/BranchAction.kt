@@ -21,6 +21,26 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
         in 6000..6999 -> {
             branch = getStateBranch(actionDetail1 - 6000, actionValue3)
         }
+        // ミミ（サマー）
+        1800 -> {
+            val target = getTarget(depend)
+            if (actionDetail2 != 0) {
+                branch.add(
+                    actionDetail2 to D.Format(
+                        R.string.action_branch_multi_target1,
+                        arrayOf(target)
+                    )
+                )
+            }
+            if (actionDetail3 != 0) {
+                branch.add(
+                    actionDetail3 to D.Format(
+                        R.string.action_branch_not_multi_target1,
+                        arrayOf(target)
+                    )
+                )
+            }
+        }
         // キャル（オーバーロード）
         1600 -> {
             val target = getTarget(depend)
@@ -205,6 +225,26 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         // ルカ（ニューイヤー）
         in 6000..6999 -> {
             branch = getStateBranch(actionDetail1 - 6000, actionValue3)
+        }
+        // ミミ（サマー）
+        1800 -> {
+            val target = getTarget(depend)
+            if (actionDetail2 != 0) {
+                branch.add(
+                    actionDetail2 to D.Format(
+                        R.string.action_branch_multi_target1,
+                        arrayOf(target)
+                    )
+                )
+            }
+            if (actionDetail3 != 0) {
+                branch.add(
+                    actionDetail3 to D.Format(
+                        R.string.action_branch_not_multi_target1,
+                        arrayOf(target)
+                    )
+                )
+            }
         }
         // キャル（サマー）
         1700 -> {

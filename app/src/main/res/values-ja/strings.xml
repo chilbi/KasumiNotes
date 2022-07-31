@@ -214,6 +214,8 @@
     <string name="action_branch_not_akinesia_target1">%sがこのスキル発動時既に行動不能状態でない場合、</string>
     <string name="action_branch_single_target">残りの攻撃対象が１つの場合、</string>
     <string name="action_branch_not_single_target">残りの攻撃対象が１つでない場合、</string>
+    <string name="action_branch_multi_target1">%sがマルチターゲットの場合、</string>
+    <string name="action_branch_not_multi_target1">%sがマルチターゲットでない場合、</string>
     <string name="action_branch_overthrew">このスキルで敵を倒した場合、</string>
     <string name="action_branch_not_overthrew">このスキルで敵を倒しなかった場合、</string>
     <string name="action_branch_critical">このスキルがクリティカルした場合、</string>

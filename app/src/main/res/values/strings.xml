@@ -214,6 +214,8 @@
     <string name="action_branch_not_akinesia_target1">%s在此技能发动时未陷入行动不能状态时，</string>
     <string name="action_branch_single_target">仅剩下一名攻击对象时，</string>
     <string name="action_branch_not_single_target">非仅剩下一名攻击对象时，</string>
+    <string name="action_branch_multi_target1">%s是多目标对象时，</string>
+    <string name="action_branch_not_multi_target1">%s不是多目标对象时，</string>
     <string name="action_branch_overthrew">使用此技能打倒敌人时，</string>
     <string name="action_branch_not_overthrew">使用此技能没有打倒敌人时，</string>
     <string name="action_branch_critical">此技能暴击时，</string>
