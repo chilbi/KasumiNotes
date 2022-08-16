@@ -44,7 +44,10 @@ fun SkillAction.getModify(skillLevel: Int, actions: List<SkillAction>): D {
             D.Text("${(actionValue2 * 100).toNumStr()}%")
         } else if (targetAction.actionType == 10 && (targetAction.actionDetail1 == 141 || targetAction.actionValue1 == 2.0)) {
             D.Text("${actionValue2.toNumStr()}%")
-        } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
+        } else if (actionValue2 < 0.0) {
+            if (!(targetAction.actionType == 35 && actionDetail2 == 4)) {
+                isAdd = false
+            }
             D.Text((-actionValue2).toNumStr())
         } else {
             D.Text(actionValue2.toNumStr())
