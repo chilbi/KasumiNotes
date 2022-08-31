@@ -228,6 +228,8 @@
     <string name="action_branch_not_exist_ore_dragon">矿石飞龙不存在己方场上时，</string>
     <string name="action_branch_def_down_target1">%s在此技能发动时已处于魔法防御下降状态时，</string>
     <string name="action_branch_not_def_down_target1">%s在此技能发动时未处于魔法防御下降状态时，</string>
+    <string name="action_branch_barrier_target1">%s有护盾展开时，</string>
+    <string name="action_branch_not_barrier_target1">%s没有护盾展开时，</string>
     <string name="action_summon_target1_distance2_content3">在%1$s的前方%2$s距离，%3$s。</string>
     <string name="action_summon_target1_content2">在%1$s身边，%2$s。</string>
 

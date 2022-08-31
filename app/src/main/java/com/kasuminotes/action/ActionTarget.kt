@@ -115,7 +115,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                 }
             } else if (targetArea == 2) {
                 if (targetCount == 99) {
-                    if ((targetRange == -1 || targetRange >= 2160)) {
+                    if (targetRange == -1 || targetRange >= 2160) {
                         val allTarget = D.Format(
                             R.string.target_all_content1,
                             arrayOf(getAssignment())
@@ -187,25 +187,32 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                 }
             } else if (targetArea == 3) {
                 if (targetCount == 99) {
-                    when {
-                        targetRange >= 2160 || targetRange <= 0 -> {
-                            D.Format(
-                                R.string.target_all_content1,
-                                arrayOf(getAssignment())
-                            )
-                        }
-                        targetRange > 0 -> {
-                            D.Format(
-                                R.string.target_all_range1_content2,
+                    if (targetRange <= 0 || targetRange >= 2160) {
+                        val allTarget = D.Format(
+                            R.string.target_all_content1,
+                            arrayOf(getAssignment())
+                        )
+                        if (actionType == 23 || actionType == 28) {//アメス
+                            D.Join(
                                 arrayOf(
-                                    D.Text(targetRange.toString()),
-                                    getAssignment()
+                                    allTarget,
+                                    D.Format(
+                                        R.string.target_any_content1,
+                                        arrayOf(getAssignment())
+                                    )
                                 )
                             )
+                        } else {
+                            allTarget
                         }
-                        else -> {
-                            D.Unknown
-                        }
+                    } else {
+                        D.Format(
+                            R.string.target_all_range1_content2,
+                            arrayOf(
+                                D.Text(targetRange.toString()),
+                                getAssignment()
+                            )
+                        )
                     }
                 } else if (targetCount == 1) {
                     if (targetRange == -1 || targetRange >= 2160) {

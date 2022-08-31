@@ -228,6 +228,8 @@
     <string name="action_branch_not_exist_ore_dragon">ネフライトワイバーンが味方にいない場合、</string>
     <string name="action_branch_def_down_target1">%sがこのスキル発動時既に魔法防御力ダウン状態の場合、</string>
     <string name="action_branch_not_def_down_target1">%sがこのスキル発動時既に魔法防御力ダウン状態でない場合、</string>
+    <string name="action_branch_barrier_target1">%sはバリアが展開されている場合、</string>
+    <string name="action_branch_not_barrier_target1">%sはバリアが展開されていない場合、</string>
     <string name="action_summon_target1_distance2_content3">%1$sの前%2$s距離に、%3$s。</string>
     <string name="action_summon_target1_content2">%1$sのそばに、%2$s。</string>
 

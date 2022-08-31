@@ -14,111 +14,70 @@ fun SkillAction.getBranch(): Array<Pair<Int, D>> {
 }
 
 fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
-    var branch = mutableListOf<Pair<Int, D>>()
+    val branch = mutableListOf<Pair<Int, D>>()
+    val target = getTarget(depend)
 
     when (actionDetail1) {
         // ホマレ
         in 6000..6999 -> {
-            branch = getStateBranch(actionDetail1 - 6000, actionValue3)
+            setStateBranch(branch,actionDetail1 - 6000, actionValue3)
+        }
+        // アメス
+        1900 -> {
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_barrier_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_barrier_target1, arrayOf(target))
+            )
         }
         // ミミ（サマー）
         1800 -> {
-            val target = getTarget(depend)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_multi_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_multi_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_multi_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_multi_target1, arrayOf(target))
+            )
         }
         // キャル（オーバーロード）
         1600 -> {
-            val target = getTarget(depend)
             val state = D.Format(R.string.fear)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_target1_state2,
-                        arrayOf(target, state)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_target1_state2,
-                        arrayOf(target, state)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_target1_state2, arrayOf(target, state)),
+                D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
+            )
         }
         // タマキ、ミサト（サマー）
         1300 -> {
-            val target = getTarget(depend)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_physical_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_magic_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_physical_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_magic_target1, arrayOf(target))
+            )
         }
         // ぺコリーヌ（プリンセス）、レイ（ハロウィン）
         in 900..999 -> {
             val above = D.Text("${actionDetail1 % 100}%")
-            val target = getTarget(depend)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_hp_not_target1_above2,
-                        arrayOf(target, above)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_hp_target1_above2,
-                        arrayOf(target, above)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_hp_not_target1_above2, arrayOf(target, above)),
+                D.Format(R.string.action_branch_hp_target1_above2, arrayOf(target, above))
+            )
         }
         // マコト（サマー）
         700 -> {
-            if (actionDetail2 != 0) {
-                branch.add(actionDetail2 to D.Format(R.string.action_branch_single_target))
-            }
-            if (actionDetail3 != 0) {
-                branch.add(actionDetail3 to D.Format(R.string.action_branch_not_single_target))
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_single_target),
+                D.Format(R.string.action_branch_not_single_target)
+            )
         }
         // ルナ、クリスティーナ（クリスマス）
         in 600..699 -> {
-            branch = getStateBranch(actionDetail1 - 600, actionValue3)
+            setStateBranch(branch,actionDetail1 - 600, actionValue3)
         }
         // アオイ、アオイ（編入生）、ミツキ（オーエド）
         in 500..599 -> {
-            val target = getTarget(depend)
             val state = when (actionDetail1 - 500) {
                 0 -> D.Format(R.string.burn)
                 1 -> D.Format(R.string.curse)
@@ -129,23 +88,23 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
                 12 -> D.Format(R.string.poison_or_fierce_poison)
                 else -> D.Unknown
             }
-            var trueBranch = actionDetail2
-            var falseBranch = actionDetail3
+            var yes = actionDetail2
+            var not = actionDetail3
             if (actionId == 104001201) {// TODO アオイ Main1+ 谜之顺序
-                trueBranch = actionDetail3
-                falseBranch = actionDetail2
+                yes = actionDetail3
+                not = actionDetail2
             }
-            if (trueBranch != 0) {
+            if (yes != 0) {
                 branch.add(
-                    trueBranch to D.Format(
+                    yes to D.Format(
                         R.string.action_branch_target1_state2,
                         arrayOf(target, state)
                     )
                 )
             }
-            if (falseBranch != 0) {
+            if (not != 0) {
                 branch.add(
-                    falseBranch to D.Format(
+                    not to D.Format(
                         R.string.action_branch_not_target1_state2,
                         arrayOf(target, state)
                     )
@@ -154,64 +113,29 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
         }
         // イオ
         300 -> {
-            val target = getTarget(depend)
             val state = D.Format(R.string.charm)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_target1_state2,
-                        arrayOf(target, state)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_target1_state2,
-                        arrayOf(target, state)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_target1_state2, arrayOf(target, state)),
+                D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
+            )
         }
         // カヤ（タイムトラベル）
         101 -> {
-            val target = getTarget(depend)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_speed_up_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_speed_up_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_speed_up_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_speed_up_target1, arrayOf(target))
+            )
         }
         // レム
         100 -> {
-            val target = getTarget(depend)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_akinesia_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_akinesia_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_akinesia_target1, arrayOf(target)
+                ),
+                D.Format(R.string.action_branch_not_akinesia_target1, arrayOf(target))
+            )
         }
     }
 
@@ -219,201 +143,126 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
 }
 
 fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
-    var branch = mutableListOf<Pair<Int, D>>()
+    val branch = mutableListOf<Pair<Int, D>>()
 
     when (actionDetail1) {
         // ルカ（ニューイヤー）
         in 6000..6999 -> {
-            branch = getStateBranch(actionDetail1 - 6000, actionValue3)
+            setStateBranch(branch,actionDetail1 - 6000, actionValue3)
         }
         // ミミ（サマー）
         1800 -> {
             val target = getTarget(depend)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_multi_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_multi_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_multi_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_multi_target1, arrayOf(target))
+            )
         }
         // キャル（サマー）
         1700 -> {
             val target = getTarget(depend)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_def_down_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_def_down_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_def_down_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_def_down_target1, arrayOf(target))
+            )
         }
         // イノリ（怪盗）
         1601 -> {
-            branch = getStateBranch(actionDetail1 - 1600, actionValue3)
+            setStateBranch(branch,actionDetail1 - 1600, actionValue3)
         }
         // アリサ、カヤ、スズナ（サマー）、ルカ（サマー）、クロエ（聖学祭）
         in 1200..1299 -> {
             val counter = D.Format(R.string.counter_num1, arrayOf(D.Text((actionDetail1 / 10 % 10).toString())))
             val above = D.Text((actionDetail1 % 10).toString())
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_counter1_above2,
-                        arrayOf(counter, above)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_counter1_above2,
-                        arrayOf(counter, above)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_counter1_above2, arrayOf(counter, above)),
+                D.Format(R.string.action_branch_not_counter1_above2, arrayOf(counter, above))
+            )
         }
         // リノ（ワンダー）
         1001 -> {
-            if (actionDetail2 != 0) {
-                branch.add(actionDetail2 to D.Format(R.string.action_branch_critical))
-            }
-            if (actionDetail3 != 0) {
-                branch.add(actionDetail3 to D.Format(R.string.action_branch_not_critical))
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_critical),
+                D.Format(R.string.action_branch_not_critical)
+            )
         }
         // エリコ、ニノン、シノブ（ハロウィン）
         1000 -> {
-            if (actionDetail2 != 0) {
-                branch.add(actionDetail2 to D.Format(R.string.action_branch_overthrew))
-            }
-            if (actionDetail3 != 0) {
-                branch.add(actionDetail3 to D.Format(R.string.action_branch_not_overthrew))
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_overthrew),
+                D.Format(R.string.action_branch_not_overthrew)
+            )
         }
         // ぺコリーヌ（ニューイヤー）
         in 900..999 -> {
-            val above = D.Text("${actionDetail1 % 100}%")
             val target = getTarget(depend)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_hp_not_target1_above2,
-                        arrayOf(target, above)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_hp_target1_above2,
-                        arrayOf(target, above)
-                    )
-                )
-            }
+            val above = D.Text("${actionDetail1 % 100}%")
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_hp_not_target1_above2, arrayOf(target, above)),
+                D.Format(R.string.action_branch_hp_target1_above2, arrayOf(target, above))
+            )
         }
         // ホマレ
         721 -> {
-            branch = getStateBranch(actionValue3.toInt(), actionValue4)
+            setStateBranch(branch, actionValue3.toInt(), actionValue4)
         }
         // ランファ
         720 -> {
-            if (actionDetail2 != 0) {
-                branch.add(actionDetail2 to D.Format(R.string.action_branch_exist_ore_dragon))
-            }
-            if (actionDetail3 != 0) {
-                branch.add(actionDetail3 to D.Format(R.string.action_branch_not_exist_ore_dragon))
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_exist_ore_dragon),
+                D.Format(R.string.action_branch_not_exist_ore_dragon)
+            )
         }
         // マコト（サマー）、アンナ（サマー）
         700 -> {
-            if (actionDetail2 != 0) {
-                branch.add(actionDetail2 to D.Format(R.string.action_branch_single_target))
-            }
-            if (actionDetail3 != 0) {
-                branch.add(actionDetail3 to D.Format(R.string.action_branch_not_single_target))
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_single_target),
+                D.Format(R.string.action_branch_not_single_target)
+            )
         }
         // レイ、ルナ、クリスティーナ（クリスマス）、チエル（聖学祭）
         in 600..699 -> {
-            branch = getStateBranch(actionDetail1 - 600, actionValue3)
+            setStateBranch(branch,actionDetail1 - 600, actionValue3)
         }
         // カヤ（タイムトラベル）
         101 -> {
             val target = getTarget(depend)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_speed_up_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_speed_up_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_speed_up_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_speed_up_target1, arrayOf(target))
+            )
         }
         // ミフユ
         100 -> {
             val target = getTarget(depend)
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_akinesia_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_not_akinesia_target1,
-                        arrayOf(target)
-                    )
-                )
-            }
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_akinesia_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_akinesia_target1, arrayOf(target))
+            )
         }
         // スズメ
         in 1..99 -> {
-            if (actionDetail2 != 0) {
-                branch.add(
-                    actionDetail2 to D.Format(
-                        R.string.action_branch_success_odds1,
-                        arrayOf(D.Text("${actionDetail1}%"))
-                    )
+            setBranch(
+                branch,
+                D.Format(
+                    R.string.action_branch_success_odds1,
+                    arrayOf(D.Text("${actionDetail1}%"))
+                ),
+                D.Format(
+                    R.string.action_branch_failure_odds1,
+                    arrayOf(D.Text("${100 - actionDetail1}%"))
                 )
-            }
-            if (actionDetail3 != 0) {
-                branch.add(
-                    actionDetail3 to D.Format(
-                        R.string.action_branch_failure_odds1,
-                        arrayOf(D.Text("${100 - actionDetail1}%"))
-                    )
-                )
-            }
+            )
         }
     }
 
@@ -438,45 +287,30 @@ fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
     )
 }
 
-private fun SkillAction.getStateBranch(stateId: Int, stateCount: Double): MutableList<Pair<Int, D>> {
-    val branch = mutableListOf<Pair<Int, D>>()
+private fun SkillAction.setBranch(branch: MutableList<Pair<Int, D>>, yes: D, not: D) {
+    if (actionDetail2 != 0) {
+        branch.add(actionDetail2 to yes)
+    }
+    if (actionDetail3 != 0) {
+        branch.add(actionDetail3 to not)
+    }
+}
+
+private fun SkillAction.setStateBranch(branch: MutableList<Pair<Int, D>>, stateId: Int, stateCount: Double) {
     val state = getStateContent(stateId)
     val target = getTarget(depend)
     if (stateCount == 0.0 || stateCount == 1.0) {
-        if (actionDetail2 != 0) {
-            branch.add(
-                actionDetail2 to D.Format(
-                    R.string.action_branch_have_target1_state2,
-                    arrayOf(target, state)
-                )
-            )
-        }
-        if (actionDetail3 != 0) {
-            branch.add(
-                actionDetail3 to D.Format(
-                    R.string.action_branch_not_have_target1_state2,
-                    arrayOf(target, state)
-                )
-            )
-        }
+        setBranch(
+            branch,
+            D.Format(R.string.action_branch_have_target1_state2, arrayOf(target, state)),
+            D.Format(R.string.action_branch_not_have_target1_state2, arrayOf(target, state))
+        )
     } else {
         val above = D.Text(stateCount.toNumStr())
-        if (actionDetail2 != 0) {
-            branch.add(
-                actionDetail2 to D.Format(
-                    R.string.action_branch_target1_state2_above3,
-                    arrayOf(target, state, above)
-                )
-            )
-        }
-        if (actionDetail3 != 0) {
-            branch.add(
-                actionDetail3 to D.Format(
-                    R.string.action_branch_not_target1_state2_above3,
-                    arrayOf(target, state, above)
-                )
-            )
-        }
+        setBranch(
+            branch,
+            D.Format(R.string.action_branch_target1_state2_above3, arrayOf(target, state, above)),
+            D.Format(R.string.action_branch_not_target1_state2_above3, arrayOf(target, state, above))
+        )
     }
-    return branch
 }
