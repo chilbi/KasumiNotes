@@ -10,10 +10,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.kasuminotes.ui.app.App
 import com.kasuminotes.utils.LocaleUtil
-import com.kasuminotes.utils.ProvideImageLoader
 
 class MainActivity : ComponentActivity() {
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -25,11 +23,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            ProvideWindowInsets {
-                ProvideImageLoader {
-                    App()
-                }
-            }
+            App()
         }
 
     }

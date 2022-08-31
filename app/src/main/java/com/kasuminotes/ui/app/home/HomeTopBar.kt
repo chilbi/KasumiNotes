@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
@@ -42,7 +42,7 @@ fun HomeTopBar(
         navigationIcon = {
             IconButton(onDrawerOpen) {
                 Image(
-                    painter = rememberImagePainter(UrlUtil.getUserIconUrl(userId)),
+                    painter = rememberAsyncImagePainter(UrlUtil.getUserIconUrl(userId)),
                     contentDescription = null,
                     modifier = Modifier
                         .padding(4.dp)

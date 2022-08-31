@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -74,8 +75,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
-import com.google.accompanist.insets.navigationBarsPadding
+import coil.compose.rememberAsyncImagePainter
 import com.kasuminotes.BuildConfig
 import com.kasuminotes.R
 import com.kasuminotes.common.DbServer
@@ -207,7 +207,7 @@ private fun UserHeader(
             .height(56.dp)
     ) {
         Image(
-            painter = rememberImagePainter(UrlUtil.getUserIconUrl(userId)),
+            painter = rememberAsyncImagePainter(UrlUtil.getUserIconUrl(userId)),
             contentDescription = null,
             modifier = Modifier
                 .size(56.dp)

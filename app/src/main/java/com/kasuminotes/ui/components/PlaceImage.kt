@@ -14,8 +14,9 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.kasuminotes.ui.theme.place
 
 @Composable
@@ -55,8 +56,8 @@ fun BoxScope.PlaceImage(
     shape: Shape = MaterialTheme.shapes.small,
     colorFilter: ColorFilter? = null
 ) {
-    val painter = rememberImagePainter(url)
-    val loading = painter.state !is ImagePainter.State.Success
+    val painter = rememberAsyncImagePainter(url)
+    val loading = painter.state !is AsyncImagePainter.State.Success
 
     PlaceImage(
         painter,

@@ -4,9 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -22,7 +25,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsHeight
 import com.kasuminotes.BuildConfig
 import com.kasuminotes.R
 import com.kasuminotes.ui.components.BackButton
@@ -45,7 +47,7 @@ fun About(
             )
         },
         bottomBar = {
-            Spacer(Modifier.navigationBarsHeight())
+            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
         },
         content = { contentPadding ->
             Column(

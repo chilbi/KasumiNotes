@@ -1,5 +1,8 @@
 package com.kasuminotes.ui.app.chara
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.BackdropScaffoldDefaults
 import androidx.compose.material.BackdropValue
@@ -13,8 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.navigationBarsPadding
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.UniqueData
@@ -35,8 +36,8 @@ fun Chara(
 
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
-    val statusBarTop =  LocalWindowInsets.current.statusBars.top
     val density = LocalDensity.current
+    val statusBarTop =  WindowInsets.statusBars.getTop(density)
 
     val statusBarHeight = remember(statusBarTop, density) {
         with(density) { statusBarTop.toDp() }

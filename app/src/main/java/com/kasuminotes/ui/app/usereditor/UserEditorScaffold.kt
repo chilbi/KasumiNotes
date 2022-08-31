@@ -3,10 +3,12 @@ package com.kasuminotes.ui.app.usereditor
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.google.accompanist.insets.navigationBarsHeight
 import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
@@ -46,7 +48,7 @@ fun UserEditorScaffold(
             )
         },
         bottomBar = {
-            Spacer(Modifier.navigationBarsHeight())
+            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
         },
         floatingActionButton = floatingActionButton,
         content = content

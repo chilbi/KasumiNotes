@@ -1,6 +1,7 @@
 package com.kasuminotes.ui.app
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -13,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsHeight
 import com.kasuminotes.R
 
 @Composable
@@ -21,7 +21,7 @@ fun BottomBar(
     selectedIndex: Int,
     onNavigateTo: (Int) -> Unit
 ) {
-    BottomAppBar(Modifier.navigationBarsHeight(56.dp)) {
+    BottomAppBar(Modifier.navigationBarsPadding()) {
         BottomNavigation(elevation = 0.dp) {
             BottomNavigationItem(
                 selected = selectedIndex == 0,

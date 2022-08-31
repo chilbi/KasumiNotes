@@ -58,7 +58,7 @@ object HttpUtil {
                 .build()
             call = client.newCall(request)
             response = call.execute()
-            val body = response.body ?: throw Exception("body is null")
+            val body = response.body
             var bytesRead: Long = 0
             val contentLength = body.contentLength()
             emit(DownloadState.Progress(bytesRead, contentLength))
@@ -96,7 +96,7 @@ object HttpUtil {
                 .build()
             call = client.newCall(request)
             response = call.execute()
-            val body = response.body ?: throw Exception("body is null")
+            val body = response.body
             val pattern = "\"TruthVersion\"\\s*:\\s*\"(\\d+)\""
             val matchResult = Regex(pattern).find(body.string()) ?: throw Exception("regex match error")
             return matchResult.groupValues[1]
@@ -120,7 +120,7 @@ object HttpUtil {
                 .build()
             call = client.newCall(request)
             response = call.execute()
-            val body = response.body ?: throw Exception("body is null")
+            val body = response.body
             val bodyString = body.string()
             val versionNamePattern = "\"tag_name\"\\s*:\\s*\"v([^\"]+)\""
             val versionNameMatchResult = Regex(versionNamePattern).find(bodyString) ?: throw Exception("regex match error")

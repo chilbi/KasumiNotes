@@ -27,8 +27,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.kasuminotes.R
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.data.UserProfile
@@ -155,8 +155,8 @@ private fun BoxScope.CharaImage(
             }
         )
     } else {
-        val coilPainter = rememberImagePainter(getImageUrl(unitId, rarity))
-        loading = coilPainter.state !is ImagePainter.State.Success
+        val coilPainter = rememberAsyncImagePainter(getImageUrl(unitId, rarity))
+        loading = coilPainter.state !is AsyncImagePainter.State.Success
         coilPainter
     }
 

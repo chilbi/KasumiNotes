@@ -2,6 +2,7 @@ package com.kasuminotes.ui.app.quest
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.Icon
@@ -38,7 +39,7 @@ fun QuestDrawer(
                 onQuestModeChange(mode)
             }
     }
-    Column(Modifier.selectableGroup()) {
+    Column(Modifier.navigationBarsPadding().selectableGroup()) {
         ListItem(
             modifier = selectable(QuestMode.Equip),
             icon = {

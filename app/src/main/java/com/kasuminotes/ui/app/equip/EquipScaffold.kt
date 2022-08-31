@@ -2,15 +2,17 @@ package com.kasuminotes.ui.app.equip
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsHeight
 import com.kasuminotes.data.Property
 import com.kasuminotes.ui.app.state.DbState
 import com.kasuminotes.ui.app.state.EquipState
@@ -38,7 +40,7 @@ fun EquipScaffold(
             )
         },
         bottomBar = {
-            Spacer(Modifier.navigationBarsHeight())
+            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
         },
         content = { contentPadding ->
             Column(

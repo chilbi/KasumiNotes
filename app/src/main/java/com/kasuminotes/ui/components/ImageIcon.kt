@@ -15,8 +15,8 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun ImageIcon(
@@ -62,8 +62,8 @@ fun ImageIcon(
     colorFilter: ColorFilter? = null,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
-    val painter = rememberImagePainter(url)
-    val loading = painter.state !is ImagePainter.State.Success
+    val painter = rememberAsyncImagePainter(url)
+    val loading = painter.state !is AsyncImagePainter.State.Success
 
     ImageIcon(
         painter = painter,
