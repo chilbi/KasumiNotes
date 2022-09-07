@@ -194,6 +194,8 @@
     <string name="action_strength_target1_formula2_time3">【力の魔字】が刻まれている間、%1$sの行動速度を%2$sアップ、効果時間%3$s秒。（このスキルの効果は他の行動速度変化スキルと重複する）</string>
     <string name="action_injured_energy1">このスキルによるダメージではＴＰ回復量は本来の%s倍になる。</string>
     <string name="action_hiding_target1_time2">%1$sを隠密状態にする、効果時間%2$s秒。</string>
+    <string name="action_injured_energy1_mark2_add3_max4_time5_target6">%6$sに【%2$s】を%3$sつ付与する、最大%4$sまで追加される、効果時間%5$s秒。【%2$s】はダメージを受けるたびに1つ消費され、ＴＰを%1$s回復する。</string>
+
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>
     <string name="action_striked_branch_time1">%s秒のモーションの間に攻撃された場合、</string>
     <string name="action_exists_field_branch_content1">%sのフィールド展開中場合、</string>
@@ -234,6 +236,7 @@
     <string name="action_summon_target1_content2">%1$sのそばに、%2$s。</string>
 
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
+    <string name="summon_403102">目の前の敵１キャラを攻撃するドクロ父親（各種のステータスがアップする）を召喚する</string>
     <string name="summon_404201">目の前の敵１キャラを攻撃する精霊を唱喚する</string>
     <string name="summon_407001">UBを使用しない、自分の分身を生成する</string>
     <string name="summon_407701">目の前の敵１キャラを攻撃するぷちゴーレムを召喚する</string>
@@ -277,6 +280,9 @@
     <string name="state_happy_times">至福のひと時</string>
     <string name="state_water_blade_intensive">水刃の加護</string>
     <string name="state_butterfly_seal">バタフライシール</string>
+    <string name="state_fuwafuwa_wool">ふわふわウール</string>
+    <string name="state_dark_night_intensive">宵闇の加護</string>
+    <string name="state_soul_ability">霊力</string>
 
     <string name="target_self">自分</string>
     <string name="target_enemy">敵</string>

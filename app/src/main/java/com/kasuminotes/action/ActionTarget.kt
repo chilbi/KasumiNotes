@@ -461,7 +461,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                     D.Format(
                         R.string.target_most_content1_extent2_target3,
                         arrayOf(
-                            D.Format(R.string.hp_ratio),
+                            D.Format(R.string.hp_remanent),
                             D.Format(R.string.target_high),
                             getAssignment()
                         )

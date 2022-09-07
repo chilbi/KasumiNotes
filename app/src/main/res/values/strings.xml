@@ -195,6 +195,8 @@
     <string name="action_strength_target1_formula2_time3">刻有【力之魔字】的期间，%1$s的行动速度提升%2$s，效果时间%3$s秒。（此技能的效果可以和其它行动速度变化技能叠加）</string>
     <string name="action_injured_energy1">由此技能造成伤害的TP回复量变为原来的%s倍。</string>
     <string name="action_hiding_target1_time2">赋予%1$s隐密状态，效果时间%2$s秒。</string>
+    <string name="action_injured_energy1_mark2_add3_max4_time5_target6">赋予%6$s%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。【%2$s】在受到伤害时就会消耗1个，同时TP回复%1$s。</string>
+
     <string name="action_striked_branch_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_exists_field_branch_content1">%s的领域展开时，</string>
     <string name="action_not_exists_field_branch_content1">%s的领域没有展开时，</string>
@@ -234,6 +236,7 @@
     <string name="action_summon_target1_content2">在%1$s身边，%2$s。</string>
 
     <string name="summon_403101">召唤一个能够攻击前方一名敌人的骷髅老爹</string>
+    <string name="summon_403102">召唤一个能够攻击前方一名敌人的骷髅老爹（各种状态得到提升）</string>
     <string name="summon_404201">咏唱召唤一个能够攻击前方一名敌人的精灵</string>
     <string name="summon_407001">制造出一个不会使用UB的自身的分身</string>
     <string name="summon_407701">召唤一个能够攻击前方一名敌人的迷你魔像</string>
@@ -277,6 +280,9 @@
     <string name="state_happy_times">幸福的时刻</string>
     <string name="state_water_blade_intensive">水刃的加护</string>
     <string name="state_butterfly_seal">蝴蝶印记</string>
+    <string name="state_fuwafuwa_wool">轻飘飘羊毛</string>
+    <string name="state_dark_night_intensive">暗夜的加护</string>
+    <string name="state_soul_ability">灵力</string>
 
     <string name="target_self">自身</string>
     <string name="target_enemy">敌人</string>

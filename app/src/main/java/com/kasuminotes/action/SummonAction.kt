@@ -7,7 +7,8 @@ fun SkillAction.getSummon(): D {
     val target = getTarget(depend)
 
     val content = when (actionDetail2) {
-        403101 -> D.Format(R.string.summon_403101)//シノブ
+        403101, 403103 -> D.Format(R.string.summon_403101)//シノブ
+        403102 -> D.Format(R.string.summon_403102)//シノブ★六
         404201, 404205 -> D.Format(R.string.summon_404201)//チカ
         407001 -> D.Format(R.string.summon_407001)//ネネカ
         407701 -> D.Format(R.string.summon_407701)//スズメ（サマー）

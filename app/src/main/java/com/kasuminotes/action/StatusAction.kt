@@ -5,24 +5,22 @@ import com.kasuminotes.data.SkillAction
 import kotlin.math.roundToInt
 
 fun SkillAction.getStatus(skillLevel: Int): D {
-    val value1: Double
-    val isBuff: Boolean
-    if (actionDetail1 > 100) {//110,141,171
+    var value1 = actionValue1
+    var isBuff = actionDetail1 % 10 == 0
+    if (actionDetail1 >= 140) {
+        value1 = 2.0//百分比
+        isBuff = !isBuff
+    }
+    if (actionDetail1 in 110..129) {
         value1 = 2.0
-        isBuff = true
-    } else{
-        value1 = actionValue1
-        isBuff = actionDetail1 % 10 == 0
     }
 
-    val formula = when (value1) {
-        1.0 -> getBaseLvFormula(actionValue2, actionValue3, skillLevel)
-        2.0 -> {
-            val percent = D.Text("${actionValue2.roundToInt()}%")
-            if (actionDetail1 < 50) D.Format(R.string.content_initial_value1, arrayOf(percent))
-            else percent
-        }
-        else -> D.Unknown
+    val formula = if (value1 == 1.0) {
+        getBaseLvFormula(actionValue2, actionValue3, skillLevel)
+    } else {
+        val percent = D.Text("${actionValue2.roundToInt()}%")
+        if (actionDetail1 < 50) D.Format(R.string.content_initial_value1, arrayOf(percent))
+        else percent
     }
 
     return D.Format(

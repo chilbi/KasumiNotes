@@ -146,7 +146,7 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
     val branch = mutableListOf<Pair<Int, D>>()
 
     when (actionDetail1) {
-        // ルカ（ニューイヤー）
+        // ルカ（ニューイヤー）、シノブ
         in 6000..6999 -> {
             setStateBranch(branch,actionDetail1 - 6000, actionValue3)
         }
