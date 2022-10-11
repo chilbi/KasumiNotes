@@ -295,6 +295,7 @@
     <string name="target_high">高</string>
     <string name="target_front">前方</string>
     <string name="target_one_content1">前方一名%s</string>
+    <string name="target_more_count1_content2">前方%1$s名%2$s</string>
     <string name="target_count1_content2">前方第%1$s名%2$s</string>
     <string name="target_all_content1">%s全体</string>
     <string name="target_range1_content2">%1$s范围内的%2$s</string>

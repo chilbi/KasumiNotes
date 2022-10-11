@@ -111,7 +111,13 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                         }
                     }
                 } else {
-                    D.Unknown
+                    D.Format(
+                        R.string.target_more_count1_content2,
+                        arrayOf(
+                            D.Text(targetCount.toString()),
+                            getAssignment()
+                        )
+                    )
                 }
             } else if (targetArea == 2) {
                 if (targetCount == 99) {
@@ -492,6 +498,17 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                 arrayOf(
                     D.Format(R.string.energy),
                     D.Format(R.string.target_low),
+                    D.Text(targetCount.toString()),
+                    getAssignment()
+                )
+            )
+        }
+        43 -> {
+            D.Format(
+                R.string.target_without_self_content1_extent2_count3_target4,
+                arrayOf(
+                    D.Format(R.string.atk),
+                    D.Format(R.string.target_high),
                     D.Text(targetCount.toString()),
                     getAssignment()
                 )
