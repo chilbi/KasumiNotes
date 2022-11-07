@@ -279,12 +279,14 @@ fun SkillAction.getStrikedBranch(): Array<Pair<Int, D>> {
 }
 
 fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
+    val branch = mutableListOf<Pair<Int, D>>()
     val content = getSkillLabel(actionDetail1)
-
-    return arrayOf(
-        actionDetail2 to D.Format(R.string.action_exists_field_branch_content1, arrayOf(content)),
-        actionDetail3 to D.Format(R.string.action_not_exists_field_branch_content1, arrayOf(content))
+    setBranch(
+        branch,
+        D.Format(R.string.action_exists_field_branch_content1, arrayOf(content)),
+        D.Format(R.string.action_not_exists_field_branch_content1, arrayOf(content))
     )
+    return branch.toTypedArray()
 }
 
 private fun SkillAction.setBranch(branch: MutableList<Pair<Int, D>>, yes: D, not: D) {

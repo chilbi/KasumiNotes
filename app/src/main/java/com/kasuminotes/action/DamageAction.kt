@@ -5,7 +5,7 @@ import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getDamage(skillLevel: Int, property: Property): D {
-    val mustHit = actionDetail1 == 3 && actionDetail2 == 1
+    val mustHit = actionDetail1 == 3
     val mustCritical = actionValue5 == 1.0
     val hasCriticalDamageRate = actionValue6 > 1.0
     val content = D.Format(if (actionDetail1 == 1 || actionDetail1 == 3) R.string.physical else R.string.magic)

@@ -196,6 +196,7 @@
     <string name="action_injured_energy1">由此技能造成伤害的TP回复量变为原来的%s倍。</string>
     <string name="action_hiding_target1_time2">赋予%1$s隐密状态，效果时间%2$s秒。</string>
     <string name="action_injured_energy1_mark2_add3_max4_time5_target6">赋予%6$s%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。【%2$s】在受到伤害时就会消耗1个，同时TP回复%1$s。</string>
+    <string name="action_hp_recovery_down_target1_formula2_time3">%1$s的HP回复量减少%2$s，效果时间%3$s秒。</string>
 
     <string name="action_striked_branch_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_exists_field_branch_content1">%s的领域展开时，</string>
