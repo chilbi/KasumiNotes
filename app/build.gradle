@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.kasuminotes"
         minSdk 21
-        targetSdk 30
+        targetSdk 32
         versionCode 55
         versionName "$kasuminotes_version"
 

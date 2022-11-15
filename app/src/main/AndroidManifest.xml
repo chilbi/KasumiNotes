@@ -18,6 +18,7 @@
 
         <activity
             android:name=".SplashActivity"
+            android:exported="true"
             android:theme="@style/Theme.SplashTheme"
             android:screenOrientation="portrait"
             tools:ignore="IntentFilterExportedReceiver,LockedOrientationActivity">
@@ -29,7 +30,6 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/Theme.KasumiNotes"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
