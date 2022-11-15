@@ -24,7 +24,8 @@ data class UserProfile(
     var unitSkillData: UnitSkillData? = null,
     var exSkillData: ExSkillData? = null,
     var promotionBonusList: List<PromotionBonus> = emptyList(),
-    var unitConversionData: UnitConversionData? = null
+    var unitConversionData: UnitConversionData? = null,
+    var exEquipSlots: List<ExEquipSlot> = emptyList()
 ) {
     var property: Property? = null
         private set
@@ -194,7 +195,8 @@ data class UserProfile(
             async { db.getPromotionBonusList(unitData.unitId) },
             async { unitConversionData?.let { db.getUnitAttackPatternList(it.convertedUnitId) } },
             async { unitConversionData?.let { db.getUnitSkillData(it.convertedUnitId) } },
-            async { unitConversionData?.let { db.getExSkillData(it.convertedUnitId) } }
+            async { unitConversionData?.let { db.getExSkillData(it.convertedUnitId) } },
+            async { db.getUnitExEquipSlots(unitData.unitId) }
         )
         unitRarity = list[0] as UnitRarity
         unitPromotionStatus = list[1] as UnitPromotionStatus
@@ -215,6 +217,8 @@ data class UserProfile(
             unitConversionData!!.unitSkillData = list[11] as UnitSkillData
             unitConversionData!!.exSkillData = list[12] as ExSkillData
         }
+        @Suppress("UNCHECKED_CAST")
+        exEquipSlots = list[13] as List<ExEquipSlot>
         val sharedChara = charaStoryStatus!!.sharedChara
         if (sharedChara.isNotEmpty()) {
             val sharedProfileList = profiles

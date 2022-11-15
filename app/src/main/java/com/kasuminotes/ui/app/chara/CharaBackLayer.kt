@@ -41,6 +41,7 @@ import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UnitData
+import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UserData
 import com.kasuminotes.ui.app.DefaultUserId
@@ -60,6 +61,7 @@ fun CharaBackLayer(
     maxUserData: MaxUserData,
     unitPromotion: UnitPromotion?,
     uniqueData: UniqueData?,
+    exEquipSlots: List<ExEquipSlot>,
     property: Property,
     originProperty: Property,
     originUserData: UserData,
@@ -108,6 +110,7 @@ fun CharaBackLayer(
             unitData.hasUnique,
             unitPromotion,
             uniqueData,
+            exEquipSlots,
             onEquipClick,
             onUniqueClick,
             onEquipChange,

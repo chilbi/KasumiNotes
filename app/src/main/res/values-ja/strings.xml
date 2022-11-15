@@ -196,6 +196,7 @@
     <string name="action_hiding_target1_time2">%1$sを隠密状態にする、効果時間%2$s秒。</string>
     <string name="action_injured_energy1_mark2_add3_max4_time5_target6">%6$sに【%2$s】を%3$sつ付与する、最大%4$sまで追加される、効果時間%5$s秒。【%2$s】はダメージを受けるたびに1つ消費され、ＴＰを%1$s回復する。</string>
     <string name="action_hp_recovery_down_target1_formula2_time3">%1$sのＨＰ回復量を%2$sダウン、効果時間%3$s秒。</string>
+    <string name="action_dispel_odds1_target2_content3">%1$s確率で%2$sの%3$sを解除する。</string>
 
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>
     <string name="action_striked_branch_time1">%s秒のモーションの間に攻撃された場合、</string>
@@ -258,6 +259,8 @@
     <string name="content_status_up_target1">自分がステータスアップ効果を受ける度に、%s</string>
     <string name="content_initial_value1">初期値の%s</string>
     <string name="content_lower_defense">低い側の防御力で防御する</string>
+    <string name="content_status_up_effect">ステータスアップ効果</string>
+    <string name="content_barrier">バリア</string>
 
     <string name="state_unknown">マーク%s</string>
     <string name="state_hiding">隠密</string>
@@ -284,6 +287,7 @@
     <string name="state_fuwafuwa_wool">ふわふわウール</string>
     <string name="state_dark_night_intensive">宵闇の加護</string>
     <string name="state_soul_ability">霊力</string>
+    <string name="state_yasakaninomagatama">八尺瓊勾玉・減葬</string>
 
     <string name="target_self">自分</string>
     <string name="target_enemy">敵</string>

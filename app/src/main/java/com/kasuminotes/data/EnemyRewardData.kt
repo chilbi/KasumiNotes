@@ -12,7 +12,6 @@ data class EnemyRewardData(
                 fields = (1..5).joinToString(",") { i ->
                     "reward_id_$i,reward_type_$i,odds_$i"
                 }
-//                fields = "$rewardFields,drop_reward_id"
             }
 
             return fields!!

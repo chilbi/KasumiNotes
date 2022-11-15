@@ -28,7 +28,6 @@ data class EquipCraft(
                     "condition_equipment_id_$i,consume_num_$i"
                 }
             }
-
             return fields!!
         }
     }

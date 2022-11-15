@@ -1,5 +1,6 @@
 package com.kasuminotes.db
 
+import com.kasuminotes.data.RfSkillData
 import com.kasuminotes.data.SkillAction
 import com.kasuminotes.data.SkillData
 import com.kasuminotes.data.UnitAttackPattern
@@ -132,7 +133,9 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
                     it.getFloat(i),
                     rawActions,
                     rawDepends,
-                    emptyList()
+                    emptyList(),
+                    null,
+                    false
                 )
             }
         }
@@ -142,6 +145,39 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
         }.awaitAll()
 
         skillData.copy(actions = actions)
+    }
+}
+
+private suspend fun AppDatabase.getRfSkillData(skillId: Int): RfSkillData? {
+    if (skillId == 0) return null
+
+    return withIOContext {
+        if (existsTable("unit_skill_data_rf")) {
+            val sql = """SELECT rf_skill_id,min_lv,max_lv
+FROM unit_skill_data_rf WHERE skill_id=$skillId"""
+
+            val rawRfSkillData = use {
+                rawQuery(sql, null).use {
+                    if (it.moveToFirst()) {
+                        RawRfSkillData(
+                            it.getInt(0),
+                            it.getInt(1),
+                            it.getInt(2)
+                        )
+                    } else {
+                        null
+                    }
+                }
+            }
+            rawRfSkillData?.let { raw ->
+                val rfSkill = getSkillData(raw.rfSkillId)
+                rfSkill?.let {
+                    RfSkillData(raw.minLv, raw.maxLv, it.copy(isRfSkill = true))
+                }
+            }
+        } else {
+            null
+        }
     }
 }
 
@@ -190,7 +226,15 @@ FROM unit_skill_data WHERE unit_id=$unitId"""
 
         val getDeferredSkillDataList: suspend (List<Int>) -> Deferred<List<SkillData?>> = { list ->
             async {
-                list.map { skillId -> getSkillData(skillId) }
+                list.map { skillId ->
+                    val skillAndRfSkill = listOf(
+                        async { getSkillData(skillId) },
+                        async { getRfSkillData(skillId) }
+                    ).awaitAll()
+                    val skillData = skillAndRfSkill[0] as SkillData?
+                    val rfSkillData = skillAndRfSkill[1] as RfSkillData?
+                    skillData?.copy(rfSkillData = rfSkillData)
+                }
             }
         }
 
@@ -218,7 +262,13 @@ FROM unit_skill_data WHERE unit_id=$unitId"""
     }
 }
 
-private class RawUnitSkillData(
+private data class RawRfSkillData(
+    val rfSkillId: Int,
+    val minLv: Int,
+    val maxLv: Int,
+)
+
+private data class RawUnitSkillData(
     val unionBurst: Int,
     val spUnionBurst: Int,
     val unionBurstEvolution: Int,

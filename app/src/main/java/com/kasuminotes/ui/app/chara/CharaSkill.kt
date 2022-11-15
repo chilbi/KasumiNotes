@@ -118,6 +118,7 @@ fun CharaSkill(
 
             SkillDetail(
                 label = "A",
+                isRfSkill = false,
                 iconUrl = UrlUtil.getAtkIconUrl(unitData.atkType),
                 name = name,
                 castTime = unitData.normalAtkCastTime,
@@ -128,6 +129,7 @@ fun CharaSkill(
             skillList.forEach { item ->
                 SkillDetail(
                     label = item.label,
+                    isRfSkill = item.skillData.isRfSkill,
                     iconUrl = UrlUtil.getSkillIconUrl(item.skillData.iconType),
                     name = item.skillData.name,
                     castTime = item.skillData.skillCastTime,
@@ -143,18 +145,22 @@ fun CharaSkill(
 }
 
 @Composable
-private fun SkillLabel(text: String) {
+private fun SkillLabel(
+    text: String,
+    color: Color = MaterialTheme.colors.onPrimary,
+    bgColor: Color = MaterialTheme.colors.primaryVariant,
+) {
     Text(
         text = text,
         modifier = Modifier
             .padding(4.dp)
             .background(
-                color = MaterialTheme.colors.primaryVariant,
+                color = bgColor,
                 shape = MaterialTheme.shapes.small
             )
             .padding(horizontal = 8.dp),
         fontSize = 14.sp,
-        color = MaterialTheme.colors.onPrimary,
+        color = color,
         fontWeight = FontWeight.Bold
     )
 }
@@ -254,6 +260,7 @@ private fun PatternItem(
 @Composable
 private fun SkillDetail(
     label: String,
+    isRfSkill: Boolean,
     iconUrl: String,
     name: String,
     castTime: Float,
@@ -272,6 +279,13 @@ private fun SkillDetail(
             verticalAlignment = Alignment.CenterVertically
         ) {
             SkillLabel(label)
+            if (isRfSkill) {
+                SkillLabel(
+                    text = "RF",
+                    color = MaterialTheme.colors.onSecondary,
+                    bgColor = MaterialTheme.colors.secondary
+                )
+            }
             Spacer(Modifier.weight(1f))
             if (BuildConfig.DEBUG) {
                 IconButton(onClick = { visibleTable.value = !visibleTable.value }) {

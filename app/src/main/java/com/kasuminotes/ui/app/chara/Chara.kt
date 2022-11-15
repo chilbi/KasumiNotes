@@ -68,6 +68,7 @@ fun Chara(
                 maxUserData,
                 userProfile.unitPromotion,
                 userProfile.uniqueData,
+                userProfile.exEquipSlots,
                 charaState.property,
                 userProfile.property ?: charaState.property,
                 userProfile.userData,

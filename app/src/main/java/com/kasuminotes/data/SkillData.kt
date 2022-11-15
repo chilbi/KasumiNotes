@@ -11,8 +11,22 @@ data class SkillData(
     val bossUbCoolTime: Float,
     val rawActions: List<Int>,//1-7
     val rawDepends: List<Int>,//1-7
-    val actions: List<SkillAction>
+    val actions: List<SkillAction>,
+    val rfSkillData: RfSkillData?,
+    val isRfSkill: Boolean
 ) {
+    fun getSkillOrRfSkill(level: Int): SkillData {
+        return if (rfSkillData == null) {
+           this
+        } else {
+            if (level < rfSkillData.minLv) {
+                this
+            } else {
+                rfSkillData.rfSkill
+            }
+        }
+    }
+
     companion object {
         private var fields: String? = null
 
@@ -31,7 +45,6 @@ data class SkillData(
                         "skill_cast_time," +
                         "boss_ub_cool_time"
             }
-
             return fields!!
         }
     }

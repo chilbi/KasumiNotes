@@ -126,6 +126,7 @@ class ActionBuilder(
             45 -> getSkillCounter()
             46 -> getRatioDamage()
             48 -> getRegeneration(skillLevel, property)
+            49 -> getDispel()
             50 -> getSustain(skillLevel)
             56 -> getBlind()
             57 -> getCountDown()

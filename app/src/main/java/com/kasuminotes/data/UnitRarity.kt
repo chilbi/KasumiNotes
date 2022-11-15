@@ -5,9 +5,14 @@ data class UnitRarity(
     val growthProperty: Property
 ) {
     companion object {
+        private var fields: String? = null
+
         fun getFields(): String {
-            val growthFields = Property.keys.joinToString("_growth,") + "_growth"
-            return Property.getFields() + "," + growthFields
+            if (fields == null) {
+                val growthFields = Property.keys.joinToString("_growth,") + "_growth"
+                fields = Property.getFields() + "," + growthFields
+            }
+            return fields!!
         }
     }
 }

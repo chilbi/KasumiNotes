@@ -40,7 +40,6 @@ data class SkillAction(
                         "target_assignment,target_area,target_range," +
                         "target_type,target_number,target_count,description,level_up_disp"
             }
-
             return fields!!
         }
     }

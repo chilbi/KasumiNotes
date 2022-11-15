@@ -64,7 +64,6 @@ data class QuestData(
                 }
                 fields = "$waveGroupFields,$rewardImageFields,quest_id,area_id,quest_name"
             }
-
             return fields!!
         }
     }

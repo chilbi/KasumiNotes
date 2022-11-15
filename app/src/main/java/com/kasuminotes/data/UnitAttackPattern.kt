@@ -69,14 +69,19 @@ data class UnitAttackPattern(
     }
 
     companion object {
+        private var fields: String? = null
+
         fun getFields(): String {
-            val atkPatternFields = (1..20).joinToString(",") { i ->
-                "atk_pattern_$i"
+            if (fields == null) {
+                val atkPatternFields = (1..20).joinToString(",") { i ->
+                    "atk_pattern_$i"
+                }
+                fields = "$atkPatternFields," +
+                        "pattern_id," +
+                        "loop_start," +
+                        "loop_end"
             }
-            return "$atkPatternFields," +
-                    "pattern_id," +
-                    "loop_start," +
-                    "loop_end"
+            return fields!!
         }
     }
 }

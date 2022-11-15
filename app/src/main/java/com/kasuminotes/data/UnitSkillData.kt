@@ -13,7 +13,7 @@ data class UnitSkillData(
     val exSkillList: List<SkillData?>,//1-5
     val exSkillEvolutionList: List<SkillData?>//1-5
 ) {
-    fun getSkillList(level: Int) = getSkillList(level, level, level, level)
+//    fun getSkillList(level: Int) = getSkillList(level, level, level, level)
 
     fun getSkillList(
         ubLevel: Int,
@@ -24,10 +24,10 @@ data class UnitSkillData(
         val list = mutableListOf<SkillItem>()
 
         unionBurst?.let {
-            list.add(SkillItem("UB", ubLevel, it))
+            list.add(SkillItem("UB", ubLevel, it.getSkillOrRfSkill(ubLevel)))
         }
         unionBurstEvolution?.let {
-            list.add(SkillItem("UB+", ubLevel, it))
+            list.add(SkillItem("UB+", ubLevel, it.getSkillOrRfSkill(ubLevel)))
         }
 
         val mainSize = max(mainSkillList.size, mainSkillEvolutionList.size)
@@ -40,16 +40,16 @@ data class UnitSkillData(
                     else -> ubLevel
                 }
                 mainSkillList.getOrNull(i)?.let {
-                    list.add(SkillItem("Main ${i + 1}", level, it))
+                    list.add(SkillItem("Main ${i + 1}", level, it.getSkillOrRfSkill(level)))
                 }
                 mainSkillEvolutionList.getOrNull(i)?.let {
-                    list.add(SkillItem("Main ${i + 1}+", level, it))
+                    list.add(SkillItem("Main ${i + 1}+", level, it.getSkillOrRfSkill(level)))
                 }
             }
         }
 
         spUnionBurst?.let {
-            list.add(SkillItem("SP UB", ubLevel, it))
+            list.add(SkillItem("SP UB", ubLevel, it.getSkillOrRfSkill(ubLevel)))
         }
 
         val spSize = max(spSkillList.size, spSkillEvolutionList.size)
@@ -57,10 +57,10 @@ data class UnitSkillData(
         if (spSize > 0) {
             for (i in 0 until spSize) {
                 spSkillList.getOrNull(i)?.let {
-                    list.add(SkillItem("SP ${i + 1}", ubLevel, it))
+                    list.add(SkillItem("SP ${i + 1}", ubLevel, it.getSkillOrRfSkill(ubLevel)))
                 }
                 spSkillEvolutionList.getOrNull(i)?.let {
-                    list.add(SkillItem("SP ${i + 1}+", ubLevel, it))
+                    list.add(SkillItem("SP ${i + 1}+", ubLevel, it.getSkillOrRfSkill(ubLevel)))
                 }
             }
         }
@@ -70,10 +70,10 @@ data class UnitSkillData(
         if (exSize > 0) {
             for (i in 0 until exSize) {
                 exSkillList.getOrNull(i)?.let {
-                    list.add(SkillItem(if (exSize == 1) "EX" else "EX ${i + 1}", exLevel, it))
+                    list.add(SkillItem(if (exSize == 1) "EX" else "EX ${i + 1}", exLevel, it.getSkillOrRfSkill(exLevel)))
                 }
                 exSkillEvolutionList.getOrNull(i)?.let {
-                    list.add(SkillItem(if (exSize == 1) "EX+" else "EX ${i + 1}+", exLevel, it))
+                    list.add(SkillItem(if (exSize == 1) "EX+" else "EX ${i + 1}+", exLevel, it.getSkillOrRfSkill(exLevel)))
                 }
             }
         }
@@ -117,7 +117,6 @@ data class UnitSkillData(
                         "sp_union_burst," +
                         "union_burst_evolution"
             }
-
             return fields!!
         }
     }

@@ -197,6 +197,7 @@
     <string name="action_hiding_target1_time2">赋予%1$s隐密状态，效果时间%2$s秒。</string>
     <string name="action_injured_energy1_mark2_add3_max4_time5_target6">赋予%6$s%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。【%2$s】在受到伤害时就会消耗1个，同时TP回复%1$s。</string>
     <string name="action_hp_recovery_down_target1_formula2_time3">%1$s的HP回复量减少%2$s，效果时间%3$s秒。</string>
+    <string name="action_dispel_odds1_target2_content3">%1$s概率解除%2$s的%3$s。</string>
 
     <string name="action_striked_branch_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_exists_field_branch_content1">%s的领域展开时，</string>
@@ -258,6 +259,8 @@
     <string name="content_status_up_target1">每当自身受到状态提升时，就会为%s</string>
     <string name="content_initial_value1">初始值的%s</string>
     <string name="content_lower_defense">物理、魔法防御力中较低一方的防御力作为防御的</string>
+    <string name="content_status_up_effect">状态提升效果</string>
+    <string name="content_barrier">护盾</string>
 
     <string name="state_unknown">标记%s</string>
     <string name="state_hiding">隐密</string>
@@ -284,6 +287,7 @@
     <string name="state_fuwafuwa_wool">轻飘飘羊毛</string>
     <string name="state_dark_night_intensive">暗夜的加护</string>
     <string name="state_soul_ability">灵力</string>
+    <string name="state_yasakaninomagatama">八尺琼勾玉・减葬</string>
 
     <string name="target_self">自身</string>
     <string name="target_enemy">敌人</string>

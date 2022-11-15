@@ -13,8 +13,8 @@ data class EquipData(
     val baseProperty: Property,
     val growthProperty: Property
 ) {
-    val maxEnhanceLevel: Int
-        get() = if (promotionLevel > 3) 5 else if (promotionLevel < 3) promotionLevel - 1 else 3
+    val maxEnhanceLevel: Int =
+        if (promotionLevel > 3) 5 else if (promotionLevel < 3) promotionLevel - 1 else 3
 
     fun getProperty(enhanceLevel: Int): Property {
         if (enhanceLevel < 0) return Property()
@@ -39,8 +39,7 @@ data class EquipData(
                 val growthFields = Property.keys.joinToString(",") { key ->
                     "${equipmentEnhanceRateName}.${key} AS ${key}_growth"
                 }
-                fields = "${baseFields}," +
-                        "${growthFields}," +
+                fields = "$baseFields,$growthFields," +
                         "${equipmentDataName}.equipment_id," +
                         "${equipmentDataName}.equipment_name," +
                         "${equipmentEnhanceRateName}.description AS equipment_type," +

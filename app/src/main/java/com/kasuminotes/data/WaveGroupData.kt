@@ -14,7 +14,6 @@ data class WaveGroupData(
                 }
                 fields = "$enemyDropFields,wave_group_id"
             }
-
             return fields!!
         }
     }

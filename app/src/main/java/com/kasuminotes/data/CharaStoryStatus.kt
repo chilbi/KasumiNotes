@@ -53,14 +53,19 @@ data class CharaStoryStatus(
     }
 
     companion object {
+        private var fields: String? = null
+
         fun getFields(): String {
-            val statusFields = (1..5).joinToString(",") { i ->
-                "status_type_$i,status_rate_$i"
+            if (fields == null) {
+                val statusFields = (1..5).joinToString(",") { i ->
+                    "status_type_$i,status_rate_$i"
+                }
+                val charaFields = (2..10).joinToString(",") { i ->
+                    "chara_id_$i"
+                }
+                fields = "$statusFields,$charaFields"
             }
-            val charaFields = (2..10).joinToString(",") { i ->
-                "chara_id_$i"
-            }
-            return "$statusFields,$charaFields"
+            return fields!!
         }
     }
 }

@@ -21,8 +21,13 @@ data class UnitPromotion(
     }
 
     companion object {
+        private var fields: String? = null
+
         fun getFields(): String {
-            return (1..6).joinToString(",") { i -> "equip_slot_$i" }
+            if (fields == null) {
+                fields = (1..6).joinToString(",") { i -> "equip_slot_$i" }
+            }
+            return fields!!
         }
     }
 }

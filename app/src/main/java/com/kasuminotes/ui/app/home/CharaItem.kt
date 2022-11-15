@@ -37,6 +37,7 @@ import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
 import com.kasuminotes.ui.theme.Rounded8
 import com.kasuminotes.ui.theme.ShadowColor
+import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun CharaItem(
@@ -141,30 +142,15 @@ private fun BoxScope.CharaImage(
     getImageUrl: (Int, Int) -> String,
     onClick: () -> Unit
 ) {
-    val shape = Rounded8
-    var loading = false
-    // 修复api网站没有环奈的plate图片
-    val painter = if (isPlate && (unitId == 170101 || unitId == 170201)) {
-        val imageId = (if (rarity > 5) 6 else if (rarity > 2) 3 else 1) * 10 + unitId
-        painterResource(
-            when (imageId) {
-                170131 -> R.drawable.unit_plate_170131
-                170231 -> R.drawable.unit_plate_170231
-                170111 -> R.drawable.unit_plate_170111
-                else -> R.drawable.unit_plate_170211
-            }
-        )
-    } else {
-        val coilPainter = rememberAsyncImagePainter(getImageUrl(unitId, rarity))
-        loading = coilPainter.state !is AsyncImagePainter.State.Success
-        coilPainter
-    }
-
     PlaceImage(
-        painter = painter,
-        loading = loading,
-        modifier = Modifier.clip(shape).clickable { onClick() },
-        shape = shape
+        // 修复api网站没有环奈的plate图片
+        url = if (isPlate && (unitId == 170101 || unitId == 170201)) {
+            UrlUtil.getKanNaPlateUrl(unitId, rarity)
+        } else {
+            getImageUrl(unitId, rarity)
+        },
+        modifier = Modifier.clip(Rounded8).clickable { onClick() },
+        shape = Rounded8
     )
 }
 
