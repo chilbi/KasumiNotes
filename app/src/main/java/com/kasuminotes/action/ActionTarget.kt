@@ -246,7 +246,8 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                         D.Unknown
                     }
                 } else {
-                    D.Unknown
+                    //イオ　rfMain2、ユカリ rfMain2
+                    D.Format(R.string.target)
                 }
             } else {
                 D.Unknown

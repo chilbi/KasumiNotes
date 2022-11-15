@@ -289,6 +289,7 @@
     <string name="state_soul_ability">霊力</string>
     <string name="state_yasakaninomagatama">八尺瓊勾玉・減葬</string>
 
+    <string name="target">対象</string>
     <string name="target_self">自分</string>
     <string name="target_enemy">敵</string>
     <string name="target_friendly">味方</string>
