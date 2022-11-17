@@ -41,10 +41,10 @@ fun ExEquipProperty(
 
             Infobar(
                 label = label,
-                value = if (value < 100.0) {
-                    value.roundToInt().toString()
-                } else {
+                value = if (index < 7) {
                     "${(value / 100).toNumStr()}%(+${(baseProperty[index] * value / 10000).roundToInt()})"
+                } else {
+                    value.roundToInt().toString()
                 }
             )
         }

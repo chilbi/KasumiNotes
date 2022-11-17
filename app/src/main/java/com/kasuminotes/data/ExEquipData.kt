@@ -34,7 +34,7 @@ data class ExEquipData(
                         0.0
                     } else {
                         val defaultValue = defaultProperty[index]
-                        if (maxValue < 100.0) {
+                        if (index < 7) {
                             val growthValue = ceil(maxValue / (maxEnhanceLevel + 1))
                             defaultValue + growthValue * level
                         } else {
@@ -49,7 +49,7 @@ data class ExEquipData(
     fun getProperty(percentProperty: Property, baseProperty: Property): Property {
         return Property { index ->
             val value = percentProperty[index]
-            if (value < 100.0) {
+            if (index < 7) {
                 value
             } else {
                 baseProperty[index] * value / 10000

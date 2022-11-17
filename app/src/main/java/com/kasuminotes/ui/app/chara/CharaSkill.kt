@@ -340,15 +340,17 @@ private fun SkillDetail(
             }
         }
 
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .padding(4.dp)
-        ) {
-            UnderlineLabel(
-                label = stringResource(R.string.skill_effect),
-                color = MaterialTheme.colors.primary
-            )
+        if (actions != null) {
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)
+            ) {
+                UnderlineLabel(
+                    label = stringResource(R.string.skill_effect),
+                    color = MaterialTheme.colors.primary
+                )
+            }
         }
 
         if (!visibleTable.value && descriptionList != null) {
