@@ -3,7 +3,6 @@ package com.kasuminotes.ui.app.chara
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,11 +39,14 @@ import com.kasuminotes.R
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
 import com.kasuminotes.action.ActionBuilder
+import com.kasuminotes.action.D
+import com.kasuminotes.action.getUnknown
 import com.kasuminotes.action.stringDescription
 import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitData
 import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.data.UserData
+import com.kasuminotes.ui.components.ActionLabel
 import com.kasuminotes.ui.components.BgBorderColumn
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.Infobar
@@ -53,11 +54,6 @@ import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.UnderlineLabel
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
-import com.kasuminotes.ui.theme.DarkError
-import com.kasuminotes.ui.theme.DarkInfo
-import com.kasuminotes.ui.theme.DarkSuccess
-import com.kasuminotes.ui.theme.DarkWarning
-import com.kasuminotes.ui.theme.Diamond
 import com.kasuminotes.ui.theme.LightInfo
 import com.kasuminotes.ui.theme.LightWarning
 import com.kasuminotes.utils.UrlUtil
@@ -331,10 +327,10 @@ private fun SkillDetail(
             lineHeight = 28.sp
         )
 
-        val descriptionList by remember(skillLevel, property, rawDepends, actions) {
+        val descriptionList: List<D>? by remember(skillLevel, property, rawDepends, actions) {
             derivedStateOf {
                 if (property != null && rawDepends != null && actions != null) {
-                    ActionBuilder(rawDepends, actions).buildDescriptionList(
+                    ActionBuilder(rawDepends, actions, false).buildDescriptionList(
                         skillLevel,
                         property
                     )
@@ -344,10 +340,18 @@ private fun SkillDetail(
             }
         }
 
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .padding(4.dp)
+        ) {
+            UnderlineLabel(
+                label = stringResource(R.string.skill_effect),
+                color = MaterialTheme.colors.primary
+            )
+        }
 
         if (!visibleTable.value && descriptionList != null) {
-            SkillEffectLabel()
-
             descriptionList!!.forEachIndexed { index, d ->
                 Row(Modifier.padding(4.dp)) {
                     ActionLabel(index + 1)
@@ -363,227 +367,18 @@ private fun SkillDetail(
         }
 
         if (BuildConfig.DEBUG && visibleTable.value && rawDepends != null && actions != null) {
-            SkillEffect(rawDepends, actions)
+            actions.forEachIndexed { index, action ->
+                Row(Modifier.padding(4.dp)) {
+                    ActionLabel(index + 1)
+
+                    Text(
+                        text = stringDescription(action.getUnknown()),
+                        modifier = Modifier.padding(start = 4.dp),
+                        fontSize = 14.sp,
+                        lineHeight = 28.sp
+                    )
+                }
+            }
         }
-    }
-}
-
-@Composable
-private fun SkillEffectLabel() {
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .padding(4.dp)
-    ) {
-        UnderlineLabel(
-            label = stringResource(R.string.skill_effect),
-            color = MaterialTheme.colors.primary
-        )
-    }
-}
-
-@Composable
-private fun ActionLabel(actionNum: Int) {
-    Box(
-        Modifier
-            .size(18.dp)
-            .background(MaterialTheme.colors.primary, Diamond),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = actionNum.toString(),
-            color = Color.White,
-            fontSize = 11.sp
-        )
-    }
-}
-
-@Composable
-private fun SkillEffect(
-    rawDepends: List<Int>,
-    actions: List<SkillAction>
-) {
-    SkillEffectLabel()
-
-    actions.forEachIndexed { index, action ->
-        val dependId = rawDepends[index]
-
-        Text(
-            text = "action_id:${action.actionId}",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp)
-                .background(DarkWarning)
-                .padding(vertical = 2.dp),
-            color = Color.White,
-            fontSize = 14.sp,
-            textAlign = TextAlign.Center
-        )
-
-        Row {
-            KeyValue(
-                label = "action_type",
-                value = action.actionType.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkSuccess
-            )
-            KeyValue(
-                label = "depend_id",
-                value = dependId.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkSuccess
-            )
-            KeyValue(
-                label = "class_id",
-                value = action.classId.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkSuccess
-            )
-        }
-
-        Row {
-            KeyValue(
-                label = "detail_1",
-                value = action.actionDetail1.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkError
-            )
-            KeyValue(
-                label = "detail_2",
-                value = action.actionDetail2.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkError
-            )
-            KeyValue(
-                label = "detail_3",
-                value = action.actionDetail3.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkError
-            )
-        }
-
-        Row {
-            KeyValue(
-                label = "value_1",
-                value = action.actionValue1.toString(),
-                modifier = Modifier.weight(1f)
-            )
-            KeyValue(
-                label = "value_2",
-                value = action.actionValue2.toString(),
-                modifier = Modifier.weight(1f)
-            )
-            KeyValue(
-                label = "value_3",
-                value = action.actionValue3.toString(),
-                modifier = Modifier.weight(1f)
-            )
-            KeyValue(
-                label = "value_4",
-                value = action.actionValue4.toString(),
-                modifier = Modifier.weight(1f)
-            )
-        }
-
-        Row {
-            KeyValue(
-                label = "value_5",
-                value = action.actionValue5.toString(),
-                modifier = Modifier.weight(1f)
-            )
-            KeyValue(
-                label = "value_6",
-                value = action.actionValue6.toString(),
-                modifier = Modifier.weight(1f)
-            )
-            KeyValue(
-                label = "value_7",
-                value = action.actionValue7.toString(),
-                modifier = Modifier.weight(1f)
-            )
-        }
-
-        Row {
-            KeyValue(
-                label = "target_type",
-                value = action.targetType.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkSuccess
-            )
-            KeyValue(
-                label = "assignment",
-                value = action.targetAssignment.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkSuccess
-            )
-            KeyValue(
-                label = "area",
-                value = action.targetArea.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkSuccess
-            )
-        }
-
-        Row {
-            KeyValue(
-                label = "count",
-                value = action.targetCount.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkSuccess
-            )
-            KeyValue(
-                label = "range",
-                value = action.targetRange.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkSuccess
-            )
-            KeyValue(
-                label = "number",
-                value = action.targetNumber.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkSuccess
-            )
-        }
-
-        KeyValue(
-            label = "description",
-            value = if (action.description.isEmpty()) "NULL" else action.description
-        )
-
-        KeyValue(
-            label = "level_up_disp",
-            value = if (action.levelUpDisp.isEmpty()) "NULL" else action.levelUpDisp
-        )
-    }
-}
-
-@Composable
-private fun KeyValue(
-    label: String,
-    value: String,
-    modifier: Modifier = Modifier,
-    color: Color = DarkInfo
-) {
-    Column(
-        modifier
-            .padding(4.dp)
-            .border(1.dp, color)
-    ) {
-        Text(
-            text = label,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color)
-                .padding(vertical = 2.dp),
-            color = Color.White,
-            fontSize = 12.sp,
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = value,
-            modifier = Modifier.fillMaxWidth(),
-            fontSize = 12.sp,
-            textAlign = TextAlign.Center
-        )
     }
 }

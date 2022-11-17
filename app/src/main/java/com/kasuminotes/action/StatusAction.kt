@@ -1,10 +1,11 @@
 package com.kasuminotes.action
 
 import com.kasuminotes.R
+import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
 import kotlin.math.roundToInt
 
-fun SkillAction.getStatus(skillLevel: Int): D {
+fun SkillAction.getStatus(skillLevel: Int, property: Property?): D {
     var value1 = actionValue1
     var isBuff = actionDetail1 % 10 == 0
     if (actionDetail1 >= 140) {
@@ -18,7 +19,12 @@ fun SkillAction.getStatus(skillLevel: Int): D {
     val formula = if (value1 == 1.0) {
         getBaseLvFormula(actionValue2, actionValue3, skillLevel)
     } else {
-        val percent = D.Text("${actionValue2.roundToInt()}%")
+        var str = "${actionValue2.roundToInt()}%"
+        if (property != null) {
+            str += if (isBuff) "(+" else "(-"
+            str += "${(property[getStatusIndex(actionDetail1 / 10)] * actionValue2 / 100).roundToInt()})"
+        }
+        val percent = D.Text(str)
         if (actionDetail1 < 50) D.Format(R.string.content_initial_value1, arrayOf(percent))
         else percent
     }

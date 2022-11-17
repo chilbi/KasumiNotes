@@ -9,11 +9,13 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
 import com.kasuminotes.MainActivity
 import com.kasuminotes.data.EquipData
+import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.CharaState
 import com.kasuminotes.ui.app.state.DbState
 import com.kasuminotes.ui.app.state.EquipState
+import com.kasuminotes.ui.app.state.ExEquipState
 import com.kasuminotes.ui.app.state.QuestState
 import com.kasuminotes.ui.app.state.UiState
 import kotlinx.coroutines.launch
@@ -24,6 +26,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     val charaState = CharaState(appRepository, viewModelScope, dbState.userState::changeMaxUserData)
     val equipState = EquipState(appRepository, viewModelScope)
     val questState = QuestState(appRepository, viewModelScope)
+    val exEquipState = ExEquipState(appRepository, viewModelScope)
 
     val navController = NavHostController(appRepository.applicationContext).apply {
         navigatorProvider.addNavigator(ComposeNavigator())
@@ -106,6 +109,13 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             charaState::changeUniqueLevel
         )
         navController.navigate("equip")
+    }
+
+    fun navigateToExEquip(exEquipSlot: ExEquipSlot) {
+        viewModelScope.launch {
+            exEquipState.selectExEquipSlot(exEquipSlot, charaState.baseProperty)
+            navController.navigate("exEquip")
+        }
     }
 
     fun navigateToImages(allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) {

@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.data.EquipData
+import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.ui.app.state.CharaState
@@ -28,7 +29,8 @@ fun Chara(
     maxUserData: MaxUserData,
     onBack: () -> Unit,
     onEquipClick: (equipData: EquipData, slot: Int?) -> Unit,
-    onUniqueClick: (UniqueData) -> Unit
+    onUniqueClick: (UniqueData) -> Unit,
+    onExEquipSlotClick: (ExEquipSlot) -> Unit
 ) {
     val userProfile = charaState.userProfile!!
     val userData = charaState.userData!!
@@ -77,6 +79,7 @@ fun Chara(
                 onBack = { if (scaffoldState.isRevealed) onBack() },
                 onEquipClick = onEquipClick,
                 onUniqueClick = onUniqueClick,
+                onExEquipSlotClick,
                 onEquipChange = { equip, slot ->
                     if (equip) {
                         charaState.changeEquipLevel(slot, userProfile.getEquipMaxLevel(slot))

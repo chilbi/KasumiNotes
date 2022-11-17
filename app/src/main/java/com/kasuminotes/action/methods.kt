@@ -124,6 +124,21 @@ fun getStatusContent(detail: Int): D {
     }
 }
 
+fun getStatusIndex(detail: Int): Int {
+    return when (detail) {
+        1 -> 1
+        2 -> 2
+        3 -> 3
+        4 -> 4
+        5 -> 7
+        6 -> 5
+        7 -> 6
+        8 -> 13
+        9 -> 8
+        else -> 0
+    }
+}
+
 fun getStateContent(detail: Int): D {
     return when (detail) {
         1 -> D.Format(R.string.state_hiding)

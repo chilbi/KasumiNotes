@@ -129,6 +129,9 @@
     <string name="magic_atk">魔法普通攻击</string>
     <string name="cast_time_s">待机时间：%s秒</string>
     <string name="skill_effect">技能效果</string>
+    <string name="same_category_equip">同类装备</string>
+    <string name="equip_property">装备属性</string>
+    <string name="equip_skill">装备技能</string>
 
     <string name="action_unknown_s1">未知类型：%s</string>
     <string name="action_ex_content1_formula2">自身的%1$s提升%2$s。</string>
@@ -236,6 +239,8 @@
     <string name="action_branch_not_barrier_target1">%s没有护盾展开时，</string>
     <string name="action_summon_target1_distance2_content3">在%1$s的前方%2$s距离，%3$s。</string>
     <string name="action_summon_target1_content2">在%1$s身边，%2$s。</string>
+    <string name="action_ex_equip_passive">战斗开始时</string>
+    <string name="action_ex_equip_passive_time1">战斗开始后经过%s秒时</string>
 
     <string name="summon_403101">召唤一个能够攻击前方一名敌人的骷髅老爹</string>
     <string name="summon_403102">召唤一个能够攻击前方一名敌人的骷髅老爹（各种状态得到提升）</string>

@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.kasuminotes.ui.app.about.About
 import com.kasuminotes.ui.app.chara.Chara
 import com.kasuminotes.ui.app.equip.Equip
+import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
 import com.kasuminotes.ui.app.quest.Quest
 import com.kasuminotes.ui.app.usereditor.CharaEditor
@@ -21,6 +22,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
     val charaState = appViewModel.charaState
     val equipState = appViewModel.equipState
     val questState = appViewModel.questState
+    val exEquipState = appViewModel.exEquipState
 
     KasumiNotesTheme(uiState.darkTheme) {
         NavHost(appViewModel.navController, "home") {
@@ -41,13 +43,20 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     userState.maxUserData!!,
                     appViewModel::popBackStack,
                     appViewModel::navigateToEquip,
-                    appViewModel::navigateToUnique
+                    appViewModel::navigateToUnique,
+                    appViewModel::navigateToExEquip
                 )
             }
             composable("equip") {
                 Equip(
                     dbState,
                     equipState,
+                    appViewModel::popBackStack
+                )
+            }
+            composable("exEquip") {
+                ExEquip(
+                    exEquipState,
                     appViewModel::popBackStack
                 )
             }

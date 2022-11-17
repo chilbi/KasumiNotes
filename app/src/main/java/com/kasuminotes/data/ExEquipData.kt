@@ -16,19 +16,45 @@ data class ExEquipData(
     val passiveSkillPower: Int,
     val defaultProperty: Property,
     val maxProperty: Property,
-    val passiveSkill1: SkillData? = null,
-    val passiveSkill2: SkillData? = null
+    val passiveSkill1: SkillData?,
+    val passiveSkill2: SkillData?
 ) {
     val maxEnhanceLevel: Int = if (rarity > 2) 5 else rarity + 2
 
-    fun getProperty(enhanceLevel: Int): Property {
-        if (enhanceLevel < 0) return Property()
+    fun getPercentProperty(enhanceLevel: Int): Property {
+        if (enhanceLevel < 0) return Property.zero
 
-        val level = min(enhanceLevel, maxEnhanceLevel)
+        return when (val level = min(enhanceLevel, maxEnhanceLevel)) {
+            maxEnhanceLevel -> maxProperty
+            0 -> defaultProperty
+            else -> {
+                Property { index ->
+                    val maxValue = maxProperty[index]
+                    if (maxValue == 0.0) {
+                        0.0
+                    } else {
+                        val defaultValue = defaultProperty[index]
+                        if (maxValue < 100.0) {
+                            val growthValue = ceil(maxValue / (maxEnhanceLevel + 1))
+                            defaultValue + growthValue * level
+                        } else {
+                            defaultValue + defaultValue * level
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-        if (level == 0) return defaultProperty
-
-        return maxProperty
+    fun getProperty(percentProperty: Property, baseProperty: Property): Property {
+        return Property { index ->
+            val value = percentProperty[index]
+            if (value < 100.0) {
+                value
+            } else {
+                baseProperty[index] * value / 10000
+            }
+        }
     }
 
     companion object {
@@ -43,15 +69,14 @@ data class ExEquipData(
                     "max_$key"
                 }
                 fields = "$defaultFields,$maxFields," +
-                        "ex_equipment_id," +
                         "name," +
                         "description," +
                         "rarity," +
                         "category," +
-                        "restriction_id" +
+                        "restriction_id," +
                         "clan_battle_equip_flag," +
                         "passive_skill_id_1," +
-                        "passive_skill_id_2" +
+                        "passive_skill_id_2," +
                         "passive_skill_power"
             }
             return fields!!
@@ -59,37 +84,3 @@ data class ExEquipData(
     }
 }
 
-//    val defaultHp: Int,
-//    val maxHp: Int,
-//    val defaultAtk: Int,
-//    val maxAtk: Int,
-//    val defaultMagicStr: Int,
-//    val maxMagicStr: Int,
-//    val defaultDef: Int,
-//    val maxDef: Int,
-//    val defaultMagicDef: Int,
-//    val maxMagicDef: Int,
-//    val defaultPhysicalCritical: Int,
-//    val maxPhysicalCritical: Int,
-//    val defaultMagicCritical: Int,
-//    val maxMagicCritical: Int,
-//    val defaultWaveHpRecovery: Int,
-//    val maxWaveHpRecovery: Int,
-//    val defaultWaveEnergyRecovery: Int,
-//    val maxWaveEnergyRecovery: Int,
-//    val defaultDodge: Int,
-//    val maxDodge: Int,
-//    val defaultPhysicalPenetrate: Int,
-//    val maxPhysicalPenetrate: Int,
-//    val defaultMagicPenetrate: Int,
-//    val maxMagicPenetrate: Int,
-//    val defaultLifeSteal: Int,
-//    val maxLifeSteal: Int,
-//    val defaultHpRecoveryRate: Int,
-//    val maxHpRecoveryRate: Int,
-//    val defaultEnergyRecoveryRate: Int,
-//    val maxEnergyRecoveryRate: Int,
-//    val defaultEnergyReduceRate: Int,
-//    val maxEnergyReduceRate: Int,
-//    val defaultAccuracy: Int,
-//    val maxAccuracy: Int

@@ -227,10 +227,10 @@ FROM unit_skill_data WHERE unit_id=$unitId"""
         val getDeferredSkillDataList: suspend (List<Int>) -> Deferred<List<SkillData?>> = { list ->
             async {
                 list.map { skillId ->
-                    val skillAndRfSkill = listOf(
+                    val skillAndRfSkill = awaitAll(
                         async { getSkillData(skillId) },
                         async { getRfSkillData(skillId) }
-                    ).awaitAll()
+                    )
                     val skillData = skillAndRfSkill[0] as SkillData?
                     val rfSkillData = skillAndRfSkill[1] as RfSkillData?
                     skillData?.copy(rfSkillData = rfSkillData)

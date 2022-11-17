@@ -32,7 +32,9 @@ class CharaState(
         private set
     var userData by mutableStateOf<UserData?>(null)
         private set
-    var property by mutableStateOf(Property())
+    var property by mutableStateOf(Property.zero)
+        private set
+    var baseProperty by mutableStateOf(Property.zero)
         private set
     var saveVisible by mutableStateOf(false)
         private set
@@ -224,6 +226,11 @@ class CharaState(
         }
     }
 
+    private fun calcBaseProperty() {
+        val exSkillProperty = userProfile!!.getExSkillProperty(userData!!)
+        baseProperty = Property { i -> property[i] - exSkillProperty[i] }
+    }
+
     private fun initData(data: UserProfile) {
         backupUnitRarity = data.unitRarity
         backupUnitPromotionStatus = data.unitPromotionStatus
@@ -231,10 +238,12 @@ class CharaState(
 
         data.calcProperty()
         property = data.property!!
+        calcBaseProperty()
     }
 
     private fun changeState() {
         saveVisible = userData != userProfile!!.userData
         property = userProfile!!.getProperty(userData!!)
+        calcBaseProperty()
     }
 }

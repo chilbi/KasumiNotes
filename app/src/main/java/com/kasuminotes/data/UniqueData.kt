@@ -10,7 +10,7 @@ data class UniqueData(
     val growthProperty: Property
 ) {
     fun getProperty(uniqueLevel: Int): Property {
-        if (uniqueLevel < 1) return Property()
+        if (uniqueLevel < 1) return Property.zero
         if (uniqueLevel == 1) return baseProperty
 
         val level = uniqueLevel - 1

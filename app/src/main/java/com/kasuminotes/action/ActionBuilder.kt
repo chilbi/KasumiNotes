@@ -5,7 +5,8 @@ import com.kasuminotes.data.SkillAction
 
 class ActionBuilder(
     private val rawDepends: List<Int>,
-    private val actions: List<SkillAction>
+    private val actions: List<SkillAction>,
+    private val isExEquipPassive: Boolean
 ) {
     fun buildDescriptionList(skillLevel: Int, property: Property): List<D> {
         val origin = mutableListOf<D>()
@@ -21,6 +22,15 @@ class ActionBuilder(
         }
 
         actions.forEachIndexed { index, action ->
+            // ExEquipPassive
+            if (arrayOf(901, 902).contains(action.actionType)) {
+                remove.add(index)
+                var modifyIndex = index + 1
+                if (arrayOf(26, 27, 74).contains(actions[modifyIndex].actionType)) {
+                    modifyIndex = actions.indexOfFirst { it.actionId == actions[modifyIndex].actionDetail1 }
+                }
+                origin[modifyIndex] = origin[modifyIndex].insert(origin[index])
+            }
             // Focus, 94Unknown
             if (action.actionType == 7 || action.actionType == 94) {
                 remove.add(index)
@@ -90,6 +100,7 @@ class ActionBuilder(
 
     private fun SkillAction.getDescription(skillLevel: Int, property: Property): D {
         return when (actionType) {
+            901, 902 -> getExEquipPassive()
             90 -> getPassive(skillLevel)
             1 -> getDamage(skillLevel, property)
             2 -> getMove()
@@ -99,7 +110,7 @@ class ActionBuilder(
             7 -> D.Unknown//Focus
             8 -> getAbnormal()
             9 -> getAbnormalDamage(skillLevel)
-            10 -> getStatus(skillLevel)
+            10 -> getStatus(skillLevel, if (isExEquipPassive) property else null)
             11 -> getCharm()
             12 -> getDarkness()
             13 -> getUncontrol()

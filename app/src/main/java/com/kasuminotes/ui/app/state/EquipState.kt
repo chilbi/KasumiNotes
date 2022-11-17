@@ -36,7 +36,7 @@ class EquipState(
         private set
     var uniqueData by mutableStateOf<UniqueData?>(null)
         private set
-    var property by mutableStateOf(Property())
+    var property by mutableStateOf(Property.zero)
         private set
     var enhanceLevel by mutableStateOf(0)
         private set

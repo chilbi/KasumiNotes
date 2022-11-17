@@ -28,8 +28,8 @@ fun PropertyTable(
         modifier = modifier
     ) { i ->
         val index = indices[i]
-        val value = property[index].roundToInt()
         val label = stringResource(Property.getStrRes(index))
+        val value = property[index].roundToInt()
 
         if (originProperty == null) {
             Infobar(

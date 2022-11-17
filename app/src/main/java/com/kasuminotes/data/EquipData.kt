@@ -17,7 +17,7 @@ data class EquipData(
         if (promotionLevel > 3) 5 else if (promotionLevel < 3) promotionLevel - 1 else 3
 
     fun getProperty(enhanceLevel: Int): Property {
-        if (enhanceLevel < 0) return Property()
+        if (enhanceLevel < 0) return Property.zero
 
         val level = min(enhanceLevel, maxEnhanceLevel)
 

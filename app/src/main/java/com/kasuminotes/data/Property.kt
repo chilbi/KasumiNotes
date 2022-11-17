@@ -4,31 +4,31 @@ import androidx.compose.runtime.Stable
 import com.kasuminotes.R
 
 @Stable
-class Property(init: (Int) -> Double = { 0.0 }) {
+class Property(init: (Int) -> Double) {
 
-    constructor(pairs: List<Pair<Int, Double>>) : this() {
+    constructor(pairs: List<Pair<Int, Double>>) : this({ 0.0 }) {
         pairs.forEach { pair ->
             arr[pair.first - 1] = pair.second
         }
     }
 
     private val arr = DoubleArray(size, init)
-    val hp: Double get() = arr[0]
+//    val hp: Double get() = arr[0]
     val atk: Double get() = arr[1]
-    val def: Double get() = arr[2]
+//    val def: Double get() = arr[2]
     val magicStr: Double get() = arr[3]
-    val magicDef: Double get() = arr[4]
-    val physicalCritical: Double get() = arr[5]
-    val magicCritical: Double get() = arr[6]
+//    val magicDef: Double get() = arr[4]
+//    val physicalCritical: Double get() = arr[5]
+//    val magicCritical: Double get() = arr[6]
 //    val dodge: Double get() = arr[7]
 //    val lifeSteal: Double get() = arr[8]
 //    val waveHpRecovery: Double get() = arr[9]
 //    val waveEnergyRecovery: Double get() = arr[10]
 //    val physicalPenetrate: Double get() = arr[11]
 //    val magicPenetrate: Double get() = arr[12]
-    val energyRecoveryRate: Double get() = arr[13]
+//    val energyRecoveryRate: Double get() = arr[13]
 //    val hpRecoveryRate: Double get() = arr[14]
-    val energyReduceRate: Double get() = arr[15]
+//    val energyReduceRate: Double get() = arr[15]
 //    val accuracy: Double get() = arr[16]
 
     operator fun get(index: Int) = arr[index]
@@ -57,6 +57,7 @@ class Property(init: (Int) -> Double = { 0.0 }) {
 
     companion object {
         const val size = 17
+        val zero = Property { 0.0 }
 
         fun getStrRes(index: Int): Int = when (index) {
             0 -> R.string.hp

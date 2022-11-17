@@ -36,7 +36,7 @@ FROM unit_rarity WHERE unit_id=$unitId AND rarity=$rarity"""
 
 suspend fun AppDatabase.getUnitPromotionStatus(unitId: Int, promotionLevel: Int): UnitPromotionStatus {
     if (promotionLevel < 2) {
-        return UnitPromotionStatus(Property())
+        return UnitPromotionStatus(Property.zero)
     }
 
     val sql = """SELECT ${UnitPromotionStatus.getFields()}

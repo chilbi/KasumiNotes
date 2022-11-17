@@ -18,14 +18,14 @@ fun SkillAction.getUnknown(): D {
                 it.toNumStr()
             }
     )
-//    str.append("target(type=$targetType")
-//    str.append(", assignment=$targetAssignment")
-//    str.append(", area=$targetArea")
-//    str.append(", count=$targetCount")
-//    str.append(", range=$targetRange")
-//    str.append(", number=$targetNumber")
-//    str.append(")")
-    str.append("target=\"${getStringDescription(getTarget(depend))}\"")
+    str.append("target(type=$targetType")
+    str.append(", assignment=$targetAssignment")
+    str.append(", area=$targetArea")
+    str.append(", count=$targetCount")
+    str.append(", range=$targetRange")
+    str.append(", number=$targetNumber")
+    str.append(")")
+//    str.append("target=\"${getStringDescription(getTarget(depend))}\"")
     if (description.isNotEmpty()) {
         str.append(";\ndescription=\"$description\"")
     }

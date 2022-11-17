@@ -44,6 +44,7 @@ fun CharaUserData(
     exEquipSlots: List<ExEquipSlot>,
     onEquipClick: (equipData: EquipData, slot: Int) -> Unit,
     onUniqueClick: (UniqueData) -> Unit,
+    onExEquipSlotClick: (ExEquipSlot) -> Unit,
     onEquipChange: (equip: Boolean, slot: Int) -> Unit,
     onUniqueChange: (equip: Boolean) -> Unit,
     onCharaLevelChange: (Int) -> Unit,
@@ -110,13 +111,22 @@ fun CharaUserData(
             Column(horizontalAlignment = Alignment.End) {
                 val hasExEquipSlots = exEquipSlots.isNotEmpty()
                 Box(Modifier.padding(end = 24.dp)) {
-                    ExEquipIcon(if (hasExEquipSlots) exEquipSlots[0] else null)
+                    ExEquipIcon(
+                        if (hasExEquipSlots) exEquipSlots[0] else null,
+                        onExEquipSlotClick
+                    )
                 }
                 Box(Modifier.padding(vertical = 4.dp)) {
-                    ExEquipIcon(if (hasExEquipSlots) exEquipSlots[1] else null)
+                    ExEquipIcon(
+                        if (hasExEquipSlots) exEquipSlots[1] else null,
+                        onExEquipSlotClick
+                    )
                 }
                 Box(Modifier.padding(end = 24.dp)) {
-                    ExEquipIcon(if (hasExEquipSlots) exEquipSlots[2] else null)
+                    ExEquipIcon(
+                        if (hasExEquipSlots) exEquipSlots[2] else null,
+                        onExEquipSlotClick
+                    )
                 }
             }
         }
@@ -168,6 +178,7 @@ private fun UniqueEquipIcon(
 @Composable
 private fun ExEquipIcon(
     exEquipSlot: ExEquipSlot?,
+    onExEquipSlotClick: (ExEquipSlot) -> Unit
 ) {
     if (exEquipSlot == null) {
         ImageIcon(
@@ -178,7 +189,8 @@ private fun ExEquipIcon(
     } else {
         ImageIcon(
             painter = painterResource(R.drawable.item_00000),
-            loading = false
+            loading = false,
+            onClick = { onExEquipSlotClick(exEquipSlot) }
         ) {
             Image(
                 painter = rememberAsyncImagePainter(UrlUtil.getExEquipCategoryUrl(exEquipSlot.category)),
