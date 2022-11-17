@@ -136,6 +136,7 @@ fun CharaStatus(
                 elevation = 16.dp
             ) {
                 Rarities(
+                    highlightCount = if (maxRarity > 5) 1 else 0,
                     maxRarity = maxRarity,
                     rarity = userData.rarity,
                     onRarityChange = {

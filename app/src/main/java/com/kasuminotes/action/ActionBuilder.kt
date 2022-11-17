@@ -101,7 +101,7 @@ class ActionBuilder(
     private fun SkillAction.getDescription(skillLevel: Int, property: Property): D {
         return when (actionType) {
             901, 902 -> getExEquipPassive()
-            90 -> getPassive(skillLevel)
+            90 -> getExPassive(skillLevel)
             1 -> getDamage(skillLevel, property)
             2 -> getMove()
             3 -> getKnock()

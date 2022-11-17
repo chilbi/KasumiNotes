@@ -21,6 +21,7 @@ import com.kasuminotes.R
 
 @Composable
 fun Rarities(
+    highlightCount: Int,
     maxRarity: Int,
     rarity: Int,
     onRarityChange: (Int) -> Unit,
@@ -28,6 +29,7 @@ fun Rarities(
     size: Dp = 20.dp,
     padding: PaddingValues = PaddingValues(4.dp)
 ) {
+    val highlightIndex = maxRarity - highlightCount - 1
     Row(modifier) {
         repeat(maxRarity) { r ->
             Box(
@@ -48,7 +50,7 @@ fun Rarities(
             ) {
                 @DrawableRes
                 val resId = if (r < rarity) {
-                    if (r > 4) {
+                    if (r > highlightIndex) {
                         R.drawable.star_large_6
                     } else {
                         R.drawable.star_large_1

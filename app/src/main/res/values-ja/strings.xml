@@ -129,12 +129,12 @@
     <string name="magic_atk">魔法通常攻撃</string>
     <string name="cast_time_s">待機時間：%s秒</string>
     <string name="skill_effect">スキル効果</string>
-    <string name="same_category_equip">同種装備</string>
+    <string name="same_category_equip">同種装備</string>8
     <string name="equip_property">装備ステータス</string>
     <string name="equip_skill">装備スキル</string>
 
     <string name="action_unknown_s1">不明タイプ：%s</string>
-    <string name="action_ex_content1_formula2">自分の%1$sを%2$sアップ。</string>
+    <string name="action_ex_passive_content1_formula2">バトル開始時に自分の%1$sを%2$sアップ、効果時間90秒。</string>
     <string name="action_damage_target1_formula2_content3">%1$sに%2$sの%3$sダメージを与える。</string>
     <string name="action_damage_must_hit">この攻撃は必ず命中する。</string>
     <string name="action_damage_must_critical">この攻撃の１ヒットのダメージは必ずクリティカルする。</string>
@@ -239,7 +239,7 @@
     <string name="action_branch_not_barrier_target1">%sはバリアが展開されていない場合、</string>
     <string name="action_summon_target1_distance2_content3">%1$sの前%2$s距離に、%3$s。</string>
     <string name="action_summon_target1_content2">%1$sのそばに、%2$s。</string>
-    <string name="action_ex_equip_passive">バトル開始後の時に</string>
+    <string name="action_ex_equip_passive">バトル開始時に</string>
     <string name="action_ex_equip_passive_time1">バトル開始後%s秒経過時に</string>
 
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>

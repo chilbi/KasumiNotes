@@ -39,24 +39,6 @@ fun EquipProperty(
     onEnhanceLevelChange: (Int) -> Unit
 ) {
     BgBorderColumn {
-        if (maxEnhanceLevel in 1..5) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                ColumnLabel(stringResource(R.string.promotion_level))
-
-                Spacer(Modifier.width(8.dp))
-
-                Rarities(
-                    maxRarity = maxEnhanceLevel,
-                    rarity = enhanceLevel,
-                    onRarityChange = onEnhanceLevelChange
-                )
-            }
-
-            Spacer(Modifier.height(4.dp))
-        }
-
         PropertyTable(
             property = property,
             indices = property.nonzeroIndices,
@@ -64,9 +46,7 @@ fun EquipProperty(
         )
 
         if (maxEnhanceLevel > 5) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 ColumnLabel(stringResource(R.string.promotion_level))
 
                 var value by rememberSaveable(enhanceLevel) {
@@ -103,6 +83,17 @@ fun EquipProperty(
                 ) {
                     Icon(Icons.Filled.Add, null)
                 }
+            }
+        } else {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                ColumnLabel(stringResource(R.string.promotion_level))
+                Spacer(Modifier.width(8.dp))
+                Rarities(
+                    highlightCount = 0,
+                    maxRarity = maxEnhanceLevel,
+                    rarity = enhanceLevel,
+                    onRarityChange = onEnhanceLevelChange
+                )
             }
         }
     }

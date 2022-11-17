@@ -21,7 +21,7 @@ fun MultiLineText(
             text = line,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 4.dp),
+                .padding(vertical = 2.dp),
             fontSize = fontSize,
             textAlign = textAlign
         )

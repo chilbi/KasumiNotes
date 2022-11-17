@@ -31,11 +31,13 @@ class ExEquipState(
         private set
     var exEquipData by mutableStateOf<ExEquipData?>(null)
         private set
-    var newExEquipData by mutableStateOf<ExEquipData?>(null)
-        private set
     var percentProperty by mutableStateOf(Property.zero)
         private set
     var baseProperty by mutableStateOf(Property.zero)
+        private set
+    var enhanceLevel by mutableStateOf(0)
+        private set
+    var maxEnhanceLevel by mutableStateOf(0)
         private set
 
     suspend fun selectExEquipSlot(exEquipSlot: ExEquipSlot, charaBaseProperty: Property) = withContext(defaultDispatcher) {
@@ -62,6 +64,13 @@ class ExEquipState(
             val exEquip = db.getExEquipData(exEquipId)
             exEquipData = exEquip
             percentProperty = exEquip.getPercentProperty(exEquip.maxEnhanceLevel)
+            enhanceLevel = exEquip.maxEnhanceLevel
+            maxEnhanceLevel = exEquip.maxEnhanceLevel
         }
+    }
+
+    fun changeEnhanceLevel(level: Int) {
+        percentProperty = exEquipData!!.getPercentProperty(level)
+        enhanceLevel = level
     }
 }

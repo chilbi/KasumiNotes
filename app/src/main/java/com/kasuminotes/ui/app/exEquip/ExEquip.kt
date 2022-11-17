@@ -53,7 +53,10 @@ fun ExEquip(
 
                     ExEquipProperty(
                         exEquipState.percentProperty,
-                        exEquipState.baseProperty
+                        exEquipState.baseProperty,
+                        exEquipState.maxEnhanceLevel,
+                        exEquipState.enhanceLevel,
+                        exEquipState::changeEnhanceLevel
                     )
 
                     if (exEquipData.passiveSkill1 != null || exEquipData.passiveSkill2 != null) {

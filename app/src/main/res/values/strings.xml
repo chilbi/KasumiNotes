@@ -134,7 +134,7 @@
     <string name="equip_skill">装备技能</string>
 
     <string name="action_unknown_s1">未知类型：%s</string>
-    <string name="action_ex_content1_formula2">自身的%1$s提升%2$s。</string>
+    <string name="action_ex_passive_content1_formula2">战斗开始时自身的%1$s提升%2$s，效果时间90秒。</string>
     <string name="action_damage_target1_formula2_content3">对%1$s造成%2$s%3$s伤害。</string>
     <string name="action_damage_must_hit">此攻击必定命中。</string>
     <string name="action_damage_must_critical">此攻击的第1击的伤害必定暴击。</string>
