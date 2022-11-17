@@ -529,7 +529,7 @@ private fun EditorDialogContent(
         SliderPlus(
             value = charaLevel,
             minValue = 1,
-            maxValue = maxCharaLevel,
+            maxValue = maxCharaLevel + 10,
             onValueChange = { charaLevel = it },
             checked = charaLevelChecked,
             onCheckedChange = { charaLevelChecked = it },
