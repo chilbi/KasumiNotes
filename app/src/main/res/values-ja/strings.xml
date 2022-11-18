@@ -346,6 +346,7 @@
     <string name="received_damage">攻撃を受けた際のダメージ</string>
     <string name="received_physical_damage">物理攻撃を受けた際のダメージ</string>
     <string name="received_magic_damage">魔法攻撃を受けた際のダメージ</string>
+    <string name="received_physical_or_magic_damage">物理/魔法攻撃を受けた際のダメージ</string>
     <string name="poison">毒</string>
     <string name="burn">火傷</string>
     <string name="curse">呪い</string>

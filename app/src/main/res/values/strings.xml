@@ -346,6 +346,7 @@
     <string name="received_damage">受到的伤害</string>
     <string name="received_physical_damage">受到的物理伤害</string>
     <string name="received_magic_damage">受到的魔法伤害</string>
+    <string name="received_physical_or_magic_damage">受到的物理/魔法伤害</string>
     <string name="poison">中毒</string>
     <string name="burn">火伤</string>
     <string name="curse">诅咒</string>
