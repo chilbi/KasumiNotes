@@ -1,7 +1,9 @@
 package com.kasuminotes.data
 
+import com.kasuminotes.action.getStatusIndex
 import kotlin.math.ceil
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 data class ExEquipData(
     val exEquipmentId: Int,
@@ -46,15 +48,58 @@ data class ExEquipData(
         }
     }
 
-    fun getProperty(percentProperty: Property, baseProperty: Property): Property {
+    fun getProperty(percentProperty: Property, baseProperty: Property, includeSkillProperty: Boolean): Property {
+        val skillProperty = if (includeSkillProperty) getSkillProperty(baseProperty) else Property.zero
         return Property { index ->
             val value = percentProperty[index]
             if (index < 7) {
-                value
+                (baseProperty[index] * value / 10000).roundToInt().toDouble() + skillProperty[index]
             } else {
-                baseProperty[index] * value / 10000
+                value + skillProperty[index]
             }
         }
+    }
+
+    private fun getSkillProperty(baseProperty: Property): Property {
+        return if (passiveSkill1 == null && passiveSkill2 == null) {
+            Property.zero
+        } else if (passiveSkill1 != null && passiveSkill2 == null) {
+            getPassive90SkillProperty(passiveSkill1, baseProperty)
+        } else if (passiveSkill1 == null && passiveSkill2 != null) {
+            getPassive90SkillProperty(passiveSkill2, baseProperty)
+        } else {
+            val p1 = getPassive90SkillProperty(passiveSkill1!!, baseProperty)
+            val p2 = getPassive90SkillProperty(passiveSkill2!!, baseProperty)
+            Property { i -> p1[i] + p2[i] }
+        }
+    }
+
+    private fun getPassive90SkillProperty(passiveSkill: SkillData, baseProperty: Property): Property {
+        val pairs = mutableListOf<Pair<Int, Double>>()
+        val actions = passiveSkill.actions
+        actions.forEachIndexed { index, action ->
+            if (arrayOf(901, 902).contains(action.actionType) && action.actionDetail1 == 0) {
+                var statusActionIndex = index + 1
+                if (arrayOf(26, 27, 74).contains(actions[statusActionIndex].actionType)) {
+                    statusActionIndex =
+                        actions.indexOfFirst { it.actionId == actions[statusActionIndex].actionDetail1 }
+                }
+                val statusAction = actions[statusActionIndex]
+                if (statusAction.actionType == 10) {
+                    val key = getStatusIndex(statusAction.actionDetail1 / 10)
+                    var value = if (statusAction.actionValue1 == 2.0) {
+                        baseProperty[key] * statusAction.actionValue2 / 100
+                    } else {
+                        statusAction.actionValue2
+                    }
+                    if (statusAction.actionDetail1 % 10 != 0) {
+                        value *= -1
+                    }
+                    pairs.add(key + 1 to value.roundToInt().toDouble())
+                }
+            }
+        }
+        return Property(pairs)
     }
 
     companion object {

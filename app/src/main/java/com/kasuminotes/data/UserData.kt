@@ -20,6 +20,12 @@ data class UserData(
     val equip4Level: Int,
     val equip5Level: Int,
     val equip6Level: Int,
+    val exEquip1: Int = 0,
+    val exEquip2: Int = 0,
+    val exEquip3: Int = 0,
+    val exEquip1Level: Int = -1,
+    val exEquip2Level: Int = -1,
+    val exEquip3Level: Int = -1,
     val lvLimitBreak: Int = 0
 ) {
     val rankRarity: Int
@@ -46,7 +52,13 @@ data class UserData(
             equip3Level,
             equip4Level,
             equip5Level,
-            equip6Level
+            equip6Level,
+            exEquip1,
+            exEquip2,
+            exEquip3,
+            exEquip1Level,
+            exEquip2Level,
+            exEquip3Level
         ).joinToString(",")
 
     fun getEquipLevel(slot: Int): Int = when (slot) {
@@ -76,7 +88,13 @@ data class UserData(
                     "equip3_level," +
                     "equip4_level," +
                     "equip5_level," +
-                    "equip6_level"
+                    "equip6_level," +
+                    "ex_equip1," +
+                    "ex_equip2," +
+                    "ex_equip3," +
+                    "ex_equip1_level," +
+                    "ex_equip2_level," +
+                    "ex_equip3_level"
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.kasuminotes.ui.app.chara
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,16 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.MaxUserData
@@ -29,7 +23,6 @@ import com.kasuminotes.data.UserData
 import com.kasuminotes.ui.components.DraggableImageIcon
 import com.kasuminotes.ui.components.ImageIcon
 import com.kasuminotes.ui.theme.GrayFilter
-import com.kasuminotes.ui.theme.ShadowColor
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -108,27 +101,12 @@ fun CharaUserData(
                 onEquipChange
             )
             
-            Column(horizontalAlignment = Alignment.End) {
-                val hasExEquipSlots = exEquipSlots.isNotEmpty()
-                Box(Modifier.padding(end = 24.dp)) {
-                    ExEquipIcon(
-                        if (hasExEquipSlots) exEquipSlots[0] else null,
-                        onExEquipSlotClick
-                    )
-                }
-                Box(Modifier.padding(vertical = 4.dp)) {
-                    ExEquipIcon(
-                        if (hasExEquipSlots) exEquipSlots[1] else null,
-                        onExEquipSlotClick
-                    )
-                }
-                Box(Modifier.padding(end = 24.dp)) {
-                    ExEquipIcon(
-                        if (hasExEquipSlots) exEquipSlots[2] else null,
-                        onExEquipSlotClick
-                    )
-                }
-            }
+            CharaExEquipSlots(
+                userData,
+                originUserData,
+                exEquipSlots,
+                onExEquipSlotClick
+            )
         }
     }
 }
@@ -175,38 +153,3 @@ private fun UniqueEquipIcon(
     }
 }
 
-@Composable
-private fun ExEquipIcon(
-    exEquipSlot: ExEquipSlot?,
-    onExEquipSlotClick: (ExEquipSlot) -> Unit
-) {
-    if (exEquipSlot == null) {
-        ImageIcon(
-            painter = painterResource(R.drawable.item_00000),
-            loading = false,
-            enabled = false
-        )
-    } else {
-        ImageIcon(
-            painter = painterResource(R.drawable.item_00000),
-            loading = false,
-            onClick = { onExEquipSlotClick(exEquipSlot) }
-        ) {
-            Image(
-                painter = rememberAsyncImagePainter(UrlUtil.getExEquipCategoryUrl(exEquipSlot.category)),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(18.dp)
-                    .align(Alignment.TopEnd)
-            )
-            Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(28.dp)
-                    .align(Alignment.Center),
-                tint = ShadowColor
-            )
-        }
-    }
-}

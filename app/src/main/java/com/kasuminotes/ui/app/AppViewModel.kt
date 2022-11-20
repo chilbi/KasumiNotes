@@ -41,9 +41,11 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 }
                 "chara" -> {
                     equipState.destroy()
+                    exEquipState.destroy()
                 }
                 "quest" -> {
                     equipState.destroy()
+                    exEquipState.destroy()
                 }
             }
         }
@@ -113,7 +115,17 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
 
     fun navigateToExEquip(exEquipSlot: ExEquipSlot) {
         viewModelScope.launch {
-            exEquipState.selectExEquipSlot(exEquipSlot, charaState.baseProperty)
+            exEquipState.selectExEquipSlot(
+                exEquipSlot,
+                charaState.baseProperty,
+                when (exEquipSlot.category / 100) {
+                    1 -> charaState.userData!!.exEquip1Level
+                    2 -> charaState.userData!!.exEquip2Level
+                    else -> charaState.userData!!.exEquip3Level
+                },
+                charaState::changeExEquip,
+                charaState::changeExEquipLevel
+            )
             navController.navigate("exEquip")
         }
     }

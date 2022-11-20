@@ -3,6 +3,8 @@ package com.kasuminotes.ui.app.state
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.kasuminotes.data.ExEquipData
+import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UnitPromotionStatus
@@ -27,6 +29,7 @@ class CharaState(
     private var backupUnitRarity: UnitRarity? = null
     private var backupUnitPromotionStatus: UnitPromotionStatus? = null
     private var backupUnitPromotion: UnitPromotion? = null
+    private var backupExEquipSlots: List<ExEquipSlot> = emptyList()
 
     var userProfile by mutableStateOf<UserProfile?>(null)
         private set
@@ -35,6 +38,8 @@ class CharaState(
     var property by mutableStateOf(Property.zero)
         private set
     var baseProperty by mutableStateOf(Property.zero)
+        private set
+    var includeExEquipProperty by mutableStateOf(Property.zero)
         private set
     var saveVisible by mutableStateOf(false)
         private set
@@ -58,6 +63,41 @@ class CharaState(
                 initData(data)
             }
         }
+    }
+
+    fun changeExEquip(slotNum: Int, exEquip: ExEquipData?) {
+        val exEquipId = exEquip?.exEquipmentId ?: 0
+        val update: (Int) -> List<ExEquipSlot> = { index: Int ->
+            userProfile!!.exEquipSlots.mapIndexed { i, slot ->
+                if (i == index) slot.copy(exEquipData = exEquip)
+                else slot
+            }
+        }
+        userData = when (slotNum) {
+            1 -> {
+                userProfile!!.exEquipSlots = update(0)
+                userData!!.copy(exEquip1 = exEquipId)
+            }
+            2 -> {
+                userProfile!!.exEquipSlots = update(1)
+                userData!!.copy(exEquip2 = exEquipId)
+            }
+            else -> {
+                userProfile!!.exEquipSlots = update(2)
+                userData!!.copy(exEquip3 = exEquipId)
+            }
+
+        }
+        changeState()
+    }
+
+    fun changeExEquipLevel(slotNum: Int, level: Int) {
+        userData = when (slotNum) {
+            1 -> userData!!.copy(exEquip1Level = level)
+            2 -> userData!!.copy(exEquip2Level = level)
+            else -> userData!!.copy(exEquip3Level = level)
+        }
+        changeState()
     }
 
     fun changeLvLimitBreak(maxCharaLevel: Int) {
@@ -156,6 +196,7 @@ class CharaState(
         userProfile!!.unitRarity = backupUnitRarity
         userProfile!!.unitPromotionStatus = backupUnitPromotionStatus
         userProfile!!.unitPromotion = backupUnitPromotion
+        userProfile!!.exEquipSlots = backupExEquipSlots
 
         userData = userProfile!!.userData
         changeState()
@@ -165,6 +206,7 @@ class CharaState(
         backupUnitRarity = userProfile!!.unitRarity
         backupUnitPromotionStatus = userProfile!!.unitPromotionStatus
         backupUnitPromotion = userProfile!!.unitPromotion
+        backupExEquipSlots = userProfile!!.exEquipSlots
 
         var userUniqueDiff = 0
         var userRarity6Diff = 0
@@ -194,7 +236,7 @@ class CharaState(
         }
 
         userProfile!!.userData = userData!!
-        userProfile!!.calcProperty()
+        userProfile!!.setProperty(property, baseProperty, includeExEquipProperty)
         saveVisible = false
 
         scope.launch(defaultDispatcher) {
@@ -205,7 +247,6 @@ class CharaState(
 
     fun destroy() {
         restore()
-
 //        userProfile = null
 //        userData = null
     }
@@ -220,30 +261,37 @@ class CharaState(
             userProfile!!.unitRarity = backupUnitRarity
             userProfile!!.unitPromotionStatus = backupUnitPromotionStatus
             userProfile!!.unitPromotion = backupUnitPromotion
+            userProfile!!.exEquipSlots = backupExEquipSlots
             backupUnitRarity = null
             backupUnitPromotionStatus = null
             backupUnitPromotion = null
+            backupExEquipSlots = emptyList()
         }
-    }
-
-    private fun calcBaseProperty() {
-        val exSkillProperty = userProfile!!.getExSkillProperty(userData!!)
-        baseProperty = Property { i -> property[i] - exSkillProperty[i] }
     }
 
     private fun initData(data: UserProfile) {
         backupUnitRarity = data.unitRarity
         backupUnitPromotionStatus = data.unitPromotionStatus
         backupUnitPromotion = data.unitPromotion
+        backupExEquipSlots = data.exEquipSlots
 
-        data.calcProperty()
-        property = data.property!!
-        calcBaseProperty()
+        calcProperty()
+        data.setProperty(property, baseProperty, includeExEquipProperty)
+    }
+
+    private fun calcProperty() {
+        val p = userProfile!!.getProperty(userData!!)
+        property = p
+
+        val exSkillProperty = userProfile!!.getExSkillProperty(userData!!)
+        baseProperty = Property { i -> property[i] - exSkillProperty[i] }
+
+        val exEquipProperty = userProfile!!.getExEquipProperty(baseProperty, userData!!)
+        includeExEquipProperty = Property { i -> exEquipProperty[i] + p[i] }
     }
 
     private fun changeState() {
         saveVisible = userData != userProfile!!.userData
-        property = userProfile!!.getProperty(userData!!)
-        calcBaseProperty()
+        calcProperty()
     }
 }

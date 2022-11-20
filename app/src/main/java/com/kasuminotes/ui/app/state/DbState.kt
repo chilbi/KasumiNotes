@@ -14,7 +14,6 @@ import com.kasuminotes.db.putUserDataList
 import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.ui.app.DefaultUserId
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
 

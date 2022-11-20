@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,15 +25,24 @@ fun ExEquip(
     exEquipState: ExEquipState,
     onBack: () -> Unit
 ) {
-    val exEquipCategory = exEquipState.exEquipCategory!!
+    val exEquipCategory = exEquipState.exEquipCategory
     val exEquipData = exEquipState.exEquipData
 
     Scaffold(
         topBar = {
-            ExEquipTopBar(exEquipCategory.category, exEquipCategory.categoryName, onBack)
+            if (exEquipCategory != null) {
+                ExEquipTopBar(exEquipCategory.category, exEquipCategory.categoryName, onBack)
+            }
         },
         bottomBar = {
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
+        },
+        floatingActionButton = {
+            if (exEquipState.exEquipData != null) {
+                FloatingActionButton(onClick = { exEquipState.changeExEquip() }) {
+                    Icon(if (exEquipState.isEquipping) Icons.Filled.Clear else Icons.Filled.Check, null)
+                }
+            }
         },
         content = { contentPadding ->
             Column(
@@ -41,6 +55,7 @@ fun ExEquip(
                 EquippableExList(
                     exEquipState.equippableExList,
                     exEquipData?.exEquipmentId ?: 0,
+                    exEquipState.exEquipSlot?.exEquipData?.exEquipmentId ?: 0,
                     exEquipState::selectExEquip
                 )
 
@@ -71,4 +86,3 @@ fun ExEquip(
         }
     )
 }
-

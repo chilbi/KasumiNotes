@@ -219,7 +219,14 @@ class CharaListState {
                 equip3Level,
                 equip4Level,
                 equip5Level,
-                equip6Level
+                equip6Level,
+                userData.exEquip1,
+                userData.exEquip2,
+                userData.exEquip3,
+                userData.exEquip1Level,
+                userData.exEquip2Level,
+                userData.exEquip3Level,
+                userData.lvLimitBreak
             )
         }
         profiles = newProfiles

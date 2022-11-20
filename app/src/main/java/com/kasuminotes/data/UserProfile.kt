@@ -1,5 +1,8 @@
 package com.kasuminotes.data
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.db.*
 import com.kasuminotes.utils.Helper
@@ -29,6 +32,10 @@ data class UserProfile(
 ) {
     var property: Property? = null
         private set
+    var baseProperty: Property? = null
+        private set
+    var includeExEquipProperty: Property? = null
+        private set
 
     fun getRealUnitData(rarity: Int): UnitData = if (shouldConverted(rarity)) unitConversionData!!.unitData else unitData
 
@@ -41,6 +48,32 @@ data class UserProfile(
     fun getExSkillProperty(data: UserData): Property {
         val realExSkillData = if (shouldConverted(data.rarity)) unitConversionData!!.exSkillData else exSkillData
         return realExSkillData!!.getProperty(data.rarity, data.exLevel)
+    }
+
+    fun getExEquipProperty(base: Property, data: UserData): Property {
+        return if (exEquipSlots.isEmpty()) {
+            Property.zero
+        } else {
+            val list = exEquipSlots.mapIndexed { index, slot ->
+                if (slot.exEquipData == null) {
+                    Property.zero
+                } else {
+                    val percent = slot.exEquipData.getPercentProperty(
+                        when (index) {
+                            0 -> data.exEquip1Level
+                            1 -> data.exEquip2Level
+                            else -> data.exEquip3Level
+                        }
+                    )
+                    slot.exEquipData.getProperty(percent, base, true)
+                }
+            }
+            Property { i ->
+                var value = 0.0
+                list.forEach { item -> value += item[i] }
+                value
+            }
+        }
     }
 
     fun getProperty(data: UserData): Property {
@@ -148,8 +181,10 @@ data class UserProfile(
 //        OrderBy.EnergyReduceRate -> (property?.energyReduceRate?.roundToInt() ?: 0).toString()
     }
 
-    fun calcProperty() {
-        property = getProperty(userData)
+    fun setProperty(p: Property, base: Property, includeExEquip: Property) {
+        property = p
+        baseProperty = base
+        includeExEquipProperty = includeExEquip
     }
 
     private fun shouldConverted(rarity: Int): Boolean = unitConversionData != null && rarity > 5
@@ -199,7 +234,10 @@ data class UserProfile(
             async { unitConversionData?.let { db.getUnitAttackPatternList(it.convertedUnitId) } },
             async { unitConversionData?.let { db.getUnitSkillData(it.convertedUnitId) } },
             async { unitConversionData?.let { db.getExSkillData(it.convertedUnitId) } },
-            async { db.getUnitExEquipSlots(unitData.unitId) }
+            async { db.getUnitExEquipSlots(unitData.unitId) },
+            async { if (userData.exEquip1 == 0) null else db.getExEquipData(userData.exEquip1) },
+            async { if (userData.exEquip2 == 0) null else db.getExEquipData(userData.exEquip2) },
+            async { if (userData.exEquip3 == 0) null else db.getExEquipData(userData.exEquip3) }
         )
         unitRarity = list[0] as UnitRarity
         unitPromotionStatus = list[1] as UnitPromotionStatus
@@ -220,8 +258,11 @@ data class UserProfile(
             unitConversionData!!.unitSkillData = list[11] as UnitSkillData
             unitConversionData!!.exSkillData = list[12] as ExSkillData
         }
+        var listIndex = 14
         @Suppress("UNCHECKED_CAST")
-        exEquipSlots = list[13] as List<ExEquipSlot>
+        exEquipSlots = (list[13] as List<ExEquipSlot>).map {
+            it.copy(exEquipData = list[listIndex++] as ExEquipData?)
+        }
         val sharedChara = charaStoryStatus!!.sharedChara
         if (sharedChara.isNotEmpty()) {
             val sharedProfileList = profiles

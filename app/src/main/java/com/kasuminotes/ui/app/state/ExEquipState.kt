@@ -24,38 +24,61 @@ class ExEquipState(
     private val scope: CoroutineScope,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
-    private var exEquipSlotRef: ExEquipSlot? = null
+    private var onExEquipDataChange: ((slotNum: Int, exEquip: ExEquipData?) -> Unit)? = null
+    private var onEnhanceLevelChange: ((slotNum: Int, level: Int) -> Unit)? = null
+    private var slotNum = 0
+
+    var exEquipSlot by mutableStateOf<ExEquipSlot?>(null)
+        private set
+    var exEquipData by mutableStateOf<ExEquipData?>(null)
+        private set
     var exEquipCategory by mutableStateOf<ExEquipCategory?>(null)
         private set
     var equippableExList by mutableStateOf<List<Int>>(emptyList())
-        private set
-    var exEquipData by mutableStateOf<ExEquipData?>(null)
         private set
     var percentProperty by mutableStateOf(Property.zero)
         private set
     var baseProperty by mutableStateOf(Property.zero)
         private set
-    var enhanceLevel by mutableStateOf(0)
+    var isEquipping by mutableStateOf(false)
         private set
     var maxEnhanceLevel by mutableStateOf(0)
         private set
+    var enhanceLevel by mutableStateOf(0)
+        private set
+    var originEnhanceLevel by mutableStateOf(0)
+        private set
 
-    suspend fun selectExEquipSlot(exEquipSlot: ExEquipSlot, charaBaseProperty: Property) = withContext(defaultDispatcher) {
-        exEquipSlotRef = exEquipSlot
+    suspend fun selectExEquipSlot(
+        slot: ExEquipSlot,
+        charaBaseProperty: Property,
+        originLevel: Int = 0,
+        onExEquipChange: ((slotNum: Int, exEquip: ExEquipData?) -> Unit)? = null,
+        onLevelChange: ((slotNum: Int, level: Int) -> Unit)? = null
+    ) = withContext(defaultDispatcher) {
+        exEquipSlot = slot
         baseProperty = charaBaseProperty
+        enhanceLevel = originLevel
+        originEnhanceLevel = originLevel
+        isEquipping = false
+        onExEquipDataChange = onExEquipChange
+        onEnhanceLevelChange = onLevelChange
+        slotNum = slot.category / 100
+
         val db = appRepository.getDatabase()
         val list = awaitAll(
-            async {
-                exEquipSlot.exEquipCategory ?: db.getExEquipCategory(exEquipSlot.category)
-            },
-            async {
-                exEquipSlot.equippableExList.ifEmpty { db.getEquippableExList(exEquipSlot.category) }
-            }
+            async { db.getExEquipCategory(slot.category) },
+            async { db.getEquippableExList(slot.category) }
         )
         exEquipCategory = list[0] as ExEquipCategory
         @Suppress("UNCHECKED_CAST")
         equippableExList = list[1] as List<Int>
-        exEquipData = exEquipSlot.exEquipData
+        if (slot.exEquipData != null) {
+            exEquipData = slot.exEquipData
+            percentProperty = slot.exEquipData.getPercentProperty(originEnhanceLevel)
+            maxEnhanceLevel = slot.exEquipData.maxEnhanceLevel
+            isEquipping = true
+        }
     }
 
     fun selectExEquip(exEquipId: Int) {
@@ -64,13 +87,52 @@ class ExEquipState(
             val exEquip = db.getExEquipData(exEquipId)
             exEquipData = exEquip
             percentProperty = exEquip.getPercentProperty(exEquip.maxEnhanceLevel)
-            enhanceLevel = exEquip.maxEnhanceLevel
             maxEnhanceLevel = exEquip.maxEnhanceLevel
+            if (exEquipSlot!!.exEquipData != null) {
+                isEquipping = exEquip.exEquipmentId == exEquipSlot!!.exEquipData!!.exEquipmentId
+            }
+            enhanceLevel = if (isEquipping) originEnhanceLevel else exEquip.maxEnhanceLevel
         }
     }
 
     fun changeEnhanceLevel(level: Int) {
         percentProperty = exEquipData!!.getPercentProperty(level)
         enhanceLevel = level
+        if (onEnhanceLevelChange != null && isEquipping) {
+            onEnhanceLevelChange!!(slotNum, level)
+        }
+    }
+
+    fun changeExEquip() {
+        if (onExEquipDataChange != null && onEnhanceLevelChange != null) {
+            if (isEquipping) {
+                isEquipping = false
+                exEquipSlot = exEquipSlot!!.copy(exEquipData = null)
+                onExEquipDataChange!!(slotNum, null)
+                onEnhanceLevelChange!!(slotNum, -1)
+            } else {
+                isEquipping = true
+                exEquipSlot = exEquipSlot!!.copy(exEquipData = exEquipData)
+                originEnhanceLevel = enhanceLevel
+                onExEquipDataChange!!(slotNum, exEquipData)
+                onEnhanceLevelChange!!(slotNum, enhanceLevel)
+            }
+        }
+    }
+
+    fun destroy() {
+        exEquipSlot = null
+        exEquipData = null
+        exEquipCategory = null
+        equippableExList = emptyList()
+        percentProperty = Property.zero
+        baseProperty = Property.zero
+        isEquipping = false
+        maxEnhanceLevel = 0
+        enhanceLevel = 0
+        maxEnhanceLevel = 0
+        slotNum = 0
+        onExEquipDataChange = null
+        onEnhanceLevelChange = null
     }
 }

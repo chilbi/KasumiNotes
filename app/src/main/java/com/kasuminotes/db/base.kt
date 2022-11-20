@@ -15,8 +15,8 @@ suspend fun AppDatabase.getBackupUserDataList(defaultUserId: Int): List<UserData
 FROM user_data WHERE user_id!=$defaultUserId"""
 
     return safelyUse {
+        val list = mutableListOf<UserData>()
         rawQuery(sql, null).use {
-            val list = mutableListOf<UserData>()
 
             while (it.moveToNext()) {
                 var i = 0
@@ -38,12 +38,17 @@ FROM user_data WHERE user_id!=$defaultUserId"""
                     it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
                     it.getInt(i)
                 )
 
                 list.add(userProfile)
             }
-
             list
         }
     }
@@ -109,6 +114,12 @@ WHERE user_id=$userId"""
                     val userData = UserData(
                         userId,//同参数userId
                         unitId,//i=0
+                        it.getInt(i++),
+                        it.getInt(i++),
+                        it.getInt(i++),
+                        it.getInt(i++),
+                        it.getInt(i++),
+                        it.getInt(i++),
                         it.getInt(i++),
                         it.getInt(i++),
                         it.getInt(i++),

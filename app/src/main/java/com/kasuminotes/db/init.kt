@@ -16,7 +16,7 @@ suspend fun AppDatabase.initDatabase(defaultUserId: Int, dbServer: DbServer) = s
     if (dbServer == DbServer.CN) {
         try {
             execSQL("ALTER TABLE skill_data ADD COLUMN boss_ub_cool_time REAL NOT NULL DEFAULT 0.0")
-        } catch (e: Throwable) {}
+        } catch (_: Throwable) {}
         try {
             listOf(
                 "sp_union_burst",
@@ -25,7 +25,7 @@ suspend fun AppDatabase.initDatabase(defaultUserId: Int, dbServer: DbServer) = s
             ).forEach { name ->
                 execSQL("ALTER TABLE unit_skill_data ADD COLUMN $name INTEGER NOT NULL DEFAULT 0")
             }
-        } catch (e: Throwable) {}
+        } catch (_: Throwable) {}
     }
 
     // TODO 雪菲专武实装的话，就删除该代码片段
@@ -37,14 +37,14 @@ suspend fun AppDatabase.initDatabase(defaultUserId: Int, dbServer: DbServer) = s
         if (!hasUnique) {
             execSQL("UPDATE unit_skill_data SET main_skill_evolution_1=0 WHERE unit_id=106401")
         }
-    } catch (e: Throwable) {}
+    } catch (_: Throwable) {}
 
     // 修改unique_equip_enhance_rate表为unique_equipment_enhance_rate
     if (existsTable("unique_equip_enhance_rate")) {
         try {
             execSQL("DROP TABLE unique_equipment_enhance_rate")
             execSQL("ALTER TABLE unique_equip_enhance_rate RENAME TO unique_equipment_enhance_rate")
-        } catch (e: Throwable) {}
+        } catch (_: Throwable) {}
     }
 
     execSQL(
@@ -134,6 +134,12 @@ LEFT JOIN (SELECT COUNT(*) AS max_rarity_6 FROM chara_data WHERE max_rarity=6)""
 'equip4_level' INTEGER NOT NULL,
 'equip5_level' INTEGER NOT NULL,
 'equip6_level' INTEGER NOT NULL,
+'ex_equip1' INTEGER NOT NULL,
+'ex_equip2' INTEGER NOT NULL,
+'ex_equip3' INTEGER NOT NULL,
+'ex_equip1_level' INTEGER NOT NULL,
+'ex_equip2_level' INTEGER NOT NULL,
+'ex_equip3_level' INTEGER NOT NULL,
 PRIMARY KEY('user_id','unit_id')
 )"""
     )
@@ -145,7 +151,8 @@ CASE(max_rarity) WHEN 6 THEN 12 ELSE 8 END AS love_level,
 CASE(equip_id) WHEN 0 THEN 0 ELSE max_unique_level END AS unique_level,
 max_promotion_level AS promotion_level,
 max_chara_level AS ub_level,max_chara_level AS skill1_level,max_chara_level AS skill2_level,max_chara_level AS ex_level,
-5 AS equip1_level,5 AS equip2_level,5 AS equip3_level,5 AS equip4_level,5 AS equip5_level,5 AS equip6_level
+5 AS equip1_level,5 AS equip2_level,5 AS equip3_level,5 AS equip4_level,5 AS equip5_level,5 AS equip6_level,
+0 AS ex_equip1,0 AS ex_equip2,0 AS ex_equip3,-1 AS ex_equip1_level,-1 AS ex_equip2_level,-1 AS ex_equip3_level
 FROM chara_data LEFT JOIN max_data"""
     )
 }
