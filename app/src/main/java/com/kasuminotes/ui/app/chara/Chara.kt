@@ -117,7 +117,7 @@ fun Chara(
                 userProfile.promotions,
                 userProfile.getRealUnitAttackPatternList(userData.rarity),
                 userProfile.getRealUnitSkillData(userData.rarity),
-                charaState.property,
+                charaState.includeExEquipProperty,
                 onEquipClick = { onEquipClick(it, null) },
                 onUniqueClick = onUniqueClick,
                 onCharaClick = {
