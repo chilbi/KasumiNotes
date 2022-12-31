@@ -11,7 +11,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
             if (arrayOf(37, 38, 39).contains(actionType)) {
                 depend.getTarget(null)
             } else {
-                depend.getFocus().append(getTarget(null))
+                depend.getFocus(targetArea).append(getTarget(null))
             }
         } else if (
             (depend.actionType == 23 || depend.actionType == 28) && depend.targetCount == 99
@@ -41,7 +41,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                         } else {
                             if (targetAssignment == 1) {
                                 if (actionType == 2) {//リマ
-                                    D.Format(R.string.target_forefront_enemy)
+                                    D.Format(R.string.target_first_enemy)
                                 } else {
                                     D.Format(
                                         R.string.target_one_content1,
@@ -162,7 +162,19 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                         }
                     }
                 } else if (targetCount == 1 && (targetRange == -1 || targetRange >= 2160)) {
-                    if (targetNumber == 0) {
+                    if (targetNumber > 0) {
+                        if (targetNumber == 1 && targetAssignment == 2) {
+                            D.Format(R.string.target_nearest_friendly)
+                        } else {
+                            D.Format(
+                                R.string.target_near_number1_content2,
+                                arrayOf(
+                                    D.Text((targetNumber + 1).toString()),
+                                    getAssignment()
+                                )
+                            )
+                        }
+                    } else {//targetNumber == 0
                         if (actionType == 7) {
                             D.join(R.string.target_nearest, getAssignmentResId())
                         } else {
@@ -171,14 +183,6 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                                 arrayOf(getAssignment())
                             )
                         }
-                    } else {
-                        D.Format(
-                            R.string.target_near_number1_content2,
-                            arrayOf(
-                                D.Text((targetNumber + 1).toString()),
-                                getAssignment()
-                            )
-                        )
                     }
                 } else if (targetCount == 0 && targetRange > 0) {
                     D.Format(
@@ -353,11 +357,18 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                 )
             )
         }
+        9 -> {
+            if (targetAssignment == 1) {
+                D.Format(R.string.target_last_enemy)
+            } else {
+                D.Format(R.string.target_last_friendly)
+            }
+        }
         10 -> {
             if (targetAssignment == 1) {
-                D.Format(R.string.target_forefront_enemy)
+                D.Format(R.string.target_first_enemy)
             } else {
-                D.Format(R.string.target_forefront_friendly)
+                D.Format(R.string.target_first_friendly)
             }
         }
         11 -> {

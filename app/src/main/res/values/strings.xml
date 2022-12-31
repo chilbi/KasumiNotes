@@ -164,6 +164,7 @@
     <string name="action_additive_max1">最多增加%s。</string>
     <string name="action_reduce_max1">最多减少%s。</string>
     <string name="action_focus_target1">以%s为中心</string>
+    <string name="action_focus_front_target1">%s的</string>
     <string name="action_darkness_formula1">使物理攻击命中率降低%s。</string>
     <string name="action_life_steal_target1_formula2">赋予%1$s下次攻击提升%2$sHP吸收效果。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">赋予%1$s每秒回复%2$s%3$s的持续%2$s回复状态，效果时间%4$s秒。</string>
@@ -278,7 +279,7 @@
     <string name="state_cheru">切噜</string>
     <string name="state_wind_sword">风之刃</string>
     <string name="state_tiger_claw">虎之爪</string>
-    <string name="state_holly_night_brilliance">圣夜光辉</string>
+    <string name="state_holly_night_brilliance">圣夜的光辉</string>
     <string name="state_ice_dragon_seal">冰龙之印</string>
     <string name="state_study_time">学习的时间</string>
     <string name="state_strength_seal">力之魔字</string>
@@ -293,6 +294,8 @@
     <string name="state_dark_night_intensive">暗夜的加护</string>
     <string name="state_soul_ability">灵力</string>
     <string name="state_yasakaninomagatama">八尺琼勾玉・减葬</string>
+    <string name="state_friendship_seal">友情的魔印</string>
+    <string name="state_hazy">朦胧</string>
 
     <string name="target">对象</string>
     <string name="target_self">自身</string>
@@ -321,8 +324,10 @@
     <string name="target_nearest_friendly">距离自身最近的己方角色</string>
     <string name="target_farthest_friendly">距离自身最远的己方角色</string>
 <!--    <string name="target_forefront_friendly">最前方一名己方角色</string>-->
-    <string name="target_forefront_friendly">最前方的己方角色</string>
-    <string name="target_forefront_enemy">最前方的敌人</string>
+    <string name="target_first_friendly">最前方的己方角色</string>
+    <string name="target_first_enemy">最前方的敌人</string>
+    <string name="target_last_friendly">最后方的己方角色</string>
+    <string name="target_last_enemy">最后方的敌人</string>
     <string name="target_front_all_content1">前方所有%s</string>
     <string name="target_near_number1_content2">距离自身第%1$s近的%2$s</string>
     <string name="target_distance1">自身前方%s距离</string>

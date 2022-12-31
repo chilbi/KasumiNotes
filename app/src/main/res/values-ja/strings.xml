@@ -164,6 +164,7 @@
     <string name="action_additive_max1">最大%sまで増加させる。</string>
     <string name="action_reduce_max1">最大%sまで減少させる。</string>
     <string name="action_focus_target1">%sを中心とした</string>
+    <string name="action_focus_front_target1">%sから</string>
     <string name="action_darkness_formula1">物理攻撃の命中率を%sダウンさせる。</string>
     <string name="action_life_steal_target1_formula2">%1$sの次の攻撃に%2$sＨＰ吸収をアップさせる効果を付与する。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">%1$sに毎秒%2$sを%3$s回復する継続%2$s回復状態を付与する、効果時間%4$s秒。</string>
@@ -293,6 +294,8 @@
     <string name="state_dark_night_intensive">宵闇の加護</string>
     <string name="state_soul_ability">霊力</string>
     <string name="state_yasakaninomagatama">八尺瓊勾玉・減葬</string>
+    <string name="state_friendship_seal">友情の魔印</string>
+    <string name="state_hazy">朧ろ</string>
 
     <string name="target">対象</string>
     <string name="target_self">自分</string>
@@ -321,8 +324,10 @@
     <string name="target_nearest_friendly">最も近くの味方１キャラ</string>
     <string name="target_farthest_friendly">最も遠くの味方１キャラ</string>
 <!--    <string name="target_forefront_friendly">一番前の味方１キャラ</string>-->
-    <string name="target_forefront_friendly">最も前の味方</string>
-    <string name="target_forefront_enemy">最も前の敵</string>
+    <string name="target_first_friendly">最も前の味方</string>
+    <string name="target_first_enemy">最も前の敵</string>
+    <string name="target_last_friendly">最も後ろの味方</string>
+    <string name="target_last_enemy">最も後ろの敵</string>
     <string name="target_front_all_content1">前すべての%s</string>
     <string name="target_near_number1_content2">自分から%1$s番目に近い%2$s</string>
     <string name="target_distance1">自分の前%s距離</string>
