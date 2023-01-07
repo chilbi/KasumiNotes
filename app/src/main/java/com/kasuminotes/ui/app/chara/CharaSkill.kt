@@ -16,11 +16,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.Code
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -267,7 +268,7 @@ private fun SkillDetail(
     rawDepends: List<Int>? = null,
     actions: List<SkillAction>? = null
 ) {
-    val visibleTable = remember { mutableStateOf(false) }
+    val visible = remember { mutableStateOf(false) }
 
     BgBorderColumn(Modifier.fillMaxWidth()) {
         Row(
@@ -283,11 +284,13 @@ private fun SkillDetail(
                 )
             }
             Spacer(Modifier.weight(1f))
-            if (BuildConfig.DEBUG) {
-                IconButton(onClick = { visibleTable.value = !visibleTable.value }) {
+            if (BuildConfig.DEBUG && actions != null) {
+                IconButton(onClick = { visible.value = !visible.value }) {
                     Icon(
-                        if (visibleTable.value) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                        null
+                        imageVector = Icons.Filled.Code,
+                        contentDescription = null,
+                        tint = if (visible.value) MaterialTheme.colors.secondary
+                        else LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
                     )
                 }
             }
@@ -353,7 +356,7 @@ private fun SkillDetail(
             }
         }
 
-        if (!visibleTable.value && descriptionList != null) {
+        if (!visible.value && descriptionList != null) {
             descriptionList!!.forEachIndexed { index, d ->
                 Row(Modifier.padding(4.dp)) {
                     ActionLabel(index + 1)
@@ -368,7 +371,7 @@ private fun SkillDetail(
             }
         }
 
-        if (BuildConfig.DEBUG && visibleTable.value && rawDepends != null && actions != null) {
+        if (visible.value && BuildConfig.DEBUG && actions != null) {
             actions.forEachIndexed { index, action ->
                 Row(Modifier.padding(4.dp)) {
                     ActionLabel(index + 1)

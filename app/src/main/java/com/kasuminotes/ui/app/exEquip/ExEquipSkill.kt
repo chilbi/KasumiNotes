@@ -8,11 +8,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.Code
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -61,7 +62,7 @@ private fun ExEquipSkillItem(
     passiveSkill: SkillData,
     baseProperty: Property
 ) {
-    val visibleTable = remember { mutableStateOf(false) }
+    val visible = remember { mutableStateOf(false) }
     val descriptionList: List<D> by remember(passiveSkill, baseProperty) {
         derivedStateOf {
             ActionBuilder(
@@ -86,10 +87,12 @@ private fun ExEquipSkillItem(
         )
         if (BuildConfig.DEBUG) {
             Spacer(Modifier.weight(1f))
-            IconButton(onClick = { visibleTable.value = !visibleTable.value }) {
+            IconButton(onClick = { visible.value = !visible.value }) {
                 Icon(
-                    if (visibleTable.value) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                    null
+                    imageVector = Icons.Filled.Code,
+                    contentDescription = null,
+                    tint = if (visible.value) MaterialTheme.colors.secondary
+                    else LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
                 )
             }
         }
@@ -101,7 +104,7 @@ private fun ExEquipSkillItem(
         fontSize = 14.sp
     )
 
-    if (!visibleTable.value) {
+    if (!visible.value) {
         descriptionList.forEachIndexed { index, d ->
             Row(Modifier.padding(4.dp)) {
                 ActionLabel(index + 1)
@@ -116,7 +119,7 @@ private fun ExEquipSkillItem(
         }
     }
 
-    if (BuildConfig.DEBUG && visibleTable.value) {
+    if (visible.value && BuildConfig.DEBUG) {
         passiveSkill.actions.forEachIndexed { index, action ->
             Row(Modifier.padding(4.dp)) {
                 ActionLabel(index + 1)
