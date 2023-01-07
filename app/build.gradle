@@ -11,7 +11,7 @@ android {
         applicationId "com.kasuminotes"
         minSdk 21
         targetSdk 33
-        versionCode 61
+        versionCode 62
         versionName "$kasuminotes_version"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
