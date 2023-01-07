@@ -154,6 +154,7 @@ class ActionBuilder(
             95 -> getHiding()
             96 -> getEnergyField(skillLevel)
             97 -> getInjuredEnergyMark()
+            99 -> getSpeedField()
             else -> getUnknown()
         }
     }

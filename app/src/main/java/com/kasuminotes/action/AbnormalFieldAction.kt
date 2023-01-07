@@ -10,13 +10,19 @@ fun SkillAction.getAbnormalField(skillLevel: Int, actions: List<SkillAction>): D
         8 -> {
             if (modifyAction.actionDetail1 == 1 || modifyAction.actionDetail1 == 2) {
                 D.Format(
-                    R.string.content_speed_formula1,
-                    arrayOf(D.Text("${(modifyAction.actionValue1 * 100).toNumStr()}%"))
+                    R.string.content_speed_target1_formula2,
+                    arrayOf(
+                        getAssignment(),
+                        D.Text("${(modifyAction.actionValue1 * 100).toNumStr()}%")
+                    )
                 )
             } else {
                 D.Format(
-                    R.string.content_abnormal1,
-                    arrayOf(getAbnormalContent(modifyAction.actionDetail1))
+                    R.string.content_state_target1_abnormal2,
+                    arrayOf(
+                        getAssignment(),
+                        getAbnormalContent(modifyAction.actionDetail1)
+                    )
                 )
             }
         }

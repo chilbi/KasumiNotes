@@ -257,8 +257,8 @@
     <string name="content_buff_target1_content2_formula3">の%1$sすべての%2$sを%3$sアップさせる</string>
     <string name="content_debuff_target1_content2_formula3">の%1$sすべての%2$sを%3$sダウンさせる</string>
     <string name="content_poison_damage_by_behaviour_formula1">の敵すべてを行動する度に%sダメージを与える毒状態にする</string>
-    <string name="content_speed_formula1">の敵すべての行動速度を本来の%sにする</string>
-    <string name="content_abnormal1">の敵すべてを%s状態にする</string>
+    <string name="content_speed_target1_formula2">の%1$sすべての行動速度を本来の%2$sにする</string>
+    <string name="content_state_target1_abnormal2">の%1$sすべてを%2$s状態にする</string>
     <string name="content_attack_hit_enemy_target1">自分の攻撃が%sの中の任意１キャラを当たる度に、命中された対象</string>
     <string name="content_attack_hit_target1">自分の攻撃が当たる度に、%s</string>
     <string name="content_attack_critical_target1">自分の攻撃がクリティカルでダメージを与える度に、%s</string>
