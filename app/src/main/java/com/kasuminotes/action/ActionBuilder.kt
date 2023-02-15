@@ -149,7 +149,7 @@ class ActionBuilder(
             71 -> getKnightGuard(skillLevel, property)
             75 -> getHitCount()
             79 -> D.Unknown//PoisonDamageByBehaviour
-            83 -> getGuildOfStrength()
+            83 -> getSpeedOverlay()
             92 -> D.Unknown//InjuredEnergy
             95 -> getHiding()
             96 -> getEnergyField(skillLevel)
