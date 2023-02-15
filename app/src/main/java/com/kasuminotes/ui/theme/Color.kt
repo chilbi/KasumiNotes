@@ -74,6 +74,7 @@ val DarkColorPalette = darkColors(
 
 val Int.rankRarity: Int
     get() = when {
+        this > 27 -> 9
         this > 23 -> 8
         this > 20 -> 7
         this > 17 -> 6
@@ -93,6 +94,15 @@ val Int.rankRarity: Int
 )
 
 object RaritiesColors {
+    private val r9: RarityColors by lazy {
+        RarityColors(
+            highLight = Color(0xFFC6FFF7),
+            light = Color(0xFFC6F7EF),
+            middle = Color(0xFF02F0F0),
+            dark = Color(0xFF00CFFA),
+            deepDark = Color(0xFF237E93)
+        )
+    }
     private val r8: RarityColors by lazy {
         RarityColors(
             highLight = Color(0xFFFFEEAA),
@@ -174,6 +184,7 @@ object RaritiesColors {
     }
 
     fun getRarityColors(rankRarity: Int): RarityColors = when (rankRarity) {
+        9 -> r9
         8 -> r8
         7 -> r7
         6 -> r6
