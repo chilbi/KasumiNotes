@@ -96,32 +96,66 @@ FROM unit_promotion WHERE unit_id=$unitId AND promotion_level=$promotionLevel"""
 suspend fun AppDatabase.getUniqueData(equipId: Int): UniqueData? {
     if (equipId == 0) return null
 
-    val sql = """SELECT ${UniqueData.getFields("ued", "ueer")}
-FROM unique_equipment_data AS ued
-JOIN unique_equipment_enhance_rate AS ueer ON ued.equipment_id=ueer.equipment_id
-WHERE ued.equipment_id=$equipId"""
-
-    return safelyUse {
-        rawQuery(sql, null).use {
-            it.moveToFirst()
-            var i = 0
-
-            val baseProperty = Property { _ ->
-                it.getDouble(i++)
+    return withIOContext {
+        val list = listOf(
+            // baseProperty
+            async {
+                val sql = "SELECT ${UniqueData.getFields()} FROM unique_equipment_data WHERE equipment_id=$equipId"
+                use {
+                    rawQuery(sql, null).use {
+                        it.moveToFirst()
+                        var i = 0
+                        val baseProperty = Property { _ ->
+                            it.getDouble(i++)
+                        }
+                        UniqueData(
+                            it.getInt(i++),
+                            it.getString(i++),
+                            it.getString(i),
+                            baseProperty,
+                            Property.zero,
+                            null
+                        )
+                    }
+                }
+            },
+            // growthProperty
+            async {
+                val sql = "SELECT ${Property.getFields()} FROM unique_equipment_enhance_rate WHERE equipment_id=$equipId AND min_lv=2"
+                use {
+                    rawQuery(sql, null).use {
+                        it.moveToFirst()
+                        var i = 0
+                        val growthProperty = Property { _ ->
+                            it.getDouble(i++)
+                        }
+                        growthProperty
+                    }
+                }
+            },
+            // rfGrowthProperty
+            async {
+                val sql = "SELECT ${Property.getFields()} FROM unique_equipment_enhance_rate WHERE equipment_id=$equipId AND min_lv=261"
+                use {
+                    rawQuery(sql, null).use {
+                        if (it.moveToFirst()) {
+                            var i = 0
+                            val rfGrowthProperty = Property { _ ->
+                                it.getDouble(i++)
+                            }
+                            rfGrowthProperty
+                        } else {
+                            null
+                        }
+                    }
+                }
             }
+        ).awaitAll()
 
-            val growthProperty = Property { _ ->
-                it.getDouble(i++)
-            }
-
-            UniqueData(
-                it.getInt(i++),
-                it.getString(i++),
-                it.getString(i),
-                baseProperty,
-                growthProperty
-            )
-        }
+        (list[0] as UniqueData).copy(
+            growthProperty = list[1] as Property,
+            rfGrowthProperty = list[2] as Property?
+        )
     }
 }
 

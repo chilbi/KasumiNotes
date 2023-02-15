@@ -270,6 +270,15 @@ fun AppDatabase.existsTable(tableName: String): Boolean {
     }
 }
 
+fun AppDatabase.existsColumn(tableName: String, columnName: String): Boolean {
+    val sql = "SELECT * FROM sqlite_master WHERE name=\"$tableName\" AND sql LIKE \"%$columnName%\""
+    return use {
+        rawQuery(sql, null).use {
+            it.moveToFirst()
+        }
+    }
+}
+
 private suspend fun AppDatabase.getUnitConversionData(originalUnitData: UnitData): UnitConversionData? {
     return if (originalUnitData.maxRarity > 5) {
         if (existsTable("unit_conversion")) {

@@ -199,13 +199,13 @@ class DbState(
                 lastDbVersion = appRepository.fetchLastDbVersion(server)
                 tempDbFile.renameTo(dbFile)
                 db = appRepository.getDatabase(dbFile.name)
-                db.initDatabase(DefaultUserId, server)
+                db.initDatabase(DefaultUserId)
             } else {
                 lastDbVersion = version
                 db = appRepository.getDatabase(dbFile.name)
                 val backupUserDataList = db.getBackupUserDataList(DefaultUserId)
                 tempDbFile.renameTo(dbFile)
-                db.initDatabase(DefaultUserId, server)
+                db.initDatabase(DefaultUserId)
                 db.putUserDataList(backupUserDataList)
             }
             userState.updateStateFromDb(db)

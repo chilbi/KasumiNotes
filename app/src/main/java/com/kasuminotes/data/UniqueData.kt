@@ -7,34 +7,36 @@ data class UniqueData(
     val equipmentName: String,
     val description: String,
     val baseProperty: Property,
-    val growthProperty: Property
+    val growthProperty: Property,
+    val rfGrowthProperty: Property?
 ) {
     fun getProperty(uniqueLevel: Int): Property {
         if (uniqueLevel < 1) return Property.zero
         if (uniqueLevel == 1) return baseProperty
 
-        val level = uniqueLevel - 1
-        return Property { index ->
-            ceil(growthProperty[index] * level) + baseProperty[index]
+        return if (rfGrowthProperty == null || uniqueLevel < 261) {
+            Property { index ->
+                baseProperty[index] +
+                        ceil(growthProperty[index] * (uniqueLevel - 1))
+            }
+        } else {
+            Property { index ->
+                baseProperty[index] +
+                        ceil(growthProperty[index] * 259) +
+                        ceil(rfGrowthProperty[index] * (uniqueLevel - 260))
+            }
         }
     }
 
     companion object {
         private var fields: String? = null
 
-        fun getFields(uniqueEquipmentDataName: String, uniqueEquipmentEnhanceRateName: String): String {
+        fun getFields(): String {
             if (fields == null) {
-                val baseFields = Property.keys.joinToString(",") { key ->
-                    "${uniqueEquipmentDataName}.${key}"
-                }
-                val growthFields = Property.keys.joinToString(",") { key ->
-                    "${uniqueEquipmentEnhanceRateName}.${key} AS ${key}_growth"
-                }
-                fields = "${baseFields}," +
-                        "${growthFields}," +
-                        "${uniqueEquipmentDataName}.equipment_id," +
-                        "${uniqueEquipmentDataName}.equipment_name," +
-                        "${uniqueEquipmentDataName}.description"
+                fields = Property.getFields() +
+                        ",equipment_id," +
+                        "equipment_name," +
+                        "description"
             }
             return fields!!
         }

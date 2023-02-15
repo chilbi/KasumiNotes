@@ -1,6 +1,5 @@
 package com.kasuminotes.db
 
-import com.kasuminotes.common.DbServer
 import com.kasuminotes.common.QuestRange
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.QuestData
@@ -10,41 +9,45 @@ import kotlinx.coroutines.awaitAll
 import kotlin.math.max
 import kotlin.math.min
 
-suspend fun AppDatabase.initDatabase(defaultUserId: Int, dbServer: DbServer) = safelyUse {
-    // TODO 国服数据库有了这些字段的话，就删除该代码片段
-    // 添加国服数据库没有的字段
-    if (dbServer == DbServer.CN) {
-        try {
-            execSQL("ALTER TABLE skill_data ADD COLUMN boss_ub_cool_time REAL NOT NULL DEFAULT 0.0")
-        } catch (_: Throwable) {}
-        try {
-            listOf(
-                "sp_union_burst",
-                "sp_skill_evolution_1",
-                "sp_skill_evolution_2"
-            ).forEach { name ->
-                execSQL("ALTER TABLE unit_skill_data ADD COLUMN $name INTEGER NOT NULL DEFAULT 0")
-            }
-        } catch (_: Throwable) {}
-    }
-
-    // TODO 雪菲专武实装的话，就删除该代码片段
-    // 删除雪菲的专武
-    try {
-        val hasUnique = rawQuery("SELECT equip_id FROM unit_unique_equip WHERE unit_id=106401", null).use {
-                it.moveToFirst()
-            }
-        if (!hasUnique) {
-            execSQL("UPDATE unit_skill_data SET main_skill_evolution_1=0 WHERE unit_id=106401")
-        }
-    } catch (_: Throwable) {}
-
+suspend fun AppDatabase.initDatabase(defaultUserId: Int) = safelyUse {
+    // TODO 国服实装270专武上限后就删除该代码片段
     // 修改unique_equip_enhance_rate表为unique_equipment_enhance_rate
     if (existsTable("unique_equip_enhance_rate")) {
         try {
             execSQL("DROP TABLE unique_equipment_enhance_rate")
             execSQL("ALTER TABLE unique_equip_enhance_rate RENAME TO unique_equipment_enhance_rate")
         } catch (_: Throwable) {}
+    }
+    if (!existsColumn("unique_equipment_enhance_rate", "min_lv")) {
+        try {
+            // 添加列 min_lv
+            execSQL("ALTER TABLE unique_equipment_enhance_rate ADD COLUMN min_lv INTEGER NOT NULL DEFAULT 2")
+        } catch (_: Throwable) {}
+    }
+    if (!existsColumn("unique_equipment_enhance_rate", "max_lv")) {
+        try {
+            // 添加列 max_lv
+            execSQL("ALTER TABLE unique_equipment_enhance_rate ADD COLUMN max_lv INTEGER NOT NULL DEFAULT -1")
+        } catch (_: Throwable) {}
+    }
+    if (!existsColumn("skill_data", "boss_ub_cool_time")) {
+        try {
+            // 添加列 boss_ub_cool_time
+            execSQL("ALTER TABLE skill_data ADD COLUMN boss_ub_cool_time REAL NOT NULL DEFAULT 0.0")
+        } catch (_: Throwable) {}
+    }
+    // TODO 国服实装限制tp上升最高上限后就删除该代码片段
+    listOf(
+        "sp_union_burst",
+        "sp_skill_evolution_1",
+        "sp_skill_evolution_2"
+    ).forEach { columnName ->
+        if (!existsColumn("unit_skill_data", columnName)) {
+            try {
+                // 添加列 sp...
+                execSQL("ALTER TABLE unit_skill_data ADD COLUMN $columnName INTEGER NOT NULL DEFAULT 0")
+            } catch (_: Throwable) {}
+        }
     }
 
     execSQL(
