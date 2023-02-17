@@ -11,19 +11,16 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.ui.theme.RaritiesColors
-import com.kasuminotes.ui.theme.RarityColors
 import com.kasuminotes.ui.theme.Rounded8
 
-fun Modifier.rarityBorder(rankRarity: Int): Modifier {
-    return rarityBorder(RaritiesColors.getRarityColors(rankRarity))
-}
+private val outlineWidth: Dp = 0.8f.dp
+private val borderWidth: Dp = 2.7f.dp
+private val inlineWidth: Dp = 0.5f.dp
+private val borderShape = Rounded8.copy(CornerSize(8.dp - outlineWidth))
+private val inlineShape = Rounded8.copy(CornerSize(8.dp - outlineWidth - borderWidth))
 
-fun Modifier.rarityBorder(
-    rarityColors: RarityColors,
-    outlineWidth: Dp = 0.75f.dp,
-    borderWidth: Dp = 2.5f.dp,
-    inlineWidth: Dp = 0.25f.dp,
-): Modifier {
+fun Modifier.rarityBorder(rankRarity: Int): Modifier {
+    val rarityColors = RaritiesColors.getRarityColors(rankRarity)
     return this
         .fillMaxSize()
         .border(
@@ -44,7 +41,7 @@ fun Modifier.rarityBorder(
                     1.0f to rarityColors.light
                 )
             ),
-            shape = Rounded8.copy(CornerSize(7.25f.dp))//8-outline
+            shape = borderShape
         )
         .padding(borderWidth)
         .border(
@@ -52,6 +49,6 @@ fun Modifier.rarityBorder(
                 width = inlineWidth,
                 brush = SolidColor(rarityColors.deepDark)
             ),
-            shape = Rounded8.copy(CornerSize(4.75f.dp))//8-outline-border
+            shape = inlineShape
         )
 }
