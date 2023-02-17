@@ -16,14 +16,11 @@ data class UniqueData(
 
         return if (rfGrowthProperty == null || uniqueLevel < 261) {
             Property { index ->
-                baseProperty[index] +
-                        ceil(growthProperty[index] * (uniqueLevel - 1))
+                baseProperty[index] + ceil(growthProperty[index] * (uniqueLevel - 1))
             }
         } else {
             Property { index ->
-                baseProperty[index] +
-                        ceil(growthProperty[index] * 259) +
-                        ceil(rfGrowthProperty[index] * (uniqueLevel - 260))
+                baseProperty[index] + ceil(growthProperty[index] * 259 + rfGrowthProperty[index] * (uniqueLevel - 260))
             }
         }
     }
