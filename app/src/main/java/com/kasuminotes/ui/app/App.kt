@@ -10,6 +10,7 @@ import com.kasuminotes.ui.app.equip.Equip
 import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
 import com.kasuminotes.ui.app.quest.Quest
+import com.kasuminotes.ui.app.summons.Summons
 import com.kasuminotes.ui.app.usereditor.CharaEditor
 import com.kasuminotes.ui.app.usereditor.UserImages
 import com.kasuminotes.ui.theme.KasumiNotesTheme
@@ -23,6 +24,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
     val equipState = appViewModel.equipState
     val questState = appViewModel.questState
     val exEquipState = appViewModel.exEquipState
+    val summonsState = appViewModel.summonsState
 
     KasumiNotesTheme(uiState.darkTheme) {
         NavHost(appViewModel.navController, "home") {
@@ -44,7 +46,8 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     appViewModel::popBackStack,
                     appViewModel::navigateToEquip,
                     appViewModel::navigateToUnique,
-                    appViewModel::navigateToExEquip
+                    appViewModel::navigateToExEquip,
+                    appViewModel::navigateToSummons
                 )
             }
             composable("equip") {
@@ -57,6 +60,12 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             composable("exEquip") {
                 ExEquip(
                     exEquipState,
+                    appViewModel::popBackStack
+                )
+            }
+            composable("summons") {
+                Summons(
+                    summonsState,
                     appViewModel::popBackStack
                 )
             }

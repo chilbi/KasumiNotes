@@ -40,30 +40,35 @@ data class UnitData(
 
     companion object {
 //        private val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd H:mm:ss")
+
+        private var fields: String? = null
+
         fun getFields(pk: Boolean): String {
-            return (if (pk) "unit_id," else "") +
-                    "unit_name," +
-                    "kana," +
-                    "actual_name," +
-                    "max_rarity," +
-                    "equip_id," +
-                    "search_area_width," +
-                    "atk_type," +
-                    "normal_atk_cast_time," +
-                    "comment," +
-                    "start_time," +
-                    "age," +
-                    "guild," +
-                    "race," +
-                    "height," +
-                    "weight," +
-                    "birth_month," +
-                    "birth_day," +
-                    "blood_type," +
-                    "favorite," +
-                    "voice," +
-                    "catch_copy," +
-                    "self_text"
+            if (fields == null) {
+                fields = "unit_name," +
+                        "kana," +
+                        "actual_name," +
+                        "max_rarity," +
+                        "equip_id," +
+                        "search_area_width," +
+                        "atk_type," +
+                        "normal_atk_cast_time," +
+                        "comment," +
+                        "start_time," +
+                        "age," +
+                        "guild," +
+                        "race," +
+                        "height," +
+                        "weight," +
+                        "birth_month," +
+                        "birth_day," +
+                        "blood_type," +
+                        "favorite," +
+                        "voice," +
+                        "catch_copy," +
+                        "self_text"
+            }
+            return (if (pk) "unit_id," else "") + fields
         }
     }
 }

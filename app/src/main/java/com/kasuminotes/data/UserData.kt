@@ -71,30 +71,33 @@ data class UserData(
     }
 
     companion object {
+        private var fields: String? = null
+
         fun getFields(pk: Boolean, fk: Boolean): String {
-            return (if (pk) "user_id," else "") +
-                    (if (fk) "unit_id," else "") +
-                    "rarity," +
-                    "chara_level," +
-                    "love_level," +
-                    "unique_level," +
-                    "promotion_level," +
-                    "ub_level," +
-                    "skill1_level," +
-                    "skill2_level," +
-                    "ex_level," +
-                    "equip1_level," +
-                    "equip2_level," +
-                    "equip3_level," +
-                    "equip4_level," +
-                    "equip5_level," +
-                    "equip6_level," +
-                    "ex_equip1," +
-                    "ex_equip2," +
-                    "ex_equip3," +
-                    "ex_equip1_level," +
-                    "ex_equip2_level," +
-                    "ex_equip3_level"
+            if (fields == null) {
+                fields = "rarity," +
+                        "chara_level," +
+                        "love_level," +
+                        "unique_level," +
+                        "promotion_level," +
+                        "ub_level," +
+                        "skill1_level," +
+                        "skill2_level," +
+                        "ex_level," +
+                        "equip1_level," +
+                        "equip2_level," +
+                        "equip3_level," +
+                        "equip4_level," +
+                        "equip5_level," +
+                        "equip6_level," +
+                        "ex_equip1," +
+                        "ex_equip2," +
+                        "ex_equip3," +
+                        "ex_equip1_level," +
+                        "ex_equip2_level," +
+                        "ex_equip3_level"
+            }
+            return (if (pk) "user_id," else "") + (if (fk) "unit_id," else "") + fields
         }
     }
 }

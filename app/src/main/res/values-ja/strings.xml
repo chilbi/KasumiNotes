@@ -20,7 +20,7 @@
     <string name="is_last_db">データベースのバージョンは最新なのです</string>
     <string name="is_latest_app">アプリのバージョンは最新なのです</string>
     <string name="re_download">初めからダウンロード</string>
-    <string name="auto_update">オートアップデート</string>
+    <string name="auto_update">自動アップデート</string>
     <string name="switch_user">ユーザーを切り替える</string>
     <string name="create_user">新規ユーザー</string>
     <string name="select_user_image">ユーザーアイコン選択</string>
@@ -48,7 +48,7 @@
     <string name="server_jp">日本サーバー</string>
     <string name="display">ディスプレイ</string>
     <string name="language">言語</string>
-    <string name="lang_cn">中国語</string>
+    <string name="lang_cn">中文</string>
     <string name="lang_jp">日本語</string>
     <string name="follow_system">フォローシステム</string>
     <string name="night">ナイトモード</string>
@@ -70,6 +70,7 @@
     <string name="chara_id">キャラID</string>
     <string name="rarity">★の数</string>
     <string name="search_area_width">攻撃距離</string>
+    <string name="summons_info">召喚物情報</string>
 
     <string name="actual_name">本名</string>
     <string name="kana">平仮名</string>

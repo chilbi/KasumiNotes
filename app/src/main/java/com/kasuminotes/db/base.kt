@@ -1,6 +1,7 @@
 package com.kasuminotes.db
 
 import com.kasuminotes.data.MaxUserData
+import com.kasuminotes.data.SummonData
 import com.kasuminotes.data.UnitConversionData
 import com.kasuminotes.data.UnitData
 import com.kasuminotes.data.User
@@ -256,6 +257,23 @@ LEFT JOIN chara_data AS cd ON SUBSTR(ud.user_id,1,4)=SUBSTR(cd.unit_id,1,4)"""
             }
 
             list
+        }
+    }
+}
+
+suspend fun AppDatabase.getSummonData(unitId: Int): SummonData {
+    val sql = "SELECT ${SummonData.getFields()} FROM unit_data WHERE unit_id=$unitId"
+
+    return safelyUse {
+        rawQuery(sql, null).use {
+            it.moveToFirst()
+            SummonData(
+                unitId,
+                it.getString(0),
+                it.getInt(1),
+                it.getInt(2),
+                it.getFloat(3)
+            )
         }
     }
 }

@@ -44,7 +44,7 @@ class CharaState(
     var saveVisible by mutableStateOf(false)
         private set
 
-    fun selectUserProfile(data: UserProfile, profiles: List<UserProfile>, maxCharaLevel: Int) {
+    fun initUserProfile(data: UserProfile, profiles: List<UserProfile>, maxCharaLevel: Int) {
         restore()
         if (data.userData.charaLevel > maxCharaLevel) {
             data.userData = data.userData.copy(lvLimitBreak = 10)

@@ -56,7 +56,7 @@ fun ExEquip(
                     exEquipState.equippableExList,
                     exEquipData?.exEquipmentId ?: 0,
                     exEquipState.exEquipSlot?.exEquipData?.exEquipmentId ?: 0,
-                    exEquipState::selectExEquip
+                    exEquipState::initExEquip
                 )
 
                 if (exEquipData != null) {

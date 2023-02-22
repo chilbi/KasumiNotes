@@ -53,6 +53,7 @@ fun CharaFrontLayer(
     property: Property,
     onEquipClick: (EquipData) -> Unit,
     onUniqueClick: (UniqueData) -> Unit,
+    onSummonsClick: (summons: List<Int>, skillLevel: Int) -> Unit,
     onCharaClick: (UserProfile) -> Unit,
     onToggle: () -> Unit
 ) {
@@ -126,7 +127,8 @@ fun CharaFrontLayer(
                             unitAttackPatternList,
                             unitSkillData,
                             property,
-                            state = skillScrollState
+                            state = skillScrollState,
+                            onSummonsClick = onSummonsClick
                         )
                 }
             }

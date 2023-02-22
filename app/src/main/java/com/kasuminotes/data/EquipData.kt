@@ -24,8 +24,18 @@ data class EquipData(
         if (level == 0) return baseProperty
 
         return Property { index ->
-            ceil(growthProperty[index] * level) + baseProperty[index]
+            baseProperty[index] + ceil(growthProperty[index] * level)
         }
+    }
+
+    fun getPropertyValue(index: Int, equipLevel: Int): Double {
+        if (equipLevel < 0) return 0.0
+
+        val level = min(equipLevel, maxEnhanceLevel)
+
+        if (level == 0) return baseProperty[index]
+
+        return baseProperty[index] + ceil(growthProperty[index] * level)
     }
 
     companion object {

@@ -57,13 +57,13 @@ class EquipState(
     var questDataList by mutableStateOf<List<QuestData>?>(null)
         private set
 
-    suspend fun selectEquip(maxArea: Int, equipId: Int) {
+    suspend fun initEquip(maxArea: Int, equipId: Int) {
         val db = appRepository.getDatabase()
         val value = db.getEquipData(equipId)
-        selectEquipData(maxArea, value)
+        initEquipData(maxArea, value)
     }
 
-    fun selectEquipData(
+    fun initEquipData(
         maxArea: Int,
         value: EquipData,
         originEnhanceLevel: Int = value.maxEnhanceLevel,
@@ -89,7 +89,7 @@ class EquipState(
         }
     }
 
-    fun selectUniqueData(
+    fun initUniqueData(
         value: UniqueData,
         originEnhanceLevel: Int,
         maxUniqueLevel: Int,

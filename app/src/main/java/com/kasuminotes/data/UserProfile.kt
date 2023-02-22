@@ -1,10 +1,19 @@
 package com.kasuminotes.data
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import com.kasuminotes.common.OrderBy
-import com.kasuminotes.db.*
+import com.kasuminotes.db.AppDatabase
+import com.kasuminotes.db.getCharaStoryStatus
+import com.kasuminotes.db.getExEquipData
+import com.kasuminotes.db.getExSkillData
+import com.kasuminotes.db.getPromotionBonusList
+import com.kasuminotes.db.getPromotions
+import com.kasuminotes.db.getUniqueData
+import com.kasuminotes.db.getUnitAttackPatternList
+import com.kasuminotes.db.getUnitExEquipSlots
+import com.kasuminotes.db.getUnitPromotion
+import com.kasuminotes.db.getUnitPromotionStatus
+import com.kasuminotes.db.getUnitRarity
+import com.kasuminotes.db.getUnitSkillData
 import com.kasuminotes.utils.Helper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -103,8 +112,8 @@ data class UserProfile(
                 value += unitPromotionStatus!!.baseProperty[index]
 
                 // unitPromotion
-                unitPromotion!!.equipSlots.forEachIndexed { slotIndex, slot ->
-                    value += getEquipValue(index, equipsLevel[slotIndex], slot)
+                unitPromotion!!.equipSlots.forEachIndexed { slotIndex, equipData ->
+                    value += equipData?.getPropertyValue(index, equipsLevel[slotIndex]) ?: 0.0
                 }
 
                 // uniqueData
@@ -189,16 +198,6 @@ data class UserProfile(
 
     private fun shouldConverted(rarity: Int): Boolean = unitConversionData != null && rarity > 5
 
-    private fun getEquipValue(index: Int, equipLevel: Int, equipData: EquipData?): Double {
-        if (equipLevel < 0 || equipData == null) return 0.0
-
-        val level = min(equipLevel, equipData.maxEnhanceLevel)
-
-        if (level == 0) return equipData.baseProperty[index]
-
-        return ceil(equipData.growthProperty[index] * level) + equipData.baseProperty[index]
-    }
-
     private fun getStoryValue(index: Int, loveLevel: Int, status: List<Property>, maxRarity: Int): Double {
         var result = 0.0
 
@@ -219,7 +218,11 @@ data class UserProfile(
         return result
     }
 
-    suspend fun load(db: AppDatabase, profiles: List<UserProfile>, defaultDispatcher: CoroutineDispatcher) = withContext(defaultDispatcher) {
+    suspend fun load(
+        db: AppDatabase,
+        profiles: List<UserProfile>,
+        defaultDispatcher: CoroutineDispatcher
+    ) = withContext(defaultDispatcher) {
         val list = awaitAll(
             async { db.getUnitRarity(unitData.unitId, userData.rarity) },
             async { db.getUnitPromotionStatus(unitData.unitId, userData.promotionLevel) },

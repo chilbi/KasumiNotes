@@ -49,7 +49,7 @@
     <string name="display">显示</string>
     <string name="language">语言</string>
     <string name="lang_cn">中文</string>
-    <string name="lang_jp">日文</string>
+    <string name="lang_jp">日本語</string>
     <string name="follow_system">跟随系统</string>
     <string name="night">深色模式</string>
     <string name="day">浅色模式</string>
@@ -70,6 +70,7 @@
     <string name="chara_id">角色ID</string>
     <string name="rarity">星数</string>
     <string name="search_area_width">攻击距离</string>
+    <string name="summons_info">召唤物情报</string>
 
     <string name="actual_name">本名</string>
     <string name="kana">平假名</string>

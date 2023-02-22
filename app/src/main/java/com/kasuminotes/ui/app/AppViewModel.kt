@@ -17,6 +17,7 @@ import com.kasuminotes.ui.app.state.DbState
 import com.kasuminotes.ui.app.state.EquipState
 import com.kasuminotes.ui.app.state.ExEquipState
 import com.kasuminotes.ui.app.state.QuestState
+import com.kasuminotes.ui.app.state.SummonsState
 import com.kasuminotes.ui.app.state.UiState
 import kotlinx.coroutines.launch
 
@@ -27,6 +28,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     val equipState = EquipState(appRepository, viewModelScope)
     val questState = QuestState(appRepository, viewModelScope)
     val exEquipState = ExEquipState(appRepository, viewModelScope)
+    val summonsState = SummonsState(appRepository, viewModelScope)
 
     val navController = NavHostController(appRepository.applicationContext).apply {
         navigatorProvider.addNavigator(ComposeNavigator())
@@ -42,6 +44,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 "chara" -> {
                     equipState.destroy()
                     exEquipState.destroy()
+                    summonsState.destroy()
                 }
                 "quest" -> {
                     equipState.destroy()
@@ -57,7 +60,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
 
     fun navigateTo(selectedIndex: Int) {
         if (selectedIndex == 1 && !dbState.questInitializing) {
-            questState.initState(dbState.userState.maxUserData!!.maxArea)
+            questState.initQuest(dbState.userState.maxUserData!!.maxArea)
             navController.navigate("quest")
         } else if (selectedIndex == 0) {
             navController.popBackStack()
@@ -69,7 +72,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToChara(userProfile: UserProfile) {
-        charaState.selectUserProfile(
+        charaState.initUserProfile(
             userProfile,
             dbState.userState.charaListState.profiles,
             dbState.userState.maxUserData!!.maxCharaLevel
@@ -79,19 +82,19 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
 
     fun navigateToEquipById(equipId: Int) {
         viewModelScope.launch {
-            equipState.selectEquip(dbState.userState.maxUserData!!.maxArea, equipId)
+            equipState.initEquip(dbState.userState.maxUserData!!.maxArea, equipId)
             navController.navigate("equip")
         }
     }
 
     fun navigateToEquip(equipData: EquipData, slot: Int?) {
         if (slot == null) {
-            equipState.selectEquipData(
+            equipState.initEquipData(
                 dbState.userState.maxUserData!!.maxArea,
                 equipData
             )
         } else {
-            equipState.selectEquipData(
+            equipState.initEquipData(
                 dbState.userState.maxUserData!!.maxArea,
                 equipData,
                 charaState.userData!!.getEquipLevel(slot),
@@ -104,7 +107,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToUnique(uniqueData: UniqueData) {
-        equipState.selectUniqueData(
+        equipState.initUniqueData(
             uniqueData,
             charaState.userData!!.uniqueLevel,
             dbState.userState.maxUserData!!.maxUniqueLevel,
@@ -115,7 +118,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
 
     fun navigateToExEquip(exEquipSlot: ExEquipSlot) {
         viewModelScope.launch {
-            exEquipState.selectExEquipSlot(
+            exEquipState.initExEquipSlot(
                 exEquipSlot,
                 charaState.baseProperty,
                 when (exEquipSlot.category / 100) {
@@ -130,16 +133,21 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         }
     }
 
+    fun navigateToSummons(summons: List<Int>, skillLevel: Int) {
+        summonsState.initSummons(summons, skillLevel, charaState.userData!!)
+        navController.navigate("summons")
+    }
+
     fun navigateToImages(allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) {
         navController.navigate("images")
         if (allUserProfile == null) {
             viewModelScope.launch {
-                dbState.userState.charaListState.changeToImages(
+                dbState.userState.charaListState.initImages(
                     dbState.userState.getAllProfiles(unlockedProfiles)
                 )
             }
         } else {
-            dbState.userState.charaListState.changeToImages(allUserProfile)
+            dbState.userState.charaListState.initImages(allUserProfile)
         }
     }
 
@@ -147,13 +155,13 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         navController.navigate("editor")
         if (allUserProfile == null) {
             viewModelScope.launch {
-                dbState.userState.charaListState.changeToEditor(
+                dbState.userState.charaListState.initEditor(
                     dbState.userState.getAllProfiles(unlockedProfiles),
                     unlockedProfiles
                 )
             }
         } else {
-            dbState.userState.charaListState.changeToEditor(allUserProfile, unlockedProfiles)
+            dbState.userState.charaListState.initEditor(allUserProfile, unlockedProfiles)
         }
     }
 

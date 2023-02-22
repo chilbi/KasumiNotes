@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.res.stringResource
-import com.kasuminotes.MainActivity
 import java.lang.StringBuilder
 
 sealed class D {
@@ -67,24 +66,24 @@ fun stringDescription(d: D): String {
     }
 }
 
-fun getStringDescription(d: D): String {
-    return when (d) {
-        D.Unknown -> "???"
-        is D.Text -> d.value
-        is D.Format -> {
-            if (d.args == null) {
-                MainActivity.instance.getString(d.id)
-            } else {
-                val formatArgs = d.args.map { getStringDescription(it) }.toTypedArray()
-                MainActivity.instance.getString(d.id, *formatArgs)
-            }
-        }
-        is D.Join -> {
-            val str = StringBuilder()
-            d.args.forEach {
-                str.append(getStringDescription(it))
-            }
-            str.toString()
-        }
-    }
-}
+//fun getStringDescription(d: D): String {
+//    return when (d) {
+//        D.Unknown -> "???"
+//        is D.Text -> d.value
+//        is D.Format -> {
+//            if (d.args == null) {
+//                MainActivity.instance.getString(d.id)
+//            } else {
+//                val formatArgs = d.args.map { getStringDescription(it) }.toTypedArray()
+//                MainActivity.instance.getString(d.id, *formatArgs)
+//            }
+//        }
+//        is D.Join -> {
+//            val str = StringBuilder()
+//            d.args.forEach {
+//                str.append(getStringDescription(it))
+//            }
+//            str.toString()
+//        }
+//    }
+//}

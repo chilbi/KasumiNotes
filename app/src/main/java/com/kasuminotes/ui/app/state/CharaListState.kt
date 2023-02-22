@@ -33,13 +33,13 @@ class CharaListState {
 
 //    private var isLoaded = false
 
-    fun changeToImages(allUserProfile: List<UserProfile>) {
+    fun initImages(allUserProfile: List<UserProfile>) {
         backupProfiles = profiles
 
         changeProfiles(allUserProfile)
     }
 
-    fun changeToEditor(allUserProfile: List<UserProfile>, unlockedProfiles: List<UserProfile>) {
+    fun initEditor(allUserProfile: List<UserProfile>, unlockedProfiles: List<UserProfile>) {
         backupProfiles = profiles
 
         when {

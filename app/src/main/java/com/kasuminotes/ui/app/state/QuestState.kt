@@ -67,7 +67,7 @@ class QuestState(
     var memoryPieces by mutableStateOf<Array<List<Int>>?>(null)
         private set
 
-    fun initState(maxArea: Int) {
+    fun initQuest(maxArea: Int) {
         this.maxArea = maxArea
         if (min37 && maxArea < 37) {
             min37 = false

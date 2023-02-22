@@ -13,7 +13,7 @@ data class UnitSkillData(
     val exSkillList: List<SkillData?>,//1-5
     val exSkillEvolutionList: List<SkillData?>//1-5
 ) {
-//    fun getSkillList(level: Int) = getSkillList(level, level, level, level)
+    fun getSkillList(level: Int) = getSkillList(level, level, level, level)
 
     fun getSkillList(
         ubLevel: Int,

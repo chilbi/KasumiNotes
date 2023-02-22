@@ -36,6 +36,8 @@ object UrlUtil {
     val lastVersionUrl =
         mapOf(DbServer.CN to LAST_VERSION_URL_CN, DbServer.JP to LAST_VERSION_URL_JP)
 
+    val summonIconUrl = "$API_URL/icon/unit/000001.webp"
+
     private fun getImageId(unitId: Int, rarity: Int) = (if (rarity > 5) 6 else if (rarity > 2) 3 else 1) * 10 + unitId
 
     fun getUnitStillUrl(unitId: Int, rarity: Int) =

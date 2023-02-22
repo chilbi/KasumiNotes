@@ -30,7 +30,8 @@ fun Chara(
     onBack: () -> Unit,
     onEquipClick: (equipData: EquipData, slot: Int?) -> Unit,
     onUniqueClick: (UniqueData) -> Unit,
-    onExEquipSlotClick: (ExEquipSlot) -> Unit
+    onExEquipSlotClick: (ExEquipSlot) -> Unit,
+    onSummonsClick: (summons: List<Int>, skillLevel: Int) -> Unit
 ) {
     val userProfile = charaState.userProfile!!
     val userData = charaState.userData!!
@@ -120,8 +121,9 @@ fun Chara(
                 charaState.includeExEquipProperty,
                 onEquipClick = { onEquipClick(it, null) },
                 onUniqueClick = onUniqueClick,
+                onSummonsClick = onSummonsClick,
                 onCharaClick = {
-                    charaState.selectUserProfile(
+                    charaState.initUserProfile(
                         it,
                         userProfile.sharedProfiles.plus(userProfile),
                         maxUserData.maxCharaLevel

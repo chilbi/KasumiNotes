@@ -30,8 +30,6 @@ fun ImmersiveTopAppBar(
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     content: @Composable ColumnScope.() -> Unit = {}
 ) {
-
-
     Surface(
         modifier = modifier,
         color = backgroundColor,

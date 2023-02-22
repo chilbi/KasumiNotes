@@ -78,7 +78,7 @@ FROM unit_promotion WHERE unit_id=$unitId AND promotion_level=$promotionLevel"""
 
         val equips = slots.map { slotId ->
             async {
-                if (slotId != AppDatabase.NullId) getEquipData(slotId) else null
+                if (slotId != AppDatabase.NullId && slotId != 0) getEquipData(slotId) else null
             }
         }.awaitAll()
 
@@ -215,24 +215,25 @@ WHERE unit_id=$unitId"""
             async {
                 val actions = use {
                     rawQuery(sql, null).use {
-                        it.moveToFirst()
-                        val actionList = mutableListOf<Int>()
-                        var i = 0
-
-                        while (i < 7) {
-                            val actionId = it.getInt(i++)
-                            if (actionId == 0) break
-
-                            actionList.add(actionId)
+                        if (it.moveToFirst()) {
+                            val actionList = mutableListOf<Int>()
+                            var i = 0
+                            while (i < 7) {
+                                val actionId = it.getInt(i++)
+                                if (actionId == 0) break
+                                actionList.add(actionId)
+                            }
+                            actionList
+                        } else {
+                            null
                         }
-
-                        actionList
                     }
                 }
 
-                actions.map { actionId ->
+                actions?.map { actionId ->
                     async { getSkillAction(actionId) }
-                }.awaitAll()
+                }?.awaitAll()
+                    ?: emptyList()
             }
         }.awaitAll()
 
@@ -254,14 +255,14 @@ suspend fun AppDatabase.getPromotionBonusList(unitId: Int): List<PromotionBonus>
                     while (it.moveToNext()) {
                         var i = 0
 
-                        val baseProperty = Property { _ ->
+                        val property = Property { _ ->
                             it.getDouble(i++)
                         }
 
                         list.add(
                             PromotionBonus(
                                 it.getInt(i),
-                                baseProperty
+                                property
                             )
                         )
                     }

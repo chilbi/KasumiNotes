@@ -49,7 +49,7 @@ class ExEquipState(
     var originEnhanceLevel by mutableStateOf(0)
         private set
 
-    suspend fun selectExEquipSlot(
+    suspend fun initExEquipSlot(
         slot: ExEquipSlot,
         charaBaseProperty: Property,
         originLevel: Int = 0,
@@ -81,7 +81,7 @@ class ExEquipState(
         }
     }
 
-    fun selectExEquip(exEquipId: Int) {
+    fun initExEquip(exEquipId: Int) {
         scope.launch(defaultDispatcher) {
             val db = appRepository.getDatabase()
             val exEquip = db.getExEquipData(exEquipId)
