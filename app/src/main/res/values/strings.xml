@@ -56,6 +56,8 @@
     <string name="app">应用</string>
     <string name="about">关于</string>
     <string name="equip">装备</string>
+    <string name="clan_battle">公会战</string>
+    <string name="user">用户</string>
     <string name="all">全部</string>
     <string name="all_type">全部类型</string>
     <string name="all_position">全部位置</string>

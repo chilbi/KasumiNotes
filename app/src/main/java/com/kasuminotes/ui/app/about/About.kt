@@ -38,12 +38,8 @@ fun About(
     Scaffold(
         topBar = {
             ImmersiveTopAppBar(
-                title = {
-                    Text(stringResource(R.string.about_app))
-                },
-                navigationIcon = {
-                    BackButton(onBack)
-                }
+                title = { Text(stringResource(R.string.about_app)) },
+                navigationIcon = { BackButton(onBack) }
             )
         },
         bottomBar = {

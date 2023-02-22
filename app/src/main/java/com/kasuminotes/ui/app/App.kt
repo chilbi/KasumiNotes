@@ -1,11 +1,14 @@
 package com.kasuminotes.ui.app
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.kasuminotes.ui.app.about.About
 import com.kasuminotes.ui.app.chara.Chara
+import com.kasuminotes.ui.app.clanBattle.ClanBattle
 import com.kasuminotes.ui.app.equip.Equip
 import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
@@ -14,6 +17,7 @@ import com.kasuminotes.ui.app.summons.Summons
 import com.kasuminotes.ui.app.usereditor.CharaEditor
 import com.kasuminotes.ui.app.usereditor.UserImages
 import com.kasuminotes.ui.theme.KasumiNotesTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun App(appViewModel: AppViewModel = viewModel()) {
@@ -27,16 +31,28 @@ fun App(appViewModel: AppViewModel = viewModel()) {
     val summonsState = appViewModel.summonsState
 
     KasumiNotesTheme(uiState.darkTheme) {
+        val scaffoldState = rememberScaffoldState()
+        val scope = rememberCoroutineScope()
+        val openDrawer: () -> Unit = {
+            scope.launch { scaffoldState.drawerState.open() }
+        }
+        val navigateToHomeAndOpenDrawer = {
+            appViewModel.popBackStack()
+            openDrawer()
+        }
+
         NavHost(appViewModel.navController, "home") {
             composable("home") {
                 Home(
+                    scaffoldState,
                     uiState,
                     dbState,
-                    appViewModel::navigateTo,
-                    appViewModel::navigateToChara,
                     appViewModel::navigateToImages,
                     appViewModel::navigateToEditor,
-                    appViewModel::navigateToAbout
+                    appViewModel::navigateToChara,
+                    appViewModel::navigateToAbout,
+                    appViewModel::navigateTo,
+                    openDrawer
                 )
             }
             composable("chara") {
@@ -72,8 +88,15 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             composable("quest") {
                 Quest(
                     questState,
+                    appViewModel::navigateToEquipById,
                     appViewModel::navigateTo,
-                    appViewModel::navigateToEquipById
+                    navigateToHomeAndOpenDrawer
+                )
+            }
+            composable("clanBattle") {
+                ClanBattle(
+                    appViewModel::navigateTo,
+                    navigateToHomeAndOpenDrawer
                 )
             }
             composable("images") {

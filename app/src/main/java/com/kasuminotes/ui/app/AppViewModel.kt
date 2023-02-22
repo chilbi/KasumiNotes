@@ -2,6 +2,10 @@ package com.kasuminotes.ui.app
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.material.DrawerState
+import androidx.compose.material.DrawerValue
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -19,6 +23,7 @@ import com.kasuminotes.ui.app.state.ExEquipState
 import com.kasuminotes.ui.app.state.QuestState
 import com.kasuminotes.ui.app.state.SummonsState
 import com.kasuminotes.ui.app.state.UiState
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel() {
@@ -59,11 +64,23 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateTo(selectedIndex: Int) {
-        if (selectedIndex == 1 && !dbState.questInitializing) {
-            questState.initQuest(dbState.userState.maxUserData!!.maxArea)
-            navController.navigate("quest")
-        } else if (selectedIndex == 0) {
-            navController.popBackStack()
+        when (selectedIndex) {
+            0 -> {
+                navController.popBackStack()
+            }
+            1 -> {
+                if (!dbState.questInitializing) {
+                    questState.initQuest(dbState.userState.maxUserData!!.maxArea)
+                    navController.navigate("quest") {
+                        popUpTo("home")
+                    }
+                }
+            }
+            2 -> {
+                navController.navigate("clanBattle") {
+                    popUpTo("home")
+                }
+            }
         }
     }
 

@@ -101,7 +101,7 @@ fun HomeDrawer(
     latestAppReleaseInfoFetching: Boolean,
     language: Language,
     darkTheme: ToggleableState,
-    onImageChange: () -> Unit,
+    onImagesClick: () -> Unit,
     onLogOut: () -> Unit,
     onDbServerChange: (DbServer) -> Unit,
     onLastDbVersionFetch: () -> Unit,
@@ -130,7 +130,7 @@ fun HomeDrawer(
             userId,
             userName,
             backgroundColor,
-            onImageChange,
+            onImagesClick,
             onLogOut
         )
 
@@ -197,7 +197,7 @@ private fun UserHeader(
     userId: Int,
     userName: String,
     backgroundColor: Color,
-    onImageChange: () -> Unit,
+    onImageClick: () -> Unit,
     onLogOut: () -> Unit
 ) {
     Row(
@@ -214,7 +214,7 @@ private fun UserHeader(
                 .clip(CircleShape)
                 .clickable(
                     enabled = userId != DefaultUserId,
-                    onClick = onImageChange
+                    onClick = onImageClick
                 )
                 .border(
                     border = BorderStroke(

@@ -19,7 +19,7 @@
     <string name="check_complete">チェック完了</string>
     <string name="is_last_db">データベースのバージョンは最新なのです</string>
     <string name="is_latest_app">アプリのバージョンは最新なのです</string>
-    <string name="re_download">初めからダウンロード</string>
+    <string name="re_download">リダウンロード</string>
     <string name="auto_update">自動アップデート</string>
     <string name="switch_user">ユーザーを切り替える</string>
     <string name="create_user">新規ユーザー</string>
@@ -56,6 +56,8 @@
     <string name="app">アプリ</string>
     <string name="about">について</string>
     <string name="equip">装備</string>
+    <string name="clan_battle">クラバト</string>
+    <string name="user">ユーザー</string>
     <string name="all">全て</string>
     <string name="all_type">全タイプ</string>
     <string name="all_position">全ポジション</string>

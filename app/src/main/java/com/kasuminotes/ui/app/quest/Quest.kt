@@ -8,8 +8,9 @@ import com.kasuminotes.ui.components.SortIconButton
 @Composable
 fun Quest(
     questState: QuestState,
+    onEquipClick: (Int) -> Unit,
     onNavigateTo: (Int) -> Unit,
-    onEquipClick: (Int) -> Unit
+    onDrawerOpen: () -> Unit
 ) {
     QuestScaffold(
         questState,
@@ -18,7 +19,7 @@ fun Quest(
             SortIconButton(questState.sortDesc, questState::toggleSortDesc)
         },
         bottomBar = {
-            BottomBar(1, onNavigateTo)
+            BottomBar(1, onNavigateTo, onDrawerOpen)
         }
     )
 }

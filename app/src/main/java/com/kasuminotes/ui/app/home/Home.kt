@@ -1,5 +1,6 @@
 package com.kasuminotes.ui.app.home
 
+import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.DbState
@@ -7,29 +8,38 @@ import com.kasuminotes.ui.app.state.UiState
 
 @Composable
 fun Home(
+    scaffoldState: ScaffoldState,
     uiState: UiState,
     dbState: DbState,
-    onNavigateTo: (Int) -> Unit,
-    onNavigateToChara: (UserProfile) -> Unit,
     onNavigateToImages: (allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) -> Unit,
     onNavigateToEditor: (allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) -> Unit,
-    onAboutClick: () -> Unit
+    onNavigateToChara: (UserProfile) -> Unit,
+    onNavigateToAbout: () -> Unit,
+    onNavigateTo: (Int) -> Unit,
+    onDrawerOpen: () -> Unit
 ) {
-    HomeScaffold(
-        uiState,
-        dbState,
-        onNavigateTo,
-        onNavigateToChara,
-        onCharaEdit = {
-            onNavigateToEditor(null, dbState.userState.charaListState.profiles)
-        },
-        onImageChange = {
-            onNavigateToImages(null, dbState.userState.charaListState.profiles)
-        },
-        onAboutClick = onAboutClick
-    )
-
     val userState = dbState.userState
+
+    val onImagesClick = {
+        onNavigateToImages(null, userState.charaListState.profiles)
+    }
+
+    val onEditorClick = {
+        onNavigateToEditor(null, userState.charaListState.profiles)
+    }
+
+    HomeScaffold(
+        scaffoldState,
+        userState,
+        dbState,
+        uiState,
+        onImagesClick,
+        onEditorClick,
+        onNavigateToChara,
+        onNavigateToAbout,
+        onNavigateTo,
+        onDrawerOpen
+    )
 
     when {
         dbState.downloadState != null -> {

@@ -7,40 +7,36 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.BottomBar
 import com.kasuminotes.ui.app.state.DbState
 import com.kasuminotes.ui.app.state.UiState
-import kotlinx.coroutines.launch
+import com.kasuminotes.ui.app.state.UserState
 
 @Composable
 fun HomeScaffold(
-    uiState: UiState,
+    scaffoldState: ScaffoldState,
+    userState: UserState,
     dbState: DbState,
+    uiState: UiState,
+    onImagesClick: () -> Unit,
+    onEditorClick: () -> Unit,
+    onNavigateToChara: (UserProfile) -> Unit,
+    onNavigateToAbout: () -> Unit,
     onNavigateTo: (Int) -> Unit,
-    onCharaClick: (UserProfile) -> Unit,
-    onCharaEdit: () -> Unit,
-    onImageChange: () -> Unit,
-    onAboutClick: () -> Unit
+    onDrawerOpen: () -> Unit
 ) {
-    val scope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
     val imageState = uiState.charaImageState
-    val userState = dbState.userState
     val listState = userState.charaListState
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            val openDrawer: () -> Unit = {
-                scope.launch { scaffoldState.drawerState.open() }
-            }
             HomeTopBar(
                 userState.userId,
                 imageState.vector,
@@ -54,14 +50,14 @@ fun HomeScaffold(
                 listState::changeAtkType,
                 listState::changePosition,
                 listState::changeOrderBy,
-                openDrawer
+                onDrawerOpen
             )
         },
         bottomBar = {
-            BottomBar(0, onNavigateTo)
+            BottomBar(0, onNavigateTo, onDrawerOpen)
         },
         floatingActionButton = {
-            FloatingActionButton(onCharaEdit) {
+            FloatingActionButton(onEditorClick) {
                 Icon(
                     imageVector = Icons.Filled.Edit,
                     contentDescription = null,
@@ -84,7 +80,7 @@ fun HomeScaffold(
                 dbState.latestAppReleaseInfoFetching,
                 uiState.language,
                 uiState.darkTheme,
-                onImageChange,
+                onImagesClick,
                 userState::logOut,
                 dbState::changeDbServer,
                 dbState::fetchLastDbVersion,
@@ -93,7 +89,7 @@ fun HomeScaffold(
                 uiState::toggleDarkTheme,
                 dbState::fetchLatestAppReleaseInfo,
                 dbState::toggleAppAutoUpdate,
-                onAboutClick
+                onNavigateToAbout
             )
         },
         content = { contentPadding ->
@@ -102,7 +98,7 @@ fun HomeScaffold(
                     uiState.charaImageState,
                     listState.derivedProfiles,
                     listState.orderBy,
-                    onCharaClick
+                    onNavigateToChara
                 )
             }
         }
