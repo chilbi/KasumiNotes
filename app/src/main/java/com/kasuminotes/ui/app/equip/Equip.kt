@@ -13,11 +13,11 @@ fun Equip(
     equipState: EquipState,
     onBack: () -> Unit
 ) {
-    val equipmentId: Int
-    val equipmentName: String
-    val equipmentType: String
-    val description: String
-    val baseProperty: Property
+    var equipmentId = 0
+    var equipmentName = ""
+    var equipmentType = ""
+    var description = ""
+    var baseProperty = Property.zero
 
     when {
         equipState.equipData != null -> {
@@ -35,9 +35,6 @@ fun Equip(
             equipmentType = stringResource(R.string.unique_equip)
             description = data.description
             baseProperty = data.baseProperty
-        }
-        else -> {
-            throw Exception("The equipData or uniqueData is not uninitialized")
         }
     }
 
