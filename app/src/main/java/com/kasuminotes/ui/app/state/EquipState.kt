@@ -57,10 +57,12 @@ class EquipState(
     var questDataList by mutableStateOf<List<QuestData>?>(null)
         private set
 
-    suspend fun initEquip(maxArea: Int, equipId: Int) {
-        val db = appRepository.getDatabase()
-        val value = db.getEquipData(equipId)
-        initEquipData(maxArea, value)
+    fun initEquip(maxArea: Int, equipId: Int) {
+        scope.launch(defaultDispatcher) {
+            val db = appRepository.getDatabase()
+            val value = db.getEquipData(equipId)
+            initEquipData(maxArea, value)
+        }
     }
 
     fun initEquipData(

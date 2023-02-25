@@ -17,7 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ExEquipState(
     private val appRepository: AppRepository,
@@ -49,35 +48,37 @@ class ExEquipState(
     var originEnhanceLevel by mutableStateOf(0)
         private set
 
-    suspend fun initExEquipSlot(
+    fun initExEquipSlot(
         slot: ExEquipSlot,
         charaBaseProperty: Property,
         originLevel: Int = 0,
         onExEquipChange: ((slotNum: Int, exEquip: ExEquipData?) -> Unit)? = null,
         onLevelChange: ((slotNum: Int, level: Int) -> Unit)? = null
-    ) = withContext(defaultDispatcher) {
-        exEquipSlot = slot
-        baseProperty = charaBaseProperty
-        enhanceLevel = originLevel
-        originEnhanceLevel = originLevel
-        isEquipping = false
-        onExEquipDataChange = onExEquipChange
-        onEnhanceLevelChange = onLevelChange
-        slotNum = slot.category / 100
+    ) {
+        scope.launch(defaultDispatcher) {
+            exEquipSlot = slot
+            baseProperty = charaBaseProperty
+            enhanceLevel = originLevel
+            originEnhanceLevel = originLevel
+            isEquipping = false
+            onExEquipDataChange = onExEquipChange
+            onEnhanceLevelChange = onLevelChange
+            slotNum = slot.category / 100
 
-        val db = appRepository.getDatabase()
-        val list = awaitAll(
-            async { db.getExEquipCategory(slot.category) },
-            async { db.getEquippableExList(slot.category) }
-        )
-        exEquipCategory = list[0] as ExEquipCategory
-        @Suppress("UNCHECKED_CAST")
-        equippableExList = list[1] as List<Int>
-        if (slot.exEquipData != null) {
-            exEquipData = slot.exEquipData
-            percentProperty = slot.exEquipData.getPercentProperty(originEnhanceLevel)
-            maxEnhanceLevel = slot.exEquipData.maxEnhanceLevel
-            isEquipping = true
+            val db = appRepository.getDatabase()
+            val list = awaitAll(
+                async { db.getExEquipCategory(slot.category) },
+                async { db.getEquippableExList(slot.category) }
+            )
+            exEquipCategory = list[0] as ExEquipCategory
+            @Suppress("UNCHECKED_CAST")
+            equippableExList = list[1] as List<Int>
+            if (slot.exEquipData != null) {
+                exEquipData = slot.exEquipData
+                percentProperty = slot.exEquipData.getPercentProperty(originEnhanceLevel)
+                maxEnhanceLevel = slot.exEquipData.maxEnhanceLevel
+                isEquipping = true
+            }
         }
     }
 

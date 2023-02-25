@@ -55,7 +55,7 @@ fun CharaEquips(
             UniqueEquipItem(uniqueData, onUniqueClick)
         }
         
-        items(maxPromotionLevel, key = { i -> i }) { index ->
+        items(maxPromotionLevel, { i -> i }) { index ->
             val unitPromotion = promotions[index]
             val promotionLevel = maxPromotionLevel - index
 

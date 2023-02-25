@@ -17,6 +17,7 @@ import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.CharaState
+import com.kasuminotes.ui.app.state.ClanBattleState
 import com.kasuminotes.ui.app.state.DbState
 import com.kasuminotes.ui.app.state.EquipState
 import com.kasuminotes.ui.app.state.ExEquipState
@@ -34,6 +35,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     val questState = QuestState(appRepository, viewModelScope)
     val exEquipState = ExEquipState(appRepository, viewModelScope)
     val summonsState = SummonsState(appRepository, viewModelScope)
+    val clanBattleState = ClanBattleState(appRepository, viewModelScope)
 
     val navController = NavHostController(appRepository.applicationContext).apply {
         navigatorProvider.addNavigator(ComposeNavigator())
@@ -77,6 +79,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 }
             }
             2 -> {
+                clanBattleState.initPeriodList()
                 navController.navigate("clanBattle") {
                     popUpTo("home")
                 }
@@ -98,10 +101,8 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToEquipById(equipId: Int) {
-        viewModelScope.launch {
-            equipState.initEquip(dbState.userState.maxUserData!!.maxArea, equipId)
-            navController.navigate("equip")
-        }
+        equipState.initEquip(dbState.userState.maxUserData!!.maxArea, equipId)
+        navController.navigate("equip")
     }
 
     fun navigateToEquip(equipData: EquipData, slot: Int?) {
@@ -134,20 +135,18 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToExEquip(exEquipSlot: ExEquipSlot) {
-        viewModelScope.launch {
-            exEquipState.initExEquipSlot(
-                exEquipSlot,
-                charaState.baseProperty,
-                when (exEquipSlot.category / 100) {
-                    1 -> charaState.userData!!.exEquip1Level
-                    2 -> charaState.userData!!.exEquip2Level
-                    else -> charaState.userData!!.exEquip3Level
-                },
-                charaState::changeExEquip,
-                charaState::changeExEquipLevel
-            )
-            navController.navigate("exEquip")
-        }
+        exEquipState.initExEquipSlot(
+            exEquipSlot,
+            charaState.baseProperty,
+            when (exEquipSlot.category / 100) {
+                1 -> charaState.userData!!.exEquip1Level
+                2 -> charaState.userData!!.exEquip2Level
+                else -> charaState.userData!!.exEquip3Level
+            },
+            charaState::changeExEquip,
+            charaState::changeExEquipLevel
+        )
+        navController.navigate("exEquip")
     }
 
     fun navigateToSummons(summons: List<Int>, skillLevel: Int) {

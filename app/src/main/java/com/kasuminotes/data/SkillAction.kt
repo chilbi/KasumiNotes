@@ -2,7 +2,6 @@ package com.kasuminotes.data
 
 data class SkillAction(
     val actionId: Int,
-    val classId: Int,
     val actionType: Int,
     val actionDetail1: Int,
     val actionDetail2: Int,
@@ -21,7 +20,6 @@ data class SkillAction(
     val targetNumber: Int,
     val targetCount: Int,
     val description: String,
-    val levelUpDisp: String,
     var depend: SkillAction? = null
 ) {
     companion object {
@@ -35,10 +33,10 @@ data class SkillAction(
                 val actionValueFields = (1..7).joinToString(",") { i ->
                     "action_value_$i"
                 }
-                fields = "action_id,class_id,action_type," +
+                fields = "action_id,action_type," +
                         "$actionDetailFields,$actionValueFields," +
                         "target_assignment,target_area,target_range," +
-                        "target_type,target_number,target_count,description,level_up_disp"
+                        "target_type,target_number,target_count,description"
             }
             return fields!!
         }

@@ -24,11 +24,6 @@ fun App(appViewModel: AppViewModel = viewModel()) {
     val uiState = appViewModel.uiState
     val dbState = appViewModel.dbState
     val userState = dbState.userState
-    val charaState = appViewModel.charaState
-    val equipState = appViewModel.equipState
-    val questState = appViewModel.questState
-    val exEquipState = appViewModel.exEquipState
-    val summonsState = appViewModel.summonsState
 
     KasumiNotesTheme(uiState.darkTheme) {
         val scaffoldState = rememberScaffoldState()
@@ -57,7 +52,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             }
             composable("chara") {
                 Chara(
-                    charaState,
+                    appViewModel.charaState,
                     userState.maxUserData!!,
                     appViewModel::popBackStack,
                     appViewModel::navigateToEquip,
@@ -69,25 +64,25 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             composable("equip") {
                 Equip(
                     dbState,
-                    equipState,
+                    appViewModel.equipState,
                     appViewModel::popBackStack
                 )
             }
             composable("exEquip") {
                 ExEquip(
-                    exEquipState,
+                    appViewModel.exEquipState,
                     appViewModel::popBackStack
                 )
             }
             composable("summons") {
                 Summons(
-                    summonsState,
+                    appViewModel.summonsState,
                     appViewModel::popBackStack
                 )
             }
             composable("quest") {
                 Quest(
-                    questState,
+                    appViewModel.questState,
                     appViewModel::navigateToEquipById,
                     appViewModel::navigateTo,
                     navigateToHomeAndOpenDrawer
@@ -95,6 +90,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             }
             composable("clanBattle") {
                 ClanBattle(
+                    appViewModel.clanBattleState,
                     appViewModel::navigateTo,
                     navigateToHomeAndOpenDrawer
                 )

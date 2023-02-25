@@ -108,6 +108,20 @@
     <string name="energy_reduce_rate">ＴＰ軽減</string>
     <string name="accuracy">命中</string>
 
+    <string name="aries">牡羊座</string>
+    <string name="taurus">牡牛座</string>
+    <string name="gemini">双子座</string>
+    <string name="cancer">蟹座</string>
+    <string name="leo">獅子座</string>
+    <string name="virgo">乙女座</string>
+    <string name="libra">天秤座</string>
+    <string name="scorpio">蠍座</string>
+    <string name="sagittarius">射手座</string>
+    <string name="capricorn">山羊座</string>
+    <string name="aquarius">水瓶座</string>
+    <string name="pisces">魚座</string>
+
+    <string name="clan_battle_period1_year2_month3_constellation4">第%1$d期　%2$d年%3$d月　%4$s</string>
     <string name="diamond_s">⬧ %s</string>
     <string name="profile">プロフィール</string>
     <string name="story">ストーリー</string>

@@ -77,7 +77,6 @@ FROM skill_action WHERE action_id=$actionId"""
                 it.getInt(i++),
                 it.getInt(i++),
                 it.getInt(i++),
-                it.getInt(i++),
                 it.getDouble(i++),
                 it.getDouble(i++),
                 it.getDouble(i++),
@@ -91,7 +90,6 @@ FROM skill_action WHERE action_id=$actionId"""
                 it.getInt(i++),
                 it.getInt(i++),
                 it.getInt(i++),
-                it.getString(i++),
                 it.getString(i)
             )
         }

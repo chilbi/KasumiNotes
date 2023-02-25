@@ -52,12 +52,6 @@ fun SkillDataParamTable(
                 modifier = Modifier.weight(1f),
                 color = DarkSuccess
             )
-            KeyValue(
-                label = "class_id",
-                value = action.classId.toString(),
-                modifier = Modifier.weight(1f),
-                color = DarkSuccess
-            )
         }
 
         Row {
@@ -167,11 +161,6 @@ fun SkillDataParamTable(
         KeyValue(
             label = "description",
             value = action.description.ifEmpty { "NULL" }
-        )
-
-        KeyValue(
-            label = "level_up_disp",
-            value = action.levelUpDisp.ifEmpty { "NULL" }
         )
     }
 }

@@ -24,11 +24,13 @@ fun UnderlineLabelColumn(
     width: Dp = 1f.dp,
     style: UnderlineStyle = UnderlineStyle.Solid,
     shape: Shape = Rounded8,
+    onClick: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
     BgBorderColumn(
         shape = shape,
-        padding = 8.dp
+        padding = 8.dp,
+        onClick = onClick
     ) {
         UnderlineLabel(label, color, width, style)
 
