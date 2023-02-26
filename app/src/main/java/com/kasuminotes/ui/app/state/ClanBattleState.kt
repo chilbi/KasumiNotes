@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.ClanBattlePeriod
+import com.kasuminotes.db.getClanBattleMapDataList
 import com.kasuminotes.db.getClanBattlePeriodList
 import com.kasuminotes.ui.app.AppRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,10 +20,40 @@ class ClanBattleState(
     var clanBattlePeriodList by mutableStateOf<List<ClanBattlePeriod>>(emptyList())
         private set
 
+    var clanBattlePeriod by mutableStateOf<ClanBattlePeriod?>(null)
+        private set
+
+    var title by mutableStateOf("")
+        private set
+
     fun initPeriodList() {
         scope.launch(defaultDispatcher) {
             val db = appRepository.getDatabase()
             clanBattlePeriodList = db.getClanBattlePeriodList()
+        }
+    }
+
+    fun initPeriod(label: String, period: ClanBattlePeriod) {
+        if (period.mapDataList.isEmpty()) {
+            scope.launch(defaultDispatcher) {
+                val db = appRepository.getDatabase()
+                var list = db.getClanBattleMapDataList(period.clanBattleId)
+
+                list = if (period.period > 10) {
+                    list.filter { it.lapNumTo != 1 }
+                } else if (period.period > 8){
+                    listOf(list[0].copy(phase = 3), list[1].copy(phase = 2), list[2])
+                } else {
+                    listOf(list[0].copy(phase = 2), list[1])
+                }
+
+                period.mapDataList = list
+                clanBattlePeriod = period
+                title = label
+            }
+        } else {
+            clanBattlePeriod = period
+            title = label
         }
     }
 }

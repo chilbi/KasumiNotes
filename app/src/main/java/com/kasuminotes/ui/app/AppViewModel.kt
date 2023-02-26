@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
 import com.kasuminotes.MainActivity
+import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.UniqueData
@@ -152,6 +153,11 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     fun navigateToSummons(summons: List<Int>, skillLevel: Int) {
         summonsState.initSummons(summons, skillLevel, charaState.userData!!)
         navController.navigate("summons")
+    }
+
+    fun navigateToMapList(label: String, period: ClanBattlePeriod) {
+        clanBattleState.initPeriod(label, period)
+        navController.navigate("clanBattleMapList")
     }
 
     fun navigateToImages(allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) {

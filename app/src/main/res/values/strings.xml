@@ -122,6 +122,9 @@
     <string name="pisces">双鱼座</string>
 
     <string name="clan_battle_period1_year2_month3_constellation4">第%1$d期 %2$d年%3$d月 %4$s</string>
+    <string name="phase_d">%d阶段</string>
+    <string name="score_coefficient">分数倍率</string>
+
     <string name="diamond_s">⬧ %s</string>
     <string name="profile">简介</string>
     <string name="story">剧情</string>

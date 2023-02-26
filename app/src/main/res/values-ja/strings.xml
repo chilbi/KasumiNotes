@@ -122,6 +122,9 @@
     <string name="pisces">魚座</string>
 
     <string name="clan_battle_period1_year2_month3_constellation4">第%1$d期　%2$d年%3$d月　%4$s</string>
+    <string name="phase_d">%d段階目</string>
+    <string name="score_coefficient">スコア倍率</string>
+
     <string name="diamond_s">⬧ %s</string>
     <string name="profile">プロフィール</string>
     <string name="story">ストーリー</string>

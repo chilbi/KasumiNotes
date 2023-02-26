@@ -13,11 +13,11 @@ class Property(init: (Int) -> Double) {
     }
 
     private val arr = DoubleArray(size, init)
-//    val hp: Double get() = arr[0]
+    val hp: Double get() = arr[0]
     val atk: Double get() = arr[1]
-//    val def: Double get() = arr[2]
+    val def: Double get() = arr[2]
     val magicStr: Double get() = arr[3]
-//    val magicDef: Double get() = arr[4]
+    val magicDef: Double get() = arr[4]
 //    val physicalCritical: Double get() = arr[5]
 //    val magicCritical: Double get() = arr[6]
 //    val dodge: Double get() = arr[7]

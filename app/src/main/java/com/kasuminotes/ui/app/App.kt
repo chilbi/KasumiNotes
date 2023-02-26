@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.kasuminotes.ui.app.about.About
 import com.kasuminotes.ui.app.chara.Chara
 import com.kasuminotes.ui.app.clanBattle.ClanBattle
+import com.kasuminotes.ui.app.clanBattle.ClanBattleMapList
 import com.kasuminotes.ui.app.equip.Equip
 import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
@@ -91,8 +92,15 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             composable("clanBattle") {
                 ClanBattle(
                     appViewModel.clanBattleState,
+                    appViewModel::navigateToMapList,
                     appViewModel::navigateTo,
                     navigateToHomeAndOpenDrawer
+                )
+            }
+            composable("clanBattleMapList") {
+                ClanBattleMapList(
+                    appViewModel.clanBattleState,
+                    appViewModel::popBackStack
                 )
             }
             composable("images") {

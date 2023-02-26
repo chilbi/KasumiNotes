@@ -5,9 +5,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.kasuminotes.data.SummonData
 import com.kasuminotes.ui.components.AttackDetail
 import com.kasuminotes.ui.components.AttackPattern
+import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.SkillDetail
 import com.kasuminotes.ui.components.bgBorder
@@ -15,7 +17,14 @@ import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun SummonDetail(summonData: SummonData) {
-    SummonInfo(summonData.unitId, summonData.unitName)
+    ImageCard(
+        imageUrl = UrlUtil.summonIconUrl,
+        primaryText = summonData.unitName,
+        secondaryText = summonData.unitId.toString(),
+        imageSize = 56.dp,
+        primaryFontSize = 18.sp,
+        secondaryFontSize = 16.sp
+    )
 
     PropertyTable(
         property = summonData.property,

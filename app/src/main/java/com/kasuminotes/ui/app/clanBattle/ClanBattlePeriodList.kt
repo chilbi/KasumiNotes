@@ -27,7 +27,7 @@ import com.kasuminotes.utils.UrlUtil
 @Composable
 fun ClanBattlePeriodList(
     clanBattlePeriodList: List<ClanBattlePeriod>,
-    onPeriodClick: (ClanBattlePeriod) -> Unit,
+    onPeriodClick: (label: String, period: ClanBattlePeriod) -> Unit,
 ) {
     val size = clanBattlePeriodList.size
     val color = MaterialTheme.colors.primary
@@ -52,7 +52,7 @@ fun ClanBattlePeriodList(
 private fun ClanBattlePeriodItem(
     clanBattlePeriod: ClanBattlePeriod,
     color: Color,
-    onPeriodClick: (ClanBattlePeriod) -> Unit
+    onPeriodClick: (label: String, period: ClanBattlePeriod) -> Unit
 ) {
     val label = stringResource(
         R.string.clan_battle_period1_year2_month3_constellation4,
@@ -61,7 +61,7 @@ private fun ClanBattlePeriodItem(
         clanBattlePeriod.month,
         stringResource(clanBattlePeriod.constellation)
     )
-    UnderlineLabelColumn(label, color, onClick = { onPeriodClick(clanBattlePeriod) }) {
+    UnderlineLabelColumn(label, color, onClick = { onPeriodClick(label, clanBattlePeriod) }) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
