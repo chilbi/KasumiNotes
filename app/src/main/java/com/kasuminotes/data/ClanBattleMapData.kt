@@ -8,6 +8,8 @@ data class ClanBattleMapData(
     val waveGroupIdList: List<Int>,// 1-5
     var enemyDataList: List<EnemyData> = emptyList()
 ) {
+    val from: Int = if (phase == 1) 1 else lapNumFrom
+
     companion object {
         private var fields: String? = null
 

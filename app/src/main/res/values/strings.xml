@@ -124,6 +124,10 @@
     <string name="clan_battle_period1_year2_month3_constellation4">第%1$d期 %2$d年%3$d月 %4$s</string>
     <string name="phase_d">%d阶段</string>
     <string name="score_coefficient">分数倍率</string>
+    <string name="round_after_d">%d周目后</string>
+    <string name="round_from1_to2">%1$d-%2$d周目</string>
+    <string name="round_d">%d周目</string>
+    <string name="multi_target_d">%d目标</string>
 
     <string name="diamond_s">⬧ %s</string>
     <string name="profile">简介</string>

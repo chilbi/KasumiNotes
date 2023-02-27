@@ -72,6 +72,14 @@ val DarkColorPalette = darkColors(
 //    onError = Color.Black
 )
 
+val phaseColors = listOf(
+    Color(0xFF60F5A0),
+    Color(0xFFFFBB99),
+    Color(0xFFFDCA64),
+    Color(0xFFFFA819),
+    Color(0xFFFD8013)
+)
+
 val Int.rankRarity: Int
     get() = when {
         this > 27 -> 9

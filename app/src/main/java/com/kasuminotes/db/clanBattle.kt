@@ -103,7 +103,10 @@ WHERE wave_group_id IN (${waveGroupIdList.joinToString(",")})"""
 
                 val multiParts = mutableListOf<Int>()
                 while (i < 20) {
-                    multiParts.add(it.getInt(i++))
+                    val id = it.getInt(i++)
+                    if (id != 0) {
+                        multiParts.add(id)
+                    }
                 }
 
                 val property = Property { _ ->
