@@ -40,6 +40,7 @@ fun AttackDetail(
         isRfSkill = false,
         iconUrl = UrlUtil.getAtkIconUrl(atkType),
         name = name,
+        coolTime = 0f,
         castTime = normalAtkCastTime,
         description = description,
         searchAreaWidth = searchAreaWidth

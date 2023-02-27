@@ -45,6 +45,7 @@ fun SkillDetail(
     isRfSkill: Boolean,
     iconUrl: String,
     name: String,
+    coolTime: Float,
     castTime: Float,
     description: String,
     searchAreaWidth: Int = 0,
@@ -105,16 +106,19 @@ fun SkillDetail(
 
         ImageCard(
             imageUrl = iconUrl,
-            primaryText = name,
+            primaryText = if (name != "") name
+            else stringResource(R.string.cool_time_s, coolTime),
             secondaryText = stringResource(R.string.cast_time_s, castTime)
         )
 
-        Text(
-            text = description,
-            modifier = Modifier.padding(4.dp),
-            fontSize = 14.sp,
-            lineHeight = 28.sp
-        )
+        if (description != "") {
+            Text(
+                text = description,
+                modifier = Modifier.padding(4.dp),
+                fontSize = 14.sp,
+                lineHeight = 28.sp
+            )
+        }
 
         val descriptionList: List<D>? by remember(skillLevel, property, rawDepends, actions) {
             derivedStateOf {

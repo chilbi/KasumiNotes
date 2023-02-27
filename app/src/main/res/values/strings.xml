@@ -151,6 +151,7 @@
     <string name="pattern">行动模式</string>
     <string name="physical_atk">物理普通攻击</string>
     <string name="magic_atk">魔法普通攻击</string>
+    <string name="cool_time_s">冷却时间：%s秒</string>
     <string name="cast_time_s">待机时间：%s秒</string>
     <string name="skill_effect">技能效果</string>
     <string name="same_category_equip">同类装备</string>

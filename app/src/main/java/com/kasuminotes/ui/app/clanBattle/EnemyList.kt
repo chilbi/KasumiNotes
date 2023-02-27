@@ -37,7 +37,8 @@ import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun EnemyList(
-    mapData: ClanBattleMapData
+    mapData: ClanBattleMapData,
+    onEnemyClick: (EnemyData) -> Unit
 ) {
     Column(
         Modifier
@@ -54,7 +55,8 @@ fun EnemyList(
         mapData.enemyDataList.forEachIndexed { i, enemyData ->
             EnemyListItem(
                 enemyData = enemyData,
-                scoreCoefficient = mapData.scoreCoefficientList[i]
+                scoreCoefficient = mapData.scoreCoefficientList[i],
+                onEnemyClick = onEnemyClick
             )
         }
     }
@@ -104,8 +106,9 @@ private fun RowScope.LabelDivider() {
 private fun EnemyListItem(
     enemyData: EnemyData,
     scoreCoefficient: Float,
+    onEnemyClick: (EnemyData) -> Unit
 ) {
-    BgBorderColumn(onClick = {}) {
+    BgBorderColumn(onClick = { onEnemyClick(enemyData) }) {
         val atkTypeStr = stringResource(
             if (enemyData.atkType == 1) R.string.physical
             else R.string.magic

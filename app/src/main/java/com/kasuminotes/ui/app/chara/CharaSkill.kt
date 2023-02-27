@@ -65,6 +65,7 @@ fun CharaSkill(
                     isRfSkill = item.skillData.isRfSkill,
                     iconUrl = UrlUtil.getSkillIconUrl(item.skillData.iconType),
                     name = item.skillData.name,
+                    coolTime = item.skillData.bossUbCoolTime,
                     castTime = item.skillData.skillCastTime,
                     description = item.skillData.description,
                     skillLevel = item.level,

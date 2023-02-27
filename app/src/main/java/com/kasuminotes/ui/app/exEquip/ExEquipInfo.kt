@@ -34,7 +34,6 @@ fun ExEquipInfo(
             Column(Modifier.padding(start = 8.dp)) {
                 MultiLineText(
                     text = description,
-                    fontSize = 12.sp,
                     textAlign = TextAlign.Start
                 )
             }

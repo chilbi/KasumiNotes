@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.data.ClanBattleMapData
+import com.kasuminotes.data.EnemyData
 import com.kasuminotes.ui.app.state.ClanBattleState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.ImmersiveTopAppBar
@@ -31,6 +32,7 @@ import com.kasuminotes.ui.theme.phaseColors
 @Composable
 fun ClanBattleMapList(
     clanBattleState: ClanBattleState,
+    onNavigateToEnemy: (EnemyData) -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(
@@ -45,7 +47,10 @@ fun ClanBattleMapList(
         },
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
-                MapTabsPanel(clanBattleState.clanBattlePeriod?.mapDataList)
+                MapTabsPanel(
+                    mapDataList = clanBattleState.clanBattlePeriod?.mapDataList,
+                    onEnemyClick = onNavigateToEnemy
+                )
             }
         }
     )
@@ -53,7 +58,8 @@ fun ClanBattleMapList(
 
 @Composable
 private fun MapTabsPanel(
-    mapDataList: List<ClanBattleMapData>?
+    mapDataList: List<ClanBattleMapData>?,
+    onEnemyClick: (EnemyData) -> Unit
 ) {
     if (mapDataList != null) {
         var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
@@ -75,7 +81,10 @@ private fun MapTabsPanel(
                 )
             },
             panelContentFor = { index ->
-                EnemyList(mapDataList[index])
+                EnemyList(
+                    mapData = mapDataList[index],
+                    onEnemyClick = onEnemyClick
+                )
             }
         )
     }

@@ -18,7 +18,7 @@ FROM unit_attack_pattern WHERE unit_id=$unitId ORDER BY pattern_id ASC"""
             val list = mutableListOf<UnitAttackPattern>()
 
             while (it.moveToNext()) {
-                val atkPatternList = mutableListOf<Int>()
+                var atkPatternList = mutableListOf<Int>()
                 var i = 0
 
                 while (i < 20) {
@@ -45,6 +45,10 @@ FROM unit_attack_pattern WHERE unit_id=$unitId ORDER BY pattern_id ASC"""
                 }
                 if (loopEnd > 13) {
                     loopEnd -= 1
+                }
+
+                if (atkPatternList.size > loopEnd) {
+                    atkPatternList = atkPatternList.subList(0, loopEnd)
                 }
 
                 list.add(

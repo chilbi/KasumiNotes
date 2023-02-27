@@ -1,5 +1,13 @@
 package com.kasuminotes.data
 
+import com.kasuminotes.db.AppDatabase
+import com.kasuminotes.db.getUnitAttackPatternList
+import com.kasuminotes.db.getUnitSkillData
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
+
 data class EnemyData(
     val enemyId: Int,
     val unitId: Int,
@@ -14,8 +22,27 @@ data class EnemyData(
     val exSkillLvList: List<Int>,// 1-5
     val multiParts: List<Int>,// 1-5
     val property: Property,
-    var EnemyMultiParts: List<EnemyData> = emptyList()
+    var EnemyMultiParts: List<EnemyData> = emptyList(),
+    var unitAttackPatternList: List<UnitAttackPattern> = emptyList(),
+    var unitSkillData: UnitSkillData? = null
 ) {
+    var skillList: List<SkillItem> = emptyList()
+        private set
+
+    suspend fun load(
+        db: AppDatabase,
+        defaultDispatcher: CoroutineDispatcher
+    ) = withContext(defaultDispatcher) {
+        val list = awaitAll(
+            async { db.getUnitAttackPatternList(unitId) },
+            async { db.getUnitSkillData(unitId) }
+        )
+        @Suppress("UNCHECKED_CAST")
+        unitAttackPatternList = list[0] as List<UnitAttackPattern>
+        unitSkillData = list[1] as UnitSkillData
+        skillList = unitSkillData!!.getSkillList(unionBurstLevel, mainSkillLvList, exSkillLvList)
+    }
+
     companion object {
         private var fields: String? = null
 

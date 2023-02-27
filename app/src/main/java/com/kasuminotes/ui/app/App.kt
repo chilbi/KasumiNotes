@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.kasuminotes.ui.app.about.About
 import com.kasuminotes.ui.app.chara.Chara
 import com.kasuminotes.ui.app.clanBattle.ClanBattle
+import com.kasuminotes.ui.app.clanBattle.ClanBattleEnemy
 import com.kasuminotes.ui.app.clanBattle.ClanBattleMapList
 import com.kasuminotes.ui.app.equip.Equip
 import com.kasuminotes.ui.app.exEquip.ExEquip
@@ -100,6 +101,14 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             composable("clanBattleMapList") {
                 ClanBattleMapList(
                     appViewModel.clanBattleState,
+                    appViewModel::navigateToEnemy,
+                    appViewModel::popBackStack
+                )
+            }
+            composable("clanBattleEnemy") {
+                ClanBattleEnemy(
+                    appViewModel.clanBattleState,
+                    appViewModel::navigateToMinions,
                     appViewModel::popBackStack
                 )
             }

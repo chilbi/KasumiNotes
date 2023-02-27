@@ -151,6 +151,7 @@
     <string name="pattern">行動パターン</string>
     <string name="physical_atk">物理通常攻撃</string>
     <string name="magic_atk">魔法通常攻撃</string>
+    <string name="cool_time_s">クールタイム：%s秒</string>
     <string name="cast_time_s">待機時間：%s秒</string>
     <string name="skill_effect">スキル効果</string>
     <string name="same_category_equip">同種装備</string>8

@@ -27,7 +27,6 @@ fun BottomBar(
 ) {
     BottomAppBar(Modifier.navigationBarsPadding()) {
         BottomNavigation(elevation = 0.dp) {
-            val scope = rememberCoroutineScope()
             BottomNavigationItem(
                 selected = selectedIndex == 0,
                 onClick = { onNavigateTo(0) },

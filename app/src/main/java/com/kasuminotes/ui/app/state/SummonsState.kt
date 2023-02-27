@@ -3,8 +3,10 @@ package com.kasuminotes.ui.app.state
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.kasuminotes.data.EnemyData
 import com.kasuminotes.data.SummonData
 import com.kasuminotes.data.UserData
+import com.kasuminotes.db.getMultiEnemyParts
 import com.kasuminotes.db.getSummonData
 import com.kasuminotes.ui.app.AppRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,21 +24,37 @@ class SummonsState(
     var summonDataList by mutableStateOf<List<SummonData>>(emptyList())
         private set
 
+    var minionDataList by mutableStateOf<List<EnemyData>>(emptyList())
+        private set
+
     fun initSummons(summons: List<Int>, skillLevel: Int, userData: UserData) {
         scope.launch(defaultDispatcher) {
             val db = appRepository.getDatabase()
-            val deferredList = summons.map { unitId ->
+            summonDataList = summons.map { unitId ->
                 async {
                     val summonData = db.getSummonData(unitId)
                     summonData.load(db, skillLevel, userData, defaultDispatcher)
                     summonData
                 }
-            }
-            summonDataList = deferredList.awaitAll()
+            }.awaitAll()
+        }
+    }
+
+    fun initMinionDataList(minions: List<Int>) {
+        scope.launch(defaultDispatcher) {
+            val db = appRepository.getDatabase()
+            val enemyDataList = db.getMultiEnemyParts(minions)
+            minionDataList = enemyDataList.map { enemyData ->
+                async {
+                    enemyData.load(db, defaultDispatcher)
+                    enemyData
+                }
+            }.awaitAll()
         }
     }
 
     fun destroy() {
         summonDataList = emptyList()
+        minionDataList = emptyList()
     }
 }

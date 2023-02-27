@@ -2,10 +2,6 @@ package com.kasuminotes.ui.app
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.material.DrawerState
-import androidx.compose.material.DrawerValue
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -13,6 +9,7 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
 import com.kasuminotes.MainActivity
 import com.kasuminotes.data.ClanBattlePeriod
+import com.kasuminotes.data.EnemyData
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.UniqueData
@@ -25,7 +22,6 @@ import com.kasuminotes.ui.app.state.ExEquipState
 import com.kasuminotes.ui.app.state.QuestState
 import com.kasuminotes.ui.app.state.SummonsState
 import com.kasuminotes.ui.app.state.UiState
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel() {
@@ -57,6 +53,9 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 "quest" -> {
                     equipState.destroy()
                     exEquipState.destroy()
+                }
+                "clanBattleEnemy" -> {
+                    summonsState.destroy()
                 }
             }
         }
@@ -155,9 +154,19 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         navController.navigate("summons")
     }
 
+    fun navigateToMinions(minions: List<Int>, skillLevel: Int) {
+        summonsState.initMinionDataList(minions)
+        navController.navigate("summons")
+    }
+
     fun navigateToMapList(label: String, period: ClanBattlePeriod) {
         clanBattleState.initPeriod(label, period)
         navController.navigate("clanBattleMapList")
+    }
+
+    fun navigateToEnemy(enemyData: EnemyData) {
+        clanBattleState.initEnemy(enemyData)
+        navController.navigate("clanBattleEnemy")
     }
 
     fun navigateToImages(allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) {
