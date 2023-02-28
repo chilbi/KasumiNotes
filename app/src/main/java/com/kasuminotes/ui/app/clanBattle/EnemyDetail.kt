@@ -60,8 +60,8 @@ fun EnemyDetail(
             )
         }
 
-        if (enemyData.EnemyMultiParts.isNotEmpty()) {
-            enemyData.EnemyMultiParts.forEach { part ->
+        if (enemyData.enemyMultiParts.isNotEmpty()) {
+            enemyData.enemyMultiParts.forEach { part ->
                 UnderlineLabelColumn(
                     label = part.name,
                     color = MaterialTheme.colors.primary
@@ -82,11 +82,17 @@ fun EnemyDetail(
                 unitSkillData = enemyData.unitSkillData!!
             )
 
+            val property = if (enemyData.enemyMultiParts.isEmpty()) {
+                enemyData.property
+            } else {
+                enemyData.enemyMultiParts[0].property
+            }
+
             AttackDetail(
                 enemyData.atkType,
                 enemyData.normalAtkCastTime,
                 enemyData.searchAreaWidth,
-                enemyData.property
+                property
             )
 
             enemyData.skillList.forEach { item ->
@@ -99,7 +105,7 @@ fun EnemyDetail(
                     castTime = item.skillData.skillCastTime,
                     description = item.skillData.description,
                     skillLevel = item.level,
-                    property = enemyData.property,
+                    property = property,
                     rawDepends = item.skillData.rawDepends,
                     actions = item.skillData.actions,
                     onSummonsClick = onMinionsClick

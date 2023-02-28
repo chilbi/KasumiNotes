@@ -22,7 +22,7 @@ data class EnemyData(
     val exSkillLvList: List<Int>,// 1-5
     val multiParts: List<Int>,// 1-5
     val property: Property,
-    var EnemyMultiParts: List<EnemyData> = emptyList(),
+    var enemyMultiParts: List<EnemyData> = emptyList(),
     var unitAttackPatternList: List<UnitAttackPattern> = emptyList(),
     var unitSkillData: UnitSkillData? = null
 ) {

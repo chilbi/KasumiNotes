@@ -3,12 +3,18 @@ package com.kasuminotes.action
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
-fun SkillAction.getRatioDamage(): D {
+fun SkillAction.getRatioDamage(skillLevel: Int): D {
     return D.Format(
-        R.string.action_damage_target1_ratio2,
+        if (actionDetail1 == 1) R.string.action_damage_target1_max_ratio2
+        else R.string.action_damage_target1_ratio2,
         arrayOf(
             getTarget(depend),
-            D.Text("${actionValue1.toNumStr()}%")
+            D.Join(
+                arrayOf(
+                    getBaseLvFormula(actionValue1, actionValue2, skillLevel) { it },
+                    D.Text("%")
+                )
+            )
         )
     )
 }

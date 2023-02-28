@@ -14,7 +14,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                 depend.getFocus(targetArea).append(getTarget(null))
             }
         } else if (
-            (depend.actionType == 23 || depend.actionType == 28) && depend.targetCount == 99
+            (depend.actionType == 23 || depend.actionType == 28) && depend.targetCount > 1
         ) {
             D.Format(R.string.target_eligible)
         } else if (depend.depend != null) {
@@ -89,10 +89,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                                             getAssignment()
                                         )
                                     ),
-                                    D.Format(
-                                        R.string.target_any_content1,
-                                        arrayOf(getAssignment())
-                                    )
+                                    getAnyTarget()
                                 )
                             )
                         } else {
@@ -127,15 +124,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                             arrayOf(getAssignment())
                         )
                         if (actionType == 23 || actionType == 28) {//ホマレ
-                            D.Join(
-                                arrayOf(
-                                    allTarget,
-                                    D.Format(
-                                        R.string.target_any_content1,
-                                        arrayOf(getAssignment())
-                                    )
-                                )
-                            )
+                            D.Join(arrayOf(allTarget, getAnyTarget()))
                         } else {
                             allTarget
                         }
@@ -148,15 +137,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                             )
                         )
                         if (actionType == 23) {// イオ、アオイ
-                            D.Join(
-                                arrayOf(
-                                    rangeTarget,
-                                    D.Format(
-                                        R.string.target_any_content1,
-                                        arrayOf(getAssignment())
-                                    )
-                                )
-                            )
+                            D.Join(arrayOf(rangeTarget, getAnyTarget()))
                         } else {
                             rangeTarget
                         }
@@ -203,15 +184,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                             arrayOf(getAssignment())
                         )
                         if (actionType == 23 || actionType == 28) {//アメス
-                            D.Join(
-                                arrayOf(
-                                    allTarget,
-                                    D.Format(
-                                        R.string.target_any_content1,
-                                        arrayOf(getAssignment())
-                                    )
-                                )
-                            )
+                            D.Join(arrayOf(allTarget, getAnyTarget()))
                         } else {
                             allTarget
                         }
@@ -251,7 +224,19 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                     }
                 } else {
                     //イオ　rfMain2、ユカリ rfMain2
-                    D.Format(R.string.target)
+                    // D.Format(R.string.target)
+                    val targets = D.Format(
+                        R.string.target_more_count1_content2,
+                        arrayOf(
+                            D.Text(targetCount.toString()),
+                            getAssignment()
+                        )
+                    )
+                    if (actionType == 23) {
+                        D.Join(arrayOf(targets, getAnyTarget()))
+                    } else {
+                        targets
+                    }
                 }
             } else {
                 D.Unknown
@@ -449,6 +434,9 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                 arrayOf(getAssignment())
             )
         }
+        24 -> {
+            D.Format(R.string.target_boss)
+        }
         25 -> {
             D.Format(
                 R.string.target_most_content1_extent2_target3,
@@ -539,4 +527,11 @@ fun SkillAction.getAssignmentResId(): Int {
 
 fun SkillAction.getAssignment(): D {
     return D.Format(getAssignmentResId())
+}
+
+fun SkillAction.getAnyTarget(): D {
+    return D.Format(
+        R.string.target_any_content1,
+        arrayOf(getAssignment())
+    )
 }

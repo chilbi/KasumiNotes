@@ -6,7 +6,7 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getHeal(skillLevel: Int, property: Property): D {
     val formula = if (actionValue1 == 1.0) {
-        getBaseLvAtkFormula(actionDetail1, actionValue2, actionValue3, actionValue4, skillLevel, property)
+        getBaseLvAtkFormula(actionDetail1, actionValue2, actionValue3, actionValue4, actionValue5, skillLevel, property)
     } else {
         D.Text("${actionValue2.toNumStr()}%")
     }

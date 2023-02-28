@@ -14,7 +14,7 @@ fun SkillAction.getHealField(skillLevel: Int, property: Property): D {
                 R.string.content_regeneration_content1_formula2,
                 arrayOf(
                     D.Format(R.string.hp),
-                    getBaseLvAtkFormula(actionDetail1, actionValue1, actionValue2, actionValue3, skillLevel, property)
+                    getBaseLvAtkFormula(actionDetail1, actionValue1, actionValue2, actionValue3, actionValue4, skillLevel, property)
                 )
             ),
             D.Text(actionValue5.toNumStr()),

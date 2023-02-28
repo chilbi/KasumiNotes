@@ -168,8 +168,14 @@
     <string name="action_move_target1">移动到%s的面前。</string>
     <string name="action_move_velocity1_target2_distance3">以%1$s的速度移动到%2$s的前方%3$s距离的位置。</string>
     <string name="action_move_return">技能结束后回到原来的位置。</string>
-    <string name="action_buff_target1_content2_formula3_time4">%1$s的%2$s提升%3$s，效果时间%4$s秒。</string>
-    <string name="action_debuff_target1_content2_formula3_time4">%1$s的%2$s下降%3$s，效果时间%4$s秒。</string>
+    <string name="action_up_target1_content2_formula3_time4">%1$s的%2$s提升%3$s，效果时间%4$s秒。</string>
+    <string name="action_down_target1_content2_formula3_time4">%1$s的%2$s下降%3$s，效果时间%4$s秒。</string>
+    <string name="action_up_target1_received_content2_formula3_time4">%1$s%2$s提升%3$s，效果时间%4$s秒。</string>
+    <string name="action_down_target1_received_content2_formula3_time4">%1$s%2$s下降%3$s，效果时间%4$s秒。</string>
+    <string name="action_received_up_target1_content2_formula3_time4">%1$s受到的%2$s提升%3$s，效果时间%4$s秒。</string>
+    <string name="action_received_down_target1_content2_formula3_time4">%1$s受到的%2$s下降%3$s，效果时间%4$s秒。</string>
+    <string name="action_const_up_content1">（此%1$s提升效果所提升的%1$s，在战斗中不受%1$s下降技能的影响。）</string>
+    <string name="action_const_down_content1">（此%1$s下降效果所下降的%1$s，在战斗中不受%1$s提升技能的影响。）</string>
     <string name="action_energy_recovery_target1_formula2">%1$s的TP回复%2$s。</string>
     <string name="action_energy_down_target1_formula2">使%1$s的TP削减%2$s。</string>
     <string name="action_hp_recovery_target1_formula2">%1$s的HP回复%2$s。</string>
@@ -195,6 +201,10 @@
     <string name="action_regeneration_target1_content2_formula3_time4">赋予%1$s每秒回复%2$s%3$s的持续%2$s回复状态，效果时间%4$s秒。</string>
     <string name="action_posture_time1_rate2">架势%1$s秒，使下次攻击伤害提升{ %2$s × 架势期间受到的伤害 }。</string>
     <string name="action_trigger_hp_target1_formula2">当%1$s的HP低于最大HP的%2$s时发动。</string>
+    <string name="action_trigger_battle_beginning">战斗开始时发动。</string>
+    <string name="action_trigger_battle_began_passed_time1">战斗开始后经过%s秒时发动。</string>
+    <string name="action_trigger_break">Break状态时发动。</string>
+    <string name="action_trigger_stealth">潜伏状态时发动。</string>
     <string name="action_destroy_target1">使%s陷入无法战斗状态。</string>
     <string name="action_accumulative_damage_formula1_tier2">每当对敌人进行攻击，对该敌人造成的伤害便会提升%1$s。此效果最多叠加%2$s次。</string>
     <string name="action_barrier_guard_target1_formula2_content3_time4">对%1$s展开可无效%2$s%3$s伤害的护盾，效果时间%4$s秒。</string>
@@ -211,7 +221,8 @@
     <string name="action_sustain_debuff_time1_target2_content3_formula4_count5">维持动作%1$s秒，期间%2$s的%3$s降低%4$s，受到%5$s次攻击就会中断此动作。</string>
     <string name="action_blind_target1_count2">赋予%1$s下%2$s次物理攻击必定被回避的状态。</string>
     <string name="action_count_down_target1_count2">对%1$s设置【倒计时】，%2$s秒后发动。</string>
-    <string name="action_damage_target1_ratio2">减少%1$s的残余HP的%2$s。</string>
+    <string name="action_damage_target1_max_ratio2">减少%1$s最大HP的%2$s。</string>
+    <string name="action_damage_target1_ratio2">减少%1$s残余HP的%2$s。</string>
     <string name="action_skill_counter1_max2">使【%1$s】的数量增加1，最多增加到%2$s。</string>
     <string name="action_change_mark_target1_state2_time3">赋予%1$s【%2$s】，效果时间%3$s秒。</string>
     <string name="action_change_mark_target1_state2_add3_max4_time5">为%1$s追加%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。</string>
@@ -222,11 +233,18 @@
     <string name="action_hit_count_target1_time2_count3">%1$s在%2$s秒内，每当造成%3$s次伤害时，</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$s追加%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。</string>
     <string name="action_speed_overlay_content1_target2_formula3_time4">%1$s，%2$s的行动速度提升%3$s，效果时间%4$s秒。（此技能的效果可以和其它行动速度变化技能叠加）</string>
-    <string name="action_injured_energy1">由此技能造成伤害的TP回复量变为原来的%s倍。</string>
+    <string name="action_injured_energy1">由此动作造成伤害的TP回复量变为原来的%s倍。</string>
     <string name="action_hiding_target1_time2">赋予%1$s隐密状态，效果时间%2$s秒。</string>
     <string name="action_injured_energy1_mark2_add3_max4_time5_target6">赋予%6$s%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。【%2$s】在受到伤害时就会消耗1个，同时TP回复%1$s。</string>
     <string name="action_hp_recovery_down_target1_formula2_time3">%1$s的HP回复量减少%2$s，效果时间%3$s秒。</string>
     <string name="action_dispel_odds1_target2_content3">%1$s概率解除%2$s的%3$s。</string>
+    <string name="action_summon_target1_front_distance2_content3">在%1$s的前方%2$s距离，%3$s。</string>
+    <string name="action_summon_target1_back_distance2_content3">在%1$s的后方%2$s距离，%3$s。</string>
+    <string name="action_summon_target1_content2">在%1$s身边，%2$s。</string>
+    <string name="action_passive_battle_beginning">战斗开始时</string>
+    <string name="action_passive_battle_began_passed_time1">战斗开始后经过%s秒时</string>
+    <string name="action_damage_attenuation_target1_limit2_coefficient3_time4">对%1$s展开限制盾，受到每个动作的伤害超过%2$s时，伤害将会被衰减，效果时间%4$s秒。（衰减系数%3$s）</string>
+    <string name="action_stealth_time1">进入潜伏状态，效果时间%s秒。</string>
 
     <string name="action_striked_branch_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_exists_field_branch_content1">%s的领域展开时，</string>
@@ -263,11 +281,10 @@
     <string name="action_branch_not_def_down_target1">%s在此技能发动时未处于魔法防御下降状态时，</string>
     <string name="action_branch_barrier_target1">%s有护盾展开时，</string>
     <string name="action_branch_not_barrier_target1">%s没有护盾展开时，</string>
-    <string name="action_summon_target1_distance2_content3">在%1$s的前方%2$s距离，%3$s。</string>
-    <string name="action_summon_target1_content2">在%1$s身边，%2$s。</string>
-    <string name="action_ex_equip_passive">战斗开始时</string>
-    <string name="action_ex_equip_passive_time1">战斗开始后经过%s秒时</string>
+    <string name="action_branch_stealth_count1">排除潜伏状态的单位，我方全体的数量≦%s时，</string>
+    <string name="action_branch_stealth_not_count1">排除潜伏状态的单位，我方全体的数量＞%s时，</string>
 
+    <string name="summon_id1">召唤【召唤物%s】</string>
     <string name="summon_403101">召唤一个能够攻击前方一名敌人的骷髅老爹</string>
     <string name="summon_403102">召唤一个能够攻击前方一名敌人的骷髅老爹（各种状态得到提升）</string>
     <string name="summon_404201">咏唱召唤一个能够攻击前方一名敌人的精灵</string>
@@ -325,8 +342,10 @@
     <string name="state_friendship_seal">友情的魔印</string>
     <string name="state_hazy">朦胧</string>
     <string name="state_kizuna_certificate">羁绊之证</string>
+    <string name="state_psi_charge">PSI★充能</string>
 
     <string name="target">对象</string>
+    <string name="target_boss">Boss</string>
     <string name="target_self">自身</string>
     <string name="target_enemy">敌人</string>
     <string name="target_friendly">己方</string>
@@ -352,7 +371,6 @@
     <string name="target_all_magic_str_content1">使用魔法攻击的所有%s角色</string>
     <string name="target_nearest_friendly">距离自身最近的己方角色</string>
     <string name="target_farthest_friendly">距离自身最远的己方角色</string>
-<!--    <string name="target_forefront_friendly">最前方一名己方角色</string>-->
     <string name="target_first_friendly">最前方的己方角色</string>
     <string name="target_first_enemy">最前方的敌人</string>
     <string name="target_last_friendly">最后方的己方角色</string>
@@ -365,8 +383,11 @@
     <string name="target_any_content1">中的任意%s</string>
 
     <string name="skill_level">技能等级</string>
+    <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × 技能等级 + (%3$s + %4$s * 技能等级) × %5$s } = %6$s</string>
     <string name="formula_base1_lv2_atk3_type4_result5">{ %1$s + %2$s × 技能等级 + %3$s × %4$s } = %5$s</string>
     <string name="formula_base1_lv2_result3">{ %1$s + %2$s × 技能等级 } = %3$s</string>
+    <string name="formula_lv1_result2">{ %1$s × 技能等级 } = %2$s</string>
+    <string name="formula_atk1_plus2_type3_result4">{ (%1$s + %2$s * 技能等级) × %3$s } = %4$s</string>
     <string name="formula_atk1_type2_result3">{ %1$s × %2$s } = %3$s</string>
     <string name="formula_m1_m2">{ %1$s × %2$s }</string>
     <string name="formula_m1_m2_m3">{ %1$s × %2$s × %3$s }</string>
@@ -374,6 +395,10 @@
     <string name="sub_formula_base1_lv2">(%1$s + %2$s × 技能等级)</string>
 
     <string name="move_speed">移动速度</string>
+    <string name="damage">伤害</string>
+    <string name="physical_damage">物理伤害</string>
+    <string name="magic_damage">魔法伤害</string>
+    <string name="physical_or_magic_damage">物理/魔法伤害</string>
     <string name="physical_critical_damage">物理暴击伤害</string>
     <string name="magic_critical_damage">魔法暴击伤害</string>
     <string name="received_critical_damage">受到的暴击伤害</string>
@@ -381,6 +406,7 @@
     <string name="received_physical_damage">受到的物理伤害</string>
     <string name="received_magic_damage">受到的魔法伤害</string>
     <string name="received_physical_or_magic_damage">受到的物理/魔法伤害</string>
+    <string name="energy_down">TP削减效果</string>
     <string name="poison">中毒</string>
     <string name="burn">火伤</string>
     <string name="curse">诅咒</string>

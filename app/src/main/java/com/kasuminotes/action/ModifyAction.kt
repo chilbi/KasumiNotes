@@ -88,7 +88,12 @@ fun SkillAction.getModify(skillLevel: Int, actions: List<SkillAction>): D {
     @StringRes
     var maxRes: Int? = null
 
-    when (actionType) {
+    var type = actionType
+    if (type == 27 && targetAction.actionType == 1 && actionDetail2 == 3) {
+        type = 26
+    }
+
+    when (type) {
         26 -> {
             if (isAdd) {
                 actionRes = R.string.action_additive_content1_formula2

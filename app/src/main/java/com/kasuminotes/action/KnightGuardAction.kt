@@ -9,7 +9,7 @@ fun SkillAction.getKnightGuard(skillLevel: Int, property: Property): D {
         R.string.action_knight_guard_target1_formula2_time3,
         arrayOf(
             getTarget(depend),
-            getBaseLvAtkFormula(actionDetail1, actionValue2, actionValue3, actionValue4, skillLevel, property),
+            getBaseLvAtkFormula(actionDetail1, actionValue2, actionValue3, actionValue4, actionValue5, skillLevel, property),
             D.Text(actionValue6.toNumStr())
         )
     )

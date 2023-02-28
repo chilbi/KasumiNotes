@@ -5,19 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.data.EnemyData
-import com.kasuminotes.data.UnitAttackPattern
-import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.db.getClanBattleMapDataList
 import com.kasuminotes.db.getClanBattlePeriodList
 import com.kasuminotes.db.getMultiEnemyParts
-import com.kasuminotes.db.getUnitAttackPatternList
-import com.kasuminotes.db.getUnitSkillData
 import com.kasuminotes.ui.app.AppRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class ClanBattleState(
@@ -70,10 +64,10 @@ class ClanBattleState(
 
     fun initEnemy(enemy: EnemyData) {
         enemyData = enemy
-        if (enemy.multiParts.isNotEmpty() && enemy.EnemyMultiParts.isEmpty()) {
+        if (enemy.multiParts.isNotEmpty() && enemy.enemyMultiParts.isEmpty()) {
             scope.launch(defaultDispatcher) {
                 val db = appRepository.getDatabase()
-                enemy.EnemyMultiParts = db.getMultiEnemyParts(enemy.multiParts)
+                enemy.enemyMultiParts = db.getMultiEnemyParts(enemy.multiParts)
                 enemyData = enemy
             }
         }

@@ -10,7 +10,7 @@ fun SkillAction.getDamageField(skillLevel: Int, property: Property): D {
         arrayOf(
             getTarget(depend),
             D.Text(actionValue7.toNumStr()),
-            getBaseLvAtkFormula(actionDetail1, actionValue1, actionValue2, actionValue3, skillLevel, property),
+            getBaseLvAtkFormula(actionDetail1, actionValue1, actionValue2, actionValue3, actionValue4, skillLevel, property),
             D.Format(if (actionDetail1 == 1 || actionDetail1 == 3) R.string.physical else R.string.magic),
             D.Text(actionValue5.toNumStr())
         )

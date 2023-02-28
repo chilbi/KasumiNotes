@@ -9,7 +9,7 @@ fun SkillAction.getRegeneration(skillLevel: Int, property: Property): D {
     val formula: D
     if (actionDetail2 == 1) {
         content = D.Format(R.string.hp)
-        formula = getBaseLvAtkFormula(actionDetail1, actionValue1, actionValue2, actionValue3, skillLevel, property)
+        formula = getBaseLvAtkFormula(actionDetail1, actionValue1, actionValue2, actionValue3, actionValue4, skillLevel, property)
     } else {
         content = D.Format(R.string.energy)
         formula = getBaseLvFormula(actionValue1, actionValue2, skillLevel)

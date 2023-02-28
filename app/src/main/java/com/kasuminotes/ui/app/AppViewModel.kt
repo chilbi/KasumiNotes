@@ -155,6 +155,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToMinions(minions: List<Int>, skillLevel: Int) {
+        skillLevel + 0
         summonsState.initMinionDataList(minions)
         navController.navigate("summons")
     }

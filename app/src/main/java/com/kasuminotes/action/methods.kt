@@ -12,6 +12,7 @@ fun getBaseLvAtkFormula(
     base: Double,
     lvCoefficient: Double,
     atkCoefficient: Double,
+    plusAtkCoefficient: Double,
     skillLevel: Int,
     property: Property,
     callback: (Double) -> Double = { result -> floor(result) }
@@ -26,11 +27,34 @@ fun getBaseLvAtkFormula(
         atkType = R.string.magic_str
         atk = property.magicStr
     }
-    val result = callback(base + lvCoefficient * skillLevel + atkCoefficient * atk)
+    val result = callback(base + lvCoefficient * skillLevel + (atkCoefficient + plusAtkCoefficient * skillLevel) * atk)
     return if (base == 0.0 && lvCoefficient == 0.0) {
+        if (plusAtkCoefficient == 0.0) {
+            D.Format(
+                R.string.formula_atk1_type2_result3,
+                arrayOf(
+                    D.Text(atkCoefficient.toNumStr()),
+                    D.Format(atkType),
+                    D.Text(result.toNumStr())
+                )
+            )
+        } else {
+            D.Format(
+                R.string.formula_atk1_plus2_type3_result4,
+                arrayOf(
+                    D.Text(atkCoefficient.toNumStr()),
+                    D.Text(plusAtkCoefficient.toString()),
+                    D.Format(atkType),
+                    D.Text(result.toNumStr())
+                )
+            )
+        }
+    } else if (plusAtkCoefficient == 0.0) {
         D.Format(
-            R.string.formula_atk1_type2_result3,
+            R.string.formula_base1_lv2_atk3_type4_result5,
             arrayOf(
+                D.Text(base.toNumStr()),
+                D.Text(lvCoefficient.toNumStr()),
                 D.Text(atkCoefficient.toNumStr()),
                 D.Format(atkType),
                 D.Text(result.toNumStr())
@@ -38,11 +62,12 @@ fun getBaseLvAtkFormula(
         )
     } else {
         D.Format(
-            R.string.formula_base1_lv2_atk3_type4_result5,
+            R.string.formula_base1_lv2_atk3_plus4_type5_result6,
             arrayOf(
                 D.Text(base.toNumStr()),
                 D.Text(lvCoefficient.toNumStr()),
                 D.Text(atkCoefficient.toNumStr()),
+                D.Text(plusAtkCoefficient.toNumStr()),
                 D.Format(atkType),
                 D.Text(result.toNumStr())
             )
@@ -60,14 +85,24 @@ fun getBaseLvFormula(
         D.Text(base.toNumStr())
     } else {
         val result = callback(base + lvCoefficient * skillLevel)
-        D.Format(
-            R.string.formula_base1_lv2_result3,
-            arrayOf(
-                D.Text(base.toNumStr()),
-                D.Text(lvCoefficient.toNumStr()),
-                D.Text(result.toNumStr())
+        if (base == 0.0) {
+            D.Format(
+                R.string.formula_lv1_result2,
+                arrayOf(
+                    D.Text(lvCoefficient.toNumStr()),
+                    D.Text(result.toNumStr())
+                )
             )
-        )
+        } else {
+            D.Format(
+                R.string.formula_base1_lv2_result3,
+                arrayOf(
+                    D.Text(base.toNumStr()),
+                    D.Text(lvCoefficient.toNumStr()),
+                    D.Text(result.toNumStr())
+                )
+            )
+        }
     }
 }
 
@@ -169,6 +204,7 @@ fun getStateContent(detail: Int): D {
         126 -> D.Format(R.string.state_friendship_seal)
         127 -> D.Format(R.string.state_hazy)
         130 -> D.Format(R.string.state_kizuna_certificate)
+        131 -> D.Format(R.string.state_psi_charge)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
 }

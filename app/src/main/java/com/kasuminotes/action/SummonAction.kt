@@ -16,7 +16,7 @@ fun SkillAction.getSummon(): D {
         408402 -> D.Format(R.string.summon_408402)//チカ（クリスマス）
         408403 -> D.Format(R.string.summon_408403)//チカ（クリスマス）
         418101 -> D.Format(R.string.summon_418101)//ランファ
-        else -> D.Text(description)
+        else -> D.Format(R.string.summon_id1, arrayOf(D.Text(actionDetail2.toString())))
     }
 
     return if (actionValue7 == 0.0) {
@@ -25,13 +25,17 @@ fun SkillAction.getSummon(): D {
             arrayOf(target, content)
         )
     } else {
-        D.Format(
-            R.string.action_summon_target1_distance2_content3,
-            arrayOf(
-                target,
-                D.Text(actionValue7.toNumStr()),
-                content
-            )
-        )
+        val resId: Int
+        val distance: Double
+
+        if (actionValue7 > 0) {
+            resId = R.string.action_summon_target1_front_distance2_content3
+            distance = actionValue7
+        } else {
+            resId = R.string.action_summon_target1_back_distance2_content3
+            distance = -actionValue7
+        }
+
+        D.Format(resId, arrayOf(target, D.Text(distance.toNumStr()), content))
     }
 }

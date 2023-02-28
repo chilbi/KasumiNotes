@@ -220,6 +220,14 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
                 D.Format(R.string.action_branch_not_exist_ore_dragon)
             )
         }
+        701 -> {
+            val count = D.Text(actionValue1.toNumStr())
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_stealth_count1, arrayOf(count)),
+                D.Format(R.string.action_branch_stealth_not_count1, arrayOf(count))
+            )
+        }
         // マコト（サマー）、アンナ（サマー）
         700 -> {
             setBranch(

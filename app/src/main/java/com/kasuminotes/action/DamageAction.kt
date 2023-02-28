@@ -14,7 +14,7 @@ fun SkillAction.getDamage(skillLevel: Int, property: Property): D {
         R.string.action_damage_target1_formula2_content3,
         arrayOf(
             getTarget(depend),
-            getBaseLvAtkFormula(actionDetail1, actionValue1, actionValue2, actionValue3, skillLevel, property),
+            getBaseLvAtkFormula(actionDetail1, actionValue1, actionValue2, actionValue3, actionValue4, skillLevel, property),
             if (actionDetail2 == 1) D.Format(R.string.content_lower_defense).append(content) else content
         )
     )
