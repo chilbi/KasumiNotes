@@ -87,9 +87,35 @@ class ActionBuilder(
             if (action.actionType == 92) {
                 remove.add(index)
                 rawDepends.forEachIndexed { dependIndex, dependActionId ->
-                    if (dependActionId == action.actionId) {
+                    if (
+                        dependActionId == action.actionId &&
+                        arrayOf(1, 9, 36, 46, 79).contains(actions[dependIndex].actionType)
+                    ) {
                         origin[dependIndex] = origin[dependIndex].append(action.getInjuredEnergy())
                     }
+                }
+            }
+            //IgnoreProvocation
+            if (action.actionType == 93) {
+                remove.add(index)
+                val willModifyList = mutableListOf<Int>()
+                val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
+                willModifyList.add(modifyIndex)
+
+                fun addDepends(actionId: Int) {
+                    rawDepends.forEachIndexed { dependIndex, dependActionId ->
+                        if (dependActionId == actionId) {
+                            willModifyList.add(dependIndex)
+                            addDepends(actions[dependIndex].actionId)
+                        }
+                    }
+                }
+
+                addDepends(actions[modifyIndex].actionId)
+
+                val ignoreProvocation = action.getIgnoreProvocation()
+                willModifyList.forEach { willModifyIndex ->
+                    origin[willModifyIndex] = origin[willModifyIndex].insert(ignoreProvocation)
                 }
             }
         }
@@ -113,7 +139,7 @@ class ActionBuilder(
             10 -> getStatus(skillLevel, actions, if (isExEquipPassive) property else null)
             11 -> getCharm()
             12 -> getDarkness()
-            13 -> getUncontrol()
+            13 -> getSilence()
             14 -> getMode()
             15 -> getSummon()
             16 -> getEnergy(skillLevel)
@@ -153,6 +179,7 @@ class ActionBuilder(
             79 -> D.Unknown//PoisonDamageByBehaviour
             83 -> getSpeedOverlay()
             92 -> D.Unknown//InjuredEnergy
+            93 -> D.Unknown//IgnoreProvocation
             95 -> getHiding()
             96 -> getEnergyField(skillLevel)
             97 -> getInjuredEnergyMark()

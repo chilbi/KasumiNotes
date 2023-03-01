@@ -5,7 +5,7 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getDispel(): D {
     val content = when (actionDetail1) {
-        3 -> D.Format(R.string.content_status_up_effect)
+        1, 3 -> D.Format(R.string.content_status_up_effect)
         10 -> D.Format(R.string.content_barrier)
         else -> D.Unknown
     }

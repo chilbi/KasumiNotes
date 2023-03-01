@@ -106,6 +106,10 @@ fun getBaseLvFormula(
     }
 }
 
+fun getDamageType(detail: Int): D {
+    return D.Format(if (detail == 1 || detail == 3) R.string.physical else R.string.magic)
+}
+
 fun getAtkType(detail: Int): D {
     return D.Format(
         if (detail == 1 || detail == 3) R.string.atk
@@ -120,6 +124,7 @@ fun getAbnormalContent(detail: Int): D {
         5 -> D.Format(R.string.fetter)
         6 -> D.Format(R.string.sleep)
         7 -> D.Format(R.string.stand)
+        8 -> D.Format(R.string.petrifaction)
         11 -> D.Format(R.string.stop)
         else -> D.Unknown
     }
@@ -201,6 +206,7 @@ fun getStateContent(detail: Int): D {
         119 -> D.Format(R.string.state_dark_night_intensive)
         120 -> D.Format(R.string.state_soul_ability)
         122 -> D.Format(R.string.state_yasakaninomagatama)
+        125 -> D.Format(R.string.state_black_star)
         126 -> D.Format(R.string.state_friendship_seal)
         127 -> D.Format(R.string.state_hazy)
         130 -> D.Format(R.string.state_kizuna_certificate)

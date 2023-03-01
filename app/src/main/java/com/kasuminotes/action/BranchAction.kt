@@ -60,7 +60,7 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
             val above = D.Text("${actionDetail1 % 100}%")
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_hp_not_target1_above2, arrayOf(target, above)),
+                D.Format(R.string.action_branch_not_hp_target1_above2, arrayOf(target, above)),
                 D.Format(R.string.action_branch_hp_target1_above2, arrayOf(target, above))
             )
         }
@@ -204,7 +204,7 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
             val above = D.Text("${actionDetail1 % 100}%")
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_hp_not_target1_above2, arrayOf(target, above)),
+                D.Format(R.string.action_branch_not_hp_target1_above2, arrayOf(target, above)),
                 D.Format(R.string.action_branch_hp_target1_above2, arrayOf(target, above))
             )
         }
@@ -220,12 +220,22 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
                 D.Format(R.string.action_branch_not_exist_ore_dragon)
             )
         }
+        // 水瓶座
+        710 -> {
+            val target = getTarget(depend)
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_break_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_break_target1, arrayOf(target))
+            )
+        }
+        // 魚座
         701 -> {
             val count = D.Text(actionValue1.toNumStr())
             setBranch(
                 branch,
                 D.Format(R.string.action_branch_stealth_count1, arrayOf(count)),
-                D.Format(R.string.action_branch_stealth_not_count1, arrayOf(count))
+                D.Format(R.string.action_branch_not_stealth_count1, arrayOf(count))
             )
         }
         // マコト（サマー）、アンナ（サマー）

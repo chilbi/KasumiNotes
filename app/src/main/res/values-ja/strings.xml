@@ -221,8 +221,6 @@
     <string name="action_sustain_debuff_time1_target2_content3_formula4_count5">モーションを%1$s秒維持する、この間%2$sの%3$sを%4$sダウン、%5$s回攻撃を受けるとモーションが中断される。</string>
     <string name="action_blind_target1_count2">%1$sに次の%2$s回物理攻撃が必ず回避される状態を付与する。</string>
     <string name="action_count_down_target1_count2">%1$sに【カウントダウン】を設置し、%2$s秒後に発動。</string>
-    <string name="action_damage_target1_max_ratio2">%1$sの最大ＨＰの%2$sを減らす。</string>
-    <string name="action_damage_target1_ratio2">%1$sの残りＨＰの%2$sを減らす。</string>
     <string name="action_skill_counter1_max2">【%1$s】の数を1増やせる、最大%2$sまで増やせる。</string>
     <string name="action_change_mark_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。</string>
     <string name="action_change_mark_target1_state2_add3_max4_time5">%1$sに【%2$s】を%3$sつ追加する、最大%4$sまで追加される、効果時間%5$s秒。</string>
@@ -242,8 +240,9 @@
     <string name="action_summon_target1_content2">%1$sのそばに、%2$s。</string>
     <string name="action_passive_battle_beginning">バトル開始時に</string>
     <string name="action_passive_battle_began_passed_time1">バトル開始後%s秒経過時に</string>
-    <string name="action_damage_attenuation_target1_limit2_coefficient3_time4">%1$sにリミットバリアを展開し、アクション毎に受けたダメージが%2$sを超えた時、ダメージが減衰される、効果時間%4$s秒。（減衰係数%3$s）</string>
+    <string name="action_damage_attenuation_target1_limit2_time3_r4_r5_r6">%1$sにリミットバリアを展開し、アクション毎に受けたダメージが%2$s万を超えた時、ダメージが減衰される、効果時間%4$s秒。\nf(100万)=%4$s万; f(200万)=%5$s万; f(999万)=%6$s万</string>
     <string name="action_stealth_time1">潜伏状態に入る、効果時間%s秒。</string>
+    <string name="action_ignore_provocation">挑発を無視して、</string>
 
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>
     <string name="action_striked_branch_time1">%s秒のモーションの間に攻撃された場合、</string>
@@ -256,7 +255,7 @@
     <string name="action_branch_counter1_above2">【%1$s】の数が≧%2$sの場合、</string>
     <string name="action_branch_not_counter1_above2">【%1$s】の数が＜%2$sの場合、</string>
     <string name="action_branch_hp_target1_above2">%1$sの残りＨＰが≧%2$sの場合、</string>
-    <string name="action_branch_hp_not_target1_above2">%1$sの残りＨＰが＜%2$sの場合、</string>
+    <string name="action_branch_not_hp_target1_above2">%1$sの残りＨＰが＜%2$sの場合、</string>
     <string name="action_branch_target1_state2">%1$sが%2$s状態の場合、</string>
     <string name="action_branch_not_target1_state2">%1$sが%2$s状態でない場合、</string>
     <string name="action_branch_speed_up_target1">%sが行動速度アップ状態の場合、</string>
@@ -281,8 +280,10 @@
     <string name="action_branch_not_def_down_target1">%sがこのスキル発動時既に魔法防御力ダウン状態でない場合、</string>
     <string name="action_branch_barrier_target1">%sはバリアが展開されている場合、</string>
     <string name="action_branch_not_barrier_target1">%sはバリアが展開されていない場合、</string>
+    <string name="action_branch_break_target1">%sのターゲットがBreak状態の場合、</string>
+    <string name="action_branch_not_break_target1">%sのターゲットがBreak状態でない場合、</string>
     <string name="action_branch_stealth_count1">潜伏状態のユニットを除いて、味方全体の数が≦%sの場合、</string>
-    <string name="action_branch_stealth_not_count1">潜伏状態のユニットを除いて、味方全体の数が＞%sの場合、</string>
+    <string name="action_branch_not_stealth_count1">潜伏状態のユニットを除いて、味方全体の数が＞%sの場合、</string>
 
     <string name="summon_id1">【召喚物%s】を召喚する</string>
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
@@ -295,6 +296,8 @@
     <string name="summon_408403">味方全体のＴＰを回復する精霊を唱喚する</string>
     <string name="summon_418101">ネフライトワイバーンを召喚する</string>
 
+    <string name="content_max_hp_ratio1">最大ＨＰの%s</string>
+    <string name="content_hp_ratio1">残りＨＰの%s</string>
     <string name="content_regeneration_content1_formula2">の味方すべての%1$sを毎秒%2$s回復する</string>
     <string name="content_buff_target1_content2_formula3">の%1$sすべての%2$sを%3$sアップさせる</string>
     <string name="content_debuff_target1_content2_formula3">の%1$sすべての%2$sを%3$sダウンさせる</string>
@@ -339,6 +342,7 @@
     <string name="state_dark_night_intensive">宵闇の加護</string>
     <string name="state_soul_ability">霊力</string>
     <string name="state_yasakaninomagatama">八尺瓊勾玉・減葬</string>
+    <string name="state_black_star">黒星</string>
     <string name="state_friendship_seal">友情の魔印</string>
     <string name="state_hazy">朧ろ</string>
     <string name="state_kizuna_certificate">絆の証</string>
@@ -361,10 +365,12 @@
     <string name="target_count1_content2">前から%1$s番目の%2$s</string>
     <string name="target_all_content1">%s全体</string>
     <string name="target_range1_content2">%1$s範囲内の%2$s</string>
+    <string name="target_range1_count2_content3">%1$s範囲内の%3$s最大%2$sキャラ</string>
     <string name="target_all_range1_content2">%1$s範囲内の%2$sすべて</string>
     <string name="target_random_one_content1">ランダムな%s１キャラ</string>
     <string name="target_random_count1_content2">ランダムな%2$s%1$sキャラ</string>
     <string name="target_most_content1_extent2_target3">最も%1$sが%2$s%3$s１キャラ</string>
+    <string name="target_farthest_content1_count2">最も遠い%1$s%2$sキャラ</string>
     <string name="target_without_self_content1_extent2_count3_target4">自分以外の最も%1$sが%2$s%4$s%3$sキャラ</string>
     <string name="target_highest_atk_or_magic_str_content1">物理攻撃力、魔法攻撃力いずれかで最も攻撃力が高い%s１キャラ</string>
     <string name="target_all_atk_content1">物理攻撃を行う全ての%sキャラ</string>
@@ -419,11 +425,12 @@
     <string name="fetter">束縛</string>
     <string name="sleep">睡眠</string>
     <string name="stand">スタン</string>
+    <string name="petrifaction">石化</string>
     <string name="stop">行動時間停止</string>
     <string name="charm">誘惑</string>
     <string name="chaos">混乱</string>
     <string name="darkness">暗闇</string>
-    <string name="uncontrol">制御無効</string>
+    <string name="silence">沈黙</string>
     <string name="invincible">無敵</string>
     <string name="physical_invalid">物理無効</string>
     <string name="provoke">挑発</string>

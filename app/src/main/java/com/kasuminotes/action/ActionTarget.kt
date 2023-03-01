@@ -174,7 +174,24 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                         )
                     )
                 } else {
-                    D.Unknown
+                    if (targetRange <= 0 || targetRange >= 2160) {
+                        D.Format(
+                            R.string.target_more_count1_content2,
+                            arrayOf(
+                                D.Text(targetCount.toString()),
+                                getAssignment()
+                            )
+                        )
+                    } else {
+                        D.Format(
+                            R.string.target_range1_count2_content3,
+                            arrayOf(
+                                D.Text(targetRange.toString()),
+                                D.Text(targetCount.toString()),
+                                getAssignment()
+                            )
+                        )
+                    }
                 }
             } else if (targetArea == 3) {
                 if (targetCount == 99) {
@@ -305,8 +322,14 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                 } else {
                     D.join(R.string.target_farthest, R.string.target_enemy)
                 }
-            } else if (targetArea == 3 && targetCount == 1) {
-                D.join(R.string.target_farthest, getAssignmentResId())
+            } else if (targetArea == 3 && targetCount > 0) {
+                D.Format(
+                    R.string.target_farthest_content1_count2,
+                    arrayOf(
+                        getAssignment(),
+                        D.Text(targetCount.toString())
+                    )
+                )
             } else {
                 D.Unknown
             }
