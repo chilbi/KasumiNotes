@@ -245,9 +245,11 @@
     <string name="action_stealth_time1">进入潜伏状态，效果时间%s秒。</string>
     <string name="action_ignore_provocation">无视挑衅，</string>
 
+
     <string name="action_striked_branch_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_exists_field_branch_content1">%s的领域展开时，</string>
     <string name="action_not_exists_field_branch_content1">%s的领域没有展开时，</string>
+    <string name="action_branch_and">且</string>
     <string name="action_branch_have_target1_state2">%1$s持有【%2$s】时，</string>
     <string name="action_branch_not_have_target1_state2">%1$s未持有【%2$s】时，</string>
     <string name="action_branch_target1_state2_above3">%1$s的【%2$s】的数量≧%3$s时，</string>
@@ -274,16 +276,16 @@
     <string name="action_branch_magic_target1">%s是使用魔法攻击的角色时，</string>
     <string name="action_branch_success_odds1">%s概率成功，成功时，</string>
     <string name="action_branch_failure_odds1">%s概率失败，失败时，</string>
-    <string name="action_branch_exist_ore_dragon">矿石飞龙已存在己方场上时，</string>
-    <string name="action_branch_not_exist_ore_dragon">矿石飞龙不存在己方场上时，</string>
+    <string name="action_branch_exist_summon1">%s已存在己方场上时，</string>
+    <string name="action_branch_not_exist_summon1">%s不存在己方场上时，</string>
     <string name="action_branch_def_down_target1">%s在此技能发动时已处于魔法防御下降状态时，</string>
     <string name="action_branch_not_def_down_target1">%s在此技能发动时未处于魔法防御下降状态时，</string>
     <string name="action_branch_barrier_target1">%s有护盾展开时，</string>
     <string name="action_branch_not_barrier_target1">%s没有护盾展开时，</string>
     <string name="action_branch_break_target1">%s的目标已陷入Break状态时，</string>
     <string name="action_branch_not_break_target1">%s的目标未陷入Break状态时，</string>
-    <string name="action_branch_stealth_count1">排除潜伏状态的单位，我方全体的数量≦%s时，</string>
-    <string name="action_branch_not_stealth_count1">排除潜伏状态的单位，我方全体的数量＞%s时，</string>
+    <string name="action_branch_unit_target1_count2">%1$s全体的数量=%2$s时，</string>
+    <string name="action_branch_not_unit_target1_count2">%1$s全体的数量≠%2$s时，</string>
 
     <string name="summon_id1">召唤【召唤物%s】</string>
     <string name="summon_403101">召唤一个能够攻击前方一名敌人的骷髅老爹</string>
@@ -295,6 +297,9 @@
     <string name="summon_408402">咏唱召唤一个能回复残余HP比例最低的一名己方角色的HP的精灵</string>
     <string name="summon_408403">咏唱召唤一个能回复己方全体TP的精灵</string>
     <string name="summon_418101">召唤矿石飞龙</string>
+
+    <string name="summon_unknown_id1">【召唤物%s】</string>
+    <string name="summon_ore_dragon">矿石飞龙</string>
 
     <string name="content_max_hp_ratio1">最大HP的%s</string>
     <string name="content_hp_ratio1">残余HP的%s</string>
@@ -387,6 +392,7 @@
     <string name="target_without_self">自身以外的己方全体</string>
     <string name="target_not_in_back_content1">不在自身后面的角色中，%s</string>
     <string name="target_any_content1">中的任意%s</string>
+    <string name="target_all_summon_content1">%s所有的召唤物</string>
 
     <string name="skill_level">技能等级</string>
     <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × 技能等级 + (%3$s + %4$s * 技能等级) × %5$s } = %6$s</string>

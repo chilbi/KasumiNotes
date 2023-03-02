@@ -142,7 +142,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                             rangeTarget
                         }
                     }
-                } else if (targetCount == 1 && (targetRange == -1 || targetRange >= 2160)) {
+                } else if (targetCount == 1 && (targetRange <= 0 || targetRange >= 2160)) {
                     if (targetNumber > 0) {
                         if (targetNumber == 1 && targetAssignment == 2) {
                             D.Format(R.string.target_nearest_friendly)
@@ -150,7 +150,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                             D.Format(
                                 R.string.target_near_number1_content2,
                                 arrayOf(
-                                    D.Text((targetNumber + 1).toString()),
+                                    D.Text(targetNumber.toString()),
                                     getAssignment()
                                 )
                             )
@@ -443,6 +443,12 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                     D.Format(R.string.target_low),
                     getAssignment()
                 )
+            )
+        }
+        18 -> {
+            D.Format(
+                R.string.target_all_summon_content1,
+                arrayOf(getAssignment())
             )
         }
         20 -> {

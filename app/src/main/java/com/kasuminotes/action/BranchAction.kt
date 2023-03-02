@@ -214,10 +214,11 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         }
         // ランファ
         720 -> {
+            val summon = getSummonText(actionValue3.toInt())
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_exist_ore_dragon),
-                D.Format(R.string.action_branch_not_exist_ore_dragon)
+                D.Format(R.string.action_branch_exist_summon1, arrayOf(summon)),
+                D.Format(R.string.action_branch_not_exist_summon1, arrayOf(summon))
             )
         }
         // 水瓶座
@@ -229,13 +230,14 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
                 D.Format(R.string.action_branch_not_break_target1, arrayOf(target))
             )
         }
-        // 魚座
-        701 -> {
-            val count = D.Text(actionValue1.toNumStr())
+        // 魚座、蠍座
+        in 701..709 -> {
+            val target = getAssignment()
+            val count = D.Text((actionDetail1 - 700).toString())
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_stealth_count1, arrayOf(count)),
-                D.Format(R.string.action_branch_not_stealth_count1, arrayOf(count))
+                D.Format(R.string.action_branch_unit_target1_count2, arrayOf(target, count)),
+                D.Format(R.string.action_branch_not_unit_target1_count2, arrayOf(target, count))
             )
         }
         // マコト（サマー）、アンナ（サマー）

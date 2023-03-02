@@ -17,7 +17,8 @@ import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun SummonDetail(
-    id: Int,
+    unitId: Int,
+    enemyId: Int?,
     name: String,
     searchAreaWidth: Int,
     atkType: Int,
@@ -28,10 +29,14 @@ fun SummonDetail(
     unitSkillData: UnitSkillData?,
     skillList: List<SkillItem>
 ) {
+    var secondaryText = "uid:$unitId"
+    if (enemyId != null) {
+        secondaryText += "; eid:$enemyId"
+    }
     ImageCard(
         imageUrl = UrlUtil.summonIconUrl,
         primaryText = name,
-        secondaryText = id.toString(),
+        secondaryText = secondaryText,
         imageSize = 56.dp,
         primaryFontSize = 18.sp,
         secondaryFontSize = 16.sp

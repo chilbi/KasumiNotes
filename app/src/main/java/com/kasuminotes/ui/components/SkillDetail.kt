@@ -141,7 +141,7 @@ fun SkillDetail(
                         list.add(action.actionDetail2)
                     }
                 }
-                list
+                list.distinct()
             }
         }
 

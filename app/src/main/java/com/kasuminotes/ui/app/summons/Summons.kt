@@ -44,6 +44,7 @@ fun Summons(
                     summonDataList.forEachIndexed { index, summonData ->
                         SummonDetail(
                             summonData.unitId,
+                            null,
                             summonData.unitName,
                             summonData.searchAreaWidth,
                             summonData.atkType,
@@ -68,6 +69,7 @@ fun Summons(
                 if (minionSize > 0) {
                     minionDataList.forEachIndexed { index, minionData ->
                         SummonDetail(
+                            minionData.unitId,
                             minionData.enemyId,
                             minionData.name,
                             minionData.searchAreaWidth,

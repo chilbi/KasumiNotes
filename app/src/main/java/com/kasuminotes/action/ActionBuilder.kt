@@ -1,5 +1,6 @@
 package com.kasuminotes.action
 
+import com.kasuminotes.R
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
 
@@ -22,15 +23,6 @@ class ActionBuilder(
         }
 
         actions.forEachIndexed { index, action ->
-            // ExEquipPassive
-            if (arrayOf(901, 902).contains(action.actionType)) {
-                remove.add(index)
-                var modifyIndex = index + 1
-                if (arrayOf(26, 27, 74).contains(actions[modifyIndex].actionType)) {
-                    modifyIndex = actions.indexOfFirst { it.actionId == actions[modifyIndex].actionDetail1 }
-                }
-                origin[modifyIndex] = origin[modifyIndex].insert(origin[index])
-            }
             // Focus, 94Unknown
             if (action.actionType == 7 || action.actionType == 94) {
                 remove.add(index)
@@ -51,37 +43,6 @@ class ActionBuilder(
                 remove.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
                 origin[modifyIndex] = origin[modifyIndex].insert(origin[index])
-            }
-            // Branch
-            if (arrayOf(23, 28, 42, 53).contains(action.actionType)) {
-                val branch = action.getBranch()
-                if (branch.isEmpty()) {
-                    if (action.actionDetail2 == 0 && action.actionDetail3 ==0) {
-                        remove.add(index)
-                    } else {
-                        origin[index] = action.getUnknown()
-                    }
-                } else {
-                    remove.add(index)
-                    branch.forEach { pair ->
-                        val modifyActionId = pair.first
-                        val modifyContent = pair.second
-                        val modifyIndex = actions.indexOfFirst { it.actionId == modifyActionId }
-                        if (!processedBranch.contains(modifyActionId)) {
-                            origin[modifyIndex] = origin[modifyIndex].insert(modifyContent)
-                            processedBranch.add(modifyActionId)
-                        }
-                        rawDepends.forEachIndexed { dependIndex, dependActionId ->
-                            if (dependActionId == modifyActionId) {
-                                val modifyDependActionId = actions[dependIndex].actionId
-                                if (!processedBranch.contains(modifyDependActionId)) {
-                                    origin[dependIndex] = origin[dependIndex].insert(modifyContent)
-                                    processedBranch.add(modifyDependActionId)
-                                }
-                            }
-                        }
-                    }
-                }
             }
             //InjuredEnergy
             if (action.actionType == 92) {
@@ -116,6 +77,70 @@ class ActionBuilder(
                 val ignoreProvocation = action.getIgnoreProvocation()
                 willModifyList.forEach { willModifyIndex ->
                     origin[willModifyIndex] = origin[willModifyIndex].insert(ignoreProvocation)
+                }
+            }
+            // ExEquipPassive
+            if (arrayOf(901, 902).contains(action.actionType)) {
+                remove.add(index)
+                var modifyIndex = index + 1
+                if (arrayOf(26, 27, 74).contains(actions[modifyIndex].actionType)) {
+                    modifyIndex = actions.indexOfFirst { it.actionId == actions[modifyIndex].actionDetail1 }
+                }
+                origin[modifyIndex] = origin[modifyIndex].insert(origin[index])
+            }
+            // Branch
+            if (arrayOf(23, 28, 42, 53).contains(action.actionType)) {
+                val branch = action.getBranch()
+                if (branch.isEmpty()) {
+                    if (action.actionDetail2 == 0 && action.actionDetail3 ==0) {
+                        remove.add(index)
+                    } else {
+                        origin[index] = action.getUnknown()
+                    }
+                } else {
+                    remove.add(index)
+                    fun insertBranch(modifyActionId: Int, modifyContent: D, preContent: D?) {
+                        val content = if (preContent == null) {
+                            modifyContent
+                        } else {
+                            D.Join(arrayOf(
+                                preContent,
+                                D.Format(R.string.action_branch_and),
+                                modifyContent
+                            ))
+                        }
+                        val modifyIndex = actions.indexOfFirst { it.actionId == modifyActionId }
+                        if (!processedBranch.contains(modifyActionId)) {
+                            val modifyAction = actions[modifyIndex]
+                            if (modifyAction.actionType == 28) {
+                                val andBranch = modifyAction.getBranch()
+                                andBranch.forEach { andPair ->
+                                    insertBranch(andPair.first, andPair.second, content)
+                                    processedBranch.add(andPair.first)
+                                }
+                            } else {
+                                origin[modifyIndex] = origin[modifyIndex].insert(content)
+                            }
+                            processedBranch.add(modifyActionId)
+                        }
+                    }
+
+                    branch.forEach { pair ->
+                        val modifyActionId = pair.first
+                        val modifyContent = pair.second
+
+                        insertBranch(modifyActionId, modifyContent, null)
+
+                        rawDepends.forEachIndexed { dependIndex, dependActionId ->
+                            if (dependActionId == modifyActionId) {
+                                val modifyDependActionId = actions[dependIndex].actionId
+                                if (!processedBranch.contains(modifyDependActionId)) {
+                                    origin[dependIndex] = origin[dependIndex].insert(modifyContent)
+                                    processedBranch.add(modifyDependActionId)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

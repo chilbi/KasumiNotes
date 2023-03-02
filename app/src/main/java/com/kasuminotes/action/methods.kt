@@ -215,6 +215,13 @@ fun getStateContent(detail: Int): D {
     }
 }
 
+fun getSummonText(id: Int): D {
+    return when (id) {
+        418101 -> D.Format(R.string.summon_ore_dragon)
+        else -> D.Format(R.string.summon_unknown_id1, arrayOf(D.Text(id.toString())))
+    }
+}
+
 fun getSkillLabel(detail: Int): D {
     return D.Text(
         when (val value = detail / 100 % 10) {
