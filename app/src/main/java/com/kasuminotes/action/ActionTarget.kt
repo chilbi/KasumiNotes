@@ -72,40 +72,29 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                         )
                     }
                 } else if (targetCount == 99) {
-                    if (targetRange == -1 || targetRange >= 2160) {
+                    val allOrRangeTarget = if (targetRange == -1 || targetRange >= 2160) {
                         D.Format(
                             R.string.target_front_all_content1,
                             arrayOf(getAssignment())
                         )
                     } else {
-                        if (actionType == 23) {//レム、レイ（ハロウィン）、ミツキ（オーエド）
-                            D.Join(
-                                arrayOf(
-                                    D.Format(R.string.target_front),
-                                    D.Format(
-                                        R.string.target_range1_content2,
-                                        arrayOf(
-                                            D.Text(targetRange.toString()),
-                                            getAssignment()
-                                        )
-                                    ),
-                                    getAnyTarget()
-                                )
-                            )
-                        } else {
-                            D.Join(
-                                arrayOf(
-                                    D.Format(R.string.target_front),
-                                    D.Format(
-                                        R.string.target_all_range1_content2,
-                                        arrayOf(
-                                            D.Text(targetRange.toString()),
-                                            getAssignment()
-                                        )
+                        D.Join(
+                            arrayOf(
+                                D.Format(R.string.target_front),
+                                D.Format(
+                                    R.string.target_all_range1_content2,
+                                    arrayOf(
+                                        D.Text(targetRange.toString()),
+                                        getAssignment()
                                     )
                                 )
                             )
-                        }
+                        )
+                    }
+                    if (actionType == 23) {//レム、レイ（ハロウィン）、ミツキ（オーエド）、33期射手座
+                        allOrRangeTarget.append(getAnyTarget())
+                    } else {
+                        allOrRangeTarget
                     }
                 } else {
                     D.Format(

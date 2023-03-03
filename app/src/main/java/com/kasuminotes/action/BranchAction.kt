@@ -128,6 +128,15 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
                 D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
             )
         }
+        // 射手座
+        200 -> {
+            val state = D.Format(R.string.darkness)
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_target1_state2, arrayOf(target, state)),
+                D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
+            )
+        }
         // カヤ（タイムトラベル）
         101 -> {
             setBranch(

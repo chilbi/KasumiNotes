@@ -170,13 +170,13 @@
     <string name="action_move_return">技能结束后回到原来的位置。</string>
     <string name="action_move_part1_distance2">使部位%1$s向前移动%2$s距离，随后使其回到原来的位置。</string>
     <string name="action_up_target1_content2_formula3_time4">%1$s的%2$s提升%3$s，效果时间%4$s秒。</string>
-    <string name="action_down_target1_content2_formula3_time4">%1$s的%2$s下降%3$s，效果时间%4$s秒。</string>
+    <string name="action_down_target1_content2_formula3_time4">%1$s的%2$s降低%3$s，效果时间%4$s秒。</string>
     <string name="action_up_target1_received_content2_formula3_time4">%1$s%2$s提升%3$s，效果时间%4$s秒。</string>
-    <string name="action_down_target1_received_content2_formula3_time4">%1$s%2$s下降%3$s，效果时间%4$s秒。</string>
+    <string name="action_down_target1_received_content2_formula3_time4">%1$s%2$s降低%3$s，效果时间%4$s秒。</string>
     <string name="action_received_up_target1_content2_formula3_time4">%1$s受到的%2$s提升%3$s，效果时间%4$s秒。</string>
-    <string name="action_received_down_target1_content2_formula3_time4">%1$s受到的%2$s下降%3$s，效果时间%4$s秒。</string>
-    <string name="action_const_up_content1">（此%1$s提升效果所提升的%1$s，在战斗中不受%1$s下降技能的影响。）</string>
-    <string name="action_const_down_content1">（此%1$s下降效果所下降的%1$s，在战斗中不受%1$s提升技能的影响。）</string>
+    <string name="action_received_down_target1_content2_formula3_time4">%1$s受到的%2$s降低%3$s，效果时间%4$s秒。</string>
+    <string name="action_const_up_content1">（此%1$s提升效果所提升的%1$s，在战斗中不受%1$s降低技能的影响。）</string>
+    <string name="action_const_down_content1">（此%1$s降低效果所降低的%1$s，在战斗中不受%1$s提升技能的影响。）</string>
     <string name="action_energy_recovery_target1_formula2">%1$s的TP回复%2$s。</string>
     <string name="action_energy_down_target1_formula2">使%1$s的TP削减%2$s。</string>
     <string name="action_hp_recovery_target1_formula2">%1$s的HP回复%2$s。</string>
@@ -280,8 +280,8 @@
     <string name="action_branch_failure_odds1">%s概率失败，失败时，</string>
     <string name="action_branch_exist_summon1">%s已存在己方场上时，</string>
     <string name="action_branch_not_exist_summon1">%s不存在己方场上时，</string>
-    <string name="action_branch_def_down_target1">%s在此技能发动时已处于魔法防御下降状态时，</string>
-    <string name="action_branch_not_def_down_target1">%s在此技能发动时未处于魔法防御下降状态时，</string>
+    <string name="action_branch_def_down_target1">%s在此技能发动时已处于魔法防御降低状态时，</string>
+    <string name="action_branch_not_def_down_target1">%s在此技能发动时未处于魔法防御降低状态时，</string>
     <string name="action_branch_barrier_target1">%s有护盾展开时，</string>
     <string name="action_branch_not_barrier_target1">%s没有护盾展开时，</string>
     <string name="action_branch_break_target1">%s的目标已陷入Break状态时，</string>
@@ -307,7 +307,7 @@
     <string name="content_hp_ratio1">残余HP的%s</string>
     <string name="content_regeneration_content1_formula2">所有己方的%1$s每秒回复%2$s</string>
     <string name="content_buff_target1_content2_formula3">所有%1$s的%2$s提升%3$s</string>
-    <string name="content_debuff_target1_content2_formula3">所有%1$s的%2$s下降%3$s</string>
+    <string name="content_debuff_target1_content2_formula3">所有%1$s的%2$s降低%3$s</string>
     <string name="content_poison_damage_by_behaviour_formula1">所有敌人陷入每当行动时就会受到%s伤害的中毒状态</string>
     <string name="content_speed_target1_formula2">所有%1$s的行动速度变为原来的%2$s</string>
     <string name="content_state_target1_abnormal2">所有%1$s陷入%2$s状态</string>
@@ -318,6 +318,7 @@
     <string name="content_initial_value1">初始值的%s</string>
     <string name="content_lower_defense">物理、魔法防御力中较低一方的防御力作为防御的</string>
     <string name="content_status_up_effect">状态提升效果</string>
+    <string name="content_status_down_effect">状态降低效果</string>
     <string name="content_barrier">护盾</string>
     <string name="content_strength_seal">【力之魔字】刻印期间</string>
     <string name="content_kizuna_certificate">【羁绊之证】解放期间</string>

@@ -317,6 +317,7 @@
     <string name="content_initial_value1">初期値の%s</string>
     <string name="content_lower_defense">低い側の防御力で防御する</string>
     <string name="content_status_up_effect">ステータスアップ効果</string>
+    <string name="content_status_down_effect">ステータスダウン効果</string>
     <string name="content_barrier">バリア</string>
     <string name="content_strength_seal">【力の魔字】が刻まれている間</string>
     <string name="content_kizuna_certificate">【絆の証】解放中</string>
