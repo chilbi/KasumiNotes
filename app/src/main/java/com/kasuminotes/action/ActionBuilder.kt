@@ -159,7 +159,7 @@ class ActionBuilder(
             4 -> getHeal(skillLevel, property)
             6 -> getBarrier(skillLevel)
             7 -> D.Unknown//Focus
-            8 -> getAbnormal()
+            8 -> getAbnormal(skillLevel)
             9 -> getAbnormalDamage(skillLevel)
             10 -> getStatus(skillLevel, actions, if (isExEquipPassive) property else null)
             11 -> getCharm()

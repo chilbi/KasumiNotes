@@ -299,20 +299,34 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             }
         }
         4 -> {
-            if (targetArea == 1 && targetCount == 1) {
-                if (targetRange == -1 || targetRange >= 2160) {
-                    D.join(R.string.target_front, R.string.target_farthest, R.string.target_enemy)
-                } else {
-                    D.Join(
-                        arrayOf(
-                            D.Format(R.string.target_front),
-                            D.Format(
-                                R.string.target_range1_content2,
-                                arrayOf(
-                                    D.Text(targetRange.toString()),
-                                    D.join(R.string.target_farthest, getAssignmentResId())
+            if (targetArea == 1) {
+                if (targetCount == 1) {
+                    if (targetRange == -1 || targetRange >= 2160) {
+                        D.join(
+                            R.string.target_front,
+                            R.string.target_farthest,
+                            R.string.target_enemy
+                        )
+                    } else {
+                        D.Join(
+                            arrayOf(
+                                D.Format(R.string.target_front),
+                                D.Format(
+                                    R.string.target_range1_content2,
+                                    arrayOf(
+                                        D.Text(targetRange.toString()),
+                                        D.join(R.string.target_farthest, getAssignmentResId())
+                                    )
                                 )
                             )
+                        )
+                    }
+                } else {
+                    D.Format(
+                        R.string.target_farthest_content1_count2,
+                        arrayOf(
+                            getAssignment(),
+                            D.Text(targetCount.toString())
                         )
                     )
                 }
