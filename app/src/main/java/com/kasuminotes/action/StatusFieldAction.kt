@@ -7,7 +7,7 @@ import kotlin.math.roundToInt
 fun SkillAction.getStatusField(skillLevel: Int): D {
     val formula = when (actionDetail2) {
         1 -> getBaseLvFormula(actionValue1, actionValue2, skillLevel)
-        2 -> D.Text("${actionValue1.roundToInt()}%")
+        2 -> getBaseLvFormula(actionValue1, actionValue2, skillLevel).append(D.Text("%"))
         else -> D.Unknown
     }
 

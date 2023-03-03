@@ -54,6 +54,9 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                     equipState.destroy()
                     exEquipState.destroy()
                 }
+                "clanBattleMapList" -> {
+                    clanBattleState.destroy()
+                }
                 "clanBattleEnemy" -> {
                     summonsState.destroy()
                 }

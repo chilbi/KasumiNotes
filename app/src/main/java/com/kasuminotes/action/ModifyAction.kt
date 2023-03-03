@@ -203,7 +203,7 @@ private fun SkillAction.getModifyContent(targetAction: SkillAction): D {
             else R.string.additive_down_amount_content1,
             arrayOf(getStatusContent(targetAction.actionDetail1 / 10))
         )
-        46 -> D.Format(R.string.additive_hp_decrement)
+        46 -> D.Format(R.string.additive_damage)
         48 -> if (actionDetail2 == 5) D.Format(R.string.additive_time)
         else D.Format(
             if (targetAction.actionDetail2 == 1) R.string.additive_hp_regeneration
@@ -238,10 +238,15 @@ private fun SkillAction.getModifyFormula(
             2 -> D.Format(R.string.skill_level)
             else -> D.Unknown
         }
-        8, 16, 35, 46 -> null
+        8, 16, 35 -> null
         10 -> when (actionDetail2) {
             2, 4 -> null
             3 -> D.Format(R.string.skill_level)
+            else -> D.Unknown
+        }
+        46 -> when (actionDetail2) {
+            1 -> null
+            2 -> D.Format(R.string.skill_level)
             else -> D.Unknown
         }
         48 -> when (actionDetail2) {
@@ -263,6 +268,9 @@ private fun SkillAction.getModifyFormula(
         },
         nonNullElements
     )
-    return if (targetAction.actionType == 46) result.append(D.Text("%"))
-    else result
+    return if (targetAction.actionType == 46) {
+        D.Format(R.string.content_max_hp_ratio1, arrayOf(result.append(D.Text("%"))))
+    } else {
+        result
+    }
 }

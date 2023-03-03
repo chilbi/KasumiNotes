@@ -30,6 +30,9 @@ fun SkillAction.getTrigger(): D {
         9 -> {
             D.Format(R.string.action_trigger_break)
         }
+        11 -> {
+            D.Format(R.string.action_trigger_all_break)
+        }
         else -> getUnknown()
     }
 }

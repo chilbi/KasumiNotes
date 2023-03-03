@@ -87,15 +87,17 @@ data class ExEquipData(
                 val statusAction = actions[statusActionIndex]
                 if (statusAction.actionType == 10) {
                     val key = getStatusIndex(statusAction.actionDetail1 / 10)
-                    var value = if (statusAction.actionValue1 == 2.0) {
-                        baseProperty[key] * statusAction.actionValue2 / 100
-                    } else {
-                        statusAction.actionValue2
+                    if (key != null) {
+                        var value = if (statusAction.actionValue1 == 2.0) {
+                            baseProperty[key] * statusAction.actionValue2 / 100
+                        } else {
+                            statusAction.actionValue2
+                        }
+                        if (statusAction.actionDetail1 % 10 != 0) {
+                            value *= -1
+                        }
+                        pairs.add(key + 1 to value.roundToInt().toDouble())
                     }
-                    if (statusAction.actionDetail1 % 10 != 0) {
-                        value *= -1
-                    }
-                    pairs.add(key + 1 to value.roundToInt().toDouble())
                 }
             }
         }

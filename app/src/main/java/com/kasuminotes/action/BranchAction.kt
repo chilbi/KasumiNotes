@@ -64,6 +64,14 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
                 D.Format(R.string.action_branch_hp_target1_above2, arrayOf(target, above))
             )
         }
+        // 天秤座
+        710 -> {
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_break_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_break_target1, arrayOf(target))
+            )
+        }
         // マコト（サマー）
         700 -> {
             setBranch(

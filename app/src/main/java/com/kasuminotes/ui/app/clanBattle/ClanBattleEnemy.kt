@@ -29,6 +29,10 @@ fun ClanBattleEnemy(
             Box(Modifier.padding(contentPadding)) {
                 EnemyDetail(
                     enemyData = clanBattleState.enemyData!!,
+                    enemyMultiParts = clanBattleState.enemyMultiParts,
+                    unitAttackPatternList = clanBattleState.unitAttackPatternList,
+                    skillList = clanBattleState.skillList,
+                    unitSkillData = clanBattleState.unitSkillData,
                     onMinionsClick = onMinionsClick
                 )
             }

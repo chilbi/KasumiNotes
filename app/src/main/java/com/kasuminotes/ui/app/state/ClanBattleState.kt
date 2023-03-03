@@ -5,6 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.data.EnemyData
+import com.kasuminotes.data.SkillItem
+import com.kasuminotes.data.UnitAttackPattern
+import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.db.getClanBattleMapDataList
 import com.kasuminotes.db.getClanBattlePeriodList
 import com.kasuminotes.db.getMultiEnemyParts
@@ -29,6 +32,18 @@ class ClanBattleState(
         private set
 
     var enemyData by mutableStateOf<EnemyData?>(null)
+        private set
+
+    var enemyMultiParts by mutableStateOf<List<EnemyData>>(emptyList())
+        private set
+
+    var unitAttackPatternList by mutableStateOf<List<UnitAttackPattern>>(emptyList())
+        private set
+
+    var skillList by mutableStateOf<List<SkillItem>>(emptyList())
+        private set
+
+    var unitSkillData by mutableStateOf<UnitSkillData?>(null)
         private set
 
     fun initPeriodList() {
@@ -64,19 +79,32 @@ class ClanBattleState(
 
     fun initEnemy(enemy: EnemyData) {
         enemyData = enemy
-        if (enemy.multiParts.isNotEmpty() && enemy.enemyMultiParts.isEmpty()) {
+        if (
+            (enemy.multiParts.isNotEmpty() && enemy.enemyMultiParts.isEmpty()) ||
+            enemy.unitSkillData == null ||
+            enemy.unitAttackPatternList.isEmpty()
+        ) {
             scope.launch(defaultDispatcher) {
                 val db = appRepository.getDatabase()
                 enemy.enemyMultiParts = db.getMultiEnemyParts(enemy.multiParts)
-                enemyData = enemy
-            }
-        }
-        if (enemy.unitSkillData == null || enemy.unitAttackPatternList.isEmpty()) {
-            scope.launch(defaultDispatcher) {
-                val db = appRepository.getDatabase()
                 enemy.load(db, defaultDispatcher)
-                enemyData = enemy
+                enemyMultiParts = enemy.enemyMultiParts
+                unitAttackPatternList = enemy.unitAttackPatternList
+                skillList = enemy.skillList
+                unitSkillData = enemy.unitSkillData
             }
+        } else {
+            enemyMultiParts = enemy.enemyMultiParts
+            unitAttackPatternList = enemy.unitAttackPatternList
+            skillList = enemy.skillList
+            unitSkillData = enemy.unitSkillData
         }
+    }
+
+    fun destroy() {
+        enemyMultiParts = emptyList()
+        unitAttackPatternList = emptyList()
+        skillList = emptyList()
+        unitSkillData = null
     }
 }

@@ -191,6 +191,7 @@ class ActionBuilder(
             49 -> getDispel()
             50 -> getSustain(skillLevel)
             54 -> getStealth()
+            55 -> getMoveParts()
             56 -> getBlind()
             57 -> getCountDown()
             58 -> getRelieveField()

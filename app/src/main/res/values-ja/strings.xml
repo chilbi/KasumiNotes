@@ -167,7 +167,8 @@
     <string name="action_damage_critical_rate1">この攻撃がクリティカルした場合、クリティカルダメージ倍率は%s倍になる。</string>
     <string name="action_move_target1">%sの目の前に移動する。</string>
     <string name="action_move_velocity1_target2_distance3">%1$sの速度で%2$sの前の%3$s距離の位置に移動する。</string>
-    <string name="action_move_return">スキル終了あと元の位置に戻る。</string>
+    <string name="action_move_return">スキル終了後元の位置に戻る。</string>
+    <string name="action_move_part1_distance2">部位%1$sを%2$s距離前へ移動させ、その後元の位置に戻させる。</string>
     <string name="action_up_target1_content2_formula3_time4">%1$sの%2$sを%3$sアップ、効果時間%4$s秒。</string>
     <string name="action_down_target1_content2_formula3_time4">%1$sの%2$sを%3$sダウン、効果時間%4$s秒。</string>
     <string name="action_up_target1_received_content2_formula3_time4">%1$sが%2$sを%3$sアップ、効果時間%4$s秒。</string>
@@ -203,8 +204,9 @@
     <string name="action_trigger_hp_target1_formula2">%1$sのＨＰが最大のＨＰの%2$s以下になった時に発動する。</string>
     <string name="action_trigger_battle_beginning">バトル開始時に発動する。</string>
     <string name="action_trigger_battle_began_passed_time1">バトル開始後%s秒経過時に発動する。</string>
-    <string name="action_trigger_break">Break状態時に発動する。</string>
     <string name="action_trigger_stealth">潜伏状態時に発動する。</string>
+    <string name="action_trigger_break">Break状態時に発動する。</string>
+    <string name="action_trigger_all_break">全ターゲットがBreakの時に発動する。</string>
     <string name="action_destroy_target1">%sを戦闘不能状態にする。</string>
     <string name="action_accumulative_damage_formula1_tier2">敵を攻撃する度に、その敵に与えるダメージを%1$s増加させる。この効果は最大%2$s回まで累積する。</string>
     <string name="action_barrier_guard_target1_formula2_content3_time4">%1$sに%2$sダメージ分の%3$s無効バリアを展開する、効果時間%4$s秒。</string>
@@ -387,6 +389,7 @@
     <string name="target_last_enemy">最も後ろの敵</string>
     <string name="target_front_all_content1">前すべての%s</string>
     <string name="target_near_number1_content2">自分から%1$s番目に近い%2$s</string>
+    <string name="target_fart_number1_content2">自分から%1$s番目に遠い%2$s</string>
     <string name="target_distance1">自分の前%s距離</string>
     <string name="target_without_self">自分以外の味方全体</string>
     <string name="target_not_in_back_content1">自分の背後にいないキャラの内、%s</string>

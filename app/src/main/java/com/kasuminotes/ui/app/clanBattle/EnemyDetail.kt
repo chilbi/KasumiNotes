@@ -29,6 +29,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kasuminotes.data.EnemyData
+import com.kasuminotes.data.SkillItem
+import com.kasuminotes.data.UnitAttackPattern
+import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.ui.components.AttackDetail
 import com.kasuminotes.ui.components.AttackPattern
 import com.kasuminotes.ui.components.BgBorderColumn
@@ -43,6 +46,10 @@ private val clanBattleEnemyPartIndices = listOf(0, 16, 1, 3, 2, 4)
 @Composable
 fun EnemyDetail(
     enemyData: EnemyData,
+    enemyMultiParts: List<EnemyData>,
+    unitAttackPatternList: List<UnitAttackPattern>,
+    skillList: List<SkillItem>,
+    unitSkillData: UnitSkillData?,
     onMinionsClick: (minions: List<Int>, skillLevel: Int) -> Unit
 ) {
     Column(
@@ -60,8 +67,8 @@ fun EnemyDetail(
             )
         }
 
-        if (enemyData.enemyMultiParts.isNotEmpty()) {
-            enemyData.enemyMultiParts.forEach { part ->
+        if (enemyMultiParts.isNotEmpty()) {
+            enemyMultiParts.forEach { part ->
                 UnderlineLabelColumn(
                     label = part.name,
                     color = MaterialTheme.colors.primary
@@ -74,18 +81,18 @@ fun EnemyDetail(
             }
         }
 
-        if (enemyData.unitSkillData != null) {
+        if (unitSkillData != null) {
             AttackPattern(
                 hasUnique = false,
                 atkType = enemyData.atkType,
-                unitAttackPatternList = enemyData.unitAttackPatternList,
-                unitSkillData = enemyData.unitSkillData!!
+                unitAttackPatternList = unitAttackPatternList,
+                unitSkillData = unitSkillData
             )
 
-            val property = if (enemyData.enemyMultiParts.isEmpty()) {
+            val property = if (enemyMultiParts.isEmpty()) {
                 enemyData.property
             } else {
-                enemyData.enemyMultiParts[0].property
+                enemyMultiParts[0].property
             }
 
             AttackDetail(
@@ -95,7 +102,7 @@ fun EnemyDetail(
                 property
             )
 
-            enemyData.skillList.forEach { item ->
+            skillList.forEach { item ->
                 SkillDetail(
                     label = item.label,
                     isRfSkill = item.skillData.isRfSkill,

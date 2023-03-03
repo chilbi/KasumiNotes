@@ -3,12 +3,12 @@ package com.kasuminotes.action
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
-fun SkillAction.getTarget(depend: SkillAction?): D {
+fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
     if (depend != null) {
         return if (depend.actionType == 1 || depend.actionId == actionId) {
             D.Format(R.string.target_damaged)
         } else if (depend.actionType == 7) {
-            if (arrayOf(37, 38, 39).contains(actionType)) {
+            if (arrayOf(37, 38, 39).contains(actionType) || focused) {
                 depend.getTarget(null)
             } else {
                 depend.getFocus(targetArea).append(getTarget(null))
@@ -18,7 +18,7 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
         ) {
             D.Format(R.string.target_eligible)
         } else if (depend.depend != null) {
-            depend.getTarget(depend.depend)
+            depend.getTarget(depend.depend, focused)
         } else {
             depend.getTarget(null)
         }
@@ -323,13 +323,23 @@ fun SkillAction.getTarget(depend: SkillAction?): D {
                     D.join(R.string.target_farthest, R.string.target_enemy)
                 }
             } else if (targetArea == 3 && targetCount > 0) {
-                D.Format(
-                    R.string.target_farthest_content1_count2,
-                    arrayOf(
-                        getAssignment(),
-                        D.Text(targetCount.toString())
+                if (targetNumber > 0) {
+                    D.Format(
+                        R.string.target_fart_number1_content2,
+                        arrayOf(
+                            D.Text((targetNumber + 1).toString()),
+                            getAssignment()
+                        )
                     )
-                )
+                } else {
+                    D.Format(
+                        R.string.target_farthest_content1_count2,
+                        arrayOf(
+                            getAssignment(),
+                            D.Text(targetCount.toString())
+                        )
+                    )
+                }
             } else {
                 D.Unknown
             }
