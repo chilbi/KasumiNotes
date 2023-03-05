@@ -33,6 +33,8 @@
     <string name="save_to_database">データベースに保存する</string>
     <string name="swipe_equip_info">装備スロットを横スライドさせて装備が着脱できる</string>
     <string name="default_user_warning">デフォルトユーザーのプロフィールがデータベース更新の時に自動的にMAX強化される！</string>
+    <string name="functionality_not_implemented">機能はまだ実装されていません</string>
+
     <string name="level">LEVEL</string>
     <string name="rank">RANK</string>
     <string name="slot">Slot</string>

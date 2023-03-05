@@ -12,7 +12,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -22,6 +24,7 @@ import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.ui.app.BottomBar
 import com.kasuminotes.ui.app.state.ClanBattleState
 import com.kasuminotes.ui.components.ImmersiveTopAppBar
+import kotlinx.coroutines.launch
 
 @Composable
 fun ClanBattle(
@@ -30,11 +33,20 @@ fun ClanBattle(
     onNavigateTo: (Int) -> Unit,
     onDrawerOpen: () -> Unit
 ) {
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+    val message = stringResource(R.string.functionality_not_implemented)
+    val onClick: () -> Unit = {
+        scope.launch {
+            scaffoldState.snackbarHostState.showSnackbar(message)
+        }
+    }
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = { ClanBattleTopBar() },
         bottomBar = { BottomBar(2, onNavigateTo, onDrawerOpen) },
         floatingActionButton = {
-            FloatingActionButton({}) {
+            FloatingActionButton(onClick = onClick) {
                 Icon(
                     imageVector = Icons.Filled.Dashboard,
                     contentDescription = null,

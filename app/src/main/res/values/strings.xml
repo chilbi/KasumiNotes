@@ -33,6 +33,8 @@
     <string name="save_to_database">保存到数据库</string>
     <string name="swipe_equip_info">横向滑动装备槽可以装卸装备</string>
     <string name="default_user_warning">默认用户的档案在数据库更新时会被自动MAX强化！</string>
+    <string name="functionality_not_implemented">功能尚未实现</string>
+
     <string name="level">LEVEL</string>
     <string name="rank">RANK</string>
     <string name="slot">Slot</string>

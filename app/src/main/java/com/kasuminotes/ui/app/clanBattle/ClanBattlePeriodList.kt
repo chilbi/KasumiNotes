@@ -56,7 +56,7 @@ private fun ClanBattlePeriodItem(
 ) {
     val label = stringResource(
         R.string.clan_battle_period1_year2_month3_constellation4,
-        clanBattlePeriod.period,
+        clanBattlePeriod.periodNum,
         clanBattlePeriod.year,
         clanBattlePeriod.month,
         stringResource(clanBattlePeriod.constellation)

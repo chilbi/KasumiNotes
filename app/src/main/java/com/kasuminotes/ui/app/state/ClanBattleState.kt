@@ -59,9 +59,9 @@ class ClanBattleState(
                 val db = appRepository.getDatabase()
                 var list = db.getClanBattleMapDataList(period.clanBattleId)
 
-                list = if (period.period > 10) {
+                list = if (period.periodNum > 10) {
                     list.filter { it.lapNumTo != 1 }
-                } else if (period.period > 8){
+                } else if (period.periodNum > 8){
                     listOf(list[0].copy(phase = 3), list[1].copy(phase = 2), list[2])
                 } else {
                     listOf(list[0].copy(phase = 2), list[1])

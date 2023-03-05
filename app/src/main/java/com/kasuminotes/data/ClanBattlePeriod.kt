@@ -8,12 +8,12 @@ data class ClanBattlePeriod(
     val bossUnitIdList: List<Int>,// 1-5
     var mapDataList: List<ClanBattleMapData> = emptyList()
 ) {
-    val period: Int = clanBattleId - 1000
+    val periodNum: Int = clanBattleId - 1000
 
     val constellation: Int by lazy {
-        val n = period % 12
-        val index = if (period <= 12) {
-            period
+        val n = periodNum % 12
+        val index = if (periodNum <= 12) {
+            periodNum
         } else if (n == 0) {
             12
         } else {
