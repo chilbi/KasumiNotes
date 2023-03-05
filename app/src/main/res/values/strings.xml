@@ -399,11 +399,11 @@
     <string name="target_all_summon_content1">%s所有的召唤物</string>
 
     <string name="skill_level">技能等级</string>
-    <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × 技能等级 + (%3$s + %4$s * 技能等级) × %5$s } = %6$s</string>
+    <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × 技能等级 + (%3$s + %4$s × 技能等级) × %5$s } = %6$s</string>
     <string name="formula_base1_lv2_atk3_type4_result5">{ %1$s + %2$s × 技能等级 + %3$s × %4$s } = %5$s</string>
     <string name="formula_base1_lv2_result3">{ %1$s + %2$s × 技能等级 } = %3$s</string>
     <string name="formula_lv1_result2">{ %1$s × 技能等级 } = %2$s</string>
-    <string name="formula_atk1_plus2_type3_result4">{ (%1$s + %2$s * 技能等级) × %3$s } = %4$s</string>
+    <string name="formula_atk1_plus2_type3_result4">{ (%1$s + %2$s × 技能等级) × %3$s } = %4$s</string>
     <string name="formula_atk1_type2_result3">{ %1$s × %2$s } = %3$s</string>
     <string name="formula_m1_m2">{ %1$s × %2$s }</string>
     <string name="formula_m1_m2_m3">{ %1$s × %2$s × %3$s }</string>

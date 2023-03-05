@@ -50,16 +50,20 @@ fun getBaseLvAtkFormula(
             )
         }
     } else if (plusAtkCoefficient == 0.0) {
-        D.Format(
-            R.string.formula_base1_lv2_atk3_type4_result5,
-            arrayOf(
-                D.Text(base.toNumStr()),
-                D.Text(lvCoefficient.toNumStr()),
-                D.Text(atkCoefficient.toNumStr()),
-                D.Format(atkType),
-                D.Text(result.toNumStr())
+        if (atkCoefficient== 0.0 && lvCoefficient == 0.0) {
+            D.Text(result.toNumStr())
+        } else {
+            D.Format(
+                R.string.formula_base1_lv2_atk3_type4_result5,
+                arrayOf(
+                    D.Text(base.toNumStr()),
+                    D.Text(lvCoefficient.toNumStr()),
+                    D.Text(atkCoefficient.toNumStr()),
+                    D.Format(atkType),
+                    D.Text(result.toNumStr())
+                )
             )
-        )
+        }
     } else {
         D.Format(
             R.string.formula_base1_lv2_atk3_plus4_type5_result6,
