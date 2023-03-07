@@ -79,6 +79,10 @@ class ClanBattleState(
 
     fun initEnemy(enemy: EnemyData) {
         enemyData = enemy
+        enemyMultiParts = enemy.enemyMultiParts
+        unitAttackPatternList = enemy.unitAttackPatternList
+        skillList = enemy.skillList
+        unitSkillData = enemy.unitSkillData
         if (
             (enemy.multiParts.isNotEmpty() && enemy.enemyMultiParts.isEmpty()) ||
             enemy.unitSkillData == null ||
@@ -93,11 +97,6 @@ class ClanBattleState(
                 skillList = enemy.skillList
                 unitSkillData = enemy.unitSkillData
             }
-        } else {
-            enemyMultiParts = enemy.enemyMultiParts
-            unitAttackPatternList = enemy.unitAttackPatternList
-            skillList = enemy.skillList
-            unitSkillData = enemy.unitSkillData
         }
     }
 

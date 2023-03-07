@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
+import com.google.accompanist.navigation.animation.AnimatedComposeNavigator
 import com.kasuminotes.MainActivity
 import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.data.EnemyData
@@ -37,29 +38,30 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     val navController = NavHostController(appRepository.applicationContext).apply {
         navigatorProvider.addNavigator(ComposeNavigator())
         navigatorProvider.addNavigator(DialogNavigator())
+        navigatorProvider.addNavigator(AnimatedComposeNavigator())
 
         addOnDestinationChangedListener { _, destination, _ ->
             when (destination.route) {
                 "home" -> {
                     charaState.destroy()
-                    questState.destroy()
+//                    questState.destroy()
                     dbState.userState.charaListState.destroy()
                 }
-                "chara" -> {
-                    equipState.destroy()
-                    exEquipState.destroy()
-                    summonsState.destroy()
-                }
-                "quest" -> {
-                    equipState.destroy()
-                    exEquipState.destroy()
-                }
-                "clanBattleMapList" -> {
-                    clanBattleState.destroy()
-                }
-                "clanBattleEnemy" -> {
-                    summonsState.destroy()
-                }
+//                "chara" -> {
+//                    equipState.destroy()
+//                    exEquipState.destroy()
+//                    summonsState.destroy()
+//                }
+//                "quest" -> {
+//                    equipState.destroy()
+//                    exEquipState.destroy()
+//                }
+//                "clanBattleMapList" -> {
+//                    clanBattleState.destroy()
+//                }
+//                "clanBattleEnemy" -> {
+//                    summonsState.destroy()
+//                }
             }
         }
     }
@@ -104,11 +106,13 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToEquipById(equipId: Int) {
+        equipState.destroy()
         equipState.initEquip(dbState.userState.maxUserData!!.maxArea, equipId)
         navController.navigate("equip")
     }
 
     fun navigateToEquip(equipData: EquipData, slot: Int?) {
+        equipState.destroy()
         if (slot == null) {
             equipState.initEquipData(
                 dbState.userState.maxUserData!!.maxArea,
@@ -128,6 +132,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToUnique(uniqueData: UniqueData) {
+        equipState.destroy()
         equipState.initUniqueData(
             uniqueData,
             charaState.userData!!.uniqueLevel,
@@ -138,6 +143,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToExEquip(exEquipSlot: ExEquipSlot) {
+        exEquipState.destroy()
         exEquipState.initExEquipSlot(
             exEquipSlot,
             charaState.baseProperty,

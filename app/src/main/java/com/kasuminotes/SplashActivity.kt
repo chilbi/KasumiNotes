@@ -2,7 +2,6 @@ package com.kasuminotes
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +14,7 @@ class SplashActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         lifecycleScope.launch {
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
-            delay(1500)
+            delay(1000)
             startActivity(intent)
             finish()
         }

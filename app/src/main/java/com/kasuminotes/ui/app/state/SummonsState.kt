@@ -28,6 +28,7 @@ class SummonsState(
         private set
 
     fun initSummons(summons: List<Int>, skillLevel: Int, userData: UserData) {
+        destroy()
         scope.launch(defaultDispatcher) {
             val db = appRepository.getDatabase()
             summonDataList = summons.map { unitId ->
@@ -41,6 +42,7 @@ class SummonsState(
     }
 
     fun initMinionDataList(minions: List<Int>) {
+        destroy()
         scope.launch(defaultDispatcher) {
             val db = appRepository.getDatabase()
             val enemyDataList = db.getMultiEnemyParts(minions)
