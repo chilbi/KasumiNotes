@@ -3,9 +3,10 @@ buildscript {
     ext {
         kasuminotes_version = '1.6.1'
         kasuminotes_version_code = 161
+        kotlin_version = '1.8.10'
         compose_version = '1.4.0-beta02'
         kotlin_compiler_version = '1.4.3'
-        kotlin_version = '1.8.10'
+        lifecycle_viewmodel_version = '2.6.0-rc01'
     }
     repositories {
         maven { url 'https://maven.aliyun.com/repository/public' }
