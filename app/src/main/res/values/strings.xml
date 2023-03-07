@@ -319,6 +319,7 @@
     <string name="content_status_up_target1">每当自身受到状态提升时，就会为%s</string>
     <string name="content_initial_value1">初始值的%s</string>
     <string name="content_lower_defense">物理、魔法防御力中较低一方的防御力作为防御的</string>
+    <string name="content_disregard_def1_value_2">无视%2$s%1$s的</string>
     <string name="content_status_up_effect">状态提升效果</string>
     <string name="content_status_down_effect">状态降低效果</string>
     <string name="content_barrier">护盾</string>

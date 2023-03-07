@@ -114,6 +114,10 @@ fun getDamageType(detail: Int): D {
     return D.Format(if (detail == 1 || detail == 3) R.string.physical else R.string.magic)
 }
 
+fun getDefType(detail: Int): D {
+    return D.Format(if (detail == 1 || detail == 3) R.string.def else R.string.magic_def)
+}
+
 fun getAtkType(detail: Int): D {
     return D.Format(
         if (detail == 1 || detail == 3) R.string.atk
