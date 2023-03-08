@@ -9,7 +9,7 @@ import com.kasuminotes.data.WaveGroupData
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 
-suspend fun AppDatabase.getEnemyRewardData(dropRewardId: Int): EnemyRewardData {
+private suspend fun AppDatabase.getEnemyRewardData(dropRewardId: Int): EnemyRewardData {
     val sql = "SELECT ${EnemyRewardData.getFields()} FROM enemy_reward_data WHERE drop_reward_id=$dropRewardId"
 
     return safelyUse {
@@ -44,7 +44,7 @@ suspend fun AppDatabase.getEnemyRewardData(dropRewardId: Int): EnemyRewardData {
     }
 }
 
-suspend fun AppDatabase.getWaveGroupDataList(waveGroupIdList: List<Int>): List<WaveGroupData> {
+private suspend fun AppDatabase.getWaveGroupDataList(waveGroupIdList: List<Int>): List<WaveGroupData> {
     val condition = waveGroupIdList.joinToString(" OR ") { waveGroupId ->
         "wave_group_id=$waveGroupId"
     }
@@ -111,10 +111,7 @@ suspend fun AppDatabase.getWaveGroupDataList(waveGroupIdList: List<Int>): List<W
     }
 }
 
-suspend fun AppDatabase.getQuestDataList(range: QuestRange): List<QuestData> {
-    val sql = """SELECT ${QuestData.getFields()} FROM quest_data
-WHERE quest_id>=${range.min} AND quest_id<=${range.max}"""
-
+private suspend fun AppDatabase.getQuestDataList(sql: String): List<QuestData> {
     return withIOContext {
         val rawQuestList: List<RawQuestData> = use {
             rawQuery(sql, null).use {
@@ -171,6 +168,45 @@ WHERE quest_id>=${range.min} AND quest_id<=${range.max}"""
                 )
             }
         }.awaitAll()
+    }
+}
+
+suspend fun AppDatabase.getQuestDataList(range: QuestRange): List<QuestData> {
+    val sql = """SELECT ${QuestData.getFields()} FROM quest_data
+WHERE quest_id>=${range.min} AND quest_id<=${range.max}"""
+
+    return getQuestDataList(sql)
+}
+
+suspend fun AppDatabase.getQuestDataList(rewardId: Int): List<QuestData> {
+    val sql = """SELECT ${QuestData.getFields()} FROM quest_data
+WHERE quest_id IN (SELECT quest_id FROM enemy_reward_data
+JOIN wave_group_data ON drop_reward_id IN (drop_reward_id_1,drop_reward_id_2,drop_reward_id_3,drop_reward_id_4,drop_reward_id_5)
+JOIN quest_data ON wave_group_id IN (wave_group_id_1,wave_group_id_2,wave_group_id_3)
+WHERE $rewardId IN (reward_id_1,reward_id_2,reward_id_3,reward_id_4,reward_id_5))"""
+
+    return getQuestDataList(sql)
+}
+
+suspend fun AppDatabase.getQuestDataList(searchedList: List<Int>, sortDesc: Boolean): List<QuestData> {
+    return withIOContext {
+        val lists = searchedList.map { rewardId ->
+            async { getQuestDataList(rewardId) }
+        }.awaitAll()
+
+        val resultList = mutableListOf<QuestData>()
+
+        for (list in lists) {
+            for (item in list) {
+                item.getDropList()
+                resultList.add(item)
+            }
+        }
+        if (sortDesc) {
+            resultList.sortedByDescending { it.questId }
+        } else {
+            resultList.sortedBy { it.questId }
+        }
     }
 }
 

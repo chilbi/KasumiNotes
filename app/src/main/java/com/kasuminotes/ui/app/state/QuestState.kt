@@ -8,7 +8,6 @@ import com.kasuminotes.common.QuestRange
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.EquipInfo
 import com.kasuminotes.data.QuestData
-import com.kasuminotes.db.getDropRangeMap
 import com.kasuminotes.db.getEquipMaterialPairList
 import com.kasuminotes.db.getEquipmentPairList
 import com.kasuminotes.db.getMemoryPieces
@@ -18,7 +17,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class QuestState(
@@ -68,6 +66,7 @@ class QuestState(
         private set
 
     fun initQuest(maxArea: Int) {
+        destroy()
         this.maxArea = maxArea
         if (min37 && maxArea < 37) {
             min37 = false
@@ -312,40 +311,40 @@ class QuestState(
             questDataList = null
             scope.launch(defaultDispatcher) {
                 val db = appRepository.getDatabase()
-
-                if (dropRangeMap == null) {
-                    dropRangeMap = db.getDropRangeMap()
-                }
-
-                val questRangeList = QuestRange.getQuestRangeList(
-                    searchedList,
-                    searchTypes,
-                    dropRangeMap!!,
-                    min37
-                )
-
-                if (questRangeList.isEmpty()) {
-                    questDataList = emptyList()
-                } else {
-                    val lists = questRangeList.map { item ->
-                        async { db.getQuestDataList(item) }
-                    }.awaitAll()
-
-                    val resultList = mutableListOf<QuestData>()
-
-                    for (list in lists) {
-                        for (item in list) {
-                            if (searchedList.any { item.contains(it) }) {
-                                resultList.add(item)
-                            }
-                        }
-                    }
-                    questDataList = if (sortDesc) {
-                        resultList.sortedByDescending { it.questId }
-                    } else {
-                        resultList.sortedBy { it.questId }
-                    }
-                }
+                questDataList = db.getQuestDataList(searchedList, sortDesc)
+//                if (dropRangeMap == null) {
+//                    dropRangeMap = db.getDropRangeMap()
+//                }
+//
+//                val questRangeList = QuestRange.getQuestRangeList(
+//                    searchedList,
+//                    searchTypes,
+//                    dropRangeMap!!,
+//                    min37
+//                )
+//
+//                if (questRangeList.isEmpty()) {
+//                    questDataList = emptyList()
+//                } else {
+//                    val lists = questRangeList.map { item ->
+//                        async { db.getQuestDataList(item) }
+//                    }.awaitAll()
+//
+//                    val resultList = mutableListOf<QuestData>()
+//
+//                    for (list in lists) {
+//                        for (item in list) {
+//                            if (searchedList.any { item.contains(it) }) {
+//                                resultList.add(item)
+//                            }
+//                        }
+//                    }
+//                    questDataList = if (sortDesc) {
+//                        resultList.sortedByDescending { it.questId }
+//                    } else {
+//                        resultList.sortedBy { it.questId }
+//                    }
+//                }
             }
         }
     }

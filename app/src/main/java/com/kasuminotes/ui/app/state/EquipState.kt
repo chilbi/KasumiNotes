@@ -3,7 +3,6 @@ package com.kasuminotes.ui.app.state
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.kasuminotes.common.QuestRange
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.EquipCraft
 import com.kasuminotes.data.EquipData
@@ -11,7 +10,6 @@ import com.kasuminotes.data.Property
 import com.kasuminotes.data.QuestData
 import com.kasuminotes.data.UniqueCraft
 import com.kasuminotes.data.UniqueData
-import com.kasuminotes.db.getDropRangeMap
 import com.kasuminotes.db.getEquipCraft
 import com.kasuminotes.db.getEquipData
 import com.kasuminotes.db.getQuestDataList
@@ -19,8 +17,6 @@ import com.kasuminotes.ui.app.AppRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlin.math.min
 
@@ -29,7 +25,7 @@ class EquipState(
     private val scope: CoroutineScope,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
-    private var dropRangeMap: Map<Int, QuestRange>? = null
+//    private var dropRangeMap: Map<Int, QuestRange>? = null
     private var onEnhanceLevelChange: ((Int) -> Unit)? = null
 
     var equipData by mutableStateOf<EquipData?>(null)
@@ -218,40 +214,40 @@ class EquipState(
             questDataList = null
             scope.launch(defaultDispatcher) {
                 val db = appRepository.getDatabase()
-
-                if (dropRangeMap == null) {
-                    dropRangeMap = db.getDropRangeMap()
-                }
-
-                val questRangeList = QuestRange.getQuestRangeList(
-                    searchedList,
-                    questTypes,
-                    dropRangeMap!!,
-                    min37
-                )
-
-                if (questRangeList.isEmpty()) {
-                    questDataList = emptyList()
-                } else {
-                    val lists = questRangeList.map { item ->
-                        async { db.getQuestDataList(item) }
-                    }.awaitAll()
-
-                    val resultList = mutableListOf<QuestData>()
-
-                    for (list in lists) {
-                        for (item in list) {
-                            if (searchedList.any { item.contains(it) }) {
-                                resultList.add(item)
-                            }
-                        }
-                    }
-                    questDataList = if (sortDesc) {
-                        resultList.sortedByDescending { it.questId }
-                    } else {
-                        resultList.sortedBy { it.questId }
-                    }
-                }
+                questDataList = db.getQuestDataList(searchedList, sortDesc)
+//                if (dropRangeMap == null) {
+//                    dropRangeMap = db.getDropRangeMap()
+//                }
+//
+//                val questRangeList = QuestRange.getQuestRangeList(
+//                    searchedList,
+//                    questTypes,
+//                    dropRangeMap!!,
+//                    min37
+//                )
+//
+//                if (questRangeList.isEmpty()) {
+//                    questDataList = emptyList()
+//                } else {
+//                    val lists = questRangeList.map { item ->
+//                        async { db.getQuestDataList(item) }
+//                    }.awaitAll()
+//
+//                    val resultList = mutableListOf<QuestData>()
+//
+//                    for (list in lists) {
+//                        for (item in list) {
+//                            if (searchedList.any { item.contains(it) }) {
+//                                resultList.add(item)
+//                            }
+//                        }
+//                    }
+//                    questDataList = if (sortDesc) {
+//                        resultList.sortedByDescending { it.questId }
+//                    } else {
+//                        resultList.sortedBy { it.questId }
+//                    }
+//                }
             }
         }
     }

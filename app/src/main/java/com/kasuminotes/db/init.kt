@@ -122,7 +122,7 @@ SELECT id,max_chara_level,max_promotion_level,max_unique_level,max_area,max_char
 FROM (SELECT 0 AS id,MAX(team_level)-1 AS max_chara_level FROM experience_team)
 LEFT JOIN (SELECT MAX(promotion_level) AS max_promotion_level FROM unit_promotion)
 LEFT JOIN (SELECT MAX(enhance_level) AS max_unique_level FROM unique_equipment_enhance_data)
-LEFT JOIN (SELECT MAX(area_id)-11000 AS max_area FROM quest_data WHERE area_id<12000)
+LEFT JOIN (SELECT MAX(area_id)-11000 AS max_area FROM quest_data WHERE area_id<12000 AND reward_image_1!=0)
 LEFT JOIN (SELECT COUNT(*) AS max_chara FROM chara_data)
 LEFT JOIN (SELECT COUNT(*) AS max_unique FROM chara_data WHERE equip_id!=0)
 LEFT JOIN (SELECT COUNT(*) AS max_rarity_6 FROM chara_data WHERE max_rarity=6)"""
