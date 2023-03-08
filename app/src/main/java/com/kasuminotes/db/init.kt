@@ -141,6 +141,7 @@ LEFT JOIN (SELECT COUNT(*) AS max_rarity_6 FROM chara_data WHERE max_rarity=6)""
 'skill1_level' INTEGER NOT NULL,
 'skill2_level' INTEGER NOT NULL,
 'ex_level' INTEGER NOT NULL,
+
 'equip1_level' INTEGER NOT NULL,
 'equip2_level' INTEGER NOT NULL,
 'equip3_level' INTEGER NOT NULL,

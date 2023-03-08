@@ -82,6 +82,22 @@ fun About(
                     onClick = { onLinkTo("https://github.com/chilbi/KasumiNotes/releases") }
                 )
 
+                Spacer(Modifier.height(24.dp))
+
+                Text(
+                    text = "API References",
+                    fontSize = 18.sp
+                )
+                TextLink(
+                    text = "https://redive.estertion.win",
+                    onClick = { onLinkTo("https://redive.estertion.win") }
+                )
+                Spacer(Modifier.height(8.dp))
+                TextLink(
+                    text = "https://wthee.xyz/redive/",
+                    onClick = { onLinkTo("https://wthee.xyz/redive/") }
+                )
+
                 Spacer(Modifier.weight(1f))
 
                 Text(
