@@ -1,5 +1,6 @@
 package com.kasuminotes.common
 
+import com.kasuminotes.data.QuestData
 import com.kasuminotes.utils.Helper
 
 class QuestRange(
@@ -19,6 +20,29 @@ class QuestRange(
         val VH get() = QuestRange(13001001, 14000000)
         val S get() = QuestRange(18001001, 20000000)
 
+        fun getFilteredQuestDataList(
+            questDataList: List<QuestData>,
+            questTypes: Array<QuestType>,
+            min37: Boolean
+        ): List<QuestData> {
+            var list = questDataList
+            if (!questTypes.contains(QuestType.N)) {
+                list = list.filter { item -> item.questId > N.max }
+            }
+            if (!questTypes.contains(QuestType.H)) {
+                list = list.filter { item -> item.questId < H.min || item.questId > H.max }
+            }
+            if (!questTypes.contains(QuestType.VH)) {
+                list = list.filter { item -> item.questId < VH.min || item.questId > VH.max }
+            }
+            if (!questTypes.contains(QuestType.S)) {
+                list = list.filter { item -> item.questId < S.min }
+            }
+            if (min37) {
+                list = list.filter { item -> item.questId > 11037000 }
+            }
+            return list
+        }
 
         fun getQuestRangeList(
             searchedList: List<Int>,

@@ -24,7 +24,8 @@ class QuestState(
     private val scope: CoroutineScope,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
-    private var dropRangeMap: Map<Int, QuestRange>? = null
+//    private var dropRangeMap: Map<Int, QuestRange>? = null
+    private var allQuestDataList = emptyList<QuestData>()
 
     var questMode by mutableStateOf(appRepository.getQuestMode())
         private set
@@ -230,16 +231,16 @@ class QuestState(
         } else {
             searchTypes.plus(type)
         }
-        changeSearchQuestDataList()
+        if (allQuestDataList.isNotEmpty()) {
+            questDataList = QuestRange.getFilteredQuestDataList(allQuestDataList, searchTypes, min37)
+        }
     }
 
     fun toggleMin37() {
         min37 = !min37
-        changeSearchQuestDataList()
-    }
-
-    fun toggleVisitIndex() {
-        visitIndex = if (visitIndex == 1) 2 else 1
+        if (allQuestDataList.isNotEmpty()) {
+            questDataList = QuestRange.getFilteredQuestDataList(allQuestDataList, searchTypes, min37)
+        }
     }
 
     fun toggleSortDesc() {
@@ -251,6 +252,10 @@ class QuestState(
                 questDataList!!.sortedBy { it.questId }
             }
         }
+    }
+
+    fun toggleVisitIndex() {
+        visitIndex = if (visitIndex == 1) 2 else 1
     }
 
     fun changeArea(value: Int) {
@@ -279,7 +284,7 @@ class QuestState(
         equipmentPairList = null
         equipMaterialPairList = null
         memoryPieces = null
-        dropRangeMap = null
+//        dropRangeMap = null
     }
 
     private fun changeQuestDataList() {
@@ -311,7 +316,8 @@ class QuestState(
             questDataList = null
             scope.launch(defaultDispatcher) {
                 val db = appRepository.getDatabase()
-                questDataList = db.getQuestDataList(searchedList, sortDesc)
+                allQuestDataList = db.getQuestDataList(searchedList, sortDesc)
+                questDataList = QuestRange.getFilteredQuestDataList(allQuestDataList, searchTypes, min37)
 //                if (dropRangeMap == null) {
 //                    dropRangeMap = db.getDropRangeMap()
 //                }

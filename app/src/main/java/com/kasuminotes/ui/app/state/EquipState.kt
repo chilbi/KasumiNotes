@@ -3,6 +3,7 @@ package com.kasuminotes.ui.app.state
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.kasuminotes.common.QuestRange
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.EquipCraft
 import com.kasuminotes.data.EquipData
@@ -26,6 +27,7 @@ class EquipState(
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
 //    private var dropRangeMap: Map<Int, QuestRange>? = null
+    private var allQuestDataList = emptyList<QuestData>()
     private var onEnhanceLevelChange: ((Int) -> Unit)? = null
 
     var equipData by mutableStateOf<EquipData?>(null)
@@ -149,8 +151,15 @@ class EquipState(
         } else {
             questTypes.plus(type)
         }
-        if (searchList != null) {
-            changeQuestDataList(searchList!!)
+        if (searchList != null && allQuestDataList.isNotEmpty()) {
+            questDataList = QuestRange.getFilteredQuestDataList(allQuestDataList, questTypes, min37)
+        }
+    }
+
+    fun toggleMin37() {
+        min37 = !min37
+        if (searchList != null && allQuestDataList.isNotEmpty()) {
+            questDataList = QuestRange.getFilteredQuestDataList(allQuestDataList, questTypes, min37)
         }
     }
 
@@ -162,13 +171,6 @@ class EquipState(
             } else {
                 questDataList!!.sortedBy { it.questId }
             }
-        }
-    }
-
-    fun toggleMin37() {
-        min37 = !min37
-        if (searchList != null) {
-            changeQuestDataList(searchList!!)
         }
     }
 
@@ -214,7 +216,8 @@ class EquipState(
             questDataList = null
             scope.launch(defaultDispatcher) {
                 val db = appRepository.getDatabase()
-                questDataList = db.getQuestDataList(searchedList, sortDesc)
+                allQuestDataList = db.getQuestDataList(searchedList, sortDesc)
+                questDataList = QuestRange.getFilteredQuestDataList(allQuestDataList, questTypes, min37)
 //                if (dropRangeMap == null) {
 //                    dropRangeMap = db.getDropRangeMap()
 //                }
