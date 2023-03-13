@@ -1,4 +1,4 @@
-package com.kasuminotes.ui.app.usereditor
+package com.kasuminotes.ui.app.userEditor
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -9,16 +9,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -29,18 +30,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.kasuminotes.R
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.UserState
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
-import com.kasuminotes.ui.components.selectedBg
-import com.kasuminotes.ui.theme.selected
+import com.kasuminotes.ui.components.selectedContainerColor
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -128,23 +126,20 @@ private fun ImagesDialog(
 
     Dialog(onClose) {
         Surface(
-            shape = MaterialTheme.shapes.medium,
-            elevation = 16.dp
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.extraLarge,
+            tonalElevation = AlertDialogDefaults.TonalElevation
         ) {
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
+            Column(Modifier.fillMaxWidth().padding(16.dp)) {
                 Text(
                     text = actualName,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    modifier = Modifier.padding(8.dp),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    style = MaterialTheme.typography.subtitle1
+                    style = MaterialTheme.typography.titleMedium
                 )
 
-                Row(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                Row(Modifier.padding(8.dp)) {
                     users.forEach { user ->
                         Column(
                             modifier = Modifier.padding(end = 8.dp),
@@ -155,10 +150,9 @@ private fun ImagesDialog(
                             Box(
                                 Modifier
                                     .clip(CircleShape)
-                                    .selectedBg(
-                                        user == userId,
-                                        MaterialTheme.colors.selected,
-                                        CircleShape
+                                    .selectedContainerColor(
+                                        selected = user == userId,
+                                        shape = CircleShape
                                     )
                                     .clickable(
                                         enabled = !registered,
@@ -176,20 +170,21 @@ private fun ImagesDialog(
                             Text(
                                 text = if (registered) stringResource(R.string.registered)
                                 else user.toString(),
-                                color = LocalContentColor.current.copy(0.5f),
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Medium
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                style = MaterialTheme.typography.labelMedium
                             )
                         }
                     }
                 }
 
-                Row(Modifier.padding(top = 8.dp)) {
+                Row(Modifier.padding(8.dp)) {
                     Spacer(Modifier.weight(1f))
 
                     TextButton(onClose) {
                         Text(stringResource(R.string.cancel))
                     }
+
+                    Spacer(Modifier.width(8.dp))
 
                     Button(
                         onClick = { onConfirm(userId, actualName) },

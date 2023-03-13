@@ -18,7 +18,7 @@ import com.kasuminotes.R
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UserData
-import com.kasuminotes.ui.components.DiffBadgedBox
+import com.kasuminotes.ui.components.BadgedDiffBox
 import com.kasuminotes.ui.components.DraggableImageIcon
 import com.kasuminotes.ui.components.ImageIcon
 import com.kasuminotes.ui.theme.GrayFilter
@@ -118,7 +118,7 @@ private fun EquipIcon(
     } else {
         val isEquipped = equipLevel > -1
 
-        DiffBadgedBox(equipLevel, originEquipLevel) {
+        BadgedDiffBox(equipLevel, originEquipLevel) {
             DraggableImageIcon(
                 url = UrlUtil.getEquipIconUrl(equipData.equipmentId),
                 onClick = { if (isEquipped) onClick(equipData) else onChange(true) },

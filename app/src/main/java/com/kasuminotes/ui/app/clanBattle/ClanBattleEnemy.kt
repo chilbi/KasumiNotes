@@ -6,14 +6,14 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.kasuminotes.data.EnemyData
 import com.kasuminotes.ui.app.state.ClanBattleState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.ImageCard
-import com.kasuminotes.ui.components.ImmersiveTopAppBar
+import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -45,7 +45,7 @@ private fun EnemyTopBar(
     enemyData: EnemyData,
     onBack: () -> Unit
 ) {
-    ImmersiveTopAppBar(
+    TopBar(
         title = {
             ImageCard(
                 imageUrl = UrlUtil.getBossUnitIconUrl(enemyData.unitId),

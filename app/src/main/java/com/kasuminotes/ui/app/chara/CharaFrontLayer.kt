@@ -1,5 +1,6 @@
 package com.kasuminotes.ui.app.chara
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -7,11 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.BackdropScaffoldDefaults
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,11 +20,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.data.CharaStoryStatus
 import com.kasuminotes.data.EquipData
@@ -36,6 +35,7 @@ import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
+import com.kasuminotes.ui.components.BackdropScaffoldDefaults
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.TabsPanel
 import com.kasuminotes.utils.UrlUtil
@@ -57,7 +57,7 @@ fun CharaFrontLayer(
     onCharaClick: (UserProfile) -> Unit,
     onToggle: () -> Unit
 ) {
-    SurfaceAndFloating(
+    FrontLayerWrapper(
         unitId = unitData.unitId,
         rarity = userData.rarity,
         onClick = onToggle
@@ -72,19 +72,20 @@ fun CharaFrontLayer(
         val equipmentScrollState = rememberLazyListState()
         val skillScrollState = rememberScrollState()
 
+        val style = MaterialTheme.typography.labelMedium
+
         TabsPanel(
             size = titles.size,
             scrollable = false,
             initIndex = 3,
-            backgroundColor = Color.Transparent,
-            contentColor = MaterialTheme.colors.primary,
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.primary,
             tabContentFor = { index ->
                 Box(Modifier.height(BackdropScaffoldDefaults.HeaderHeight)) {
                     Text(
                         text = stringResource(titles[index]),
                         modifier = Modifier.align(Alignment.Center),
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
+                        style = style
                     )
                 }
             },
@@ -137,7 +138,7 @@ fun CharaFrontLayer(
 }
 
 @Composable
-private fun SurfaceAndFloating(
+private fun FrontLayerWrapper(
     unitId: Int,
     rarity: Int,
     onClick: () -> Unit,
@@ -147,9 +148,8 @@ private fun SurfaceAndFloating(
         Surface(
             modifier = Modifier.padding(top = 28.dp),
             shape = BackdropScaffoldDefaults.frontLayerShape,
-            elevation = BackdropScaffoldDefaults.FrontLayerElevation,
-            color = MaterialTheme.colors.surface,
-            contentColor = MaterialTheme.colors.onSurface,
+            color = MaterialTheme.colorScheme.surface,
+            tonalElevation = BackdropScaffoldDefaults.FrontLayerElevation,
             content = content
         )
 
@@ -158,14 +158,8 @@ private fun SurfaceAndFloating(
                 .align(Alignment.TopEnd)
                 .offset((-70.181816).dp)
         ) {
-            FloatingActionButton(
-                onClick,
-                backgroundColor = Color.Transparent,
-                contentColor = Color.Unspecified
-            ) {
-                Box(Modifier.size(56.dp)) {
-                    PlaceImage(UrlUtil.getUnitIconUrl(unitId, rarity))
-                }
+            Box(Modifier.size(56.dp).clip(CircleShape).clickable(onClick = onClick)) {
+                PlaceImage(UrlUtil.getUnitIconUrl(unitId, rarity))
             }
         }
     }

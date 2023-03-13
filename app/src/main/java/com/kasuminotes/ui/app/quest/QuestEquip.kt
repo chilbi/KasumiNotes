@@ -8,17 +8,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Checkbox
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.FabPosition
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipInfo
 import com.kasuminotes.ui.components.ImageIcon
-import com.kasuminotes.ui.components.ImmersiveTopAppBar
-import com.kasuminotes.ui.components.UnderlineLabelColumn
+import com.kasuminotes.ui.components.TopBar
+import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
 import com.kasuminotes.ui.theme.RaritiesColors
@@ -51,7 +51,7 @@ fun QuestEquip(
 ) {
     Scaffold(
         topBar = {
-            ImmersiveTopAppBar(
+            TopBar(
                 title = {
                     Text(stringResource(R.string.equip_list))
                 },
@@ -75,8 +75,7 @@ fun QuestEquip(
         },
         bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
-        floatingActionButtonPosition = FabPosition.Center,
-        isFloatingActionButtonDocked = true,
+        containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
                 LazyColumn(contentPadding = PaddingValues(4.dp)) {
@@ -114,23 +113,19 @@ private fun FilterButton(
     ) {
         val allSelected = typePairList?.size == equipTypes.size
 
-        DropdownMenuItem(onClick = { onAllEquipTypesChange(allSelected) }) {
-            Checkbox(allSelected, null)
-            Text(
-                text = stringResource(R.string.all),
-                modifier = Modifier.padding(start = 4.dp)
-            )
-        }
+        DropdownMenuItem(
+            text = { Text(stringResource(R.string.all)) },
+            leadingIcon = { Checkbox(allSelected, null) },
+            onClick = { onAllEquipTypesChange(allSelected) }
+        )
 
         typePairList?.forEach { pair ->
             val checked = equipTypes.contains(pair.first)
-            DropdownMenuItem(onClick = { onEquipTypesChange(checked, pair.first) }) {
-                Checkbox(checked, null)
-                Text(
-                    text = pair.second,
-                    modifier = Modifier.padding(start = 4.dp)
-                )
-            }
+            DropdownMenuItem(
+                text = { Text(pair.second) },
+                leadingIcon = { Checkbox(checked, null) },
+                onClick = { onEquipTypesChange(checked, pair.first) }
+            )
         }
     }
 }
@@ -141,7 +136,7 @@ fun EquipmentPairItem(
     equips: List<EquipInfo>,
     onEquipClick: (Int) -> Unit
 ) {
-    UnderlineLabelColumn(
+    LabelContainer(
         label = stringResource(R.string.rare) + rarity,
         color = RaritiesColors.getRarityColors(rarity / 10).middle
     ) {

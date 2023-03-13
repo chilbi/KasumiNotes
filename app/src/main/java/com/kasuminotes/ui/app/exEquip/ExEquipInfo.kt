@@ -5,15 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.ui.components.MultiLineText
 import com.kasuminotes.ui.components.PlaceImage
-import com.kasuminotes.ui.components.UnderlineLabelColumn
+import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -22,9 +21,9 @@ fun ExEquipInfo(
     name: String,
     description: String
 ) {
-    UnderlineLabelColumn(
+    LabelContainer(
         label = name,
-        color = MaterialTheme.colors.primary
+        color = MaterialTheme.colorScheme.primary
     ) {
         Row(Modifier.padding(4.dp)) {
             Box(Modifier.size(56.dp)) {
@@ -32,10 +31,7 @@ fun ExEquipInfo(
             }
 
             Column(Modifier.padding(start = 8.dp)) {
-                MultiLineText(
-                    text = description,
-                    textAlign = TextAlign.Start
-                )
+                MultiLineText(description)
             }
         }
     }

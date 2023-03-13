@@ -4,24 +4,21 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Badge
-import androidx.compose.material.BadgedBox
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgeDefaults
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.kasuminotes.R
 import com.kasuminotes.data.ExEquipSlot
@@ -85,17 +82,21 @@ private fun ExEquipIcon(
         )
     } else {
         val exEquip = exEquipSlot.exEquipData
-        val backgroundColor = if (
+        val containerColor: Color
+        val text: String
+        if (
             exEquipLevel != originExEquipLevel ||
             (exEquip == null && originExEquipId != 0) ||
             (exEquip != null && originExEquipId == 0) ||
             (exEquip != null && exEquip.exEquipmentId != originExEquipId)
         ) {
-            MaterialTheme.colors.secondary
+            containerColor = BadgeDefaults.containerColor
+            text = "M"
         } else {
-            Color.Transparent
+            containerColor = Color.Transparent
+            text = ""
         }
-        BadgedBox({ Badge(backgroundColor = backgroundColor) }) {
+        BadgedBox({ Badge(containerColor = containerColor) { Text(text) } }) {
             if (exEquip == null) {
                 ImageIcon(
                     painter = painterResource(R.drawable.item_00000),

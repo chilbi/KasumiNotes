@@ -5,8 +5,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipCraft
-import com.kasuminotes.ui.components.BgBorderColumn
-import com.kasuminotes.ui.components.ColumnLabel
+import com.kasuminotes.ui.components.FixedWidthLabel
+import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
 import com.kasuminotes.utils.UrlUtil
@@ -18,8 +18,8 @@ fun EquipCraftList(
     enabledSearch: Boolean,
     onSearchListChange: (materialId: Int) -> Unit
 ) {
-    BgBorderColumn {
-        ColumnLabel(stringResource(R.string.synthetic_material))
+    Container {
+        FixedWidthLabel(stringResource(R.string.synthetic_material))
 
         VerticalGrid(
             size = craftList.size,

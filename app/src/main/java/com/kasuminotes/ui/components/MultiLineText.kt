@@ -1,29 +1,68 @@
 package com.kasuminotes.ui.components
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.kasuminotes.R
 
 @Composable
 fun MultiLineText(
-    text: String,
-    fontSize: TextUnit = 13.sp,
-    textAlign: TextAlign = TextAlign.Center
+    multiLine: String,
+    padding: PaddingValues = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
+    textAlign: TextAlign = TextAlign.Start,
+    style: TextStyle = MaterialTheme.typography.bodySmall
 ) {
-    text.split("\\n").forEach { line ->
-        Text(
-            text = line,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 4.dp, vertical = 2.dp),
-            fontSize = fontSize,
-            textAlign = textAlign
-        )
+    multiLine.split("\\n").forEach { line ->
+        LineText(line, padding, textAlign, style)
     }
+}
+
+@Composable
+fun MultiLineText(
+    lineList: List<String>,
+    padding: PaddingValues = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
+    textAlign: TextAlign = TextAlign.Start,
+    style: TextStyle = MaterialTheme.typography.bodySmall
+) {
+    lineList.forEach { line ->
+        LineText(line, padding, textAlign, style)
+    }
+}
+
+@Composable
+fun LineText(
+    line: String,
+    padding: PaddingValues = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
+    textAlign: TextAlign = TextAlign.Start,
+    style: TextStyle = MaterialTheme.typography.bodySmall
+) {
+    Text(
+        text = line,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(padding),
+        textAlign = textAlign,
+        style = style
+    )
+}
+
+@Composable
+fun NoDataText() {
+    Text(
+        text = stringResource(R.string.no_data),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.bodyLarge
+    )
 }

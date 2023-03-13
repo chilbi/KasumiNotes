@@ -1,6 +1,6 @@
 package com.kasuminotes.ui.app.home
 
-import androidx.compose.material.ScaffoldState
+import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.DbState
@@ -8,7 +8,7 @@ import com.kasuminotes.ui.app.state.UiState
 
 @Composable
 fun Home(
-    scaffoldState: ScaffoldState,
+    drawerState: DrawerState,
     uiState: UiState,
     dbState: DbState,
     onNavigateToImages: (allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) -> Unit,
@@ -29,7 +29,7 @@ fun Home(
     }
 
     HomeScaffold(
-        scaffoldState,
+        drawerState,
         userState,
         dbState,
         uiState,

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#FF5F96F5</color>
-    <color name="primary_variant">#FF5B88E6</color>
-    <color name="secondary">#FFF55F96</color>
-    <color name="secondary_variant">#FFF2397E</color>
-    <color name="error">#FFB00020</color>
-    <color name="error_night">#FFCF6679</color>
-    <color name="black_night">#FF121212</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#FFA03F28</color>
+    <color name="primary_variant">#FF77574F</color>
+    <color name="secondary">#FF6D5D2E</color>
+    <color name="secondary_variant">#FF544519</color>
+    <color name="error">#FFBA1A1A</color>
+    <color name="error_night">#FFFFB4AB</color>
+    <color name="black_night">#FF442A23</color>
+    <color name="black">#FF201A19</color>
+    <color name="white">#FFEDE0DD</color>
     <color name="immersive_sys_ui">#33000000</color>
-    <color name="ic_launcher_background">@color/white</color>
+    <color name="ic_launcher_background">#FFF5DDD8</color>
 </resources>

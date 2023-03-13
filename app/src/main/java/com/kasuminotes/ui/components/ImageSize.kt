@@ -8,21 +8,6 @@ import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.unit.Constraints
 import kotlin.math.roundToInt
 
-fun Modifier.imageSize(ratio: Float): Modifier {
-    return this.then(
-        when (ratio) {
-            1f -> IconSizeModify
-            0.5f -> PlateSizeModify
-            0.5625f -> StillSizeModify
-            else -> ImageSizeModifier(ratio)
-        }
-    )
-}
-
-val IconSizeModify by lazy { ImageSizeModifier(1f) }
-val PlateSizeModify by lazy { ImageSizeModifier(0.5f) }
-val StillSizeModify by lazy { ImageSizeModifier(0.5625f) }
-
 class ImageSizeModifier(private val ratio: Float) : LayoutModifier {
     override fun MeasureScope.measure(
         measurable: Measurable,
@@ -44,4 +29,21 @@ class ImageSizeModifier(private val ratio: Float) : LayoutModifier {
         other is ImageSizeModifier && ratio == other.ratio
 
     override fun hashCode() = ratio.hashCode()
+}
+
+object ImageSize {
+    val IconModifier by lazy { ImageSizeModifier(1f) }
+    val PlateModifier by lazy { ImageSizeModifier(0.5f) }
+    val StillModifier by lazy { ImageSizeModifier(0.5625f) }
+}
+
+fun Modifier.imageSize(ratio: Float): Modifier {
+    return this.then(
+        when (ratio) {
+            1f -> ImageSize.IconModifier
+            0.5f -> ImageSize.PlateModifier
+            0.5625f -> ImageSize.StillModifier
+            else -> ImageSizeModifier(ratio)
+        }
+    )
 }

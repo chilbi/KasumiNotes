@@ -13,14 +13,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,10 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.MaxUserData
@@ -46,12 +44,12 @@ import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UserData
 import com.kasuminotes.ui.app.DefaultUserId
 import com.kasuminotes.ui.components.Alert
+import com.kasuminotes.ui.components.Container
+import com.kasuminotes.ui.components.ImageSize
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.ImmersiveBackButton
 import com.kasuminotes.ui.components.Severity
 import com.kasuminotes.ui.components.StillBox
-import com.kasuminotes.ui.components.StillSizeModify
-import com.kasuminotes.ui.components.bgBorder
 import com.kasuminotes.ui.theme.ImmersiveSysUi
 
 @Composable
@@ -87,7 +85,7 @@ fun CharaBackLayer(
         StillBox(
             unitData.unitId,
             userData.rarity,
-            StillSizeModify
+            ImageSize.StillModifier
         ) {
             ImmersiveBackButton(
                 onBack,
@@ -126,14 +124,12 @@ fun CharaBackLayer(
             onLvLimitBreakChange,
         )
 
-        PropertyTable(
-            property,
-            modifier = Modifier
-                .padding(8.dp)
-                .bgBorder(MaterialTheme.colors.isLight)
-                .padding(4.dp),
-            originProperty = originProperty,
-        )
+        Container(margin = 8.dp) {
+            PropertyTable(
+                property = property,
+                originProperty = originProperty,
+            )
+        }
 
         AlertMessage(userData.userId, saveVisible, onCancel, onSave)
     }
@@ -160,7 +156,7 @@ private fun AlertMessage(
             TextButton(
                 onClick = onCancel,
                 colors = ButtonDefaults.textButtonColors(
-                    contentColor = MaterialTheme.colors.secondary
+                    contentColor = MaterialTheme.colorScheme.tertiary
                 )
             ) {
                 Text(stringResource(R.string.cancel))
@@ -216,8 +212,7 @@ private fun CharaName(
                     .align(Alignment.CenterStart)
                     .padding(start = 8.dp),
                 color = Color.White,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.titleLarge
             )
         }
 

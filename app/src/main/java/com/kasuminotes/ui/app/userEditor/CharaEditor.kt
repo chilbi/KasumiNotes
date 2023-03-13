@@ -1,4 +1,4 @@
-package com.kasuminotes.ui.app.usereditor
+package com.kasuminotes.ui.app.userEditor
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -26,19 +27,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Checkbox
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
@@ -52,7 +54,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.kasuminotes.R
@@ -68,7 +69,6 @@ import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
 import com.kasuminotes.ui.components.SliderPlus
 import com.kasuminotes.ui.components.imageSize
-import com.kasuminotes.ui.theme.DarkWarning
 import com.kasuminotes.ui.theme.RaritiesColors
 import com.kasuminotes.ui.theme.rankRarity
 import com.kasuminotes.utils.UrlUtil
@@ -131,13 +131,10 @@ fun CharaEditor(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = if (isEmpty) onConfirm else toggleVisibleEditor,
-                backgroundColor = if (isEmpty) MaterialTheme.colors.primary else MaterialTheme.colors.secondary,
-                contentColor = Color.White
+                containerColor = if (isEmpty) MaterialTheme.colorScheme.primaryContainer
+                else MaterialTheme.colorScheme.tertiaryContainer
             ) {
-                Icon(
-                    imageVector = if (isEmpty) Icons.Filled.Check else Icons.Filled.Edit,
-                    contentDescription = null
-                )
+                Icon(if (isEmpty) Icons.Filled.Check else Icons.Filled.Edit, null)
             }
         },
         topBarContent = {
@@ -269,8 +266,8 @@ private fun SelectableCharaItem(
                     .size(32.dp)
                     .padding(4.dp)
                     .background(
-                        DarkWarning,
-                        MaterialTheme.shapes.small
+                        MaterialTheme.colorScheme.tertiaryContainer,
+                        MaterialTheme.shapes.extraSmall
                     )
             ) {
                 Icon(
@@ -363,7 +360,7 @@ private fun RowScope.ToggleButton(
             Text(
                 text = text,
                 modifier = Modifier.padding(start = 4.dp),
-                fontSize = 14.sp
+                style = MaterialTheme.typography.bodyMedium
             )
         }
     }
@@ -391,16 +388,14 @@ private fun EditorDialog(
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
         Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            shape = MaterialTheme.shapes.medium,
-            elevation = 16.dp
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 24.dp),
+            shape = MaterialTheme.shapes.extraLarge,
+            tonalElevation = AlertDialogDefaults.TonalElevation
         ) {
             Column(
                 Modifier
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(horizontal = 8.dp, vertical = 24.dp)
             ) {
                 EditorDialogTitle(selectedChara.size) {
                     onClose()
@@ -439,7 +434,7 @@ private fun EditorDialogTitle(
             Icon(
                 imageVector = Icons.Filled.Delete,
                 contentDescription = null,
-                tint = MaterialTheme.colors.secondary
+                tint = MaterialTheme.colorScheme.tertiary
             )
         }
     }
@@ -537,7 +532,7 @@ private fun EditorDialogContent(
             LabelText(stringResource(R.string.level))
         }
 
-        val bgColor = RaritiesColors.getRarityColors(promotionLevel.rankRarity).middle
+        val color = RaritiesColors.getRarityColors(promotionLevel.rankRarity).middle
 
         SliderPlus(
             value = promotionLevel,
@@ -549,7 +544,7 @@ private fun EditorDialogContent(
         ) {
             LabelText(
                 text = stringResource(R.string.rank),
-                background = bgColor
+                color = color
             )
         }
 
@@ -563,17 +558,19 @@ private fun EditorDialogContent(
         ) {
             LabelText(
                 text = stringResource(R.string.slot),
-                background = bgColor
+                color = color
             )
         }
     }
 
-    Row(Modifier.padding(vertical = 4.dp)) {
+    Row(Modifier.padding(8.dp)) {
         Spacer(Modifier.weight(1f))
 
         TextButton(onClose) {
             Text(stringResource(R.string.cancel))
         }
+
+        Spacer(Modifier.width(8.dp))
 
         Button(
             onClick = {
@@ -586,7 +583,7 @@ private fun EditorDialogContent(
                     if (promotionLevelChecked) promotionLevel else null,
                     if (unlockSlotChecked) unlockSlot else null
                 )
-            },
+            }
         ) {
             Text(stringResource(R.string.confirm))
         }

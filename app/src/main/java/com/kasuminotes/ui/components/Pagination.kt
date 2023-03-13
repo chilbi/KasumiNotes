@@ -3,17 +3,16 @@ package com.kasuminotes.ui.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.kasuminotes.ui.theme.selected
 
 @Composable
 fun Pagination(
@@ -21,12 +20,14 @@ fun Pagination(
     page: Int,
     onChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    minSize: Dp = 48.dp
+    minSize: Dp = 48.dp,
+    selectedColor: Color = MaterialTheme.colorScheme.primary,
+    style: TextStyle = MaterialTheme.typography.labelLarge
 ) {
     BoxWithConstraints(modifier) {
         val cols = maxOf((maxWidth / minSize).toInt(), 1)
         val items = mutableListOf<Int?>()
-        if (count <= cols) {
+        if (cols < 5 || count <= cols) {
             for (value in 1..count) {
                 items.add(value)
             }
@@ -55,9 +56,7 @@ fun Pagination(
             }
         }
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             repeat(cols) { i ->
                 Box(
                     Modifier.weight(1f),
@@ -74,15 +73,15 @@ fun Pagination(
                             IconButton(onClick = { onChange(newPage) }) {
                                 Text(
                                     text = "…",
-                                    fontWeight = FontWeight.Bold
+                                    style = style
                                 )
                             }
                         } else {
                             IconButton(onClick = { onChange(item) }) {
                                 Text(
                                     text = item.toString(),
-                                    color = if (item == page) MaterialTheme.colors.selected else Color.Unspecified,
-                                    fontWeight = FontWeight.Bold
+                                    color = if (item == page) selectedColor else Color.Unspecified,
+                                    style = style
                                 )
                             }
                         }

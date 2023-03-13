@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,12 +23,11 @@ import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.data.QuestData
 import com.kasuminotes.data.RewardData
-import com.kasuminotes.ui.components.BgBorderColumn
+import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
-import com.kasuminotes.ui.components.selectedBg
-import com.kasuminotes.ui.theme.selected
+import com.kasuminotes.ui.components.selectedContainerColor
 import com.kasuminotes.utils.Helper
 import com.kasuminotes.utils.UrlUtil
 
@@ -56,7 +55,7 @@ fun QuestDropItem(
     val dropList = questData.getDropList()
     val dropGold = questData.getDropGold()
 
-    BgBorderColumn {
+    Container {
         Row(
             modifier = Modifier.padding(4.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -67,8 +66,7 @@ fun QuestDropItem(
 
             Text(
                 text = questData.questName,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.labelLarge
             )
 
             Spacer(Modifier.weight(1f))
@@ -115,11 +113,7 @@ private fun RewardItem(
         Column(
             modifier = Modifier
                 .width(40.dp)
-                .selectedBg(
-                    selected,
-                    MaterialTheme.colors.selected,
-                    MaterialTheme.shapes.small
-                )
+                .selectedContainerColor(selected)
                 .clickable(enabled = onSelected != null) {
                     onSelected?.invoke(rewardData.rewardId)
                 }

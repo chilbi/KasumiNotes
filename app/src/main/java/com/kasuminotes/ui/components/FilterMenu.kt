@@ -6,16 +6,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,9 +59,10 @@ private fun RowScope.AtkTypeMenu(
         label = stringResource(atkType.resId)
     ) { onCollapse ->
         AtkType.values().forEach { type ->
-            DropdownMenuItem(onClick = { onAtkTypeChange(type).also { onCollapse() } }) {
-                Text(stringResource(type.resId))
-            }
+            DropdownMenuItem(
+                text = { Text(stringResource(type.resId)) },
+                onClick = { onAtkTypeChange(type).also { onCollapse() } }
+            )
         }
     }
 }
@@ -76,9 +77,10 @@ private fun RowScope.PositionMenu(
         label = stringResource(position.resId)
     ) { onCollapse ->
         Position.values().forEach { pos ->
-            DropdownMenuItem(onClick = { onPositionChange(pos).also { onCollapse() } }) {
-                Text(stringResource(pos.resId))
-            }
+            DropdownMenuItem(
+                text = { Text(stringResource(pos.resId)) },
+                onClick = { onPositionChange(pos).also { onCollapse() } }
+            )
         }
     }
 }
@@ -94,9 +96,10 @@ private fun RowScope.OrderByMenu(
         label = stringResource(orderBy.resId) + stringResource(if (sortDesc) R.string.desc else R.string.asc)
     ) { onCollapse ->
         OrderBy.values().forEach { order ->
-            DropdownMenuItem(onClick = { onOrderByChange(order).also { onCollapse() } }) {
-                Text(stringResource(order.resId))
-            }
+            DropdownMenuItem(
+                text = { Text(stringResource(order.resId)) },
+                onClick = { onOrderByChange(order).also { onCollapse() } }
+            )
         }
     }
 }
@@ -112,7 +115,7 @@ private fun RowScope.FilterMenuItem(
             var expanded by remember { mutableStateOf(false) }
             TextButton(
                 onClick = { expanded = true },
-                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colors.onPrimary)
+                colors = ButtonDefaults.textButtonColors(contentColor = LocalContentColor.current)
             ) {
                 Text(label)
                 Icon(

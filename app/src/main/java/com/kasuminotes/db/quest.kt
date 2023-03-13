@@ -210,23 +210,23 @@ suspend fun AppDatabase.getQuestDataList(searchedList: List<Int>, sortDesc: Bool
     }
 }
 
-suspend fun AppDatabase.getDropRangeMap(): Map<Int, QuestRange> = safelyUse {
-    val sql = "SELECT range_id,range_min,range_max FROM drop_range"
-
-    rawQuery(sql, null).use {
-        val map = mutableMapOf<Int, QuestRange>()
-
-        while (it.moveToNext()) {
-            val rangeId = it.getInt(0)
-            val rangeMin = it.getInt(1)
-            val rangeMax = it.getInt(2)
-
-            map[rangeId] = QuestRange(rangeMin, rangeMax)
-        }
-
-        map
-    }
-}
+//suspend fun AppDatabase.getDropRangeMap(): Map<Int, QuestRange> = safelyUse {
+//    val sql = "SELECT range_id,range_min,range_max FROM drop_range"
+//
+//    rawQuery(sql, null).use {
+//        val map = mutableMapOf<Int, QuestRange>()
+//
+//        while (it.moveToNext()) {
+//            val rangeId = it.getInt(0)
+//            val rangeMin = it.getInt(1)
+//            val rangeMax = it.getInt(2)
+//
+//            map[rangeId] = QuestRange(rangeMin, rangeMax)
+//        }
+//
+//        map
+//    }
+//}
 
 suspend fun AppDatabase.getMemoryPieces(): Array<List<Int>> = safelyUse {
     val sql = "SELECT id FROM memory_piece ORDER BY id DESC"

@@ -1,6 +1,7 @@
 package com.kasuminotes.ui.app.equip
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,15 +10,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.data.Property
 import com.kasuminotes.ui.app.state.DbState
 import com.kasuminotes.ui.app.state.EquipState
-import com.kasuminotes.ui.components.BgBorderColumn
+import com.kasuminotes.ui.components.BackButton
+import com.kasuminotes.ui.components.Container
+import com.kasuminotes.ui.components.ImageCard
+import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.MultiLineText
+import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun EquipScaffold(
@@ -42,6 +48,7 @@ fun EquipScaffold(
         bottomBar = {
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
         },
+        containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Column(
                 Modifier
@@ -50,7 +57,7 @@ fun EquipScaffold(
                     .verticalScroll(rememberScrollState())
                     .padding(4.dp)
             ) {
-                BgBorderColumn {
+                Container {
                     MultiLineText(description)
                 }
 
@@ -93,6 +100,28 @@ fun EquipScaffold(
                     )
                 }
             }
+        }
+    )
+}
+
+@Composable
+private fun EquipTopBar(
+    equipmentId: Int,
+    equipmentName: String,
+    equipmentType: String,
+    onBack: () -> Unit
+) {
+    TopBar(
+        title = {
+            ImageCard(
+                imageUrl = UrlUtil.getEquipIconUrl(equipmentId),
+                primaryText = equipmentName,
+                secondaryText = equipmentType,
+                paddingValues = PaddingValues(vertical = 4.dp)
+            )
+        },
+        navigationIcon = {
+            BackButton(onBack)
         }
     )
 }

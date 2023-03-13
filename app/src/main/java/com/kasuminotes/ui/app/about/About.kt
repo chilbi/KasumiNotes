@@ -12,9 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,13 +22,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.BuildConfig
 import com.kasuminotes.R
 import com.kasuminotes.ui.components.BackButton
-import com.kasuminotes.ui.components.ImmersiveTopAppBar
+import com.kasuminotes.ui.components.TopBar
 
 @Composable
 fun About(
@@ -37,7 +35,7 @@ fun About(
 ) {
     Scaffold(
         topBar = {
-            ImmersiveTopAppBar(
+            TopBar(
                 title = { Text(stringResource(R.string.about_app)) },
                 navigationIcon = { BackButton(onBack) }
             )
@@ -45,6 +43,7 @@ fun About(
         bottomBar = {
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
         },
+        containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Column(
                 modifier = Modifier
@@ -57,14 +56,14 @@ fun About(
                 Image(painterResource(R.mipmap.ic_launcher_foreground), null)
                 Text(
                     text = "v${BuildConfig.VERSION_NAME}",
-                    fontSize = 22.sp
+                    style = MaterialTheme.typography.titleLarge
                 )
 
                 Spacer(Modifier.height(14.dp))
 
                 Text(
                     text = "Github Repository Page",
-                    fontSize = 18.sp
+                    style = MaterialTheme.typography.titleMedium
                 )
                 TextLink(
                     text = "https://github.com/chilbi/KasumiNotes",
@@ -75,7 +74,7 @@ fun About(
 
                 Text(
                     text = "App Releases Page",
-                    fontSize = 18.sp
+                    style = MaterialTheme.typography.titleMedium
                 )
                 TextLink(
                     text = "https://github.com/chilbi/KasumiNotes/releases",
@@ -86,7 +85,7 @@ fun About(
 
                 Text(
                     text = "API References",
-                    fontSize = 18.sp
+                    style = MaterialTheme.typography.titleMedium
                 )
                 TextLink(
                     text = "https://redive.estertion.win",
@@ -102,7 +101,7 @@ fun About(
 
                 Text(
                     text = "LICENSE",
-                    fontSize = 18.sp
+                    style = MaterialTheme.typography.titleMedium
                 )
                 TextLink(
                     text = "Apache License Version 2.0",
@@ -118,8 +117,7 @@ fun About(
 @Composable
 private fun TextLink(
     text: String,
-    color: Color = MaterialTheme.colors.primary,
-    fontSize: TextUnit = 14.sp,
+    color: Color = MaterialTheme.colorScheme.primary,
     onClick: () -> Unit
 ) {
     Text(
@@ -128,7 +126,7 @@ private fun TextLink(
             .clickable(onClick = onClick)
             .padding(2.dp),
         color = color,
-        fontSize = fontSize,
-        textDecoration = TextDecoration.Underline
+        textDecoration = TextDecoration.Underline,
+        style = MaterialTheme.typography.bodyMedium
     )
 }

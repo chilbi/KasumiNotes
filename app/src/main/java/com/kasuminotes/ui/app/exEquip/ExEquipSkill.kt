@@ -5,15 +5,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -34,7 +33,7 @@ import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillData
 import com.kasuminotes.ui.components.ActionLabel
 import com.kasuminotes.ui.components.PlaceImage
-import com.kasuminotes.ui.components.UnderlineLabelColumn
+import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -43,9 +42,9 @@ fun ExEquipSkill(
     passiveSkill2: SkillData?,
     baseProperty: Property
 ) {
-    UnderlineLabelColumn(
+    LabelContainer(
         label = stringResource(R.string.equip_skill),
-        color = MaterialTheme.colors.primary
+        color = MaterialTheme.colorScheme.primary
     ) {
         if (passiveSkill1 != null) {
             ExEquipSkillItem(passiveSkill1, baseProperty)
@@ -83,7 +82,7 @@ private fun ExEquipSkillItem(
         Text(
             text = passiveSkill.name,
             modifier = Modifier.padding(start = 4.dp),
-            fontSize = 16.sp
+            style = MaterialTheme.typography.bodyLarge
         )
         if (BuildConfig.DEBUG) {
             Spacer(Modifier.weight(1f))
@@ -91,8 +90,8 @@ private fun ExEquipSkillItem(
                 Icon(
                     imageVector = Icons.Filled.Code,
                     contentDescription = null,
-                    tint = if (visible.value) MaterialTheme.colors.secondary
-                    else LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+                    tint = if (visible.value) MaterialTheme.colorScheme.tertiary
+                    else LocalContentColor.current
                 )
             }
         }
@@ -101,7 +100,7 @@ private fun ExEquipSkillItem(
     Text(
         text = passiveSkill.description,
         modifier = Modifier.padding(4.dp),
-        fontSize = 14.sp
+        style = MaterialTheme.typography.bodyMedium
     )
 
     if (!visible.value) {
@@ -111,9 +110,8 @@ private fun ExEquipSkillItem(
 
                 Text(
                     text = stringDescription(d),
-                    modifier = Modifier.padding(start = 4.dp),
-                    fontSize = 14.sp,
-                    lineHeight = 28.sp
+                    modifier = Modifier.padding(4.dp),
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
@@ -126,9 +124,8 @@ private fun ExEquipSkillItem(
 
                 Text(
                     text = stringDescription(action.getUnknown()),
-                    modifier = Modifier.padding(start = 4.dp),
-                    fontSize = 14.sp,
-                    lineHeight = 28.sp
+                    modifier = Modifier.padding(4.dp),
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }

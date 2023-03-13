@@ -5,7 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -16,15 +16,14 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
-import com.kasuminotes.ui.theme.place
 
 @Composable
 fun BoxScope.PlaceImage(
     painter: Painter,
     loading: Boolean,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colors.place,
-    shape: Shape = MaterialTheme.shapes.small,
+    color: Color = MaterialTheme.colorScheme.surfaceVariant,
+    shape: Shape = MaterialTheme.shapes.extraSmall,
     colorFilter: ColorFilter? = null
 ) {
     if (loading) {
@@ -51,8 +50,8 @@ fun BoxScope.PlaceImage(
 fun BoxScope.PlaceImage(
     url: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colors.place,
-    shape: Shape = MaterialTheme.shapes.small,
+    color: Color = MaterialTheme.colorScheme.surfaceVariant,
+    shape: Shape = MaterialTheme.shapes.extraSmall,
     colorFilter: ColorFilter? = null
 ) {
     val painter = rememberAsyncImagePainter(url)

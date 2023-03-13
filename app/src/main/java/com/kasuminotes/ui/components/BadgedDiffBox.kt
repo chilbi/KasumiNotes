@@ -2,44 +2,41 @@ package com.kasuminotes.ui.components
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.Badge
-import androidx.compose.material.BadgedBox
-import androidx.compose.material.Text
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.sp
-import com.kasuminotes.ui.theme.Negative
-import com.kasuminotes.ui.theme.Positive
 
 @Composable
-fun DiffBadgedBox(
+fun BadgedDiffBox(
     value: Int,
     originValue: Int,
     content: @Composable BoxScope.() -> Unit
 ) {
     val diff = value - originValue
-    val backgroundColor: Color
+    val containerColor: Color
     val badgeContent: @Composable (RowScope.() -> Unit)?
     when {
         diff == 0 -> {
-            backgroundColor = Color.Transparent
+            containerColor = Color.Transparent
             badgeContent = null
         }
         diff > 0 -> {
-            backgroundColor = Positive
-            badgeContent = { Text(text = "+$diff", fontSize = 8.sp) }
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+            badgeContent = { Text("+$diff") }
         }
         else -> {
-            backgroundColor = Negative
-            badgeContent = { Text(diff.toString(), fontSize = 8.sp) }
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+            badgeContent = { Text(diff.toString()) }
         }
     }
 
     BadgedBox(
         badge = {
             Badge(
-                backgroundColor = backgroundColor,
-                contentColor = Color.White,
+                containerColor = containerColor,
                 content = badgeContent
             )
         },

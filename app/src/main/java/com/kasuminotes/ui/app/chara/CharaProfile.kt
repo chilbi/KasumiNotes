@@ -10,19 +10,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.data.UnitData
-import com.kasuminotes.ui.components.BgBorderColumn
+import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.components.MultiLineText
 
@@ -37,7 +35,7 @@ fun CharaProfile(
             .verticalScroll(state)
             .padding(4.dp)
     ) {
-        BgBorderColumn {
+        Container {
             InfobarFullWidth(R.string.actual_name, unitData.actualName)
 
             InfobarFullWidth(R.string.kana, unitData.kana)
@@ -89,21 +87,20 @@ private fun MultiLineInfo(
     @StringRes labelResId: Int,
     text: String
 ) {
-    BgBorderColumn {
+    Container {
         Text(
             text = stringResource(labelResId),
             modifier = Modifier
                 .padding(4.dp)
                 .width(dimensionResource(R.dimen.multi_label_width))
                 .background(
-                    color = MaterialTheme.colors.primary,
-                    shape = MaterialTheme.shapes.small
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = MaterialTheme.shapes.extraSmall
                 )
                 .padding(vertical = 2.dp),
-            color = MaterialTheme.colors.onPrimary,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Center
+            color = MaterialTheme.colorScheme.onPrimary,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.labelMedium
         )
 
         MultiLineText(text)

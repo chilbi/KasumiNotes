@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,15 +17,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.data.ClanBattleMapData
 import com.kasuminotes.data.EnemyData
 import com.kasuminotes.ui.app.state.ClanBattleState
 import com.kasuminotes.ui.components.BackButton
-import com.kasuminotes.ui.components.ImmersiveTopAppBar
+import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.TabsPanel
 import com.kasuminotes.ui.theme.phaseColors
 
@@ -37,7 +35,7 @@ fun ClanBattleMapList(
 ) {
     Scaffold(
         topBar = {
-            ImmersiveTopAppBar(
+            TopBar(
                 title = { Text(clanBattleState.title) },
                 navigationIcon = { BackButton(onBack) }
             )
@@ -63,21 +61,21 @@ private fun MapTabsPanel(
 ) {
     if (mapDataList != null) {
         var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
-        val unSelectedColor = MaterialTheme.colors.onSurface.copy(0.5f)
+        val unSelectedColor = MaterialTheme.colorScheme.onSurface.copy(0.5f)
+        val style = MaterialTheme.typography.titleSmall
         TabsPanel(
             size = mapDataList.size,
             scrollable = false,
             selectedTabIndex = selectedTabIndex,
             onTabIndexSelected = { selectedTabIndex = it },
-            backgroundColor = Color.Transparent,
+            containerColor = Color.Transparent,
             contentColor = phaseColors[mapDataList.size - selectedTabIndex - 1],
             tabContentFor = { index ->
                 Text(
                     text = stringResource(R.string.phase_d, mapDataList[index].phase),
                     modifier = Modifier.padding(vertical = 14.dp),
                     color = if (index == selectedTabIndex) Color.Unspecified else unSelectedColor,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold
+                    style = style
                 )
             },
             panelContentFor = { index ->

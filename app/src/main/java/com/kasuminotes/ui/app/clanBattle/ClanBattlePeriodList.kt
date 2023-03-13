@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.ui.components.PlaceImage
-import com.kasuminotes.ui.components.UnderlineLabelColumn
-import com.kasuminotes.ui.theme.Rounded8
+import com.kasuminotes.ui.components.LabelContainer
+import com.kasuminotes.ui.theme.UnitImageShape
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -30,7 +30,7 @@ fun ClanBattlePeriodList(
     onPeriodClick: (label: String, period: ClanBattlePeriod) -> Unit,
 ) {
     val size = clanBattlePeriodList.size
-    val color = MaterialTheme.colors.primary
+    val color = MaterialTheme.colorScheme.primary
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = 4.dp, end = 4.dp, bottom = 4.dp)
@@ -61,7 +61,7 @@ private fun ClanBattlePeriodItem(
         clanBattlePeriod.month,
         stringResource(clanBattlePeriod.constellation)
     )
-    UnderlineLabelColumn(label, color, onClick = { onPeriodClick(label, clanBattlePeriod) }) {
+    LabelContainer(label, color, onClick = { onPeriodClick(label, clanBattlePeriod) }) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -72,7 +72,7 @@ private fun ClanBattlePeriodItem(
                 Box(Modifier.size(56.dp)) {
                     PlaceImage(
                         url = UrlUtil.getBossUnitIconUrl(unitId),
-                        shape = Rounded8
+                        shape = UnitImageShape
                     )
                 }
             }

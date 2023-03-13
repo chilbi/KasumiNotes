@@ -10,17 +10,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.Text
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import org.w3c.dom.Text
 
 @Composable
 fun ImageCard(
@@ -30,8 +28,8 @@ fun ImageCard(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(4.dp),
     imageSize: Dp = 48.dp,
-    primaryFontSize: TextUnit = 16.sp,
-    secondaryFontSize: TextUnit = 14.sp,
+    primaryStyle: TextStyle = MaterialTheme.typography.titleMedium,
+    secondaryStyle: TextStyle = MaterialTheme.typography.titleSmall,
     secondaryContent: @Composable RowScope.() -> Unit = {}
 ) {
     Row(modifier.padding(paddingValues)) {
@@ -46,8 +44,7 @@ fun ImageCard(
         ) {
             Text(
                 text = primaryText,
-                fontSize = primaryFontSize,
-                fontWeight = FontWeight.Bold
+                style = primaryStyle
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -55,9 +52,8 @@ fun ImageCard(
             ) {
                 Text(
                     text = secondaryText,
-                    color = LocalContentColor.current.copy(0.6f),
-                    fontSize = secondaryFontSize,
-                    fontWeight = FontWeight.Medium
+                    color = LocalContentColor.current.copy(0.5f),
+                    style = secondaryStyle
                 )
 
                 secondaryContent()

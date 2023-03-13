@@ -1,5 +1,6 @@
 package com.kasuminotes.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -7,8 +8,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import com.kasuminotes.data.Property
-import com.kasuminotes.ui.theme.Negative
-import com.kasuminotes.ui.theme.Positive
 import kotlin.math.roundToInt
 
 private val propertyIndices: List<Int> = listOf(
@@ -51,7 +50,11 @@ fun PropertyTable(
                     value = buildAnnotatedString {
                         withStyle(
                             SpanStyle(
-                                color = if (diffValue > 0) Positive else Negative
+                                color = if (diffValue > 0) {
+                                    MaterialTheme.colorScheme.onPrimaryContainer
+                                } else {
+                                    MaterialTheme.colorScheme.onTertiaryContainer
+                                }
                             )
                         ) {
                             if (diffValue > 0) append("+")

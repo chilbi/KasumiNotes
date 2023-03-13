@@ -12,30 +12,28 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.kasuminotes.R
 import com.kasuminotes.ui.components.ImageIcon
 import com.kasuminotes.ui.components.Infobar
-import com.kasuminotes.ui.theme.place
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -51,24 +49,21 @@ fun SignInDialog(
 ) {
     Dialog(onClose) {
         Surface(
-            shape = MaterialTheme.shapes.medium,
-            elevation = 20.dp
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.extraLarge,
+            tonalElevation = AlertDialogDefaults.TonalElevation
         ) {
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
+            Column(Modifier.fillMaxWidth().padding(16.dp)) {
                 SignInTitle()
 
-                Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                Column(Modifier.padding(8.dp)) {
                     SignInImage(
                         newUserId,
                         newUserName,
                         onImageSelect
                     )
 
-                    Spacer(Modifier.height(8.dp))
+                    Divider(Modifier.padding(vertical = 16.dp))
 
                     SignInCharaCount(
                         charaCount,
@@ -77,12 +72,14 @@ fun SignInDialog(
                     )
                 }
 
-                Row(Modifier.padding(top = 8.dp)) {
+                Row(Modifier.padding(8.dp)) {
                     Spacer(Modifier.weight(1f))
 
                     TextButton(onClick = onClose) {
                         Text(stringResource(R.string.cancel))
                     }
+
+                    Spacer(Modifier.width(8.dp))
 
                     Button(
                         onClick = onSignIn,
@@ -100,8 +97,8 @@ fun SignInDialog(
 private fun SignInTitle() {
     Text(
         text = stringResource(R.string.create_user),
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-        style = MaterialTheme.typography.subtitle1
+        modifier = Modifier.padding(8.dp),
+        style = MaterialTheme.typography.headlineSmall
     )
 }
 
@@ -111,23 +108,29 @@ private fun SignInImage(
     newUserName: String?,
     onImageSelect: () -> Unit
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .clickable(onClick = onImageSelect),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         if (newUserId == null && newUserName == null) {
             Spacer(
                 Modifier
                     .size(48.dp)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colors.place)
-                    .clickable(onClick = onImageSelect)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
             )
             Text(
                 text = stringResource(R.string.select_user_image),
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier.padding(start = 8.dp),
+                color = MaterialTheme.colorScheme.primary
             )
         } else {
             ImageIcon(
                 url = UrlUtil.getUserIconUrl(newUserId!!),
-                onClick = onImageSelect,
+                onClick = null,
                 shape = CircleShape
             )
             Column(
@@ -138,16 +141,14 @@ private fun SignInImage(
             ) {
                 Text(
                     text = newUserName!!,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
+                    maxLines = 1,
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Text(
                     text = "uid:$newUserId",
-                    color = LocalContentColor.current.copy(0.6f),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium
+                    color = LocalContentColor.current.copy(0.5f),
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
@@ -160,20 +161,25 @@ private fun SignInCharaCount(
     maxChara: Int,
     onCharaEdit: () -> Unit
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .clickable(onClick = onCharaEdit),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Infobar(
             label = stringResource(R.string.chara_count),
             value = "$charaCount/$maxChara",
-            modifier = Modifier.width(128.dp),
-            width = 64.dp
+            modifier = Modifier.width(160.dp),
+            width = 80.dp
         )
 
-        IconButton(onCharaEdit) {
-            Icon(
-                imageVector = Icons.Filled.Edit,
-                contentDescription = null,
-                tint = MaterialTheme.colors.primary
-            )
-        }
+        Icon(
+            imageVector = Icons.Filled.Edit,
+            contentDescription = null,
+            modifier = Modifier.padding(8.dp),
+            tint = MaterialTheme.colorScheme.primary
+        )
     }
 }

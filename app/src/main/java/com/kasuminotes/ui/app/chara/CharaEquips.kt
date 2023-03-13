@@ -10,23 +10,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.ui.components.ImageIcon
-import com.kasuminotes.ui.components.UnderlineLabelColumn
+import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.theme.RaritiesColors
 import com.kasuminotes.ui.theme.UniqueColor
 import com.kasuminotes.ui.theme.rankRarity
@@ -75,7 +73,7 @@ private fun EquipItem(
     color: Color = RaritiesColors.getRarityColors(promotionLevel.rankRarity).middle,
     onEquipClick: (EquipData) -> Unit
 ) {
-    UnderlineLabelColumn(
+    LabelContainer(
         label = stringResource(R.string.rank) + " $promotionLevel",
         color = color
     ) {
@@ -100,7 +98,7 @@ private fun UniqueEquipItem(
     uniqueData: UniqueData?,
     onEquipClick: (UniqueData) -> Unit,
 ) {
-    UnderlineLabelColumn(
+    LabelContainer(
         label = stringResource(R.string.unique_equip),
         color = UniqueColor
     ) {
@@ -120,7 +118,7 @@ private fun UniqueEquipItem(
 
             if (uniqueData == null) {
                 text = stringResource(R.string.no_unique)
-                color = MaterialTheme.colors.onSurface.copy(0.35f)
+                color = MaterialTheme.colorScheme.onSurface.copy(0.35f)
             } else {
                 text = uniqueData.equipmentName
                 color = UniqueColor
@@ -130,8 +128,7 @@ private fun UniqueEquipItem(
                 text = text,
                 modifier = Modifier.padding(start = 8.dp),
                 color = color,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.titleSmall
             )
         }
     }

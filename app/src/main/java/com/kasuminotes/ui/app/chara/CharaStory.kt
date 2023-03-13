@@ -7,16 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.data.CharaStoryStatus
 import com.kasuminotes.data.Property
@@ -27,7 +25,7 @@ import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.TabsPanel
-import com.kasuminotes.ui.components.UnderlineLabelColumn
+import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.UnderlineStyle
 
 @Composable
@@ -57,8 +55,8 @@ fun CharaStory(
             scrollable = stories.size > 4,
             selectedTabIndex = selectedTabIndex,
             onTabIndexSelected = onTabIndexSelected,
-            backgroundColor = Color.Transparent,
-            contentColor = MaterialTheme.colors.onSurface.copy(0.5f),
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.onSurface.copy(0.5f),
             edgePadding = 0.dp,
             tabContentFor = { index ->
                 val story = stories[index]
@@ -73,8 +71,7 @@ fun CharaStory(
                 Text(
                     text = story.label,
                     modifier = Modifier.padding(vertical = 4.dp),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold
+                    style = MaterialTheme.typography.labelMedium
                 )
             },
             panelContentFor = { index ->
@@ -121,10 +118,10 @@ private fun StoryProperty(
     unlock: Boolean,
     property: Property
 ) {
-    UnderlineLabelColumn(
+    LabelContainer(
         label = label,
-        color = if (unlock) MaterialTheme.colors.primaryVariant
-        else MaterialTheme.colors.onSurface.copy(0.5f),
+        color = if (unlock) MaterialTheme.colorScheme.primary
+        else MaterialTheme.colorScheme.onSurface.copy(0.5f),
         style = if (unlock) UnderlineStyle.Solid else UnderlineStyle.Dotted
     ) {
         PropertyTable(

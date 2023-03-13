@@ -28,7 +28,7 @@ class UnderlineStyle private constructor(@Suppress("unused") private val value: 
 }
 
 fun Modifier.underline(
-    width: Dp,
+    thickness: Dp,
     color: Color,
     style: UnderlineStyle = UnderlineStyle.Solid,
     startPointX: Dp = 0.dp,
@@ -37,7 +37,7 @@ fun Modifier.underline(
         val sizeWidth = size.width.absoluteValue
         val sizeHeight = size.height.absoluteValue
         val strokeWidth = min(
-            if (width == Dp.Hairline) 1f else width.toPx(), sizeHeight
+            if (thickness == Dp.Hairline) 1f else thickness.toPx(), sizeHeight
         )
         val startX = startPointX.toPx()
         val y = sizeHeight - (strokeWidth / 2)

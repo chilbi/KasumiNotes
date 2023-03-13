@@ -1,11 +1,7 @@
 package com.kasuminotes.ui.app
 
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -21,12 +17,10 @@ import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
 import com.kasuminotes.ui.app.quest.Quest
 import com.kasuminotes.ui.app.summons.Summons
-import com.kasuminotes.ui.app.usereditor.CharaEditor
-import com.kasuminotes.ui.app.usereditor.UserImages
+import com.kasuminotes.ui.app.userEditor.CharaEditor
+import com.kasuminotes.ui.app.userEditor.UserImages
 import com.kasuminotes.ui.theme.KasumiNotesTheme
 import kotlinx.coroutines.launch
-
-private const val durationMillis = 500
 
 @Composable
 fun App(appViewModel: AppViewModel = viewModel()) {
@@ -35,10 +29,10 @@ fun App(appViewModel: AppViewModel = viewModel()) {
     val userState = dbState.userState
 
     KasumiNotesTheme(uiState.darkTheme) {
-        val scaffoldState = rememberScaffoldState()
+        val drawerState = rememberDrawerState(DrawerValue.Closed)
         val scope = rememberCoroutineScope()
         val openDrawer: () -> Unit = {
-            scope.launch { scaffoldState.drawerState.open() }
+            scope.launch { drawerState.open() }
         }
         val navigateToHomeAndOpenDrawer = {
             appViewModel.popBackStack()
@@ -47,35 +41,17 @@ fun App(appViewModel: AppViewModel = viewModel()) {
 
         AnimatedNavHost(
             navController = appViewModel.navController,
-            startDestination = "home",
-            enterTransition = { fadeIn(tween(durationMillis)) },
-            exitTransition = { fadeOut(tween(durationMillis)) }
+            startDestination = NavGraph.Home.route,
+            enterTransition = NavTransitions.defaultEnterTransition,
+            exitTransition = NavTransitions.defaultExitTransition
         ) {
             composable(
-                route = "home",
-                enterTransition = {
-                    if (
-                        initialState.destination.route == "chara" ||
-                        initialState.destination.route == "about"
-                    ) {
-                        slideInHorizontally(tween(durationMillis)) { -it }
-                    } else {
-                        null
-                    }
-                },
-                exitTransition = {
-                    if (
-                        targetState.destination.route == "chara" ||
-                        targetState.destination.route == "about"
-                    ) {
-                        slideOutHorizontally(tween(durationMillis)) {-it }
-                    } else {
-                        null
-                    }
-                }
+                route = NavGraph.Home.route,
+                enterTransition = NavGraph.Home.enterTransition,
+                exitTransition = NavGraph.Home.exitTransition
             ) {
                 Home(
-                    scaffoldState,
+                    drawerState,
                     uiState,
                     dbState,
                     appViewModel::navigateToImages,
@@ -87,21 +63,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = "chara",
-                enterTransition = {
-                    if (initialState.destination.route == "home") {
-                        slideInHorizontally(tween(durationMillis)) { it }
-                    } else {
-                        slideInHorizontally(tween(durationMillis)) { -it }
-                    }
-                },
-                exitTransition = {
-                    if (targetState.destination.route == "home") {
-                        slideOutHorizontally(tween(durationMillis)) { it }
-                    } else {
-                        slideOutHorizontally(tween(durationMillis)) { -it }
-                    }
-                }
+                route = NavGraph.Chara.route,
+                enterTransition = NavGraph.Chara.enterTransition,
+                exitTransition = NavGraph.Chara.exitTransition
             ) {
                 Chara(
                     appViewModel.charaState,
@@ -114,13 +78,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = "equip",
-                enterTransition = {
-                    slideInHorizontally(tween(durationMillis)) { it }
-                },
-                exitTransition = {
-                    slideOutHorizontally(tween(durationMillis)) { it }
-                }
+                route = NavGraph.Equip.route,
+                enterTransition = NavGraph.Equip.enterTransition,
+                exitTransition = NavGraph.Equip.exitTransition
             ) {
                 Equip(
                     dbState,
@@ -129,13 +89,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = "exEquip",
-                enterTransition = {
-                    slideInHorizontally(tween(durationMillis)) { it }
-                },
-                exitTransition = {
-                    slideOutHorizontally(tween(durationMillis)) { it }
-                }
+                route = NavGraph.ExEquip.route,
+                enterTransition = NavGraph.ExEquip.enterTransition,
+                exitTransition = NavGraph.ExEquip.exitTransition
             ) {
                 ExEquip(
                     appViewModel.exEquipState,
@@ -143,13 +99,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = "summons",
-                enterTransition = {
-                    slideInHorizontally(tween(durationMillis)) { it }
-                },
-                exitTransition = {
-                    slideOutHorizontally(tween(durationMillis)) { it }
-                }
+                route = NavGraph.Summons.route,
+                enterTransition = NavGraph.Summons.enterTransition,
+                exitTransition = NavGraph.Summons.exitTransition
             ) {
                 Summons(
                     appViewModel.summonsState,
@@ -157,21 +109,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = "quest",
-                enterTransition = {
-                    if (initialState.destination.route == "equip") {
-                        slideInHorizontally(tween(durationMillis)) { -it }
-                    } else {
-                        null
-                    }
-                },
-                exitTransition = {
-                    if (targetState.destination.route == "equip") {
-                        slideOutHorizontally(tween(durationMillis)) {-it }
-                    } else {
-                        null
-                    }
-                }
+                route = NavGraph.Quest.route,
+                enterTransition = NavGraph.Quest.enterTransition,
+                exitTransition = NavGraph.Quest.exitTransition
             ) {
                 Quest(
                     appViewModel.questState,
@@ -181,21 +121,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = "clanBattle",
-                enterTransition = {
-                    if (initialState.destination.route == "clanBattleMapList") {
-                        slideInHorizontally(tween(durationMillis)) { -it }
-                    } else {
-                        null
-                    }
-                },
-                exitTransition = {
-                    if (targetState.destination.route == "clanBattleMapList") {
-                        slideOutHorizontally(tween(durationMillis)) {-it }
-                    } else {
-                        null
-                    }
-                }
+                route = NavGraph.ClanBattle.route,
+                enterTransition = NavGraph.ClanBattle.enterTransition,
+                exitTransition = NavGraph.ClanBattle.exitTransition
             ) {
                 ClanBattle(
                     appViewModel.clanBattleState,
@@ -205,21 +133,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = "clanBattleMapList",
-                enterTransition = {
-                    if (initialState.destination.route == "clanBattle") {
-                        slideInHorizontally(tween(durationMillis)) { it }
-                    } else {
-                        slideInHorizontally(tween(durationMillis)) { -it }
-                    }
-                },
-                exitTransition = {
-                    if (targetState.destination.route == "clanBattle") {
-                        slideOutHorizontally(tween(durationMillis)) { it }
-                    } else {
-                        slideOutHorizontally(tween(durationMillis)) { -it }
-                    }
-                }
+                route = NavGraph.ClanBattleMapList.route,
+                enterTransition = NavGraph.ClanBattleMapList.enterTransition,
+                exitTransition = NavGraph.ClanBattleMapList.exitTransition
             ) {
                 ClanBattleMapList(
                     appViewModel.clanBattleState,
@@ -228,21 +144,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = "clanBattleEnemy",
-                enterTransition = {
-                    if (initialState.destination.route == "clanBattleMapList") {
-                        slideInHorizontally(tween(durationMillis)) { it }
-                    } else {
-                        slideInHorizontally(tween(durationMillis)) { -it }
-                    }
-                },
-                exitTransition = {
-                    if (targetState.destination.route == "clanBattleMapList") {
-                        slideOutHorizontally(tween(durationMillis)) { it }
-                    } else {
-                        slideOutHorizontally(tween(durationMillis)) { -it }
-                    }
-                }
+                route = NavGraph.ClanBattleEnemy.route,
+                enterTransition = NavGraph.ClanBattleEnemy.enterTransition,
+                exitTransition = NavGraph.ClanBattleEnemy.exitTransition
             ) {
                 ClanBattleEnemy(
                     appViewModel.clanBattleState,
@@ -250,32 +154,28 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     appViewModel::popBackStack
                 )
             }
-            composable("images") {
+            composable(
+                route = NavGraph.About.route,
+                enterTransition = NavGraph.About.enterTransition,
+                exitTransition = NavGraph.About.exitTransition
+            ) {
+                About(
+                    appViewModel::popBackStack,
+                    appViewModel::linkTo
+                )
+            }
+            composable(NavGraph.Images.route) {
                 UserImages(
                     userState,
                     appViewModel::userEditorBack,
                     appViewModel::confirmNewImage
                 )
             }
-            composable("editor") {
+            composable(NavGraph.Editor.route) {
                 CharaEditor(
                     userState,
                     appViewModel::userEditorBack,
                     appViewModel::confirmNewUserProfiles
-                )
-            }
-            composable(
-                route = "about",
-                enterTransition = {
-                    slideInHorizontally(tween(durationMillis)) { it }
-                },
-                exitTransition = {
-                    slideOutHorizontally(tween(durationMillis)) { it }
-                }
-            ) {
-                About(
-                    appViewModel::popBackStack,
-                    appViewModel::linkTo
                 )
             }
         }

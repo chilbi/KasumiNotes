@@ -2,11 +2,11 @@ package com.kasuminotes.ui.app.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -80,6 +80,6 @@ private fun DownloadDialogContent(state: DownloadState) {
         } else {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
         }
-        Text(text, style = MaterialTheme.typography.caption)
+        Text(text, style = MaterialTheme.typography.bodySmall)
     }
 }

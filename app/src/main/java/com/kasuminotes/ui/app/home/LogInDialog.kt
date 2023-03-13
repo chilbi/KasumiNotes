@@ -15,26 +15,24 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.kasuminotes.R
 import com.kasuminotes.data.User
@@ -55,17 +53,17 @@ fun LogInDialog(
     Dialog(onClose) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.medium,
-            elevation = 20.dp
+            shape = MaterialTheme.shapes.extraLarge,
+            tonalElevation = AlertDialogDefaults.TonalElevation
         ) {
-            Column {
+            Column(Modifier.fillMaxWidth().padding(16.dp)) {
                 LogInTitle()
 
                 Column(
                     Modifier
                         .heightIn(max = 420.dp)
                         .verticalScroll(rememberScrollState())
-                        .padding(vertical = 8.dp)
+                        .padding(8.dp)
                 ) {
                     userList.forEach { user ->
                         UserItem(user, maxChara, onLogIn, onDelete)
@@ -78,6 +76,8 @@ fun LogInDialog(
                     TextButton(onClose) {
                         Text(stringResource(R.string.cancel))
                     }
+
+                    Spacer(Modifier.width(8.dp))
 
                     Button(onClick = {
                         onClose()
@@ -95,8 +95,8 @@ fun LogInDialog(
 private fun LogInTitle() {
     Text(
         text = stringResource(R.string.switch_user),
-        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
-        style = MaterialTheme.typography.subtitle1
+        modifier = Modifier.padding(8.dp),
+        style = MaterialTheme.typography.headlineSmall
     )
 }
 
@@ -130,16 +130,14 @@ private fun UserItem(
             ) {
                 Text(
                     text = user.userName,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
+                    maxLines = 1,
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Text(
                     text = "uid:${user.userId}",
-                    color = LocalContentColor.current.copy(0.6f),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium
+                    color = LocalContentColor.current.copy(0.5f),
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
@@ -155,8 +153,8 @@ private fun UserItem(
                 Icon(
                     imageVector = Icons.Filled.Delete,
                     contentDescription = null,
-                    tint = if (user.userId != DefaultUserId) MaterialTheme.colors.secondary
-                    else LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+                    tint = if (user.userId != DefaultUserId) MaterialTheme.colorScheme.error
+                    else LocalContentColor.current
                 )
             }
 
@@ -165,8 +163,8 @@ private fun UserItem(
                 value = "${user.userChara}/$maxChara",
                 modifier = Modifier
                     .padding(start = 4.dp)
-                    .width(128.dp),
-                width = 64.dp
+                    .width(160.dp),
+                width = 80.dp
             )
         }
     }

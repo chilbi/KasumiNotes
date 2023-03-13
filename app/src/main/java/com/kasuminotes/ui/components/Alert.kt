@@ -1,3 +1,4 @@
+
 package com.kasuminotes.ui.components
 
 import androidx.compose.foundation.background
@@ -7,23 +8,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.WarningAmber
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.ui.theme.DarkError
 import com.kasuminotes.ui.theme.DarkInfo
 import com.kasuminotes.ui.theme.DarkSuccess
@@ -73,7 +72,7 @@ fun Alert(
 
     Row(
         modifier = modifier
-            .background(bgColor, MaterialTheme.shapes.small)
+            .background(bgColor, MaterialTheme.shapes.extraSmall)
             .padding(padding),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -89,7 +88,7 @@ fun Alert(
                 text = text,
                 modifier = Modifier.widthIn(max = maxWidth - 48.dp),
                 color = Color.Black,
-                fontSize = 12.sp,
+                style = MaterialTheme.typography.bodySmall
             )
         }
 

@@ -1,46 +1,54 @@
 package com.kasuminotes.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.contentColorFor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun Infobar(
     label: String,
     value: String,
     modifier: Modifier = Modifier,
+    underlineStyle: UnderlineStyle = UnderlineStyle.Dashed,
     width: Dp = 72.dp,
-    color: Color = MaterialTheme.colors.primary,
+    margin: PaddingValues = PaddingValues(4.dp),
+    padding: PaddingValues = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
+    color: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = contentColorFor(color),
-    style: UnderlineStyle = UnderlineStyle.Dashed,
-    fontSize: TextUnit = 12.sp,
-    textAlign: TextAlign? = null
+    shape: Shape = MaterialTheme.shapes.extraSmall,
+    textAlign: TextAlign? = null,
+    labelStyle: TextStyle = MaterialTheme.typography.labelMedium,
+    valueStyle: TextStyle = MaterialTheme.typography.bodySmall
 ) {
     InfobarImpl(
         label = label,
         stringValue = value,
         annotatedStringValue = null,
         modifier = modifier,
+        underlineStyle = underlineStyle,
         width = width,
+        margin = margin,
+        padding = padding,
         color = color,
         contentColor = contentColor,
-        style = style,
-        fontSize = fontSize,
-        textAlign = textAlign
+        shape = shape,
+        textAlign = textAlign,
+        labelStyle = labelStyle,
+        valueStyle = valueStyle
     )
 }
 
@@ -49,24 +57,32 @@ fun Infobar(
     label: String,
     value: AnnotatedString,
     modifier: Modifier = Modifier,
+    underlineStyle: UnderlineStyle = UnderlineStyle.Dashed,
     width: Dp = 72.dp,
-    color: Color = MaterialTheme.colors.primary,
+    margin: PaddingValues = PaddingValues(4.dp),
+    padding: PaddingValues = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
+    color: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = contentColorFor(color),
-    style: UnderlineStyle = UnderlineStyle.Dashed,
-    fontSize: TextUnit = 12.sp,
-    textAlign: TextAlign? = null
+    shape: Shape = MaterialTheme.shapes.extraSmall,
+    textAlign: TextAlign? = null,
+    labelStyle: TextStyle = MaterialTheme.typography.labelMedium,
+    valueStyle: TextStyle = MaterialTheme.typography.bodySmall
 ) {
     InfobarImpl(
         label = label,
         stringValue = null,
         annotatedStringValue = value,
         modifier = modifier,
+        underlineStyle = underlineStyle,
         width = width,
+        margin = margin,
+        padding = padding,
         color = color,
         contentColor = contentColor,
-        style = style,
-        fontSize = fontSize,
-        textAlign = textAlign
+        shape = shape,
+        textAlign = textAlign,
+        labelStyle = labelStyle,
+        valueStyle = valueStyle
     )
 }
 
@@ -76,36 +92,31 @@ private fun InfobarImpl(
     stringValue: String?,
     annotatedStringValue: AnnotatedString?,
     modifier: Modifier = Modifier,
-    width: Dp,
-    color: Color,
-    contentColor: Color,
-    style: UnderlineStyle,
-    fontSize: TextUnit,
-    textAlign: TextAlign?
+    underlineStyle: UnderlineStyle = UnderlineStyle.Dashed,
+    width: Dp = 72.dp,
+    margin: PaddingValues = PaddingValues(4.dp),
+    padding: PaddingValues = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
+    color: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = contentColorFor(color),
+    shape: Shape = MaterialTheme.shapes.extraSmall,
+    textAlign: TextAlign? = null,
+    labelStyle: TextStyle = MaterialTheme.typography.labelMedium,
+    valueStyle: TextStyle = MaterialTheme.typography.bodySmall
 ) {
     Row(
         modifier
-            .padding(4.dp)
-            .underline(
-                width = 1.dp,
-                color = color,
-                style = style,
-                startPointX = width - 4.dp
-            )
+            .padding(margin)
+            .underline(1.dp, color, underlineStyle, width - 8.dp)
     ) {
         Text(
             text = label,
             modifier = Modifier
                 .width(width)
-                .background(
-                    color = color,
-                    shape = MaterialTheme.shapes.small
-                )
-                .padding(horizontal = 4.dp, vertical = 2.dp),
+                .background(color, shape)
+                .padding(padding),
             color = contentColor,
-            fontSize = fontSize,
-            fontWeight = FontWeight.Medium,
-            textAlign = textAlign
+            textAlign = textAlign,
+            style = labelStyle
         )
 
         when {
@@ -114,18 +125,18 @@ private fun InfobarImpl(
                     text = stringValue,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(vertical = 2.dp),
-                    fontSize = fontSize,
-                    textAlign = TextAlign.End
+                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                    textAlign = TextAlign.End,
+                    style = valueStyle
                 )
             annotatedStringValue != null ->
                 Text(
                     text = annotatedStringValue,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(vertical = 2.dp),
-                    fontSize = fontSize,
-                    textAlign = TextAlign.End
+                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                    textAlign = TextAlign.End,
+                    style = valueStyle
                 )
         }
     }

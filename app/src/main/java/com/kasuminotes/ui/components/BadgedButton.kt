@@ -10,20 +10,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 
 @Composable
 fun BadgedButton(
@@ -46,13 +50,33 @@ fun BadgedButton(
     ) {
         label()
 
-        DiffBadgedBox(value, originValue) {
+        BadgedDiffBox(value, originValue) {
             Text(
                 text = value.toString(),
                 modifier = Modifier.padding(horizontal = 4.dp),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.labelLarge
             )
+        }
+    }
+}
+
+@Composable
+fun BadgedButtonDialog(
+    value: Int,
+    originValue: Int,
+    label: @Composable () -> Unit,
+    content: @Composable (onClose: () -> Unit) -> Unit
+) {
+    var visible by rememberSaveable { mutableStateOf(false) }
+    val onOpen = { visible = true }
+    val onClose = { visible = false }
+
+    BadgedButton(value, originValue, onOpen, label)
+
+    if (visible) {
+        Dialog(onClose) {
+            content(onClose)
         }
     }
 }
@@ -69,21 +93,20 @@ fun LabelImage(@DrawableRes id: Int) {
 @Composable
 fun LabelText(
     text: String,
-    background: Color = MaterialTheme.colors.primary,
-    color: Color = MaterialTheme.colors.onPrimary,
+    color: Color = MaterialTheme.colorScheme.primaryContainer,
+    contentColor: Color = contentColorFor(color),
 ) {
     Text(
         text =text,
         modifier = Modifier
             .width(40.dp)
             .background(
-                color = background,
-                shape = MaterialTheme.shapes.medium
+                color = color,
+                shape = MaterialTheme.shapes.extraSmall
             )
             .padding(vertical = 2.dp),
-        color = color,
-        fontSize = 10.sp,
-        fontWeight = FontWeight.SemiBold,
-        textAlign = TextAlign.Center
+        color = contentColor,
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.labelSmall
     )
 }

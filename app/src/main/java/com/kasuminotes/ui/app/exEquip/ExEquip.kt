@@ -1,24 +1,34 @@
 package com.kasuminotes.ui.app.exEquip
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.ui.app.state.ExEquipState
+import com.kasuminotes.ui.components.BackButton
+import com.kasuminotes.ui.components.TopBar
+import com.kasuminotes.ui.components.PlaceImage
+import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun ExEquip(
@@ -44,6 +54,7 @@ fun ExEquip(
                 }
             }
         },
+        containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Column(
                 Modifier
@@ -83,6 +94,27 @@ fun ExEquip(
                     }
                 }
             }
+        }
+    )
+}
+
+@Composable
+private fun ExEquipTopBar(
+    category: Int,
+    categoryName: String,
+    onBack: () -> Unit
+) {
+    TopBar(
+        title = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(Modifier.padding(end = 8.dp).size(24.dp)) {
+                    PlaceImage(UrlUtil.getExEquipCategoryUrl(category))
+                }
+                Text(categoryName)
+            }
+        },
+        navigationIcon = {
+            BackButton(onBack)
         }
     )
 }

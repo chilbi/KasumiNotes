@@ -9,16 +9,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,17 +25,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.data.EnemyData
 import com.kasuminotes.data.SkillItem
 import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.ui.components.AttackDetail
 import com.kasuminotes.ui.components.AttackPattern
-import com.kasuminotes.ui.components.BgBorderColumn
+import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.SkillDetail
-import com.kasuminotes.ui.components.UnderlineLabelColumn
+import com.kasuminotes.ui.components.LabelContainer
+import com.kasuminotes.ui.components.MultiLineText
 import com.kasuminotes.utils.UrlUtil
 
 private val clanBattleEnemyIndices = listOf(0, 16, 1, 3, 2, 4, 13, 15)
@@ -60,7 +58,7 @@ fun EnemyDetail(
     ) {
         EnemyComment(enemyData.comment)
 
-        BgBorderColumn {
+        Container {
             PropertyTable(
                 property = enemyData.property,
                 indices = clanBattleEnemyIndices
@@ -69,9 +67,9 @@ fun EnemyDetail(
 
         if (enemyMultiParts.isNotEmpty()) {
             enemyMultiParts.forEach { part ->
-                UnderlineLabelColumn(
+                LabelContainer(
                     label = part.name,
-                    color = MaterialTheme.colors.primary
+                    color = MaterialTheme.colorScheme.primary
                 ) {
                     PropertyTable(
                         property = part.property,
@@ -132,12 +130,14 @@ private fun EnemyComment(comment: String) {
     Box {
         var expanded by remember { mutableStateOf(false) }
 
-        BgBorderColumn {
+        Container {
+            val style = MaterialTheme.typography.bodyMedium
             Box(Modifier.clickable { expanded = !expanded }) {
                 Column {
-                    comments.first.forEach { text ->
-                        CommentText(text)
-                    }
+                    MultiLineText(
+                        lineList = comments.first,
+                        style = style
+                    )
                 }
                 Icon(
                     imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
@@ -152,23 +152,12 @@ private fun EnemyComment(comment: String) {
                 exit = fadeOut() + shrinkVertically()
             ) {
                 Column {
-                    comments.second.forEach { text ->
-                        CommentText(text)
-                    }
+                    MultiLineText(
+                        lineList = comments.second,
+                        style = style
+                    )
                 }
             }
         }
     }
-}
-
-
-@Composable
-private fun CommentText(text: String) {
-    Text(
-        text = text,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 4.dp, vertical = 2.dp),
-        fontSize = 14.sp
-    )
 }

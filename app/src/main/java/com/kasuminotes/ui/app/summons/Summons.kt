@@ -9,12 +9,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.kasuminotes.R
 import com.kasuminotes.ui.app.state.SummonsState
+import com.kasuminotes.ui.components.BackButton
+import com.kasuminotes.ui.components.TopBar
 
 private val summonPropertyIndices: List<Int> = listOf(
     1, 3, 5, 6, 2, 4, 16, 7, 0, 8, 9, 10, 13, 15, 14
@@ -30,6 +36,7 @@ fun Summons(
     Scaffold(
         topBar = { SummonsTopBar(onBack) },
         bottomBar = { Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars)) },
+        containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Column(
                 Modifier
@@ -94,3 +101,10 @@ fun Summons(
     )
 }
 
+@Composable
+private fun SummonsTopBar(onBack: () -> Unit) {
+    TopBar(
+        title = { Text(stringResource(R.string.summons_info)) },
+        navigationIcon = { BackButton(onBack) }
+    )
+}

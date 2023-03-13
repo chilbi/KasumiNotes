@@ -174,35 +174,35 @@ FROM chara_data LEFT JOIN max_data"""
 suspend fun AppDatabase.initQuestDropData() {
     withIOContext {
         val list = listOf(
-            async { getQuestDataList(QuestRange.N) },
+//            async { getQuestDataList(QuestRange.N) },
             async { getQuestDataList(QuestRange.H) },
-            async { getQuestDataList(QuestRange.VH) },
-            async {
-                use {
-                    rawQuery(
-                        "SELECT equipment_id FROM equipment_data WHERE equipment_id<110000",
-                        null
-                    ).use {
-                        val set = mutableSetOf<Int>()
-
-                        while (it.moveToNext()) {
-                            val equipId = it.getInt(0)
-                            set.add(Helper.getEquipRarity(equipId))
-                        }
-
-                        set.sortedBy { o -> o }
-                    }
-                }
-            }
+            async { getQuestDataList(QuestRange.VH) }
+//            async {
+//                use {
+//                    rawQuery(
+//                        "SELECT equipment_id FROM equipment_data WHERE equipment_id<110000",
+//                        null
+//                    ).use {
+//                        val set = mutableSetOf<Int>()
+//
+//                        while (it.moveToNext()) {
+//                            val equipId = it.getInt(0)
+//                            set.add(Helper.getEquipRarity(equipId))
+//                        }
+//
+//                        set.sortedBy { o -> o }
+//                    }
+//                }
+//            }
         ).awaitAll()
-        @Suppress("UNCHECKED_CAST")
-        val nQuestList = list[0] as List<QuestData>
-        @Suppress("UNCHECKED_CAST")
-        val hQuestList = list[1] as List<QuestData>
-        @Suppress("UNCHECKED_CAST")
-        val vhQuestList = list[2] as List<QuestData>
-        @Suppress("UNCHECKED_CAST")
-        val equipRarityList = list[3] as List<Int>
+//        @Suppress("UNCHECKED_CAST")
+//        val nQuestList = list[0] as List<QuestData>
+//        @Suppress("UNCHECKED_CAST")
+        val hQuestList = list[0]// as List<QuestData>
+//        @Suppress("UNCHECKED_CAST")
+        val vhQuestList = list[1]// as List<QuestData>
+//        @Suppress("UNCHECKED_CAST")
+//        val equipRarityList = list[3] as List<Int>
 
         val pieceSet = mutableSetOf<Int>()
         hQuestList.forEach { item ->
@@ -223,15 +223,7 @@ suspend fun AppDatabase.initQuestDropData() {
                 memoryPieceSql += "\nUNION SELECT $rewardImage"
             }
         }
-
-//        var equipRaritySql = "REPLACE INTO `equip_rarity`\nSELECT ${equipRarityList[0]}"
-//        val equipRaritySize = equipRarityList.size
-//        i = 1
-//
-//        while (i < equipRaritySize) {
-//            equipRaritySql += "\nUNION SELECT ${equipRarityList[i++]}"
-//        }
-
+/*
         val dropRangeList = mutableListOf<Pair<Int, QuestRange>>()
         val pairs = arrayOf(
             QuestType.N.value to nQuestList,
@@ -276,23 +268,20 @@ suspend fun AppDatabase.initQuestDropData() {
         while (i < dropRangeSize) {
             dropRangeSql += "\nUNION SELECT ${toValues(dropRangeList[i++])}"
         }
-
+*/
         use {
             execSQL("CREATE TABLE `memory_piece`('id' INTEGER NOT NULL,PRIMARY KEY('id'))")
             execSQL(memoryPieceSql)
 
-//            execSQL("CREATE TABLE `equip_rarity`('rarity' INTEGER NOT NULL, PRIMARY KEY('rarity'))")
-//            execSQL(equipRaritySql)
-
-            execSQL(
-                """CREATE TABLE `drop_range`(
-'range_id' INTEGER NOT NULL,
-'range_min' INTEGER NOT NULL,
-'range_max' INTEGER NOT NULL,
-PRIMARY KEY('range_id')
-)"""
-            )
-            execSQL(dropRangeSql)
+//            execSQL(
+//                """CREATE TABLE `drop_range`(
+//'range_id' INTEGER NOT NULL,
+//'range_min' INTEGER NOT NULL,
+//'range_max' INTEGER NOT NULL,
+//PRIMARY KEY('range_id')
+//)"""
+//            )
+//            execSQL(dropRangeSql)
         }
     }
 }

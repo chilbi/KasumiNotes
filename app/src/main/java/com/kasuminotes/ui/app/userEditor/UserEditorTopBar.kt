@@ -1,12 +1,12 @@
-package com.kasuminotes.ui.app.usereditor
+package com.kasuminotes.ui.app.userEditor
 
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,7 +17,7 @@ import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.FilterMenu
-import com.kasuminotes.ui.components.ImmersiveTopAppBar
+import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.SearchBar
 
 @Composable
@@ -37,7 +37,7 @@ fun UserEditorTopBar(
 ) {
     var visibleSearch by rememberSaveable { mutableStateOf(false) }
 
-    ImmersiveTopAppBar(
+    TopBar(
         title = {
             if (visibleSearch) {
                 SearchBar(searchText, onSearchTextChange)

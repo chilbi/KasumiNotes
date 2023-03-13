@@ -8,13 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScrollableTabRow
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.contentColorFor
-import androidx.compose.material.primarySurface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun TabsPanel(
@@ -31,9 +30,9 @@ fun TabsPanel(
     scrollable: Boolean,
     initIndex: Int,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colors.primarySurface,
-    contentColor: Color = contentColorFor(backgroundColor),
-    edgePadding: Dp = TabRowDefaults.ScrollableTabRowPadding,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
+    contentColor: Color = contentColorFor(containerColor),
+    edgePadding: Dp = 52.dp,// ScrollableTabRowPadding
     tabContentFor: @Composable ColumnScope.(index: Int) -> Unit,
     panelContentFor: @Composable (index: Int) -> Unit
 ) {
@@ -45,7 +44,7 @@ fun TabsPanel(
         selectedTabIndex = selectedTabIndex,
         onTabIndexSelected = { selectedTabIndex = it },
         modifier = modifier,
-        backgroundColor = backgroundColor,
+        containerColor = containerColor,
         contentColor = contentColor,
         edgePadding = edgePadding,
         tabContentFor = tabContentFor,
@@ -60,9 +59,9 @@ fun TabsPanel(
     selectedTabIndex: Int,
     onTabIndexSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colors.primarySurface,
-    contentColor: Color = contentColorFor(backgroundColor),
-    edgePadding: Dp = TabRowDefaults.ScrollableTabRowPadding,
+    containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
+    contentColor: Color = contentColorFor(containerColor),
+    edgePadding: Dp = 52.dp,// ScrollableTabRowPadding
     tabContentFor: @Composable ColumnScope.(index: Int) -> Unit,
     panelContentFor: @Composable (index: Int) -> Unit
 ) {
@@ -87,7 +86,7 @@ fun TabsPanel(
             ScrollableTabRow(
                 selectedTabIndex = selectedTabIndex,
                 modifier = modifier,
-                backgroundColor = backgroundColor,
+                containerColor = containerColor,
                 contentColor = contentColor,
                 edgePadding = edgePadding,
                 tabs = tabs
@@ -96,7 +95,7 @@ fun TabsPanel(
             TabRow(
                 selectedTabIndex = selectedTabIndex,
                 modifier = modifier,
-                backgroundColor = backgroundColor,
+                containerColor = containerColor,
                 contentColor = contentColor,
                 tabs = tabs
             )

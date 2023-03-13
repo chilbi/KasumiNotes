@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.FabPosition
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,11 +21,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.QuestData
-import com.kasuminotes.ui.components.ImmersiveTopAppBar
+import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.Pagination
 
 @Composable
@@ -44,7 +43,7 @@ fun QuestMap(
 ) {
     Scaffold(
         topBar = {
-            ImmersiveTopAppBar(
+            TopBar(
                 title = {
                     Text(stringResource(R.string.map_list))
                 },
@@ -55,7 +54,7 @@ fun QuestMap(
                             questType = questType,
                             modifier = Modifier.size(40.dp),
                             shape = CircleShape,
-                            fontSize = 16.sp
+                            style = MaterialTheme.typography.titleMedium
                         )
                     }
                     DropdownMenu(
@@ -63,36 +62,35 @@ fun QuestMap(
                         onDismissRequest = { expanded = false }
                     ) {
                         QuestType.values().forEach { type ->
-                            DropdownMenuItem(onClick = {
-                                onQuestTypeChange(type)
-                                expanded = false
-                            }) {
-                                QuestLabel(type)
-                            }
+                            DropdownMenuItem(
+                                text = { QuestLabel(type) },
+                                onClick = {
+                                    onQuestTypeChange(type)
+                                    expanded = false
+                                }
+                            )
                         }
                     }
                 },
                 actions = {
                     sortButton()
                 },
-                content = {
-                    if (
-                        questType == QuestType.N ||
-                        questType == QuestType.H
-                    ) {
+                content = if (questType == QuestType.N || questType == QuestType.H) {
+                    {
                         Pagination(
                             count = maxArea,
                             page = area,
                             onChange = onAreaChange
                         )
                     }
+                } else {
+                    null
                 }
             )
         },
         bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
-        floatingActionButtonPosition = FabPosition.Center,
-        isFloatingActionButtonDocked = true,
+        containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
                 LazyColumn(contentPadding = PaddingValues(4.dp)) {

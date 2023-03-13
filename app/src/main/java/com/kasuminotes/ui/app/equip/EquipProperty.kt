@@ -2,16 +2,15 @@ package com.kasuminotes.ui.app.equip
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Slider
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,11 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.data.Property
-import com.kasuminotes.ui.components.BgBorderColumn
-import com.kasuminotes.ui.components.ColumnLabel
+import com.kasuminotes.ui.components.FixedWidthLabel
+import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.Rarities
 
@@ -38,7 +36,7 @@ fun EquipProperty(
     property: Property,
     onEnhanceLevelChange: (Int) -> Unit
 ) {
-    BgBorderColumn {
+    Container {
         PropertyTable(
             property = property,
             indices = property.nonzeroIndices,
@@ -47,7 +45,7 @@ fun EquipProperty(
 
         if (maxEnhanceLevel > 5) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                ColumnLabel(stringResource(R.string.promotion_level))
+                FixedWidthLabel(stringResource(R.string.promotion_level))
 
                 var value by rememberSaveable(enhanceLevel) {
                     mutableStateOf(enhanceLevel.toFloat())
@@ -58,8 +56,8 @@ fun EquipProperty(
                 Text(
                     text = intValue.toString(),
                     modifier = Modifier.width(36.dp),
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium
                 )
 
                 IconButton(
@@ -86,7 +84,7 @@ fun EquipProperty(
             }
         } else {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                ColumnLabel(stringResource(R.string.promotion_level))
+                FixedWidthLabel(stringResource(R.string.promotion_level))
                 Spacer(Modifier.width(8.dp))
                 Rarities(
                     highlightCount = 0,

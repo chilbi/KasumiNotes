@@ -1,5 +1,6 @@
 package com.kasuminotes.ui.app.summons
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -9,7 +10,7 @@ import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.ui.components.AttackDetail
 import com.kasuminotes.ui.components.AttackPattern
-import com.kasuminotes.ui.components.BgBorderColumn
+import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.SkillDetail
@@ -37,12 +38,10 @@ fun SummonDetail(
         imageUrl = UrlUtil.summonIconUrl,
         primaryText = name,
         secondaryText = secondaryText,
-        imageSize = 56.dp,
-        primaryFontSize = 18.sp,
-        secondaryFontSize = 16.sp
+        imageSize = 56.dp
     )
 
-    BgBorderColumn {
+    Container {
         PropertyTable(
             property = property,
             indices = propertyIndices

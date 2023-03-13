@@ -13,14 +13,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
@@ -28,10 +29,9 @@ import com.kasuminotes.action.toNumStr
 import com.kasuminotes.data.ClanBattleMapData
 import com.kasuminotes.data.EnemyData
 import com.kasuminotes.data.Property
-import com.kasuminotes.ui.components.BgBorderColumn
+import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.Infobar
-import com.kasuminotes.ui.theme.LightWarning
 import com.kasuminotes.ui.theme.phaseColors
 import com.kasuminotes.utils.UrlUtil
 
@@ -97,7 +97,7 @@ private fun RowScope.LabelDivider() {
             .weight(1f)
             .padding(horizontal = 8.dp)
             .height(1.dp)
-            .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
+            .background(MaterialTheme.colorScheme.outlineVariant)
     )
 }
 
@@ -108,7 +108,7 @@ private fun EnemyListItem(
     scoreCoefficient: Float,
     onEnemyClick: (EnemyData) -> Unit
 ) {
-    BgBorderColumn(onClick = { onEnemyClick(enemyData) }) {
+    Container(onClick = { onEnemyClick(enemyData) }) {
         val atkTypeStr = stringResource(
             if (enemyData.atkType == 1) R.string.physical
             else R.string.magic
@@ -117,17 +117,14 @@ private fun EnemyListItem(
             imageUrl = UrlUtil.getBossUnitIconUrl(enemyData.unitId),
             primaryText = enemyData.name,
             secondaryText = "【$atkTypeStr】",
-            imageSize = 56.dp,
-            primaryFontSize = 18.sp,
-            secondaryFontSize = 16.sp
+            imageSize = 56.dp
         ) {
             if (enemyData.multiParts.isNotEmpty()) {
                 Text(
                     text = stringResource(R.string.multi_target_d, enemyData.multiParts.size),
                     modifier = Modifier.padding(horizontal = 4.dp),
-                    color = MaterialTheme.colors.secondary,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.labelLarge
                 )
             }
             Spacer(Modifier.weight(1f))
@@ -135,9 +132,9 @@ private fun EnemyListItem(
                 label = "Lv",
                 value = enemyData.level.toString(),
                 modifier = Modifier.width(60.dp),
-                width = 21.dp,
-                color = LightWarning,
-                contentColor = Color.Black
+                width = 24.dp,
+                color = MaterialTheme.colorScheme.primaryContainer,
+                textAlign = TextAlign.Center
             )
         }
 
@@ -151,7 +148,8 @@ private fun EnemyListItem(
             Box(Modifier.weight(1f)) {
                 Infobar(
                     label = stringResource(R.string.score_coefficient),
-                    value = scoreCoefficient.toString()
+                    value = scoreCoefficient.toString(),
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
         }

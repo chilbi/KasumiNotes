@@ -3,11 +3,7 @@ package com.kasuminotes.ui.app.chara
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.material.BackdropScaffold
-import androidx.compose.material.BackdropScaffoldDefaults
-import androidx.compose.material.BackdropValue
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.rememberBackdropScaffoldState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,6 +17,10 @@ import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.ui.app.state.CharaState
+import com.kasuminotes.ui.components.BackdropScaffold
+import com.kasuminotes.ui.components.BackdropScaffoldDefaults
+import com.kasuminotes.ui.components.BackdropValue
+import com.kasuminotes.ui.components.rememberBackdropScaffoldState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -142,12 +142,12 @@ fun Chara(
         peekHeight = peekHeight,
         headerHeight = headerHeight,
         persistentAppBar = false,
-        backLayerBackgroundColor = MaterialTheme.colors.surface,
-        backLayerContentColor = MaterialTheme.colors.onSurface,
+        backLayerBackgroundColor = MaterialTheme.colorScheme.surface,
+        backLayerContentColor = MaterialTheme.colorScheme.onSurface,
         frontLayerShape = RectangleShape,
         frontLayerElevation = 0.dp,
         frontLayerBackgroundColor = Color.Transparent,
-        frontLayerContentColor = MaterialTheme.colors.onSurface,
+        frontLayerContentColor = MaterialTheme.colorScheme.onSurface,
         frontLayerScrimColor = Color.Transparent
     )
 }

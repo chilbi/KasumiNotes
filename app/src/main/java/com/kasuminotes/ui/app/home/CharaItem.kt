@@ -12,7 +12,8 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
@@ -23,19 +24,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
 import com.kasuminotes.R
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.CharaImageState
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
-import com.kasuminotes.ui.theme.Rounded8
+import com.kasuminotes.ui.theme.UnitImageShape
 import com.kasuminotes.ui.theme.ShadowColor
 import com.kasuminotes.utils.UrlUtil
 
@@ -107,6 +104,13 @@ fun CharaItem(
 @Composable
 private fun BoxScope.Caption(text: String, layerAlpha: State<Float>, charaImageState: CharaImageState) {
     if (text.isNotEmpty()) {
+        val style = if (charaImageState.isIcon) {
+            MaterialTheme.typography.bodySmall
+        } else if (charaImageState.isPlate) {
+            MaterialTheme.typography.bodyMedium
+        } else {
+            MaterialTheme.typography.bodyLarge
+        }
         Text(
             text = text,
             modifier = Modifier
@@ -114,8 +118,7 @@ private fun BoxScope.Caption(text: String, layerAlpha: State<Float>, charaImageS
                 .align(Alignment.TopEnd)
                 .graphicsLayer { alpha = layerAlpha.value },
             color = Color.White,
-            fontSize = if (charaImageState.isIcon) 12.sp else if (charaImageState.isPlate) 14.sp else 16.sp,
-            style = TextStyle(shadow = Shadow(offset = Offset(1.0f, 1.0f), blurRadius = 1.5f))
+            style = style.copy(shadow = Shadow(offset = Offset(1.0f, 1.0f), blurRadius = 1.5f))
         )
     }
 }
@@ -129,7 +132,7 @@ private fun RarityBorderShadow() {
             .offset(y = 2.5.dp)
             .background(
                 color = ShadowColor,
-                shape = Rounded8
+                shape = UnitImageShape
             )
     )
 }
@@ -149,8 +152,8 @@ private fun BoxScope.CharaImage(
         } else {
             getImageUrl(unitId, rarity)
         },
-        modifier = Modifier.clip(Rounded8).clickable { onClick() },
-        shape = Rounded8
+        modifier = Modifier.clip(UnitImageShape).clickable { onClick() },
+        shape = UnitImageShape
     )
 }
 

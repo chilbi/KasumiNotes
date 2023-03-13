@@ -4,17 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.common.QuestType
 
 @Composable
@@ -22,14 +20,14 @@ fun QuestLabel(
     questType: QuestType,
     modifier: Modifier = Modifier,
     checked: Boolean = true,
-    shape: Shape = MaterialTheme.shapes.small,
+    shape: Shape = MaterialTheme.shapes.extraSmall,
     padding: PaddingValues = PaddingValues(horizontal = 4.dp),
-    fontSize: TextUnit = 14.sp
+    style: TextStyle = MaterialTheme.typography.labelLarge
 ) {
     Box(
         modifier
             .background(
-                color = if (checked) questType.color else MaterialTheme.colors.onSurface.copy(0.35f),
+                color = if (checked) questType.color else MaterialTheme.colorScheme.onSurface.copy(0.35f),
                 shape = shape
             )
             .padding(padding),
@@ -38,8 +36,7 @@ fun QuestLabel(
         Text(
             text = questType.name,
             color = Color.White,
-            fontSize = fontSize,
-            fontWeight = FontWeight.Bold
+            style = style
         )
     }
 }

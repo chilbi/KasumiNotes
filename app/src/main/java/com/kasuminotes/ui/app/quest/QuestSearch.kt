@@ -17,21 +17,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.FabPosition
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.IconToggleButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconToggleButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
@@ -49,18 +49,17 @@ import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.EquipInfo
 import com.kasuminotes.data.QuestData
 import com.kasuminotes.ui.components.ImageIcon
-import com.kasuminotes.ui.components.ImmersiveTopAppBar
+import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.NoDataText
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.TextToggleButton
 import com.kasuminotes.ui.components.Toggle37Button
-import com.kasuminotes.ui.components.UnderlineLabelColumn
+import com.kasuminotes.ui.components.LabelContainer
+import com.kasuminotes.ui.components.SelectableItem
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
-import com.kasuminotes.ui.components.selectedBg
+import com.kasuminotes.ui.components.selectedContainerColor
 import com.kasuminotes.ui.theme.RaritiesColors
-import com.kasuminotes.ui.theme.place
-import com.kasuminotes.ui.theme.selected
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -90,7 +89,7 @@ fun QuestSearch(
 ) {
     Scaffold(
         topBar = {
-            ImmersiveTopAppBar(
+            TopBar(
                 title = {
                     Text(stringResource(R.string.search_list))
                 },
@@ -150,8 +149,7 @@ fun QuestSearch(
         },
         bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
-        floatingActionButtonPosition = FabPosition.Center,
-        isFloatingActionButtonDocked = true,
+        containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
                 Crossfade(targetState = visitIndex) { state ->
@@ -246,8 +244,8 @@ private fun SearchSet(
                         Modifier
                             .size(48.dp)
                             .background(
-                                MaterialTheme.colors.place,
-                                MaterialTheme.shapes.small
+                                MaterialTheme.colorScheme.surfaceVariant,
+                                MaterialTheme.shapes.extraSmall
                             )
                             .clickable(enabled = visitIndex == 0) {
                                 onSearchesChange(0)
@@ -304,47 +302,52 @@ private fun SearchSetMenu(
         searchSet.forEach { pair ->
             if (pair.first != searchId) {
                 DropdownMenuItem(
+                    text = {
+                        SearchSet(
+                            visitIndex = 0,
+                            searches = pair.second,
+                            onSearchesChange = {
+                                expanded = false
+                                onSearchIdChange(pair.first)
+                            }
+                        )
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = {
+                            if (searchSet.size == 2) {
+                                expanded = false
+                            }
+                            onSearchesDel(pair.first)
+                        }) {
+                            Icon(Icons.Filled.Delete, null)
+                        }
+                    },
                     onClick = {
                         expanded = false
                         onSearchIdChange(pair.first)
                     },
                     contentPadding = PaddingValues(horizontal = 4.dp)
-                ) {
-                    SearchSet(
-                        visitIndex = 0,
-                        searches = pair.second,
-                        onSearchesChange = {
-                            expanded = false
-                            onSearchIdChange(pair.first)
-                        }
-                    )
-
-                    IconButton(onClick = {
-                        if (searchSet.size == 2) {
-                            expanded = false
-                        }
-                        onSearchesDel(pair.first)
-                    }) {
-                        Icon(Icons.Filled.Delete, null)
-                    }
-                }
+                )
             }
         }
         DropdownMenuItem(
+            text = {
+                Spacer(Modifier.fillMaxWidth())
+            },
+            trailingIcon = {
+                Box(
+                    modifier = Modifier.size(48.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(Icons.Filled.Add, null)
+                }
+            },
             onClick = {
                 expanded = false
                 onSearchesAdd()
             },
             contentPadding = PaddingValues(horizontal = 4.dp)
-        ) {
-            Spacer(Modifier.weight(1f))
-            Box(
-                modifier = Modifier.size(48.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(Icons.Filled.Add, null)
-            }
-        }
+        )
     }
 }
 
@@ -355,7 +358,7 @@ fun EquipPairItem(
     searches: Array<Int>,
     onSearchesChange: (Int) -> Unit
 ) {
-    UnderlineLabelColumn(
+    LabelContainer(
         label = stringResource(R.string.rare) + rarity,
         color = RaritiesColors.getRarityColors(rarity / 10).middle
     ) {
@@ -366,9 +369,10 @@ fun EquipPairItem(
             val equipId = equips[index].equipmentId
             SelectableItem(
                 selected = searches.contains(equipId),
-                url = UrlUtil.getEquipIconUrl(equipId),
                 onClick = { onSearchesChange(equipId) }
-            )
+            ) {
+                PlaceImage(UrlUtil.getEquipIconUrl(equipId))
+            }
         }
     }
 }
@@ -381,7 +385,7 @@ private fun PiecesItem(
     searches: Array<Int>,
     onSearchesChange: (Int) -> Unit
 ) {
-    UnderlineLabelColumn(label, color) {
+    LabelContainer(label, color) {
         VerticalGrid(
             size = pieces.size,
             cells = VerticalGridCells.Adaptive(60.dp)
@@ -389,35 +393,10 @@ private fun PiecesItem(
             val id = pieces[index]
             SelectableItem(
                 selected = searches.contains(id),
-                url = UrlUtil.getItemIconUrl(id),
                 onClick = { onSearchesChange(id) }
-            )
+            ) {
+                PlaceImage(UrlUtil.getItemIconUrl(id))
+            }
         }
-    }
-}
-
-@Composable
-private fun BoxScope.SelectableItem(
-    selected: Boolean,
-    url: String,
-    onClick: () -> Unit
-) {
-    Box(
-        Modifier
-            .align(Alignment.Center)
-            .size(60.dp)
-            .padding(2.dp)
-            .selectedBg(
-                selected,
-                MaterialTheme.colors.selected,
-                MaterialTheme.shapes.small
-            )
-            .clickable(
-                role = Role.Button,
-                onClick = onClick
-            )
-            .padding(4.dp)
-    ) {
-        PlaceImage(url)
     }
 }
