@@ -56,6 +56,12 @@ class ExEquipState(
         onLevelChange: ((slotNum: Int, level: Int) -> Unit)? = null
     ) {
         scope.launch(defaultDispatcher) {
+            val db = appRepository.getDatabase()
+            val list = awaitAll(
+                async { db.getExEquipCategory(slot.category) },
+                async { db.getEquippableExList(slot.category) }
+            )
+
             exEquipSlot = slot
             baseProperty = charaBaseProperty
             enhanceLevel = originLevel
@@ -64,12 +70,6 @@ class ExEquipState(
             onExEquipDataChange = onExEquipChange
             onEnhanceLevelChange = onLevelChange
             slotNum = slot.category / 100
-
-            val db = appRepository.getDatabase()
-            val list = awaitAll(
-                async { db.getExEquipCategory(slot.category) },
-                async { db.getEquippableExList(slot.category) }
-            )
             exEquipCategory = list[0] as ExEquipCategory
             @Suppress("UNCHECKED_CAST")
             equippableExList = list[1] as List<Int>

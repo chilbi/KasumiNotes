@@ -48,8 +48,6 @@ FROM ex_equipment_category WHERE category=$category"""
 }
 
 suspend fun AppDatabase.getEquippableExList(category: Int): List<Int> {
-//    val sql = """SELECT ex_equipment_id FROM ex_equipment_data
-//WHERE passive_skill_id_1!=0 ORDER BY rarity DESC"""
     val sql = """SELECT ex_equipment_id FROM ex_equipment_data
 WHERE category=$category ORDER BY rarity DESC"""
 

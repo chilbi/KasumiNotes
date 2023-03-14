@@ -28,26 +28,28 @@ fun EquippableExList(
         label = stringResource(R.string.same_category_equip),
         color = MaterialTheme.colorScheme.primary
     ) {
-        VerticalGrid(
-            size = equippableExList.size,
-            cells = VerticalGridCells.Adaptive(60.dp)
-        ) { index ->
-            val exEquipId = equippableExList[index]
-            val containerColor: Color
-            val text: String
-            if (exEquipId == equippedExEquipId) {
-                containerColor = BadgeDefaults.containerColor
-                text = "E"
-            } else {
-                containerColor = Color.Transparent
-                text = ""
-            }
-            SelectableItem(
-                selected = exEquipId == selectedExEquipId,
-                onClick = { onExEquipClick(exEquipId) }
-            ) {
-                BadgedBox({ Badge(containerColor = containerColor) { Text(text) } }) {
-                    PlaceImage(UrlUtil.getExEquipUrl(exEquipId))
+        if (equippableExList.isNotEmpty()) {
+            VerticalGrid(
+                size = equippableExList.size,
+                cells = VerticalGridCells.Adaptive(60.dp)
+            ) { index ->
+                val exEquipId = equippableExList[index]
+                val containerColor: Color
+                val text: String
+                if (exEquipId == equippedExEquipId) {
+                    containerColor = BadgeDefaults.containerColor
+                    text = "E"
+                } else {
+                    containerColor = Color.Transparent
+                    text = ""
+                }
+                SelectableItem(
+                    selected = exEquipId == selectedExEquipId,
+                    onClick = { onExEquipClick(exEquipId) }
+                ) {
+                    BadgedBox({ Badge(containerColor = containerColor) { Text(text) } }) {
+                        PlaceImage(UrlUtil.getExEquipUrl(exEquipId))
+                    }
                 }
             }
         }
