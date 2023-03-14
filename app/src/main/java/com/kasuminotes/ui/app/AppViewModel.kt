@@ -73,7 +73,9 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     fun navigateTo(selectedIndex: Int) {
         when (selectedIndex) {
             0 -> {
-                navController.popBackStack()
+                if (navController.currentDestination?.route != "home") {
+                    navController.popBackStack()
+                }
             }
             1 -> {
                 if (!dbState.questInitializing) {
