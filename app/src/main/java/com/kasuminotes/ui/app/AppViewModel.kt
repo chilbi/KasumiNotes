@@ -44,24 +44,8 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             when (destination.route) {
                 NavGraph.Home.route -> {
                     charaState.destroy()
-//                    questState.destroy()
                     dbState.userState.charaListState.destroy()
                 }
-//                NavGraph.Chara.route -> {
-//                    equipState.destroy()
-//                    exEquipState.destroy()
-//                    summonsState.destroy()
-//                }
-//                NavGraph.Quest.route -> {
-//                    equipState.destroy()
-//                    exEquipState.destroy()
-//                }
-//                NavGraph.ClanBattleMapList.route -> {
-//                    clanBattleState.destroy()
-//                }
-//                NavGraph.ClanBattleEnemy.route -> {
-//                    summonsState.destroy()
-//                }
             }
         }
     }
@@ -73,7 +57,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     fun navigateTo(selectedIndex: Int) {
         when (selectedIndex) {
             0 -> {
-                if (navController.currentDestination?.route != "home") {
+                if (navController.currentDestination?.route != NavGraph.Home.route) {
                     navController.popBackStack()
                 }
             }

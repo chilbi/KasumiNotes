@@ -35,7 +35,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             scope.launch { drawerState.open() }
         }
         val navigateToHomeAndOpenDrawer = {
-            appViewModel.popBackStack()
+            appViewModel.navigateTo(0)
             openDrawer()
         }
 
