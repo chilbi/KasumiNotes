@@ -3,6 +3,7 @@ package com.kasuminotes.ui.app
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -31,13 +32,13 @@ fun App(appViewModel: AppViewModel = viewModel()) {
     KasumiNotesTheme(uiState.darkTheme) {
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val scope = rememberCoroutineScope()
-        val openDrawer: () -> Unit = {
+        val openDrawer = remember<() -> Unit> {{
             scope.launch { drawerState.open() }
-        }
-        val navigateToHomeAndOpenDrawer = {
+        }}
+        val navigateToHomeAndOpenDrawer = remember<() -> Unit> {{
             appViewModel.navigateTo(0)
             openDrawer()
-        }
+        }}
 
         AnimatedNavHost(
             navController = appViewModel.navController,
@@ -54,8 +55,10 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     drawerState,
                     uiState,
                     dbState,
-                    appViewModel::navigateToImages,
-                    appViewModel::navigateToEditor,
+                    appViewModel::navigateToImagesForChangeUserImage,
+                    appViewModel::navigateToEditorForChangeUserProfiles,
+                    appViewModel::navigateToImagesForSignInUserImage,
+                    appViewModel::navigateToEditorForSignInUserProfiles,
                     appViewModel::navigateToChara,
                     appViewModel::navigateToAbout,
                     appViewModel::navigateTo,

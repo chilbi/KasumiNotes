@@ -16,7 +16,7 @@ fun ModalDrawer(
     userState: UserState,
     dbState: DbState,
     uiState: UiState,
-    onImagesClick: () -> Unit,
+    onImageClick: () -> Unit,
     onNavigateToAbout: () -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -40,7 +40,7 @@ fun ModalDrawer(
                 dbState.latestAppReleaseInfoFetching,
                 uiState.language,
                 uiState.darkTheme,
-                onImagesClick,
+                onImageClick,
                 userState::logOut,
                 dbState::changeDbServer,
                 dbState::fetchLastDbVersion,

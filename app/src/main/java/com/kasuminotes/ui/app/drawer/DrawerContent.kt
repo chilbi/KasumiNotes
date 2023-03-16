@@ -37,7 +37,7 @@ fun DrawerContent(
     latestAppReleaseInfoFetching: Boolean,
     language: Language,
     darkTheme: ToggleableState,
-    onImagesClick: () -> Unit,
+    onImageClick: () -> Unit,
     onLogOut: () -> Unit,
     onDbServerChange: (DbServer) -> Unit,
     onLastDbVersionFetch: () -> Unit,
@@ -75,7 +75,7 @@ fun DrawerContent(
                 userId,
                 userName,
                 backgroundColor,
-                onImagesClick,
+                onImageClick,
                 onLogOut
             )
 

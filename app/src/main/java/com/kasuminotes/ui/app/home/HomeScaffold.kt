@@ -24,8 +24,8 @@ fun HomeScaffold(
     userState: UserState,
     dbState: DbState,
     uiState: UiState,
-    onImagesClick: () -> Unit,
-    onEditorClick: () -> Unit,
+    onImageClick: () -> Unit,
+    onEditClick: () -> Unit,
     onNavigateToChara: (UserProfile) -> Unit,
     onNavigateToAbout: () -> Unit,
     onNavigateTo: (Int) -> Unit,
@@ -34,7 +34,7 @@ fun HomeScaffold(
     val imageState = uiState.charaImageState
     val listState = userState.charaListState
 
-    ModalDrawer(drawerState, userState, dbState, uiState, onImagesClick, onNavigateToAbout) {
+    ModalDrawer(drawerState, userState, dbState, uiState, onImageClick, onNavigateToAbout) {
         Scaffold(
             topBar = {
                 HomeTopBar(
@@ -57,7 +57,7 @@ fun HomeScaffold(
                 BottomBar(0, onNavigateTo, onDrawerOpen)
             },
             floatingActionButton = {
-                FloatingActionButton(onEditorClick) {
+                FloatingActionButton(onEditClick) {
                     Icon(Icons.Filled.Edit, null)
                 }
             },

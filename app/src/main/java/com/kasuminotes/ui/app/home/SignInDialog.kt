@@ -3,6 +3,7 @@ package com.kasuminotes.ui.app.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,8 +33,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.kasuminotes.R
-import com.kasuminotes.ui.components.ImageIcon
 import com.kasuminotes.ui.components.Infobar
+import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -42,8 +43,8 @@ fun SignInDialog(
     newUserName: String?,
     charaCount: Int,
     maxChara: Int,
-    onImageSelect: () -> Unit,
-    onCharaEdit: () -> Unit,
+    onImageClick: () -> Unit,
+    onEditClick: () -> Unit,
     onClose: () -> Unit,
     onSignIn: () -> Unit
 ) {
@@ -60,7 +61,7 @@ fun SignInDialog(
                     SignInImage(
                         newUserId,
                         newUserName,
-                        onImageSelect
+                        onImageClick
                     )
 
                     Divider(Modifier.padding(vertical = 16.dp))
@@ -68,7 +69,7 @@ fun SignInDialog(
                     SignInCharaCount(
                         charaCount,
                         maxChara,
-                        onCharaEdit
+                        onEditClick
                     )
                 }
 
@@ -106,13 +107,13 @@ private fun SignInTitle() {
 private fun SignInImage(
     newUserId: Int?,
     newUserName: String?,
-    onImageSelect: () -> Unit
+    onImageClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
-            .clickable(onClick = onImageSelect),
+            .clickable(onClick = onImageClick),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (newUserId == null && newUserName == null) {
@@ -128,11 +129,12 @@ private fun SignInImage(
                 color = MaterialTheme.colorScheme.primary
             )
         } else {
-            ImageIcon(
-                url = UrlUtil.getUserIconUrl(newUserId!!),
-                onClick = null,
-                shape = CircleShape
-            )
+            Box(Modifier.size(48.dp)) {
+                PlaceImage(
+                    url = UrlUtil.getUserIconUrl(newUserId!!),
+                    shape = CircleShape
+                )
+            }
             Column(
                 modifier = Modifier
                     .height(48.dp)
@@ -159,13 +161,13 @@ private fun SignInImage(
 private fun SignInCharaCount(
     charaCount: Int,
     maxChara: Int,
-    onCharaEdit: () -> Unit
+    onEditClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
-            .clickable(onClick = onCharaEdit),
+            .clickable(onClick = onEditClick),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Infobar(

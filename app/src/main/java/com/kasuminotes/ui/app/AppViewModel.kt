@@ -165,31 +165,69 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         navController.navigate(NavGraph.ClanBattleEnemy.route)
     }
 
-    fun navigateToImages(allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) {
-        navController.navigate(NavGraph.Images.route)
-        if (allUserProfile == null) {
-            viewModelScope.launch {
-                dbState.userState.charaListState.initImages(
-                    dbState.userState.getAllProfiles(unlockedProfiles)
-                )
-            }
-        } else {
-            dbState.userState.charaListState.initImages(allUserProfile)
+//    fun navigateToImages(allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) {
+//        navController.navigate(NavGraph.Images.route)
+//        if (allUserProfile == null) {
+//            viewModelScope.launch {
+//                dbState.userState.charaListState.initImages(
+//                    dbState.userState.getAllProfiles(unlockedProfiles)
+//                )
+//            }
+//        } else {
+//            dbState.userState.charaListState.initImages(allUserProfile)
+//        }
+//    }
+//
+//    fun navigateToEditor(allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) {
+//        navController.navigate(NavGraph.Editor.route)
+//        if (allUserProfile == null) {
+//            viewModelScope.launch {
+//                dbState.userState.charaListState.initEditor(
+//                    dbState.userState.getAllProfiles(unlockedProfiles),
+//                    unlockedProfiles
+//                )
+//            }
+//        } else {
+//            dbState.userState.charaListState.initEditor(allUserProfile, unlockedProfiles)
+//        }
+//    }
+
+    fun navigateToImagesForChangeUserImage() {
+        viewModelScope.launch {
+            dbState.userState.charaListState.initImages(
+                dbState.userState.getAllProfiles(dbState.userState.charaListState.profiles)
+            )
+            navController.navigate(NavGraph.Images.route)
         }
     }
 
-    fun navigateToEditor(allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) {
-        navController.navigate(NavGraph.Editor.route)
-        if (allUserProfile == null) {
-            viewModelScope.launch {
-                dbState.userState.charaListState.initEditor(
-                    dbState.userState.getAllProfiles(unlockedProfiles),
-                    unlockedProfiles
-                )
-            }
-        } else {
-            dbState.userState.charaListState.initEditor(allUserProfile, unlockedProfiles)
+    fun navigateToImagesForSignInUserImage() {
+        dbState.userState.charaListState.initImages(
+            dbState.userState.allProfiles!!
+        )
+        navController.navigate(NavGraph.Images.route)
+
+    }
+
+    fun navigateToEditorForChangeUserProfiles() {
+        viewModelScope.launch {
+            val unlockedProfiles = dbState.userState.charaListState.profiles
+            dbState.userState.charaListState.initEditor(
+                dbState.userState.getAllProfiles(unlockedProfiles),
+                unlockedProfiles
+            )
+            navController.navigate(NavGraph.Editor.route)
         }
+
+    }
+
+    fun navigateToEditorForSignInUserProfiles() {
+        val unlockedProfiles = dbState.userState.newProfiles ?: emptyList()
+        dbState.userState.charaListState.initEditor(
+            dbState.userState.allProfiles!!,
+            unlockedProfiles
+        )
+        navController.navigate(NavGraph.Editor.route)
     }
 
     fun userEditorBack() {

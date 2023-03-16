@@ -11,8 +11,10 @@ fun Home(
     drawerState: DrawerState,
     uiState: UiState,
     dbState: DbState,
-    onNavigateToImages: (allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) -> Unit,
-    onNavigateToEditor: (allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) -> Unit,
+    onNavigateToImagesForChangeUserImage: () -> Unit,
+    onNavigateToEditorForChangeUserProfiles: () -> Unit,
+    onNavigateToImagesForSignInUserImage: () -> Unit,
+    onNavigateToEditorForSignInUserProfiles: () -> Unit,
     onNavigateToChara: (UserProfile) -> Unit,
     onNavigateToAbout: () -> Unit,
     onNavigateTo: (Int) -> Unit,
@@ -20,21 +22,13 @@ fun Home(
 ) {
     val userState = dbState.userState
 
-    val onImagesClick = {
-        onNavigateToImages(null, userState.charaListState.profiles)
-    }
-
-    val onEditorClick = {
-        onNavigateToEditor(null, userState.charaListState.profiles)
-    }
-
     HomeScaffold(
         drawerState,
         userState,
         dbState,
         uiState,
-        onImagesClick,
-        onEditorClick,
+        onNavigateToImagesForChangeUserImage,
+        onNavigateToEditorForChangeUserProfiles,
         onNavigateToChara,
         onNavigateToAbout,
         onNavigateTo,
@@ -80,18 +74,8 @@ fun Home(
                 newUserName = userState.newUserName,
                 charaCount = userState.newProfiles?.size ?: 0,
                 maxChara = userState.allProfiles?.size ?: 0,
-                onImageSelect = {
-                    onNavigateToImages(
-                        userState.allProfiles,
-                        emptyList()
-                    )
-                },
-                onCharaEdit = {
-                    onNavigateToEditor(
-                        userState.allProfiles,
-                        userState.newProfiles ?: emptyList()
-                    )
-                },
+                onImageClick = onNavigateToImagesForSignInUserImage,
+                onEditClick = onNavigateToEditorForSignInUserProfiles,
                 onClose = userState::closeSignIn,
                 onSignIn = userState::signIn
             )
