@@ -165,33 +165,6 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         navController.navigate(NavGraph.ClanBattleEnemy.route)
     }
 
-//    fun navigateToImages(allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) {
-//        navController.navigate(NavGraph.Images.route)
-//        if (allUserProfile == null) {
-//            viewModelScope.launch {
-//                dbState.userState.charaListState.initImages(
-//                    dbState.userState.getAllProfiles(unlockedProfiles)
-//                )
-//            }
-//        } else {
-//            dbState.userState.charaListState.initImages(allUserProfile)
-//        }
-//    }
-//
-//    fun navigateToEditor(allUserProfile: List<UserProfile>?, unlockedProfiles: List<UserProfile>) {
-//        navController.navigate(NavGraph.Editor.route)
-//        if (allUserProfile == null) {
-//            viewModelScope.launch {
-//                dbState.userState.charaListState.initEditor(
-//                    dbState.userState.getAllProfiles(unlockedProfiles),
-//                    unlockedProfiles
-//                )
-//            }
-//        } else {
-//            dbState.userState.charaListState.initEditor(allUserProfile, unlockedProfiles)
-//        }
-//    }
-
     fun navigateToImagesForChangeUserImage() {
         viewModelScope.launch {
             dbState.userState.charaListState.initImages(
