@@ -28,7 +28,7 @@
     <string name="registered">登録済み</string>
     <string name="unlock_chara">解放済み</string>
     <string name="lock_chara">未解放</string>
-    <string name="all_select">全て選択</string>
+    <string name="all_select">すべて選択</string>
     <string name="edit_selected_d">選択中の%dキャラを編集する</string>
     <string name="save_to_database">データベースに保存する</string>
     <string name="swipe_equip_info">装備スロットを横スライドさせて装備が着脱できる</string>
@@ -60,7 +60,7 @@
     <string name="equip">装備</string>
     <string name="clan_battle">クラバト</string>
     <string name="user">ユーザー</string>
-    <string name="all">全て</string>
+    <string name="all">すべて</string>
     <string name="all_type">全タイプ</string>
     <string name="all_position">全ポジション</string>
     <string name="physical">物理</string>
@@ -247,6 +247,7 @@
     <string name="action_damage_attenuation_target1_limit2_time3_r4_r5_r6">%1$sにリミットバリアを展開し、アクション毎に受けたダメージが%2$s万を超えた時、ダメージが減衰される、効果時間%4$s秒。\nf(100万)=%4$s万; f(200万)=%5$s万; f(999万)=%6$s万</string>
     <string name="action_stealth_time1">潜伏状態に入る、効果時間%s秒。</string>
     <string name="action_ignore_provocation">挑発を無視して、</string>
+    <string name="action_akinesia_invalid_target1_count2_time3">%1$sに受ける行動不能を最大%2$s回まで無効化できる状態を付与する、効果時間%3$s秒。</string>
 
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>
     <string name="action_striked_branch_time1">%s秒のモーションの間に攻撃された場合、</string>
@@ -359,46 +360,56 @@
     <string name="state_psi_charge">PSI★チャージ</string>
 
     <string name="target">対象</string>
-    <string name="target_boss">Boss</string>
+    <string name="target_damaged">ダメージを受けた対象</string>
+    <string name="target_randomized">ランダムに選ばれた対象</string>
+    <string name="target_eligible">条件に合った対象</string>
     <string name="target_self">自分</string>
+    <string name="target_boss">Boss</string>
     <string name="target_enemy">敵</string>
     <string name="target_friendly">味方</string>
-    <string name="target_damaged">ダメージを受けた対象</string>
-    <string name="target_eligible">条件に合った対象</string>
+    <string name="target_enemy_side">敵</string>
+    <string name="target_friendly_side">味方</string>
+    <string name="target_enemy_count1">敵%s</string>
+    <string name="target_friendly_count1">味方%s</string>
+    <string name="target_count1">１キャラ</string>
+    <string name="target_count2">２キャラ</string>
+    <string name="target_count3">３キャラ</string>
+    <string name="target_count4">４キャラ</string>
+    <string name="target_count5">５キャラ</string>
+    <string name="target_number1">１番目</string>
+    <string name="target_number2">２番目</string>
+    <string name="target_number3">３番目</string>
+    <string name="target_number4">４番目</string>
+    <string name="target_number5">５番目</string>
     <string name="target_nearest">最も近くの</string>
     <string name="target_farthest">最も遠くの</string>
     <string name="target_low">低い</string>
     <string name="target_high">高い</string>
     <string name="target_front">前方</string>
-    <string name="target_one_content1">目の前の%s１キャラ</string>
-    <string name="target_more_count1_content2">目の前の%2$s%1$sキャラ</string>
-    <string name="target_count1_content2">前から%1$s番目の%2$s</string>
+    <string name="target_forward">目の前の</string>
     <string name="target_all_content1">%s全体</string>
-    <string name="target_range1_content2">%1$s範囲内の%2$s</string>
-    <string name="target_range1_count2_content3">%1$s範囲内の%3$s最大%2$sキャラ</string>
-    <string name="target_all_range1_content2">%1$s範囲内の%2$sすべて</string>
-    <string name="target_random_one_content1">ランダムな%s１キャラ</string>
-    <string name="target_random_count1_content2">ランダムな%2$s%1$sキャラ</string>
-    <string name="target_most_content1_extent2_target3">最も%1$sが%2$s%3$s１キャラ</string>
-    <string name="target_farthest_content1_count2">最も遠い%1$s%2$sキャラ</string>
-    <string name="target_without_self_content1_extent2_count3_target4">自分以外の最も%1$sが%2$s%4$s%3$sキャラ</string>
-    <string name="target_highest_atk_or_magic_str_content1">物理攻撃力、魔法攻撃力いずれかで最も攻撃力が高い%s１キャラ</string>
-    <string name="target_all_atk_content1">物理攻撃を行う全ての%sキャラ</string>
-    <string name="target_all_magic_str_content1">魔法攻撃を行う全ての%sキャラ</string>
-    <string name="target_nearest_friendly">最も近くの味方１キャラ</string>
-    <string name="target_farthest_friendly">最も遠くの味方１キャラ</string>
-    <string name="target_first_friendly">最も前の味方</string>
-    <string name="target_first_enemy">最も前の敵</string>
-    <string name="target_last_friendly">最も後ろの味方</string>
-    <string name="target_last_enemy">最も後ろの敵</string>
     <string name="target_front_all_content1">前すべての%s</string>
-    <string name="target_near_number1_content2">自分から%1$s番目に近い%2$s</string>
-    <string name="target_fart_number1_content2">自分から%1$s番目に遠い%2$s</string>
+    <string name="target_range1_content2">%1$s範囲内の%2$s</string>
+    <string name="target_range_all_content1">%sすべて</string>
+    <string name="target_range_max_assignment_count1">最大%s</string>
+    <string name="target_random_assignment_count1">ランダムな%s</string>
+    <string name="target_front_number1_assignment2">前から%1$sの%2$s</string>
+    <string name="target_nearest_assignment1">最も近くの%s</string>
+    <string name="target_farthest_assignment1">最も遠くの%s</string>
+    <string name="target_near_number1_assignment2">自分から%1$sに近い%2$s</string>
+    <string name="target_far_number1_assignment2">自分から%1$sに遠い%2$s</string>
+    <string name="target_farthest_assignment_count1">最も遠い%s</string>
+    <string name="target_first_assignment_count1">最も前の%s</string>
+    <string name="target_last_assignment_count1">最も後ろの%s</string>
+    <string name="target_most_content1_extent2_assignment_count3">最も%1$sが%2$s%3$s</string>
+    <string name="target_without_self">自分以外の</string>
+    <string name="target_all_atk_content1">物理攻撃を行うすべての%sキャラ</string>
+    <string name="target_all_magic_str_content1">魔法攻撃を行うすべての%sキャラ</string>
     <string name="target_distance1">自分の前%s距離</string>
-    <string name="target_without_self">自分以外の味方全体</string>
     <string name="target_not_in_back_content1">自分の背後にいないキャラの内、%s</string>
     <string name="target_any_content1">の中の任意%s</string>
     <string name="target_all_summon_content1">%s全体の召喚物</string>
+    <string name="target_multi_target1">%sのマルチターゲット部位すべて</string>
 
     <string name="skill_level">スキルLv</string>
     <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × スキルLv + (%3$s + %4$s × スキルLv) × %5$s } = %6$s</string>
@@ -462,6 +473,7 @@
     <string name="hp_lost_ratio">損失したＨＰ割合</string>
     <string name="counter_num1">カウンター%s</string>
     <string name="of">の</string>
+    <string name="atk_or_magic_str">物理攻撃力、魔法攻撃力いずれかで</string>
 
     <string name="additive_time">効果時間</string>
     <string name="additive_damage">ダメージ量</string>

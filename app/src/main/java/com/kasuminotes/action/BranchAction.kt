@@ -249,7 +249,7 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         }
         // 魚座、蠍座
         in 701..709 -> {
-            val target = getAssignment()
+            val target = getAssignmentSide()
             val count = D.Text((actionDetail1 - 700).toString())
             setBranch(
                 branch,

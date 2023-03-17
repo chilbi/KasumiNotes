@@ -1,579 +1,509 @@
 package com.kasuminotes.action
 
+import androidx.annotation.StringRes
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
+
+/** 残余HP比例最高的 */
+private val hpRatioHighTypes = arrayOf(6, 26, 35)
+/** 加上残余HP比例最低的 */
+private val hpRatioTypes = hpRatioHighTypes.plus(arrayOf(5, 25, 36))
+/** TP最高的 */
+private val energyHighTypes = arrayOf(12, 27, 37)
+/** 加上TP最低的 */
+private val energyTypes = energyHighTypes.plus(arrayOf(13, 28, 41))
+/** 物理攻击力最高的 */
+private val atkHighTypes = arrayOf(14, 29, 43)
+/** 加上物理攻击力最低的 */
+private val atkTypes = atkHighTypes.plus(arrayOf(15, 30))
+/** 魔法攻击力最高的 */
+private val magicStrHighTypes = arrayOf(16, 31)
+/** 加上魔法攻击力最低的 */
+private val magicStrTypes = magicStrHighTypes.plus(arrayOf(17, 32))
+/** 物理攻击力或魔法攻击力最高的 */
+private val atkOrMagicStrHighTypes = arrayOf(38)
+/** 加上物理攻击力或魔法攻击力最低的 */
+private val atkOrMagicStrTypes = atkOrMagicStrHighTypes.plus(39)
+/** 自身以外的（还有34在其它地方处理了） */
+private val withoutSelfTypes = arrayOf(41, 43)
+/** 不在自身后面的 */
+private val notInBackTypes = arrayOf(35, 36)
+/** 所有 "{0}最{1高|低}的{2}" 的类型 */
+private val allMostTypes = hpRatioTypes
+    .plus(energyTypes)
+    .plus(atkTypes)
+    .plus(magicStrTypes)
+    .plus(atkOrMagicStrTypes)
+/** 所有最高的类型 */
+private val allMostHighTypes = hpRatioHighTypes
+    .plus(energyHighTypes)
+    .plus(atkHighTypes)
+    .plus(magicStrHighTypes)
+    .plus(atkOrMagicStrHighTypes)
 
 fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
     if (depend != null) {
         return if (depend.actionType == 1 || depend.actionId == actionId) {
-            D.Format(R.string.target_damaged)
+            getDependMultiTarget(D.Format(R.string.target_damaged))
+        } else if (depend.targetType in arrayOf(2, 8) && depend.actionType !in arrayOf(26, 27, 74)) {
+            getDependMultiTarget(D.Format(R.string.target_randomized))
         } else if (depend.actionType == 7) {
-            if (arrayOf(37, 38, 39).contains(actionType) || focused) {
+            if (actionType in arrayOf(37, 38, 39) || focused) {
                 depend.getTarget(null)
             } else {
                 depend.getFocus(targetArea).append(getTarget(null))
             }
-        } else if (
-            (depend.actionType == 23 || depend.actionType == 28) && depend.targetCount > 1
-        ) {
-            D.Format(R.string.target_eligible)
+        } else if ((depend.actionType in arrayOf(23, 28)) && depend.targetCount > 1) {
+            getDependMultiTarget(D.Format(R.string.target_eligible))
         } else if (depend.depend != null) {
             depend.getTarget(depend.depend, focused)
         } else {
-            depend.getTarget(null)
+            getDependMultiTarget(depend.getTarget(null))
         }
     }
 
     return when (targetType) {
         0, 7 -> D.Format(R.string.target_self)
-        1, 3 -> {
-            if (targetArea == 1) {
-                if (targetCount == 1) {
-                    if (targetRange == -1 || targetRange >= 2160) {
+        1, 3, 34 -> {
+            val nearTarget = if (targetArea == 1) {
+                if (targetCount == 1) {//一名目标
+                    if (isFullRangeTarget()) {
                         if (targetNumber > 0) {
                             D.Format(
-                                R.string.target_count1_content2,
-                                arrayOf(
-                                    D.Text((targetNumber + 1).toString()),
-                                    getAssignment()
-                                )
+                                R.string.target_front_number1_assignment2,
+                                arrayOf(getNumber(), getAssignment())
                             )
-                        } else {
-                            if (targetAssignment == 1) {
-                                if (actionType == 2) {//リマ
-                                    D.Format(R.string.target_first_enemy)
-                                } else {
-                                    D.Format(
-                                        R.string.target_one_content1,
-                                        arrayOf(D.Format(R.string.target_enemy))
-                                    )
-                                }
-                            } else {//シノブ
-                                D.Format(R.string.target_self)
-                            }
+                        } else {//targetNumber == 0
+                            D.Join(arrayOf(D.Format(R.string.target_forward), getAssignmentCount()))
                         }
-                    } else if (targetRange == 0) {
-                        D.Format(
-                            R.string.target_one_content1,
-                            arrayOf(getAssignment())
-                        )
                     } else {
                         D.Format(
                             R.string.target_range1_content2,
                             arrayOf(
+                                D.Join(arrayOf(D.Format(R.string.target_front), D.Text(targetRange.toString()))),
+                                D.Join(arrayOf(D.Format(R.string.target_nearest), getAssignmentCount()))
+                            )
+                        )
+                    }
+                } else {//多名目标
+                    val manyTarget = if (targetCount == 99 || targetCount == 0) {
+                        if (isFullRangeTarget()) {
+                            D.Format(R.string.target_front_all_content1, arrayOf(getAssignment()))
+                        } else {
+                            D.Format(
+                                R.string.target_range1_content2,
+                                arrayOf(
+                                    D.Join(arrayOf(D.Format(R.string.target_front), D.Text(targetRange.toString()))),
+                                    D.Format(
+                                        R.string.target_range_all_content1,
+                                        arrayOf(getAssignment())
+                                    )
+                                )
+                            )
+                        }
+                    } else {//n名目标
+                        if (isFullRangeTarget()) {
+                            D.Join(arrayOf(D.Format(R.string.target_front), getAssignmentCount()))
+                        } else {
+                            D.Format(
+                                R.string.target_range1_content2,
+                                arrayOf(
+                                    D.Join(arrayOf(D.Format(R.string.target_front), D.Text(targetRange.toString()))),
+                                    D.Format(
+                                        R.string.target_range_max_assignment_count1,
+                                        arrayOf(getAssignmentCount())
+                                    )
+                                )
+                            )
+                        }
+                    }
+                    getAnyManyTarget(manyTarget)//レム、レイ（ハロウィン）、ミツキ（オーエド）、33期射手座
+                }
+            } else {//targetArea == 2 || targetArea == 3
+                if (targetCount == 1) {//一名目标
+                    if (isFullRangeTarget()) {
+                        if (targetRange == 0 && targetNumber == 0) {//targetArea==3
+                            D.Format(R.string.target_self)
+                        } else {
+                            if (targetNumber > 0) {
+                                if (targetNumber == 1 && targetAssignment == 2) {
+                                    D.Format(
+                                        R.string.target_nearest_assignment1,
+                                        arrayOf(getAssignmentCount())
+                                    )
+                                } else {
+                                    D.Format(
+                                        R.string.target_near_number1_assignment2,
+                                        arrayOf(getNumber(), getAssignmentCount())
+                                    )
+                                }
+                            } else {//targetNumber == 0
                                 D.Join(
                                     arrayOf(
-                                        D.Format(R.string.target_front),
-                                        D.Text(targetRange.toString())
-                                    )
-                                ),
-                                D.join(R.string.target_nearest, getAssignmentResId())
-                            )
-                        )
-                    }
-                } else if (targetCount == 99) {
-                    val allOrRangeTarget = if (targetRange == -1 || targetRange >= 2160) {
-                        D.Format(
-                            R.string.target_front_all_content1,
-                            arrayOf(getAssignment())
-                        )
-                    } else {
-                        D.Join(
-                            arrayOf(
-                                D.Format(R.string.target_front),
-                                D.Format(
-                                    R.string.target_all_range1_content2,
-                                    arrayOf(
-                                        D.Text(targetRange.toString()),
-                                        getAssignment()
-                                    )
-                                )
-                            )
-                        )
-                    }
-                    if (actionType == 23) {//レム、レイ（ハロウィン）、ミツキ（オーエド）、33期射手座
-                        allOrRangeTarget.append(getAnyTarget())
-                    } else {
-                        allOrRangeTarget
-                    }
-                } else {
-                    D.Format(
-                        R.string.target_more_count1_content2,
-                        arrayOf(
-                            D.Text(targetCount.toString()),
-                            getAssignment()
-                        )
-                    )
-                }
-            } else if (targetArea == 2) {
-                if (targetCount == 99) {
-                    if (targetRange == -1 || targetRange >= 2160) {
-                        val allTarget = D.Format(
-                            R.string.target_all_content1,
-                            arrayOf(getAssignment())
-                        )
-                        if (actionType == 23 || actionType == 28) {//ホマレ
-                            D.Join(arrayOf(allTarget, getAnyTarget()))
-                        } else {
-                            allTarget
-                        }
-                    } else {
-                        val rangeTarget = D.Format(
-                            R.string.target_all_range1_content2,
-                            arrayOf(
-                                D.Text(targetRange.toString()),
-                                getAssignment()
-                            )
-                        )
-                        if (actionType == 23) {// イオ、アオイ
-                            D.Join(arrayOf(rangeTarget, getAnyTarget()))
-                        } else {
-                            rangeTarget
-                        }
-                    }
-                } else if (targetCount == 1 && (targetRange <= 0 || targetRange >= 2160)) {
-                    if (targetNumber > 0) {
-                        if (targetNumber == 1 && targetAssignment == 2) {
-                            D.Format(R.string.target_nearest_friendly)
-                        } else {
-                            D.Format(
-                                R.string.target_near_number1_content2,
-                                arrayOf(
-                                    D.Text(targetNumber.toString()),
-                                    getAssignment()
-                                )
-                            )
-                        }
-                    } else {//targetNumber == 0
-                        if (actionType == 7) {
-                            D.join(R.string.target_nearest, getAssignmentResId())
-                        } else {
-                            D.Format(
-                                R.string.target_one_content1,
-                                arrayOf(getAssignment())
-                            )
-                        }
-                    }
-                } else if (targetCount == 0 && targetRange > 0) {
-                    D.Format(
-                        R.string.target_all_range1_content2,
-                        arrayOf(
-                            D.Text(targetRange.toString()),
-                            getAssignment()
-                        )
-                    )
-                } else {
-                    if (targetRange <= 0 || targetRange >= 2160) {
-                        D.Format(
-                            R.string.target_more_count1_content2,
-                            arrayOf(
-                                D.Text(targetCount.toString()),
-                                getAssignment()
-                            )
-                        )
-                    } else {
-                        D.Format(
-                            R.string.target_range1_count2_content3,
-                            arrayOf(
-                                D.Text(targetRange.toString()),
-                                D.Text(targetCount.toString()),
-                                getAssignment()
-                            )
-                        )
-                    }
-                }
-            } else if (targetArea == 3) {
-                if (targetCount == 99) {
-                    if (targetRange <= 0 || targetRange >= 2160) {
-                        val allTarget = D.Format(
-                            R.string.target_all_content1,
-                            arrayOf(getAssignment())
-                        )
-                        if (actionType == 23 || actionType == 28) {//アメス
-                            D.Join(arrayOf(allTarget, getAnyTarget()))
-                        } else {
-                            allTarget
-                        }
-                    } else {
-                        D.Format(
-                            R.string.target_all_range1_content2,
-                            arrayOf(
-                                D.Text(targetRange.toString()),
-                                getAssignment()
-                            )
-                        )
-                    }
-                } else if (targetCount == 1) {
-                    if (targetRange == -1 || targetRange >= 2160) {
-                        if (targetNumber > 0) {
-                            if (targetNumber == 1 && targetAssignment == 2) {
-                                D.Format(R.string.target_nearest_friendly)
-                            } else {
-                                D.Format(
-                                    R.string.target_near_number1_content2,
-                                    arrayOf(
-                                        D.Text((targetNumber + 1).toString()),
-                                        getAssignment()
+                                        D.Format(R.string.target_nearest),
+                                        getAssignmentCount()
                                     )
                                 )
                             }
+                        }
+                    } else {
+                        D.Format(
+                            R.string.target_range1_content2,
+                            arrayOf(
+                                D.Text(targetRange.toString()),
+                                D.Join(
+                                    arrayOf(
+                                        D.Format(R.string.target_nearest),
+                                        getAssignmentCount()
+                                    )
+                                )
+                            )
+                        )
+                    }
+                } else {//多名目标
+                    val manyTarget = if (targetCount == 99 || targetCount == 0) {
+                        if (isFullRangeTarget()) {
+                            D.Format(R.string.target_all_content1, arrayOf(getAssignmentSide()))
                         } else {
                             D.Format(
-                                R.string.target_one_content1,
-                                arrayOf(getAssignment())
+                                R.string.target_range1_content2,
+                                arrayOf(
+                                    D.Text(targetRange.toString()),
+                                    D.Format(
+                                        R.string.target_range_all_content1,
+                                        arrayOf(getAssignment())
+                                    )
+                                )
                             )
                         }
-                    } else if (targetRange == 0 && targetNumber == 0) {
-                        D.Format(R.string.target_self)
-                    } else {
-                        D.Unknown
+                    } else {//n名目标
+                        if (isFullRangeTarget()) {
+                            D.Join(arrayOf(D.Format(R.string.target_nearest), getAssignmentCount()))
+                        } else {
+                            D.Format(
+                                R.string.target_range1_content2,
+                                arrayOf(
+                                    D.Text(targetRange.toString()),
+                                    D.Format(
+                                        R.string.target_range_max_assignment_count1,
+                                        arrayOf(getAssignmentCount())
+                                    )
+                                )
+                            )
+                        }
                     }
-                } else {
-                    //イオ　rfMain2、ユカリ rfMain2
-                    // D.Format(R.string.target)
-                    val targets = D.Format(
-                        R.string.target_more_count1_content2,
-                        arrayOf(
-                            D.Text(targetCount.toString()),
-                            getAssignment()
-                        )
-                    )
-                    if (actionType == 23) {
-                        D.Join(arrayOf(targets, getAnyTarget()))
-                    } else {
-                        targets
-                    }
+                    getAnyManyTarget(manyTarget)//(targetArea=2)ホマレ、イオ、アオイ; (targetArea=3)アメス、イオ　rfMain2、ユカリ rfMain2
                 }
+            }
+            if (targetType == 34) {
+                D.Join(arrayOf(D.Format(R.string.target_without_self), nearTarget))
             } else {
-                D.Unknown
+                nearTarget
             }
         }
         2, 8 -> {
-            val random = if (targetCount == 1) {
-                D.Format(
-                    R.string.target_random_one_content1,
-                    arrayOf(getAssignment())
-                )
-            } else {
-                D.Format(
-                    R.string.target_random_count1_content2,
-                    arrayOf(
-                        D.Text(targetCount.toString()),
-                        getAssignment()
-                    )
-                )
-            }
-            if (targetArea == 1 && targetRange > 0) {
-                D.Join(
-                    arrayOf(
-                        D.Format(R.string.target_front),
-                        if (targetRange < 2160) D.Format(
-                            R.string.target_range1_content2,
-                            arrayOf(D.Text(targetRange.toString()), random)
-                        )
-                        else random
-                    )
-                )
-            } else if (targetArea == 2 || targetArea == 3) {
-                if (targetRange == -1 || targetRange >= 2160) {
-                    random
-                } else {
-                    D.Format(
-                        R.string.target_range1_content2,
-                        arrayOf(D.Text(targetRange.toString()), random)
-                    )
-                }
-            } else {
-                D.Unknown
-            }
-        }
-        4 -> {
-            if (targetArea == 1) {
-                if (targetCount == 1) {
-                    if (targetRange == -1 || targetRange >= 2160) {
-                        D.join(
-                            R.string.target_front,
-                            R.string.target_farthest,
-                            R.string.target_enemy
-                        )
-                    } else {
-                        D.Join(
-                            arrayOf(
-                                D.Format(R.string.target_front),
-                                D.Format(
-                                    R.string.target_range1_content2,
-                                    arrayOf(
-                                        D.Text(targetRange.toString()),
-                                        D.join(R.string.target_farthest, getAssignmentResId())
-                                    )
-                                )
-                            )
-                        )
-                    }
-                } else {
-                    D.Format(
-                        R.string.target_farthest_content1_count2,
-                        arrayOf(
-                            getAssignment(),
-                            D.Text(targetCount.toString())
-                        )
-                    )
-                }
-            } else if (targetArea == 2 && targetCount == 1) {
-                if (targetAssignment == 2) {
-                    D.Format(R.string.target_farthest_friendly)
-                } else {
-                    D.join(R.string.target_farthest, R.string.target_enemy)
-                }
-            } else if (targetArea == 3 && targetCount > 0) {
-                if (targetNumber > 0) {
-                    D.Format(
-                        R.string.target_fart_number1_content2,
-                        arrayOf(
-                            D.Text((targetNumber + 1).toString()),
-                            getAssignment()
-                        )
-                    )
-                } else {
-                    D.Format(
-                        R.string.target_farthest_content1_count2,
-                        arrayOf(
-                            getAssignment(),
-                            D.Text(targetCount.toString())
-                        )
-                    )
-                }
-            } else {
-                D.Unknown
-            }
-        }
-        5 -> {
-            val lowest = D.Format(
-                R.string.target_most_content1_extent2_target3,
-                arrayOf(
-                    D.Format(R.string.hp_ratio),
-                    D.Format(R.string.target_low),
-                    getAssignment()
-                )
+            val randomTarget = D.Format(
+                R.string.target_random_assignment_count1,
+                arrayOf(getAssignmentCount())
             )
-            if (targetRange >= 2160) {
-                lowest
+            val rangeRandomTarget = if (isFullRangeTarget()) {
+                randomTarget
             } else {
                 D.Format(
                     R.string.target_range1_content2,
                     arrayOf(
                         D.Text(targetRange.toString()),
-                        lowest
+                        randomTarget
+                    )
+                )
+            }
+            if (targetArea == 1) {
+                D.Join(arrayOf(D.Format(R.string.target_front), rangeRandomTarget))
+            } else {
+                rangeRandomTarget
+            }
+        }
+        4 -> {
+            val farthestTarget = if (targetNumber > 0) {
+                D.Format(
+                    R.string.target_far_number1_assignment2,
+                    arrayOf(
+                        getNumber(),
+                        getAssignment()
+                    )
+                )
+            } else if (targetCount == 1) {
+                D.Format(
+                    R.string.target_farthest_assignment1,
+                    arrayOf(getAssignment())
+                )
+            } else {
+                D.Format(
+                    R.string.target_farthest_assignment_count1,
+                    arrayOf(getAssignmentCount())
+                )
+            }
+            val rangeFarthestTarget = if (isFullRangeTarget()) {
+                farthestTarget
+            } else {
+                D.Format(
+                    R.string.target_range1_content2,
+                    arrayOf(
+                        D.Text(targetRange.toString()),
+                        farthestTarget
+                    )
+                )
+            }
+            if (targetArea == 1) {
+                D.Join(arrayOf(D.Format(R.string.target_front), rangeFarthestTarget))
+            } else {
+                rangeFarthestTarget
+            }
+        }
+        9 -> D.Format(R.string.target_last_assignment_count1, arrayOf(getAssignmentCount()))
+        10 -> D.Format(R.string.target_first_assignment_count1, arrayOf(getAssignmentCount()))
+        11 -> D.Format(R.string.target_distance1, arrayOf(D.Text(actionValue1.toNumStr())))
+        //33 -> D.Unknown (shadow)
+        18 -> D.Format(R.string.target_all_summon_content1, arrayOf(getAssignmentSide()))
+        //19 -> D.Unknown (tpReducing)
+        20 -> D.Format(R.string.target_all_atk_content1, arrayOf(getAssignmentSide()))
+        21 -> D.Format(R.string.target_all_magic_str_content1, arrayOf(getAssignmentSide()))
+        //22 -> D.Unknown (allSummonRandom)
+        //23 -> D.Unknown (selfSummonRandom)
+        24 -> D.Format(R.string.target_boss)
+        //40 -> D.Unknown
+        42 -> D.Format(R.string.target_multi_target1, arrayOf(getAssignmentSide()))
+        in allMostTypes -> {
+            @StringRes
+            val content = when (targetType) {
+                in hpRatioTypes -> R.string.hp_ratio
+                in energyTypes -> R.string.energy
+                in atkTypes -> R.string.atk
+                in magicStrTypes -> R.string.magic_str
+                else -> R.string.atk_or_magic_str//in atkOrMagicStrTypes
+            }
+            val lowestTarget = D.Format(
+                R.string.target_most_content1_extent2_assignment_count3,
+                arrayOf(
+                    D.Format(content),
+                    D.Format(if (allMostHighTypes.contains(targetType)) R.string.target_high else R.string.target_low),
+                    getAssignmentCount()
+                )
+            )
+            val manyTarget = if (isFullRangeTarget()) {
+                lowestTarget
+            } else {
+                D.Format(
+                    R.string.target_range1_content2,
+                    arrayOf(
+                        D.Text(targetRange.toString()),
+                        lowestTarget
+                    )
+                )
+            }
+            if (withoutSelfTypes.contains(targetType)) {
+                D.Join(arrayOf(D.Format(R.string.target_without_self), manyTarget))
+            } else if (notInBackTypes.contains(targetType)) {
+                D.Format(R.string.target_not_in_back_content1, arrayOf(manyTarget))
+            } else {
+                manyTarget
+            }
+        }
+        else -> D.Unknown
+        /*5, 6, 25, 26, 35, 36 -> {
+            val lowestTarget = D.Format(
+                R.string.target_most_content1_extent2_assignment_count3,
+                arrayOf(
+                    D.Format(R.string.hp_ratio),
+                    D.Format(if (targetType in arrayOf(6, 26, 35)) R.string.target_high else R.string.target_low),
+                    getAssignmentCount()
+                )
+            )
+            if (isFullRangeTarget()) {
+                lowestTarget
+            } else {
+                D.Format(
+                    R.string.target_range1_content2,
+                    arrayOf(
+                        D.Text(targetRange.toString()),
+                        lowestTarget
                     )
                 )
             }
         }
-        6 -> {
+        12, 13, 27, 28, 37 -> {
             D.Format(
-                R.string.target_most_content1_extent2_target3,
-                arrayOf(
-                    D.Format(R.string.hp_ratio),
-                    D.Format(R.string.target_high),
-                    getAssignment()
-                )
-            )
-        }
-        9 -> {
-            if (targetAssignment == 1) {
-                D.Format(R.string.target_last_enemy)
-            } else {
-                D.Format(R.string.target_last_friendly)
-            }
-        }
-        10 -> {
-            if (targetAssignment == 1) {
-                D.Format(R.string.target_first_enemy)
-            } else {
-                D.Format(R.string.target_first_friendly)
-            }
-        }
-        11 -> {
-            D.Format(
-                R.string.target_distance1,
-                arrayOf(D.Text(actionValue1.toNumStr()))
-            )
-        }
-        12 -> {
-            D.Format(
-                R.string.target_most_content1_extent2_target3,
+                R.string.target_most_content1_extent2_assignment_count3,
                 arrayOf(
                     D.Format(R.string.energy),
-                    D.Format(R.string.target_high),
-                    getAssignment()
+                    D.Format(if (targetType in arrayOf(12, 27, 37)) R.string.target_high else R.string.target_low),
+                    getAssignmentCount()
                 )
             )
         }
-        13 -> {
+        14, 15, 29, 30 -> {
             D.Format(
-                R.string.target_most_content1_extent2_target3,
-                arrayOf(
-                    D.Format(R.string.energy),
-                    D.Format(R.string.target_low),
-                    getAssignment()
-                )
-            )
-        }
-        14 -> {
-            D.Format(
-                R.string.target_most_content1_extent2_target3,
+                R.string.target_most_content1_extent2_assignment_count3,
                 arrayOf(
                     D.Format(R.string.atk),
-                    D.Format(R.string.target_high),
-                    getAssignment()
+                    D.Format(if (targetType == 14 || targetType == 29) R.string.target_high else R.string.target_low),
+                    getAssignmentCount()
                 )
             )
         }
-        15 -> {
+        16, 17, 31, 32 -> {
             D.Format(
-                R.string.target_most_content1_extent2_target3,
-                arrayOf(
-                    D.Format(R.string.atk),
-                    D.Format(R.string.target_low),
-                    getAssignment()
-                )
-            )
-        }
-        16 -> {
-            D.Format(
-                R.string.target_most_content1_extent2_target3,
+                R.string.target_most_content1_extent2_assignment_count3,
                 arrayOf(
                     D.Format(R.string.magic_str),
-                    D.Format(R.string.target_high),
-                    getAssignment()
+                    D.Format(if (targetType == 16 || targetType == 31) R.string.target_high else R.string.target_low),
+                    getAssignmentCount()
                 )
             )
         }
-        17 -> {
+        38, 39 -> {
             D.Format(
-                R.string.target_most_content1_extent2_target3,
+                R.string.target_most_content1_extent2_assignment_count3,
                 arrayOf(
-                    D.Format(R.string.magic_str),
-                    D.Format(R.string.target_low),
-                    getAssignment()
+                    D.Format(R.string.atk_or_magic_str),
+                    D.Format(if (targetType == 38) R.string.target_high else R.string.target_low),
+                    getAssignmentCount()
                 )
             )
         }
-        18 -> {
-            D.Format(
-                R.string.target_all_summon_content1,
-                arrayOf(getAssignment())
-            )
-        }
-        20 -> {
-            D.Format(
-                R.string.target_all_atk_content1,
-                arrayOf(getAssignment())
-            )
-        }
-        21 -> {
-            D.Format(
-                R.string.target_all_magic_str_content1,
-                arrayOf(getAssignment())
-            )
-        }
-        24 -> {
-            D.Format(R.string.target_boss)
-        }
-        25 -> {
-            D.Format(
-                R.string.target_most_content1_extent2_target3,
+        41 -> {
+            D.Join(
                 arrayOf(
-                    D.Format(R.string.hp_ratio),
-                    D.Format(R.string.target_low),
-                    getAssignment()
-                )
-            )
-        }
-        31 -> {
-            D.Format(
-                R.string.target_most_content1_extent2_target3,
-                arrayOf(
-                    D.Format(R.string.magic_str),
-                    D.Format(R.string.target_high),
-                    getAssignment()
-                )
-            )
-        }
-        34 -> {
-            D.Format(R.string.target_without_self)
-        }
-        35 -> {
-            D.Format(
-                R.string.target_not_in_back_content1,
-                arrayOf(
+                    D.Format(R.string.target_without_self),
                     D.Format(
-                        R.string.target_most_content1_extent2_target3,
+                        R.string.target_most_content1_extent2_assignment_count3,
                         arrayOf(
-                            D.Format(R.string.hp_remanent),
-                            D.Format(R.string.target_high),
-                            getAssignment()
+                            D.Format(R.string.energy),
+                            D.Format(R.string.target_low),
+                            getAssignmentCount()
                         )
                     )
                 )
             )
-
-        }
-        37 -> {
-            D.Format(
-                R.string.target_most_content1_extent2_target3,
-                arrayOf(
-                    D.Format(R.string.energy),
-                    D.Format(R.string.target_high),
-                    getAssignment()
-                )
-            )
-        }
-        38 -> {
-            D.Format(
-                R.string.target_highest_atk_or_magic_str_content1,
-                arrayOf(getAssignment())
-            )
-        }
-        41 -> {
-            D.Format(
-                R.string.target_without_self_content1_extent2_count3_target4,
-                arrayOf(
-                    D.Format(R.string.energy),
-                    D.Format(R.string.target_low),
-                    D.Text(targetCount.toString()),
-                    getAssignment()
-                )
-            )
         }
         43 -> {
-            D.Format(
-                R.string.target_without_self_content1_extent2_count3_target4,
+            D.Join(
                 arrayOf(
-                    D.Format(R.string.atk),
-                    D.Format(R.string.target_high),
-                    D.Text(targetCount.toString()),
-                    getAssignment()
+                    D.Format(R.string.target_without_self),
+                    D.Format(
+                        R.string.target_most_content1_extent2_assignment_count3,
+                        arrayOf(
+                            D.Format(R.string.atk),
+                            D.Format(R.string.target_high),
+                            getAssignmentCount()
+                        )
+                    )
                 )
             )
-        }
-        else -> D.Unknown
+        }*/
     }
 }
 
-fun SkillAction.getAssignmentResId(): Int {
-    return when (targetAssignment) {
-        1 -> R.string.target_enemy
-        else -> R.string.target_friendly
-    }
-}
-
+/**
+ * if (targetAssignment == 1) 敌人 else 己方角色
+ *
+ * 敌人|己方角色
+ *
+ * 敵|味方
+ */
 fun SkillAction.getAssignment(): D {
-    return D.Format(getAssignmentResId())
+    return D.Format(if (targetAssignment == 1) R.string.target_enemy else R.string.target_friendly)
 }
 
-fun SkillAction.getAnyTarget(): D {
+/**
+ * if (targetAssignment == 1) 敌方 else 己方
+ *
+ * 敌方|己方
+ *
+ * 敵|味方
+ */
+fun SkillAction.getAssignmentSide(): D {
+    return D.Format(if (targetAssignment == 1) R.string.target_enemy_side else R.string.target_friendly_side)
+}
+
+/**
+ * if (targetAssignment == 1) 敌人 else 己方角色
+ *
+ * {n}名{敌人|己方角色}
+ *
+ * {敵|味方}{n}キャラ
+ */
+private fun SkillAction.getAssignmentCount(): D {
+    @StringRes
+    val count = when (targetCount) {
+        1 -> R.string.target_count1
+        2 -> R.string.target_count2
+        3 -> R.string.target_count3
+        4 -> R.string.target_count4
+        else -> R.string.target_count5
+    }
     return D.Format(
-        R.string.target_any_content1,
-        arrayOf(getAssignment())
+        if (targetAssignment == 1) R.string.target_enemy_count1 else R.string.target_friendly_count1,
+        arrayOf(D.Format(count))
     )
+}
+
+/**
+ * 第{n}
+ *
+ * {n}番目
+ */
+private fun SkillAction.getNumber(): D {
+    val number = if (targetAssignment == 2) targetNumber - 1 else targetNumber
+    return D.Format(
+        when (number) {
+            0 -> R.string.target_number1
+            1 -> R.string.target_number2
+            2 -> R.string.target_number3
+            3 -> R.string.target_number4
+            else -> R.string.target_number5
+        }
+    )
+}
+
+/**
+ * if (actionType == 23 || actionType == 28) any_target else target
+ *
+ * 中的任意{0}
+ *
+ * の中の任意{0}
+ */
+private fun SkillAction.getAnyManyTarget(manyTarget: D): D {
+    return if (actionType in arrayOf(23, 28)) {
+        D.Join(
+            arrayOf(
+                manyTarget,
+                D.Format(R.string.target_any_content1, arrayOf(getAssignment()))
+            )
+        )
+    } else {
+        manyTarget
+    }
+}
+
+/**
+ * if (targetType == 24) multi_target else target
+ *
+ * {0}的所有多目标部位
+ *
+ * {0}のマルチターゲット部位すべて
+ */
+private fun SkillAction.getDependMultiTarget(dependTarget: D): D {
+    return if (targetType == 42) {
+        D.Format(R.string.target_multi_target1, arrayOf(dependTarget))
+    } else {
+        dependTarget
+    }
+}
+
+/**
+ * targetRange <= 0 || targetRange >= 2160
+ */
+private fun SkillAction.isFullRangeTarget(): Boolean {
+    return targetRange <= 0 || targetRange >= 2160
 }

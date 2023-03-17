@@ -24,7 +24,7 @@ class ActionBuilder(
 
         actions.forEachIndexed { index, action ->
             // Focus, 94Unknown
-            if (action.actionType == 7 || action.actionType == 94) {
+            if (action.actionType in arrayOf(7, 94)) {
                 remove.add(index)
             }
             // AbnormalField
@@ -33,7 +33,7 @@ class ActionBuilder(
                 remove.add(modifyIndex)
             }
             // Modify
-            if (arrayOf(26, 27, 74).contains(action.actionType)) {
+            if (action.actionType in arrayOf(26, 27, 74)) {
                 remove.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
                 origin[modifyIndex] = origin[modifyIndex].append(origin[index])
@@ -50,7 +50,7 @@ class ActionBuilder(
                 rawDepends.forEachIndexed { dependIndex, dependActionId ->
                     if (
                         dependActionId == action.actionId &&
-                        arrayOf(1, 9, 36, 46, 79).contains(actions[dependIndex].actionType)
+                        actions[dependIndex].actionType in arrayOf(1, 9, 36, 46, 79)
                     ) {
                         origin[dependIndex] = origin[dependIndex].append(action.getInjuredEnergy())
                     }
@@ -80,16 +80,16 @@ class ActionBuilder(
                 }
             }
             // ExEquipPassive
-            if (arrayOf(901, 902).contains(action.actionType)) {
+            if (action.actionType in arrayOf(901, 902)) {
                 remove.add(index)
                 var modifyIndex = index + 1
-                if (arrayOf(26, 27, 74).contains(actions[modifyIndex].actionType)) {
+                if (actions[modifyIndex].actionType in arrayOf(26, 27, 74)) {
                     modifyIndex = actions.indexOfFirst { it.actionId == actions[modifyIndex].actionDetail1 }
                 }
                 origin[modifyIndex] = origin[modifyIndex].insert(origin[index])
             }
             // Branch
-            if (arrayOf(23, 28, 42, 53).contains(action.actionType)) {
+            if (action.actionType in arrayOf(23, 28, 42, 53)) {
                 val branch = action.getBranch()
                 if (branch.isEmpty()) {
                     if (action.actionDetail2 == 0 && action.actionDetail3 ==0) {
@@ -211,6 +211,7 @@ class ActionBuilder(
             97 -> getInjuredEnergyMark()
             98 -> getEnergyDownCut()
             99 -> getSpeedField()
+            100 -> getAkinesiaInvalid()
             else -> getUnknown()
         }
     }

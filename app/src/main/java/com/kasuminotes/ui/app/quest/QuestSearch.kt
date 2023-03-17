@@ -4,7 +4,6 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -40,8 +39,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
@@ -58,7 +55,6 @@ import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.SelectableItem
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
-import com.kasuminotes.ui.components.selectedContainerColor
 import com.kasuminotes.ui.theme.RaritiesColors
 import com.kasuminotes.utils.UrlUtil
 

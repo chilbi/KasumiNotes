@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -91,10 +92,10 @@ fun TextToggleButton(
     onToggle: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    color: Color = MaterialTheme.colorScheme.tertiary,
+    color: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = contentColorFor(color),
     shape: Shape = MaterialTheme.shapes.extraSmall,
-    padding: PaddingValues = PaddingValues(4.dp),
+    padding: PaddingValues = PaddingValues(8.dp),
     style: TextStyle = MaterialTheme.typography.labelLarge
 ) {
     Row(

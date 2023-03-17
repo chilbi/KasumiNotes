@@ -28,10 +28,13 @@ fun AttackDetail(
         atkTypeText = stringResource(R.string.magic)
     }
 
+    val target = stringResource(R.string.target_front) +
+            stringResource(R.string.target_enemy_count1, stringResource(R.string.target_count1))
+
     val description = stringResource(
         R.string.action_damage_target1_formula2_content3,
-        stringResource(R.string.target_one_content1, stringResource(R.string.target_enemy)),
-        damage.roundToInt().toString(),
+        target,
+        damage.roundToInt().toString(),// TODO 不确定的取整方式
         atkTypeText
     )
 

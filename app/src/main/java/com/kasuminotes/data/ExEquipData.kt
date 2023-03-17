@@ -78,9 +78,9 @@ data class ExEquipData(
         val pairs = mutableListOf<Pair<Int, Double>>()
         val actions = passiveSkill.actions
         actions.forEachIndexed { index, action ->
-            if (arrayOf(901, 902).contains(action.actionType) && action.actionDetail1 == 0) {
+            if (action.actionType in arrayOf(901, 902) && action.actionDetail1 == 0) {
                 var statusActionIndex = index + 1
-                if (arrayOf(26, 27, 74).contains(actions[statusActionIndex].actionType)) {
+                if (actions[statusActionIndex].actionType in arrayOf(26, 27, 74)) {
                     statusActionIndex =
                         actions.indexOfFirst { it.actionId == actions[statusActionIndex].actionDetail1 }
                 }

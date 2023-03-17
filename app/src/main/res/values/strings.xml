@@ -248,6 +248,7 @@
     <string name="action_damage_attenuation_target1_limit2_time3_r4_r5_r6">对%1$s展开限制盾，受到每个动作的伤害超过%2$s万时，伤害将会被衰减，效果时间%3$s秒。\nf(100万)=%4$s万; f(200万)=%5$s万; f(999万)=%6$s万</string>
     <string name="action_stealth_time1">进入潜伏状态，效果时间%s秒。</string>
     <string name="action_ignore_provocation">无视挑衅，</string>
+    <string name="action_akinesia_invalid_target1_count2_time3">赋予%1$s可无效化最多%2$s次受到的行动不能的状态，效果时间%3$s秒。</string>
 
 
     <string name="action_striked_branch_time1">%s秒的动作期间内受到攻击时，</string>
@@ -324,7 +325,7 @@
     <string name="content_status_down_effect">状态降低效果</string>
     <string name="content_barrier">护盾</string>
     <string name="content_strength_seal">【力之魔字】刻印期间</string>
-    <string name="content_kizuna_certificate">【羁绊之证】解放期间</string>
+    <string name="content_kizuna_certificate">【情谊的证明】解放期间</string>
     <string name="content_unknown_state">【未知标记】持有期间</string>
 
     <string name="state_unknown">标记%s</string>
@@ -356,50 +357,60 @@
     <string name="state_black_star">黑星</string>
     <string name="state_friendship_seal">友情的魔印</string>
     <string name="state_hazy">朦胧</string>
-    <string name="state_kizuna_certificate">羁绊之证</string>
+    <string name="state_kizuna_certificate">情谊的证明</string>
     <string name="state_psi_charge">PSI★充能</string>
 
     <string name="target">对象</string>
-    <string name="target_boss">Boss</string>
+    <string name="target_damaged">受到伤害的对象</string>
+    <string name="target_randomized">随机到的对象</string>
+    <string name="target_eligible">符合条件的对象</string>
     <string name="target_self">自身</string>
+    <string name="target_boss">Boss</string>
     <string name="target_enemy">敌人</string>
-    <string name="target_friendly">己方</string>
-    <string name="target_damaged">受到伤害的目标</string>
-    <string name="target_eligible">符合条件的目标</string>
+    <string name="target_friendly">己方角色</string>
+    <string name="target_enemy_side">敌方</string>
+    <string name="target_friendly_side">己方</string>
+    <string name="target_enemy_count1">%s敌人</string>
+    <string name="target_friendly_count1">%s己方角色</string>
+    <string name="target_count1">一名</string>
+    <string name="target_count2">两名</string>
+    <string name="target_count3">三名</string>
+    <string name="target_count4">四名</string>
+    <string name="target_count5">五名</string>
+    <string name="target_number1">第一</string>
+    <string name="target_number2">第二</string>
+    <string name="target_number3">第三</string>
+    <string name="target_number4">第四</string>
+    <string name="target_number5">第五</string>
     <string name="target_nearest">最近的</string>
     <string name="target_farthest">最远的</string>
     <string name="target_low">低</string>
     <string name="target_high">高</string>
     <string name="target_front">前方</string>
-    <string name="target_one_content1">前方一名%s</string>
-    <string name="target_more_count1_content2">前方%1$s名%2$s</string>
-    <string name="target_count1_content2">前方第%1$s名%2$s</string>
+    <string name="target_forward">前方</string>
     <string name="target_all_content1">%s全体</string>
+    <string name="target_front_all_content1">前方所有%s</string>
     <string name="target_range1_content2">%1$s范围内的%2$s</string>
-    <string name="target_range1_count2_content3">%1$s范围内的最大%2$s名%3$s</string>
-    <string name="target_all_range1_content2">%1$s范围内的所有%2$s</string>
-    <string name="target_random_one_content1">随机一名%s</string>
-    <string name="target_random_count1_content2">随机%1$s名%2$s</string>
-    <string name="target_most_content1_extent2_target3">%1$s最%2$s的一名%3$s角色</string>
-    <string name="target_farthest_content1_count2">最远的%1$s%2$s名角色</string>
-    <string name="target_without_self_content1_extent2_count3_target4">自身以外的%1$s最%2$s的%3$s名%4$s角色</string>
-    <string name="target_highest_atk_or_magic_str_content1">物理攻击力或者魔法攻击力最高的一名%s</string>
+    <string name="target_range_all_content1">所有%s</string>
+    <string name="target_range_max_assignment_count1">最大%s</string>
+    <string name="target_random_assignment_count1">随机%s</string>
+    <string name="target_front_number1_assignment2">前方%1$s名%2$s</string>
+    <string name="target_nearest_assignment1">距离自身最近的%s</string>
+    <string name="target_farthest_assignment1">距离自身最远的%s</string>
+    <string name="target_near_number1_assignment2">距离自身%1$s近的%2$s</string>
+    <string name="target_far_number1_assignment2">距离自身%1$s远的%2$s</string>
+    <string name="target_farthest_assignment_count1">最远的%s</string>
+    <string name="target_first_assignment_count1">最前方的%s</string>
+    <string name="target_last_assignment_count1">最后方的%s</string>
+    <string name="target_most_content1_extent2_assignment_count3">%1$s最%2$s的%3$s</string>
+    <string name="target_without_self">自身以外的</string>
     <string name="target_all_atk_content1">使用物理攻击的所有%s角色</string>
     <string name="target_all_magic_str_content1">使用魔法攻击的所有%s角色</string>
-    <string name="target_nearest_friendly">距离自身最近的己方角色</string>
-    <string name="target_farthest_friendly">距离自身最远的己方角色</string>
-    <string name="target_first_friendly">最前方的己方角色</string>
-    <string name="target_first_enemy">最前方的敌人</string>
-    <string name="target_last_friendly">最后方的己方角色</string>
-    <string name="target_last_enemy">最后方的敌人</string>
-    <string name="target_front_all_content1">前方所有%s</string>
-    <string name="target_near_number1_content2">距离自身第%1$s近的%2$s</string>
-    <string name="target_fart_number1_content2">距离自身第%1$s远的%2$s</string>
     <string name="target_distance1">自身前方%s距离</string>
-    <string name="target_without_self">自身以外的己方全体</string>
     <string name="target_not_in_back_content1">不在自身后面的角色中，%s</string>
     <string name="target_any_content1">中的任意%s</string>
     <string name="target_all_summon_content1">%s所有的召唤物</string>
+    <string name="target_multi_target1">%s的所有多目标部位</string>
 
     <string name="skill_level">技能等级</string>
     <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × 技能等级 + (%3$s + %4$s × 技能等级) × %5$s } = %6$s</string>
@@ -463,6 +474,7 @@
     <string name="hp_lost_ratio">损失的HP比例</string>
     <string name="counter_num1">计数器%s</string>
     <string name="of">的</string>
+    <string name="atk_or_magic_str">物理攻击力或者魔法攻击力</string>
 
     <string name="additive_time">效果时间</string>
     <string name="additive_damage">伤害量</string>

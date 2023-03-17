@@ -2,7 +2,6 @@ package com.kasuminotes.action
 
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
-import kotlin.math.roundToInt
 
 fun SkillAction.getStatusField(skillLevel: Int): D {
     val formula = when (actionDetail2) {
