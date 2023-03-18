@@ -28,7 +28,7 @@ fun AttackDetail(
         atkTypeText = stringResource(R.string.magic)
     }
 
-    val target = stringResource(R.string.target_front) +
+    val target = stringResource(R.string.target_forward) +
             stringResource(R.string.target_enemy_count1, stringResource(R.string.target_count1))
 
     val description = stringResource(

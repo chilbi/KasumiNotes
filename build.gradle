@@ -10,8 +10,11 @@ buildscript {
         lifecycle_viewmodel_version = '2.6.0'
     }
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        gradlePluginPortal()
         google()
         mavenCentral()
     }

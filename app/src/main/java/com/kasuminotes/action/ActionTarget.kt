@@ -71,7 +71,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                         if (targetNumber > 0) {
                             D.Format(
                                 R.string.target_front_number1_assignment2,
-                                arrayOf(getNumber(), getAssignment())
+                                arrayOf(getNumber(), getAssignmentOne())
                             )
                         } else {//targetNumber == 0
                             D.Join(arrayOf(D.Format(R.string.target_forward), getAssignmentCount()))
@@ -140,7 +140,8 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                             } else {//targetNumber == 0
                                 D.Join(
                                     arrayOf(
-                                        D.Format(R.string.target_nearest),
+                                        D.Format(if (targetArea == 3)
+                                            R.string.target_forward else R.string.target_nearest),
                                         getAssignmentCount()
                                     )
                                 )
@@ -310,97 +311,6 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             }
         }
         else -> D.Unknown
-        /*5, 6, 25, 26, 35, 36 -> {
-            val lowestTarget = D.Format(
-                R.string.target_most_content1_extent2_assignment_count3,
-                arrayOf(
-                    D.Format(R.string.hp_ratio),
-                    D.Format(if (targetType in arrayOf(6, 26, 35)) R.string.target_high else R.string.target_low),
-                    getAssignmentCount()
-                )
-            )
-            if (isFullRangeTarget()) {
-                lowestTarget
-            } else {
-                D.Format(
-                    R.string.target_range1_content2,
-                    arrayOf(
-                        D.Text(targetRange.toString()),
-                        lowestTarget
-                    )
-                )
-            }
-        }
-        12, 13, 27, 28, 37 -> {
-            D.Format(
-                R.string.target_most_content1_extent2_assignment_count3,
-                arrayOf(
-                    D.Format(R.string.energy),
-                    D.Format(if (targetType in arrayOf(12, 27, 37)) R.string.target_high else R.string.target_low),
-                    getAssignmentCount()
-                )
-            )
-        }
-        14, 15, 29, 30 -> {
-            D.Format(
-                R.string.target_most_content1_extent2_assignment_count3,
-                arrayOf(
-                    D.Format(R.string.atk),
-                    D.Format(if (targetType == 14 || targetType == 29) R.string.target_high else R.string.target_low),
-                    getAssignmentCount()
-                )
-            )
-        }
-        16, 17, 31, 32 -> {
-            D.Format(
-                R.string.target_most_content1_extent2_assignment_count3,
-                arrayOf(
-                    D.Format(R.string.magic_str),
-                    D.Format(if (targetType == 16 || targetType == 31) R.string.target_high else R.string.target_low),
-                    getAssignmentCount()
-                )
-            )
-        }
-        38, 39 -> {
-            D.Format(
-                R.string.target_most_content1_extent2_assignment_count3,
-                arrayOf(
-                    D.Format(R.string.atk_or_magic_str),
-                    D.Format(if (targetType == 38) R.string.target_high else R.string.target_low),
-                    getAssignmentCount()
-                )
-            )
-        }
-        41 -> {
-            D.Join(
-                arrayOf(
-                    D.Format(R.string.target_without_self),
-                    D.Format(
-                        R.string.target_most_content1_extent2_assignment_count3,
-                        arrayOf(
-                            D.Format(R.string.energy),
-                            D.Format(R.string.target_low),
-                            getAssignmentCount()
-                        )
-                    )
-                )
-            )
-        }
-        43 -> {
-            D.Join(
-                arrayOf(
-                    D.Format(R.string.target_without_self),
-                    D.Format(
-                        R.string.target_most_content1_extent2_assignment_count3,
-                        arrayOf(
-                            D.Format(R.string.atk),
-                            D.Format(R.string.target_high),
-                            getAssignmentCount()
-                        )
-                    )
-                )
-            )
-        }*/
     }
 }
 
@@ -413,6 +323,17 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
  */
 fun SkillAction.getAssignment(): D {
     return D.Format(if (targetAssignment == 1) R.string.target_enemy else R.string.target_friendly)
+}
+
+/**
+ * if (targetAssignment == 1) 敌人 else 己方角色
+ *
+ * 敌人|己方角色
+ *
+ * 敵１キャラ|味方１キャラ
+ */
+fun SkillAction.getAssignmentOne(): D {
+    return D.Format(if (targetAssignment == 1) R.string.target_enemy_one else R.string.target_friendly_one)
 }
 
 /**

@@ -19,9 +19,10 @@ data class SkillAction(
     val targetType: Int,
     val targetNumber: Int,
     val targetCount: Int,
-    val description: String,
-    var depend: SkillAction? = null
+    val description: String
 ) {
+    var depend: SkillAction? = null
+
     companion object {
         private var fields: String? = null
 

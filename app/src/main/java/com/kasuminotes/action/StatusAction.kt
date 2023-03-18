@@ -5,7 +5,8 @@ import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
 import kotlin.math.roundToInt
 
-fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property: Property?): D {
+/** arrayOf(contentDesc, timeDesc, constDesc) */
+fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, property: Property?): Array<D?> {
     // 不受技能影响
     var isConst = false
     var detail1 = actionDetail1
@@ -54,41 +55,48 @@ fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property:
 
     val resId = if (isUp) {
         if (isReceived) {
-            R.string.action_up_target1_received_content2_formula3_time4
+            R.string.action_up_target1_received_content2_formula3
         } else {
-            R.string.action_up_target1_content2_formula3_time4
+            R.string.action_up_target1_content2_formula3
         }
     } else {
         if (isReceived) {
-            R.string.action_down_target1_received_content2_formula3_time4
+            R.string.action_down_target1_received_content2_formula3
         } else {
-            R.string.action_down_target1_content2_formula3_time4
+            R.string.action_down_target1_content2_formula3
         }
     }
 
     val time = if (actionDetail2 == 2) {
         val action = actions.find { action -> action.actionType == 17 && action.actionDetail1 == 9 }
-        action?.actionValue3 ?: 0.0
+        action?.actionValue3 ?: actionValue4
     } else {
         actionValue4
     }
 
-    val result = D.Format(
-        resId,
-        arrayOf(
-            getTarget(depend),
-            content,
-            formula,
-            D.Text(time.toNumStr())
-        )
-    )
+    val contentDesc = D.Format(resId, arrayOf(getTarget(depend), content, formula))
 
-    return if (isConst) {
-        result.append(D.Format(
+    val timeDesc = D.Text(time.toNumStr())
+
+    val constDesc = if (isConst) {
+        D.Format(
             if (isUp) R.string.action_const_up_content1 else R.string.action_const_down_content1,
             arrayOf(content)
-        ))
+        )
     } else {
-        result
+        null
+    }
+
+    return arrayOf(contentDesc, timeDesc, constDesc)
+}
+fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property: Property?): D {
+    val arr = getStatusArray(skillLevel, actions, property)
+    val contentDesc = arr[0]!!
+    val timeDesc = D.Format(R.string.action_time1, arrayOf(arr[1]!!))
+    val constDesc = arr[2]
+    return if (constDesc == null) {
+        D.Join(arrayOf(contentDesc, timeDesc))
+    } else {
+        D.Join(arrayOf(contentDesc, timeDesc, constDesc))
     }
 }
