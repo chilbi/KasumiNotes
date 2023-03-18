@@ -6,54 +6,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 
-/*
-val PrimaryColor = Color(0xFF5F96F5)
-val PrimaryVariantColor = Color(0xFF5B88E6)
-val SecondaryColor = Color(0xFFF55F96)
-val SecondaryVariantColor = Color(0xFFF2397E)
-val LightPlace = Color(0xFFE0E0E0)
-val DarkPlace = Color(0xFF3F3F3F)
-val BorderColor = Color(0x335E6FA2)
-val Positive = Color(0xFF0097A7)
-val Negative = Color(0xFFE64A19)
-
-val Colors.place: Color
-    get() = if (isLight) LightPlace else DarkPlace
-
-val Colors.selected: Color
-    get() = if (isLight) LightWarning else DarkWarning
-
-val LightColorPalette = lightColors(
-    primary = PrimaryColor,
-    primaryVariant = PrimaryVariantColor,
-    secondary = SecondaryColor,
-    secondaryVariant = SecondaryVariantColor,
-//    background = Color.White,
-//    surface = Color.White,
-//    error = Color(0xFFB00020),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-//    onBackground = Color.Black,
-//    onSurface = Color.Black,
-//    onError = Color.White
-)
-
-val DarkColorPalette = darkColors(
-    primary = PrimaryColor,
-    primaryVariant = PrimaryVariantColor,
-    secondary = SecondaryColor,
-    secondaryVariant = SecondaryVariantColor,
-//    background = Color(0xFF121212),
-//    surface = Color(0xFF121212),
-//    error = Color(0xFFCF6679),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-//    onBackground = Color.White,
-//    onSurface = Color.White,
-//    onError = Color.Black
-)
-*/
-
 val ImmersiveSysUi = Color(0x33000000)
 val ShadowColor = Color(0x775E6FA2)
 val UniqueColor = Color(0xFFD34BEF)

@@ -308,7 +308,7 @@
 
     <string name="content_max_hp_ratio1">最大HP的%s</string>
     <string name="content_hp_ratio1">残余HP的%s</string>
-    <string name="content_regeneration_content1_formula2">所有己方的%1$s每秒回复%2$s</string>
+    <string name="content_regeneration_content1_formula2">所有己方角色的%1$s每秒回复%2$s</string>
     <string name="content_buff_target1_content2_formula3">所有%1$s的%2$s提升%3$s</string>
     <string name="content_debuff_target1_content2_formula3">所有%1$s的%2$s降低%3$s</string>
     <string name="content_poison_damage_by_behaviour_formula1">所有敌人陷入每当行动时就会受到%s伤害的中毒状态</string>
