@@ -1,5 +1,6 @@
 package com.kasuminotes.data
 
+import com.kasuminotes.common.SummonMinion
 import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.db.getExSkillData
 import com.kasuminotes.db.getUnitAttackPatternList
@@ -13,22 +14,25 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 
 data class SummonData(
-    val unitId: Int,
+    override val unitId: Int,
     val unitName: String,
-    val searchAreaWidth: Int,
-    val atkType: Int,
-    val normalAtkCastTime: Float,
+    override val searchAreaWidth: Int,
+    override val atkType: Int,
+    override val normalAtkCastTime: Float,
     var unitRarity: UnitRarity? = null,
     var unitPromotionStatus: UnitPromotionStatus? = null,
     var unitPromotion: UnitPromotion? = null,
-    var unitAttackPatternList: List<UnitAttackPattern> = emptyList(),
-    var unitSkillData: UnitSkillData? = null,
+    override var unitAttackPatternList: List<UnitAttackPattern> = emptyList(),
+    override var unitSkillData: UnitSkillData? = null,
     var exSkillData: ExSkillData? = null
-) {
-    var property: Property = Property.zero
+): SummonMinion {
+    override val enemyId: Int? = null
+    override val name: String get() = unitName
+
+    override var property: Property = Property.zero
         private set
 
-    var skillList: List<SkillItem> = emptyList()
+    override var skillList: List<SkillItem> = emptyList()
         private set
 
     private fun setProperty(level: Int, userData: UserData) {

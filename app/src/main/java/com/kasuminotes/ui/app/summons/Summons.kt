@@ -7,9 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,8 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
+import com.kasuminotes.common.SummonMinion
 import com.kasuminotes.ui.app.state.SummonsState
 import com.kasuminotes.ui.components.BackButton
+import com.kasuminotes.ui.components.TabsPanel
 import com.kasuminotes.ui.components.TopBar
 
 private val summonPropertyIndices: List<Int> = listOf(
@@ -42,60 +41,17 @@ fun Summons(
                 Modifier
                     .fillMaxSize()
                     .padding(contentPadding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(4.dp)
             ) {
-                val summonDataList = summonsState.summonDataList
-                val summonSize = summonDataList.size
-                if (summonSize > 0) {
-                    summonDataList.forEachIndexed { index, summonData ->
-                        SummonDetail(
-                            summonData.unitId,
-                            null,
-                            summonData.unitName,
-                            summonData.searchAreaWidth,
-                            summonData.atkType,
-                            summonData.normalAtkCastTime,
-                            summonData.property,
-                            summonPropertyIndices,
-                            summonData.unitAttackPatternList,
-                            summonData.unitSkillData,
-                            summonData.skillList
-                        )
-                        if (index != summonSize - 1) {
-                            Divider(
-                                modifier = Modifier.padding(vertical = 32.dp),
-                                thickness = 2.dp
-                            )
-                        }
-                    }
+                var propertyIndices = summonPropertyIndices
+                val summonMinionList: List<SummonMinion> = summonsState.summonDataList.ifEmpty {
+                    propertyIndices = minionPropertyIndices
+                    summonsState.minionDataList
                 }
 
-                val minionDataList = summonsState.minionDataList
-                val minionSize = minionDataList.size
-                if (minionSize > 0) {
-                    minionDataList.forEachIndexed { index, minionData ->
-                        SummonDetail(
-                            minionData.unitId,
-                            minionData.enemyId,
-                            minionData.name,
-                            minionData.searchAreaWidth,
-                            minionData.atkType,
-                            minionData.normalAtkCastTime,
-                            minionData.property,
-                            minionPropertyIndices,
-                            minionData.unitAttackPatternList,
-                            minionData.unitSkillData,
-                            minionData.skillList
-                        )
-                        if (index != minionSize - 1) {
-                            Divider(
-                                modifier = Modifier.padding(vertical = 32.dp),
-                                thickness = 2.dp
-                            )
-                        }
-                    }
-                }
+                SummonsTabsPanel(
+                    summonMinionList,
+                    propertyIndices
+                )
             }
         }
     )
@@ -107,4 +63,41 @@ private fun SummonsTopBar(onBack: () -> Unit) {
         title = { Text(stringResource(R.string.summons_info)) },
         navigationIcon = { BackButton(onBack) }
     )
+}
+
+@Composable
+private fun SummonsTabsPanel(
+    summonMinionList: List<SummonMinion>,
+    propertyIndices: List<Int>
+) {
+    val size = summonMinionList.size
+    if (size > 0) {
+        TabsPanel(
+            size = size,
+            scrollable = size > 3,
+            initIndex = 0,
+            edgePadding = 0.dp,
+            tabContentFor = { index ->
+                val summonMinion = summonMinionList[index]
+                SummonHeader(
+                    summonMinion.unitId,
+                    summonMinion.enemyId,
+                    summonMinion.name
+                )
+            },
+            panelContentFor = { index ->
+                val summonMinion = summonMinionList[index]
+                SummonDetail(
+                    summonMinion.searchAreaWidth,
+                    summonMinion.atkType,
+                    summonMinion.normalAtkCastTime,
+                    summonMinion.property,
+                    summonMinion.unitAttackPatternList,
+                    summonMinion.unitSkillData,
+                    summonMinion.skillList,
+                    propertyIndices
+                )
+            }
+        )
+    }
 }

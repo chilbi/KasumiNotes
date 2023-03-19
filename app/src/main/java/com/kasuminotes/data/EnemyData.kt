@@ -1,5 +1,6 @@
 package com.kasuminotes.data
 
+import com.kasuminotes.common.SummonMinion
 import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.db.getUnitAttackPatternList
 import com.kasuminotes.db.getUnitSkillData
@@ -9,24 +10,24 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 
 data class EnemyData(
-    val enemyId: Int,
-    val unitId: Int,
-    val name: String,
-    val searchAreaWidth: Int,
-    val atkType: Int,
-    val normalAtkCastTime: Float,
+    override val enemyId: Int,
+    override val unitId: Int,
+    override val name: String,
+    override val searchAreaWidth: Int,
+    override val atkType: Int,
+    override val normalAtkCastTime: Float,
     val comment: String,
     val level: Int,
     val unionBurstLevel: Int,
     val mainSkillLvList: List<Int>,// 1-10
     val exSkillLvList: List<Int>,// 1-5
     val multiParts: List<Int>,// 1-5
-    val property: Property,
+    override val property: Property,
     var enemyMultiParts: List<EnemyData> = emptyList(),
-    var unitAttackPatternList: List<UnitAttackPattern> = emptyList(),
-    var unitSkillData: UnitSkillData? = null
-) {
-    var skillList: List<SkillItem> = emptyList()
+    override var unitAttackPatternList: List<UnitAttackPattern> = emptyList(),
+    override var unitSkillData: UnitSkillData? = null
+): SummonMinion {
+    override var skillList: List<SkillItem> = emptyList()
         private set
 
     suspend fun load(
