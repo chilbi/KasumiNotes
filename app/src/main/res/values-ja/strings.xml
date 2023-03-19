@@ -169,7 +169,7 @@
     <string name="action_damage_critical_rate1">この攻撃がクリティカルした場合、クリティカルダメージ倍率は%s倍になる。</string>
     <string name="action_move_target1">%sの目の前に移動する。</string>
     <string name="action_move_velocity1_target2_distance3">%1$sの速度で%2$sの前の%3$s距離の位置に移動する。</string>
-    <string name="action_move_return">スキル終了後元の位置に戻る。</string>
+    <string name="action_move_return">スキル終了後もとの位置に戻る。</string>
     <string name="action_move_part1_distance2">部位%1$sを%2$s距離前へ移動させ、その後元の位置に戻させる。</string>
     <string name="action_time1">、効果時間%s秒。</string>
     <string name="action_up_target1_content2_formula3">%1$sの%2$sを%3$sアップさせる</string>
@@ -238,7 +238,8 @@
     <string name="action_hiding_target1_time2">%1$sを隠密状態にする、効果時間%2$s秒。</string>
     <string name="action_injured_energy1_mark2_add3_max4_time5_target6">%6$sに【%2$s】を%3$sつ付与する、最大%4$sまで追加される、効果時間%5$s秒。【%2$s】はダメージを受けるたびに1つ消費され、ＴＰを%1$s回復する。</string>
     <string name="action_hp_recovery_down_target1_formula2_time3">%1$sのＨＰ回復量を%2$sダウンさせる、効果時間%3$s秒。</string>
-    <string name="action_dispel_odds1_target2_content3">%1$s確率で%2$sの%3$sを解除する。</string>
+    <string name="action_odds1">%s確率で</string>
+    <string name="action_dispel_target1_content2">%1$sの%2$sを解除する。</string>
     <string name="action_summon_target1_front_distance2_content3">%1$sの前方%2$s距離に、%3$s。</string>
     <string name="action_summon_target1_back_distance2_content3">%1$sの後方%2$s距離に、%3$s。</string>
     <string name="action_summon_target1_content2">%1$sのそばに、%2$s。</string>
@@ -390,7 +391,7 @@
     <string name="target_front">前方</string>
     <string name="target_forward">目の前の</string>
     <string name="target_all_content1">%s全体</string>
-    <string name="target_front_all_content1">前すべての%s</string>
+    <string name="target_front_all_assignment1">前方の%sすべて</string>
     <string name="target_range1_content2">%1$s範囲内の%2$s</string>
     <string name="target_range_all_content1">%sすべて</string>
     <string name="target_range_max_assignment_count1">最大%s</string>
@@ -457,7 +458,7 @@
     <string name="darkness">暗闇</string>
     <string name="silence">沈黙</string>
     <string name="invincible">無敵</string>
-    <string name="physical_invalid">物理無効</string>
+    <string name="physical_invalid">全ての物理攻撃を回避する</string>
     <string name="provoke">挑発</string>
     <string name="fear">恐慌</string>
     <string name="harmed_remove_content1">%s攻撃を受けたときのみ解除される。</string>

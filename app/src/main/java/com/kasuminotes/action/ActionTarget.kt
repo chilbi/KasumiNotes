@@ -88,7 +88,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                 } else {//多名目标
                     val manyTarget = if (targetCount == 99 || targetCount == 0) {
                         if (isFullRangeTarget()) {
-                            D.Format(R.string.target_front_all_content1, arrayOf(getAssignment()))
+                            D.Format(R.string.target_front_all_assignment1, arrayOf(getAssignment()))
                         } else {
                             D.Format(
                                 R.string.target_range1_content2,
@@ -236,7 +236,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             } else if (targetCount == 1) {
                 D.Format(
                     R.string.target_farthest_assignment1,
-                    arrayOf(getAssignment())
+                    arrayOf(getAssignmentOne())
                 )
             } else {
                 D.Format(

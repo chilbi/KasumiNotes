@@ -239,7 +239,8 @@
     <string name="action_hiding_target1_time2">赋予%1$s隐密状态，效果时间%2$s秒。</string>
     <string name="action_injured_energy1_mark2_add3_max4_time5_target6">赋予%6$s%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。【%2$s】在受到伤害时就会消耗1个，同时TP回复%1$s。</string>
     <string name="action_hp_recovery_down_target1_formula2_time3">%1$s的HP回复量减少%2$s，效果时间%3$s秒。</string>
-    <string name="action_dispel_odds1_target2_content3">%1$s概率解除%2$s的%3$s。</string>
+    <string name="action_odds1">%s概率</string>
+    <string name="action_dispel_target1_content2">解除%1$s的%2$s。</string>
     <string name="action_summon_target1_front_distance2_content3">在%1$s的前方%2$s距离，%3$s。</string>
     <string name="action_summon_target1_back_distance2_content3">在%1$s的后方%2$s距离，%3$s。</string>
     <string name="action_summon_target1_content2">在%1$s身边，%2$s。</string>
@@ -249,7 +250,6 @@
     <string name="action_stealth_time1">进入潜伏状态，效果时间%s秒。</string>
     <string name="action_ignore_provocation">无视挑衅，</string>
     <string name="action_akinesia_invalid_target1_count2_time3">赋予%1$s可无效化最多%2$s次受到的行动不能的状态，效果时间%3$s秒。</string>
-
 
     <string name="action_striked_branch_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_exists_field_branch_content1">%s的领域展开时，</string>
@@ -391,7 +391,7 @@
     <string name="target_front">前方</string>
     <string name="target_forward">前方</string>
     <string name="target_all_content1">%s全体</string>
-    <string name="target_front_all_content1">前方所有%s</string>
+    <string name="target_front_all_assignment1">前方所有%s</string>
     <string name="target_range1_content2">%1$s范围内的%2$s</string>
     <string name="target_range_all_content1">所有%s</string>
     <string name="target_range_max_assignment_count1">最大%s</string>
@@ -458,7 +458,7 @@
     <string name="darkness">黑暗</string>
     <string name="silence">沉默</string>
     <string name="invincible">无敌</string>
-    <string name="physical_invalid">物理无效</string>
+    <string name="physical_invalid">回避所有的物理攻击的</string>
     <string name="provoke">挑衅</string>
     <string name="fear">恐慌</string>
     <string name="harmed_remove_content1">%s只当受到攻击时才能解除。</string>

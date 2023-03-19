@@ -11,12 +11,22 @@ fun SkillAction.getDispel(): D {
         else -> D.Unknown
     }
 
-    return D.Format(
-        R.string.action_dispel_odds1_target2_content3,
+    val result = D.Format(
+        R.string.action_dispel_target1_content2,
         arrayOf(
-            D.Text("${actionValue1.toNumStr()}%"),
             getTarget(depend),
             content
         )
     )
+
+    return if (actionValue1 < 100.0) {
+        result.insert(
+            D.Format(
+                R.string.action_odds1,
+                arrayOf(D.Text("${actionValue1.toNumStr()}%"))
+            )
+        )
+    } else {
+        result
+    }
 }
