@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -51,6 +52,8 @@ import com.kasuminotes.ui.components.ImmersiveBackButton
 import com.kasuminotes.ui.components.Severity
 import com.kasuminotes.ui.components.StillBox
 import com.kasuminotes.ui.theme.ImmersiveSysUi
+import com.kasuminotes.ui.theme.md_theme_light_onSurface
+import com.kasuminotes.ui.theme.md_theme_light_primary
 
 @Composable
 fun CharaBackLayer(
@@ -155,14 +158,15 @@ private fun AlertMessage(
         ) {
             TextButton(
                 onClick = onCancel,
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = MaterialTheme.colorScheme.tertiary
-                )
+                colors = ButtonDefaults.textButtonColors(contentColor = md_theme_light_onSurface)
             ) {
                 Text(stringResource(R.string.cancel))
             }
 
-            TextButton(onClick = onSave) {
+            TextButton(
+                onClick = onSave,
+                colors = ButtonDefaults.textButtonColors(contentColor = md_theme_light_primary)
+            ) {
                 Text(stringResource(R.string.save))
             }
         }
@@ -176,7 +180,10 @@ private fun AlertMessage(
             text = stringResource(R.string.default_user_warning),
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
         ) {
-            IconButton(onClick = { errorVisible = false }) {
+            IconButton(
+                onClick = { errorVisible = false },
+                colors = IconButtonDefaults.iconButtonColors(contentColor = md_theme_light_onSurface)
+            ) {
                 Icon(Icons.Filled.Close, null)
             }
         }
@@ -188,7 +195,10 @@ private fun AlertMessage(
             text = stringResource(R.string.swipe_equip_info),
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
         ) {
-            IconButton(onClick = { infoVisible = false }) {
+            IconButton(
+                onClick = { infoVisible = false },
+                colors = IconButtonDefaults.iconButtonColors(contentColor = md_theme_light_onSurface)
+            ) {
                 Icon(Icons.Filled.Close, null)
             }
         }
