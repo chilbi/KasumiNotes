@@ -131,8 +131,8 @@ private fun EnemyListItem(
             Infobar(
                 label = "Lv",
                 value = enemyData.level.toString(),
-                modifier = Modifier.width(60.dp),
-                width = 24.dp,
+                modifier = Modifier.width(72.dp),
+                width = 26.dp,
                 color = MaterialTheme.colorScheme.primaryContainer,
                 textAlign = TextAlign.Center
             )

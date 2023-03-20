@@ -7,6 +7,8 @@ import java.text.NumberFormat
 import kotlin.math.ceil
 import kotlin.math.floor
 
+fun isAtkType(detail: Int): Boolean = detail == 1 || detail == 3
+
 fun getBaseLvAtkFormula(
     detail: Int,
     base: Double,
@@ -20,7 +22,7 @@ fun getBaseLvAtkFormula(
     @StringRes
     val atkType: Int
     val atk: Double
-    if (detail == 1 || detail == 3) {
+    if (isAtkType(detail)) {
         atkType = R.string.atk
         atk = property.atk
     } else {
@@ -120,7 +122,7 @@ fun getDefType(detail: Int): D {
 
 fun getAtkType(detail: Int): D {
     return D.Format(
-        if (detail == 1 || detail == 3) R.string.atk
+        if (isAtkType(detail)) R.string.atk
         else R.string.magic_str
     )
 }

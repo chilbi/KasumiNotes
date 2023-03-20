@@ -131,13 +131,9 @@ private fun EnemyComment(comment: String) {
         var expanded by remember { mutableStateOf(false) }
 
         Container {
-            val style = MaterialTheme.typography.bodyMedium
             Box(Modifier.clickable { expanded = !expanded }) {
                 Column {
-                    MultiLineText(
-                        lineList = comments.first,
-                        style = style
-                    )
+                    MultiLineText(comments.first)
                 }
                 Icon(
                     imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
@@ -152,10 +148,7 @@ private fun EnemyComment(comment: String) {
                 exit = fadeOut() + shrinkVertically()
             ) {
                 Column {
-                    MultiLineText(
-                        lineList = comments.second,
-                        style = style
-                    )
+                    MultiLineText(comments.second)
                 }
             }
         }

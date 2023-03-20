@@ -52,7 +52,7 @@ fun ImageCard(
             ) {
                 Text(
                     text = secondaryText,
-                    color = LocalContentColor.current.copy(0.5f),
+                    color = LocalContentColor.current.copy(0.75f),
                     style = secondaryStyle
                 )
 

@@ -24,6 +24,10 @@
     <string name="switch_user">ユーザーを切り替える</string>
     <string name="create_user">新規ユーザー</string>
     <string name="select_user_image">ユーザーアイコン選択</string>
+    <string name="edit">編集する</string>
+    <string name="save_edit">保存する</string>
+    <string name="equipping">装備する</string>
+    <string name="demount_equip">卸す</string>
     <string name="edit_chara">キャラ編集</string>
     <string name="registered">登録済み</string>
     <string name="unlock_chara">解放済み</string>
@@ -97,8 +101,8 @@
     <string name="def">物理防御力</string>
     <string name="magic_str">魔法攻撃力</string>
     <string name="magic_def">魔法防御力</string>
-    <string name="physical_critical">物理クリ</string>
-    <string name="magic_critical">魔法クリ</string>
+    <string name="physical_critical">物理クリティカル</string>
+    <string name="magic_critical">魔法クリティカル</string>
     <string name="dodge">回避</string>
     <string name="life_steal">ＨＰ吸収</string>
     <string name="wave_hp_recovery">ＨＰ自回</string>
@@ -159,8 +163,11 @@
     <string name="same_category_equip">同種装備</string>8
     <string name="equip_property">装備ステータス</string>
     <string name="equip_skill">装備スキル</string>
+    <string name="full_stop">。</string>
 
     <string name="action_unknown_s1">不明タイプ：%s</string>
+    <string name="action_focus_target1">%sを中心とした</string>
+    <string name="action_focus_front_target1">%sから</string>
     <string name="action_ex_passive_content1_formula2">バトル開始時に自分の%1$sを%2$sアップさせる、効果時間90秒。</string>
     <string name="action_damage_target1_formula2_content3">%1$sに%2$sの%3$sダメージを与える。</string>
     <string name="action_damage_must_hit">この攻撃は必ず命中する。</string>
@@ -180,9 +187,11 @@
     <string name="action_received_down_target1_content2_formula3_time4">%1$sに受ける%2$sを%3$sダウンさせる、効果時間%4$s秒。</string>
     <string name="action_const_up_content1">（この%1$sアップ効果で上昇した%1$sは、バトル中に受ける%1$sダウンスキルの影響を受けない。）</string>
     <string name="action_const_down_content1">（この%1$sダウン効果で下降した%1$sは、バトル中に受ける%1$sアップスキルの影響を受けない。）</string>
-    <string name="action_sustain_time1_content2_count3">モーションを%1$s秒維持する、この間%2$s、%3$s回攻撃を受けるとモーションが中断される。</string>
+    <string name="action_sustain_time1">モーションを%s秒維持する</string>
+    <string name="action_sustain_damage_rate1">、次の攻撃ダメージを{ %s × この間に受けたダメージ }アップさせる。</string>
+    <string name="action_sustain_status_content1_count2">、この間%1$s、%2$s回攻撃を受けるとモーションが中断される。</string>
     <string name="action_energy_recovery_target1_formula2">%1$sのＴＰを%2$s回復する。</string>
-    <string name="action_energy_down_target1_formula2">%1$sのＴＰを%2$s失わせる。</string>
+    <string name="action_energy_down_target1_formula2">%1$sのＴＰを%2$sダウンさせる。</string>
     <string name="action_hp_recovery_target1_formula2">%1$sのＨＰを%2$s回復する。</string>
     <string name="action_speed_target1_formula2_time3">%1$sの行動速度を本来の%2$sにする、効果時間%3$s秒。</string>
     <string name="action_abnormal_target1_content2_time3">%1$sを%2$s状態にする、効果時間%3$s秒。</string>
@@ -199,12 +208,9 @@
     <string name="action_divide_content1_formula2">%1$sを基礎値の%2$s分の一にする。</string>
     <string name="action_additive_max1">最大%sまで増加させる。</string>
     <string name="action_reduce_max1">最大%sまで減少させる。</string>
-    <string name="action_focus_target1">%sを中心とした</string>
-    <string name="action_focus_front_target1">%sから</string>
     <string name="action_darkness_formula1">物理攻撃の命中率を%sダウンさせる。</string>
     <string name="action_life_steal_target1_formula2">%1$sの次の攻撃に%2$sＨＰ吸収をアップさせる効果を付与する。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">%1$sに毎秒%2$sを%3$s回復する継続%2$s回復状態を付与する、効果時間%4$s秒。</string>
-    <string name="action_posture_time1_rate2">%1$s秒身構えをする、次の攻撃ダメージを{ %2$s × 身構え中に受けたダメージ }アップさせる。</string>
     <string name="action_trigger_hp_target1_formula2">%1$sのＨＰが最大のＨＰの%2$s以下になった時に発動する。</string>
     <string name="action_trigger_battle_beginning">バトル開始時に発動する。</string>
     <string name="action_trigger_battle_began_passed_time1">バトル開始後%s秒経過時に発動する。</string>
@@ -250,11 +256,11 @@
     <string name="action_ignore_provocation">挑発を無視して、</string>
     <string name="action_akinesia_invalid_target1_count2_time3">%1$sに受ける行動不能を最大%2$s回まで無効化できる状態を付与する、効果時間%3$s秒。</string>
 
+    <string name="action_branch_and">且つ</string>
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>
     <string name="action_striked_branch_time1">%s秒のモーションの間に攻撃された場合、</string>
     <string name="action_exists_field_branch_content1">%sのフィールド展開中場合、</string>
     <string name="action_not_exists_field_branch_content1">%sのフィールド展開中でない場合、</string>
-    <string name="action_branch_and">且つ</string>
     <string name="action_branch_have_target1_state2">%1$sが【%2$s】を持っている場合、</string>
     <string name="action_branch_not_have_target1_state2">%1$sが【%2$s】を持っていない場合、</string>
     <string name="action_branch_target1_state2_above3">%1$sの【%2$s】の数が≧%3$sの場合、</string>
@@ -480,6 +486,7 @@
 
     <string name="additive_time">効果時間</string>
     <string name="additive_damage">ダメージ量</string>
+    <string name="additive_damage_rate1">ダメージの%s倍率</string>
     <string name="additive_critical_damage">クリティカル時のダメージ量</string>
     <string name="additive_hp_decrement">ＨＰの減らす量</string>
     <string name="additive_hp_recovery">ＨＰの回復量</string>

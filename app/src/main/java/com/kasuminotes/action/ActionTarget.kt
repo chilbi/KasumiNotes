@@ -49,9 +49,9 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             getDependMultiTarget(D.Format(R.string.target_randomized))
         } else if (depend.actionType == 7) {
             if (actionType in arrayOf(37, 38, 39) || focused) {
-                depend.getTarget(null)
+                depend.getTarget(null, true)
             } else {
-                depend.getFocus(targetArea).append(getTarget(null))
+                depend.getFocus(this).append(getTarget(null, true))
             }
         } else if ((depend.actionType in arrayOf(23, 28)) && depend.targetCount > 1) {
             getDependMultiTarget(D.Format(R.string.target_eligible))

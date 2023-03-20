@@ -24,6 +24,10 @@
     <string name="switch_user">切换用户</string>
     <string name="create_user">新建用户</string>
     <string name="select_user_image">选择用户头像</string>
+    <string name="edit">编辑</string>
+    <string name="save_edit">保存</string>
+    <string name="equipping">装备上</string>
+    <string name="demount_equip">卸下</string>
     <string name="edit_chara">编辑角色</string>
     <string name="registered">已注册</string>
     <string name="unlock_chara">已解放</string>
@@ -159,8 +163,11 @@
     <string name="same_category_equip">同类装备</string>
     <string name="equip_property">装备属性</string>
     <string name="equip_skill">装备技能</string>
+    <string name="full_stop">。</string>
 
     <string name="action_unknown_s1">未知类型：%s</string>
+    <string name="action_focus_target1">以%s为中心</string>
+    <string name="action_focus_front_target1">%s的</string>
     <string name="action_ex_passive_content1_formula2">战斗开始时自身的%1$s提升%2$s，效果时间90秒。</string>
     <string name="action_damage_target1_formula2_content3">对%1$s造成%2$s%3$s伤害。</string>
     <string name="action_damage_must_hit">此攻击必定命中。</string>
@@ -180,9 +187,11 @@
     <string name="action_received_down_target1_content2_formula3_time4">%1$s受到的%2$s降低%3$s，效果时间%4$s秒。</string>
     <string name="action_const_up_content1">（此%1$s提升效果所提升的%1$s，在战斗中不受%1$s降低技能的影响。）</string>
     <string name="action_const_down_content1">（此%1$s降低效果所降低的%1$s，在战斗中不受%1$s提升技能的影响。）</string>
-    <string name="action_sustain_time1_content2_count3">维持动作%1$s秒，期间%2$s，受到%3$s次攻击就会中断此动作。</string>
+    <string name="action_sustain_time1">维持动作%s秒</string>
+    <string name="action_sustain_damage_rate1">，使下次攻击伤害提升{ %s × 期间受到的伤害 }。</string>
+    <string name="action_sustain_status_content1_count2">，期间%1$s，受到%2$s次攻击就会中断此动作。</string>
     <string name="action_energy_recovery_target1_formula2">%1$s的TP回复%2$s。</string>
-    <string name="action_energy_down_target1_formula2">使%1$s的TP削减%2$s。</string>
+    <string name="action_energy_down_target1_formula2">使%1$s的TP降低%2$s。</string>
     <string name="action_hp_recovery_target1_formula2">%1$s的HP回复%2$s。</string>
     <string name="action_speed_target1_formula2_time3">%1$s的行动速度变为原来的%2$s，效果时间%3$s秒。</string>
     <string name="action_abnormal_target1_content2_time3">使%1$s陷入%2$s状态，效果时间%3$s秒。</string>
@@ -199,12 +208,9 @@
     <string name="action_divide_content1_formula2">使%1$s变为基础值的%2$s分之一。</string>
     <string name="action_additive_max1">最多增加%s。</string>
     <string name="action_reduce_max1">最多减少%s。</string>
-    <string name="action_focus_target1">以%s为中心</string>
-    <string name="action_focus_front_target1">%s的</string>
     <string name="action_darkness_formula1">使物理攻击命中率降低%s。</string>
     <string name="action_life_steal_target1_formula2">赋予%1$s下次攻击提升%2$sHP吸收效果。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">赋予%1$s每秒回复%2$s%3$s的持续%2$s回复状态，效果时间%4$s秒。</string>
-    <string name="action_posture_time1_rate2">架势%1$s秒，使下次攻击伤害提升{ %2$s × 架势期间受到的伤害 }。</string>
     <string name="action_trigger_hp_target1_formula2">当%1$s的HP低于最大HP的%2$s时发动。</string>
     <string name="action_trigger_battle_beginning">战斗开始时发动。</string>
     <string name="action_trigger_battle_began_passed_time1">战斗开始后经过%s秒时发动。</string>
@@ -251,10 +257,10 @@
     <string name="action_ignore_provocation">无视挑衅，</string>
     <string name="action_akinesia_invalid_target1_count2_time3">赋予%1$s可无效化最多%2$s次受到的行动不能的状态，效果时间%3$s秒。</string>
 
+    <string name="action_branch_and">且</string>
     <string name="action_striked_branch_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_exists_field_branch_content1">%s的领域展开时，</string>
     <string name="action_not_exists_field_branch_content1">%s的领域没有展开时，</string>
-    <string name="action_branch_and">且</string>
     <string name="action_branch_have_target1_state2">%1$s持有【%2$s】时，</string>
     <string name="action_branch_not_have_target1_state2">%1$s未持有【%2$s】时，</string>
     <string name="action_branch_target1_state2_above3">%1$s的【%2$s】的数量≧%3$s时，</string>
@@ -397,10 +403,10 @@
     <string name="target_range_max_assignment_count1">最大%s</string>
     <string name="target_random_assignment_count1">随机%s</string>
     <string name="target_front_number1_assignment2">前方%1$s名%2$s</string>
-    <string name="target_nearest_assignment1">距离自身最近的%s</string>
-    <string name="target_farthest_assignment1">距离自身最远的%s</string>
-    <string name="target_near_number1_assignment2">距离自身%1$s近的%2$s</string>
-    <string name="target_far_number1_assignment2">距离自身%1$s远的%2$s</string>
+    <string name="target_nearest_assignment1">最近的%s</string>
+    <string name="target_farthest_assignment1">最远的%s</string>
+    <string name="target_near_number1_assignment2">%1$s近的%2$s</string>
+    <string name="target_far_number1_assignment2">%1$s远的%2$s</string>
     <string name="target_farthest_assignment_count1">最远的%s</string>
     <string name="target_first_assignment_count1">最前方的%s</string>
     <string name="target_last_assignment_count1">最后方的%s</string>
@@ -438,7 +444,7 @@
     <string name="received_physical_damage">受到的物理伤害</string>
     <string name="received_magic_damage">受到的魔法伤害</string>
     <string name="received_physical_or_magic_damage">受到的物理/魔法伤害</string>
-    <string name="energy_down">TP削减效果</string>
+    <string name="energy_down">TP降低效果</string>
     <string name="poison">中毒</string>
     <string name="burn">火伤</string>
     <string name="curse">诅咒</string>
@@ -480,6 +486,7 @@
 
     <string name="additive_time">效果时间</string>
     <string name="additive_damage">伤害量</string>
+    <string name="additive_damage_rate1">伤害的%s倍率</string>
     <string name="additive_critical_damage">暴击伤害量</string>
     <string name="additive_hp_decrement">HP的减少量</string>
     <string name="additive_hp_recovery">HP的回复量</string>

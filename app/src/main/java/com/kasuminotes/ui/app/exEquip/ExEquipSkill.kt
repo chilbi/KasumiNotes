@@ -64,11 +64,8 @@ private fun ExEquipSkillItem(
     val visible = remember { mutableStateOf(false) }
     val descriptionList: List<D> by remember(passiveSkill, baseProperty) {
         derivedStateOf {
-            ActionBuilder(
-                passiveSkill.rawDepends,
-                passiveSkill.actions,
-                true
-            ).buildDescriptionList(0, baseProperty)
+            ActionBuilder(passiveSkill.rawDepends, passiveSkill.actions, true)
+                .buildDescriptionList(0, baseProperty)
         }
     }
 
@@ -90,8 +87,8 @@ private fun ExEquipSkillItem(
                 Icon(
                     imageVector = Icons.Filled.Code,
                     contentDescription = null,
-                    tint = if (visible.value) MaterialTheme.colorScheme.tertiary
-                    else LocalContentColor.current
+                    tint = if (visible.value) MaterialTheme.colorScheme.secondary
+                    else LocalContentColor.current.copy(0.75f)
                 )
             }
         }
@@ -107,24 +104,22 @@ private fun ExEquipSkillItem(
         descriptionList.forEachIndexed { index, d ->
             Row(Modifier.padding(4.dp)) {
                 ActionLabel(index + 1)
-
                 Text(
                     text = stringDescription(d),
-                    modifier = Modifier.padding(4.dp),
+                    modifier = Modifier.padding(start = 4.dp),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
     }
 
-    if (visible.value && BuildConfig.DEBUG) {
+    if (BuildConfig.DEBUG && visible.value) {
         passiveSkill.actions.forEachIndexed { index, action ->
             Row(Modifier.padding(4.dp)) {
                 ActionLabel(index + 1)
-
                 Text(
                     text = stringDescription(action.getUnknown()),
-                    modifier = Modifier.padding(4.dp),
+                    modifier = Modifier.padding(start = 4.dp),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

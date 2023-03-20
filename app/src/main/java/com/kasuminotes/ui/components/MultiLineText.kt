@@ -18,7 +18,7 @@ fun MultiLineText(
     multiLine: String,
     padding: PaddingValues = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
     textAlign: TextAlign = TextAlign.Start,
-    style: TextStyle = MaterialTheme.typography.bodySmall
+    style: TextStyle = MaterialTheme.typography.bodyMedium
 ) {
     multiLine.split("\\n").forEach { line ->
         LineText(line, padding, textAlign, style)
@@ -30,7 +30,7 @@ fun MultiLineText(
     lineList: List<String>,
     padding: PaddingValues = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
     textAlign: TextAlign = TextAlign.Start,
-    style: TextStyle = MaterialTheme.typography.bodySmall
+    style: TextStyle = MaterialTheme.typography.bodyMedium
 ) {
     lineList.forEach { line ->
         LineText(line, padding, textAlign, style)
@@ -42,7 +42,7 @@ fun LineText(
     line: String,
     padding: PaddingValues = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
     textAlign: TextAlign = TextAlign.Start,
-    style: TextStyle = MaterialTheme.typography.bodySmall
+    style: TextStyle = MaterialTheme.typography.bodyMedium
 ) {
     Text(
         text = line,

@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kasuminotes.BuildConfig
 import com.kasuminotes.R
 import com.kasuminotes.action.ActionBuilder
@@ -64,11 +63,11 @@ fun SkillDetail(
             if (isRfSkill) {
                 AdaptiveWidthLabel(
                     text = "RF",
-                    color = MaterialTheme.colorScheme.tertiary
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
             Spacer(Modifier.weight(1f))
-            if (BuildConfig.DEBUG && actions != null) {
+            if (BuildConfig.DEBUG) {
                 IconButton(
                     modifier = Modifier.height(28.dp),
                     onClick = { visible.value = !visible.value }
@@ -76,7 +75,7 @@ fun SkillDetail(
                     Icon(
                         imageVector = Icons.Filled.Code,
                         contentDescription = null,
-                        tint = if (visible.value) MaterialTheme.colorScheme.tertiary
+                        tint = if (visible.value) MaterialTheme.colorScheme.secondary
                         else LocalContentColor.current.copy(0.75f)
                     )
                 }
@@ -115,18 +114,15 @@ fun SkillDetail(
             Text(
                 text = description,
                 modifier = Modifier.padding(4.dp),
-                fontSize = 14.sp,
-                lineHeight = 28.sp
+                style = MaterialTheme.typography.bodyMedium
             )
         }
 
         val descriptionList: List<D>? by remember(skillLevel, property, rawDepends, actions) {
             derivedStateOf {
                 if (property != null && rawDepends != null && actions != null) {
-                    ActionBuilder(rawDepends, actions, false).buildDescriptionList(
-                        skillLevel,
-                        property
-                    )
+                    ActionBuilder(rawDepends, actions, false)
+                        .buildDescriptionList(skillLevel, property)
                 } else {
                     null
                 }
@@ -146,11 +142,7 @@ fun SkillDetail(
         }
 
         if (actions != null) {
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(4.dp)
-            ) {
+            Box(Modifier.fillMaxWidth().padding(4.dp)) {
                 UnderlineLabel(
                     label = stringResource(R.string.skill_effect),
                     color = MaterialTheme.colorScheme.primary
@@ -158,16 +150,14 @@ fun SkillDetail(
             }
         }
 
-        if (!visible.value && descriptionList != null) {
+        if (descriptionList != null && !visible.value) {
             descriptionList!!.forEachIndexed { index, d ->
                 Row(Modifier.padding(4.dp)) {
                     ActionLabel(index + 1)
-
                     Text(
                         text = stringDescription(d),
                         modifier = Modifier.padding(start = 4.dp),
-                        fontSize = 14.sp,
-                        lineHeight = 28.sp
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }
@@ -182,16 +172,14 @@ fun SkillDetail(
             }
         }
 
-        if (visible.value && BuildConfig.DEBUG && actions != null) {
+        if (BuildConfig.DEBUG && actions != null && visible.value) {
             actions.forEachIndexed { index, action ->
                 Row(Modifier.padding(4.dp)) {
                     ActionLabel(index + 1)
-
                     Text(
                         text = stringDescription(action.getUnknown()),
                         modifier = Modifier.padding(start = 4.dp),
-                        fontSize = 14.sp,
-                        lineHeight = 28.sp
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }

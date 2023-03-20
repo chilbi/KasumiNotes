@@ -24,7 +24,6 @@ fun SkillAction.getDamage(skillLevel: Int, property: Property): D {
         damageType
     }
 
-
     var damage: D = D.Format(
         R.string.action_damage_target1_formula2_content3,
         arrayOf(

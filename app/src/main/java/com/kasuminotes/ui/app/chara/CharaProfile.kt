@@ -102,8 +102,10 @@ private fun MultiLineInfo(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.labelMedium
         )
-
-        MultiLineText(text)
+        MultiLineText(
+            multiLine = text,
+            style = MaterialTheme.typography.bodySmall
+        )
     }
 }
 

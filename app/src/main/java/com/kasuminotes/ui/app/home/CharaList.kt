@@ -43,7 +43,7 @@ fun CharaList(
         columns = GridCells.Fixed(charaImageState.cellCount),
         contentPadding = PaddingValues(4.dp)
     ) {
-        items(derivedProfiles) { userProfile ->
+        items(derivedProfiles, { it.unitData.unitId }) { userProfile ->
             CharaItem(
                 layerAlpha,
                 orderBy,

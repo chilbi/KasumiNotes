@@ -14,7 +14,7 @@ fun SkillAction.getBarrier(skillLevel: Int): D {
     val content = when (actionDetail1) {
         1, 3 -> D.Format(R.string.physical)
         2, 4 -> D.Format(R.string.magic)
-        5, 6 -> D.join(R.string.physical, R.string.magic)
+        5, 6 -> D.Join(arrayOf(D.Format(R.string.physical), D.Text("/"), D.Format(R.string.magic)))
         else -> D.Unknown
     }
 

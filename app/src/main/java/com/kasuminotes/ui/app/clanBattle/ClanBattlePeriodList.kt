@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,18 +30,16 @@ fun ClanBattlePeriodList(
     clanBattlePeriodList: List<ClanBattlePeriod>,
     onPeriodClick: (label: String, period: ClanBattlePeriod) -> Unit,
 ) {
-    val size = clanBattlePeriodList.size
     val color = MaterialTheme.colorScheme.primary
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = 4.dp, end = 4.dp, bottom = 4.dp)
     ) {
-        item {
+        item("spacer") {
             Spacer(Modifier.height(4.dp))
         }
 
-        items(size, { i -> i }) { index ->
-            val clanBattlePeriod = clanBattlePeriodList[index]
+        items(clanBattlePeriodList, { it.clanBattleId }) { clanBattlePeriod ->
             if (clanBattlePeriod.bossUnitIdList.isNotEmpty()) {
                 ClanBattlePeriodItem(clanBattlePeriod, color, onPeriodClick)
             }

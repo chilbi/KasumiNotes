@@ -28,6 +28,8 @@ class CharaListState {
         private set
     var lockedChara by mutableStateOf<List<Int>>(emptyList())
         private set
+    var derivedLockedChara by mutableStateOf<List<Int>>(emptyList())
+        private set
     var selectedChara by mutableStateOf<List<Int>>(emptyList())
         private set
 
@@ -44,15 +46,15 @@ class CharaListState {
 
         when {
             unlockedProfiles.isEmpty() -> {
-                changeProfiles(allUserProfile)
                 lockedChara = allUserProfile.map { it.unitData.unitId }
+                changeProfiles(allUserProfile)
             }
             unlockedProfiles.size == allUserProfile.size -> {
                 val all = unlockedProfiles.map { userProfile ->
                     UserProfile(userProfile.userData.copy(userId = 0), userProfile.unitData)
                 }
-                changeProfiles(all)
                 lockedChara = emptyList()
+                changeProfiles(all)
             }
             else -> {
                 val all = mutableListOf<UserProfile>()
@@ -67,8 +69,8 @@ class CharaListState {
                         all.add(UserProfile(unlockedProfile.userData.copy(userId = 0), unlockedProfile.unitData))
                     }
                 }
-                changeProfiles(all)
                 lockedChara = locked
+                changeProfiles(all)
             }
         }
     }
@@ -84,6 +86,7 @@ class CharaListState {
         backupProfiles = null
 
         lockedChara = emptyList()
+        derivedLockedChara = emptyList()
         selectedChara = emptyList()
     }
 
@@ -96,17 +99,19 @@ class CharaListState {
     }
 
     fun clearSelected() {
-        selectedChara = emptyList()
+        if (selectedChara.isNotEmpty()) {
+            selectedChara = emptyList()
+        }
     }
 
     fun selectAllChara() {
-        selectedChara = profiles.map { it.unitData.unitId }
+        selectedChara = derivedProfiles.map { it.unitData.unitId }
     }
 
     fun selectUnlockedChara() {
         val newSelected = mutableListOf<Int>()
-        val locked = lockedChara
-        profiles.forEach { userProfile ->
+        val locked = derivedLockedChara
+        derivedProfiles.forEach { userProfile ->
             val unitId = userProfile.unitData.unitId
             if (!locked.contains(unitId)) {
                 newSelected.add(unitId)
@@ -116,7 +121,7 @@ class CharaListState {
     }
 
     fun selectLockedChara() {
-        selectedChara = lockedChara
+        selectedChara = derivedLockedChara
     }
 
     fun deleteProfiles() {
@@ -127,7 +132,7 @@ class CharaListState {
             }
         }
         lockedChara = newLocked
-        selectedChara = emptyList()
+        derivedLocked(derivedProfiles)
     }
 
     fun modifyProfiles(
@@ -231,28 +236,28 @@ class CharaListState {
         }
         profiles = newProfiles
         lockedChara = newLocked
-        selectedChara = emptyList()
+        derivedLocked(derivedProfiles)
     }
 
     fun changeProfiles(value: List<UserProfile>) {
 //        isLoaded = false
         profiles = value
-        derivedProfiles = derived(profiles)
+        derived()
     }
 
     fun changeSearchText(value: String) {
         searchText = value
-        derivedProfiles = derived(profiles)
+        derived()
     }
 
     fun changeAtkType(value: AtkType) {
         atkType = value
-        derivedProfiles = derived(profiles)
+        derived()
     }
 
     fun changePosition(value: Position) {
         position = value
-        derivedProfiles = derived(profiles)
+        derived()
     }
 
     fun changeOrderBy(value: OrderBy) {
@@ -266,16 +271,17 @@ class CharaListState {
         }
     }
 
-    private fun derived(originProfiles: List<UserProfile>): List<UserProfile> {
+    private fun derived() {
+        val originProfiles = profiles
         val list =
             if (searchText.isEmpty() && atkType == AtkType.All && position == Position.All) {
                 originProfiles
             } else {
                 originProfiles.filter { userProfile ->
                     userProfile.getRealUnitData(userProfile.userData.rarity).let {
-                        val searchTextMatch = searchText.isEmpty() || (
-                            it.unitId.toString() + it.unitName + it.kana + it.actualName
-                            ).contains(searchText)
+                        val searchTextMatch = searchText.isEmpty() ||
+                                (it.unitId.toString() + it.unitName + it.kana + it.actualName)
+                                    .contains(searchText)
                         val atkTypeMatch =
                             atkType == AtkType.All || atkType.ordinal == it.atkType
                         val positionMatch =
@@ -284,7 +290,19 @@ class CharaListState {
                     }
                 }
             }
-        return sort(list, orderBy, sortDesc)
+        val sortedList = sort(list, orderBy, sortDesc)
+        derivedLocked(list)
+        derivedProfiles = sortedList
+    }
+
+    private fun derivedLocked(derivedList: List<UserProfile>) {
+        if (backupProfiles != null) {
+            val originLockedChara = lockedChara
+            derivedLockedChara = originLockedChara.filter { unitId ->
+                derivedList.any { item -> item.unitData.unitId == unitId }
+            }
+            clearSelected()
+        }
     }
 
     private fun sort(list: List<UserProfile>, order: OrderBy, desc: Boolean): List<UserProfile> {

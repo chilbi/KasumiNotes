@@ -15,7 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -23,7 +23,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.kasuminotes.R
 import com.kasuminotes.ui.app.state.ExEquipState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
@@ -49,9 +51,11 @@ fun ExEquip(
         },
         floatingActionButton = {
             if (exEquipState.exEquipData != null) {
-                FloatingActionButton(onClick = { exEquipState.changeExEquip() }) {
-                    Icon(if (exEquipState.isEquipping) Icons.Filled.Clear else Icons.Filled.Check, null)
-                }
+                ExtendedFloatingActionButton(
+                    text = { Text(stringResource(if (exEquipState.isEquipping) R.string.demount_equip else R.string.equipping)) },
+                    icon = { Icon(if (exEquipState.isEquipping) Icons.Filled.Clear else Icons.Filled.Check, null) },
+                    onClick = exEquipState::changeExEquip
+                )
             }
         },
         containerColor = MaterialTheme.colorScheme.surface,

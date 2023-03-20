@@ -6,7 +6,9 @@ import com.kasuminotes.data.SkillAction
 import kotlin.math.ceil
 
 fun SkillAction.getModify(skillLevel: Int, actions: List<SkillAction>): D {
+    /** actionDetail1：修饰的目标动作 */
     val targetAction = actions.find { it.actionId == actionDetail1 }!!
+    /** 嵌套修饰的目标动作 */
     val nestTargetAction = if (targetAction.actionType == 26 || targetAction.actionType == 27) {
         actions.find { it.actionId == targetAction.actionDetail1 }!!
     } else {
@@ -39,6 +41,7 @@ fun SkillAction.getModify(skillLevel: Int, actions: List<SkillAction>): D {
         }
     }
 
+    /** actionValue2, actionValue3 常量（如：(10 + 10 × 技能等级)） */
     val constantVariable = if (actionValue3 == 0.0) {
         if (targetAction.actionType == 1 && actionDetail2 == 6) {
             D.Text("${(actionValue2 * 100).toNumStr()}%")
@@ -118,11 +121,15 @@ fun SkillAction.getModify(skillLevel: Int, actions: List<SkillAction>): D {
     val result = D.Format(actionRes, arrayOf(content, formula))
     return if (maxRes == null) {
         result
-    } else{
+    } else {
+
         result.append(D.Format(maxRes, arrayOf(max!!)))
     }
 }
 
+/**
+ * actionValue1：自变量（如：敌人全体的数量）
+ */
 private fun SkillAction.getModifyIndependentVariable(): D {
     return when {
         actionValue1 > 2000.0 -> {
@@ -155,12 +162,16 @@ private fun SkillAction.getModifyIndependentVariable(): D {
     }
 }
 
+/**
+ * actionDetail2：修饰动作的内容（如：伤害的物理攻击力倍率）
+ */
 private fun SkillAction.getModifyContent(targetAction: SkillAction): D {
     return when (targetAction.actionType) {
-        1 -> D.Format(
-            if (actionDetail2 == 6) R.string.additive_critical_damage
-            else R.string.additive_damage
-        )
+        1 -> when (actionDetail2) {
+            3 -> D.Format(R.string.additive_damage_rate1, arrayOf(getAtkType(targetAction.actionDetail1)))
+            6 -> D.Format(R.string.additive_critical_damage)
+            else -> D.Format(R.string.additive_damage)
+        }
         3 -> D.Format(R.string.additive_distance)
         4 -> D.Format(R.string.additive_hp_recovery)
         6 -> if (actionDetail2 == 3) D.Format(R.string.additive_time)
@@ -213,6 +224,9 @@ private fun SkillAction.getModifyContent(targetAction: SkillAction): D {
     }
 }
 
+/**
+ * 公式（如：{ 物理攻击力 * 敌人全体的数量 }）
+ */
 private fun SkillAction.getModifyFormula(
     targetAction: SkillAction,
     constantVariable: D,
@@ -221,9 +235,8 @@ private fun SkillAction.getModifyFormula(
 ): D {
     val otherConstantVariable = when (targetAction.actionType) {
         1 -> when (actionDetail2) {
-            1, 6 -> null
+            1, 3, 6 -> null
             2 -> D.Format(R.string.skill_level)
-            3 -> getAtkType(targetAction.actionDetail1)
             else -> D.Unknown
         }
         3 -> null

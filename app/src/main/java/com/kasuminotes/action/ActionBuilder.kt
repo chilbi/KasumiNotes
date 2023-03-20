@@ -24,7 +24,10 @@ class ActionBuilder(
 
         actions.forEachIndexed { index, action ->
             // Focus, 94Unknown
-            if (action.actionType in arrayOf(7, 94)) {
+            if (
+                action.actionType in arrayOf(7, 94) ||
+                (action.actionType == 21 && action.actionValue1 == 0.0 && action.actionValue2 == 0.0)
+            ) {
                 remove.add(index)
             }
             // AbnormalField
@@ -169,7 +172,7 @@ class ActionBuilder(
             15 -> getSummon()
             16 -> getEnergy(skillLevel)
             17 -> getTrigger()
-            18 -> getPosture()
+            18 -> getSustainDamage()
             20 -> getProvoke(skillLevel)
             21 -> getNoDamage(skillLevel)
             22 -> getPattern()
@@ -189,7 +192,7 @@ class ActionBuilder(
             46 -> getRatioDamage(skillLevel)
             48 -> getRegeneration(skillLevel, property)
             49 -> getDispel()
-            50 -> getSustain(skillLevel)
+            50 -> getSustainStatus(skillLevel)
             54 -> getStealth()
             55 -> getMoveParts()
             56 -> getBlind()

@@ -10,37 +10,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.AlertDialogDefaults
-import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
@@ -50,12 +37,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.kasuminotes.R
 import com.kasuminotes.common.ImageVariant
 import com.kasuminotes.common.OrderBy
@@ -63,15 +47,9 @@ import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.home.CharaItem
 import com.kasuminotes.ui.app.state.CharaImageState
 import com.kasuminotes.ui.app.state.UserState
-import com.kasuminotes.ui.components.LabelImage
-import com.kasuminotes.ui.components.LabelText
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
-import com.kasuminotes.ui.components.SliderPlus
 import com.kasuminotes.ui.components.imageSize
-import com.kasuminotes.ui.theme.RaritiesColors
-import com.kasuminotes.ui.theme.rankRarity
-import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun CharaEditor(
@@ -129,31 +107,29 @@ fun CharaEditor(
         onOrderByChange = listState::changeOrderBy,
         onBack = onBack,
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = if (isEmpty) onConfirm else toggleVisibleEditor,
-                containerColor = if (isEmpty) MaterialTheme.colorScheme.primaryContainer
-                else MaterialTheme.colorScheme.tertiaryContainer
-            ) {
-                Icon(if (isEmpty) Icons.Filled.Check else Icons.Filled.Edit, null)
-            }
+            ExtendedFloatingActionButton(
+                text = { Text(stringResource(if (isEmpty) R.string.save_edit else R.string.edit)) },
+                icon = { Icon(if (isEmpty) Icons.Filled.Check else Icons.Filled.Edit, null) },
+                onClick = if (isEmpty) onConfirm else toggleVisibleEditor
+            )
         },
         topBarContent = {
-            val count = listState.profiles.size
-            val lockCount = listState.lockedChara.size
-            val unlockCount = count - lockCount
+            val derivedCount = listState.derivedProfiles.size
+            val derivedLockCount = listState.derivedLockedChara.size
+            val derivedUnlockCount = derivedCount - derivedLockCount
             val allSelected = if (visibleUnlock && visibleLock) {
-                selectedChara.size == count
+                selectedChara.size == derivedCount
             } else if (visibleUnlock) {
-                selectedChara.size == unlockCount
+                selectedChara.size == derivedUnlockCount
             } else if (visibleLock) {
-                selectedChara.size == lockCount
+                selectedChara.size == derivedLockCount
             } else {
                 true
             }
 
             SelectMenu(
-                unlockCount,
-                lockCount,
+                derivedUnlockCount,
+                derivedLockCount,
                 visibleUnlock,
                 visibleLock,
                 allSelected,
@@ -181,8 +157,8 @@ fun CharaEditor(
                     animation = keyframes {
                         durationMillis = 4500
                         0.0f at 0 with FastOutSlowInEasing
-                        0.0f at 1850 with FastOutSlowInEasing
-                        1.0f at 2650 with FastOutSlowInEasing
+                        0.0f at 1750 with FastOutSlowInEasing
+                        1.0f at 2750 with FastOutSlowInEasing
                         1.0f at 4500 with FastOutSlowInEasing
                     },
                     repeatMode = RepeatMode.Reverse
@@ -194,7 +170,7 @@ fun CharaEditor(
                     columns = GridCells.Fixed(4),
                     contentPadding = PaddingValues(4.dp)
                 ) {
-                    items(profiles) { userProfile ->
+                    items(profiles, { it.unitData.unitId }) { userProfile ->
                         val unitId = userProfile.unitData.unitId
                         val locked = lockedChara.contains(unitId)
                         val selected = selectedChara.contains(unitId)
@@ -210,13 +186,19 @@ fun CharaEditor(
                             listState::selectChara
                         )
                     }
+                    item("box1") {
+                        Box(Modifier.imageSize(1f))
+                    }
+                    item("box2") {
+                        Box(Modifier.imageSize(1f))
+                    }
                 }
             }
         }
     )
 
     if (visibleEditor) {
-        EditorDialog(
+        CharaEditorDialog(
             userState.maxUserData!!.maxCharaLevel,
             userState.maxUserData!!.maxUniqueLevel,
             userState.maxUserData!!.maxPromotionLevel,
@@ -244,9 +226,7 @@ private fun SelectableCharaItem(
             SizedBox(charaImageState.ratio, charaImageState.isIcon) {
                 PlaceImage(
                     url = charaImageState.getImageUrl(unitId, 3),
-                    modifier = Modifier.clickable {
-                        onSelect(unitId)
-                    }
+                    modifier = Modifier.clickable { onSelect(unitId) }
                 )
             }
         } else {
@@ -266,7 +246,7 @@ private fun SelectableCharaItem(
                     .size(32.dp)
                     .padding(4.dp)
                     .background(
-                        MaterialTheme.colorScheme.tertiaryContainer,
+                        MaterialTheme.colorScheme.secondary,
                         MaterialTheme.shapes.extraSmall
                     )
             ) {
@@ -274,7 +254,7 @@ private fun SelectableCharaItem(
                     imageVector = Icons.Filled.Check,
                     contentDescription = null,
                     modifier = Modifier.align(Alignment.Center),
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onSecondary
                 )
             }
         }
@@ -362,230 +342,6 @@ private fun RowScope.ToggleButton(
                 modifier = Modifier.padding(start = 4.dp),
                 style = MaterialTheme.typography.bodyMedium
             )
-        }
-    }
-}
-
-@Composable
-private fun EditorDialog(
-    maxCharaLevel: Int,
-    maxUniqueLevel: Int,
-    maxPromotionLevel: Int,
-    selectedChara: List<Int>,
-    onClose: () -> Unit,
-    onDelete: () -> Unit,
-    onConfirm: (
-        rarity: Int?,
-        charaLevel: Int?,
-        loveLevel: Int?,
-        uniqueLevel: Int?,
-        promotionLevel: Int?,
-        unlockSlot: Int?
-    ) -> Unit
-) {
-    Dialog(
-        onDismissRequest = onClose,
-        properties = DialogProperties(usePlatformDefaultWidth = false)
-    ) {
-        Surface(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 24.dp),
-            shape = MaterialTheme.shapes.extraLarge,
-            tonalElevation = AlertDialogDefaults.TonalElevation
-        ) {
-            Column(
-                Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 8.dp, vertical = 24.dp)
-            ) {
-                EditorDialogTitle(selectedChara.size) {
-                    onClose()
-                    onDelete()
-                }
-
-                SelectedCharaList(selectedChara)
-
-                EditorDialogContent(
-                    maxCharaLevel,
-                    maxUniqueLevel,
-                    maxPromotionLevel,
-                    onClose,
-                    onConfirm
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun EditorDialogTitle(
-    selectedSize: Int,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(stringResource(R.string.edit_selected_d, selectedSize))
-
-        IconButton(onClick) {
-            Icon(
-                imageVector = Icons.Filled.Delete,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.tertiary
-            )
-        }
-    }
-}
-
-@Composable
-private fun SelectedCharaList(selectedChara: List<Int>) {
-    LazyRow(contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)) {
-        items(selectedChara) { unitId ->
-            Box(
-                Modifier
-                    .size(48.dp)
-                    .padding(4.dp)
-            ) {
-                PlaceImage(UrlUtil.getUnitIconUrl(unitId, 3))
-            }
-        }
-    }
-}
-
-@Composable
-private fun EditorDialogContent(
-    maxCharaLevel: Int,
-    maxUniqueLevel: Int,
-    maxPromotionLevel: Int,
-    onClose: () -> Unit,
-    onConfirm: (
-        rarity: Int?,
-        charaLevel: Int?,
-        loveLevel: Int?,
-        uniqueLevel: Int?,
-        promotionLevel: Int?,
-        unlockSlot: Int?
-    ) -> Unit
-) {
-    var rarity by remember { mutableStateOf(6) }
-    var charaLevel by remember { mutableStateOf(maxCharaLevel) }
-    var loveLevel by remember { mutableStateOf(12) }
-    var uniqueLevel by remember { mutableStateOf(maxUniqueLevel) }
-    var promotionLevel by remember { mutableStateOf(maxPromotionLevel) }
-    var unlockSlot by remember { mutableStateOf(6) }
-
-    var rarityChecked by remember { mutableStateOf(true) }
-    var charaLevelChecked by remember { mutableStateOf(true) }
-    var loveLevelChecked by remember { mutableStateOf(true) }
-    var uniqueLevelChecked by remember { mutableStateOf(true) }
-    var promotionLevelChecked by remember { mutableStateOf(true) }
-    var unlockSlotChecked by remember { mutableStateOf(true) }
-
-    Column(Modifier.padding(4.dp)) {
-        SliderPlus(
-            value = rarity,
-            minValue = 1,
-            maxValue = 6,
-            onValueChange = { rarity = it },
-            checked = rarityChecked,
-            onCheckedChange = { rarityChecked = it }
-        ) {
-            LabelImage(
-                if (rarity > 5) R.drawable.star_large_6
-                else R.drawable.star_large_1
-            )
-        }
-
-        SliderPlus(
-            value = loveLevel,
-            minValue = 0,
-            maxValue = 12,
-            onValueChange = { loveLevel = it },
-            checked = loveLevelChecked,
-            onCheckedChange = { loveLevelChecked = it}
-        ) {
-            LabelImage(R.drawable.love_level)
-        }
-
-        SliderPlus(
-            value = uniqueLevel,
-            minValue = 0,
-            maxValue = maxUniqueLevel,
-            onValueChange = { uniqueLevel = it },
-            checked = uniqueLevelChecked,
-            onCheckedChange = { uniqueLevelChecked = it}
-        ) {
-            LabelImage(R.drawable.unique_large)
-        }
-
-        SliderPlus(
-            value = charaLevel,
-            minValue = 1,
-            maxValue = maxCharaLevel + 10,
-            onValueChange = { charaLevel = it },
-            checked = charaLevelChecked,
-            onCheckedChange = { charaLevelChecked = it },
-        ) {
-            LabelText(stringResource(R.string.level))
-        }
-
-        val color = RaritiesColors.getRarityColors(promotionLevel.rankRarity).middle
-
-        SliderPlus(
-            value = promotionLevel,
-            minValue = 1,
-            maxValue = maxPromotionLevel,
-            onValueChange = { promotionLevel = it },
-            checked = promotionLevelChecked,
-            onCheckedChange = { promotionLevelChecked = it }
-        ) {
-            LabelText(
-                text = stringResource(R.string.rank),
-                color = color
-            )
-        }
-
-        SliderPlus(
-            value = unlockSlot,
-            minValue = 0,
-            maxValue = 6,
-            onValueChange = { unlockSlot = it },
-            checked = unlockSlotChecked,
-            onCheckedChange = { unlockSlotChecked = it }
-        ) {
-            LabelText(
-                text = stringResource(R.string.slot),
-                color = color
-            )
-        }
-    }
-
-    Row(Modifier.padding(8.dp)) {
-        Spacer(Modifier.weight(1f))
-
-        TextButton(onClose) {
-            Text(stringResource(R.string.cancel))
-        }
-
-        Spacer(Modifier.width(8.dp))
-
-        Button(
-            onClick = {
-                onClose()
-                onConfirm(
-                    if (rarityChecked) rarity else null,
-                    if (charaLevelChecked) charaLevel else null,
-                    if (loveLevelChecked) loveLevel else null,
-                    if (uniqueLevelChecked) uniqueLevel else null,
-                    if (promotionLevelChecked) promotionLevel else null,
-                    if (unlockSlotChecked) unlockSlot else null
-                )
-            }
-        ) {
-            Text(stringResource(R.string.confirm))
         }
     }
 }

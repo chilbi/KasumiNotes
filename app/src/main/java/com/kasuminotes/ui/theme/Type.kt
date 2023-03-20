@@ -13,5 +13,19 @@ val Typography = Typography(
         fontSize = 20.sp,
         lineHeight = 25.0.sp,
         letterSpacing = 0.0.sp,
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.2.sp,
+    ),
+    bodySmall = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.4.sp
     )
 )

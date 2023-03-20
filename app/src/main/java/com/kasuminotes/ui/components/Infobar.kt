@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -116,6 +117,9 @@ private fun InfobarImpl(
                 .padding(padding),
             color = contentColor,
             textAlign = textAlign,
+            overflow = TextOverflow.Ellipsis,
+            softWrap = false,
+            maxLines = 1,
             style = labelStyle
         )
 
@@ -127,6 +131,9 @@ private fun InfobarImpl(
                         .weight(1f)
                         .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
                     textAlign = TextAlign.End,
+                    overflow = TextOverflow.Ellipsis,
+                    softWrap = false,
+                    maxLines = 1,
                     style = valueStyle
                 )
             annotatedStringValue != null ->
@@ -136,6 +143,9 @@ private fun InfobarImpl(
                         .weight(1f)
                         .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
                     textAlign = TextAlign.End,
+                    overflow = TextOverflow.Ellipsis,
+                    softWrap = false,
+                    maxLines = 1,
                     style = valueStyle
                 )
         }

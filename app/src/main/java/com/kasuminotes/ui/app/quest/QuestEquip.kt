@@ -79,7 +79,7 @@ fun QuestEquip(
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
                 LazyColumn(contentPadding = PaddingValues(4.dp)) {
-                    items(equipmentPairList ?: emptyList()) { pair ->
+                    items(equipmentPairList ?: emptyList(), { it.first }) { pair ->
                         val equips = pair.second.filter { equipTypes.contains(it.type) }
                         if (equips.isNotEmpty()) {
                             EquipmentPairItem(
