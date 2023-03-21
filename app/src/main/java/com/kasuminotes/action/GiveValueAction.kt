@@ -5,92 +5,91 @@ import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 import kotlin.math.ceil
 
-fun SkillAction.getModify(skillLevel: Int, actions: List<SkillAction>): D {
+fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
     /** actionDetail1：修饰的目标动作 */
     val targetAction = actions.find { it.actionId == actionDetail1 }!!
+
     /** 嵌套修饰的目标动作 */
     val nestTargetAction = if (targetAction.actionType == 26 || targetAction.actionType == 27) {
         actions.find { it.actionId == targetAction.actionDetail1 }!!
     } else {
         null
     }
-    var isAdd = true
 
-    val max = if (actionValue4 == 0.0 && actionValue5 == 0.0) {
-        null
-    } else {
-        if (actionValue5 == 0.0) {
-            if (targetAction.actionType == 1 && actionDetail2 == 6) {
-                D.Text("${(actionValue4 * 100).toNumStr()}%")
-            } else if (
-                (targetAction.actionType == 10 && (targetAction.actionDetail1 == 141 || targetAction.actionValue1 == 2.0)) ||
-                targetAction.actionType == 46
-            ) {
-                D.Text("${actionValue4.toNumStr()}%")
-            } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
-                D.Text((-actionValue4).toNumStr())
-            } else {
-                D.Text(actionValue4.toNumStr())
-            }
-        } else {
-            if (actionValue4 > 0.0 && actionValue5 > 0.0) {
-                D.Text(ceil(actionValue4 + actionValue5 * skillLevel).toNumStr())
-            } else {
-                D.Text(ceil((-actionValue4) + (-actionValue5) * skillLevel).toNumStr())
-            }
+    var giveValueCount = 1
+    // 击杀数动作会叠算
+    if (actionType == 26 && actionValue1 == 2.0) {
+        var count = 0
+        actions.forEach { action ->
+            if (action.actionType == 26 && action.actionValue1 == 2.0) count++
         }
+        giveValueCount = count
     }
+
+    val value2 = actionValue2 * giveValueCount
+    val value3 = actionValue3 * giveValueCount
+
+    var isAdditive = true
 
     /** actionValue2, actionValue3 常量（如：(10 + 10 × 技能等级)） */
-    val constantVariable = if (actionValue3 == 0.0) {
+    val constantVariable = if (value3 == 0.0) {
         if (targetAction.actionType == 1 && actionDetail2 == 6) {
-            D.Text("${(actionValue2 * 100).toNumStr()}%")
-        } else if (targetAction.actionType == 10 && (targetAction.actionDetail1 == 141 || targetAction.actionValue1 == 2.0)) {
-            D.Text("${actionValue2.toNumStr()}%")
-        } else if (actionValue2 < 0.0) {
+            D.Text("${(value2 * 100).toNumStr()}%")
+        } else if (targetAction.actionType == 10 && targetAction.isStatusPercent()) {
+            D.Text("${value2.toNumStr()}%")
+        } else if (value2 < 0.0) {
             if (!(targetAction.actionType == 35 && actionDetail2 == 4)) {
-                isAdd = false
+                isAdditive = false
             }
-            D.Text((-actionValue2).toNumStr())
+            D.Text((-value2).toNumStr())
         } else {
-            D.Text(actionValue2.toNumStr())
+            D.Text(value2.toNumStr())
         }
     } else {
-        if (actionValue2 > 0.0 && actionValue3 > 0.0) {
+        if (value2 > 0.0 && value3 > 0.0) {
             D.Format(
                 R.string.sub_formula_base1_lv2,
                 arrayOf(
-                    D.Text(actionValue2.toNumStr()),
-                    D.Text(actionValue3.toNumStr())
+                    D.Text(value2.toNumStr()),
+                    D.Text(value3.toNumStr())
                 )
             )
         } else {
-            isAdd = false
+            isAdditive = false
             D.Format(
                 R.string.sub_formula_base1_lv2,
                 arrayOf(
-                    D.Text((-actionValue2).toNumStr()),
-                    D.Text((-actionValue3).toNumStr())
+                    D.Text((-value2).toNumStr()),
+                    D.Text((-value3).toNumStr())
                 )
             )
         }
     }
 
-    val independentVariable = getModifyIndependentVariable()
+    val independentVariable = getGiveValueIndependentVariable()
 
-    val content = getModifyContent(nestTargetAction ?: targetAction)
+    val content = getGiveValueContent(nestTargetAction ?: targetAction)
 
     val formula = if (nestTargetAction == null) {
         getModifyFormula(targetAction, constantVariable, independentVariable, null)
     } else {
-        targetAction.getModifyFormula(nestTargetAction, constantVariable, independentVariable, targetAction.getModifyIndependentVariable())
+        targetAction.getModifyFormula(
+            nestTargetAction,
+            constantVariable,
+            independentVariable,
+            targetAction.getGiveValueIndependentVariable()
+        )
     }
+
+
+    val maxValue = getMaxValue(skillLevel, targetAction)
 
     @StringRes
     val actionRes: Int
     @StringRes
-    var maxRes: Int? = null
+    val maxRes: Int
 
+    /** 26：加减，27：倍，74：{0}分之一 */
     var type = actionType
     if (type == 27 && targetAction.actionType == 1 && actionDetail2 == 3) {
         type = 26
@@ -98,39 +97,35 @@ fun SkillAction.getModify(skillLevel: Int, actions: List<SkillAction>): D {
 
     when (type) {
         26 -> {
-            if (isAdd) {
+            if (isAdditive) {
                 actionRes = R.string.action_additive_content1_formula2
-                if (max != null) {
-                    maxRes = R.string.action_additive_max1
-                }
+                maxRes = R.string.action_additive_max1
             } else {
                 actionRes = R.string.action_reduce_content1_formula2
-                if (max != null) {
-                    maxRes = R.string.action_reduce_max1
-                }
+                maxRes = R.string.action_reduce_max1
             }
         }
         27 -> {
-            actionRes = R.string.action_multiple_content1_formula2
+            actionRes = R.string.action_multiply_content1_formula2
+            maxRes = R.string.action_multiply_max1
         }
         else -> {// 74
             actionRes = R.string.action_divide_content1_formula2
+            maxRes = R.string.action_divide_max1
         }
     }
 
     val result = D.Format(actionRes, arrayOf(content, formula))
-    return if (maxRes == null) {
-        result
-    } else {
-
-        result.append(D.Format(maxRes, arrayOf(max!!)))
-    }
+    return result.append(
+        if (maxValue == null) D.Format(R.string.full_stop)
+        else D.Format(maxRes, arrayOf(maxValue))
+    )
 }
 
 /**
  * actionValue1：自变量（如：敌人全体的数量）
  */
-private fun SkillAction.getModifyIndependentVariable(): D {
+private fun SkillAction.getGiveValueIndependentVariable(): D {
     return when {
         actionValue1 > 2000.0 -> {
             D.Format(R.string.count_state1, arrayOf(getStateContent((actionValue1 % 1000).toInt())))
@@ -146,7 +141,7 @@ private fun SkillAction.getModifyIndependentVariable(): D {
             when (actionValue1.toInt()) {
                 0 -> D.Format(R.string.hp_remanent)
                 1 -> D.Format(R.string.hp_lost)
-                2 -> D.Format(R.string.overthrow_count)
+                2 -> D.Format(R.string.defeat_count)
                 4 -> D.Format(R.string.count_target1, arrayOf(getTarget(depend)))
                 5 -> D.Format(R.string.damaged_count)
                 6 -> D.Format(R.string.damaged_amount)
@@ -163,9 +158,9 @@ private fun SkillAction.getModifyIndependentVariable(): D {
 }
 
 /**
- * actionDetail2：修饰动作的内容（如：伤害的物理攻击力倍率）
+ * actionDetail2：修饰动作的类型（如：伤害的物理攻击力倍率）
  */
-private fun SkillAction.getModifyContent(targetAction: SkillAction): D {
+private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
     return when (targetAction.actionType) {
         1 -> when (actionDetail2) {
             3 -> D.Format(R.string.additive_damage_rate1, arrayOf(getAtkType(targetAction.actionDetail1)))
@@ -285,5 +280,33 @@ private fun SkillAction.getModifyFormula(
         D.Format(R.string.content_max_hp_ratio1, arrayOf(result.append(D.Text("%"))))
     } else {
         result
+    }
+}
+
+/** actionValue4, actionValue5：上限值 */
+private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction): D? {
+    return if (actionValue4 == 0.0 && actionValue5 == 0.0) {
+        null
+    } else {
+        if (actionValue5 == 0.0) {
+            if (targetAction.actionType == 1 && actionDetail2 == 6) {
+                D.Text("${(actionValue4 * 100).toNumStr()}%")
+            } else if (
+                (targetAction.actionType == 10 && (targetAction.actionDetail1 == 141 || targetAction.actionValue1 == 2.0)) ||
+                targetAction.actionType == 46
+            ) {
+                D.Text("${actionValue4.toNumStr()}%")
+            } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
+                D.Text((-actionValue4).toNumStr())
+            } else {
+                D.Text(actionValue4.toNumStr())
+            }
+        } else {
+            if (actionValue4 > 0.0 && actionValue5 > 0.0) {
+                D.Text(ceil(actionValue4 + actionValue5 * skillLevel).toNumStr())
+            } else {
+                D.Text(ceil((-actionValue4) + (-actionValue5) * skillLevel).toNumStr())
+            }
+        }
     }
 }

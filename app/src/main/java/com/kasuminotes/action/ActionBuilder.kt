@@ -35,7 +35,7 @@ class ActionBuilder(
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
                 remove.add(modifyIndex)
             }
-            // Modify
+            // GiveValue
             if (action.actionType in arrayOf(26, 27, 74)) {
                 remove.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
@@ -161,7 +161,7 @@ class ActionBuilder(
             3 -> getKnock()
             4 -> getHeal(skillLevel, property)
             6 -> getBarrier(skillLevel)
-            7 -> D.Unknown//Focus
+            7 -> D.Unknown/** [getFocus] */
             8 -> getAbnormal(skillLevel)
             9 -> getAbnormalDamage(skillLevel)
             10 -> getStatus(skillLevel, actions, if (isExEquipPassive) property else null)
@@ -176,8 +176,8 @@ class ActionBuilder(
             20 -> getProvoke(skillLevel)
             21 -> getNoDamage(skillLevel)
             22 -> getPattern()
-            23, 28, 42, 53 -> D.Unknown//Branch
-            26, 27, 74 -> getModify(skillLevel, actions)
+            23, 28, 42, 53 -> D.Unknown/** [getBranch] */
+            26, 27, 74 -> getGiveValue(skillLevel, actions)
             30 -> getDestroy()
             32 -> getLifeSteal(skillLevel)
             33 -> getShieldCounter(skillLevel)
@@ -205,10 +205,10 @@ class ActionBuilder(
             61 -> getFear()
             71 -> getKnightGuard(skillLevel, property)
             75 -> getHitCount()
-            79 -> D.Unknown//PoisonDamageByBehaviour
+            79 -> D.Unknown/** [getAbnormalField] */
             83 -> getSpeedOverlay()
-            92 -> D.Unknown//InjuredEnergy
-            93 -> D.Unknown//IgnoreProvocation
+            92 -> D.Unknown/** [getInjuredEnergy] */
+            93 -> D.Unknown/** [getIgnoreProvocation] */
             95 -> getHiding()
             96 -> getEnergyField(skillLevel)
             97 -> getInjuredEnergyMark()

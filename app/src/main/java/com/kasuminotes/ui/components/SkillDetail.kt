@@ -67,7 +67,7 @@ fun SkillDetail(
                 )
             }
             Spacer(Modifier.weight(1f))
-            if (BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG && actions != null) {
                 IconButton(
                     modifier = Modifier.height(28.dp),
                     onClick = { visible.value = !visible.value }

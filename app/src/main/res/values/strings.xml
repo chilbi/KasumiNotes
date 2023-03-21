@@ -202,13 +202,15 @@
     <string name="action_haulin_target1_formula2">拉近%1$s%2$s距离。</string>
     <string name="action_knockback_target1_formula2">击飞%1$s%2$s距离。</string>
     <string name="action_diaup_target1_formula2">击飞%1$s%2$s高度。</string>
-    <string name="action_additive_content1_formula2">使%1$s增加%2$s。</string>
-    <string name="action_reduce_content1_formula2">使%1$s减少%2$s。</string>
-    <string name="action_multiple_content1_formula2">使%1$s变为基础值的%2$s倍。</string>
-    <string name="action_divide_content1_formula2">使%1$s变为基础值的%2$s分之一。</string>
-    <string name="action_additive_max1">最多增加%s。</string>
-    <string name="action_reduce_max1">最多减少%s。</string>
-    <string name="action_darkness_formula1">使物理攻击命中率降低%s。</string>
+    <string name="action_additive_content1_formula2">使%1$s增加%2$s</string>
+    <string name="action_reduce_content1_formula2">使%1$s减少%2$s</string>
+    <string name="action_multiply_content1_formula2">使%1$s变为基础值的%2$s倍</string>
+    <string name="action_divide_content1_formula2">使%1$s变为基础值的%2$s分之一</string>
+    <string name="action_additive_max1">，最多增加%s。</string>
+    <string name="action_reduce_max1">，最多减少%s。</string>
+    <string name="action_multiply_max1">，最多变为%s倍。</string>
+    <string name="action_divide_max1">，最多变为%s分之一。</string>
+    <string name="action_darkness_formula1">使物理攻击命中率降低到%s。</string>
     <string name="action_life_steal_target1_formula2">赋予%1$s下次攻击提升%2$sHP吸收效果。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">赋予%1$s每秒回复%2$s%3$s的持续%2$s回复状态，效果时间%4$s秒。</string>
     <string name="action_trigger_hp_target1_formula2">当%1$s的HP低于最大HP的%2$s时发动。</string>
@@ -469,11 +471,12 @@
     <string name="fear">恐慌</string>
     <string name="harmed_remove_content1">%s只当受到攻击时才能解除。</string>
 
+    <string name="max_hp">最大HP</string>
     <string name="energy">TP</string>
     <string name="hp_ratio">残余HP比例</string>
     <string name="hp_remanent">残余的HP</string>
     <string name="hp_lost">损失的HP</string>
-    <string name="overthrow_count">打倒敌人的数量</string>
+    <string name="defeat_count">打倒敌人的数量</string>
     <string name="count_target1">%s的数量</string>
     <string name="count_state1">【%s】的数量</string>
     <string name="damaged_count">受到伤害的敌人数量</string>

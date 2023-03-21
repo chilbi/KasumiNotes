@@ -16,7 +16,7 @@ fun SkillAction.getDarkness(): D {
             ),
             D.Format(
                 R.string.action_darkness_formula1,
-                arrayOf(D.Text("${100 - actionDetail1}%"))
+                arrayOf(D.Text("${actionDetail1}%"))
             )
         )
     )

@@ -202,13 +202,15 @@
     <string name="action_haulin_target1_formula2">%1$sを%2$s距離引き寄せる。</string>
     <string name="action_knockback_target1_formula2">%1$sを%2$s距離吹き飛ばす。</string>
     <string name="action_diaup_target1_formula2">%1$sを%2$s高度吹き飛ばす。</string>
-    <string name="action_additive_content1_formula2">%1$sを%2$s増加させる。</string>
-    <string name="action_reduce_content1_formula2">%1$sを%2$s減少させる。</string>
-    <string name="action_multiple_content1_formula2">%1$sを基礎値の%2$s倍にする。</string>
-    <string name="action_divide_content1_formula2">%1$sを基礎値の%2$s分の一にする。</string>
-    <string name="action_additive_max1">最大%sまで増加させる。</string>
-    <string name="action_reduce_max1">最大%sまで減少させる。</string>
-    <string name="action_darkness_formula1">物理攻撃の命中率を%sダウンさせる。</string>
+    <string name="action_additive_content1_formula2">%1$sを%2$s増加させる</string>
+    <string name="action_reduce_content1_formula2">%1$sを%2$s減少させる</string>
+    <string name="action_multiply_content1_formula2">%1$sを基礎値の%2$s倍にする</string>
+    <string name="action_divide_content1_formula2">%1$sを基礎値の%2$s分の一にする</string>
+    <string name="action_additive_max1">、最大%sまで増加させる。</string>
+    <string name="action_reduce_max1">、最大%sまで減少させる。</string>
+    <string name="action_multiply_max1">、最大%s倍にする。</string>
+    <string name="action_divide_max1">、最大%s分の一にする。</string>
+    <string name="action_darkness_formula1">物理攻撃の命中率を%sにする。</string>
     <string name="action_life_steal_target1_formula2">%1$sの次の攻撃に%2$sＨＰ吸収をアップさせる効果を付与する。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">%1$sに毎秒%2$sを%3$s回復する継続%2$s回復状態を付与する、効果時間%4$s秒。</string>
     <string name="action_trigger_hp_target1_formula2">%1$sのＨＰが最大のＨＰの%2$s以下になった時に発動する。</string>
@@ -469,11 +471,12 @@
     <string name="fear">恐慌</string>
     <string name="harmed_remove_content1">%s攻撃を受けたときのみ解除される。</string>
 
+    <string name="max_hp">最大ＨＰ</string>
     <string name="energy">ＴＰ</string>
     <string name="hp_ratio">残りＨＰ割合</string>
     <string name="hp_remanent">残りＨＰ</string>
     <string name="hp_lost">損失したＨＰ</string>
-    <string name="overthrow_count">倒した敵の数</string>
+    <string name="defeat_count">とどめを刺した敵の数</string>
     <string name="count_target1">%sの数</string>
     <string name="count_state1">【%s】の数</string>
     <string name="damaged_count">ダメージを与えた敵の数</string>

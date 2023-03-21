@@ -103,7 +103,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                         }
                     } else {//n名目标
                         if (isFullRangeTarget()) {
-                            D.Join(arrayOf(D.Format(R.string.target_front), getAssignmentCount()))
+                            D.Join(arrayOf(D.Format(R.string.target_forward), getAssignmentCount()))
                         } else {
                             D.Format(
                                 R.string.target_range1_content2,

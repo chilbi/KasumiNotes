@@ -37,23 +37,15 @@ class Property(init: (Int) -> Double) {
 
     val nonzeroIndices: List<Int> by lazy {
         val list = mutableListOf<Int>()
-        arr.indices.forEach { index ->
-            if (arr[index] != 0.0) {
-                list.add(index)
-            }
+        arr.forEachIndexed { index, item ->
+            if (item != 0.0) list.add(index)
         }
         list
     }
 
-    override fun equals(other: Any?): Boolean {
-        return other is Property && arr.indices.all { index ->
-            this[index] == other[index]
-        }
-    }
+    override fun equals(other: Any?) = other is Property && arr.contentEquals(other.arr)
 
-    override fun hashCode(): Int {
-        return arr.indices.sumOf { index -> this[index] }.toInt()
-    }
+    override fun hashCode() = arr.hashCode()
 
     companion object {
         const val size = 17

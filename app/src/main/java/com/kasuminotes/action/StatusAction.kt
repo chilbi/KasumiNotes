@@ -5,6 +5,33 @@ import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
 import kotlin.math.roundToInt
 
+fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property: Property?): D {
+    val arr = getStatusArray(skillLevel, actions, property)
+    val contentDesc = arr[0]!!
+    val timeDesc = D.Format(R.string.action_time1, arrayOf(arr[1]!!))
+    val constDesc = arr[2]
+    return if (constDesc == null) {
+        D.Join(arrayOf(contentDesc, timeDesc))
+    } else {
+        D.Join(arrayOf(contentDesc, timeDesc, constDesc))
+    }
+}
+
+fun SkillAction.isStatusPercent(): Boolean {
+    var detail1 = actionDetail1
+    if (detail1 > 1000) {
+        detail1 -= 1000
+    }
+    var isPercent = actionValue1 == 2.0
+    if (detail1 >= 140) {
+        isPercent = true
+    }
+    if (detail1 in 110..129) {
+        isPercent = true
+    }
+    return isPercent
+}
+
 /** arrayOf(contentDesc, timeDesc, constDesc) */
 fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, property: Property?): Array<D?> {
     // 不受技能影响
@@ -88,15 +115,4 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
     }
 
     return arrayOf(contentDesc, timeDesc, constDesc)
-}
-fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property: Property?): D {
-    val arr = getStatusArray(skillLevel, actions, property)
-    val contentDesc = arr[0]!!
-    val timeDesc = D.Format(R.string.action_time1, arrayOf(arr[1]!!))
-    val constDesc = arr[2]
-    return if (constDesc == null) {
-        D.Join(arrayOf(contentDesc, timeDesc))
-    } else {
-        D.Join(arrayOf(contentDesc, timeDesc, constDesc))
-    }
 }

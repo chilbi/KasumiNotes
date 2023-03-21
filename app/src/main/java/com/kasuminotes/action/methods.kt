@@ -153,6 +153,7 @@ fun getAbnormalDamageContent(detail: Int): D {
 
 fun getStatusContent(detail: Int): D {
     return when (detail) {
+        0 -> D.Format(R.string.max_hp)
         1 -> D.Format(R.string.atk)
         2 -> D.Format(R.string.def)
         3 -> D.Format(R.string.magic_str)
