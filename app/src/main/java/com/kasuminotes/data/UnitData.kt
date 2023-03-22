@@ -33,9 +33,14 @@ data class UnitData(
 
     val hasUnique: Boolean get() = equipId != 0
 
-    val startTimeStr = startTime.split(" ")[0].substring(2)
+    val startTimeStr: String = startTime
+        .split(" ")[0]
+        .substring(2)
 
-    val startTimeInt = startTimeStr.replace("/", "").toInt()
+    val startTimeInt: Int = startTimeStr
+        .split("/")
+        .joinToString("") { s -> if (s.length < 2) "0$s" else s }
+        .toInt()
 //    val startDateTime: LocalDateTime = LocalDateTime.parse(startTime, formatter)
 
     companion object {
