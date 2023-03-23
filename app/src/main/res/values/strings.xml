@@ -243,7 +243,8 @@
     <string name="action_hit_count_target1_time2_count3">%1$s在%2$s秒内，每当造成%3$s次伤害时，</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$s追加%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。</string>
     <string name="action_speed_overlay_content1_target2_formula3_time4">%1$s，%2$s的行动速度提升%3$s，效果时间%4$s秒。（此技能的效果可以和其它行动速度变化技能叠加）</string>
-    <string name="action_injured_energy1">由此动作造成伤害的TP回复量变为原来的%s倍。</string>
+    <string name="action_injured_energy1">由此动作造成伤害的TP回复量变为原来的%s。</string>
+    <string name="action_no_injured_energy">由此动作造成的伤害不回复TP。</string>
     <string name="action_hiding_target1_time2">赋予%1$s隐密状态，效果时间%2$s秒。</string>
     <string name="action_injured_energy1_mark2_add3_max4_time5_target6">赋予%6$s%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。【%2$s】在受到伤害时就会消耗1个，同时TP回复%1$s。</string>
     <string name="action_hp_recovery_down_target1_formula2_time3">%1$s的HP回复量减少%2$s，效果时间%3$s秒。</string>
