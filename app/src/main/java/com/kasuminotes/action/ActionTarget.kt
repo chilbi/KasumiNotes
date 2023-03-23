@@ -51,7 +51,11 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             if (actionType in arrayOf(37, 38, 39) || focused) {
                 depend.getTarget(null, true)
             } else {
-                depend.getFocus(this).append(getTarget(null, true))
+                if (targetCount == 1) {
+                    getTarget(null, true)
+                } else {
+                    depend.getFocus(this).append(getTarget(null, true))
+                }
             }
         } else if ((depend.actionType in arrayOf(23, 28)) && depend.targetCount > 1) {
             getDependMultiTarget(D.Format(R.string.target_eligible))

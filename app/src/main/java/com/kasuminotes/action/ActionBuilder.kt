@@ -10,16 +10,19 @@ class ActionBuilder(
     private val isExEquipPassive: Boolean
 ) {
     fun buildDescriptionList(skillLevel: Int, property: Property): List<D> {
-        val origin = mutableListOf<D>()
-        val remove = mutableListOf<Int>()
-        val processedBranch = mutableListOf<Int>()
+        val originList = mutableListOf<D>()
+        val processedBranchModifyIndexList = mutableListOf<Int>()
+        val willRemoveIndexList = mutableListOf<Int>()
+        val willModifyBranchList = mutableListOf<Pair<Int, D>>()
+        val willModifyIgnoreProvocationIndexList = mutableListOf<Int>()
+        var ignoreProvocation: D? = null
 
         actions.forEachIndexed { index, action ->
             val dependId = rawDepends[index]
             if (dependId != 0) {
                 action.depend = actions.find { it.actionId == dependId }
             }
-            origin.add(action.getDescription(skillLevel, property))
+            originList.add(action.getDescription(skillLevel, property))
         }
 
         actions.forEachIndexed { index, action ->
@@ -28,81 +31,71 @@ class ActionBuilder(
                 action.actionType in arrayOf(7, 94) ||
                 (action.actionType == 21 && action.actionValue1 == 0.0 && action.actionValue2 == 0.0)
             ) {
-                remove.add(index)
+                willRemoveIndexList.add(index)
             }
             // AbnormalField
             if (action.actionType == 39) {
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
-                remove.add(modifyIndex)
+                willRemoveIndexList.add(modifyIndex)
             }
             // GiveValue
             if (action.actionType in arrayOf(26, 27, 74)) {
-                remove.add(index)
+                willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
-                origin[modifyIndex] = origin[modifyIndex].append(origin[index])
+                originList[modifyIndex] = originList[modifyIndex].append(originList[index])
             }
             // HitCount
             if (action.actionType == 75) {
-                remove.add(index)
+                willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
-                origin[modifyIndex] = origin[modifyIndex].insert(origin[index])
+                originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
             }
             //InjuredEnergy
             if (action.actionType == 92) {
-                remove.add(index)
+                willRemoveIndexList.add(index)
                 rawDepends.forEachIndexed { dependIndex, dependActionId ->
                     if (
                         dependActionId == action.actionId &&
                         actions[dependIndex].actionType in arrayOf(1, 9, 36, 46, 79)
                     ) {
-                        origin[dependIndex] = origin[dependIndex].append(action.getInjuredEnergy())
+                        originList[dependIndex] = originList[dependIndex].append(action.getInjuredEnergy())
                     }
                 }
             }
             //IgnoreProvocation
             if (action.actionType == 93) {
-                remove.add(index)
-                val willModifyList = mutableListOf<Int>()
+                willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
-                willModifyList.add(modifyIndex)
-
-                fun addDepends(actionId: Int) {
-                    rawDepends.forEachIndexed { dependIndex, dependActionId ->
-                        if (dependActionId == actionId) {
-                            willModifyList.add(dependIndex)
-                            addDepends(actions[dependIndex].actionId)
-                        }
-                    }
+                if (!willModifyIgnoreProvocationIndexList.contains(modifyIndex)) {
+                    willModifyIgnoreProvocationIndexList.add(modifyIndex)
                 }
-
-                addDepends(actions[modifyIndex].actionId)
-
-                val ignoreProvocation = action.getIgnoreProvocation()
-                willModifyList.forEach { willModifyIndex ->
-                    origin[willModifyIndex] = origin[willModifyIndex].insert(ignoreProvocation)
+                val dependIndexList = collectDependIndex(modifyIndex) { dependIndex ->
+                    !willModifyIgnoreProvocationIndexList.contains(dependIndex)
                 }
+                willModifyIgnoreProvocationIndexList.addAll(dependIndexList)
+                ignoreProvocation = action.getIgnoreProvocation()
             }
             // ExEquipPassive
             if (action.actionType in arrayOf(901, 902)) {
-                remove.add(index)
+                willRemoveIndexList.add(index)
                 var modifyIndex = index + 1
                 if (actions[modifyIndex].actionType in arrayOf(26, 27, 74)) {
                     modifyIndex = actions.indexOfFirst { it.actionId == actions[modifyIndex].actionDetail1 }
                 }
-                origin[modifyIndex] = origin[modifyIndex].insert(origin[index])
+                originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
             }
             // Branch
             if (action.actionType in arrayOf(23, 28, 42, 53)) {
                 val branch = action.getBranch()
                 if (branch.isEmpty()) {
                     if (action.actionDetail2 == 0 && action.actionDetail3 ==0) {
-                        remove.add(index)
+                        willRemoveIndexList.add(index)
                     } else {
-                        origin[index] = action.getUnknown()
+                        originList[index] = action.getUnknown()
                     }
                 } else {
-                    remove.add(index)
-                    fun insertBranch(modifyActionId: Int, modifyContent: D, preContent: D?) {
+                    willRemoveIndexList.add(index)
+                    fun collectBranch(modifyActionId: Int, modifyContent: D, preContent: D?) {
                         val content = if (preContent == null) {
                             modifyContent
                         } else {
@@ -113,34 +106,35 @@ class ActionBuilder(
                             ))
                         }
                         val modifyIndex = actions.indexOfFirst { it.actionId == modifyActionId }
-                        if (!processedBranch.contains(modifyActionId)) {
+                        if (!processedBranchModifyIndexList.contains(modifyIndex)) {
                             val modifyAction = actions[modifyIndex]
                             if (modifyAction.actionType == 28) {
                                 val andBranch = modifyAction.getBranch()
                                 andBranch.forEach { andPair ->
-                                    insertBranch(andPair.first, andPair.second, content)
-                                    processedBranch.add(andPair.first)
+                                    collectBranch(andPair.first, andPair.second, content)
                                 }
                             } else {
-                                origin[modifyIndex] = origin[modifyIndex].insert(content)
+                                willModifyBranchList.add(modifyIndex to content)
                             }
-                            processedBranch.add(modifyActionId)
+                            processedBranchModifyIndexList.add(modifyIndex)
                         }
                     }
-
                     branch.forEach { pair ->
                         val modifyActionId = pair.first
                         val modifyContent = pair.second
-
-                        insertBranch(modifyActionId, modifyContent, null)
-
-                        rawDepends.forEachIndexed { dependIndex, dependActionId ->
-                            if (dependActionId == modifyActionId) {
-                                val modifyDependActionId = actions[dependIndex].actionId
-                                if (!processedBranch.contains(modifyDependActionId)) {
-                                    origin[dependIndex] = origin[dependIndex].insert(modifyContent)
-                                    processedBranch.add(modifyDependActionId)
+                        collectBranch(modifyActionId, modifyContent, null)
+                        willModifyBranchList.toTypedArray().forEach { collectedPair ->
+                            val mIndex = collectedPair.first
+                            val mContent = collectedPair.second
+                            val dependIndexList = collectDependIndex(mIndex) { dependIndex ->
+                                val noContains = !processedBranchModifyIndexList.contains(dependIndex)
+                                if (noContains) {
+                                    processedBranchModifyIndexList.add(dependIndex)
                                 }
+                                noContains
+                            }
+                            dependIndexList.forEach { dependIndex ->
+                                willModifyBranchList.add(dependIndex to mContent)
                             }
                         }
                     }
@@ -148,8 +142,33 @@ class ActionBuilder(
             }
         }
 
-        return if (remove.isEmpty()) origin
-        else origin.filterIndexed { index, _ -> !remove.contains(index) }
+        if (willModifyBranchList.isNotEmpty()) {
+            willModifyBranchList.forEach { collectedPair ->
+                val mIndex = collectedPair.first
+                val mContent = collectedPair.second
+                originList[mIndex] = originList[mIndex].insert(mContent)
+            }
+        }
+
+        if (ignoreProvocation != null && willModifyIgnoreProvocationIndexList.isNotEmpty()) {
+            willModifyIgnoreProvocationIndexList.forEach { willModifyIndex ->
+                originList[willModifyIndex] = originList[willModifyIndex].insert(ignoreProvocation!!)
+            }
+        }
+
+        return if (willRemoveIndexList.isEmpty()) originList
+        else originList.filterIndexed { index, _ -> !willRemoveIndexList.contains(index) }
+    }
+
+    private fun collectDependIndex(index: Int, predicate: (dependIndex: Int) -> Boolean): List<Int> {
+        val list = mutableListOf<Int>()
+        rawDepends.forEachIndexed { dependIndex, dependActionId ->
+            if (dependActionId == actions[index].actionId && predicate(dependIndex)) {
+                list.add(dependIndex)
+                list.addAll(collectDependIndex(dependIndex, predicate))
+            }
+        }
+        return list
     }
 
     private fun SkillAction.getDescription(skillLevel: Int, property: Property): D {
@@ -212,7 +231,7 @@ class ActionBuilder(
             95 -> getHiding()
             96 -> getEnergyField(skillLevel)
             97 -> getInjuredEnergyMark()
-            98 -> getEnergyDownCut()
+            98 -> getEnergyCut()
             99 -> getSpeedField()
             100 -> getAkinesiaInvalid()
             else -> getUnknown()
