@@ -12,69 +12,69 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NavBackStackEntry
 
-sealed class NavGraph(
+sealed class AppNavGraph(
     val route: String,
     val parent: List<String> = emptyList(),
     val child: List<String> = emptyList()
 ) {
-    object Home : NavGraph(
+    object Home : AppNavGraph(
         route = "home",
         child = listOf("chara", "about")
     )
 
-    object Chara : NavGraph(
+    object Chara : AppNavGraph(
         route = "chara",
         parent = listOf("home"),
         child = listOf("equip", "exEquip", "summons")
     )
 
-    object Equip : NavGraph(
+    object Equip : AppNavGraph(
         route = "equip",
         parent = listOf("chara", "quest")
     )
 
-    object ExEquip : NavGraph(
+    object ExEquip : AppNavGraph(
         route = "exEquip",
         parent = listOf("chara")
     )
 
-    object Summons : NavGraph(
+    object Summons : AppNavGraph(
         route = "summons",
         parent = listOf("chara", "clanBattleEnemy")
     )
 
-    object Quest : NavGraph(
+    object Quest : AppNavGraph(
         route = "quest",
         child = listOf("equip")
     )
 
-    object ClanBattle : NavGraph(
+    object ClanBattle : AppNavGraph(
         route = "clanBattle",
         child = listOf("clanBattleMapList")
     )
 
-    object ClanBattleMapList : NavGraph(
+    object ClanBattleMapList : AppNavGraph(
         route = "clanBattleMapList",
         parent = listOf("clanBattle"),
         child = listOf("clanBattleEnemy")
     )
 
-    object ClanBattleEnemy : NavGraph(
+    object ClanBattleEnemy : AppNavGraph(
         route = "clanBattleEnemy",
         parent = listOf("clanBattleMapList"),
         child = listOf("summons")
     )
 
-    object About : NavGraph(
+    object About : AppNavGraph(
         route = "about",
         parent = listOf("home")
     )
 
-    object Images : NavGraph(
+    object Images : AppNavGraph(
         route = "images"
     )
 
-    object Editor : NavGraph(
+    object Editor : AppNavGraph(
         route = "editor"
     )
 

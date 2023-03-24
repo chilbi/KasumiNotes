@@ -42,7 +42,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
 
         addOnDestinationChangedListener { _, destination, _ ->
             when (destination.route) {
-                NavGraph.Home.route -> {
+                AppNavGraph.Home.route -> {
                     charaState.destroy()
                     dbState.userState.charaListState.destroy()
                 }
@@ -57,29 +57,29 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     fun navigateTo(selectedIndex: Int) {
         when (selectedIndex) {
             0 -> {
-                if (navController.currentDestination?.route != NavGraph.Home.route) {
+                if (navController.currentDestination?.route != AppNavGraph.Home.route) {
                     navController.popBackStack()
                 }
             }
             1 -> {
                 if (!dbState.questInitializing) {
                     questState.initQuest(dbState.userState.maxUserData!!.maxArea)
-                    navController.navigate(NavGraph.Quest.route) {
-                        popUpTo(NavGraph.Home.route)
+                    navController.navigate(AppNavGraph.Quest.route) {
+                        popUpTo(AppNavGraph.Home.route)
                     }
                 }
             }
             2 -> {
                 clanBattleState.initPeriodList()
-                navController.navigate(NavGraph.ClanBattle.route) {
-                    popUpTo(NavGraph.Home.route)
+                navController.navigate(AppNavGraph.ClanBattle.route) {
+                    popUpTo(AppNavGraph.Home.route)
                 }
             }
         }
     }
 
     fun navigateToAbout() {
-        navController.navigate(NavGraph.About.route)
+        navController.navigate(AppNavGraph.About.route)
     }
 
     fun navigateToChara(userProfile: UserProfile) {
@@ -88,13 +88,13 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             dbState.userState.charaListState.profiles,
             dbState.userState.maxUserData!!.maxCharaLevel
         )
-        navController.navigate(NavGraph.Chara.route)
+        navController.navigate(AppNavGraph.Chara.route)
     }
 
     fun navigateToEquipById(equipId: Int) {
         equipState.destroy()
         equipState.initEquip(dbState.userState.maxUserData!!.maxArea, equipId)
-        navController.navigate(NavGraph.Equip.route)
+        navController.navigate(AppNavGraph.Equip.route)
     }
 
     fun navigateToEquip(equipData: EquipData, slot: Int?) {
@@ -114,7 +114,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 }
             )
         }
-        navController.navigate(NavGraph.Equip.route)
+        navController.navigate(AppNavGraph.Equip.route)
     }
 
     fun navigateToUnique(uniqueData: UniqueData) {
@@ -125,7 +125,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             dbState.userState.maxUserData!!.maxUniqueLevel,
             charaState::changeUniqueLevel
         )
-        navController.navigate(NavGraph.Equip.route)
+        navController.navigate(AppNavGraph.Equip.route)
     }
 
     fun navigateToExEquip(exEquipSlot: ExEquipSlot) {
@@ -141,28 +141,28 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             charaState::changeExEquip,
             charaState::changeExEquipLevel
         )
-        navController.navigate(NavGraph.ExEquip.route)
+        navController.navigate(AppNavGraph.ExEquip.route)
     }
 
     fun navigateToSummons(summons: List<Int>, skillLevel: Int) {
         summonsState.initSummons(summons, skillLevel, charaState.userData!!)
-        navController.navigate(NavGraph.Summons.route)
+        navController.navigate(AppNavGraph.Summons.route)
     }
 
     fun navigateToMinions(minions: List<Int>, skillLevel: Int) {
         skillLevel + 0
         summonsState.initMinionDataList(minions)
-        navController.navigate(NavGraph.Summons.route)
+        navController.navigate(AppNavGraph.Summons.route)
     }
 
     fun navigateToMapList(label: String, period: ClanBattlePeriod) {
         clanBattleState.initPeriod(label, period)
-        navController.navigate(NavGraph.ClanBattleMapList.route)
+        navController.navigate(AppNavGraph.ClanBattleMapList.route)
     }
 
     fun navigateToEnemy(enemyData: EnemyData) {
         clanBattleState.initEnemy(enemyData)
-        navController.navigate(NavGraph.ClanBattleEnemy.route)
+        navController.navigate(AppNavGraph.ClanBattleEnemy.route)
     }
 
     fun navigateToImagesForChangeUserImage() {
@@ -170,7 +170,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             dbState.userState.charaListState.initImages(
                 dbState.userState.getAllProfiles(dbState.userState.charaListState.profiles)
             )
-            navController.navigate(NavGraph.Images.route)
+            navController.navigate(AppNavGraph.Images.route)
         }
     }
 
@@ -178,7 +178,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         dbState.userState.charaListState.initImages(
             dbState.userState.allProfiles!!
         )
-        navController.navigate(NavGraph.Images.route)
+        navController.navigate(AppNavGraph.Images.route)
 
     }
 
@@ -189,7 +189,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 dbState.userState.getAllProfiles(unlockedProfiles),
                 unlockedProfiles
             )
-            navController.navigate(NavGraph.Editor.route)
+            navController.navigate(AppNavGraph.Editor.route)
         }
 
     }
@@ -200,7 +200,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             dbState.userState.allProfiles!!,
             unlockedProfiles
         )
-        navController.navigate(NavGraph.Editor.route)
+        navController.navigate(AppNavGraph.Editor.route)
     }
 
     fun userEditorBack() {

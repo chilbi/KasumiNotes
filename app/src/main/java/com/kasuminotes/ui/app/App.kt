@@ -42,14 +42,14 @@ fun App(appViewModel: AppViewModel = viewModel()) {
 
         AnimatedNavHost(
             navController = appViewModel.navController,
-            startDestination = NavGraph.Home.route,
+            startDestination = AppNavGraph.Home.route,
             enterTransition = NavTransitions.defaultEnterTransition,
             exitTransition = NavTransitions.defaultExitTransition
         ) {
             composable(
-                route = NavGraph.Home.route,
-                enterTransition = NavGraph.Home.enterTransition,
-                exitTransition = NavGraph.Home.exitTransition
+                route = AppNavGraph.Home.route,
+                enterTransition = AppNavGraph.Home.enterTransition,
+                exitTransition = AppNavGraph.Home.exitTransition
             ) {
                 Home(
                     drawerState,
@@ -66,9 +66,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = NavGraph.Chara.route,
-                enterTransition = NavGraph.Chara.enterTransition,
-                exitTransition = NavGraph.Chara.exitTransition
+                route = AppNavGraph.Chara.route,
+                enterTransition = AppNavGraph.Chara.enterTransition,
+                exitTransition = AppNavGraph.Chara.exitTransition
             ) {
                 Chara(
                     appViewModel.charaState,
@@ -81,9 +81,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = NavGraph.Equip.route,
-                enterTransition = NavGraph.Equip.enterTransition,
-                exitTransition = NavGraph.Equip.exitTransition
+                route = AppNavGraph.Equip.route,
+                enterTransition = AppNavGraph.Equip.enterTransition,
+                exitTransition = AppNavGraph.Equip.exitTransition
             ) {
                 Equip(
                     dbState,
@@ -92,9 +92,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = NavGraph.ExEquip.route,
-                enterTransition = NavGraph.ExEquip.enterTransition,
-                exitTransition = NavGraph.ExEquip.exitTransition
+                route = AppNavGraph.ExEquip.route,
+                enterTransition = AppNavGraph.ExEquip.enterTransition,
+                exitTransition = AppNavGraph.ExEquip.exitTransition
             ) {
                 ExEquip(
                     appViewModel.exEquipState,
@@ -102,9 +102,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = NavGraph.Summons.route,
-                enterTransition = NavGraph.Summons.enterTransition,
-                exitTransition = NavGraph.Summons.exitTransition
+                route = AppNavGraph.Summons.route,
+                enterTransition = AppNavGraph.Summons.enterTransition,
+                exitTransition = AppNavGraph.Summons.exitTransition
             ) {
                 Summons(
                     appViewModel.summonsState,
@@ -112,9 +112,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = NavGraph.Quest.route,
-                enterTransition = NavGraph.Quest.enterTransition,
-                exitTransition = NavGraph.Quest.exitTransition
+                route = AppNavGraph.Quest.route,
+                enterTransition = AppNavGraph.Quest.enterTransition,
+                exitTransition = AppNavGraph.Quest.exitTransition
             ) {
                 Quest(
                     appViewModel.questState,
@@ -124,9 +124,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = NavGraph.ClanBattle.route,
-                enterTransition = NavGraph.ClanBattle.enterTransition,
-                exitTransition = NavGraph.ClanBattle.exitTransition
+                route = AppNavGraph.ClanBattle.route,
+                enterTransition = AppNavGraph.ClanBattle.enterTransition,
+                exitTransition = AppNavGraph.ClanBattle.exitTransition
             ) {
                 ClanBattle(
                     appViewModel.clanBattleState,
@@ -136,9 +136,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = NavGraph.ClanBattleMapList.route,
-                enterTransition = NavGraph.ClanBattleMapList.enterTransition,
-                exitTransition = NavGraph.ClanBattleMapList.exitTransition
+                route = AppNavGraph.ClanBattleMapList.route,
+                enterTransition = AppNavGraph.ClanBattleMapList.enterTransition,
+                exitTransition = AppNavGraph.ClanBattleMapList.exitTransition
             ) {
                 ClanBattleMapList(
                     appViewModel.clanBattleState,
@@ -147,9 +147,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = NavGraph.ClanBattleEnemy.route,
-                enterTransition = NavGraph.ClanBattleEnemy.enterTransition,
-                exitTransition = NavGraph.ClanBattleEnemy.exitTransition
+                route = AppNavGraph.ClanBattleEnemy.route,
+                enterTransition = AppNavGraph.ClanBattleEnemy.enterTransition,
+                exitTransition = AppNavGraph.ClanBattleEnemy.exitTransition
             ) {
                 ClanBattleEnemy(
                     appViewModel.clanBattleState,
@@ -158,23 +158,23 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = NavGraph.About.route,
-                enterTransition = NavGraph.About.enterTransition,
-                exitTransition = NavGraph.About.exitTransition
+                route = AppNavGraph.About.route,
+                enterTransition = AppNavGraph.About.enterTransition,
+                exitTransition = AppNavGraph.About.exitTransition
             ) {
                 About(
                     appViewModel::popBackStack,
                     appViewModel::linkTo
                 )
             }
-            composable(NavGraph.Images.route) {
+            composable(AppNavGraph.Images.route) {
                 UserImages(
                     userState,
                     appViewModel::userEditorBack,
                     appViewModel::confirmNewImage
                 )
             }
-            composable(NavGraph.Editor.route) {
+            composable(AppNavGraph.Editor.route) {
                 CharaEditor(
                     userState,
                     appViewModel::userEditorBack,
