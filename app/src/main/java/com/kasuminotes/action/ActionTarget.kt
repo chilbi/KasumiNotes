@@ -52,9 +52,9 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                 depend.getTarget(null, true)
             } else {
                 if (targetCount == 1) {
-                    getTarget(null, true)
+                    depend.getTarget(null, true)
                 } else {
-                    depend.getFocus(this).append(getTarget(null, true))
+                    depend.getTargetFocus(this).append(getTarget(null, true))
                 }
             }
         } else if ((depend.actionType in arrayOf(23, 28)) && depend.targetCount > 1) {

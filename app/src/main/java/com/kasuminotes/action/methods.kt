@@ -9,6 +9,12 @@ import kotlin.math.floor
 
 fun isAtkType(detail: Int): Boolean = detail == 1 || detail == 3
 
+fun getAtkType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.atk else R.string.magic_str)
+
+fun getDefType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.def else R.string.magic_def)
+
+fun getDamageType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.physical else R.string.magic)
+
 fun getBaseLvAtkFormula(
     detail: Int,
     base: Double,
@@ -110,21 +116,6 @@ fun getBaseLvFormula(
             )
         }
     }
-}
-
-fun getDamageType(detail: Int): D {
-    return D.Format(if (detail == 1 || detail == 3) R.string.physical else R.string.magic)
-}
-
-fun getDefType(detail: Int): D {
-    return D.Format(if (detail == 1 || detail == 3) R.string.def else R.string.magic_def)
-}
-
-fun getAtkType(detail: Int): D {
-    return D.Format(
-        if (isAtkType(detail)) R.string.atk
-        else R.string.magic_str
-    )
 }
 
 fun getAbnormalContent(detail: Int): D {

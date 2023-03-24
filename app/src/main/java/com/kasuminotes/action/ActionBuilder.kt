@@ -25,7 +25,7 @@ class ActionBuilder(
         val ignoreProvocationModify = ModifyDescription(rawDepends, actions)
 
         actions.forEachIndexed { index, action ->
-            /** [getFocus], 94 [getUnknown] */
+            /** [getTargetFocus], 94 [getUnknown] */
             if (action.actionType in arrayOf(7, 94)) {
                 willRemoveIndexList.add(index)
             }
@@ -112,27 +112,27 @@ class ActionBuilder(
     private fun SkillAction.getDescription(skillLevel: Int, property: Property): D {
         return when (actionType) {
             901, 902 -> getExEquipPassive()
-            90 -> getExPassive(skillLevel)
+            90 -> getExSkillPassive(skillLevel)
             1 -> getDamage(skillLevel, property)
             2 -> getMove()
             3 -> getKnock()
             4 -> getHeal(skillLevel, property)
             6 -> getBarrier(skillLevel)
-            7 -> D.Unknown/** [getFocus] */
+            7 -> D.Unknown/** [getTargetFocus] */
             8 -> getAbnormal(skillLevel)
             9 -> getAbnormalDamage(skillLevel)
             10 -> getStatus(skillLevel, actions, if (isExEquipPassive) property else null)
             11 -> getCharm()
             12 -> getDarkness()
             13 -> getSilence()
-            14 -> getMode()
+            14 -> getChangeMode()
             15 -> getSummon()
-            16 -> getEnergy(skillLevel)
+            16 -> getChangeEnergy(skillLevel)
             17 -> getTrigger()
             18 -> getSustainDamage()
             20 -> getProvoke(skillLevel)
             21 -> getNoDamage(skillLevel)
-            22 -> getPattern()
+            22 -> getChangePattern()
             23, 28, 42, 53 -> D.Unknown/** [getBranch] */
             26, 27, 74 -> getGiveValue(skillLevel, actions)
             30 -> getDestroy()

@@ -3,7 +3,7 @@ package com.kasuminotes.action
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
-fun SkillAction.getPattern(): D {
+fun SkillAction.getChangePattern(): D {
     val pattern = D.Text((actionDetail2 % 10).toString())
 
     return if (actionValue1 < 0) {

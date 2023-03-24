@@ -4,7 +4,7 @@ import com.kasuminotes.R
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
 
-fun SkillAction.getExPassive(skillLevel: Int): D {
+fun SkillAction.getExSkillPassive(skillLevel: Int): D {
     val index = actionDetail1 - 1
     return D.Format(
         R.string.action_ex_passive_content1_formula2,

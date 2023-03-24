@@ -3,7 +3,7 @@ package com.kasuminotes.action
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
-fun SkillAction.getMode(): D {
+fun SkillAction.getChangeMode(): D {
     val pattern = D.Text((actionDetail2 % 10).toString())
     return when (actionDetail1) {
         1 -> D.Format(
