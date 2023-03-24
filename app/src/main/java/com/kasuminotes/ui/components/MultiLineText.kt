@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -55,14 +56,16 @@ fun LineText(
 }
 
 @Composable
-fun NoDataText() {
+fun CenterText(
+    text: String,
+    color: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    style: TextStyle = MaterialTheme.typography.bodyLarge
+) {
     Text(
-        text = stringResource(R.string.no_data),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        text = text,
+        modifier = Modifier.fillMaxWidth().padding(4.dp),
+        color = color,
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.bodyLarge
+        style = style
     )
 }

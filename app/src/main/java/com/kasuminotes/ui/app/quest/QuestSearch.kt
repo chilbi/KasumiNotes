@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -47,7 +46,7 @@ import com.kasuminotes.data.EquipInfo
 import com.kasuminotes.data.QuestData
 import com.kasuminotes.ui.components.ImageIcon
 import com.kasuminotes.ui.components.TopBar
-import com.kasuminotes.ui.components.NoDataText
+import com.kasuminotes.ui.components.CenterText
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.TextToggleButton
 import com.kasuminotes.ui.components.Toggle37Button
@@ -153,17 +152,10 @@ fun QuestSearch(
                         0 -> {
                             when {
                                 questDataList == null -> {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(top = 4.dp),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        CircularProgressIndicator()
-                                    }
+                                    CenterText(stringResource(R.string.searching))
                                 }
                                 questDataList.isEmpty() -> {
-                                    NoDataText()
+                                    CenterText(stringResource(R.string.no_data))
                                 }
                                 else -> {
                                     LazyColumn(contentPadding = PaddingValues(4.dp)) {

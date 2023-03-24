@@ -145,6 +145,7 @@
     <string name="synthetic_material">合成材料</string>
     <string name="obtain_place">获取途径</string>
     <string name="no_data">空空如也</string>
+    <string name="searching">搜索中…</string>
     <string name="map_list">地图列表</string>
     <string name="search_list">搜索列表</string>
     <string name="equip_list">装备列表</string>

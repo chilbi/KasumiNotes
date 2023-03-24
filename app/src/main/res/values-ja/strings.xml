@@ -144,6 +144,7 @@
     <string name="promotion_level">強化レベル</string>
     <string name="synthetic_material">合成素材</string>
     <string name="obtain_place">入手場所</string>
+    <string name="searching">捜索中…</string>
     <string name="no_data">空っぽだ</string>
     <string name="map_list">マップリスト</string>
     <string name="search_list">検索リスト</string>

@@ -3,21 +3,18 @@ package com.kasuminotes.ui.app.equip
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.QuestData
 import com.kasuminotes.ui.app.quest.QuestDropList
 import com.kasuminotes.ui.app.quest.QuestLabel
 import com.kasuminotes.ui.components.FixedWidthLabel
-import com.kasuminotes.ui.components.NoDataText
+import com.kasuminotes.ui.components.CenterText
 import com.kasuminotes.ui.components.SortIconButton
 import com.kasuminotes.ui.components.Toggle37Button
 
@@ -58,14 +55,10 @@ fun EquipDropList(
 
         when {
             questDataList == null -> {
-                CircularProgressIndicator(
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 4.dp)
-                )
+                CenterText(stringResource(R.string.searching))
             }
             questDataList.isEmpty() -> {
-                NoDataText()
+                CenterText(stringResource(R.string.no_data))
             }
             else -> {
                 QuestDropList(
