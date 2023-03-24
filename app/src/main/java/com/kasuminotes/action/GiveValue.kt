@@ -303,9 +303,9 @@ private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction):
             }
         } else {
             if (actionValue4 > 0.0 && actionValue5 > 0.0) {
-                D.Text(ceil(actionValue4 + actionValue5 * skillLevel).toNumStr())
+                D.Text(ceil(actionValue4 + actionValue5 * skillLevel).toNumStr())// TODO 不确定的取整方式
             } else {
-                D.Text(ceil((-actionValue4) + (-actionValue5) * skillLevel).toNumStr())
+                D.Text(ceil((-actionValue4) + (-actionValue5) * skillLevel).toNumStr())// TODO 不确定的取整方式
             }
         }
     }

@@ -125,7 +125,7 @@ class EquipState(
                 } else {
                     searchList!!.filter { it != materialId }
                 }
-            } else if (searchList!!.size < 3) { // TODO 提示最多选3个
+            } else if (searchList!!.size < 3) {// TODO 提示最多选3个
                 val list = searchList!!.toMutableList()
                 list.add(materialId)
                 list

@@ -28,7 +28,7 @@ fun PropertyTable(
     ) { i ->
         val index = indices[i]
         val label = stringResource(Property.getStrRes(index))
-        val value = property[index].roundToInt()
+        val value = property[index].roundToInt()// TODO 不确定的取整方式
 
         if (originProperty == null) {
             Infobar(
@@ -36,7 +36,7 @@ fun PropertyTable(
                 value = value.toString()
             )
         } else {
-            val originValue = originProperty[index].roundToInt()
+            val originValue = originProperty[index].roundToInt()// TODO 不确定的取整方式
             val diffValue = value - originValue
 
             if (diffValue == 0) {

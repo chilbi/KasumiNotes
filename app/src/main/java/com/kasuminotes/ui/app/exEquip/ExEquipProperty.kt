@@ -41,9 +41,9 @@ fun ExEquipProperty(
             Infobar(
                 label = label,
                 value = if (index < 7) {
-                    "${(value / 100).toNumStr()}%(+${(baseProperty[index] * value / 10000).roundToInt()})"
+                    "${(value / 100).toNumStr()}%(+${(baseProperty[index] * value / 10000).roundToInt()})"// TODO 不确定的取整方式
                 } else {
-                    value.roundToInt().toString()
+                    value.roundToInt().toString()// TODO 不确定的取整方式
                 }
             )
         }

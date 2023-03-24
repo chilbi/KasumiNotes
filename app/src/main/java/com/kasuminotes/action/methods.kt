@@ -23,7 +23,7 @@ fun getBaseLvAtkFormula(
     plusAtkCoefficient: Double,
     skillLevel: Int,
     property: Property,
-    callback: (Double) -> Double = { result -> floor(result) }
+    callback: (Double) -> Double = { floor(it) }// TODO 不确定的取整方式
 ): D {
     @StringRes
     val atkType: Int
@@ -91,7 +91,7 @@ fun getBaseLvFormula(
     base: Double,
     lvCoefficient: Double,
     skillLevel: Int,
-    callback: (Double) -> Double = { result -> ceil(result) }
+    callback: (Double) -> Double = { ceil(it) }// TODO 不确定的取整方式
 ): D {
     return if (lvCoefficient == 0.0) {
         D.Text(base.toNumStr())

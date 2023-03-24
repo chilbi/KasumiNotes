@@ -37,7 +37,7 @@ data class ExEquipData(
                     } else {
                         val defaultValue = defaultProperty[index]
                         if (index < 7) {
-                            val growthValue = ceil(maxValue / (maxEnhanceLevel + 1))
+                            val growthValue = ceil(maxValue / (maxEnhanceLevel + 1))// TODO 不确定的取整方式
                             defaultValue + growthValue * level
                         } else {
                             defaultValue + defaultValue * level
@@ -53,7 +53,7 @@ data class ExEquipData(
         return Property { index ->
             val value = percentProperty[index]
             if (index < 7) {
-                (baseProperty[index] * value / 10000).roundToInt().toDouble() + skillProperty[index]
+                (baseProperty[index] * value / 10000).roundToInt().toDouble() + skillProperty[index]// TODO 不确定的取整方式
             } else {
                 value + skillProperty[index]
             }
@@ -96,7 +96,7 @@ data class ExEquipData(
                         if (statusAction.actionDetail1 % 10 != 0) {
                             value *= -1
                         }
-                        pairs.add(key + 1 to value.roundToInt().toDouble())
+                        pairs.add(key + 1 to value.roundToInt().toDouble())// TODO 不确定的取整方式
                     }
                 }
             }

@@ -24,7 +24,7 @@ data class EquipData(
         if (level == 0) return baseProperty
 
         return Property { index ->
-            baseProperty[index] + ceil(growthProperty[index] * level)
+            baseProperty[index] + ceil(growthProperty[index] * level)// TODO 不确定的取整方式
         }
     }
 
@@ -35,7 +35,7 @@ data class EquipData(
 
         if (level == 0) return baseProperty[index]
 
-        return baseProperty[index] + ceil(growthProperty[index] * level)
+        return baseProperty[index] + ceil(growthProperty[index] * level)// TODO 不确定的取整方式
     }
 
     companion object {
