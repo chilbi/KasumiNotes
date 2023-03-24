@@ -268,7 +268,6 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
         9 -> D.Format(R.string.target_last_assignment_count1, arrayOf(getAssignmentCount()))
         10 -> D.Format(R.string.target_first_assignment_count1, arrayOf(getAssignmentCount()))
         11 -> D.Format(R.string.target_distance1, arrayOf(D.Text(actionValue1.toNumStr())))
-        //33 -> D.Unknown (shadow)
         18 -> D.Format(R.string.target_all_summon_content1, arrayOf(getAssignmentSide()))
         //19 -> D.Unknown (tpReducing)
         20 -> D.Format(R.string.target_all_atk_content1, arrayOf(getAssignmentSide()))
@@ -276,6 +275,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
         //22 -> D.Unknown (allSummonRandom)
         //23 -> D.Unknown (selfSummonRandom)
         24 -> D.Format(R.string.target_boss)
+        //33 -> D.Unknown (shadow)
         //40 -> D.Unknown
         42 -> D.Format(R.string.target_multi_target1, arrayOf(getAssignmentSide()))
         in allMostTypes -> {
@@ -287,7 +287,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                 in magicStrTypes -> R.string.magic_str
                 else -> R.string.atk_or_magic_str//in atkOrMagicStrTypes
             }
-            val lowestTarget = D.Format(
+            val mostTarget = D.Format(
                 R.string.target_most_content1_extent2_assignment_count3,
                 arrayOf(
                     D.Format(content),
@@ -296,13 +296,27 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                 )
             )
             val manyTarget = if (isFullRangeTarget()) {
-                lowestTarget
+                if (targetArea == 1) {
+                    D.Join(
+                        arrayOf(
+                            D.Format(R.string.target_front_assignment1, arrayOf(getAssignment())),
+                            mostTarget
+                        )
+                    )
+                } else {
+                    mostTarget
+                }
             } else {
+                val range = D.Text(targetRange.toString())
                 D.Format(
                     R.string.target_range1_content2,
                     arrayOf(
-                        D.Text(targetRange.toString()),
-                        lowestTarget
+                        if (targetArea == 1) {
+                            D.Join(arrayOf(D.Format(R.string.target_front), range))
+                        } else {
+                            range
+                        },
+                        mostTarget
                     )
                 )
             }

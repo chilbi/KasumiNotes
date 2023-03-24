@@ -401,6 +401,7 @@
     <string name="target_forward">目の前の</string>
     <string name="target_all_content1">%s全体</string>
     <string name="target_front_all_assignment1">前方の%sすべて</string>
+    <string name="target_front_assignment1">前方の%sの中で</string>
     <string name="target_range1_content2">%1$s範囲内の%2$s</string>
     <string name="target_range_all_content1">%sすべて</string>
     <string name="target_range_max_assignment_count1">最大%s</string>
@@ -413,7 +414,7 @@
     <string name="target_farthest_assignment_count1">最も遠い%s</string>
     <string name="target_first_assignment_count1">最も前の%s</string>
     <string name="target_last_assignment_count1">最も後ろの%s</string>
-    <string name="target_most_content1_extent2_assignment_count3">最も%1$sが%2$s%3$s</string>
+    <string name="target_most_content1_extent2_assignment_count3">%1$sが最も%2$s%3$s</string>
     <string name="target_without_self">自分以外の</string>
     <string name="target_all_atk_content1">物理攻撃を行うすべての%sキャラ</string>
     <string name="target_all_magic_str_content1">魔法攻撃を行うすべての%sキャラ</string>
@@ -485,8 +486,8 @@
     <string name="rear_friendly_count">後方にいる味方の数</string>
     <string name="hp_lost_ratio">損失したＨＰ割合</string>
     <string name="counter_num1">カウンター%s</string>
-    <string name="of">の</string>
-    <string name="atk_or_magic_str">物理攻撃力、魔法攻撃力いずれかで</string>
+    <string name="of_s1_s2">%1$sの%2$s</string>
+    <string name="atk_or_magic_str">物理攻撃力、魔法攻撃力いずれかで攻撃力</string>
 
     <string name="additive_time">効果時間</string>
     <string name="additive_damage">ダメージ量</string>

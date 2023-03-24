@@ -71,9 +71,9 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
     val content = getGiveValueContent(nestTargetAction ?: targetAction)
 
     val formula = if (nestTargetAction == null) {
-        getModifyFormula(targetAction, constantVariable, independentVariable, null)
+        getGiveValueFormula(targetAction, constantVariable, independentVariable, null)
     } else {
-        targetAction.getModifyFormula(
+        targetAction.getGiveValueFormula(
             nestTargetAction,
             constantVariable,
             independentVariable,
@@ -145,10 +145,10 @@ private fun SkillAction.getGiveValueIndependentVariable(): D {
                 4 -> D.Format(R.string.count_target1, arrayOf(getTarget(depend)))
                 5 -> D.Format(R.string.damaged_count)
                 6 -> D.Format(R.string.damaged_amount)
-                7 -> D.Join(arrayOf(getTarget(depend), D.Format(R.string.of), D.Format(R.string.atk)))
-                8 -> D.Join(arrayOf(getTarget(depend), D.Format(R.string.of), D.Format(R.string.magic_str)))
-                9 -> D.Join(arrayOf(getTarget(depend), D.Format(R.string.of), D.Format(R.string.def)))
-                10 -> D.Join(arrayOf(getTarget(depend), D.Format(R.string.of), D.Format(R.string.magic_def)))
+                7 -> D.Format(R.string.of_s1_s2, arrayOf(getTarget(depend), D.Format(R.string.atk)))
+                8 -> D.Format(R.string.of_s1_s2, arrayOf(getTarget(depend), D.Format(R.string.magic_str)))
+                9 -> D.Format(R.string.of_s1_s2, arrayOf(getTarget(depend), D.Format(R.string.def)))
+                10 -> D.Format(R.string.of_s1_s2, arrayOf(getTarget(depend), D.Format(R.string.magic_def)))
                 12 -> D.Format(R.string.rear_friendly_count)
                 13 -> D.Join(arrayOf(getTarget(depend), D.Format(R.string.hp_lost_ratio)))
                 else -> D.Unknown
@@ -222,7 +222,7 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
 /**
  * 公式（如：{ 物理攻击力 * 敌人全体的数量 }）
  */
-private fun SkillAction.getModifyFormula(
+private fun SkillAction.getGiveValueFormula(
     targetAction: SkillAction,
     constantVariable: D,
     independentVariable: D,
