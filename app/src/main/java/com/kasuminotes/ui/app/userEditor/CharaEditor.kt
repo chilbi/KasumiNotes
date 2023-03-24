@@ -170,7 +170,7 @@ fun CharaEditor(
                     columns = GridCells.Fixed(4),
                     contentPadding = PaddingValues(4.dp)
                 ) {
-                    items(profiles, { it.unitData.unitId }) { userProfile ->
+                    items(profiles) { userProfile ->
                         val unitId = userProfile.unitData.unitId
                         val locked = lockedChara.contains(unitId)
                         val selected = selectedChara.contains(unitId)

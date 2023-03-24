@@ -52,7 +52,7 @@ fun UserImages(
                     columns = GridCells.Fixed(4),
                     contentPadding = PaddingValues(4.dp)
                 ) {
-                    items(listState.derivedProfiles, { it.unitData.unitId }) { userProfile ->
+                    items(listState.derivedProfiles) { userProfile ->
                         SizedBox(1f, true) {
                             PlaceImage(
                                 url = UrlUtil.getUnitIconUrl(userProfile.unitData.unitId, 3),

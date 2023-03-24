@@ -94,7 +94,7 @@ fun QuestMap(
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
                 LazyColumn(contentPadding = PaddingValues(4.dp)) {
-                    items(questDataList ?: emptyList(), { it.questId }) { questData ->
+                    items(questDataList ?: emptyList()) { questData ->
                         QuestDropItem(
                             questData = questData,
                             selectedList = highlightList,
