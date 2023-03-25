@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -51,7 +52,10 @@ import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.ImmersiveBackButton
 import com.kasuminotes.ui.components.Severity
 import com.kasuminotes.ui.components.StillBox
+import com.kasuminotes.ui.components.VerticalGrid
+import com.kasuminotes.ui.components.VerticalGridCells
 import com.kasuminotes.ui.theme.ImmersiveSysUi
+import com.kasuminotes.ui.theme.ShadowColor
 import com.kasuminotes.ui.theme.md_theme_light_onSurface
 import com.kasuminotes.ui.theme.md_theme_light_primary
 
@@ -85,53 +89,68 @@ fun CharaBackLayer(
     onSave: () -> Unit
 ) {
     Column(Modifier.verticalScroll(rememberScrollState())) {
-        StillBox(
-            unitData.unitId,
-            userData.rarity,
-            ImageSize.StillModifier
+        Box(
+            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.scrim),
+            contentAlignment = Alignment.Center
         ) {
-            ImmersiveBackButton(
-                onBack,
-                Modifier.padding(top = statusBarHeight)
-            )
+            StillBox(
+                unitData.unitId,
+                userData.rarity,
+                Modifier.sizeIn(maxWidth = 400.dp).then(ImageSize.StillModifier)
+            ) {
+                ImmersiveBackButton(
+                    onBack,
+                    Modifier.padding(top = statusBarHeight)
+                )
 
-            CharaName(
-                unitData.unitName,
-                Modifier
-                    .align(Alignment.BottomStart)
-                    .fillMaxWidth()
-                    .height(36.dp)
-            )
+                CharaName(
+                    unitData.unitName,
+                    Modifier
+                        .align(Alignment.BottomStart)
+                        .fillMaxWidth()
+                        .height(36.dp)
+                )
+            }
         }
 
-        CharaUserData(
-            userData,
-            originUserData,
-            maxUserData,
-            unitData.maxRarity,
-            unitData.hasUnique,
-            unitPromotion,
-            uniqueData,
-            exEquipSlots,
-            onEquipClick,
-            onUniqueClick,
-            onExEquipSlotClick,
-            onEquipChange,
-            onUniqueChange,
-            onCharaLevelChange,
-            onRarityChange,
-            onUniqueLevelChange,
-            onLoveLevelChange,
-            onPromotionLevelChange,
-            onSkillLevelChange,
-            onLvLimitBreakChange,
-        )
-
-        Container(margin = 8.dp) {
-            PropertyTable(
-                property = property,
-                originProperty = originProperty,
-            )
+        VerticalGrid(
+            size = 2,
+            cells = VerticalGridCells.Adaptive(400.dp)
+        ) { index ->
+            when (index) {
+                0 -> {
+                    CharaUserData(
+                        userData,
+                        originUserData,
+                        maxUserData,
+                        unitData.maxRarity,
+                        unitData.hasUnique,
+                        unitPromotion,
+                        uniqueData,
+                        exEquipSlots,
+                        onEquipClick,
+                        onUniqueClick,
+                        onExEquipSlotClick,
+                        onEquipChange,
+                        onUniqueChange,
+                        onCharaLevelChange,
+                        onRarityChange,
+                        onUniqueLevelChange,
+                        onLoveLevelChange,
+                        onPromotionLevelChange,
+                        onSkillLevelChange,
+                        onLvLimitBreakChange,
+                    )
+                }
+                1 -> {
+                    Container(margin = 8.dp) {
+                        PropertyTable(
+                            property = property,
+                            originProperty = originProperty,
+                        )
+                    }
+                }
+            }
         }
 
         AlertMessage(userData.userId, saveVisible, onCancel, onSave)

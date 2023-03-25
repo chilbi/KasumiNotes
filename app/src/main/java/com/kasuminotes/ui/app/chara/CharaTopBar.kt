@@ -30,9 +30,7 @@ fun CharaTopBar(
     StillBox(
         unitId,
         rarity,
-        Modifier
-            .fillMaxWidth()
-            .height(200.dp)
+        Modifier.fillMaxWidth().height(200.dp)
     ) {
         Box(
             Modifier
