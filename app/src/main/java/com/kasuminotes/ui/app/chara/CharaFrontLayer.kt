@@ -159,7 +159,10 @@ private fun FrontLayerWrapper(
                 .offset((-70.181816).dp)
         ) {
             Box(Modifier.size(56.dp).clip(CircleShape).clickable(onClick = onClick)) {
-                PlaceImage(UrlUtil.getUnitIconUrl(unitId, rarity))
+                PlaceImage(
+                    url = UrlUtil.getUnitIconUrl(unitId, rarity),
+                    shape = CircleShape
+                )
             }
         }
     }
