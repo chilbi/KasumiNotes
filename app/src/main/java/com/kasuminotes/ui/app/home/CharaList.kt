@@ -6,8 +6,8 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
@@ -40,8 +40,9 @@ fun CharaList(
     )
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(charaImageState.cellCount),
-        contentPadding = PaddingValues(4.dp)
+        columns = charaImageState.gridCells,
+        contentPadding = PaddingValues(4.dp),
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
         items(derivedProfiles) { userProfile ->
             CharaItem(

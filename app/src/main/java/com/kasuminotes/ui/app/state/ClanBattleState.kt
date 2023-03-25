@@ -49,7 +49,10 @@ class ClanBattleState(
     fun initPeriodList() {
         scope.launch(defaultDispatcher) {
             val db = appRepository.getDatabase()
-            clanBattlePeriodList = db.getClanBattlePeriodList()
+            val list = db.getClanBattlePeriodList()
+            clanBattlePeriodList = list.filter { clanBattlePeriod ->
+                clanBattlePeriod.bossUnitIdList.isNotEmpty()
+            }
         }
     }
 

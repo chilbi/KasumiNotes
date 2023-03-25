@@ -1,6 +1,7 @@
 package com.kasuminotes.ui.app.state
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.material.icons.filled.ViewComfy
@@ -19,7 +20,7 @@ class CharaImageState(
 ) {
     val getImageUrl: (Int, Int) -> String
     val ratio: Float
-    val cellCount: Int
+    val gridCells: GridCells
     val vector: ImageVector
     val isIcon: Boolean
     val isPlate: Boolean
@@ -43,7 +44,7 @@ class CharaImageState(
             ImageVariant.Icon -> {
                 getImageUrl = UrlUtil::getUnitIconUrl
                 ratio = 1f
-                cellCount = 4
+                gridCells = iconGridCells
                 vector = Icons.Filled.ViewComfy
                 isIcon = true
                 isPlate = false
@@ -58,7 +59,7 @@ class CharaImageState(
             ImageVariant.Plate -> {
                 getImageUrl = UrlUtil::getUnitPlateUrl
                 ratio = 0.5f
-                cellCount = 2
+                gridCells = GridCells.Adaptive(iconSize * 2)
                 vector = Icons.Filled.ViewAgenda
                 isIcon = false
                 isPlate = true
@@ -73,7 +74,7 @@ class CharaImageState(
             ImageVariant.Still -> {
                 getImageUrl = UrlUtil::getUnitStillUrl
                 ratio = 0.5625f
-                cellCount = 1
+                gridCells = GridCells.Adaptive(iconSize * 4)
                 vector = Icons.Filled.ViewDay
                 isIcon = false
                 isPlate = false
@@ -86,5 +87,10 @@ class CharaImageState(
                 uniqueId = R.drawable.unique_large
             }
         }
+    }
+
+    companion object {
+        val iconSize = 84.dp
+        val iconGridCells = GridCells.Adaptive(iconSize)
     }
 }

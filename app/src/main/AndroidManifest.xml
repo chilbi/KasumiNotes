@@ -13,14 +13,13 @@
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/Theme.KasumiNotes">
 
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.SplashTheme"
-            android:screenOrientation="portrait"
             tools:ignore="IntentFilterExportedReceiver,LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +30,6 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.KasumiNotes"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
     </application>

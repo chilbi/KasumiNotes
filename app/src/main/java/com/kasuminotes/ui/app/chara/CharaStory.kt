@@ -27,6 +27,8 @@ import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.TabsPanel
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.UnderlineStyle
+import com.kasuminotes.ui.components.VerticalGrid
+import com.kasuminotes.ui.components.VerticalGridCells
 
 @Composable
 fun CharaStory(
@@ -94,15 +96,13 @@ private fun StoryProperties(
     unlockCount: Int,
     state: ScrollState
 ) {
-    if (status == null) return
-
-    Column(
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(state)
-            .padding(4.dp)
-    ) {
-        status.forEachIndexed { index, property ->
+    if (status != null) {
+        VerticalGrid(
+            size = status.size,
+            cells = VerticalGridCells.Adaptive(350.dp),
+            modifier = Modifier.verticalScroll(state).padding(4.dp)
+        ) { index ->
+            val property = status[index]
             StoryProperty(
                 label = stringResource(R.string.story_d, index + 1 + diffCount),
                 unlock = index < unlockCount,

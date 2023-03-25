@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.selection.selectable
@@ -167,8 +166,9 @@ fun CharaEditor(
 
             Box(Modifier.padding(contentPadding)) {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(4),
-                    contentPadding = PaddingValues(4.dp)
+                    columns = charaImageState.gridCells,
+                    contentPadding = PaddingValues(4.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     items(profiles) { userProfile ->
                         val unitId = userProfile.unitData.unitId
@@ -223,7 +223,7 @@ private fun SelectableCharaItem(
 ) {
     Box(Modifier.imageSize(1f)) {
         if (locked) {
-            SizedBox(charaImageState.ratio, charaImageState.isIcon) {
+            SizedBox(charaImageState.ratio) {
                 PlaceImage(
                     url = charaImageState.getImageUrl(unitId, 3),
                     modifier = Modifier.clickable { onSelect(unitId) }

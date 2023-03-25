@@ -44,10 +44,7 @@ fun CharaItem(
     charaImageState: CharaImageState,
     onCharaClick: (UserProfile) -> Unit
 ) {
-    SizedBox(
-        charaImageState.ratio,
-        charaImageState.isIcon
-    ) {
+    SizedBox(charaImageState.ratio) {
         val padding = 2.dp
         val maxRarity = userProfile.unitData.maxRarity
         val rarity = userProfile.userData.rarity

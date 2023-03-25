@@ -3,13 +3,12 @@ package com.kasuminotes.ui.app.chara
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,22 +33,19 @@ import com.kasuminotes.utils.UrlUtil
 fun CharaEquips(
     uniqueData: UniqueData?,
     promotions: List<UnitPromotion>,
-    state: LazyListState,
+    state: LazyGridState,
     onEquipClick: (EquipData) -> Unit,
     onUniqueClick: (UniqueData) -> Unit,
 ) {
     val maxPromotionLevel = promotions.size
 
-    LazyColumn(
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(336.dp),
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = 4.dp, end = 4.dp, bottom = 4.dp),
-        state = state
+        state = state,
+        contentPadding = PaddingValues(4.dp),
     ) {
-        item {
-            Spacer(Modifier.height(4.dp))
-        }
-        
-        item {
+        item("unique") {
             UniqueEquipItem(uniqueData, onUniqueClick)
         }
         
@@ -57,11 +53,7 @@ fun CharaEquips(
             val unitPromotion = promotions[index]
             val promotionLevel = maxPromotionLevel - index
 
-            EquipItem(
-                unitPromotion,
-                promotionLevel,
-                onEquipClick = onEquipClick
-            )
+            EquipItem(unitPromotion, promotionLevel, onEquipClick)
         }
     }
 }
@@ -70,8 +62,8 @@ fun CharaEquips(
 private fun EquipItem(
     unitPromotion: UnitPromotion,
     promotionLevel: Int,
-    color: Color = RaritiesColors.getRarityColors(promotionLevel.rankRarity).middle,
-    onEquipClick: (EquipData) -> Unit
+    onEquipClick: (EquipData) -> Unit,
+    color: Color = RaritiesColors.getRarityColors(promotionLevel.rankRarity).middle
 ) {
     LabelContainer(
         label = stringResource(R.string.rank) + " $promotionLevel",
@@ -84,10 +76,7 @@ private fun EquipItem(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             unitPromotion.equipSlots.forEach { equipData ->
-                EquipIcon(
-                    equipData,
-                    onEquipClick = onEquipClick
-                )
+                EquipIcon(equipData, onEquipClick)
             }
         }
     }

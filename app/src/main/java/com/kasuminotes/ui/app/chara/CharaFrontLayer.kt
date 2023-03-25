@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -69,7 +69,7 @@ fun CharaFrontLayer(
         var storySelectedTabIndex by rememberSaveable { mutableStateOf(0) }
         val profileScrollState = rememberScrollState()
         val storyScrollState = rememberScrollState()
-        val equipmentScrollState = rememberLazyListState()
+        val equipmentGridState = rememberLazyGridState()
         val skillScrollState = rememberScrollState()
 
         val style = MaterialTheme.typography.labelMedium
@@ -117,7 +117,7 @@ fun CharaFrontLayer(
                         CharaEquips(
                             uniqueData,
                             promotions,
-                            state = equipmentScrollState,
+                            state = equipmentGridState,
                             onEquipClick = onEquipClick,
                             onUniqueClick = onUniqueClick
                         )
@@ -158,7 +158,11 @@ private fun FrontLayerWrapper(
                 .align(Alignment.TopEnd)
                 .offset((-70.181816).dp)
         ) {
-            Box(Modifier.size(56.dp).clip(CircleShape).clickable(onClick = onClick)) {
+            Box(
+                Modifier
+                    .size(56.dp)
+                    .clip(CircleShape)
+                    .clickable(onClick = onClick)) {
                 PlaceImage(
                     url = UrlUtil.getUnitIconUrl(unitId, rarity),
                     shape = CircleShape

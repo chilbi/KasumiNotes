@@ -32,6 +32,8 @@ import com.kasuminotes.data.Property
 import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.Infobar
+import com.kasuminotes.ui.components.VerticalGrid
+import com.kasuminotes.ui.components.VerticalGridCells
 import com.kasuminotes.ui.theme.phaseColors
 import com.kasuminotes.utils.UrlUtil
 
@@ -40,22 +42,23 @@ fun EnemyList(
     mapData: ClanBattleMapData,
     onEnemyClick: (EnemyData) -> Unit
 ) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(4.dp)
-    ) {
+    Column(Modifier.fillMaxSize().padding(4.dp)) {
         ListLabel(
             from = mapData.from,
             to = mapData.lapNumTo,
             color = phaseColors[mapData.phase - 1]
         )
 
-        mapData.enemyDataList.forEachIndexed { i, enemyData ->
+        val list = mapData.enemyDataList
+        VerticalGrid(
+            size = list.size,
+            cells = VerticalGridCells.Adaptive(350.dp),
+            modifier = Modifier.verticalScroll(rememberScrollState())
+        ) { index ->
+            val enemyData = list[index]
             EnemyListItem(
                 enemyData = enemyData,
-                scoreCoefficient = mapData.scoreCoefficientList[i],
+                scoreCoefficient = mapData.scoreCoefficientList[index],
                 onEnemyClick = onEnemyClick
             )
         }

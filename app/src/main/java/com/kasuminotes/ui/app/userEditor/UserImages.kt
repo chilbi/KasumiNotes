@@ -1,10 +1,10 @@
 package com.kasuminotes.ui.app.userEditor
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.UserProfile
+import com.kasuminotes.ui.app.state.CharaImageState
 import com.kasuminotes.ui.app.state.UserState
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
@@ -49,11 +50,12 @@ fun UserImages(
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(4),
-                    contentPadding = PaddingValues(4.dp)
+                    columns = CharaImageState.iconGridCells,
+                    contentPadding = PaddingValues(4.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     items(listState.derivedProfiles) { userProfile ->
-                        SizedBox(1f, true) {
+                        SizedBox(1f) {
                             PlaceImage(
                                 url = UrlUtil.getUnitIconUrl(userProfile.unitData.unitId, 3),
                                 shape = CircleShape,
