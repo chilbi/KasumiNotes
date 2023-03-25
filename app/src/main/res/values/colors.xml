@@ -10,5 +10,5 @@
     <color name="black">#FF201A19</color>
     <color name="white">#FFEDE0DD</color>
     <color name="immersive_sys_ui">#33000000</color>
-    <color name="ic_launcher_background">#FFF5DDD8</color>
+    <color name="ic_launcher_background">#00000000</color>
 </resources>
