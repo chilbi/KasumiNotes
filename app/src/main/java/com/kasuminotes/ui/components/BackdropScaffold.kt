@@ -488,7 +488,7 @@ object BackdropScaffoldDefaults {
     val FrontLayerElevation = 1.dp
 
     val frontLayerScrimColor: Color
-        @Composable get() = MaterialTheme.colorScheme.scrim
+        @Composable get() = MaterialTheme.colorScheme.scrim.copy(0.15f)
 }
 
 private val AnimationSlideOffset = 20.dp

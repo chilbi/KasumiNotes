@@ -27,30 +27,28 @@ fun CharaTopBar(
     statusBarHeight: Dp,
     onBack: () -> Unit
 ) {
-    Box(Modifier.fillMaxSize()) {
-        StillBox(
-            unitId,
-            rarity,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(160.dp)
+    StillBox(
+        unitId,
+        rarity,
+        Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+    ) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .padding(top = statusBarHeight)
+                .background(ImmersiveSysUi)
         ) {
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .padding(top = statusBarHeight)
-                    .background(ImmersiveSysUi)
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    ImmersiveBackButton(onBack)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                ImmersiveBackButton(onBack)
 
-                    Text(
-                        text = unitName,
-                        modifier = Modifier.padding(start = 8.dp),
-                        color = Color.White,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
+                Text(
+                    text = unitName,
+                    modifier = Modifier.padding(start = 8.dp),
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleLarge
+                )
             }
         }
     }

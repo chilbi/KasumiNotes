@@ -88,7 +88,7 @@ dependencies {
     // core-ktx
     implementation "androidx.core:core-ktx:1.9.0"
     // activity-compose
-    implementation 'androidx.activity:activity-compose:1.7.0-rc01'
+    implementation 'androidx.activity:activity-compose:1.7.0'
     // appcompat
     implementation 'androidx.appcompat:appcompat:1.6.1'
     // palette
@@ -116,7 +116,7 @@ dependencies {
     // navigation-compose
     implementation 'androidx.navigation:navigation-compose:2.5.3'
     // navigation-animation
-    implementation 'com.google.accompanist:accompanist-navigation-animation:0.28.0'
+    implementation 'com.google.accompanist:accompanist-navigation-animation:0.30.0'
     // coil-compose
     implementation 'io.coil-kt:coil-compose:2.2.2'
 

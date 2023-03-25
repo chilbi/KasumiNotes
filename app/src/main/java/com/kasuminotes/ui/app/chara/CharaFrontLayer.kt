@@ -2,6 +2,7 @@ package com.kasuminotes.ui.app.chara
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -57,27 +58,37 @@ fun CharaFrontLayer(
     onCharaClick: (UserProfile) -> Unit,
     onToggle: () -> Unit
 ) {
-    FrontLayerWrapper(
-        unitId = unitData.unitId,
-        rarity = userData.rarity,
-        onClick = onToggle
-    ) {
-        val titles = remember {
-            listOf(R.string.profile, R.string.story, R.string.equipment, R.string.skill)
-        }
+    val titles = remember { listOf(R.string.profile, R.string.story, R.string.equipment, R.string.skill) }
+    val titlesSize = titles.size
+    val style = MaterialTheme.typography.labelMedium
 
+    FrontLayerWrapper(
+        titlesSize,
+        unitData.unitId,
+        userData.rarity,
+        onToggle
+    ) {
         var storySelectedTabIndex by rememberSaveable { mutableStateOf(0) }
         val profileScrollState = rememberScrollState()
         val storyScrollState = rememberScrollState()
         val equipmentGridState = rememberLazyGridState()
         val skillScrollState = rememberScrollState()
-
-        val style = MaterialTheme.typography.labelMedium
+        val onTabIndexSelected = remember<(Int) -> Unit>(storySelectedTabIndex, sharedProfiles) {
+            { index ->
+                if (storySelectedTabIndex != index) {
+                    storySelectedTabIndex = index
+                } else if (index > 0) {
+                    storySelectedTabIndex = 0
+                    onCharaClick(sharedProfiles[index - 1])
+                }
+            }
+        }
 
         TabsPanel(
-            size = titles.size,
+            size = titlesSize,
             scrollable = false,
             initIndex = 3,
+            modifier = Modifier.height(BackdropScaffoldDefaults.HeaderHeight),
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.primary,
             tabContentFor = { index ->
@@ -91,46 +102,40 @@ fun CharaFrontLayer(
             },
             panelContentFor = { index ->
                 when (index) {
-                    0 ->
-                        CharaProfile(
-                            unitData,
-                            profileScrollState
-                        )
-                    1 ->
+                    0 -> {
+                        CharaProfile(unitData, profileScrollState)
+                    }
+                    1 -> {
                         CharaStory(
                             userData,
                             unitData,
                             charaStoryStatus,
                             sharedProfiles,
-                            selectedTabIndex = storySelectedTabIndex,
-                            onTabIndexSelected = {
-                                if (storySelectedTabIndex != it) {
-                                    storySelectedTabIndex = it
-                                } else if (it > 0) {
-                                    storySelectedTabIndex = 0
-                                    onCharaClick(sharedProfiles[it - 1])
-                                }
-                            },
-                            state = storyScrollState
+                            storySelectedTabIndex,
+                            onTabIndexSelected,
+                            storyScrollState
                         )
-                    2 ->
+                    }
+                    2 -> {
                         CharaEquips(
                             uniqueData,
                             promotions,
-                            state = equipmentGridState,
-                            onEquipClick = onEquipClick,
-                            onUniqueClick = onUniqueClick
+                            equipmentGridState,
+                            onEquipClick,
+                            onUniqueClick
                         )
-                    3 ->
+                    }
+                    3 -> {
                         CharaSkill(
                             userData,
                             unitData,
                             unitAttackPatternList,
                             unitSkillData,
                             property,
-                            state = skillScrollState,
-                            onSummonsClick = onSummonsClick
+                            skillScrollState,
+                            onSummonsClick
                         )
+                    }
                 }
             }
         )
@@ -139,12 +144,13 @@ fun CharaFrontLayer(
 
 @Composable
 private fun FrontLayerWrapper(
+    titlesSize: Int,
     unitId: Int,
     rarity: Int,
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    Box {
+    BoxWithConstraints {
         Surface(
             modifier = Modifier.padding(top = 28.dp),
             shape = BackdropScaffoldDefaults.frontLayerShape,
@@ -153,21 +159,18 @@ private fun FrontLayerWrapper(
             content = content
         )
 
+        val offsetX = remember(maxWidth) { maxWidth / titlesSize * 3 - 28.dp }
         Box(
             Modifier
-                .align(Alignment.TopEnd)
-                .offset((-70.181816).dp)
+                .offset(offsetX)
+                .size(56.dp)
+                .clip(CircleShape)
+                .clickable(onClick = onClick)
         ) {
-            Box(
-                Modifier
-                    .size(56.dp)
-                    .clip(CircleShape)
-                    .clickable(onClick = onClick)) {
-                PlaceImage(
-                    url = UrlUtil.getUnitIconUrl(unitId, rarity),
-                    shape = CircleShape
-                )
-            }
+            PlaceImage(
+                url = UrlUtil.getUnitIconUrl(unitId, rarity),
+                shape = CircleShape
+            )
         }
     }
 }
