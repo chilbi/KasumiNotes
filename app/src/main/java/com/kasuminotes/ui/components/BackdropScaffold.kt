@@ -246,7 +246,8 @@ fun BackdropScaffold(
     frontLayerBackgroundColor: Color = MaterialTheme.colorScheme.surface,
     frontLayerContentColor: Color = contentColorFor(frontLayerBackgroundColor),
     frontLayerScrimColor: Color = BackdropScaffoldDefaults.frontLayerScrimColor,
-    snackbarHost: @Composable (SnackbarHostState) -> Unit = { SnackbarHost(it) }
+    snackbarHost: @Composable (SnackbarHostState) -> Unit = { SnackbarHost(it) },
+    calcBackLayerConstraints: ((Constraints) -> Constraints)? = null
 ) {
     val peekHeightPx = with(LocalDensity.current) { peekHeight.toPx() }
     val headerHeightPx = with(LocalDensity.current) { headerHeight.toPx() }
@@ -261,7 +262,7 @@ fun BackdropScaffold(
             BackLayerTransition(scaffoldState.targetValue, appBar, backLayerContent)
         }
     }
-    val calculateBackLayerConstraints: (Constraints) -> Constraints = {
+    val calculateBackLayerConstraints: (Constraints) -> Constraints = calcBackLayerConstraints ?: {
         it.copy(minWidth = 0, minHeight = 0).offset(vertical = -headerHeightPx.roundToInt())
     }
 

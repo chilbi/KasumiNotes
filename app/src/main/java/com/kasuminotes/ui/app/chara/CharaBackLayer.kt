@@ -1,6 +1,7 @@
 package com.kasuminotes.ui.app.chara
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,9 +33,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.transform.BlurTransformation
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.MaxUserData
@@ -55,9 +62,9 @@ import com.kasuminotes.ui.components.StillBox
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
 import com.kasuminotes.ui.theme.ImmersiveSysUi
-import com.kasuminotes.ui.theme.ShadowColor
 import com.kasuminotes.ui.theme.md_theme_light_onSurface
 import com.kasuminotes.ui.theme.md_theme_light_primary
+import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun CharaBackLayer(
@@ -72,6 +79,7 @@ fun CharaBackLayer(
     originUserData: UserData,
     saveVisible: Boolean,
     statusBarHeight: Dp,
+    headerHeight: Dp,
     onBack: () -> Unit,
     onEquipClick: (equipData: EquipData, slot: Int) -> Unit,
     onUniqueClick: (UniqueData) -> Unit,
@@ -89,29 +97,13 @@ fun CharaBackLayer(
     onSave: () -> Unit
 ) {
     Column(Modifier.verticalScroll(rememberScrollState())) {
-        Box(
-            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.scrim),
-            contentAlignment = Alignment.Center
-        ) {
-            StillBox(
-                unitData.unitId,
-                userData.rarity,
-                Modifier.sizeIn(maxWidth = 400.dp).then(ImageSize.StillModifier)
-            ) {
-                ImmersiveBackButton(
-                    onBack,
-                    Modifier.padding(top = statusBarHeight)
-                )
-
-                CharaName(
-                    unitData.unitName,
-                    Modifier
-                        .align(Alignment.BottomStart)
-                        .fillMaxWidth()
-                        .height(36.dp)
-                )
-            }
-        }
+        CharaHeader(
+            unitData.unitId,
+            userData.rarity,
+            unitData.unitName,
+            statusBarHeight,
+            onBack
+        )
 
         VerticalGrid(
             size = 2,
@@ -154,6 +146,58 @@ fun CharaBackLayer(
         }
 
         AlertMessage(userData.userId, saveVisible, onCancel, onSave)
+
+        Spacer(Modifier.height(headerHeight))
+    }
+}
+
+@Composable
+private fun CharaHeader(
+    unitId: Int,
+    rarity: Int,
+    unitName: String,
+    statusBarHeight: Dp,
+    onBack: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.scrim),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = rememberAsyncImagePainter(
+                ImageRequest.Builder(LocalContext.current)
+                    .data(UrlUtil.getUnitStillUrl(unitId, rarity))
+                    .transformations(BlurTransformation(LocalContext.current, 20f, 1.5f))
+                    .build()
+            ),
+            contentDescription = null,
+            modifier = Modifier.matchParentSize(),
+            contentScale = ContentScale.FillWidth
+        )
+
+        StillBox(
+            unitId,
+            rarity,
+            Modifier
+                .zIndex(2f)
+                .sizeIn(maxWidth = 420.dp)
+                .then(ImageSize.StillModifier)
+        ) {
+            ImmersiveBackButton(
+                onBack,
+                Modifier.padding(top = statusBarHeight)
+            )
+
+            CharaName(
+                unitName,
+                Modifier
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .height(36.dp)
+            )
+        }
     }
 }
 

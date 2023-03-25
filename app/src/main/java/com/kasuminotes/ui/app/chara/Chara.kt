@@ -77,6 +77,7 @@ fun Chara(
                 userProfile.userData,
                 charaState.saveVisible,
                 statusBarHeight,
+                headerHeight,
                 onBack = { if (scaffoldState.isRevealed) onBack() },
                 onEquipClick = onEquipClick,
                 onUniqueClick = onUniqueClick,
@@ -148,6 +149,7 @@ fun Chara(
         frontLayerElevation = 0.dp,
         frontLayerBackgroundColor = Color.Transparent,
         frontLayerContentColor = MaterialTheme.colorScheme.onSurface,
-        frontLayerScrimColor = Color.Transparent
+        frontLayerScrimColor = Color.Transparent,
+        calcBackLayerConstraints = { it.copy(minWidth = 0, minHeight = 0) }
     )
 }
