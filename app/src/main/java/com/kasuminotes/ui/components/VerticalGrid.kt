@@ -52,17 +52,25 @@ private fun FixedGrid(
 ) {
     val rows = (size + cols - 1) / cols
     Column(modifier) {
-        repeat(rows) { row ->
-            Row {
-                repeat(cols) { col ->
-                    val index = row * cols + col
-                    if (index < size) {
-                        Box(Modifier.weight(1f)) {
-                            contentFor(index)
+        if (rows > 0) {
+            repeat(rows) { row ->
+                Row {
+                    repeat(cols) { col ->
+                        val index = row * cols + col
+                        if (index < size) {
+                            Box(Modifier.weight(1f)) {
+                                contentFor(index)
+                            }
+                        } else {
+                            Spacer(Modifier.weight(1f))
                         }
-                    } else {
-                        Spacer(Modifier.weight(1f))
                     }
+                }
+            }
+        } else {
+            repeat(size) { index ->
+                Box {
+                    contentFor(index)
                 }
             }
         }

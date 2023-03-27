@@ -23,61 +23,76 @@ import com.kasuminotes.data.UnitData
 import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.components.MultiLineText
+import com.kasuminotes.ui.components.VerticalGrid
+import com.kasuminotes.ui.components.VerticalGridCells
 
 @Composable
 fun CharaProfile(
     unitData: UnitData,
     state: ScrollState
 ) {
-    Column(
-        Modifier
+    VerticalGrid(
+        size = 2,
+        cells = VerticalGridCells.Adaptive(350.dp),
+        modifier = Modifier
             .fillMaxSize()
             .verticalScroll(state)
             .padding(4.dp)
-    ) {
-        Container {
-            InfobarFullWidth(R.string.actual_name, unitData.actualName)
+    ) { index ->
+        when (index) {
+            0 -> {
+                Container {
+                    InfobarFullWidth(R.string.actual_name, unitData.actualName)
 
-            InfobarFullWidth(R.string.kana, unitData.kana)
+                    InfobarFullWidth(R.string.kana, unitData.kana)
 
-            InfobarFullWidth(R.string.voice, unitData.voice)
+                    InfobarFullWidth(R.string.voice, unitData.voice)
 
-            InfobarFullWidth(R.string.guild, unitData.guild)
+                    InfobarFullWidth(R.string.guild, unitData.guild)
 
-            InfobarFullWidth(R.string.favorite, unitData.favorite)
+                    InfobarFullWidth(R.string.favorite, unitData.favorite)
 
-            InfobarFullWidth(R.string.race, unitData.race)
+                    InfobarFullWidth(R.string.race, unitData.race)
 
-            Row {
-                InfobarHalfWidth(R.string.height, unitData.height)
+                    Row {
+                        InfobarHalfWidth(R.string.height, unitData.height)
 
-                InfobarHalfWidth(R.string.weight, unitData.weight)
+                        InfobarHalfWidth(R.string.weight, unitData.weight)
+                    }
+
+                    Row {
+                        InfobarHalfWidth(R.string.age, unitData.age)
+
+                        InfobarHalfWidth(
+                            R.string.birthday,
+                            stringResource(
+                                R.string.birth_month_day,
+                                unitData.birthMonth,
+                                unitData.birthDay
+                            )
+                        )
+                    }
+
+                    Row {
+                        InfobarHalfWidth(R.string.blood_type, unitData.bloodType)
+
+                        InfobarHalfWidth(R.string.chara_id, (unitData.unitId / 100).toString())
+                    }
+                }
             }
+            1 -> {
+                Column {
+                    MultiLineInfo(R.string.comment, unitData.comment)
 
-            Row {
-                InfobarHalfWidth(R.string.age, unitData.age)
+                    if (unitData.catchCopy.isNotEmpty()) {
+                        MultiLineInfo(R.string.catch_copy, unitData.catchCopy)
+                    }
 
-                InfobarHalfWidth(
-                    R.string.birthday,
-                    stringResource(R.string.birth_month_day, unitData.birthMonth, unitData.birthDay)
-                )
+                    if (unitData.selfText.isNotEmpty()) {
+                        MultiLineInfo(R.string.self_text, unitData.selfText)
+                    }
+                }
             }
-
-            Row {
-                InfobarHalfWidth(R.string.blood_type, unitData.bloodType)
-
-                InfobarHalfWidth(R.string.chara_id, (unitData.unitId / 100).toString())
-            }
-        }
-
-        MultiLineInfo(R.string.comment, unitData.comment)
-
-        if (unitData.catchCopy.isNotEmpty()) {
-            MultiLineInfo(R.string.catch_copy, unitData.catchCopy)
-        }
-
-        if (unitData.selfText.isNotEmpty()) {
-            MultiLineInfo(R.string.self_text, unitData.selfText)
         }
     }
 }

@@ -100,7 +100,7 @@ private fun StoryProperties(
         VerticalGrid(
             size = status.size,
             cells = VerticalGridCells.Adaptive(350.dp),
-            modifier = Modifier.verticalScroll(state).padding(4.dp)
+            modifier = Modifier.fillMaxSize().verticalScroll(state).padding(4.dp)
         ) { index ->
             val property = status[index]
             StoryProperty(
