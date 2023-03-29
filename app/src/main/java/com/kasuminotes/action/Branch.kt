@@ -13,9 +13,12 @@ fun SkillAction.getBranch(): Array<Pair<Int, D>> {
     }
 }
 
-fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
+private val SkillAction.finalDepend: SkillAction?
+    get() = if (depend == null) this else if (depend!!.actionType == 7) null else depend!!.finalDepend
+
+private fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
     val branch = mutableListOf<Pair<Int, D>>()
-    val target = getTarget(depend)
+    val target = finalDepend?.copy(actionType = 23)?.getTarget(null) ?: getTarget(depend)
 
     when (actionDetail1) {
         // ホマレ
@@ -159,7 +162,7 @@ fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
     return branch.toTypedArray()
 }
 
-fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
+private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
     val branch = mutableListOf<Pair<Int, D>>()
 
     when (actionDetail1) {
@@ -306,7 +309,7 @@ fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
     return branch.toTypedArray()
 }
 
-fun SkillAction.getStrikedBranch(): Array<Pair<Int, D>> {
+private fun SkillAction.getStrikedBranch(): Array<Pair<Int, D>> {
     return arrayOf(
         actionDetail2 to D.Format(
             R.string.action_striked_branch_time1,
@@ -315,7 +318,7 @@ fun SkillAction.getStrikedBranch(): Array<Pair<Int, D>> {
     )
 }
 
-fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
+private fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
     val branch = mutableListOf<Pair<Int, D>>()
     val content = getSkillLabel(actionDetail1)
     setBranch(

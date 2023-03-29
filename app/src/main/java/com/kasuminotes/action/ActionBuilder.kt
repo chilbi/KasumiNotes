@@ -231,7 +231,7 @@ private class ModifyDescription(
         val modifyIndex = actions.indexOfFirst { it.actionId == modifyActionId }
         if (!processedModifyIndexList.contains(modifyIndex)) {
             val modifyAction = actions[modifyIndex]
-            if (modifyAction.actionType in arrayOf(23, 28)) {
+            if (modifyAction.isBranch()) {
                 val andBranch = modifyAction.getBranch()
                 andBranch.forEach { andPair ->
                     collectBranch(andPair.first, andPair.second, content)

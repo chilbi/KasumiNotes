@@ -41,6 +41,9 @@ private val allMostHighTypes = hpRatioHighTypes
     .plus(magicStrHighTypes)
     .plus(atkOrMagicStrHighTypes)
 
+/** if (actionType == 23 || actionType == 28) any_target else target */
+fun SkillAction.isBranch() = actionType in arrayOf(23, 28)
+
 fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
     if (depend != null) {
         return if (depend.actionType == 1 || depend.actionId == actionId) {
@@ -57,12 +60,18 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                     depend.getTargetFocus(this).append(getTarget(null, true))
                 }
             }
-        } else if ((depend.actionType in arrayOf(23, 28)) && depend.targetCount > 1) {
-            getDependMultiTarget(D.Format(R.string.target_eligible))
+        } else if (depend.isBranch()) {
+            if (depend.targetCount > 1) {
+                getDependMultiTarget(D.Format(R.string.target_eligible))
+            } else if (depend.depend != null) {
+                getDependMultiTarget(depend.getTarget(depend.depend!!.copy(actionType = 23), focused))
+            } else {
+                getDependMultiTarget(depend.getTarget(null, focused))
+            }
         } else if (depend.depend != null) {
             depend.getTarget(depend.depend, focused)
         } else {
-            getDependMultiTarget(depend.getTarget(null))
+            getDependMultiTarget(depend.getTarget(null, focused))
         }
     }
 
@@ -413,7 +422,7 @@ private fun SkillAction.getNumber(): D {
  * の中の任意{0}
  */
 private fun SkillAction.getAnyManyTarget(manyTarget: D): D {
-    return if (actionType in arrayOf(23, 28)) {
+    return if (isBranch()) {
         D.Join(
             arrayOf(
                 manyTarget,
@@ -426,7 +435,7 @@ private fun SkillAction.getAnyManyTarget(manyTarget: D): D {
 }
 
 /**
- * if (targetType == 24) multi_target else target
+ * if (targetType == 42) multi_target else target
  *
  * {0}的所有多目标部位
  *
