@@ -239,7 +239,7 @@
     <string name="action_change_mark_target1_state2_add3_max4_time5">%1$sに【%2$s】を%3$sつ追加する、最大%4$sまで追加される、効果時間%5$s秒。</string>
     <string name="action_change_mark_target1_state2_consume3">%1$sの【%2$s】を%3$sつ消費する。</string>
     <string name="action_change_mark_consume_target1_state2">%1$sの【%2$s】を消費する。</string>
-    <string name="action_knight_guard_target1_formula2_time3">%1$sに【騎士の加護】を付与する。ＨＰが0になると、倒れずに【騎士の加護】を消費してＨＰを%2$s回復する。効果時間%3$s秒。</string>
+    <string name="action_knight_guard_target1_formula2_time3">%1$sに【騎士の加護】を付与する。ＨＰが0になると、倒れずに【騎士の加護】を消費してＨＰを%2$s回復する、効果時間%3$s秒。</string>
     <string name="action_shield_counter_target1_content2_add3_max4_consume5_formula6">%1$sに【%2$s】を%3$sつ追加する、最大%4$sまで追加される。【%2$s】は１回ダメージを無効化する毎に%5$sつ消耗され、同時に攻撃してきた敵に%6$sダメージを与える。</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$sに【%2$s】が%3$sつ追加されるようになる、最大%4$sまで追加される、効果時間%5$s秒。</string>
     <string name="action_speed_overlay_content1_target2_formula3_time4">%1$s、%2$sの行動速度を%3$sアップさせる、効果時間%4$s秒。（このスキルの効果は他の行動速度変化スキルと重複する）</string>
