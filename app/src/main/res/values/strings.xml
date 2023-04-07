@@ -41,6 +41,7 @@
 
     <string name="level">LEVEL</string>
     <string name="rank">RANK</string>
+    <string name="bonus">奖励</string>
     <string name="slot">Slot</string>
     <string name="map">地图</string>
     <string name="chara">角色</string>

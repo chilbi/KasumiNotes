@@ -69,8 +69,8 @@ fun BadgedButtonDialog(
     content: @Composable (onClose: () -> Unit) -> Unit
 ) {
     var visible by rememberSaveable { mutableStateOf(false) }
-    val onOpen = { visible = true }
-    val onClose = { visible = false }
+    val onOpen = remember {{ visible = true }}
+    val onClose = remember {{ visible = false }}
 
     BadgedButton(value, originValue, onOpen, label)
 

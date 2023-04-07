@@ -39,6 +39,8 @@ class CharaState(
         private set
     var baseProperty by mutableStateOf(Property.zero)
         private set
+    var rankBonusProperty by mutableStateOf<Property?>(null)
+        private set
     var includeExEquipProperty by mutableStateOf(Property.zero)
         private set
     var saveVisible by mutableStateOf(false)
@@ -165,6 +167,7 @@ class CharaState(
                     equip5Level = unitPromotion.equipSlot5?.maxEnhanceLevel ?: -1,
                     equip6Level = unitPromotion.equipSlot6?.maxEnhanceLevel ?: -1
                 )
+                rankBonusProperty = userProfile!!.getRankBonusProperty(value)
                 changeState()
             }
         }
@@ -199,6 +202,7 @@ class CharaState(
         userProfile!!.exEquipSlots = backupExEquipSlots
 
         userData = userProfile!!.userData
+        rankBonusProperty = userProfile!!.getRankBonusProperty(userData!!.promotionLevel)
         changeState()
     }
 
@@ -275,6 +279,7 @@ class CharaState(
         backupUnitPromotion = data.unitPromotion
         backupExEquipSlots = data.exEquipSlots
 
+        rankBonusProperty = data.getRankBonusProperty(userData!!.promotionLevel)
         calcProperty()
         data.setProperty(property, baseProperty, includeExEquipProperty)
     }

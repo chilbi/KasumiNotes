@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package coil.transform
 
 import android.content.Context

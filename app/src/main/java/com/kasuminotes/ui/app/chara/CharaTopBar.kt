@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.kasuminotes.ui.components.ImmersiveBackButton
+import com.kasuminotes.ui.components.TranslucentBackButton
 import com.kasuminotes.ui.components.StillBox
-import com.kasuminotes.ui.theme.ImmersiveSysUi
+import com.kasuminotes.ui.theme.Translucent
 
 @Composable
 fun CharaTopBar(
@@ -36,10 +36,10 @@ fun CharaTopBar(
             Modifier
                 .fillMaxSize()
                 .padding(top = statusBarHeight)
-                .background(ImmersiveSysUi)
+                .background(Translucent)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                ImmersiveBackButton(onBack)
+                TranslucentBackButton(onBack)
 
                 Text(
                     text = unitName,

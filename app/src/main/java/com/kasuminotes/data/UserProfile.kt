@@ -52,6 +52,12 @@ data class UserProfile(
 
     fun getEquipMaxLevel(slot: Int): Int = unitPromotion?.getEquip(slot)?.maxEnhanceLevel ?: 0
 
+    fun getRankBonusProperty(promotionLevel: Int): Property? {
+        return promotionBonusList.find {
+            it.promotionLevel == promotionLevel
+        }?.bonusProperty
+    }
+
     fun getExSkillProperty(data: UserData): Property {
         val realExSkillData = if (shouldConverted(data.rarity)) unitConversionData!!.exSkillData else exSkillData
         return realExSkillData!!.getProperty(data.rarity, data.exLevel)
@@ -93,13 +99,9 @@ data class UserProfile(
         ) {
             val rarityLevel = data.charaLevel + data.promotionLevel
             val equipsLevel = data.equipsLevel
-
             val uniqueProperty = uniqueData?.getProperty(data.uniqueLevel)
             val exSkillProperty = getExSkillProperty(data)
-
-            val promotionBonusProperty = promotionBonusList.find {
-                it.promotionLevel == data.promotionLevel
-            }?.bonusProperty ?: Property.zero
+            val rankBonusProperty = getRankBonusProperty(data.promotionLevel) ?: Property.zero
 
             Property { index ->
                 // unitRarity
@@ -138,7 +140,7 @@ data class UserProfile(
                 value += exSkillProperty[index]
 
                 // promotionBonus
-                value += promotionBonusProperty[index]
+                value += rankBonusProperty[index]
 
                 value
             }

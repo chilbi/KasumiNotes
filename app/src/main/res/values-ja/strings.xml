@@ -41,6 +41,7 @@
 
     <string name="level">LEVEL</string>
     <string name="rank">RANK</string>
+    <string name="bonus">ボーナス</string>
     <string name="slot">Slot</string>
     <string name="map">マップ</string>
     <string name="chara">キャラ</string>

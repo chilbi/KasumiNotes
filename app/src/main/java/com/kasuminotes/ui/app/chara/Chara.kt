@@ -72,6 +72,7 @@ fun Chara(
                 userProfile.unitPromotion,
                 userProfile.uniqueData,
                 userProfile.exEquipSlots,
+                charaState.rankBonusProperty,
                 charaState.includeExEquipProperty,
                 userProfile.includeExEquipProperty ?: charaState.includeExEquipProperty,
                 userProfile.userData,

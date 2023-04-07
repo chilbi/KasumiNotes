@@ -56,12 +56,12 @@ import com.kasuminotes.ui.components.Alert
 import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.ImageSize
 import com.kasuminotes.ui.components.PropertyTable
-import com.kasuminotes.ui.components.ImmersiveBackButton
+import com.kasuminotes.ui.components.TranslucentBackButton
 import com.kasuminotes.ui.components.Severity
 import com.kasuminotes.ui.components.StillBox
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
-import com.kasuminotes.ui.theme.ImmersiveSysUi
+import com.kasuminotes.ui.theme.Translucent
 import com.kasuminotes.ui.theme.md_theme_light_onSurface
 import com.kasuminotes.ui.theme.md_theme_light_primary
 import com.kasuminotes.utils.UrlUtil
@@ -74,6 +74,7 @@ fun CharaBackLayer(
     unitPromotion: UnitPromotion?,
     uniqueData: UniqueData?,
     exEquipSlots: List<ExEquipSlot>,
+    rankBonusProperty: Property?,
     property: Property,
     originProperty: Property,
     originUserData: UserData,
@@ -119,6 +120,7 @@ fun CharaBackLayer(
                         unitData.hasUnique,
                         unitPromotion,
                         uniqueData,
+                        rankBonusProperty,
                         exEquipSlots,
                         onEquipClick,
                         onUniqueClick,
@@ -185,7 +187,7 @@ private fun CharaHeader(
                 .sizeIn(maxWidth = 420.dp)
                 .then(ImageSize.StillModifier)
         ) {
-            ImmersiveBackButton(
+            TranslucentBackButton(
                 onBack,
                 Modifier.padding(top = statusBarHeight)
             )
@@ -277,7 +279,7 @@ private fun CharaName(
         Box(
             Modifier
                 .fillMaxHeight()
-                .background(ImmersiveSysUi)
+                .background(Translucent)
         ) {
             Text(
                 text = unitName,
@@ -295,7 +297,7 @@ private fun CharaName(
                 .fillMaxHeight()
                 .background(
                     brush = Brush.horizontalGradient(
-                        0.0f to ImmersiveSysUi,
+                        0.0f to Translucent,
                         0.2f to Color.Transparent
                     )
                 )

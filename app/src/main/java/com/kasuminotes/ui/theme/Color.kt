@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 
-val ImmersiveSysUi = Color(0x33000000)
+val Translucent = Color(0x33000000)
 val ShadowColor = Color(0x775E6FA2)
 val UniqueColor = Color(0xFFD34BEF)
 val LightError = Color(0xFFFFCDD2)

@@ -60,13 +60,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-//        useIR = true
         freeCompilerArgs += [
                 "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
                 "-Xopt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
                 "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
                 "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
-//                "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
                 "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
                 "-Xopt-in=coil.annotation.ExperimentalCoilApi"
         ]
@@ -91,10 +89,6 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.7.0'
     // appcompat
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    // palette
-    // implementation 'androidx.palette:palette-ktx:1.0.0'
-    // material
-    implementation 'com.google.android.material:material:1.8.0'
 
     // lifecycle-viewmodel-compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_viewmodel_version"
@@ -109,7 +103,6 @@ dependencies {
     implementation "androidx.compose.ui:ui-util:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation "androidx.compose.animation:animation:$compose_version"
-//    implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation "androidx.compose.material:material-ripple:$compose_version"
     implementation "androidx.compose.material3:material3:$material3_version"
@@ -118,7 +111,7 @@ dependencies {
     // navigation-animation
     implementation 'com.google.accompanist:accompanist-navigation-animation:0.30.0'
     // coil-compose
-    implementation 'io.coil-kt:coil-compose:2.2.2'
+    implementation 'io.coil-kt:coil-compose:2.3.0'
 
     // okhttp
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'

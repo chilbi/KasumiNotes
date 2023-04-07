@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -25,7 +24,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.kasuminotes.ui.theme.ImmersiveSysUi
+import com.kasuminotes.ui.theme.Translucent
 
 @Composable
 fun BackButton(onBack: () -> Unit) {
@@ -35,7 +34,7 @@ fun BackButton(onBack: () -> Unit) {
 }
 
 @Composable
-fun ImmersiveBackButton(
+fun TranslucentBackButton(
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -44,7 +43,7 @@ fun ImmersiveBackButton(
             imageVector = Icons.Filled.ArrowBack,
             contentDescription = null,
             modifier = Modifier
-                .background(ImmersiveSysUi, CircleShape)
+                .background(Translucent, CircleShape)
                 .padding(4.dp),
             tint = Color.White
         )
