@@ -50,9 +50,9 @@ private fun FixedGrid(
     modifier: Modifier = Modifier,
     contentFor: @Composable BoxScope.(index: Int) -> Unit
 ) {
-    val rows = (size + cols - 1) / cols
     Column(modifier) {
         if (cols > 1) {
+            val rows = (size + cols - 1) / cols
             repeat(rows) { row ->
                 Row {
                     repeat(cols) { col ->
