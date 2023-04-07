@@ -52,7 +52,7 @@ private fun FixedGrid(
 ) {
     val rows = (size + cols - 1) / cols
     Column(modifier) {
-        if (rows > 0) {
+        if (cols > 1) {
             repeat(rows) { row ->
                 Row {
                     repeat(cols) { col ->

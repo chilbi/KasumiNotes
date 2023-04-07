@@ -35,7 +35,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
         val openDrawer = remember<() -> Unit> {{
             scope.launch { drawerState.open() }
         }}
-        val navigateToHomeAndOpenDrawer = remember<() -> Unit> {{
+        val navigateToHomeAndOpenDrawer = remember {{
             appViewModel.navigateTo(0)
             openDrawer()
         }}
