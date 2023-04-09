@@ -7,18 +7,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.common.SummonMinion
 import com.kasuminotes.ui.app.state.SummonsState
 import com.kasuminotes.ui.components.BackButton
-import com.kasuminotes.ui.components.TabsPanel
+import com.kasuminotes.ui.components.TabsPager
 import com.kasuminotes.ui.components.TopBar
 
 private val summonPropertyIndices: List<Int> = listOf(
@@ -72,21 +74,23 @@ private fun SummonsTabsPanel(
 ) {
     val size = summonMinionList.size
     if (size > 0) {
-        TabsPanel(
-            size = size,
+        TabsPager(
             scrollable = size > 3,
-            initIndex = 0,
+            pageCount = size,
+            pagerState = rememberPagerState(),
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.primary,
             edgePadding = 0.dp,
-            tabContentFor = { index ->
-                val summonMinion = summonMinionList[index]
+            tabContent = { page ->
+                val summonMinion = summonMinionList[page]
                 SummonHeader(
                     summonMinion.unitId,
                     summonMinion.enemyId,
                     summonMinion.name
                 )
             },
-            panelContentFor = { index ->
-                val summonMinion = summonMinionList[index]
+            pageContent = { page ->
+                val summonMinion = summonMinionList[page]
                 SummonDetail(
                     summonMinion.searchAreaWidth,
                     summonMinion.atkType,

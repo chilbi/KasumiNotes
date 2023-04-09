@@ -6,14 +6,11 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -24,7 +21,7 @@ import com.kasuminotes.data.EnemyData
 import com.kasuminotes.ui.app.state.ClanBattleState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
-import com.kasuminotes.ui.components.TabsPanel
+import com.kasuminotes.ui.components.TabsPager
 import com.kasuminotes.ui.theme.phaseColors
 
 @Composable
@@ -60,27 +57,26 @@ private fun MapTabsPanel(
     onEnemyClick: (EnemyData) -> Unit
 ) {
     if (mapDataList != null) {
-        var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
+        val pagerState = rememberPagerState()
         val unSelectedColor = MaterialTheme.colorScheme.onSurface.copy(0.5f)
         val style = MaterialTheme.typography.titleSmall
-        TabsPanel(
-            size = mapDataList.size,
+        TabsPager(
             scrollable = false,
-            selectedTabIndex = selectedTabIndex,
-            onTabIndexSelected = { selectedTabIndex = it },
+            pageCount = mapDataList.size,
+            pagerState = pagerState,
             containerColor = Color.Transparent,
-            contentColor = phaseColors[mapDataList.size - selectedTabIndex - 1],
-            tabContentFor = { index ->
+            contentColor = phaseColors[mapDataList.size - pagerState.currentPage - 1],
+            tabContent = { page ->
                 Text(
-                    text = stringResource(R.string.phase_d, mapDataList[index].phase),
+                    text = stringResource(R.string.phase_d, mapDataList[page].phase),
                     modifier = Modifier.padding(vertical = 14.dp),
-                    color = if (index == selectedTabIndex) Color.Unspecified else unSelectedColor,
+                    color = if (page == pagerState.currentPage) Color.Unspecified else unSelectedColor,
                     style = style
                 )
             },
-            panelContentFor = { index ->
+            pageContent = { page ->
                 EnemyList(
-                    mapData = mapDataList[index],
+                    mapData = mapDataList[page],
                     onEnemyClick = onEnemyClick
                 )
             }

@@ -8,17 +8,15 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,8 +36,9 @@ import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.components.BackdropScaffoldDefaults
 import com.kasuminotes.ui.components.PlaceImage
-import com.kasuminotes.ui.components.TabsPanel
+import com.kasuminotes.ui.components.TabsPager
 import com.kasuminotes.utils.UrlUtil
+import kotlinx.coroutines.launch
 
 @Composable
 fun CharaFrontLayer(
@@ -59,49 +58,49 @@ fun CharaFrontLayer(
     onToggle: () -> Unit
 ) {
     val titles = remember { listOf(R.string.profile, R.string.story, R.string.equipment, R.string.skill) }
-    val titlesSize = titles.size
-    val style = MaterialTheme.typography.labelMedium
 
     FrontLayerWrapper(
-        titlesSize,
+        titles.size,
         unitData.unitId,
         userData.rarity,
         onToggle
     ) {
-        var storySelectedTabIndex by rememberSaveable { mutableStateOf(0) }
+        val style = MaterialTheme.typography.labelMedium
+        val scope = rememberCoroutineScope()
         val profileScrollState = rememberScrollState()
         val storyScrollState = rememberScrollState()
         val equipmentGridState = rememberLazyGridState()
         val skillScrollState = rememberScrollState()
-        val onTabIndexSelected = remember<(Int) -> Unit>(storySelectedTabIndex, sharedProfiles) {
-            { index ->
-                if (storySelectedTabIndex != index) {
-                    storySelectedTabIndex = index
-                } else if (index > 0) {
-                    storySelectedTabIndex = 0
-                    onCharaClick(sharedProfiles[index - 1])
+        val storyPagerState = rememberPagerState()
+        val onStoryTabClick = remember<(page: Int) -> Unit>(sharedProfiles) {
+            { page ->
+                if (storyPagerState.currentPage != page) {
+                    scope.launch { storyPagerState.animateScrollToPage(page) }
+                } else if (page > 0) {
+                    onCharaClick(sharedProfiles[page - 1])
+                    scope.launch { storyPagerState.scrollToPage(0) }
                 }
             }
         }
 
-        TabsPanel(
-            size = titlesSize,
+        TabsPager(
             scrollable = false,
-            initIndex = 3,
+            pageCount = titles.size,
+            pagerState = rememberPagerState(3),
             modifier = Modifier.height(BackdropScaffoldDefaults.HeaderHeight),
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.primary,
-            tabContentFor = { index ->
+            tabContent = { page ->
                 Box(Modifier.height(BackdropScaffoldDefaults.HeaderHeight)) {
                     Text(
-                        text = stringResource(titles[index]),
+                        text = stringResource(titles[page]),
                         modifier = Modifier.align(Alignment.Center),
                         style = style
                     )
                 }
             },
-            panelContentFor = { index ->
-                when (index) {
+            pageContent = { page ->
+                when (page) {
                     0 -> {
                         CharaProfile(unitData, profileScrollState)
                     }
@@ -111,9 +110,9 @@ fun CharaFrontLayer(
                             unitData,
                             charaStoryStatus,
                             sharedProfiles,
-                            storySelectedTabIndex,
-                            onTabIndexSelected,
-                            storyScrollState
+                            storyScrollState,
+                            storyPagerState,
+                            onStoryTabClick,
                         )
                     }
                     2 -> {

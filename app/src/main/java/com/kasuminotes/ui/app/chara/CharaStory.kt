@@ -2,10 +2,10 @@ package com.kasuminotes.ui.app.chara
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,7 +24,7 @@ import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.PlaceImage
-import com.kasuminotes.ui.components.TabsPanel
+import com.kasuminotes.ui.components.TabsPager
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.UnderlineStyle
 import com.kasuminotes.ui.components.VerticalGrid
@@ -36,11 +36,12 @@ fun CharaStory(
     unitData: UnitData,
     charaStoryStatus: CharaStoryStatus?,
     sharedProfiles: List<UserProfile>,
-    selectedTabIndex: Int,
-    onTabIndexSelected: (Int) -> Unit,
-    state: ScrollState
+    scrollState: ScrollState,
+    pagerState: PagerState,
+    onTabClick: (page: Int) -> Unit
 ) {
-    Box(Modifier.fillMaxSize()) {
+    // TODO tabPage状态不能持久保存
+    Box(Modifier.fillMaxSize().verticalScroll(scrollState)) {
         val stories: List<StoryItem> = remember(userData, charaStoryStatus, sharedProfiles.size) {
             charaStoryStatus?.getStoryList(
                 unitData.unitId,
@@ -52,16 +53,16 @@ fun CharaStory(
             ) ?: emptyList()
         }
 
-        TabsPanel(
-            size = stories.size,
+        TabsPager(
             scrollable = stories.size > 4,
-            selectedTabIndex = selectedTabIndex,
-            onTabIndexSelected = onTabIndexSelected,
+            pageCount = stories.size,
+            pagerState = pagerState,
             containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.onSurface.copy(0.5f),
+            contentColor = MaterialTheme.colorScheme.secondary,
             edgePadding = 0.dp,
-            tabContentFor = { index ->
-                val story = stories[index]
+            onTabClick = onTabClick,
+            tabContent = { page ->
+                val story = stories[page]
                 Box(
                     Modifier
                         .padding(top = 8.dp)
@@ -76,13 +77,12 @@ fun CharaStory(
                     style = MaterialTheme.typography.labelMedium
                 )
             },
-            panelContentFor = { index ->
-                val storyItem = stories[index]
+            pageContent = { page ->
+                val storyItem = stories[page]
                 StoryProperties(
                     status = storyItem.status,
                     diffCount = storyItem.diffCount,
-                    unlockCount = storyItem.unlockCount,
-                    state = state
+                    unlockCount = storyItem.unlockCount
                 )
             }
         )
@@ -93,14 +93,13 @@ fun CharaStory(
 private fun StoryProperties(
     status: List<Property>?,
     diffCount: Int,
-    unlockCount: Int,
-    state: ScrollState
+    unlockCount: Int
 ) {
     if (status != null) {
         VerticalGrid(
             size = status.size,
             cells = VerticalGridCells.Adaptive(350.dp),
-            modifier = Modifier.fillMaxSize().verticalScroll(state).padding(4.dp)
+            modifier = Modifier.fillMaxSize().padding(4.dp)// TODO 滚动修饰符在这无效
         ) { index ->
             val property = status[index]
             StoryProperty(
