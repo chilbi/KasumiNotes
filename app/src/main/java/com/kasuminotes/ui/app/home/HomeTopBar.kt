@@ -5,6 +5,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -35,7 +36,8 @@ fun HomeTopBar(
 ) {
     TopBar(
         title = {
-            SearchBar(searchText, onSearchTextChange)
+            val onClear = remember {{ onSearchTextChange("") }}
+            SearchBar(searchText, onSearchTextChange, onClear)
         },
         navigationIcon = {
             IconButton(onDrawerOpen) {

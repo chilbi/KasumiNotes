@@ -11,6 +11,7 @@ import com.kasuminotes.data.UserProfile
 
 class CharaListState {
     var backupProfiles: List<UserProfile>? = null
+    var backSearchText: String? = null
 
     var profiles by mutableStateOf<List<UserProfile>>(emptyList())
         private set
@@ -37,13 +38,17 @@ class CharaListState {
 
     fun initImages(allUserProfile: List<UserProfile>) {
         backupProfiles = profiles
+        backSearchText = searchText
 
+        if (searchText != "") searchText = ""
         changeProfiles(allUserProfile)
     }
 
     fun initEditor(allUserProfile: List<UserProfile>, unlockedProfiles: List<UserProfile>) {
         backupProfiles = profiles
+        backSearchText = searchText
 
+        if (searchText != "") searchText = ""
         when {
             unlockedProfiles.isEmpty() -> {
                 lockedChara = allUserProfile.map { it.unitData.unitId }
@@ -82,8 +87,12 @@ class CharaListState {
     }
 
     fun destroy(newProfiles: List<UserProfile>) {
+        if (backSearchText != null && backSearchText != searchText) {
+            searchText = backSearchText!!
+        }
         changeProfiles(newProfiles)
         backupProfiles = null
+        backSearchText = null
 
         lockedChara = emptyList()
         derivedLockedChara = emptyList()
