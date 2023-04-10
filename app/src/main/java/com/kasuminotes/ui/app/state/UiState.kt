@@ -12,6 +12,8 @@ class UiState(
 ) {
     var language by mutableStateOf(appRepository.getLanguage())
         private set
+    var themeIndex by mutableStateOf(appRepository.getThemeIndex())
+        private set
     var darkTheme by mutableStateOf(appRepository.getDarkTheme())
         private set
     var charaImageState by mutableStateOf(CharaImageState(appRepository.getImageVariant()))
@@ -21,6 +23,13 @@ class UiState(
         if (value != language) {
             language = value
             appRepository.setLanguage(value)
+        }
+    }
+
+    fun changeThemeIndex(value: Int) {
+        if (value != themeIndex) {
+            themeIndex = value
+            appRepository.setThemeIndex(value)
         }
     }
 

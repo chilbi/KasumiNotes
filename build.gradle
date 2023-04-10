@@ -4,8 +4,8 @@ buildscript {
         kasuminotes_version = '1.7.9'
         kasuminotes_version_code = 179
         kotlin_version = '1.8.10'
-        compose_version = '1.4.0'
-        material3_version = '1.1.0-beta01'
+        compose_version = '1.4.1'
+        material3_version = '1.1.0-beta02'
         kotlin_compiler_version = '1.4.4'
         lifecycle_viewmodel_version = '2.6.1'
     }

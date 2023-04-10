@@ -36,6 +36,7 @@ fun DrawerContent(
     lastVersionFetching: Boolean,
     latestAppReleaseInfoFetching: Boolean,
     language: Language,
+    themeIndex: Int,
     darkTheme: ToggleableState,
     onImageClick: () -> Unit,
     onLogOut: () -> Unit,
@@ -43,6 +44,7 @@ fun DrawerContent(
     onLastDbVersionFetch: () -> Unit,
     onDbAutoUpdateToggle: () -> Unit,
     onLanguageChange: (Language) -> Unit,
+    onThemeIndexChange: (Int) -> Unit,
     onDarkThemeToggle: () -> Unit,
     onLatestAppReleaseInfoFetch: () -> Unit,
     onAppAutoUpdateToggle: () -> Unit,
@@ -97,8 +99,10 @@ fun DrawerContent(
 
             DisplayMenuList(
                 language,
+                themeIndex,
                 darkTheme,
                 onLanguageChange,
+                onThemeIndexChange,
                 onDarkThemeToggle
             )
 

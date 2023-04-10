@@ -31,7 +31,6 @@ fun HomeScaffold(
     onNavigateTo: (Int) -> Unit,
     onDrawerOpen: () -> Unit
 ) {
-    val imageState = uiState.charaImageState
     val listState = userState.charaListState
 
     ModalDrawer(drawerState, userState, dbState, uiState, onImageClick, onNavigateToAbout) {
@@ -39,7 +38,7 @@ fun HomeScaffold(
             topBar = {
                 HomeTopBar(
                     userState.userId,
-                    imageState.vector,
+                    uiState.charaImageState.vector,
                     listState.searchText,
                     listState.atkType,
                     listState.position,

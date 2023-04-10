@@ -29,7 +29,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
     val dbState = appViewModel.dbState
     val userState = dbState.userState
 
-    KasumiNotesTheme(uiState.darkTheme) {
+    KasumiNotesTheme(uiState.themeIndex, uiState.darkTheme) {
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val scope = rememberCoroutineScope()
         val openDrawer = remember<() -> Unit> {{

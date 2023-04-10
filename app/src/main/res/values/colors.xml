@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="dark">#FF201A19</color>
-    <color name="light">#FFEDE0DD</color>
+    <color name="dark">#FF1A1C1E</color>
+    <color name="light">#FFFDFBFF</color>
     <color name="translucent">#33000000</color>
     <color name="background">@color/light</color>
     <color name="ic_launcher_background">@android:color/transparent</color>

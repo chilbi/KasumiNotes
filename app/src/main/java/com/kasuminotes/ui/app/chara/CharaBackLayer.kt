@@ -61,9 +61,10 @@ import com.kasuminotes.ui.components.Severity
 import com.kasuminotes.ui.components.StillBox
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
+import com.kasuminotes.ui.theme.DarkError
+import com.kasuminotes.ui.theme.DarkInfo
+import com.kasuminotes.ui.theme.DarkWarning
 import com.kasuminotes.ui.theme.Translucent
-import com.kasuminotes.ui.theme.md_theme_light_onSurface
-import com.kasuminotes.ui.theme.md_theme_light_primary
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -223,14 +224,14 @@ private fun AlertMessage(
         ) {
             TextButton(
                 onClick = onCancel,
-                colors = ButtonDefaults.textButtonColors(contentColor = md_theme_light_onSurface)
+                colors = ButtonDefaults.textButtonColors(contentColor = Color.DarkGray)
             ) {
                 Text(stringResource(R.string.cancel))
             }
 
             TextButton(
                 onClick = onSave,
-                colors = ButtonDefaults.textButtonColors(contentColor = md_theme_light_primary)
+                colors = ButtonDefaults.textButtonColors(contentColor = DarkWarning)
             ) {
                 Text(stringResource(R.string.save))
             }
@@ -247,7 +248,7 @@ private fun AlertMessage(
         ) {
             IconButton(
                 onClick = { errorVisible = false },
-                colors = IconButtonDefaults.iconButtonColors(contentColor = md_theme_light_onSurface)
+                colors = IconButtonDefaults.iconButtonColors(contentColor = DarkError)
             ) {
                 Icon(Icons.Filled.Close, null)
             }
@@ -262,7 +263,7 @@ private fun AlertMessage(
         ) {
             IconButton(
                 onClick = { infoVisible = false },
-                colors = IconButtonDefaults.iconButtonColors(contentColor = md_theme_light_onSurface)
+                colors = IconButtonDefaults.iconButtonColors(contentColor = DarkInfo)
             ) {
                 Icon(Icons.Filled.Close, null)
             }

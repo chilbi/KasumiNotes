@@ -57,6 +57,7 @@
     <string name="language">言語</string>
     <string name="lang_cn">中文</string>
     <string name="lang_jp">日本語</string>
+    <string name="theme_color">テーマ色</string>
     <string name="follow_system">フォローシステム</string>
     <string name="night">ナイトモード</string>
     <string name="day">デーモード</string>

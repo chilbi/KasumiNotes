@@ -57,6 +57,7 @@
     <string name="language">语言</string>
     <string name="lang_cn">中文</string>
     <string name="lang_jp">日本語</string>
+    <string name="theme_color">主题颜色</string>
     <string name="follow_system">跟随系统</string>
     <string name="night">深色模式</string>
     <string name="day">浅色模式</string>

@@ -87,6 +87,12 @@ class AppRepository(
         MainActivity.instance.reload()
     }
 
+    fun getThemeIndex() = context.themeIndexSP
+
+    fun setThemeIndex(value: Int) {
+        context.themeIndexSP = value
+    }
+
     fun getDarkTheme() = ToggleableState.valueOf(context.darkThemeSP)
 
     fun setDarkTheme(state: ToggleableState) {
