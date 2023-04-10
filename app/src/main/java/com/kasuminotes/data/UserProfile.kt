@@ -28,7 +28,7 @@ data class UserProfile(
     var unitPromotion: UnitPromotion? = null,
     var uniqueData: UniqueData? = null,
     var charaStoryStatus: CharaStoryStatus? = null,
-    var sharedProfiles: List<UserProfile> = emptyList(),
+    var sharedProfiles: List<UserProfile>? = null,
     var promotions: List<UnitPromotion> = emptyList(),
     var unitAttackPatternList: List<UnitAttackPattern> = emptyList(),
     var unitSkillData: UnitSkillData? = null,
@@ -125,8 +125,8 @@ data class UserProfile(
                 value += getStoryValue(index, data.loveLevel, charaStoryStatus!!.status, unitData.maxRarity)
 
                 // sharedCharaStoryStatus
-                if (sharedProfiles.isNotEmpty()) {
-                    sharedProfiles.forEach { item ->
+                if (sharedProfiles != null && sharedProfiles!!.isNotEmpty()) {
+                    sharedProfiles!!.forEach { item ->
                         value += getStoryValue(
                             index,
                             item.userData.loveLevel,
@@ -264,7 +264,9 @@ data class UserProfile(
             it.copy(exEquipData = list[listIndex++] as ExEquipData?)
         }
         val sharedChara = charaStoryStatus!!.sharedChara
-        if (sharedChara.isNotEmpty()) {
+        if (sharedChara.isEmpty()) {
+            sharedProfiles = emptyList()
+        } else {
             val sharedProfileList = profiles
                 .filter { sharedChara.contains(it.unitData.unitId) }
                 .sortedByDescending { it.unitData.unitId }

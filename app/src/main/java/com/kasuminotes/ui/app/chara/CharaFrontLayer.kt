@@ -45,7 +45,7 @@ fun CharaFrontLayer(
     userData: UserData,
     unitData: UnitData,
     charaStoryStatus: CharaStoryStatus?,
-    sharedProfiles: List<UserProfile>,
+    sharedProfiles: List<UserProfile>?,
     uniqueData: UniqueData?,
     promotions: List<UnitPromotion>,
     unitAttackPatternList: List<UnitAttackPattern>,
@@ -54,7 +54,7 @@ fun CharaFrontLayer(
     onEquipClick: (EquipData) -> Unit,
     onUniqueClick: (UniqueData) -> Unit,
     onSummonsClick: (summons: List<Int>, skillLevel: Int) -> Unit,
-    onCharaClick: (UserProfile) -> Unit,
+    onCharaChange: (UserProfile) -> Unit,
     onToggle: () -> Unit
 ) {
     val titles = remember { listOf(R.string.profile, R.string.story, R.string.equipment, R.string.skill) }
@@ -77,8 +77,10 @@ fun CharaFrontLayer(
                 if (storyPagerState.currentPage != page) {
                     scope.launch { storyPagerState.animateScrollToPage(page) }
                 } else if (page > 0) {
-                    onCharaClick(sharedProfiles[page - 1])
-                    scope.launch { storyPagerState.scrollToPage(0) }
+                    scope.launch {
+                        storyPagerState.scrollToPage(0)
+                        onCharaChange(sharedProfiles!![page - 1])
+                    }
                 }
             }
         }

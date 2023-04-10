@@ -35,57 +35,63 @@ fun CharaStory(
     userData: UserData,
     unitData: UnitData,
     charaStoryStatus: CharaStoryStatus?,
-    sharedProfiles: List<UserProfile>,
+    sharedProfiles: List<UserProfile>?,
     scrollState: ScrollState,
     pagerState: PagerState,
     onTabClick: (page: Int) -> Unit
 ) {
     // TODO tabPage状态不能持久保存
     Box(Modifier.fillMaxSize().verticalScroll(scrollState)) {
-        val stories: List<StoryItem> = remember(userData, charaStoryStatus, sharedProfiles.size) {
-            charaStoryStatus?.getStoryList(
-                unitData.unitId,
-                userData.rarity,
-                unitData.maxRarity,
-                userData.loveLevel,
-                unitData.unitName,
-                sharedProfiles
-            ) ?: emptyList()
-        }
-
-        TabsPager(
-            scrollable = stories.size > 4,
-            pageCount = stories.size,
-            pagerState = pagerState,
-            containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.secondary,
-            edgePadding = 0.dp,
-            onTabClick = onTabClick,
-            tabContent = { page ->
-                val story = stories[page]
-                Box(
-                    Modifier
-                        .padding(top = 8.dp)
-                        .size(48.dp)
-                ) {
-                    PlaceImage(story.iconUrl)
-                }
-
-                Text(
-                    text = story.label,
-                    modifier = Modifier.padding(vertical = 4.dp),
-                    style = MaterialTheme.typography.labelMedium
-                )
-            },
-            pageContent = { page ->
-                val storyItem = stories[page]
-                StoryProperties(
-                    status = storyItem.status,
-                    diffCount = storyItem.diffCount,
-                    unlockCount = storyItem.unlockCount
+        val stories: List<StoryItem> = remember(userData, charaStoryStatus, sharedProfiles) {
+            if (charaStoryStatus == null || sharedProfiles == null) {
+                emptyList()
+            } else {
+                charaStoryStatus.getStoryList(
+                    unitData.unitId,
+                    userData.rarity,
+                    unitData.maxRarity,
+                    userData.loveLevel,
+                    unitData.unitName,
+                    sharedProfiles
                 )
             }
-        )
+        }
+
+        if (stories.isNotEmpty()) {
+            TabsPager(
+                scrollable = stories.size > 4,
+                pageCount = stories.size,
+                pagerState = pagerState,
+                containerColor = Color.Transparent,
+                contentColor = MaterialTheme.colorScheme.secondary,
+                edgePadding = 0.dp,
+                onTabClick = onTabClick,
+                tabContent = { page ->
+                    val story = stories[page]
+                    Box(
+                        Modifier
+                            .padding(top = 8.dp)
+                            .size(48.dp)
+                    ) {
+                        PlaceImage(story.iconUrl)
+                    }
+
+                    Text(
+                        text = story.label,
+                        modifier = Modifier.padding(vertical = 4.dp),
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                },
+                pageContent = { page ->
+                    val storyItem = stories[page]
+                    StoryProperties(
+                        status = storyItem.status,
+                        diffCount = storyItem.diffCount,
+                        unlockCount = storyItem.unlockCount
+                    )
+                }
+            )
+        }
     }
 }
 

@@ -29,7 +29,7 @@ fun CharaEquipSlots(
     userData: UserData,
     originUserData: UserData,
     unitPromotion: UnitPromotion?,
-    onEquipClick: (equipData: EquipData, slot: Int) -> Unit,
+    onEquipSlotClick: (equipData: EquipData, slot: Int) -> Unit,
     onEquipChange: (equip: Boolean, slot: Int) -> Unit
 ) {
     val spacerWidth = 24.dp
@@ -40,7 +40,7 @@ fun CharaEquipSlots(
                 equipLevel = userData.equip1Level,
                 originEquipLevel = originUserData.equip1Level,
                 equipData = unitPromotion?.equipSlot1,
-                onClick = { onEquipClick(it, 1) },
+                onClick = { onEquipSlotClick(it, 1) },
                 onChange = { onEquipChange(it, 1) }
             )
 
@@ -50,7 +50,7 @@ fun CharaEquipSlots(
                 equipLevel = userData.equip2Level,
                 originEquipLevel = originUserData.equip2Level,
                 equipData = unitPromotion?.equipSlot2,
-                onClick = { onEquipClick(it, 2) },
+                onClick = { onEquipSlotClick(it, 2) },
                 onChange = { onEquipChange(it, 2) }
             )
         }
@@ -62,7 +62,7 @@ fun CharaEquipSlots(
                 equipLevel = userData.equip3Level,
                 originEquipLevel = originUserData.equip3Level,
                 equipData = unitPromotion?.equipSlot3,
-                onClick = { onEquipClick(it, 3) },
+                onClick = { onEquipSlotClick(it, 3) },
                 onChange = { onEquipChange(it, 3) }
             )
 
@@ -72,7 +72,7 @@ fun CharaEquipSlots(
                 equipLevel = userData.equip4Level,
                 originEquipLevel = originUserData.equip4Level,
                 equipData = unitPromotion?.equipSlot4,
-                onClick = { onEquipClick(it, 4) },
+                onClick = { onEquipSlotClick(it, 4) },
                 onChange = { onEquipChange(it, 4) }
             )
         }
@@ -84,7 +84,7 @@ fun CharaEquipSlots(
                 equipLevel = userData.equip5Level,
                 originEquipLevel = originUserData.equip5Level,
                 equipData = unitPromotion?.equipSlot5,
-                onClick = { onEquipClick(it, 5) },
+                onClick = { onEquipSlotClick(it, 5) },
                 onChange = { onEquipChange(it, 5) }
             )
 
@@ -94,7 +94,7 @@ fun CharaEquipSlots(
                 equipLevel = userData.equip6Level,
                 originEquipLevel = originUserData.equip6Level,
                 equipData = unitPromotion?.equipSlot6,
-                onClick = { onEquipClick(it, 6) },
+                onClick = { onEquipSlotClick(it, 6) },
                 onChange = { onEquipChange(it, 6) }
             )
         }

@@ -11,11 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.UniqueData
+import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.CharaState
 import com.kasuminotes.ui.components.BackdropScaffold
 import com.kasuminotes.ui.components.BackdropScaffoldDefaults
@@ -28,7 +30,7 @@ fun Chara(
     charaState: CharaState,
     maxUserData: MaxUserData,
     onBack: () -> Unit,
-    onEquipClick: (equipData: EquipData, slot: Int?) -> Unit,
+    onEquipSlotClick: (equipData: EquipData, slot: Int?) -> Unit,
     onUniqueClick: (UniqueData) -> Unit,
     onExEquipSlotClick: (ExEquipSlot) -> Unit,
     onSummonsClick: (summons: List<Int>, skillLevel: Int) -> Unit
@@ -36,6 +38,7 @@ fun Chara(
     val userProfile = charaState.userProfile!!
     val userData = charaState.userData!!
     val unitData = userProfile.getRealUnitData(userData.rarity)
+    val originProperty = userProfile.includeExEquipProperty ?: charaState.includeExEquipProperty
 
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
@@ -54,6 +57,45 @@ fun Chara(
         BackdropScaffoldDefaults.HeaderHeight + 28.dp
     }
 
+    val calcBackLayerConstraints = remember<(Constraints) -> Constraints> {{ constraints ->
+        constraints.copy(minWidth = 0, minHeight = 0)
+    }}
+
+    val onToggle = remember<() -> Unit> {{
+        scope.launch {
+            if (scaffoldState.isConcealed) scaffoldState.reveal()
+            else scaffoldState.conceal()
+        }
+    }}
+
+    val onEquipClick = remember<(EquipData) -> Unit> {{ equipData ->
+        onEquipSlotClick(equipData, null)
+    }}
+
+    val onCharaChange = remember<(UserProfile) -> Unit>(userProfile) {{ otherChara ->
+        charaState.initUserProfile(
+            otherChara,
+            userProfile.sharedProfiles!!.plus(userProfile),
+            maxUserData.maxCharaLevel
+        )
+    }}
+
+    val onEquipChange = remember<(Boolean, Int) -> Unit>(userProfile) {{ equip, slot ->
+        if (equip) {
+            charaState.changeEquipLevel(slot, userProfile.getEquipMaxLevel(slot))
+        } else {
+            charaState.changeEquipLevel(slot, -1)
+        }
+    }}
+
+    val onUniqueChange = remember<(Boolean) -> Unit> {{ equip ->
+        if (equip) {
+            charaState.changeUniqueLevel(maxUserData.maxUniqueLevel)
+        } else {
+            charaState.changeUniqueLevel(0)
+        }
+    }}
+
     BackdropScaffold(
         appBar = {
             CharaTopBar(
@@ -61,7 +103,7 @@ fun Chara(
                 userData.rarity,
                 unitData.unitName,
                 statusBarHeight,
-                onBack = { if (scaffoldState.isConcealed) onBack() }
+                onBack
             )
         },
         backLayerContent = {
@@ -74,40 +116,26 @@ fun Chara(
                 userProfile.exEquipSlots,
                 charaState.rankBonusProperty,
                 charaState.includeExEquipProperty,
-                userProfile.includeExEquipProperty ?: charaState.includeExEquipProperty,
+                originProperty,
                 userProfile.userData,
                 charaState.saveVisible,
                 statusBarHeight,
                 headerHeight,
-                onBack = { if (scaffoldState.isRevealed) onBack() },
-                onEquipClick = onEquipClick,
-                onUniqueClick = onUniqueClick,
+                onBack,
+                onEquipSlotClick,
+                onUniqueClick,
                 onExEquipSlotClick,
-                onEquipChange = { equip, slot ->
-                    if (equip) {
-                        charaState.changeEquipLevel(slot, userProfile.getEquipMaxLevel(slot))
-                    } else {
-                        charaState.changeEquipLevel(slot, -1)
-                    }
-                },
-                onUniqueChange = { equip ->
-                    if (equip) {
-                        charaState.changeUniqueLevel(maxUserData.maxUniqueLevel)
-                    } else {
-                        charaState.changeUniqueLevel(0)
-                    }
-                },
-
-                onCharaLevelChange = charaState::changeCharaLevel,
-                onRarityChange = charaState::changeRarity,
-                onUniqueLevelChange = charaState::changeUniqueLevel,
-                onLoveLevelChange = charaState::changeLoveLevel,
-                onPromotionLevelChange = charaState::changePromotionLevel,
-                onSkillLevelChange = charaState::changeSkillLevel,
-                onLvLimitBreakChange = charaState::changeLvLimitBreak,
-
-                onCancel = charaState::cancel,
-                onSave = charaState::save
+                onEquipChange,
+                onUniqueChange,
+                charaState::changeCharaLevel,
+                charaState::changeRarity,
+                charaState::changeUniqueLevel,
+                charaState::changeLoveLevel,
+                charaState::changePromotionLevel,
+                charaState::changeSkillLevel,
+                charaState::changeLvLimitBreak,
+                charaState::cancel,
+                charaState::save
             )
         },
         frontLayerContent = {
@@ -121,22 +149,11 @@ fun Chara(
                 userProfile.getRealUnitAttackPatternList(userData.rarity),
                 userProfile.getRealUnitSkillData(userData.rarity),
                 charaState.includeExEquipProperty,
-                onEquipClick = { onEquipClick(it, null) },
-                onUniqueClick = onUniqueClick,
-                onSummonsClick = onSummonsClick,
-                onCharaClick = {
-                    charaState.initUserProfile(
-                        it,
-                        userProfile.sharedProfiles.plus(userProfile),
-                        maxUserData.maxCharaLevel
-                    )
-                },
-                onToggle = {
-                    scope.launch {
-                        if (scaffoldState.isConcealed) scaffoldState.reveal()
-                        else scaffoldState.conceal()
-                    }
-                }
+                onEquipClick,
+                onUniqueClick,
+                onSummonsClick,
+                onCharaChange,
+                onToggle
             )
         },
         modifier = Modifier.navigationBarsPadding(),
@@ -151,6 +168,6 @@ fun Chara(
         frontLayerBackgroundColor = Color.Transparent,
         frontLayerContentColor = MaterialTheme.colorScheme.onSurface,
         frontLayerScrimColor = Color.Transparent,
-        calcBackLayerConstraints = { it.copy(minWidth = 0, minHeight = 0) }
+        calcBackLayerConstraints = calcBackLayerConstraints
     )
 }

@@ -49,7 +49,7 @@ fun CharaUserData(
     uniqueData: UniqueData?,
     rankBonusProperty: Property?,
     exEquipSlots: List<ExEquipSlot>,
-    onEquipClick: (equipData: EquipData, slot: Int) -> Unit,
+    onEquipSlotClick: (equipData: EquipData, slot: Int) -> Unit,
     onUniqueClick: (UniqueData) -> Unit,
     onExEquipSlotClick: (ExEquipSlot) -> Unit,
     onEquipChange: (equip: Boolean, slot: Int) -> Unit,
@@ -111,7 +111,7 @@ fun CharaUserData(
                 userData,
                 originUserData,
                 unitPromotion,
-                onEquipClick,
+                onEquipSlotClick,
                 onEquipChange
             )
             
