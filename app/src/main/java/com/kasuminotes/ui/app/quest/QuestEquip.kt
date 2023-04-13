@@ -142,7 +142,7 @@ fun EquipmentPairItem(
     ) {
         VerticalGrid(
             size = equips.size,
-            cells = VerticalGridCells.Adaptive(48.dp)
+            cells = VerticalGridCells.Adaptive(56.dp)
         ) { index ->
             val equipId = equips[index].equipmentId
             Box(
