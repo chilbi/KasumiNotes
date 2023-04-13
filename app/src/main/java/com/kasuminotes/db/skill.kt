@@ -108,45 +108,52 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
     return withIOContext {
         val skillData = use {
             rawQuery(sql, null).use {
-                it.moveToFirst()
-                var i = 0
+                if (it.moveToFirst()) {
+                    var i = 0
 
-                val rawActions = mutableListOf<Int>()
-                val rawDepends = mutableListOf<Int>()
+                    val rawActions = mutableListOf<Int>()
+                    val rawDepends = mutableListOf<Int>()
 
-                while (i < 14) {
-                    val actionId = it.getInt(i++)
-                    if (actionId == 0) break
+                    while (i < 14) {
+                        val actionId = it.getInt(i++)
+                        if (actionId == 0) break
 
-                    rawActions.add(actionId)
-                    rawDepends.add(it.getInt(i++))
+                        rawActions.add(actionId)
+                        rawDepends.add(it.getInt(i++))
+                    }
+
+                    i = 14
+
+                    SkillData(
+                        it.getInt(i++),
+                        it.getString(i++),
+                        it.getString(i++),
+                        it.getInt(i++),
+                        it.getInt(i++),
+                        it.getInt(i++),
+                        it.getFloat(i++),
+                        it.getFloat(i),
+                        rawActions,
+                        rawDepends,
+                        emptyList(),
+                        null,
+                        false
+                    )
+                } else {
+                    null
                 }
-
-                i = 14
-
-                SkillData(
-                    it.getInt(i++),
-                    it.getString(i++),
-                    it.getString(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getFloat(i++),
-                    it.getFloat(i),
-                    rawActions,
-                    rawDepends,
-                    emptyList(),
-                    null,
-                    false
-                )
             }
         }
 
-        val actions = skillData.rawActions.map { actionId ->
-            async { getSkillAction(actionId) }
-        }.awaitAll()
+        if (skillData == null) {
+            null
+        } else {
+            val actions = skillData.rawActions.map { actionId ->
+                async { getSkillAction(actionId) }
+            }.awaitAll()
 
-        skillData.copy(actions = actions)
+            skillData.copy(actions = actions)
+        }
     }
 }
 

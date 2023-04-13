@@ -18,18 +18,18 @@ FROM unit_rarity WHERE unit_id=$unitId AND rarity=$rarity"""
 
     return safelyUse {
         rawQuery(sql, null).use {
-            it.moveToFirst()
-            var i = 0
-
-            val baseProperty = Property { _ ->
-                it.getDouble(i++)
+            if (it.moveToFirst()) {
+                var i = 0
+                val baseProperty = Property { _ ->
+                    it.getDouble(i++)
+                }
+                val growthProperty = Property { _ ->
+                    it.getDouble(i++)
+                }
+                UnitRarity(baseProperty, growthProperty)
+            } else {
+                UnitRarity(Property.zero, Property.zero)
             }
-
-            val growthProperty = Property { _ ->
-                it.getDouble(i++)
-            }
-
-            UnitRarity(baseProperty, growthProperty)
         }
     }
 }
@@ -44,14 +44,15 @@ FROM unit_promotion_status WHERE unit_id=$unitId AND promotion_level=$promotionL
 
     return safelyUse {
         rawQuery(sql, null).use {
-            it.moveToFirst()
-            var i = 0
-
-            val baseProperty = Property { _ ->
-                it.getDouble(i++)
+            if (it.moveToFirst()) {
+                var i = 0
+                val baseProperty = Property { _ ->
+                    it.getDouble(i++)
+                }
+                UnitPromotionStatus(baseProperty)
+            } else {
+                UnitPromotionStatus(Property.zero)
             }
-
-            UnitPromotionStatus(baseProperty)
         }
     }
 }
@@ -64,14 +65,12 @@ FROM unit_promotion WHERE unit_id=$unitId AND promotion_level=$promotionLevel"""
         val slots = use {
             rawQuery(sql, null).use {
                 val list = mutableListOf<Int>()
-
-                it.moveToFirst()
-                var i = 0
-
-                while (i < 6) {
-                    list.add(it.getInt(i++))
+                if (it.moveToFirst()) {
+                    var i = 0
+                    while (i < 6) {
+                        list.add(it.getInt(i++))
+                    }
                 }
-
                 list
             }
         }
@@ -103,19 +102,22 @@ suspend fun AppDatabase.getUniqueData(equipId: Int): UniqueData? {
                 val sql = "SELECT ${UniqueData.getFields()} FROM unique_equipment_data WHERE equipment_id=$equipId"
                 use {
                     rawQuery(sql, null).use {
-                        it.moveToFirst()
-                        var i = 0
-                        val baseProperty = Property { _ ->
-                            it.getDouble(i++)
-                        }
-                        UniqueData(
-                            it.getInt(i++),
-                            it.getString(i++),
-                            it.getString(i),
-                            baseProperty,
-                            Property.zero,
+                        if (it.moveToFirst()) {
+                            var i = 0
+                            val baseProperty = Property { _ ->
+                                it.getDouble(i++)
+                            }
+                            UniqueData(
+                                it.getInt(i++),
+                                it.getString(i++),
+                                it.getString(i),
+                                baseProperty,
+                                Property.zero,
+                                null
+                            )
+                        } else {
                             null
-                        )
+                        }
                     }
                 }
             },
@@ -124,12 +126,15 @@ suspend fun AppDatabase.getUniqueData(equipId: Int): UniqueData? {
                 val sql = "SELECT ${Property.getFields()} FROM unique_equipment_enhance_rate WHERE equipment_id=$equipId AND min_lv=2"
                 use {
                     rawQuery(sql, null).use {
-                        it.moveToFirst()
-                        var i = 0
-                        val growthProperty = Property { _ ->
-                            it.getDouble(i++)
+                        if (it.moveToFirst()) {
+                            var i = 0
+                            val growthProperty = Property { _ ->
+                                it.getDouble(i++)
+                            }
+                            growthProperty
+                        } else {
+                            Property.zero
                         }
-                        growthProperty
                     }
                 }
             },
@@ -152,7 +157,8 @@ suspend fun AppDatabase.getUniqueData(equipId: Int): UniqueData? {
             }
         ).awaitAll()
 
-        (list[0] as UniqueData).copy(
+        val uniqueData = list[0] as UniqueData?
+        uniqueData?.copy(
             growthProperty = list[1] as Property,
             rfGrowthProperty = list[2] as Property?
         )

@@ -15,11 +15,12 @@ FROM unit_ex_equipment_slot WHERE unit_id=$unitId"""
 
             use {
                 rawQuery(sql, null).use {
-                    it.moveToFirst()
                     val list = mutableListOf<ExEquipSlot>()
-                    var i = 0
-                    while (i < 3) {
-                        list.add(ExEquipSlot(it.getInt(i++), null))
+                    if (it.moveToFirst()) {
+                        var i = 0
+                        while (i < 3) {
+                            list.add(ExEquipSlot(it.getInt(i++), null))
+                        }
                     }
                     list
                 }

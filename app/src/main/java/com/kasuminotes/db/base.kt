@@ -215,8 +215,11 @@ suspend fun AppDatabase.getUserName(userId: Int): String {
 
     return safelyUse {
         rawQuery(sql, null).use {
-            it.moveToFirst()
-            it.getString(0)
+            if (it.moveToFirst()) {
+                it.getString(0)
+            } else {
+                "NULL"
+            }
         }
     }
 }
@@ -315,8 +318,7 @@ private suspend fun AppDatabase.getUnitConversionData(originalUnitData: UnitData
                     null
                 } else {
                     use {
-                        val sql =
-                            """SELECT unit_name,kana,search_area_width,atk_type,normal_atk_cast_time,comment,start_time
+                        val sql = """SELECT unit_name,kana,search_area_width,atk_type,normal_atk_cast_time,comment,start_time
 FROM unit_data WHERE unit_id=${convertedUnitId}"""
                         rawQuery(sql, null).use {
                             it.moveToFirst()
