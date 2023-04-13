@@ -104,7 +104,7 @@ private fun StoryProperties(
     if (status != null) {
         VerticalGrid(
             size = status.size,
-            cells = VerticalGridCells.Adaptive(350.dp),
+            cells = VerticalGridCells.Adaptive(400.dp),
             modifier = Modifier.fillMaxSize().padding(4.dp)// TODO 滚动修饰符在这无效
         ) { index ->
             val property = status[index]

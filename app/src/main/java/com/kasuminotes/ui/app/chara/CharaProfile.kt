@@ -33,7 +33,7 @@ fun CharaProfile(
 ) {
     VerticalGrid(
         size = 2,
-        cells = VerticalGridCells.Adaptive(350.dp),
+        cells = VerticalGridCells.Adaptive(400.dp),
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(state)

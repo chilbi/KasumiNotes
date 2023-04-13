@@ -52,7 +52,7 @@ fun EnemyList(
         val list = mapData.enemyDataList
         VerticalGrid(
             size = list.size,
-            cells = VerticalGridCells.Adaptive(350.dp),
+            cells = VerticalGridCells.Adaptive(400.dp),
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) { index ->
             val enemyData = list[index]

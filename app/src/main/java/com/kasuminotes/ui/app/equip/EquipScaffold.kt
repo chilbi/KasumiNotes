@@ -23,6 +23,8 @@ import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.MultiLineText
+import com.kasuminotes.ui.components.VerticalGrid
+import com.kasuminotes.ui.components.VerticalGridCells
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -57,17 +59,27 @@ fun EquipScaffold(
                     .verticalScroll(rememberScrollState())
                     .padding(4.dp)
             ) {
-                Container {
-                    MultiLineText(description)
+                VerticalGrid(
+                    size = 2,
+                    cells = VerticalGridCells.Adaptive(400.dp)
+                ) { index ->
+                    when (index) {
+                        0 -> {
+                            Container {
+                                MultiLineText(description)
+                            }
+                        }
+                        1 -> {
+                            EquipProperty(
+                                equipState.enhanceLevel,
+                                equipState.maxEnhanceLevel,
+                                baseProperty,
+                                equipState.property,
+                                equipState::changeEnhanceLevel
+                            )
+                        }
+                    }
                 }
-
-                EquipProperty(
-                    equipState.enhanceLevel,
-                    equipState.maxEnhanceLevel,
-                    baseProperty,
-                    equipState.property,
-                    equipState::changeEnhanceLevel
-                )
 
                 if (equipState.equipCraftList != null) {
                     EquipCraftList(
