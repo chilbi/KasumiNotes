@@ -282,7 +282,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
         20 -> D.Format(R.string.target_all_atk_content1, arrayOf(getAssignmentSide()))
         21 -> D.Format(R.string.target_all_magic_str_content1, arrayOf(getAssignmentSide()))
         //22 -> D.Unknown (allSummonRandom)
-        //23 -> D.Unknown (selfSummonRandom)
+        23 -> D.Format(R.string.target_all_summon_of_self)
         24 -> D.Format(R.string.target_boss)
         //33 -> D.Unknown (shadow)
         //40 -> D.Unknown

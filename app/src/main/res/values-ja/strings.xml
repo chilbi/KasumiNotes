@@ -233,6 +233,7 @@
     <string name="action_mode_pattern1_time2">行動パターン%1$sに切り換える、効果時間%2$s秒。</string>
     <string name="action_mode_pattern1_energy2">行動パターン%1$sに切り換える、毎秒ＴＰを%2$s消耗する、効果はＴＰが無くなるまで続く。</string>
     <string name="action_mode_return_pattern1">効果が切ると、行動パターン%sに切り換える。</string>
+    <string name="action_mode_return_mode1_pattern2">効果が切ると、%1$s行動パターン%2$sに切り換える。</string>
     <string name="action_relieve_field_content1">%sが展開しているフィールド効果を解除する。</string>
     <string name="action_blind_target1_count2">%1$sに次の%2$s回物理攻撃が必ず回避される状態を付与する。</string>
     <string name="action_count_down_target1_count2">%1$sに【カウントダウン】を設置し、%2$s秒後に発動。</string>
@@ -244,7 +245,7 @@
     <string name="action_knight_guard_target1_formula2_time3">%1$sに【騎士の加護】を付与する。ＨＰが0になると、倒れずに【騎士の加護】を消費してＨＰを%2$s回復する、効果時間%3$s秒。</string>
     <string name="action_shield_counter_target1_content2_add3_max4_consume5_formula6">%1$sに【%2$s】を%3$sつ追加する、最大%4$sまで追加される。【%2$s】は１回ダメージを無効化する毎に%5$sつ消耗され、同時に攻撃してきた敵に%6$sダメージを与える。</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$sに【%2$s】が%3$sつ追加されるようになる、最大%4$sまで追加される、効果時間%5$s秒。</string>
-    <string name="action_speed_overlay_content1_target2_formula3_time4">%1$s、%2$sの行動速度を%3$sアップさせる、効果時間%4$s秒。（このスキルの効果は他の行動速度変化スキルと重複する）</string>
+    <string name="action_speed_overlay_target1_formula2_time3">%1$sの行動速度を%2$sアップさせる、効果時間%3$s秒。（このスキルの効果は他の行動速度変化スキルと重複する）</string>
     <string name="action_injured_energy1">このアクションによるダメージではＴＰ回復量は本来の%sになる。</string>
     <string name="action_no_injured_energy">このアクションによるダメージではＴＰが回復しない。</string>
     <string name="action_hiding_target1_time2">%1$sを隠密状態にする、効果時間%2$s秒。</string>
@@ -314,9 +315,16 @@
     <string name="summon_408402">最も残りＨＰ割合が低い味方１キャラのＨＰを回復する精霊を唱喚する</string>
     <string name="summon_408403">味方全体のＴＰを回復する精霊を唱喚する</string>
     <string name="summon_418101">ネフライトワイバーンを召喚する</string>
+    <string name="summon_425801">UBを使用しない、自分のシャドウ(425801)を生成する</string>
+    <string name="summon_425802">UBを使用しない、自分のシャドウ(425802)を生成する</string>
 
     <string name="summon_unknown_id1">【召喚物%s】</string>
     <string name="summon_ore_dragon">ネフライトワイバーン</string>
+
+    <string name="mode_id1">自分を姿(%s)に変化させる、</string>
+    <string name="mode_return">自分をもとの姿に戻させる、</string>
+    <string name="mode_1158100">自分を人の姿に変化させる、</string>
+    <string name="mode_fly">自分を飛行状態にする、</string>
 
     <string name="content_max_hp_ratio1">最大ＨＰの%s</string>
     <string name="content_hp_ratio1">残りＨＰの%s</string>
@@ -336,9 +344,8 @@
     <string name="content_status_up_effect">ステータスアップ効果</string>
     <string name="content_status_down_effect">ステータスダウン効果</string>
     <string name="content_barrier">バリア</string>
-    <string name="content_strength_seal">【力の魔字】が刻まれている間</string>
-    <string name="content_kizuna_certificate">【絆の証】解放中</string>
-    <string name="content_unknown_state">【未知マーク】が持っている間</string>
+    <string name="content_strength_seal">【力の魔字】が刻まれている間、</string>
+    <string name="content_kizuna_certificate">【絆の証】解放中、</string>
 
     <string name="state_unknown">マーク%s</string>
     <string name="state_hiding">隠密</string>
@@ -425,6 +432,7 @@
     <string name="target_not_in_back_content1">自分の背後にいないキャラの内、%s</string>
     <string name="target_any_content1">の中の任意%s</string>
     <string name="target_all_summon_content1">%s全体の召喚物</string>
+    <string name="target_all_summon_of_self">自分の召喚物すべて</string>
     <string name="target_multi_target1">%sのマルチターゲット部位すべて</string>
 
     <string name="skill_level">スキルLv</string>

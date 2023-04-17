@@ -233,6 +233,7 @@
     <string name="action_mode_pattern1_time2">切换到行动模式%1$s，效果时间%2$s秒。</string>
     <string name="action_mode_pattern1_energy2">切换到行动模式%1$s，每秒消耗TP%2$s，效果持续到TP耗尽为止。</string>
     <string name="action_mode_return_pattern1">效果结束后，切换到行动模式%s。</string>
+    <string name="action_mode_return_mode1_pattern2">效果结束后，%1$s切换到行动模式%2$s。</string>
     <string name="action_relieve_field_content1">解除%s展开的领域效果。</string>
     <string name="action_blind_target1_count2">赋予%1$s下%2$s次物理攻击必定被回避的状态。</string>
     <string name="action_count_down_target1_count2">对%1$s设置【倒计时】，%2$s秒后发动。</string>
@@ -245,7 +246,7 @@
     <string name="action_shield_counter_target1_content2_add3_max4_consume5_formula6">为%1$s追加%3$s个【%2$s】，最多可以追加%4$s个。【%2$s】每无效1次伤害就会消耗%5$s个，同时对进攻的敌人造成%6$s伤害。</string>
     <string name="action_hit_count_target1_time2_count3">%1$s在%2$s秒内，每当造成%3$s次伤害时，</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$s追加%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。</string>
-    <string name="action_speed_overlay_content1_target2_formula3_time4">%1$s，%2$s的行动速度提升%3$s，效果时间%4$s秒。（此技能的效果可以和其它行动速度变化技能叠加）</string>
+    <string name="action_speed_overlay_target1_formula2_time3">%1$s的行动速度提升%2$s，效果时间%3$s秒。（此技能的效果可以和其它行动速度变化技能叠加）</string>
     <string name="action_injured_energy1">由此动作造成伤害的TP回复量变为原来的%s。</string>
     <string name="action_no_injured_energy">由此动作造成的伤害不回复TP。</string>
     <string name="action_hiding_target1_time2">赋予%1$s隐密状态，效果时间%2$s秒。</string>
@@ -314,9 +315,17 @@
     <string name="summon_408402">咏唱召唤一个能回复残余HP比例最低的一名己方角色的HP的精灵</string>
     <string name="summon_408403">咏唱召唤一个能回复己方全体TP的精灵</string>
     <string name="summon_418101">召唤矿石飞龙</string>
+    <string name="summon_425801">制造出一个不会使用UB的自身的暗影(425801)</string>
+    <string name="summon_425802">制造出一个不会使用UB的自身的暗影(425802)</string>
 
     <string name="summon_unknown_id1">【召唤物%s】</string>
     <string name="summon_ore_dragon">矿石飞龙</string>
+
+
+    <string name="mode_id1">自身变化为姿态(%s)，</string>
+    <string name="mode_return">自身恢复为原来的姿态，</string>
+    <string name="mode_1158100">自身变化为人类的姿态，</string>
+    <string name="mode_fly">赋予自身飞行状态，</string>
 
     <string name="content_max_hp_ratio1">最大HP的%s</string>
     <string name="content_hp_ratio1">残余HP的%s</string>
@@ -336,9 +345,8 @@
     <string name="content_status_up_effect">状态提升效果</string>
     <string name="content_status_down_effect">状态降低效果</string>
     <string name="content_barrier">护盾</string>
-    <string name="content_strength_seal">【力之魔字】刻印期间</string>
-    <string name="content_kizuna_certificate">【情谊的证明】解放期间</string>
-    <string name="content_unknown_state">【未知标记】持有期间</string>
+    <string name="content_strength_seal">【力之魔字】刻印期间，</string>
+    <string name="content_kizuna_certificate">【情谊的证明】解放期间，</string>
 
     <string name="state_unknown">标记%s</string>
     <string name="state_hiding">隐密</string>
@@ -425,6 +433,7 @@
     <string name="target_not_in_back_content1">不在自身后面的角色中，%s</string>
     <string name="target_any_content1">中的任意%s</string>
     <string name="target_all_summon_content1">%s所有的召唤物</string>
+    <string name="target_all_summon_of_self">自身所有的召唤物</string>
     <string name="target_multi_target1">%s的所有多目标部位</string>
 
     <string name="skill_level">技能等级</string>
