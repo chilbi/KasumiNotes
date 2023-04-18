@@ -103,12 +103,12 @@ fun SkillDetail(
             )
         }
 
-        ImageCard(
-            imageUrl = iconUrl,
-            primaryText = if (name != "") name
-            else stringResource(R.string.cool_time_s, coolTime),
-            secondaryText = stringResource(R.string.cast_time_s, castTime)
-        )
+        val primaryText = name.ifBlank { label }
+        var secondaryText = stringResource(R.string.cast_time_s, castTime)
+        if (coolTime != 0f) {
+            secondaryText += "; " + stringResource(R.string.cool_time_s, coolTime)
+        }
+        ImageCard(iconUrl, primaryText, secondaryText)
 
         if (description != "") {
             Text(

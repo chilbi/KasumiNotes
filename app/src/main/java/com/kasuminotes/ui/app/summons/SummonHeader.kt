@@ -1,15 +1,13 @@
 package com.kasuminotes.ui.app.summons
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.kasuminotes.ui.components.PlaceImage
-import com.kasuminotes.utils.UrlUtil
 
 private val textModifier = Modifier.padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 8.dp)
 
@@ -19,13 +17,14 @@ fun SummonHeader(
     enemyId: Int?,
     name: String,
 ) {
-    Box(
+    /*Box(
         Modifier
             .padding(8.dp)
             .size(48.dp)
     ) {
         PlaceImage(UrlUtil.summonIconUrl)
-    }
+    }*/
+    Spacer(Modifier.height(8.dp))
 
     Text(
         text = name,

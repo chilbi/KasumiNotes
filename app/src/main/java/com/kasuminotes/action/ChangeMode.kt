@@ -14,7 +14,7 @@ fun SkillAction.getChangeMode(): D {
                 arrayOf(patternNum, D.Text(actionValue1.toNumStr()))
             )
             if (hasMode) {
-                val model = when (actionValue3) {
+                val mode = when (actionValue3) {
                     0.0 -> {
                         if (actionValue5 == 1.0 && actionValue6 == 1.0) {
                             D.Format(R.string.mode_fly)
@@ -25,7 +25,7 @@ fun SkillAction.getChangeMode(): D {
                     1158100.0 -> D.Format(R.string.mode_1158100)
                     else -> D.Format(R.string.mode_id1, arrayOf(D.Text(actionValue3.toNumStr())))
                 }
-                model.append(pattern)
+                mode.append(pattern)
             } else {
                 pattern
             }
