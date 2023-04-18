@@ -76,6 +76,7 @@ android {
         kotlinCompilerExtensionVersion kotlin_compiler_version
         kotlinCompilerVersion kotlin_version
     }
+    namespace 'com.kasuminotes'
 }
 
 dependencies {
@@ -109,14 +110,14 @@ dependencies {
     // navigation-compose
     implementation 'androidx.navigation:navigation-compose:2.5.3'
     // navigation-animation
-    implementation 'com.google.accompanist:accompanist-navigation-animation:0.30.1'
+    implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
     // coil-compose
     implementation 'io.coil-kt:coil-compose:2.3.0'
 
     // okhttp
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
     // commons-compress
-    implementation 'org.apache.commons:commons-compress:1.22'
+    implementation 'org.apache.commons:commons-compress:1.23.0'
     // brotli
     implementation 'org.brotli:dec:0.1.2'
 
