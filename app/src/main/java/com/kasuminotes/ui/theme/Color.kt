@@ -376,11 +376,11 @@ val Themes: Array<Lazy<Palettes>> = arrayOf(
 )
 
 val phaseColors = listOf(
-    Color(0xFF77D39E),
-    Color(0xFFFFBB99),
-    Color(0xFFFDCA64),
-    Color(0xFFFFA819),
-    Color(0xFFFD8013)
+    Color(0xFF80BF65),
+    Color(0xFF6CA8E6),
+    Color(0xFFCC6AA6),
+    Color(0xFFD94C42),
+    Color(0xFFB367DC)
 )
 
 val Int.rankRarity: Int
