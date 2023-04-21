@@ -41,9 +41,6 @@ private val allMostHighTypes = hpRatioHighTypes
     .plus(magicStrHighTypes)
     .plus(atkOrMagicStrHighTypes)
 
-/** if (actionType == 23 || actionType == 28) any_target else target */
-fun SkillAction.isBranch() = actionType in arrayOf(23, 28)
-
 fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
     if (depend != null) {
         return if (depend.actionType == 1 || depend.actionId == actionId) {
@@ -342,57 +339,111 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
 }
 
 /**
- * if (targetAssignment == 1) 敌人 else 己方角色
+ * when (targetAssignment) {
  *
- * 敌人|己方角色
+ *    1 -> 敌人
  *
- * 敵|味方
+ *    2 -> 己方角色
+ *
+ *    else -> 敌人和己方角色
+ *
+ * }
+ *
+ * 敌人|己方角色|敌人和己方角色
+ *
+ * 敵|味方|敵と味方
  */
 fun SkillAction.getAssignment(): D {
-    return D.Format(if (targetAssignment == 1) R.string.target_enemy else R.string.target_friendly)
+    return D.Format(
+        when (targetAssignment) {
+            1 -> R.string.target_enemy
+            2 -> R.string.target_friendly
+            else -> R.string.target_enemy_and_friendly
+        }
+    )
 }
 
 /**
- * if (targetAssignment == 1) 敌人 else 己方角色
+ * when (targetAssignment) {
  *
- * 敌人|己方角色
+ *    1 -> 敌人
  *
- * 敵１キャラ|味方１キャラ
+ *    2 -> 己方角色
+ *
+ *    else -> 敌人和己方角色
+ *
+ * }
+ *
+ * 敌人|己方角色|敌人和己方角色
+ *
+ * 敵１キャラ|味方１キャラ|敵と味方１キャラ
  */
 fun SkillAction.getAssignmentOne(): D {
-    return D.Format(if (targetAssignment == 1) R.string.target_enemy_one else R.string.target_friendly_one)
+    return D.Format(
+        when (targetAssignment) {
+            1 -> R.string.target_enemy_one
+            2 -> R.string.target_friendly_one
+            else -> R.string.target_enemy_and_friendly_one
+        }
+    )
 }
 
 /**
- * if (targetAssignment == 1) 敌方 else 己方
+ * when (targetAssignment) {
  *
- * 敌方|己方
+ *    1 -> 敌方
  *
- * 敵|味方
+ *    2 -> 己方
+ *
+ *    else -> 敌方和己方
+ *
+ * }
+ * 敌方|己方|敌方和己方
+ *
+ * 敵|味方|敵と味方
  */
 fun SkillAction.getAssignmentSide(): D {
-    return D.Format(if (targetAssignment == 1) R.string.target_enemy_side else R.string.target_friendly_side)
+    return D.Format(
+        when (targetAssignment) {
+            1 -> R.string.target_enemy_side
+            2 -> R.string.target_friendly_side
+            else -> R.string.target_enemy_and_friendly_side
+        }
+    )
 }
 
 /**
- * if (targetAssignment == 1) 敌人 else 己方角色
+ * when (targetAssignment) {
  *
- * {n}名{敌人|己方角色}
+ *    1 -> 敌人
  *
- * {敵|味方}{n}キャラ
+ *    2 -> 己方角色
+ *
+ *    else -> 敌人和己方角色
+ *
+ * }
+ * {n}名{敌人|己方角色|敌人和己方角色}
+ *
+ * {敵|味方|敵と味方}{n}キャラ
  */
 private fun SkillAction.getAssignmentCount(): D {
-    @StringRes
-    val count = when (targetCount) {
-        1 -> R.string.target_count1
-        2 -> R.string.target_count2
-        3 -> R.string.target_count3
-        4 -> R.string.target_count4
-        else -> R.string.target_count5
-    }
     return D.Format(
-        if (targetAssignment == 1) R.string.target_enemy_count1 else R.string.target_friendly_count1,
-        arrayOf(D.Format(count))
+        when (targetAssignment) {
+            1 -> R.string.target_enemy_count1
+            2 -> R.string.target_friendly_count1
+            else -> R.string.target_enemy_and_friendly_count1
+        },
+        arrayOf(
+            D.Format(
+                when (targetCount) {
+                    1 -> R.string.target_count1
+                    2 -> R.string.target_count2
+                    3 -> R.string.target_count3
+                    4 -> R.string.target_count4
+                    else -> R.string.target_count5
+                }
+            )
+        )
     )
 }
 
@@ -455,3 +506,6 @@ private fun SkillAction.getDependMultiTarget(dependTarget: D): D {
 private fun SkillAction.isFullRangeTarget(): Boolean {
     return targetRange <= 0 || targetRange >= 2160
 }
+
+/** if (actionType == 23 || actionType == 28) any_target else target */
+fun SkillAction.isBranch() = actionType in arrayOf(23, 28)

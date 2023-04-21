@@ -163,57 +163,60 @@ private fun SkillAction.getGiveValueIndependentVariable(): D {
 private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
     return when (targetAction.actionType) {
         1 -> when (actionDetail2) {
-            3 -> D.Format(R.string.additive_damage_rate1, arrayOf(getAtkType(targetAction.actionDetail1)))
-            6 -> D.Format(R.string.additive_critical_damage)
-            else -> D.Format(R.string.additive_damage)
+            3 -> D.Format(R.string.give_damage_rate1, arrayOf(getAtkType(targetAction.actionDetail1)))
+            6 -> D.Format(R.string.give_critical_damage)
+            else -> D.Format(R.string.give_damage)
         }
-        3 -> D.Format(R.string.additive_distance)
-        4 -> D.Format(R.string.additive_hp_recovery)
-        6 -> if (actionDetail2 == 3) D.Format(R.string.additive_time)
+        3 -> D.Format(R.string.give_distance)
+        4 -> D.Format(R.string.give_hp_recovery)
+        6 -> if (actionDetail2 == 3) D.Format(R.string.give_time)
         else D.Format(
             when (targetAction.actionDetail1) {
-                1, 2, 5 -> R.string.additive_barrier_guard
-                else -> R.string.additive_barrier_drain
+                1, 2, 5 -> R.string.give_barrier_guard
+                else -> R.string.give_barrier_drain
             }
         )
-        8 -> D.Format(R.string.additive_time)
-        9 -> if (actionDetail2 == 3) D.Format(R.string.additive_time)
+        8 -> D.Format(R.string.give_time)
+        9 -> if (actionDetail2 == 3) D.Format(R.string.give_time)
         else D.Join(
             arrayOf(
                 getAbnormalDamageContent(targetAction.actionDetail1),
-                D.Format(R.string.additive_damage)
+                D.Format(R.string.give_damage)
             )
         )
-        10 -> if (actionDetail2 == 4) D.Format(R.string.additive_time)
+        10 -> if (actionDetail2 == 4) D.Format(R.string.give_time)
         else D.Format(
-            if (targetAction.actionDetail1 == 141 || targetAction.actionDetail1 % 10 == 0) R.string.additive_up_amount_content1
-            else R.string.additive_down_amount_content1,
+            if (targetAction.isStatusUp()) R.string.give_up_amount_content1
+            else R.string.give_down_amount_content1,
             arrayOf(getStatusContent(targetAction.actionDetail1 / 10))
         )
-        16 -> D.Format(R.string.additive_energy_recovery)
+        16 -> D.Format(
+            if (targetAction.actionDetail1 == 1) R.string.give_energy_recovery
+            else R.string.give_energy_decrement
+        )
         35 -> when (actionDetail2) {
             4 -> D.Format(
-                if (actionValue2 > 0.0) R.string.additive_mark_add_state1 else R.string.additive_mark_consume_state1,
+                if (actionValue2 > 0.0) R.string.give_mark_add_state1 else R.string.give_mark_consume_state1,
                 arrayOf(getStateContent(targetAction.actionValue2.toInt()))
             )
-            3 -> D.Format(R.string.additive_time)
+            3 -> D.Format(R.string.give_time)
             1 -> D.Format(
-                R.string.additive_mark_max_state1,
+                R.string.give_mark_max_state1,
                 arrayOf(getStateContent(targetAction.actionValue2.toInt()))
             )
             else -> D.Unknown
         }
-        38 -> if (actionDetail2 == 3) D.Format(R.string.additive_time)
+        38 -> if (actionDetail2 == 3) D.Format(R.string.give_time)
         else D.Format(
-            if (targetAction.actionDetail1 % 10 == 0) R.string.additive_up_amount_content1
-            else R.string.additive_down_amount_content1,
+            if (targetAction.actionDetail1 % 10 == 0) R.string.give_up_amount_content1
+            else R.string.give_down_amount_content1,
             arrayOf(getStatusContent(targetAction.actionDetail1 / 10))
         )
-        46 -> D.Format(R.string.additive_damage)
-        48 -> if (actionDetail2 == 5) D.Format(R.string.additive_time)
+        46 -> D.Format(R.string.give_damage)
+        48 -> if (actionDetail2 == 5) D.Format(R.string.give_time)
         else D.Format(
-            if (targetAction.actionDetail2 == 1) R.string.additive_hp_regeneration
-            else R.string.additive_energy_regeneration
+            if (targetAction.actionDetail2 == 1) R.string.give_hp_regeneration
+            else R.string.give_energy_regeneration
         )
         else -> D.Unknown
     }

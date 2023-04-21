@@ -32,6 +32,18 @@ fun SkillAction.isStatusPercent(): Boolean {
     return isPercent
 }
 
+fun SkillAction.isStatusUp(): Boolean {
+    var detail1 = actionDetail1
+    if (detail1 > 1000) {
+        detail1 -= 1000
+    }
+    var isUp = detail1 % 10 == 0
+    if (detail1 >= 140) {
+        isUp = !isUp
+    }
+    return isUp
+}
+
 /** arrayOf(contentDesc, timeDesc, constDesc) */
 fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, property: Property?): Array<D?> {
     // 不受技能影响

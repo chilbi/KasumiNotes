@@ -183,10 +183,7 @@ private fun CharaHeader(
         StillBox(
             unitId,
             rarity,
-            Modifier
-                .zIndex(2f)
-                .sizeIn(maxWidth = 420.dp)
-                .then(ImageSize.StillModifier)
+            Modifier.sizeIn(maxWidth = 420.dp).then(ImageSize.StillModifier)
         ) {
             TranslucentBackButton(
                 onBack,
