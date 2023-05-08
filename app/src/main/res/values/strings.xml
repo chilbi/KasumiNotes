@@ -262,6 +262,7 @@
     <string name="action_damage_attenuation_target1_limit2_time3_r4_r5_r6">对%1$s展开限制盾，受到每个动作的伤害超过%2$s万时，伤害将会被衰减，效果时间%3$s秒。\nf(100万)=%4$s万; f(200万)=%5$s万; f(999万)=%6$s万</string>
     <string name="action_stealth_time1">进入潜伏状态，效果时间%s秒。</string>
     <string name="action_ignore_provocation">无视挑衅，</string>
+    <string name="action_akinesia_invalid_target1_time2">赋予%1$s可无效化受到的行动不能的状态，效果时间%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">赋予%1$s可无效化最多%2$s次受到的行动不能的状态，效果时间%3$s秒。</string>
 
     <string name="action_branch_and">且</string>
@@ -375,6 +376,7 @@
     <string name="state_soul_ability">灵力</string>
     <string name="state_yasakaninomagatama">八尺琼勾玉・减葬</string>
     <string name="state_black_star">黑星</string>
+    <string name="state_sword">真破・天楼霸断剑</string>
     <string name="state_friendship_seal">友情的魔印</string>
     <string name="state_hazy">朦胧</string>
     <string name="state_kizuna_certificate">情谊的证明</string>

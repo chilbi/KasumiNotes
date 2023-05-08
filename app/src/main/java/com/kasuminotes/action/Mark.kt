@@ -25,7 +25,7 @@ fun SkillAction.getMark(): D {
         R.string.action_mark_content1_state2_add3_max4_time5,
         arrayOf(
             content,
-            getStateContent(actionValue2.toInt()),
+            getStateContent(actionValue2.toInt(), actionId),
             D.Text(actionDetail2.toString()),
             D.Text(actionValue1.toNumStr()),
             D.Text(actionValue3.toNumStr())

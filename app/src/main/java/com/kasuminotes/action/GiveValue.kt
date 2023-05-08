@@ -128,10 +128,10 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 private fun SkillAction.getGiveValueIndependentVariable(): D {
     return when {
         actionValue1 > 2000.0 -> {
-            D.Format(R.string.count_state1, arrayOf(getStateContent((actionValue1 % 1000).toInt())))
+            D.Format(R.string.count_state1, arrayOf(getStateContent((actionValue1 % 1000).toInt(), actionId)))
         }
         actionValue1 > 100.0 -> {
-            D.Format(R.string.count_state1, arrayOf(getStateContent((actionValue1 % 100).toInt())))
+            D.Format(R.string.count_state1, arrayOf(getStateContent((actionValue1 % 100).toInt(), actionId)))
         }
         actionValue1 > 20.0 -> {
             val counter = D.Format(R.string.counter_num1, arrayOf(D.Text((actionValue1 % 10).toNumStr())))
@@ -197,12 +197,12 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
         35 -> when (actionDetail2) {
             4 -> D.Format(
                 if (actionValue2 > 0.0) R.string.give_mark_add_state1 else R.string.give_mark_consume_state1,
-                arrayOf(getStateContent(targetAction.actionValue2.toInt()))
+                arrayOf(getStateContent(targetAction.actionValue2.toInt(), actionId))
             )
             3 -> D.Format(R.string.give_time)
             1 -> D.Format(
                 R.string.give_mark_max_state1,
-                arrayOf(getStateContent(targetAction.actionValue2.toInt()))
+                arrayOf(getStateContent(targetAction.actionValue2.toInt(), actionId))
             )
             else -> D.Unknown
         }

@@ -5,7 +5,7 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getChangeMark(): D {
     val target = getTarget(depend)
-    val state = getStateContent(actionValue2.toInt())
+    val state = getStateContent(actionValue2.toInt(), actionId)
     val time = D.Text(actionValue3.toNumStr())
 
     return if (actionValue1 > 1.0) {

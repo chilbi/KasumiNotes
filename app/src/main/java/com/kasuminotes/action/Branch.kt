@@ -339,7 +339,7 @@ private fun SkillAction.setBranch(branch: MutableList<Pair<Int, D>>, yes: D, not
 }
 
 private fun SkillAction.setStateBranch(branch: MutableList<Pair<Int, D>>, stateId: Int, stateCount: Double) {
-    val state = getStateContent(stateId)
+    val state = getStateContent(stateId, actionId)
     val target = getTarget(depend)
     if (stateCount == 0.0 || stateCount == 1.0) {
         setBranch(

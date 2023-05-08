@@ -181,7 +181,7 @@ fun getStatusIndex(detail: Int): Int? {
     }
 }
 
-fun getStateContent(detail: Int): D {
+fun getStateContent(detail: Int, actionId: Int): D {
     return when (detail) {
         1 -> D.Format(R.string.state_hiding)
         2 -> D.Format(R.string.state_omemechan)
@@ -190,7 +190,7 @@ fun getStateContent(detail: Int): D {
         57 -> D.Format(R.string.state_flinch)
         60 -> D.Format(R.string.state_otomodachi)
         61 -> D.Format(R.string.state_coin)
-        63, 125 -> D.Format(R.string.state_black_star)
+        63 -> D.Format(R.string.state_black_star)
         76 -> D.Format(R.string.state_cheru)
         77 -> D.Format(R.string.state_wind_sword)
         90 -> D.Format(R.string.state_tiger_claw)
@@ -209,6 +209,8 @@ fun getStateContent(detail: Int): D {
         119 -> D.Format(R.string.state_dark_night_intensive)
         120 -> D.Format(R.string.state_soul_ability)
         122 -> D.Format(R.string.state_yasakaninomagatama)
+        125 -> if (actionId / 100000 == 1061) D.Format(R.string.state_sword)
+        else D.Format(R.string.state_black_star)
         126 -> D.Format(R.string.state_friendship_seal)
         127 -> D.Format(R.string.state_hazy)
         130 -> D.Format(R.string.state_kizuna_certificate)

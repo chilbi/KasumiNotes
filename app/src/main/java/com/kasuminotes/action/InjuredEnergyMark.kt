@@ -8,7 +8,7 @@ fun SkillAction.getInjuredEnergyMark(): D {
         R.string.action_injured_energy1_mark2_add3_max4_time5_target6,
         arrayOf(
             D.Text(actionValue1.toNumStr()),
-            getStateContent(actionDetail2),
+            getStateContent(actionDetail2, actionId),
             D.Text(actionValue3.toNumStr()),
             D.Text(actionValue4.toNumStr()),
             D.Text(actionValue5.toNumStr()),
