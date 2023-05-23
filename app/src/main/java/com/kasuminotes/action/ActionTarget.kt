@@ -132,7 +132,8 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             } else {//targetArea == 2 || targetArea == 3
                 if (targetCount == 1) {//一名目标
                     if (isFullRangeTarget()) {
-                        if (targetRange == 0 && targetNumber == 0) {//targetArea==3
+                        if (targetRange == 0 && targetNumber == 0 && targetAssignment != 1) {
+                            //targetArea==3、ゴブリングレート（UB）
                             D.Format(R.string.target_self)
                         } else {
                             if (targetNumber > 0) {

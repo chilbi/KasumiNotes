@@ -3,7 +3,6 @@ package com.kasuminotes.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.state.ToggleableState
 
 @Composable
