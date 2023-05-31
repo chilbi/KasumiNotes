@@ -18,6 +18,8 @@ fun SkillAction.getSummon(): D {
         418101 -> D.Format(R.string.summon_418101)//ランファ
         425801 -> D.Format(R.string.summon_425801)
         425802 -> D.Format(R.string.summon_425802)
+        426201 -> D.Format(R.string.summon_426201)
+        426202 -> D.Format(R.string.summon_426202)
         else -> D.Format(R.string.summon_id1, arrayOf(D.Text(actionDetail2.toString())))
     }
 

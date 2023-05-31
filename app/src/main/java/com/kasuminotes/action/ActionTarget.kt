@@ -7,7 +7,7 @@ import com.kasuminotes.data.SkillAction
 /** 残余HP比例最高的 */
 private val hpRatioHighTypes = arrayOf(6, 26, 35)
 /** 加上残余HP比例最低的 */
-private val hpRatioTypes = hpRatioHighTypes.plus(arrayOf(5, 25, 36))
+private val hpRatioTypes = hpRatioHighTypes.plus(arrayOf(5, 25, 36, 44))
 /** TP最高的 */
 private val energyHighTypes = arrayOf(12, 27, 37)
 /** 加上TP最低的 */
@@ -25,7 +25,7 @@ private val atkOrMagicStrHighTypes = arrayOf(38)
 /** 加上物理攻击力或魔法攻击力最低的 */
 private val atkOrMagicStrTypes = atkOrMagicStrHighTypes.plus(39)
 /** 自身以外的（还有34在其它地方处理了） */
-private val withoutSelfTypes = arrayOf(41, 43)
+private val withoutSelfTypes = arrayOf(41, 43, 44)
 /** 不在自身后面的 */
 private val notInBackTypes = arrayOf(35, 36)
 /** 所有 "{0}最{1高|低}的{2}" 的类型 */

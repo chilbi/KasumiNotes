@@ -223,6 +223,10 @@ fun getStateContent(detail: Int, actionId: Int): D {
 fun getSummonText(id: Int): D {
     return when (id) {
         418101 -> D.Format(R.string.summon_ore_dragon)
+        425801 -> D.Format(R.string.summon_shadow_425801)
+        425802 -> D.Format(R.string.summon_shadow_425802)
+        426201 -> D.Format(R.string.summon_family_426201)
+        426202 -> D.Format(R.string.summon_family_426202)
         else -> D.Format(R.string.summon_unknown_id1, arrayOf(D.Text(id.toString())))
     }
 }

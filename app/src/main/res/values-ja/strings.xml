@@ -318,9 +318,15 @@
     <string name="summon_418101">ネフライトワイバーンを召喚する</string>
     <string name="summon_425801">UBを使用しない、自分のシャドウ(425801)を生成する</string>
     <string name="summon_425802">UBを使用しない、自分のシャドウ(425802)を生成する</string>
+    <string name="summon_426201">眷属(426201)を召喚する</string>
+    <string name="summon_426202">眷属(426202)を召喚する</string>
 
     <string name="summon_unknown_id1">【召喚物%s】</string>
     <string name="summon_ore_dragon">ネフライトワイバーン</string>
+    <string name="summon_shadow_425801">シャドウ(425801)</string>
+    <string name="summon_shadow_425802">シャドウ(425802)</string>
+    <string name="summon_family_426201">眷属(426201)</string>
+    <string name="summon_family_426202">眷属(426202)</string>
 
     <string name="mode_id1">自分を姿(%s)に変化させる、</string>
     <string name="mode_return">自分をもとの姿に戻させる、</string>
