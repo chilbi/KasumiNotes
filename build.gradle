@@ -1,12 +1,12 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kasuminotes_version = '1.8.4'
-        kasuminotes_version_code = 183
-        kotlin_version = '1.8.20'
+        kasuminotes_version = '1.8.5'
+        kasuminotes_version_code = 185
+        kotlin_version = '1.8.21'
         compose_version = '1.4.3'
-        material3_version = '1.1.0-rc01'
-        kotlin_compiler_version = '1.4.6'
+        material3_version = '1.1.0'
+        kotlin_compiler_version = '1.4.7'
         lifecycle_viewmodel_version = '2.6.1'
         accompanist_version = '0.30.1'
     }
@@ -20,7 +20,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.0.1'
+        classpath 'com.android.tools.build:gradle:8.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong

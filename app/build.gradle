@@ -83,11 +83,11 @@ dependencies {
     // kotlin-stdlib
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     // kotlin-coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
     // core-ktx
-    implementation "androidx.core:core-ktx:1.10.0"
+    implementation "androidx.core:core-ktx:1.10.1"
     // activity-compose
-    implementation 'androidx.activity:activity-compose:1.7.0'
+    implementation 'androidx.activity:activity-compose:1.7.2'
     // appcompat
     implementation 'androidx.appcompat:appcompat:1.6.1'
 
@@ -112,7 +112,7 @@ dependencies {
     // navigation-animation
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
     // coil-compose
-    implementation 'io.coil-kt:coil-compose:2.3.0'
+    implementation 'io.coil-kt:coil-compose:2.4.0'
 
     // okhttp
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
