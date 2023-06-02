@@ -38,7 +38,10 @@ fun Chara(
     val userProfile = charaState.userProfile!!
     val userData = charaState.userData!!
     val unitData = userProfile.getRealUnitData(userData.rarity)
-    val originProperty = userProfile.includeExEquipProperty ?: charaState.includeExEquipProperty
+    val property = charaState.includeExEquipProperty
+    val originProperty = remember(charaState.saveVisible, userProfile.includeExEquipProperty, property) {
+        userProfile.includeExEquipProperty ?: property
+    }
 
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
@@ -115,7 +118,7 @@ fun Chara(
                 userProfile.uniqueData,
                 userProfile.exEquipSlots,
                 charaState.rankBonusProperty,
-                charaState.includeExEquipProperty,
+                property,
                 originProperty,
                 userProfile.userData,
                 charaState.saveVisible,
@@ -148,7 +151,7 @@ fun Chara(
                 userProfile.promotions,
                 userProfile.getRealUnitAttackPatternList(userData.rarity),
                 userProfile.getRealUnitSkillData(userData.rarity),
-                charaState.includeExEquipProperty,
+                property,
                 onEquipClick,
                 onUniqueClick,
                 onSummonsClick,
