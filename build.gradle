@@ -1,8 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kasuminotes_version = '1.8.5'
-        kasuminotes_version_code = 185
+        kasuminotes_version = '1.8.6'
+        kasuminotes_version_code = 186
         kotlin_version = '1.8.21'
         compose_version = '1.4.3'
         material3_version = '1.1.0'
