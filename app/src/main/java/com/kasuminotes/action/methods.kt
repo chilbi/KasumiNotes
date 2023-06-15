@@ -216,6 +216,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         130 -> D.Format(R.string.state_kizuna_certificate)
         131 -> D.Format(R.string.state_psi_charge)
         133 -> D.Format(R.string.state_universe_seal)
+        134 -> D.Format(R.string.state_beauty)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
 }
