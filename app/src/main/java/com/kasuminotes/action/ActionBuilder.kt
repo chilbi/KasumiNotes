@@ -53,12 +53,24 @@ class ActionBuilder(
             /** [getInjuredEnergy] */
             if (action.actionType == 92) {
                 willRemoveIndexList.add(index)
+                val modifyTypes = arrayOf(1, 9, 36, 46, 79)
                 rawDepends.forEachIndexed { dependIndex, dependActionId ->
-                    if (
-                        dependActionId == action.actionId &&
-                        actions[dependIndex].actionType in arrayOf(1, 9, 36, 46, 79)
-                    ) {
-                        originList[dependIndex] = originList[dependIndex].append(action.getInjuredEnergy())
+                    if (dependActionId == action.actionId) {
+                        val injuredEnergyContent = action.getInjuredEnergy()
+                        val dependAction = actions[dependIndex]
+                        if (dependAction.actionType in modifyTypes) {
+                            originList[dependIndex] = originList[dependIndex].append(injuredEnergyContent)
+                        } else if (dependAction.actionType == 93) {
+                            val injuredEnergyModify = ModifyDescription(rawDepends, actions)
+                            val targetIndex = actions.indexOfFirst { it.actionId == dependAction.actionDetail1 }
+                            injuredEnergyModify.collectIgnoreProvocation(targetIndex, injuredEnergyContent)
+                            injuredEnergyModify.collectDepend()
+                            injuredEnergyModify.forEachModify { modifyIndex, modifyContent ->
+                                if (actions[modifyIndex].actionType in modifyTypes) {
+                                    originList[modifyIndex] = originList[modifyIndex].append(modifyContent)
+                                }
+                            }
+                        }
                     }
                 }
             }
