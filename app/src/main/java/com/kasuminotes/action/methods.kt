@@ -217,6 +217,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         131 -> D.Format(R.string.state_psi_charge)
         133 -> D.Format(R.string.state_universe_seal)
         134 -> D.Format(R.string.state_beauty)
+        135 -> D.Format(R.string.state_battery)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
 }

@@ -170,6 +170,15 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         in 6000..6999 -> {
             setStateBranch(branch,actionDetail1 - 6000, actionValue3)
         }
+        // アキノ（サマー）
+        2001 -> {
+        val target = getTarget(depend)
+        setBranch(
+            branch,
+            D.Format(R.string.action_branch_exists_magic, arrayOf(target)),
+            D.Format(R.string.action_branch_not_exists_magic, arrayOf(target))
+        )
+    }
         // ミミ（サマー）
         1800 -> {
             val target = getTarget(depend)
@@ -312,7 +321,7 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
 private fun SkillAction.getStrikedBranch(): Array<Pair<Int, D>> {
     return arrayOf(
         actionDetail2 to D.Format(
-            R.string.action_striked_branch_time1,
+            R.string.action_branch_striked_time1,
             arrayOf(D.Text(actionValue4.toNumStr()))
         )
     )
@@ -323,8 +332,8 @@ private fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
     val content = getSkillLabel(actionDetail1)
     setBranch(
         branch,
-        D.Format(R.string.action_exists_field_branch_content1, arrayOf(content)),
-        D.Format(R.string.action_not_exists_field_branch_content1, arrayOf(content))
+        D.Format(R.string.action_branch_exists_field_content1, arrayOf(content)),
+        D.Format(R.string.action_branch_not_exists_field_content1, arrayOf(content))
     )
     return branch.toTypedArray()
 }

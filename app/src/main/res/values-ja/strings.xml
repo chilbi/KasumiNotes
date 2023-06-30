@@ -245,7 +245,7 @@
     <string name="action_knight_guard_target1_formula2_time3">%1$sに【騎士の加護】を付与する。ＨＰが0になると、倒れずに【騎士の加護】を消費してＨＰを%2$s回復する、効果時間%3$s秒。</string>
     <string name="action_shield_counter_target1_content2_add3_max4_consume5_formula6">%1$sに【%2$s】を%3$sつ追加する、最大%4$sまで追加される。【%2$s】は１回ダメージを無効化する毎に%5$sつ消耗され、同時に攻撃してきた敵に%6$sダメージを与える。</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$sに【%2$s】が%3$sつ追加されるようになる、最大%4$sまで追加される、効果時間%5$s秒。</string>
-    <string name="action_speed_overlay_target1_formula2_time3">%1$sの行動速度を%2$sアップさせる、効果時間%3$s秒。（このスキルの効果は他の行動速度変化スキルと重複する）</string>
+    <string name="action_speed_overlay_target1_content2_formula3_time4">%1$sの行動速度を%3$s%2$sさせる、効果時間%4$s秒。（このスキルの効果は他の行動速度変化スキルと重複する）</string>
     <string name="action_injured_energy1">このアクションによるダメージではＴＰ回復量は本来の%sになる。</string>
     <string name="action_no_injured_energy">このアクションによるダメージではＴＰが回復しない。</string>
     <string name="action_hiding_target1_time2">%1$sを隠密状態にする、効果時間%2$s秒。</string>
@@ -266,9 +266,9 @@
 
     <string name="action_branch_and">且つ</string>
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>
-    <string name="action_striked_branch_time1">%s秒のモーションの間に攻撃された場合、</string>
-    <string name="action_exists_field_branch_content1">%sのフィールド展開中場合、</string>
-    <string name="action_not_exists_field_branch_content1">%sのフィールド展開中でない場合、</string>
+    <string name="action_branch_striked_time1">%s秒のモーションの間に攻撃された場合、</string>
+    <string name="action_branch_exists_field_content1">%sのフィールド展開中場合、</string>
+    <string name="action_branch_not_exists_field_content1">%sのフィールド展開中でない場合、</string>
     <string name="action_branch_have_target1_state2">%1$sが【%2$s】を持っている場合、</string>
     <string name="action_branch_not_have_target1_state2">%1$sが【%2$s】を持っていない場合、</string>
     <string name="action_branch_target1_state2_above3">%1$sの【%2$s】の数が≧%3$sの場合、</string>
@@ -305,6 +305,8 @@
     <string name="action_branch_not_break_target1">%sのターゲットがBreak状態でない場合、</string>
     <string name="action_branch_unit_target1_count2">%1$s全体の数が=%2$sの場合、</string>
     <string name="action_branch_not_unit_target1_count2">%1$s全体の数が≠%2$sの場合、</string>
+    <string name="action_branch_exists_magic">魔法攻撃をする敵がいる場合、</string>
+    <string name="action_branch_not_exists_magic">魔法攻撃をする敵がいない場合、</string>
 
     <string name="summon_id1">【召喚物%s】を召喚する</string>
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
@@ -350,9 +352,13 @@
     <string name="content_disregard_def1_value_2">%1$sを%2$sを無視する</string>
     <string name="content_status_up_effect">ステータスアップ効果</string>
     <string name="content_status_down_effect">ステータスダウン効果</string>
+    <string name="content_up">アップ</string>
+    <string name="content_down">ダウン</string>
     <string name="content_barrier">バリア</string>
     <string name="content_strength_seal">【力の魔字】が刻まれている間、</string>
     <string name="content_kizuna_certificate">【絆の証】解放中、</string>
+    <string name="content_full_charge">自分が【フルチャージ】状態になり、</string>
+    <string name="content_system_down">自分が【システムダウン】状態になり、</string>
 
     <string name="state_unknown">マーク%s</string>
     <string name="state_hiding">隠密</string>
@@ -388,6 +394,7 @@
     <string name="state_psi_charge">PSI★チャージ</string>
     <string name="state_universe_seal">万象の刻印</string>
     <string name="state_beauty">美貌</string>
+    <string name="state_battery">バッテリー</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>
