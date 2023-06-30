@@ -359,7 +359,7 @@
     <string name="content_strength_seal">【力之魔字】刻印期间，</string>
     <string name="content_kizuna_certificate">【情谊的证明】解放期间，</string>
     <string name="content_full_charge">赋予自身【满电】状态，</string>
-    <string name="content_system_down">使自身陷入【系统故障】状态，</string>
+    <string name="content_system_down">使自身陷入【系统宕机】状态，</string>
 
     <string name="state_unknown">标记%s</string>
     <string name="state_hiding">隐密</string>
@@ -395,7 +395,7 @@
     <string name="state_psi_charge">PSI★充能</string>
     <string name="state_universe_seal">万象的刻印</string>
     <string name="state_beauty">美貌</string>
-    <string name="state_battery">电池</string>
+    <string name="state_battery">电量</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>
