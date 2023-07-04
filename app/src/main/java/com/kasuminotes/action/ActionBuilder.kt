@@ -44,6 +44,12 @@ class ActionBuilder(
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
                 originList[modifyIndex] = originList[modifyIndex].append(originList[index])
             }
+            /** [getDamageBaseAtk] */
+            if (action.actionType == 103) {
+                willRemoveIndexList.add(index)
+                val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
+                originList[modifyIndex] = originList[modifyIndex].append(originList[index])
+            }
             /** [getHitCount] */
             if (action.actionType == 75) {
                 willRemoveIndexList.add(index)
@@ -184,6 +190,7 @@ class ActionBuilder(
             98 -> getEnergyCut()
             99 -> getSpeedField()
             100 -> getAkinesiaInvalid()
+            103 -> getDamageBaseAtk()
             else -> getUnknown()
         }
     }

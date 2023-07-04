@@ -177,6 +177,7 @@
     <string name="action_damage_must_critical">此攻击的第1击的伤害必定暴击。</string>
     <string name="action_damage_must_hit_and_critical">此攻击必定命中，且第1击的伤害必定暴击。</string>
     <string name="action_damage_critical_rate1">当此攻击暴击时，暴击伤害倍率为%s倍。</string>
+    <string name="action_damage_base_atk1_target2">此攻击以%2$s的%1$s为基础造成伤害。</string>
     <string name="action_move_target1">移动到%s的面前。</string>
     <string name="action_move_velocity1_target2_distance3">以%1$s的速度移动到%2$s的前方%3$s距离的位置。</string>
     <string name="action_move_return">技能结束后回到原来的位置。</string>
