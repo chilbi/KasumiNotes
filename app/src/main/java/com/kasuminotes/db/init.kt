@@ -1,15 +1,18 @@
 package com.kasuminotes.db
 
 import com.kasuminotes.common.QuestRange
-import com.kasuminotes.common.QuestType
-import com.kasuminotes.data.QuestData
-import com.kasuminotes.utils.Helper
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlin.math.max
-import kotlin.math.min
 
 suspend fun AppDatabase.initDatabase(defaultUserId: Int) = safelyUse {
+    // TODO 国服实装水怜专武后就删除该代码片段
+    // 修改unit_unique_equipment表为unit_unique_equip
+    if (existsTable("unit_unique_equipment")) {
+        try {
+            execSQL("DROP TABLE unit_unique_equip")
+            execSQL("ALTER TABLE unit_unique_equipment RENAME TO unit_unique_equip")
+        } catch (_: Throwable) {}
+    }
     // TODO 国服实装270专武上限后就删除该代码片段
     // 修改unique_equip_enhance_rate表为unique_equipment_enhance_rate
     if (existsTable("unique_equip_enhance_rate")) {
