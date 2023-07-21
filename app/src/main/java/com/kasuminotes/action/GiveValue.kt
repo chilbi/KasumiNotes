@@ -35,7 +35,7 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
     val constantVariable = if (value3 == 0.0) {
         if (targetAction.actionType == 1 && actionDetail2 == 6) {
             D.Text("${(value2 * 100).toNumStr()}%")
-        } else if (targetAction.actionType == 10 && targetAction.isStatusPercent()) {
+        } else if (targetAction.actionType == 10 && actionType != 74 && targetAction.isStatusPercent()) {
             D.Text("${value2.toNumStr()}%")
         } else if (value2 < 0.0) {
             if (!(targetAction.actionType == 35 && actionDetail2 == 4)) {
