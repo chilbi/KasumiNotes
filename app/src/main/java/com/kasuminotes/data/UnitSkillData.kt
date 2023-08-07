@@ -1,5 +1,6 @@
 package com.kasuminotes.data
 
+import com.kasuminotes.common.Label
 import kotlin.math.max
 
 data class UnitSkillData(
@@ -47,10 +48,10 @@ data class UnitSkillData(
         val list = mutableListOf<SkillItem>()
 
         unionBurst?.let {
-            list.add(SkillItem("UB", unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
+            list.add(SkillItem(Label.ub, unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
         }
         unionBurstEvolution?.let {
-            list.add(SkillItem("UB+", unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
+            list.add(SkillItem(Label.ub + "+", unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
         }
 
         val mainSize = max(mainSkillList.size, mainSkillEvolutionList.size)
@@ -59,16 +60,16 @@ data class UnitSkillData(
             for (i in 0 until mainSize) {
                 val level = mainSkillLvList[i]
                 mainSkillList.getOrNull(i)?.let {
-                    list.add(SkillItem("Main ${i + 1}", level, it.getSkillOrRfSkill(level)))
+                    list.add(SkillItem(Label.skill + (i + 1).toString(), level, it.getSkillOrRfSkill(level)))
                 }
                 mainSkillEvolutionList.getOrNull(i)?.let {
-                    list.add(SkillItem("Main ${i + 1}+", level, it.getSkillOrRfSkill(level)))
+                    list.add(SkillItem(Label.skill + "${i + 1}+", level, it.getSkillOrRfSkill(level)))
                 }
             }
         }
 
         spUnionBurst?.let {
-            list.add(SkillItem("SP UB", unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
+            list.add(SkillItem(Label.sp + Label.ub, unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
         }
 
         val spSize = max(spSkillList.size, spSkillEvolutionList.size)
@@ -76,10 +77,10 @@ data class UnitSkillData(
         if (spSize > 0) {
             for (i in 0 until spSize) {
                 spSkillList.getOrNull(i)?.let {
-                    list.add(SkillItem("SP ${i + 1}", unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
+                    list.add(SkillItem(Label.sp + (i + 1).toString(), unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
                 }
                 spSkillEvolutionList.getOrNull(i)?.let {
-                    list.add(SkillItem("SP ${i + 1}+", unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
+                    list.add(SkillItem(Label.sp + "${i + 1}+", unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
                 }
             }
         }
@@ -90,10 +91,10 @@ data class UnitSkillData(
             for (i in 0 until exSize) {
                 val level = exSkillLvList[i]
                 exSkillList.getOrNull(i)?.let {
-                    list.add(SkillItem(if (exSize == 1) "EX" else "EX ${i + 1}", level, it.getSkillOrRfSkill(level)))
+                    list.add(SkillItem(if (exSize == 1) Label.ex else Label.ex + (i + 1).toString(), level, it.getSkillOrRfSkill(level)))
                 }
                 exSkillEvolutionList.getOrNull(i)?.let {
-                    list.add(SkillItem(if (exSize == 1) "EX+" else "EX ${i + 1}+", level, it.getSkillOrRfSkill(level)))
+                    list.add(SkillItem(if (exSize == 1) Label.ex + "+" else Label.ex + "${i + 1}+", level, it.getSkillOrRfSkill(level)))
                 }
             }
         }

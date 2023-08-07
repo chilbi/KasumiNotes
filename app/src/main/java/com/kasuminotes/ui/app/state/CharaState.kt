@@ -3,6 +3,7 @@ package com.kasuminotes.ui.app.state
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.kasuminotes.common.Label
 import com.kasuminotes.data.ExEquipData
 import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.Property
@@ -175,9 +176,9 @@ class CharaState(
 
     fun changeSkillLevel(value: Int, labelText: String) {
         userData = when (labelText) {
-            "UB" -> userData!!.copy(ubLevel = value)
-            "EX" -> userData!!.copy(exLevel = value)
-            "Main 1" -> userData!!.copy(skill1Level = value)
+            Label.ub -> userData!!.copy(ubLevel = value)
+            Label.ex -> userData!!.copy(exLevel = value)
+            Label.skill + "1" -> userData!!.copy(skill1Level = value)
             else -> userData!!.copy(skill2Level = value)
         }
         changeState()

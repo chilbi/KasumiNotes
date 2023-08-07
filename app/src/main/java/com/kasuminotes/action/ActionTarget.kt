@@ -204,7 +204,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                             )
                         }
                     }
-                    getAnyManyTarget(manyTarget)//(targetArea=2)ホマレ、イオ、アオイ; (targetArea=3)アメス、イオ　rfMain2、ユカリ rfMain2
+                    getAnyManyTarget(manyTarget)//(targetArea=2)ホマレ、イオ、アオイ; (targetArea=3)アメス、イオ　rf S2、ユカリ rf S2
                 }
             }
             if (targetType == 34) {

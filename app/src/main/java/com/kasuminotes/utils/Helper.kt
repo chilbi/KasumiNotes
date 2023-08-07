@@ -1,9 +1,6 @@
 package com.kasuminotes.utils
 
-import com.kasuminotes.common.QuestRange
 import com.kasuminotes.common.QuestType
-import kotlin.math.max
-import kotlin.math.min
 
 object Helper {
     fun getStoryDiffCount(statusSize: Int, maxRarity: Int): Int {
@@ -23,7 +20,7 @@ object Helper {
         }
     }
 
-    fun getEquipRarityString(equipId: Int): String {
+    private fun getEquipRarityString(equipId: Int): String {
         val idStr = equipId.toString()
         if (idStr.length < 6) return "-1"
         return idStr.substring(2, 3) + idStr.substring(5, 6)
@@ -44,7 +41,7 @@ object Helper {
             questId < 18000000 -> QuestType.VH
             else -> QuestType.S
         }
-    }
+    }/*
 
     fun mergeQuestRanges(ranges: MutableList<QuestRange>): MutableList<QuestRange> {
         return mergeQuestRanges(ranges, 0, 1, ranges.size)
@@ -74,5 +71,5 @@ object Helper {
             ranges.removeAt(i)
             mergeQuestRanges(ranges, 0, 1, size - 1)
         }
-    }
+    }*/
 }

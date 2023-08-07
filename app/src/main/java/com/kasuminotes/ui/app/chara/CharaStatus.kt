@@ -27,6 +27,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
+import com.kasuminotes.common.Label
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.UserData
 import com.kasuminotes.ui.components.BadgedButtonDialog
@@ -78,33 +79,33 @@ fun CharaStatus(
                         value = userData.ubLevel,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, "UB") }
+                        onValueChange = { onSkillLevelChange(it, Label.ub) }
                     ) {
-                        LabelText("UB")
+                        LabelText(Label.ub)
                     }
                     SliderPlus(
                         value = userData.skill1Level,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, "Main 1") }
+                        onValueChange = { onSkillLevelChange(it, Label.skill + "1") }
                     ) {
-                        LabelText("Main 1")
+                        LabelText(Label.skill + "1")
                     }
                     SliderPlus(
                         value = userData.skill2Level,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, "Main 2") }
+                        onValueChange = { onSkillLevelChange(it, Label.skill + "2") }
                     ) {
-                        LabelText("Main 2")
+                        LabelText(Label.skill + "2")
                     }
                     SliderPlus(
                         value = userData.exLevel,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, "EX") }
+                        onValueChange = { onSkillLevelChange(it, Label.ex) }
                     ) {
-                        LabelText("EX")
+                        LabelText(Label.ex)
                     }
                 }
             }

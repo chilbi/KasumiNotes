@@ -1,5 +1,6 @@
 package com.kasuminotes.data
 
+import com.kasuminotes.common.Label
 import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.utils.UrlUtil
 
@@ -32,28 +33,28 @@ data class UnitAttackPattern(
         val iconUrl: String
         val atkLabel: String
 
-        // 1->"A", 1001->"Main1", 1002->"Main2", 2001->"SP1", 2002->"SP2"
+        // 1->"A", 1001->"S1", 1002->"S2", 2001->"SP1", 2002->"SP2"
         if (atkPattern == 1) {
             iconUrl = UrlUtil.getAtkIconUrl(atkType)
-            atkLabel = "A"
+            atkLabel = Label.a
         } else {
             val n = atkPattern % 10
             val skillData: SkillData?
 
             if (atkPattern < 2000) {
                 if (hasUnique && n == 1 && unitSkillData.mainSkillEvolutionList.isNotEmpty()) {
-                    atkLabel = "Main 1+"
+                    atkLabel = Label.skill + "1+"
                     skillData = unitSkillData.mainSkillEvolutionList.getOrNull(0)
                 } else {
-                    atkLabel = "Main $n"
+                    atkLabel = Label.skill + n.toString()
                     skillData = unitSkillData.mainSkillList.getOrNull(n - 1)
                 }
             } else {
                 if (hasUnique && n == 1 && unitSkillData.spSkillEvolutionList.isNotEmpty()) {
-                    atkLabel = "SP 1+"
+                    atkLabel = Label.sp + "1+"
                     skillData = unitSkillData.spSkillEvolutionList.getOrNull(0)
                 } else {
-                    atkLabel = "SP $n"
+                    atkLabel = Label.sp + n.toString()
                     skillData = unitSkillData.spSkillList.getOrNull(n - 1)
                 }
             }

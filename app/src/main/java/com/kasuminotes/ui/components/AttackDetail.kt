@@ -3,6 +3,7 @@ package com.kasuminotes.ui.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.kasuminotes.R
+import com.kasuminotes.common.Label
 import com.kasuminotes.data.Property
 import com.kasuminotes.utils.UrlUtil
 import kotlin.math.roundToInt
@@ -39,7 +40,7 @@ fun AttackDetail(
     )
 
     SkillDetail(
-        label = "A",
+        label = Label.a,
         isRfSkill = false,
         iconUrl = UrlUtil.getAtkIconUrl(atkType),
         name = name,

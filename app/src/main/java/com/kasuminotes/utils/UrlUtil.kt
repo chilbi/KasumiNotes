@@ -26,7 +26,7 @@ object UrlUtil {
     private const val ICON_ITEM_URL = "$API_URL/icon/item/%d.webp"
     private const val ICON_EX_EQUIPMENT_URL = "$ICON_EX_EQUIPMENT_DIR/%d.webp"
     private const val ICON_EX_EQUIPMENT_CATEGORY_URL = "$ICON_EX_EQUIPMENT_DIR/category/%d.webp"
-    private const val ICON_EX_EQUIPMENT_MAP_URL = "$ICON_EX_EQUIPMENT_DIR/map/%d.webp"
+//    private const val ICON_EX_EQUIPMENT_MAP_URL = "$ICON_EX_EQUIPMENT_DIR/map/%d.webp"
 
     // App Release URL
     const val APP_RELEASE_URL = "https://api.github.com/repos/chilbi/KasumiNotes/releases/latest"
@@ -36,7 +36,7 @@ object UrlUtil {
     val lastVersionUrl =
         mapOf(DbServer.CN to LAST_VERSION_URL_CN, DbServer.JP to LAST_VERSION_URL_JP)
 
-    const val summonIconUrl = "$API_URL/icon/unit/000001.webp"
+//    const val summonIconUrl = "$API_URL/icon/unit/000001.webp"
 
     private fun getImageId(unitId: Int, rarity: Int) = (if (rarity > 5) 6 else if (rarity > 2) 3 else 1) * 10 + unitId
 
@@ -72,5 +72,5 @@ object UrlUtil {
 
     fun getExEquipCategoryUrl(categoryId: Int) = String.format(ICON_EX_EQUIPMENT_CATEGORY_URL, categoryId)
 
-    fun getExEquipMapUrl(mapId: Int) = String.format(ICON_EX_EQUIPMENT_MAP_URL, mapId)
+//    fun getExEquipMapUrl(mapId: Int) = String.format(ICON_EX_EQUIPMENT_MAP_URL, mapId)
 }

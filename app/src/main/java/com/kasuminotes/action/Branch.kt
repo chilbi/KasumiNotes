@@ -101,7 +101,7 @@ private fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
             }
             var yes = actionDetail2
             var not = actionDetail3
-            if (actionId == 104001201) {// TODO アオイ Main1+ 谜之顺序
+            if (actionId == 104001201) {// TODO アオイ S1+ 谜之顺序
                 yes = actionDetail3
                 not = actionDetail2
             }

@@ -2,6 +2,7 @@ package com.kasuminotes.action
 
 import androidx.annotation.StringRes
 import com.kasuminotes.R
+import com.kasuminotes.common.Label
 import com.kasuminotes.data.Property
 import java.text.NumberFormat
 import kotlin.math.ceil
@@ -236,8 +237,8 @@ fun getSummonText(id: Int): D {
 fun getSkillLabel(detail: Int): D {
     return D.Text(
         when (val value = detail / 100 % 10) {
-            1 -> "UB"
-            else -> "Main ${value - 1}"
+            1 -> Label.ub
+            else -> Label.skill + (value - 1).toString()
         }
     )
 }
