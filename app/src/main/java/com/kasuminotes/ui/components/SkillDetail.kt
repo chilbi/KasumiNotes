@@ -1,6 +1,11 @@
 package com.kasuminotes.ui.components
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,10 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,13 +24,13 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.kasuminotes.BuildConfig
 import com.kasuminotes.R
 import com.kasuminotes.action.ActionBuilder
 import com.kasuminotes.action.D
@@ -52,7 +55,8 @@ fun SkillDetail(
     actions: List<SkillAction>? = null,
     onSummonsClick: ((summons: List<Int>, skillLevel: Int) -> Unit)? = null
 ) {
-    val visible = remember { mutableStateOf(false) }
+    var visibleCode by remember { mutableStateOf(false) }
+    var visibleDescription by remember { mutableStateOf(false) }
 
     Container {
         Row(
@@ -67,18 +71,19 @@ fun SkillDetail(
                 )
             }
             Spacer(Modifier.weight(1f))
-            if (BuildConfig.DEBUG && actions != null) {
-                IconButton(
-                    modifier = Modifier.height(28.dp),
-                    onClick = { visible.value = !visible.value }
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Code,
-                        contentDescription = null,
-                        tint = if (visible.value) MaterialTheme.colorScheme.secondary
-                        else LocalContentColor.current.copy(0.75f)
-                    )
-                }
+            if (actions != null) {
+                VisibleIconButton(
+                    visible = visibleCode,
+                    imageVector = Icons.Filled.Code,
+                    onClick = { visibleCode = !visibleCode },
+                    modifier = Modifier.height(28.dp)
+                )
+                VisibleIconButton(
+                    visible = visibleDescription,
+                    imageVector = Icons.Filled.Comment,
+                    onClick = { visibleDescription = !visibleDescription },
+                    modifier = Modifier.height(28.dp)
+                )
             }
             @StringRes
             val labelId: Int
@@ -110,7 +115,11 @@ fun SkillDetail(
         }
         ImageCard(iconUrl, primaryText, secondaryText)
 
-        if (description != "") {
+        AnimatedVisibility(
+            visible = description != "" && (visibleDescription || actions == null),
+            enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
+            exit = fadeOut() + shrinkVertically()
+        ) {
             Text(
                 text = description,
                 modifier = Modifier.padding(4.dp),
@@ -142,7 +151,10 @@ fun SkillDetail(
         }
 
         if (actions != null) {
-            Box(Modifier.fillMaxWidth().padding(4.dp)) {
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)) {
                 UnderlineLabel(
                     label = stringResource(R.string.skill_effect),
                     color = MaterialTheme.colorScheme.primary
@@ -150,7 +162,7 @@ fun SkillDetail(
             }
         }
 
-        if (descriptionList != null && !visible.value) {
+        if (descriptionList != null && !visibleCode) {
             descriptionList!!.forEachIndexed { index, d ->
                 Row(Modifier.padding(4.dp)) {
                     ActionLabel(index + 1)
@@ -165,14 +177,16 @@ fun SkillDetail(
             if (summons.isNotEmpty()) {
                 Button(
                     onClick = { onSummonsClick?.invoke(summons, skillLevel) },
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 4.dp)
                 ) {
                     Text(stringResource(R.string.summons_info))
                 }
             }
         }
 
-        if (BuildConfig.DEBUG && actions != null && visible.value) {
+        if (actions != null && visibleCode) {
             actions.forEachIndexed { index, action ->
                 Row(Modifier.padding(4.dp)) {
                     ActionLabel(index + 1)

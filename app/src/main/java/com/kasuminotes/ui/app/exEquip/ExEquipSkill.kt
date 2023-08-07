@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,12 +15,11 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.kasuminotes.BuildConfig
 import com.kasuminotes.R
 import com.kasuminotes.action.ActionBuilder
 import com.kasuminotes.action.D
@@ -34,6 +30,7 @@ import com.kasuminotes.data.SkillData
 import com.kasuminotes.ui.components.ActionLabel
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.LabelContainer
+import com.kasuminotes.ui.components.VisibleIconButton
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -61,7 +58,7 @@ private fun ExEquipSkillItem(
     passiveSkill: SkillData,
     baseProperty: Property
 ) {
-    val visible = remember { mutableStateOf(false) }
+    var visible by remember { mutableStateOf(false) }
     val descriptionList: List<D> by remember(passiveSkill, baseProperty) {
         derivedStateOf {
             ActionBuilder(passiveSkill.rawDepends, passiveSkill.actions, true)
@@ -81,44 +78,36 @@ private fun ExEquipSkillItem(
             modifier = Modifier.padding(start = 4.dp),
             style = MaterialTheme.typography.bodyLarge
         )
-        if (BuildConfig.DEBUG) {
-            Spacer(Modifier.weight(1f))
-            IconButton(onClick = { visible.value = !visible.value }) {
-                Icon(
-                    imageVector = Icons.Filled.Code,
-                    contentDescription = null,
-                    tint = if (visible.value) MaterialTheme.colorScheme.secondary
-                    else LocalContentColor.current.copy(0.75f)
-                )
-            }
-        }
+        Spacer(Modifier.weight(1f))
+        VisibleIconButton(
+            visible = visible,
+            imageVector = Icons.Filled.Code,
+            onClick = { visible = !visible }
+        )
     }
 
-    Text(
-        text = passiveSkill.description,
-        modifier = Modifier.padding(4.dp),
-        style = MaterialTheme.typography.bodyMedium
-    )
-
-    if (!visible.value) {
-        descriptionList.forEachIndexed { index, d ->
-            Row(Modifier.padding(4.dp)) {
-                ActionLabel(index + 1)
-                Text(
-                    text = stringDescription(d),
-                    modifier = Modifier.padding(start = 4.dp),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        }
-    }
-
-    if (BuildConfig.DEBUG && visible.value) {
+    if (visible) {
+        Text(
+            text = passiveSkill.description,
+            modifier = Modifier.padding(4.dp),
+            style = MaterialTheme.typography.bodyMedium
+        )
         passiveSkill.actions.forEachIndexed { index, action ->
             Row(Modifier.padding(4.dp)) {
                 ActionLabel(index + 1)
                 Text(
                     text = stringDescription(action.getUnknown()),
+                    modifier = Modifier.padding(start = 4.dp),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
+    } else {
+        descriptionList.forEachIndexed { index, d ->
+            Row(Modifier.padding(4.dp)) {
+                ActionLabel(index + 1)
+                Text(
+                    text = stringDescription(d),
                     modifier = Modifier.padding(start = 4.dp),
                     style = MaterialTheme.typography.bodyMedium
                 )
