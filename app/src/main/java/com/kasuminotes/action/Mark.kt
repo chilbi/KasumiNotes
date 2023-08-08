@@ -5,12 +5,12 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getMark(): D {
     val content = D.Format(
-        if (actionType == 60) {
+        if (actionType == 60 || actionType == 101) {
             if (actionDetail1 == 4) {
                 R.string.content_attack_critical_target1
             } else {
                 if (actionDetail3 == 0) {
-                    R.string.content_attack_hit_enemy_target1
+                    R.string.content_attack_hit_enemy
                 } else {
                     R.string.content_attack_hit_target1
                 }

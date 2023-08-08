@@ -345,8 +345,8 @@
     <string name="content_poison_damage_by_behaviour_formula1">所有敌人陷入每当行动时就会受到%s伤害的中毒状态</string>
     <string name="content_speed_target1_formula2">所有%1$s的行动速度变为原来的%2$s</string>
     <string name="content_state_target1_abnormal2">所有%1$s陷入%2$s状态</string>
-    <string name="content_attack_hit_enemy_target1">每当自身的攻击命中%s中任意一名时，就会为被命中的该目标</string>
-    <string name="content_attack_hit_target1">每当自身的攻击命中时，就会为%s</string>
+    <string name="content_attack_hit_enemy">每当自身的攻击命中敌人时，就会为被命中的目标</string>
+    <string name="content_attack_hit_target1">每当自身的攻击命中敌人时，就会为%s</string>
     <string name="content_attack_critical_target1">每当自身的攻击暴击时，就会为%s</string>
     <string name="content_status_up_target1">每当自身受到状态提升时，就会为%s</string>
     <string name="content_initial_value1">初始值的%s</string>

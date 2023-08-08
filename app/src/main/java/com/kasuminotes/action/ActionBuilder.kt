@@ -174,7 +174,7 @@ class ActionBuilder(
             57 -> getCountDown()
             58 -> getRelieveField()
             59 -> getHpRecoveryDown()
-            60, 77 -> getMark()
+            60, 77, 101 -> getMark()
             72 -> getDamageCut()
             73 -> getDamageAttenuation()
             61 -> getFear()
