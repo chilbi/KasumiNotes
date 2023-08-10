@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
@@ -24,7 +25,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun TabsPager(
     scrollable: Boolean,
-    pageCount: Int,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
@@ -32,7 +32,7 @@ fun TabsPager(
     edgePadding: Dp = 52.dp,// ScrollableTabRowPadding
     onTabClick: ((page: Int) -> Unit)? = null,
     tabContent: @Composable ColumnScope.(page: Int) -> Unit,
-    pageContent: @Composable (page: Int) -> Unit
+    pageContent: @Composable PagerScope.(page: Int) -> Unit
 ) {
     Column {
         if (scrollable) {
@@ -48,7 +48,7 @@ fun TabsPager(
                         color = contentColor
                     )
                 },
-                tabs = { Tabs(pageCount, pagerState, onTabClick, tabContent) }
+                tabs = { Tabs(pagerState.pageCount, pagerState, onTabClick, tabContent) }
             )
         } else {
             TabRow(
@@ -62,14 +62,13 @@ fun TabsPager(
                         color = contentColor
                     )
                 },
-                tabs = { Tabs(pageCount, pagerState, onTabClick, tabContent) }
+                tabs = { Tabs(pagerState.pageCount, pagerState, onTabClick, tabContent) }
             )
         }
 
         HorizontalPager(
-            pageCount = pageCount,
-            modifier = Modifier.fillMaxSize(),
             state = pagerState,
+            modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.Top,
             key = { it },
             pageContent = pageContent

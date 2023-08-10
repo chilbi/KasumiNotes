@@ -27,6 +27,7 @@ import com.kasuminotes.R
 import com.kasuminotes.data.CharaStoryStatus
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.Property
+import com.kasuminotes.data.StoryItem
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitData
@@ -65,13 +66,27 @@ fun CharaFrontLayer(
         userData.rarity,
         onToggle
     ) {
+        val stories: List<StoryItem> = remember(userData, charaStoryStatus, sharedProfiles) {
+            if (charaStoryStatus == null || sharedProfiles == null) {
+                emptyList()
+            } else {
+                charaStoryStatus.getStoryList(
+                    unitData.unitId,
+                    userData.rarity,
+                    unitData.maxRarity,
+                    userData.loveLevel,
+                    unitData.unitName,
+                    sharedProfiles
+                )
+            }
+        }
         val style = MaterialTheme.typography.labelMedium
         val scope = rememberCoroutineScope()
         val profileScrollState = rememberScrollState()
         val storyScrollState = rememberScrollState()
         val equipmentGridState = rememberLazyGridState()
         val skillScrollState = rememberScrollState()
-        val storyPagerState = rememberPagerState()
+        val storyPagerState = rememberPagerState { stories.size }
         val onStoryTabClick = remember<(page: Int) -> Unit>(sharedProfiles) {
             { page ->
                 if (storyPagerState.currentPage != page) {
@@ -87,8 +102,7 @@ fun CharaFrontLayer(
 
         TabsPager(
             scrollable = false,
-            pageCount = titles.size,
-            pagerState = rememberPagerState(3),
+            pagerState = rememberPagerState(3) { titles.size },
             modifier = Modifier.height(BackdropScaffoldDefaults.HeaderHeight),
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.primary,
@@ -108,10 +122,7 @@ fun CharaFrontLayer(
                     }
                     1 -> {
                         CharaStory(
-                            userData,
-                            unitData,
-                            charaStoryStatus,
-                            sharedProfiles,
+                            stories,
                             storyScrollState,
                             storyPagerState,
                             onStoryTabClick,

@@ -57,12 +57,11 @@ private fun MapTabsPanel(
     onEnemyClick: (EnemyData) -> Unit
 ) {
     if (mapDataList != null) {
-        val pagerState = rememberPagerState()
+        val pagerState = rememberPagerState { mapDataList.size }
         val unSelectedColor = MaterialTheme.colorScheme.onSurface.copy(0.5f)
         val style = MaterialTheme.typography.titleSmall
         TabsPager(
             scrollable = false,
-            pageCount = mapDataList.size,
             pagerState = pagerState,
             containerColor = Color.Transparent,
             contentColor = phaseColors[mapDataList.size - pagerState.currentPage - 1],

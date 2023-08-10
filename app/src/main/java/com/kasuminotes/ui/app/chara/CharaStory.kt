@@ -10,18 +10,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
-import com.kasuminotes.data.CharaStoryStatus
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.StoryItem
-import com.kasuminotes.data.UnitData
-import com.kasuminotes.data.UserData
-import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.TabsPager
@@ -32,35 +27,16 @@ import com.kasuminotes.ui.components.VerticalGridCells
 
 @Composable
 fun CharaStory(
-    userData: UserData,
-    unitData: UnitData,
-    charaStoryStatus: CharaStoryStatus?,
-    sharedProfiles: List<UserProfile>?,
+    stories: List<StoryItem>,
     scrollState: ScrollState,
     pagerState: PagerState,
     onTabClick: (page: Int) -> Unit
 ) {
     // TODO tabPage状态不能持久保存
     Box(Modifier.fillMaxSize().verticalScroll(scrollState)) {
-        val stories: List<StoryItem> = remember(userData, charaStoryStatus, sharedProfiles) {
-            if (charaStoryStatus == null || sharedProfiles == null) {
-                emptyList()
-            } else {
-                charaStoryStatus.getStoryList(
-                    unitData.unitId,
-                    userData.rarity,
-                    unitData.maxRarity,
-                    userData.loveLevel,
-                    unitData.unitName,
-                    sharedProfiles
-                )
-            }
-        }
-
         if (stories.isNotEmpty()) {
             TabsPager(
                 scrollable = stories.size > 4,
-                pageCount = stories.size,
                 pagerState = pagerState,
                 containerColor = Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.secondary,

@@ -76,8 +76,7 @@ private fun SummonsTabsPanel(
     if (size > 0) {
         TabsPager(
             scrollable = size > 3,
-            pageCount = size,
-            pagerState = rememberPagerState(),
+            pagerState = rememberPagerState { size },
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.primary,
             edgePadding = 0.dp,

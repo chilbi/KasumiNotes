@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.kasuminotes.ui.app.about.About
 import com.kasuminotes.ui.app.chara.Chara
 import com.kasuminotes.ui.app.clanBattle.ClanBattle
@@ -40,16 +40,16 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             openDrawer()
         }}
 
-        AnimatedNavHost(
+        NavHost(
             navController = appViewModel.navController,
-            startDestination = AppNavGraph.Home.route,
-            enterTransition = NavTransitions.defaultEnterTransition,
-            exitTransition = NavTransitions.defaultExitTransition
+            startDestination = AppNavData.Home.route,
+            enterTransition = AppNavTransitions.enterTransition,
+            exitTransition = AppNavTransitions.exitTransition
         ) {
             composable(
-                route = AppNavGraph.Home.route,
-                enterTransition = AppNavGraph.Home.enterTransition,
-                exitTransition = AppNavGraph.Home.exitTransition
+                route = AppNavData.Home.route,
+                enterTransition = AppNavData.Home.enterTransition,
+                exitTransition = AppNavData.Home.exitTransition
             ) {
                 Home(
                     drawerState,
@@ -66,9 +66,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = AppNavGraph.Chara.route,
-                enterTransition = AppNavGraph.Chara.enterTransition,
-                exitTransition = AppNavGraph.Chara.exitTransition
+                route = AppNavData.Chara.route,
+                enterTransition = AppNavData.Chara.enterTransition,
+                exitTransition = AppNavData.Chara.exitTransition
             ) {
                 Chara(
                     appViewModel.charaState,
@@ -81,9 +81,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = AppNavGraph.Equip.route,
-                enterTransition = AppNavGraph.Equip.enterTransition,
-                exitTransition = AppNavGraph.Equip.exitTransition
+                route = AppNavData.Equip.route,
+                enterTransition = AppNavData.Equip.enterTransition,
+                exitTransition = AppNavData.Equip.exitTransition
             ) {
                 Equip(
                     dbState,
@@ -92,9 +92,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = AppNavGraph.ExEquip.route,
-                enterTransition = AppNavGraph.ExEquip.enterTransition,
-                exitTransition = AppNavGraph.ExEquip.exitTransition
+                route = AppNavData.ExEquip.route,
+                enterTransition = AppNavData.ExEquip.enterTransition,
+                exitTransition = AppNavData.ExEquip.exitTransition
             ) {
                 ExEquip(
                     appViewModel.exEquipState,
@@ -102,9 +102,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = AppNavGraph.Summons.route,
-                enterTransition = AppNavGraph.Summons.enterTransition,
-                exitTransition = AppNavGraph.Summons.exitTransition
+                route = AppNavData.Summons.route,
+                enterTransition = AppNavData.Summons.enterTransition,
+                exitTransition = AppNavData.Summons.exitTransition
             ) {
                 Summons(
                     appViewModel.summonsState,
@@ -112,9 +112,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = AppNavGraph.Quest.route,
-                enterTransition = AppNavGraph.Quest.enterTransition,
-                exitTransition = AppNavGraph.Quest.exitTransition
+                route = AppNavData.Quest.route,
+                enterTransition = AppNavData.Quest.enterTransition,
+                exitTransition = AppNavData.Quest.exitTransition
             ) {
                 Quest(
                     appViewModel.questState,
@@ -124,9 +124,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = AppNavGraph.ClanBattle.route,
-                enterTransition = AppNavGraph.ClanBattle.enterTransition,
-                exitTransition = AppNavGraph.ClanBattle.exitTransition
+                route = AppNavData.ClanBattle.route,
+                enterTransition = AppNavData.ClanBattle.enterTransition,
+                exitTransition = AppNavData.ClanBattle.exitTransition
             ) {
                 ClanBattle(
                     appViewModel.clanBattleState,
@@ -136,9 +136,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = AppNavGraph.ClanBattleMapList.route,
-                enterTransition = AppNavGraph.ClanBattleMapList.enterTransition,
-                exitTransition = AppNavGraph.ClanBattleMapList.exitTransition
+                route = AppNavData.ClanBattleMapList.route,
+                enterTransition = AppNavData.ClanBattleMapList.enterTransition,
+                exitTransition = AppNavData.ClanBattleMapList.exitTransition
             ) {
                 ClanBattleMapList(
                     appViewModel.clanBattleState,
@@ -147,9 +147,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = AppNavGraph.ClanBattleEnemy.route,
-                enterTransition = AppNavGraph.ClanBattleEnemy.enterTransition,
-                exitTransition = AppNavGraph.ClanBattleEnemy.exitTransition
+                route = AppNavData.ClanBattleEnemy.route,
+                enterTransition = AppNavData.ClanBattleEnemy.enterTransition,
+                exitTransition = AppNavData.ClanBattleEnemy.exitTransition
             ) {
                 ClanBattleEnemy(
                     appViewModel.clanBattleState,
@@ -158,23 +158,23 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = AppNavGraph.About.route,
-                enterTransition = AppNavGraph.About.enterTransition,
-                exitTransition = AppNavGraph.About.exitTransition
+                route = AppNavData.About.route,
+                enterTransition = AppNavData.About.enterTransition,
+                exitTransition = AppNavData.About.exitTransition
             ) {
                 About(
                     appViewModel::popBackStack,
                     appViewModel::linkTo
                 )
             }
-            composable(AppNavGraph.Images.route) {
+            composable(AppNavData.Images.route) {
                 UserImages(
                     userState,
                     appViewModel::userEditorBack,
                     appViewModel::confirmNewImage
                 )
             }
-            composable(AppNavGraph.Editor.route) {
+            composable(AppNavData.Editor.route) {
                 CharaEditor(
                     userState,
                     appViewModel::userEditorBack,
