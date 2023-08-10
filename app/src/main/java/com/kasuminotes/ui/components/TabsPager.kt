@@ -48,7 +48,7 @@ fun TabsPager(
                         color = contentColor
                     )
                 },
-                tabs = { Tabs(pagerState.pageCount, pagerState, onTabClick, tabContent) }
+                tabs = { Tabs(pagerState, onTabClick, tabContent) }
             )
         } else {
             TabRow(
@@ -62,7 +62,7 @@ fun TabsPager(
                         color = contentColor
                     )
                 },
-                tabs = { Tabs(pagerState.pageCount, pagerState, onTabClick, tabContent) }
+                tabs = { Tabs(pagerState, onTabClick, tabContent) }
             )
         }
 
@@ -78,13 +78,12 @@ fun TabsPager(
 
 @Composable
 private fun Tabs(
-    pageCount: Int,
     pagerState: PagerState,
     onTabClick: ((page: Int) -> Unit)?,
     tabContent: @Composable ColumnScope.(page: Int) -> Unit
 ) {
     val scope = rememberCoroutineScope()
-    repeat(pageCount) { page->
+    repeat(pagerState.pageCount) { page->
         val onClick = remember<() -> Unit>(page, onTabClick) {{
             if (onTabClick == null) {
                 scope.launch { pagerState.animateScrollToPage(page) }
