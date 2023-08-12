@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.rememberScrollState
@@ -27,6 +29,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,9 +39,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
+import androidx.compose.ui.window.Dialog
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.BlurTransformation
@@ -55,6 +59,7 @@ import com.kasuminotes.ui.app.DefaultUserId
 import com.kasuminotes.ui.components.Alert
 import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.ImageSize
+import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.TranslucentBackButton
 import com.kasuminotes.ui.components.Severity
@@ -121,7 +126,6 @@ fun CharaBackLayer(
                         unitData.hasUnique,
                         unitPromotion,
                         uniqueData,
-                        rankBonusProperty,
                         exEquipSlots,
                         onEquipSlotClick,
                         onUniqueClick,
@@ -139,10 +143,13 @@ fun CharaBackLayer(
                 }
                 1 -> {
                     Container(margin = 8.dp) {
-                        PropertyTable(
-                            property = property,
-                            originProperty = originProperty,
-                        )
+                        Box {
+                            PropertyTable(
+                                property = property,
+                                originProperty = originProperty,
+                            )
+                            RankBonusButton(rankBonusProperty)
+                        }
                     }
                 }
             }
@@ -151,6 +158,44 @@ fun CharaBackLayer(
         AlertMessage(userData.userId, saveVisible, onCancel, onSave)
 
         Spacer(Modifier.height(headerHeight))
+    }
+}
+
+@Composable
+private fun BoxScope.RankBonusButton(rankBonusProperty: Property?) {
+    var visible by rememberSaveable { mutableStateOf(false) }
+    val onOpen = remember {{ visible = true }}
+    val onClose = remember {{ visible = false }}
+    val label = "${stringResource(R.string.rank)} ${stringResource(R.string.bonus)}"
+    val hasBonus = rankBonusProperty != null
+
+    TextButton(
+        onClick = onOpen,
+        modifier = Modifier
+            .align(Alignment.BottomEnd)
+            .offset(0.dp, 8.dp),
+        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.tertiary),
+        enabled = hasBonus
+    ) {
+        Text(
+            text = label,
+            textDecoration = TextDecoration.Underline
+        )
+    }
+
+    if (visible && hasBonus) {
+        Dialog(onClose) {
+            LabelContainer(
+                label = label,
+                color = MaterialTheme.colorScheme.primary,
+                padding = 12.dp
+            ) {
+                PropertyTable(
+                    property = rankBonusProperty!!,
+                    indices = rankBonusProperty.nonzeroIndices
+                )
+            }
+        }
     }
 }
 
@@ -183,7 +228,9 @@ private fun CharaHeader(
         StillBox(
             unitId,
             rarity,
-            Modifier.sizeIn(maxWidth = 420.dp).then(ImageSize.StillModifier)
+            Modifier
+                .sizeIn(maxWidth = 420.dp)
+                .then(ImageSize.StillModifier)
         ) {
             TranslucentBackButton(
                 onBack,
