@@ -323,6 +323,7 @@
     <string name="summon_425802">制造出一个不会使用UB的自身的暗影(425802)</string>
     <string name="summon_426201">召唤眷属(426201)</string>
     <string name="summon_426202">召唤眷属(426202)</string>
+    <string name="summon_427101">召唤骷髅老爹(427101)</string>
 
     <string name="summon_unknown_id1">【召唤物%s】</string>
     <string name="summon_ore_dragon">矿石飞龙</string>
@@ -330,6 +331,7 @@
     <string name="summon_shadow_425802">暗影(425802)</string>
     <string name="summon_family_426201">眷属(426201)</string>
     <string name="summon_family_426202">眷属(426202)</string>
+    <string name="summon_skull_427101">骷髅老爹(427101)</string>
 
 
     <string name="mode_id1">自身变化为姿态(%s)，</string>

@@ -230,6 +230,7 @@ fun getSummonText(id: Int): D {
         425802 -> D.Format(R.string.summon_shadow_425802)
         426201 -> D.Format(R.string.summon_family_426201)
         426202 -> D.Format(R.string.summon_family_426202)
+        427101 -> D.Format(R.string.summon_skull_427101)
         else -> D.Format(R.string.summon_unknown_id1, arrayOf(D.Text(id.toString())))
     }
 }
