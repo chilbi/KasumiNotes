@@ -1,6 +1,7 @@
 package com.kasuminotes.ui.app.state
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.common.QuestRange
@@ -14,6 +15,7 @@ import com.kasuminotes.data.UniqueData
 import com.kasuminotes.db.getEquipCraft
 import com.kasuminotes.db.getEquipData
 import com.kasuminotes.db.getQuestDataList
+import com.kasuminotes.db.getUnique2Craft
 import com.kasuminotes.ui.app.AppRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -28,17 +30,19 @@ class EquipState(
 ) {
 //    private var dropRangeMap: Map<Int, QuestRange>? = null
     private var allQuestDataList = emptyList<QuestData>()
-    private var onEnhanceLevelChange: ((Int) -> Unit)? = null
+    private var onEnhanceLevelChange: ((value: Int, slot: Int) -> Unit)? = null
 
     var equipData by mutableStateOf<EquipData?>(null)
         private set
-    var uniqueData by mutableStateOf<UniqueData?>(null)
+    var unique1Data by mutableStateOf<UniqueData?>(null)
+        private set
+    var unique2Data by mutableStateOf<UniqueData?>(null)
         private set
     var property by mutableStateOf(Property.zero)
         private set
-    var enhanceLevel by mutableStateOf(0)
+    var enhanceLevel by mutableIntStateOf(0)
         private set
-    var maxEnhanceLevel by mutableStateOf(0)
+    var maxEnhanceLevel by mutableIntStateOf(0)
         private set
     var equipCraftList by mutableStateOf<List<EquipCraft>?>(null)
         private set
@@ -58,60 +62,81 @@ class EquipState(
     fun initEquip(maxArea: Int, equipId: Int) {
         scope.launch(defaultDispatcher) {
             val db = appRepository.getDatabase()
-            val value = db.getEquipData(equipId)
-            initEquipData(maxArea, value)
+            val equipDataValue = db.getEquipData(equipId)
+            initEquipData(equipDataValue, maxArea)
         }
     }
 
     fun initEquipData(
+        equipDataValue: EquipData,
         maxArea: Int,
-        value: EquipData,
-        originEnhanceLevel: Int = value.maxEnhanceLevel,
-        onLevelChange: ((Int) -> Unit)? = null
+        originEnhanceLevel: Int = equipDataValue.maxEnhanceLevel,
+        onLevelChange: ((value: Int, slot: Int) -> Unit)? = null
     ) {
         if (min37 && maxArea < 37) {
             min37 = false
         }
-        equipData = value
-        uniqueData = null
+        equipData = equipDataValue
+        unique1Data = null
+        unique2Data = null
         enhanceLevel = originEnhanceLevel
-        maxEnhanceLevel = value.maxEnhanceLevel
+        maxEnhanceLevel = equipDataValue.maxEnhanceLevel
         onEnhanceLevelChange = onLevelChange
-        property = value.getProperty(originEnhanceLevel)
-        if (value.craftFlg == 1) {
+        property = equipDataValue.getProperty(originEnhanceLevel)
+        if (equipDataValue.craftFlg == 1) {
             scope.launch(defaultDispatcher) {
                 val db = appRepository.getDatabase()
-                val equipCraft = db.getEquipCraft(value.equipmentId)
+                val equipCraft = db.getEquipCraft(equipDataValue.equipmentId)
                 equipCraftList = equipCraft.getCraftList()
             }
         } else {
-            equipCraftList = listOf(EquipCraft(value.equipmentId, 1, null))
+            equipCraftList = listOf(EquipCraft(equipDataValue.equipmentId, 1, null))
         }
     }
 
-    fun initUniqueData(
-        value: UniqueData,
+    fun initUnique1Data(
+        uniqueDataValue: UniqueData,
         originEnhanceLevel: Int,
         maxUniqueLevel: Int,
-        onLevelChange: (Int) -> Unit
+        onLevelChange: (value: Int, slot: Int) -> Unit
     ) {
-        uniqueData = value
         equipData = null
+        unique1Data = uniqueDataValue
+        unique2Data = null
         enhanceLevel = originEnhanceLevel
         maxEnhanceLevel = maxUniqueLevel
         onEnhanceLevelChange = onLevelChange
-        property = value.getProperty(originEnhanceLevel)
-        changeUniqueCraft(value.equipmentId, maxUniqueLevel)
+        property = uniqueDataValue.getUnique1Property(originEnhanceLevel)
+        changeUnique1Craft(uniqueDataValue.equipmentId, maxUniqueLevel)
+    }
+
+    fun initUnique2Data(
+        uniqueDataValue: UniqueData,
+        originEnhanceLevel: Int,
+        onLevelChange: (value: Int, slot: Int) -> Unit
+    ) {
+        equipData = null
+        unique1Data = null
+        unique2Data = uniqueDataValue
+        enhanceLevel = originEnhanceLevel
+        maxEnhanceLevel = 5
+        onEnhanceLevelChange = onLevelChange
+        property = uniqueDataValue.getUnique2Property(originEnhanceLevel)
+        changeUnique2Craft(uniqueDataValue.equipmentId)
     }
 
     fun changeEnhanceLevel(value: Int) {
         enhanceLevel = value
         if (equipData != null) {
             property = equipData!!.getProperty(value)
-        } else if (uniqueData != null) {
-            property = uniqueData!!.getProperty(value)
+            onEnhanceLevelChange?.invoke(value, 0)
+        } else if (unique1Data != null) {
+            property = unique1Data!!.getUnique1Property(value)
+            onEnhanceLevelChange?.invoke(value, 1)
+        } else if (unique2Data != null) {
+            property = unique2Data!!.getUnique2Property(value)
+            onEnhanceLevelChange?.invoke(value, 2)
         }
-        onEnhanceLevelChange?.invoke(value)
     }
 
     fun changeSearchList(materialId: Int) {
@@ -177,7 +202,7 @@ class EquipState(
     fun destroy() {
 //        dropRangeMap = null
 //        equipData = null
-//        uniqueData = null
+//        unique1Data = null
         equipCraftList = null
         uniqueCraftList = null
         searchList = null
@@ -185,7 +210,7 @@ class EquipState(
         onEnhanceLevelChange = null
     }
 
-    private fun changeUniqueCraft(equipmentId: Int, maxUnlockLevel: Int) {
+    private fun changeUnique1Craft(equipmentId: Int, maxUnlockLevel: Int) {
         val memoryId = "31${equipmentId.toString().substring(2, 5)}".toInt()
         val list = mutableListOf<UniqueCraft>()
         list.add(UniqueCraft(30, 140000, 3, memoryId, 50))
@@ -207,6 +232,21 @@ class EquipState(
             }
         }
         uniqueCraftList = list
+    }
+
+    private fun changeUnique2Craft(equipmentId: Int) {
+        scope.launch(defaultDispatcher) {
+            val db = appRepository.getDatabase()
+            val memoryId = db.getUnique2Craft(equipmentId)
+            val list = mutableListOf<UniqueCraft>()
+            list.add(UniqueCraft(0, -1, -1, memoryId, 50))
+            list.add(UniqueCraft(1, -1, -1, memoryId, 10))
+            list.add(UniqueCraft(2, -1, -1, memoryId, 15))
+            list.add(UniqueCraft(3, -1, -1, memoryId, 20))
+            list.add(UniqueCraft(4, -1, -1, memoryId, 25))
+            list.add(UniqueCraft(5, -1, -1, memoryId, 30))
+            uniqueCraftList = list
+        }
     }
 
     private fun changeQuestDataList(searchedList: List<Int>) {

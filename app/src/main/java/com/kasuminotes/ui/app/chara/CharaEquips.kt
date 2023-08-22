@@ -31,11 +31,11 @@ import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun CharaEquips(
-    uniqueData: UniqueData?,
+    unique1Data: UniqueData?,
     promotions: List<UnitPromotion>,
     state: LazyGridState,
     onEquipClick: (EquipData) -> Unit,
-    onUniqueClick: (UniqueData) -> Unit,
+    onUniqueClick: (uniqueData: UniqueData, slot: Int) -> Unit
 ) {
     val maxPromotionLevel = promotions.size
 
@@ -46,7 +46,7 @@ fun CharaEquips(
         contentPadding = PaddingValues(4.dp),
     ) {
         item("unique") {
-            UniqueEquipItem(uniqueData, onUniqueClick)
+            UniqueEquipItem(unique1Data, onUniqueClick)
         }
         
         items(maxPromotionLevel, { it }) { index ->
@@ -84,8 +84,8 @@ private fun EquipItem(
 
 @Composable
 private fun UniqueEquipItem(
-    uniqueData: UniqueData?,
-    onEquipClick: (UniqueData) -> Unit,
+    unique1Data: UniqueData?,
+    onUniqueClick: (uniqueData: UniqueData, slot: Int) -> Unit,
 ) {
     LabelContainer(
         label = stringResource(R.string.unique_equip),
@@ -97,19 +97,19 @@ private fun UniqueEquipItem(
                 .padding(4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            UniqueEquipIcon(
-                uniqueData,
-                onEquipClick
+            Unique1Icon(
+                unique1Data,
+                onUniqueClick
             )
 
             val text: String
             val color: Color
 
-            if (uniqueData == null) {
+            if (unique1Data == null) {
                 text = stringResource(R.string.no_unique)
                 color = MaterialTheme.colorScheme.onSurface.copy(0.35f)
             } else {
-                text = uniqueData.equipmentName
+                text = unique1Data.equipmentName
                 color = UniqueColor
             }
 
@@ -143,11 +143,11 @@ private fun EquipIcon(
 }
 
 @Composable
-private fun UniqueEquipIcon(
-    uniqueData: UniqueData?,
-    onEquipClick: (UniqueData) -> Unit,
+private fun Unique1Icon(
+    unique1Data: UniqueData?,
+    onUniqueClick: (uniqueData: UniqueData, slot: Int) -> Unit
 ) {
-    if (uniqueData == null) {
+    if (unique1Data == null) {
         ImageIcon(
             painter = painterResource(R.drawable.unique_0),
             loading = false,
@@ -155,8 +155,8 @@ private fun UniqueEquipIcon(
         )
     } else {
         ImageIcon(
-            url = UrlUtil.getEquipIconUrl(uniqueData.equipmentId),
-            onClick = { onEquipClick(uniqueData) }
+            url = UrlUtil.getEquipIconUrl(unique1Data.equipmentId),
+            onClick = { onUniqueClick(unique1Data, 1) }
         )
     }
 }

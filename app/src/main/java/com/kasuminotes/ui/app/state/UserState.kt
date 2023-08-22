@@ -286,7 +286,7 @@ class UserState(
             userProfile.userData = userData
             userDataList.add(userData)
 
-            if (userProfile.userData.uniqueLevel > 0) {
+            if (userProfile.userData.unique1Level > 0) {
                 userUnique++
             }
             if (userProfile.userData.rarity > 5) {

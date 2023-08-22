@@ -26,7 +26,8 @@ data class UserProfile(
     var unitRarity: UnitRarity? = null,
     var unitPromotionStatus: UnitPromotionStatus? = null,
     var unitPromotion: UnitPromotion? = null,
-    var uniqueData: UniqueData? = null,
+    var unique1Data: UniqueData? = null,
+    var unique2Data: UniqueData? = null,
     var charaStoryStatus: CharaStoryStatus? = null,
     var sharedProfiles: List<UserProfile>? = null,
     var promotions: List<UnitPromotion> = emptyList(),
@@ -99,7 +100,8 @@ data class UserProfile(
         ) {
             val rarityLevel = data.charaLevel + data.promotionLevel
             val equipsLevel = data.equipsLevel
-            val uniqueProperty = uniqueData?.getProperty(data.uniqueLevel)
+            val unique1Property = unique1Data?.getUnique1Property(data.unique1Level)
+            val unique2Property = unique2Data?.getUnique2Property(data.unique2Level)
             val exSkillProperty = getExSkillProperty(data)
             val rankBonusProperty = getRankBonusProperty(data.promotionLevel) ?: Property.zero
 
@@ -107,23 +109,22 @@ data class UserProfile(
                 // unitRarity
                 var value = unitRarity!!.baseProperty[index]
                 value += unitRarity!!.growthProperty[index] * rarityLevel
-
                 // unitPromotionStatus
                 value += unitPromotionStatus!!.baseProperty[index]
-
                 // unitPromotion
                 unitPromotion!!.equipSlots.forEachIndexed { slotIndex, equipData ->
                     value += equipData?.getPropertyValue(index, equipsLevel[slotIndex]) ?: 0.0
                 }
-
-                // uniqueData
-                if (uniqueProperty != null) {
-                    value += uniqueProperty[index]
+                // unique1Data
+                if (unique1Property != null) {
+                    value += unique1Property[index]
                 }
-
+                // unique2Data
+                if (unique2Property != null) {
+                    value += unique2Property[index]
+                }
                 // selfCharaStoryStatus
                 value += getStoryValue(index, data.loveLevel, charaStoryStatus!!.status, unitData.maxRarity)
-
                 // sharedCharaStoryStatus
                 if (sharedProfiles != null && sharedProfiles!!.isNotEmpty()) {
                     sharedProfiles!!.forEach { item ->
@@ -135,13 +136,10 @@ data class UserProfile(
                         )
                     }
                 }
-
                 // exSkillData
                 value += exSkillProperty[index]
-
                 // promotionBonus
                 value += rankBonusProperty[index]
-
                 value
             }
         } else {
@@ -224,7 +222,8 @@ data class UserProfile(
             async { db.getUnitRarity(unitData.unitId, userData.rarity) },
             async { db.getUnitPromotionStatus(unitData.unitId, userData.promotionLevel) },
             async { db.getUnitPromotion(unitData.unitId, userData.promotionLevel) },
-            async { db.getUniqueData(unitData.equipId) },
+            async { db.getUniqueData(unitData.equip1Id) },
+            async { db.getUniqueData(unitData.equip2Id) },
             async { charaStoryStatus ?: db.getCharaStoryStatus(unitData.unitId) },
             async { db.getPromotions(unitData.unitId) },
             async { db.getUnitAttackPatternList(unitData.unitId) },
@@ -242,25 +241,26 @@ data class UserProfile(
         unitRarity = list[0] as UnitRarity
         unitPromotionStatus = list[1] as UnitPromotionStatus
         unitPromotion = list[2] as UnitPromotion
-        uniqueData = list[3] as UniqueData?
-        charaStoryStatus = list[4] as CharaStoryStatus
+        unique1Data = list[3] as UniqueData?
+        unique2Data = list[4] as UniqueData?
+        charaStoryStatus = list[5] as CharaStoryStatus
         @Suppress("UNCHECKED_CAST")
-        promotions = list[5] as List<UnitPromotion>
+        promotions = list[6] as List<UnitPromotion>
         @Suppress("UNCHECKED_CAST")
-        unitAttackPatternList = list[6] as List<UnitAttackPattern>
-        unitSkillData = list[7] as UnitSkillData
-        exSkillData = list[8] as ExSkillData
+        unitAttackPatternList = list[7] as List<UnitAttackPattern>
+        unitSkillData = list[8] as UnitSkillData
+        exSkillData = list[9] as ExSkillData
         @Suppress("UNCHECKED_CAST")
-        promotionBonusList = list[9] as List<PromotionBonus>
+        promotionBonusList = list[10] as List<PromotionBonus>
         if (unitConversionData != null) {
             @Suppress("UNCHECKED_CAST")
-            unitConversionData!!.unitAttackPatternList = list[10] as List<UnitAttackPattern>
-            unitConversionData!!.unitSkillData = list[11] as UnitSkillData
-            unitConversionData!!.exSkillData = list[12] as ExSkillData
+            unitConversionData!!.unitAttackPatternList = list[11] as List<UnitAttackPattern>
+            unitConversionData!!.unitSkillData = list[12] as UnitSkillData
+            unitConversionData!!.exSkillData = list[13] as ExSkillData
         }
-        var listIndex = 14
+        var listIndex = 15
         @Suppress("UNCHECKED_CAST")
-        exEquipSlots = (list[13] as List<ExEquipSlot>).map {
+        exEquipSlots = (list[14] as List<ExEquipSlot>).map {
             it.copy(exEquipData = list[listIndex++] as ExEquipData?)
         }
         val sharedChara = charaStoryStatus!!.sharedChara

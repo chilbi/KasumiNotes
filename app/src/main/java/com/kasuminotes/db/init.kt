@@ -53,10 +53,10 @@ suspend fun AppDatabase.initDatabase(defaultUserId: Int) = safelyUse {
         }
     }
     // TODO 雪菲专武实装的话后就删除该代码片段
-    val hasUnique = rawQuery(
+    val hasUnique1 = rawQuery(
         "SELECT equip_id FROM unit_unique_equip WHERE unit_id=106401", null
     ).use { it.moveToFirst() }
-    if (!hasUnique) {
+    if (!hasUnique1) {
         try {
             // 删除错误的雪菲专武
             execSQL("UPDATE unit_skill_data SET main_skill_evolution_1=0 WHERE unit_id=106401")
@@ -70,7 +70,8 @@ suspend fun AppDatabase.initDatabase(defaultUserId: Int) = safelyUse {
 'kana' TEXT NOT NULL,
 'actual_name' TEXT NOT NULL,
 'max_rarity' INTEGER NOT NULL,
-'equip_id' INTEGER NOT NULL,
+'equip1_id' INTEGER NOT NULL,
+'equip2_id' INTEGER NOT NULL,
 'search_area_width' INTEGER NOT NULL,
 'atk_type' INTEGER NOT NULL,
 'normal_atk_cast_time' REAL NOT NULL,
@@ -95,13 +96,14 @@ PRIMARY KEY('unit_id')
     execSQL(
 """INSERT INTO `chara_data`
 SELECT ud.unit_id,ud.unit_name,kana,IFNULL(aub.unit_name,ud.kana) AS actual_name,
-max_rarity,IFNULL(uue.equip_id, 0) AS equip_id,
+max_rarity,IFNULL(uue1.equip_id, 0) AS equip1_id,IFNULL(uue2.equip_id, 0) AS equip2_id,
 search_area_width,atk_type,normal_atk_cast_time,comment,start_time,
 age,guild,race,height,weight,birth_month,birth_day,blood_type,favorite,voice,catch_copy,self_text
 FROM unit_data AS ud JOIN unit_profile AS up ON ud.unit_id=up.unit_id
 LEFT JOIN actual_unit_background AS aub ON SUBSTR(ud.unit_id,1,4)=SUBSTR(aub.unit_id,1,4)
 LEFT JOIN (SELECT unit_id,COUNT(unit_id) AS max_rarity FROM unit_rarity GROUP BY unit_id) AS ur ON ud.unit_id=ur.unit_id
-LEFT JOIN unit_unique_equip AS uue ON ud.unit_id=uue.unit_id
+LEFT JOIN unit_unique_equip AS uue1 ON ud.unit_id=uue1.unit_id AND uue1.equip_slot=1
+LEFT JOIN unit_unique_equip AS uue2 ON ud.unit_id=uue2.unit_id AND uue2.equip_slot=2
 WHERE comment!='' AND ud.unit_id<400000"""
     )
 
@@ -127,7 +129,7 @@ LEFT JOIN (SELECT MAX(promotion_level) AS max_promotion_level FROM unit_promotio
 LEFT JOIN (SELECT MAX(enhance_level) AS max_unique_level FROM unique_equipment_enhance_data)
 LEFT JOIN (SELECT MAX(area_id)-11000 AS max_area FROM quest_data WHERE area_id<12000 AND reward_image_1!=0)
 LEFT JOIN (SELECT COUNT(*) AS max_chara FROM chara_data)
-LEFT JOIN (SELECT COUNT(*) AS max_unique FROM chara_data WHERE equip_id!=0)
+LEFT JOIN (SELECT COUNT(*) AS max_unique FROM chara_data WHERE equip1_id!=0)
 LEFT JOIN (SELECT COUNT(*) AS max_rarity_6 FROM chara_data WHERE max_rarity=6)"""
     )
 
@@ -138,13 +140,13 @@ LEFT JOIN (SELECT COUNT(*) AS max_rarity_6 FROM chara_data WHERE max_rarity=6)""
 'rarity' INTEGER NOT NULL,
 'chara_level' INTEGER NOT NULL,
 'love_level' INTEGER NOT NULL,
-'unique_level' INTEGER NOT NULL,
+'unique1_level' INTEGER NOT NULL,
+'unique2_level' INTEGER NOT NULL,
 'promotion_level' INTEGER NOT NULL,
 'ub_level' INTEGER NOT NULL,
 'skill1_level' INTEGER NOT NULL,
 'skill2_level' INTEGER NOT NULL,
 'ex_level' INTEGER NOT NULL,
-
 'equip1_level' INTEGER NOT NULL,
 'equip2_level' INTEGER NOT NULL,
 'equip3_level' INTEGER NOT NULL,
@@ -165,7 +167,8 @@ PRIMARY KEY('user_id','unit_id')
 """INSERT INTO `user_data`
 SELECT $defaultUserId AS user_id,unit_id,max_rarity AS rarity,max_chara_level AS chara_level,
 CASE(max_rarity) WHEN 6 THEN 12 ELSE 8 END AS love_level,
-CASE(equip_id) WHEN 0 THEN 0 ELSE max_unique_level END AS unique_level,
+CASE(equip1_id) WHEN 0 THEN 0 ELSE max_unique_level END AS unique1_level,
+CASE(equip2_id) WHEN 0 THEN -1 ELSE 5 END AS unique2_level,
 max_promotion_level AS promotion_level,
 max_chara_level AS ub_level,max_chara_level AS skill1_level,max_chara_level AS skill2_level,max_chara_level AS ex_level,
 5 AS equip1_level,5 AS equip2_level,5 AS equip3_level,5 AS equip4_level,5 AS equip5_level,5 AS equip6_level,

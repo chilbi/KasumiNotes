@@ -21,7 +21,8 @@ import com.kasuminotes.data.UnitSkillData
 
 @Composable
 fun AttackPattern(
-    hasUnique: Boolean,
+    hasUnique1: Boolean,
+    hasUnique2: Boolean,
     atkType: Int,
     unitAttackPatternList: List<UnitAttackPattern>,
     unitSkillData: UnitSkillData,
@@ -48,7 +49,8 @@ fun AttackPattern(
                 val atkPattern = pattern.getAtkPattern(
                     index,
                     atkType,
-                    hasUnique,
+                    hasUnique1,
+                    hasUnique2,
                     unitSkillData
                 )
 

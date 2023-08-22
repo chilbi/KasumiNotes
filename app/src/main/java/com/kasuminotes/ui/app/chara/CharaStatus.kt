@@ -44,11 +44,11 @@ fun CharaStatus(
     originUserData: UserData,
     maxUserData: MaxUserData,
     maxRarity: Int,
-    hasUnique: Boolean,
+    hasUnique1: Boolean,
     modifier: Modifier = Modifier,
     onCharaLevelChange: (Int) -> Unit,
     onRarityChange: (Int) -> Unit,
-    onUniqueLevelChange: (Int) -> Unit,
+    onUniqueLevelChange: (value: Int, slot: Int) -> Unit,
     onLoveLevelChange: (Int) -> Unit,
     onPromotionLevelChange: (Int) -> Unit,
     onSkillLevelChange: (value: Int, labelText: String) -> Unit
@@ -140,10 +140,10 @@ fun CharaStatus(
             }
         }
 
-        if (hasUnique) {
+        if (hasUnique1) {
             BadgedButtonDialog(
-                userData.uniqueLevel,
-                originUserData.uniqueLevel,
+                userData.unique1Level,
+                originUserData.unique1Level,
                 label = { LabelImage(R.drawable.unique_large) }
             ) {
                 Surface(
@@ -152,10 +152,10 @@ fun CharaStatus(
                 ) {
                     Box(Modifier.padding(horizontal = 16.dp, vertical = 24.dp)) {
                         SliderPlus(
-                            value = userData.uniqueLevel,
+                            value = userData.unique1Level,
                             minValue = 0,
                             maxValue = maxUserData.maxUniqueLevel,
-                            onValueChange = onUniqueLevelChange,
+                            onValueChange = { onUniqueLevelChange(it, 1) },
                         ) {
                             LabelImage(R.drawable.unique_large)
                         }

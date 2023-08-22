@@ -30,8 +30,8 @@ val GrayFilter by lazy {
 
 @Stable
 class Palettes(
-    val LightColors: ColorScheme,
-    val DarkColors: ColorScheme
+    val lightColors: ColorScheme,
+    val darkColors: ColorScheme
 )
 
 val PrimaryPalettes: Array<Color> = arrayOf(
@@ -45,7 +45,7 @@ val PrimaryPalettes: Array<Color> = arrayOf(
 val Themes: Array<Lazy<Palettes>> = arrayOf(
     lazy {
         Palettes(
-            LightColors = lightColorScheme(
+            lightColors = lightColorScheme(
                 primary = Color(0xFF215FA6),
                 onPrimary = Color(0xFFFFFFFF),
                 primaryContainer = Color(0xFFD5E3FF),
@@ -76,7 +76,7 @@ val Themes: Array<Lazy<Palettes>> = arrayOf(
                 outlineVariant = Color(0xFFC4C6CF),
                 scrim = Color(0xFF000000)
             ),
-            DarkColors = darkColorScheme(
+            darkColors = darkColorScheme(
                 primary = Color(0xFFA6C8FF),
                 onPrimary = Color(0xFF003060),
                 primaryContainer = Color(0xFF004787),
@@ -111,7 +111,7 @@ val Themes: Array<Lazy<Palettes>> = arrayOf(
     },
     lazy {
         Palettes(
-            LightColors = lightColorScheme(
+            lightColors = lightColorScheme(
                 primary = Color(0xFFAE2660),
                 onPrimary = Color(0xFFFFFFFF),
                 primaryContainer = Color(0xFFFFD9E2),
@@ -142,7 +142,7 @@ val Themes: Array<Lazy<Palettes>> = arrayOf(
                 outlineVariant = Color(0xFFD6C2C5),
                 scrim = Color(0xFF000000)
             ),
-            DarkColors = darkColorScheme(
+            darkColors = darkColorScheme(
                 primary = Color(0xFFFFB1C7),
                 onPrimary = Color(0xFF650031),
                 primaryContainer = Color(0xFF8E0348),
@@ -177,7 +177,7 @@ val Themes: Array<Lazy<Palettes>> = arrayOf(
     },
     lazy {
         Palettes(
-            LightColors = lightColorScheme(
+            lightColors = lightColorScheme(
                 primary = Color(0xFF436915),
                 onPrimary = Color(0xFFFFFFFF),
                 primaryContainer = Color(0xFFC2F18D),
@@ -208,7 +208,7 @@ val Themes: Array<Lazy<Palettes>> = arrayOf(
                 outlineVariant = Color(0xFFC5C8BA),
                 scrim = Color(0xFF000000)
             ),
-            DarkColors = darkColorScheme(
+            darkColors = darkColorScheme(
                 primary = Color(0xFFA7D474),
                 onPrimary = Color(0xFF1E3700),
                 primaryContainer = Color(0xFF2D5000),
@@ -243,7 +243,7 @@ val Themes: Array<Lazy<Palettes>> = arrayOf(
     },
     lazy {
         Palettes(
-            LightColors = lightColorScheme(
+            lightColors = lightColorScheme(
                 primary = Color(0xFF616200),
                 onPrimary = Color(0xFFFFFFFF),
                 primaryContainer = Color(0xFFE8E870),
@@ -274,7 +274,7 @@ val Themes: Array<Lazy<Palettes>> = arrayOf(
                 outlineVariant = Color(0xFFCAC7B6),
                 scrim = Color(0xFF000000)
             ),
-            DarkColors = darkColorScheme(
+            darkColors = darkColorScheme(
                 primary = Color(0xFFCCCC57),
                 onPrimary = Color(0xFF323200),
                 primaryContainer = Color(0xFF494900),
@@ -309,7 +309,7 @@ val Themes: Array<Lazy<Palettes>> = arrayOf(
     },
     lazy {
         Palettes(
-            LightColors = lightColorScheme(
+            lightColors = lightColorScheme(
                 primary = Color(0xFFA03F28),
                 onPrimary = Color(0xFFFFFFFF),
                 primaryContainer = Color(0xFFFFDAD2),
@@ -340,7 +340,7 @@ val Themes: Array<Lazy<Palettes>> = arrayOf(
                 outlineVariant = Color(0xFFD8C2BD),
                 scrim = Color(0xFF000000)
             ),
-            DarkColors = darkColorScheme(
+            darkColors = darkColorScheme(
                 primary = Color(0xFFFFB4A3),
                 onPrimary = Color(0xFF611201),
                 primaryContainer = Color(0xFF812813),

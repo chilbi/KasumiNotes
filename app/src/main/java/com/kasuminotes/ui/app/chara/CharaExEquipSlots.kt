@@ -32,7 +32,7 @@ fun CharaExEquipSlots(
     userData: UserData,
     originUserData: UserData,
     exEquipSlots: List<ExEquipSlot>,
-    onExEquipSlotClick: (ExEquipSlot) -> Unit
+    onExEquipClick: (ExEquipSlot) -> Unit
 ) {
     Column(horizontalAlignment = Alignment.End) {
         val hasExEquipSlots = exEquipSlots.isNotEmpty()
@@ -42,7 +42,7 @@ fun CharaExEquipSlots(
                 originUserData.exEquip1Level,
                 originUserData.exEquip1,
                 if (hasExEquipSlots) exEquipSlots[0] else null,
-                onExEquipSlotClick
+                onExEquipClick
             )
         }
         Box(Modifier.padding(vertical = 4.dp)) {
@@ -51,7 +51,7 @@ fun CharaExEquipSlots(
                 originUserData.exEquip2Level,
                 originUserData.exEquip2,
                 if (hasExEquipSlots) exEquipSlots[1] else null,
-                onExEquipSlotClick
+                onExEquipClick
             )
         }
         Box(Modifier.padding(end = 24.dp)) {
@@ -60,7 +60,7 @@ fun CharaExEquipSlots(
                 originUserData.exEquip3Level,
                 originUserData.exEquip3,
                 if (hasExEquipSlots) exEquipSlots[2] else null,
-                onExEquipSlotClick
+                onExEquipClick
             )
         }
     }
@@ -72,7 +72,7 @@ private fun ExEquipIcon(
     originExEquipLevel: Int,
     originExEquipId: Int,
     exEquipSlot: ExEquipSlot?,
-    onExEquipSlotClick: (ExEquipSlot) -> Unit
+    onExEquipClick: (ExEquipSlot) -> Unit
 ) {
     if (exEquipSlot == null) {
         ImageIcon(
@@ -101,7 +101,7 @@ private fun ExEquipIcon(
                 ImageIcon(
                     painter = painterResource(R.drawable.item_00000),
                     loading = false,
-                    onClick = { onExEquipSlotClick(exEquipSlot) }
+                    onClick = { onExEquipClick(exEquipSlot) }
                 ) {
                     Image(
                         painter = rememberAsyncImagePainter(
@@ -126,7 +126,7 @@ private fun ExEquipIcon(
             } else {
                 ImageIcon(
                     url = UrlUtil.getExEquipUrl(exEquip.exEquipmentId),
-                    onClick = { onExEquipSlotClick(exEquipSlot) }
+                    onClick = { onExEquipClick(exEquipSlot) }
                 ) {
                     Row(
                         Modifier

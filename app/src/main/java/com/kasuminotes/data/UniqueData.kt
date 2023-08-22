@@ -10,7 +10,7 @@ data class UniqueData(
     val growthProperty: Property,
     val rfGrowthProperty: Property?
 ) {
-    fun getProperty(uniqueLevel: Int): Property {
+    fun getUnique1Property(uniqueLevel: Int): Property {
         if (uniqueLevel < 1) return Property.zero
         if (uniqueLevel == 1) return baseProperty
 
@@ -22,6 +22,15 @@ data class UniqueData(
             Property { index ->
                 baseProperty[index] + ceil(growthProperty[index] * 259 + rfGrowthProperty[index] * (uniqueLevel - 260))// TODO 不确定的取整方式
             }
+        }
+    }
+
+    fun getUnique2Property(uniqueLevel: Int): Property {
+        if (uniqueLevel < 0) return Property.zero
+        if (uniqueLevel == 0) return baseProperty
+
+        return Property { index ->
+            baseProperty[index] + ceil(growthProperty[index] * uniqueLevel)// TODO 不确定的取整方式
         }
     }
 

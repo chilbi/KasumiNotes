@@ -19,7 +19,7 @@ fun KasumiNotesTheme(
     }
 
     MaterialTheme(
-        colorScheme = if (darkTheme) theme.DarkColors else theme.LightColors,
+        colorScheme = if (darkTheme) theme.darkColors else theme.lightColors,
         shapes = Shapes,
         typography = Typography,
         content = content

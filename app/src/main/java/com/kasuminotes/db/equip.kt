@@ -103,7 +103,6 @@ suspend fun AppDatabase.getEquipCraft(equipmentId: Int): EquipCraft = getEquipCr
 
 private suspend fun AppDatabase.getEquipCraft(equipmentId: Int, consumeNum: Int, checked: Boolean): EquipCraft {
     return withIOContext {
-
          if (checked || isCraft(equipmentId)) {
             val sql = "SELECT ${EquipCraft.getFields()} FROM equipment_craft WHERE equipment_id=$equipmentId"
 
@@ -150,7 +149,20 @@ private suspend fun AppDatabase.getEquipCraft(equipmentId: Int, consumeNum: Int,
     }
 }
 
-suspend fun AppDatabase.getEquipmentPairList(): List<Pair<Int, List<EquipInfo>>> {
+suspend fun AppDatabase.getUnique2Craft(equipmentId: Int): Int {
+    val sql = """SELECT item_id FROM unique_equip_craft_enhance
+jOIN unique_equip_consume_group ON consume_group_id=group_id
+WHERE equipment_id=$equipmentId"""
+
+    return safelyUse {
+        rawQuery(sql, null).use {
+            it.moveToFirst()
+            it.getInt(0)
+        }
+    }
+}
+
+    suspend fun AppDatabase.getEquipmentPairList(): List<Pair<Int, List<EquipInfo>>> {
     val sql = """SELECT ed.equipment_id,eer.description
 FROM equipment_data AS ed
 JOIN equipment_enhance_rate AS eer ON ed.equipment_id=eer.equipment_id

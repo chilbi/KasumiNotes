@@ -19,17 +19,16 @@ data class UnitAttackPattern(
     fun getAtkPattern(
         index: Int,
         atkType: Int,
-        hasUnique: Boolean,
+        hasUnique1: Boolean,
+        hasUnique2: Boolean,
         unitSkillData: UnitSkillData
     ): AtkPattern {
         val atkPattern = atkPatternList[index]
-
         val loopLabel: String? = when (index + 1) {
             loopStart -> "START"
             loopEnd -> "END"
             else -> null
         }
-
         val iconUrl: String
         val atkLabel: String
 
@@ -39,31 +38,25 @@ data class UnitAttackPattern(
             atkLabel = Label.a
         } else {
             val n = atkPattern % 10
-            val skillData: SkillData?
-
-            if (atkPattern < 2000) {
-                if (hasUnique && n == 1 && unitSkillData.mainSkillEvolutionList.isNotEmpty()) {
-                    atkLabel = Label.skill + "1+"
-                    skillData = unitSkillData.mainSkillEvolutionList.getOrNull(0)
-                } else {
-                    atkLabel = Label.skill + n.toString()
-                    skillData = unitSkillData.mainSkillList.getOrNull(n - 1)
-                }
+            val isEvolution = (hasUnique1 && n == 1) || (hasUnique2 && n == 2)
+            val isSP = atkPattern > 2000
+            val skillList = if (isEvolution) {
+                if (isSP) unitSkillData.spSkillEvolutionList
+                else unitSkillData.mainSkillEvolutionList
             } else {
-                if (hasUnique && n == 1 && unitSkillData.spSkillEvolutionList.isNotEmpty()) {
-                    atkLabel = Label.sp + "1+"
-                    skillData = unitSkillData.spSkillEvolutionList.getOrNull(0)
-                } else {
-                    atkLabel = Label.sp + n.toString()
-                    skillData = unitSkillData.spSkillList.getOrNull(n - 1)
-                }
+                if (isSP) unitSkillData.spSkillList
+                else unitSkillData.mainSkillList
             }
-
+            val skillData = skillList.getOrNull(n - 1)
             iconUrl = if (skillData != null) {
                 UrlUtil.getSkillIconUrl(skillData.iconType)
             } else {
                 UrlUtil.getEquipIconUrl(AppDatabase.NullId)
             }
+            var label = if (isSP) Label.sp else Label.skill
+            label += n.toString()
+            if (isEvolution) label += "+"
+            atkLabel = label
         }
 
         return AtkPattern(loopLabel, iconUrl, atkLabel)

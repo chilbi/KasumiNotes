@@ -29,10 +29,9 @@ fun UniqueCraftList(
 ) {
     Container(modifier = modifier, padding = 0.dp) {
         FixedWidthLabel(
-            text = stringResource(R.string.synthetic_material),
+            text = stringResource(R.string.enhance_material),
             margin = PaddingValues(8.dp)
         )
-
         Column(
             Modifier
                 .verticalScroll(rememberScrollState())
@@ -40,16 +39,16 @@ fun UniqueCraftList(
         ) {
             craftList.forEach { craftItem ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    CraftItem(
-                        imageUrl = UrlUtil.getEquipIconUrl(craftItem.heartId),
-                        consumeSum = craftItem.heartSum,
-                        selected = false,
-                        enabled = false,
-                        onClick = {}
-                    )
-
-                    Spacer(Modifier.width(8.dp))
-
+                    if (craftItem.heartId != -1) {
+                        CraftItem(
+                            imageUrl = UrlUtil.getEquipIconUrl(craftItem.heartId),
+                            consumeSum = craftItem.heartSum,
+                            selected = false,
+                            enabled = false,
+                            onClick = {}
+                        )
+                        Spacer(Modifier.width(8.dp))
+                    }
                     CraftItem(
                         imageUrl = UrlUtil.getItemIconUrl(craftItem.memoryId),
                         consumeSum = craftItem.memorySum,
@@ -57,9 +56,7 @@ fun UniqueCraftList(
                         enabled = false,
                         onClick = {}
                     )
-
                     Spacer(Modifier.weight(1f))
-
                     Button(onClick = { onEnhanceLevelChange(craftItem.unlockLevel) }) {
                         Text(text = craftItem.unlockLevel.toString())
                     }

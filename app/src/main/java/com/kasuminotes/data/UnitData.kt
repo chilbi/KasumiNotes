@@ -6,7 +6,8 @@ data class UnitData(
     val kana: String,
     val actualName: String,
     val maxRarity: Int,
-    val equipId: Int,
+    val equip1Id: Int,
+    val equip2Id: Int,
     val searchAreaWidth: Int,
     val atkType: Int,
     val normalAtkCastTime: Float,
@@ -25,13 +26,15 @@ data class UnitData(
     val catchCopy: String,
     val selfText: String
 ) {
-    val position = when {
+    val position: Int = when {
         searchAreaWidth < 300 -> 1
         searchAreaWidth < 600 -> 2
         else -> 3
     }
 
-    val hasUnique: Boolean get() = equipId != 0
+    val hasUnique1: Boolean get() = equip1Id != 0
+
+    val hasUnique2: Boolean get() = equip2Id != 0
 
     val startTimeStr: String = startTime
         .split(" ")[0]
@@ -54,7 +57,8 @@ data class UnitData(
                         "kana," +
                         "actual_name," +
                         "max_rarity," +
-                        "equip_id," +
+                        "equip1_id," +
+                        "equip2_id," +
                         "search_area_width," +
                         "atk_type," +
                         "normal_atk_cast_time," +

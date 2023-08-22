@@ -48,8 +48,8 @@ fun CharaItem(
         val padding = 2.dp
         val maxRarity = userProfile.unitData.maxRarity
         val rarity = userProfile.userData.rarity
-        val hasUnique =
-            userProfile.unitData.hasUnique && userProfile.userData.uniqueLevel > 0
+        val hasUnique1 =
+            userProfile.unitData.hasUnique1 && userProfile.userData.unique1Level > 0
         val enablePositionAlpha = charaImageState.isIcon && maxRarity > 5
 
         RarityBorderShadow()
@@ -67,7 +67,7 @@ fun CharaItem(
         Rarities(
             padding,
             layerAlpha,
-            hasUnique,
+            hasUnique1,
             maxRarity,
             rarity,
             charaImageState.starSize,
@@ -85,7 +85,7 @@ fun CharaItem(
             charaImageState.positionSize
         )
 
-        if (hasUnique) {
+        if (hasUnique1) {
             Unique(
                 padding,
                 layerAlpha,
@@ -163,7 +163,7 @@ private fun RarityBorder(rankRarity: Int) {
 private fun BoxScope.Rarities(
     padding: Dp,
     layerAlpha: State<Float>,
-    hasUnique: Boolean,
+    hasUnique1: Boolean,
     maxRarity: Int,
     rarity: Int,
     starSize: Dp,
@@ -177,7 +177,7 @@ private fun BoxScope.Rarities(
             .padding(start = padding, bottom = padding)
             .wrapContentSize()
             .align(Alignment.BottomStart)
-            .layerAlpha(1 - layerAlpha.value, hasUnique)
+            .layerAlpha(1 - layerAlpha.value, hasUnique1)
     ) {
         repeat(maxRarity) { r ->
             val id = if (r < rarity) {

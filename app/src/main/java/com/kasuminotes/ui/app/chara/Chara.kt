@@ -30,9 +30,9 @@ fun Chara(
     charaState: CharaState,
     maxUserData: MaxUserData,
     onBack: () -> Unit,
-    onEquipSlotClick: (equipData: EquipData, slot: Int?) -> Unit,
-    onUniqueClick: (UniqueData) -> Unit,
-    onExEquipSlotClick: (ExEquipSlot) -> Unit,
+    onEquipmentClick: (equipData: EquipData, slot: Int?) -> Unit,
+    onUniqueClick: (uniqueData: UniqueData, slot: Int) -> Unit,
+    onExEquipClick: (ExEquipSlot) -> Unit,
     onSummonsClick: (summons: List<Int>, skillLevel: Int) -> Unit
 ) {
     val userProfile = charaState.userProfile!!
@@ -72,7 +72,7 @@ fun Chara(
     }}
 
     val onEquipClick = remember<(EquipData) -> Unit> {{ equipData ->
-        onEquipSlotClick(equipData, null)
+        onEquipmentClick(equipData, null)
     }}
 
     val onCharaChange = remember<(UserProfile) -> Unit>(userProfile) {{ otherChara ->
@@ -85,17 +85,19 @@ fun Chara(
 
     val onEquipChange = remember<(Boolean, Int) -> Unit>(userProfile) {{ equip, slot ->
         if (equip) {
-            charaState.changeEquipLevel(slot, userProfile.getEquipMaxLevel(slot))
+            charaState.changeEquipLevel(userProfile.getEquipMaxLevel(slot), slot)
         } else {
-            charaState.changeEquipLevel(slot, -1)
+            charaState.changeEquipLevel(-1, slot)
         }
     }}
 
-    val onUniqueChange = remember<(Boolean) -> Unit> {{ equip ->
-        if (equip) {
-            charaState.changeUniqueLevel(maxUserData.maxUniqueLevel)
+    val onUniqueChange = remember<(Boolean, Int) -> Unit>(maxUserData.maxUniqueLevel) {{ equip, slot ->
+        if (slot == 1) {
+            if (equip) charaState.changeUniqueLevel(maxUserData.maxUniqueLevel, 1)
+            else charaState.changeUniqueLevel(0, 1)
         } else {
-            charaState.changeUniqueLevel(0)
+            if (equip) charaState.changeUniqueLevel(5, 2)
+            else charaState.changeUniqueLevel(-1, 2)
         }
     }}
 
@@ -115,7 +117,8 @@ fun Chara(
                 unitData,
                 maxUserData,
                 userProfile.unitPromotion,
-                userProfile.uniqueData,
+                userProfile.unique1Data,
+                userProfile.unique2Data,
                 userProfile.exEquipSlots,
                 charaState.rankBonusProperty,
                 property,
@@ -125,9 +128,9 @@ fun Chara(
                 statusBarHeight,
                 headerHeight,
                 onBack,
-                onEquipSlotClick,
+                onEquipmentClick,
                 onUniqueClick,
-                onExEquipSlotClick,
+                onExEquipClick,
                 onEquipChange,
                 onUniqueChange,
                 charaState::changeCharaLevel,
@@ -147,7 +150,7 @@ fun Chara(
                 unitData,
                 userProfile.charaStoryStatus,
                 userProfile.sharedProfiles,
-                userProfile.uniqueData,
+                userProfile.unique1Data,
                 userProfile.promotions,
                 userProfile.getRealUnitAttackPatternList(userData.rarity),
                 userProfile.getRealUnitSkillData(userData.rarity),

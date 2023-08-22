@@ -145,6 +145,7 @@
     <string name="story_d">第%d話</string>
     <string name="promotion_level">強化レベル</string>
     <string name="synthetic_material">合成素材</string>
+    <string name="enhance_material">強化素材</string>
     <string name="obtain_place">入手場所</string>
     <string name="searching">捜索中…</string>
     <string name="no_data">空っぽだ</string>

@@ -43,7 +43,8 @@ fun SummonDetail(
 
         if (unitSkillData != null) {
             AttackPattern(
-                hasUnique = false,
+                hasUnique1 = false,
+                hasUnique2 = false,
                 atkType = atkType,
                 unitAttackPatternList = unitAttackPatternList,
                 unitSkillData = unitSkillData

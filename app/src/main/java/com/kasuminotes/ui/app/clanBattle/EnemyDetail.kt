@@ -81,7 +81,8 @@ fun EnemyDetail(
 
         if (unitSkillData != null) {
             AttackPattern(
-                hasUnique = false,
+                hasUnique1 = false,
+                hasUnique2 = false,
                 atkType = enemyData.atkType,
                 unitAttackPatternList = unitAttackPatternList,
                 unitSkillData = unitSkillData

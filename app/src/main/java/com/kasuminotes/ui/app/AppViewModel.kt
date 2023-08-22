@@ -99,30 +99,38 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         equipState.destroy()
         if (slot == null) {
             equipState.initEquipData(
-                dbState.userState.maxUserData!!.maxArea,
-                equipData
+                equipData,
+                dbState.userState.maxUserData!!.maxArea
             )
         } else {
             equipState.initEquipData(
-                dbState.userState.maxUserData!!.maxArea,
                 equipData,
+                dbState.userState.maxUserData!!.maxArea,
                 charaState.userData!!.getEquipLevel(slot),
-                onLevelChange = { value ->
-                    charaState.changeEquipLevel(slot, value)
+                onLevelChange = { value, _ ->
+                    charaState.changeEquipLevel(value, slot)
                 }
             )
         }
         navController.navigate(AppNavData.Equip.route)
     }
 
-    fun navigateToUnique(uniqueData: UniqueData) {
+    fun navigateToUnique(uniqueData: UniqueData, slot: Int) {
         equipState.destroy()
-        equipState.initUniqueData(
-            uniqueData,
-            charaState.userData!!.uniqueLevel,
-            dbState.userState.maxUserData!!.maxUniqueLevel,
-            charaState::changeUniqueLevel
-        )
+        if (slot == 1) {
+            equipState.initUnique1Data(
+                uniqueData,
+                charaState.userData!!.unique1Level,
+                dbState.userState.maxUserData!!.maxUniqueLevel,
+                charaState::changeUniqueLevel
+            )
+        } else {
+            equipState.initUnique2Data(
+                uniqueData,
+                charaState.userData!!.unique2Level,
+                charaState::changeUniqueLevel
+            )
+        }
         navController.navigate(AppNavData.Equip.route)
     }
 

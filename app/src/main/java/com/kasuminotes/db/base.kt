@@ -45,6 +45,7 @@ FROM user_data WHERE user_id!=$defaultUserId"""
                     it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
+                    it.getInt(i++),
                     it.getInt(i)
                 )
 
@@ -135,6 +136,7 @@ WHERE user_id=$userId"""
                         it.getInt(i++),
                         it.getInt(i++),
                         it.getInt(i++),
+                        it.getInt(i++),
                         it.getInt(i++)
                     )
 
@@ -143,6 +145,7 @@ WHERE user_id=$userId"""
                         it.getString(i++),
                         it.getString(i++),
                         it.getString(i++),
+                        it.getInt(i++),
                         it.getInt(i++),
                         it.getInt(i++),
                         it.getInt(i++),
@@ -185,7 +188,7 @@ suspend fun AppDatabase.getMaxUserData(userId: Int): MaxUserData {
 max_area,max_chara,max_unique,max_rarity_6,user_chara,user_unique,user_rarity_6
 FROM max_data
 LEFT JOIN (SELECT COUNT(user_id) AS user_chara FROM user_data WHERE user_id=$userId)
-LEFT JOIN (SELECT COUNT(user_id) AS user_unique FROM user_data WHERE user_id=$userId AND unique_level>0)
+LEFT JOIN (SELECT COUNT(user_id) AS user_unique FROM user_data WHERE user_id=$userId AND unique1_level>0)
 LEFT JOIN (SELECT COUNT(user_id) AS user_rarity_6 FROM user_data WHERE user_id=$userId AND rarity=6)"""
 
     return safelyUse {

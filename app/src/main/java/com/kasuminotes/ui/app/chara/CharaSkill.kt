@@ -46,7 +46,8 @@ fun CharaSkill(
 
         if (skillList != null) {
             AttackPattern(
-                hasUnique = unitData.hasUnique && userData.uniqueLevel > 0,
+                hasUnique1 = unitData.hasUnique1 && userData.unique1Level > 0,
+                hasUnique2 = unitData.hasUnique2 && userData.unique2Level > -1,
                 atkType = unitData.atkType,
                 unitAttackPatternList = unitAttackPatternList,
                 unitSkillData = unitSkillData!!

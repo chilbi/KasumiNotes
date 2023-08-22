@@ -201,10 +201,10 @@ class CharaListState {
             } else {
                 if (unitData.maxRarity < 6 && loveLevel > 8) 8 else loveLevel
             }
-            val newUniqueLevel = if (uniqueLevel == null) {
-                userData.uniqueLevel
+            val newUnique1Level = if (uniqueLevel == null) {
+                userData.unique1Level
             } else {
-                if (unitData.hasUnique) uniqueLevel else 0
+                if (unitData.hasUnique1) uniqueLevel else 0
             }
             val newPromotionLevel = promotionLevel ?: userData.promotionLevel
             if (unlockSlot == null) {
@@ -222,7 +222,8 @@ class CharaListState {
                 newRarity,
                 newCharaLevel,
                 newLoveLevel,
-                newUniqueLevel,
+                newUnique1Level,
+                userData.unique2Level,
                 newPromotionLevel,
                 newCharaLevel,
                 newCharaLevel,

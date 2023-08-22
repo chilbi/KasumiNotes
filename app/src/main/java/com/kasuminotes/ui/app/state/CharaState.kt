@@ -140,8 +140,9 @@ class CharaState(
         }
     }
 
-    fun changeUniqueLevel(value: Int) {
-        userData = userData!!.copy(uniqueLevel = value)
+    fun changeUniqueLevel(value: Int, slot: Int) {
+        userData = if (slot == 1) userData!!.copy(unique1Level = value)
+        else userData!!.copy(unique2Level = value)
         changeState()
     }
 
@@ -184,7 +185,7 @@ class CharaState(
         changeState()
     }
 
-    fun changeEquipLevel(slot: Int, value: Int) {
+    fun changeEquipLevel(value: Int, slot: Int) {
         userData = when (slot) {
             1 -> userData!!.copy(equip1Level = value)
             2 -> userData!!.copy(equip2Level = value)
@@ -215,9 +216,9 @@ class CharaState(
 
         var userUniqueDiff = 0
         var userRarity6Diff = 0
-        if (userProfile!!.unitData.hasUnique) {
-            val originUniqueLevel = userProfile!!.userData.uniqueLevel
-            val willChangeUniqueLevel = userData!!.uniqueLevel
+        if (userProfile!!.unitData.hasUnique1) {
+            val originUniqueLevel = userProfile!!.userData.unique1Level
+            val willChangeUniqueLevel = userData!!.unique1Level
             if (originUniqueLevel > 0 && willChangeUniqueLevel < 1) {
                 userUniqueDiff = -1
             }

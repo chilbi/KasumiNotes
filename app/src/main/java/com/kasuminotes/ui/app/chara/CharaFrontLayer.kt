@@ -47,13 +47,13 @@ fun CharaFrontLayer(
     unitData: UnitData,
     charaStoryStatus: CharaStoryStatus?,
     sharedProfiles: List<UserProfile>?,
-    uniqueData: UniqueData?,
+    unique1Data: UniqueData?,
     promotions: List<UnitPromotion>,
     unitAttackPatternList: List<UnitAttackPattern>,
     unitSkillData: UnitSkillData?,
     property: Property,
     onEquipClick: (EquipData) -> Unit,
-    onUniqueClick: (UniqueData) -> Unit,
+    onUniqueClick: (uniqueData: UniqueData, slot: Int) -> Unit,
     onSummonsClick: (summons: List<Int>, skillLevel: Int) -> Unit,
     onCharaChange: (UserProfile) -> Unit,
     onToggle: () -> Unit
@@ -130,7 +130,7 @@ fun CharaFrontLayer(
                     }
                     2 -> {
                         CharaEquips(
-                            uniqueData,
+                            unique1Data,
                             promotions,
                             equipmentGridState,
                             onEquipClick,

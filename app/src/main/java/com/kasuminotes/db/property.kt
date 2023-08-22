@@ -123,7 +123,7 @@ suspend fun AppDatabase.getUniqueData(equipId: Int): UniqueData? {
             },
             // growthProperty
             async {
-                val sql = "SELECT ${Property.getFields()} FROM unique_equipment_enhance_rate WHERE equipment_id=$equipId AND min_lv=2"
+                val sql = "SELECT ${Property.getFields()} FROM unique_equipment_enhance_rate WHERE equipment_id=$equipId AND min_lv<261"
                 use {
                     rawQuery(sql, null).use {
                         if (it.moveToFirst()) {
@@ -157,8 +157,8 @@ suspend fun AppDatabase.getUniqueData(equipId: Int): UniqueData? {
             }
         ).awaitAll()
 
-        val uniqueData = list[0] as UniqueData?
-        uniqueData?.copy(
+        val unique1Data = list[0] as UniqueData?
+        unique1Data?.copy(
             growthProperty = list[1] as Property,
             rfGrowthProperty = list[2] as Property?
         )

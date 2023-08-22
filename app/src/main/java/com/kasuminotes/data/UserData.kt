@@ -8,7 +8,8 @@ data class UserData(
     val rarity: Int,
     val charaLevel: Int,
     val loveLevel: Int,
-    val uniqueLevel: Int,
+    val unique1Level: Int,
+    val unique2Level: Int,
     val promotionLevel: Int,
     val ubLevel: Int,
     val skill1Level: Int,
@@ -41,7 +42,8 @@ data class UserData(
             rarity,
             charaLevel,
             loveLevel,
-            uniqueLevel,
+            unique1Level,
+            unique2Level,
             promotionLevel,
             ubLevel,
             skill1Level,
@@ -78,7 +80,8 @@ data class UserData(
                 fields = "rarity," +
                         "chara_level," +
                         "love_level," +
-                        "unique_level," +
+                        "unique1_level," +
+                        "unique2_level," +
                         "promotion_level," +
                         "ub_level," +
                         "skill1_level," +
