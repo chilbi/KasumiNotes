@@ -506,6 +506,7 @@
     <string name="silence">沉默</string>
     <string name="invincible">无敌</string>
     <string name="physical_invalid">回避所有的物理攻击的</string>
+    <string name="break_immunity">Break免疫</string>
     <string name="provoke">挑衅</string>
     <string name="fear">恐慌</string>
     <string name="harmed_remove_content1">%s只当受到攻击时才能解除。</string>

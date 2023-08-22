@@ -7,6 +7,7 @@ fun SkillAction.getNoDamage(skillLevel: Int): D {
     val content = when (actionDetail1) {
         1 -> D.Format(R.string.invincible)
         2 -> D.Format(R.string.physical_invalid)
+        6 -> D.Format(R.string.break_immunity)
         else -> D.Unknown
     }
 
