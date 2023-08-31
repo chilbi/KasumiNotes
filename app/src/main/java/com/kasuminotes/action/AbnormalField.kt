@@ -28,7 +28,7 @@ fun SkillAction.getAbnormalField(skillLevel: Int, actions: List<SkillAction>): D
         }
         79 -> {
             D.Format(
-                R.string.content_poison_damage_by_behaviour_formula1,
+                R.string.content_poison_damage_formula1,
                 arrayOf(getBaseLvFormula(modifyAction.actionValue1, modifyAction.actionValue2, skillLevel))
             )
         }

@@ -23,10 +23,7 @@ fun SkillAction.isStatusPercent(): Boolean {
         detail1 -= 1000
     }
     var isPercent = actionValue1 == 2.0
-    if (detail1 >= 140) {
-        isPercent = true
-    }
-    if (detail1 in 110..129) {
+    if ((detail1 in 110..129) || (detail1 >= 140)) {
         isPercent = true
     }
     return isPercent
@@ -38,7 +35,7 @@ fun SkillAction.isStatusUp(): Boolean {
         detail1 -= 1000
     }
     var isUp = detail1 % 10 == 0
-    if (detail1 >= 140) {
+    if (detail1 in 140..179) {
         isUp = !isUp
     }
     return isUp
@@ -60,13 +57,12 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
     var isReceived = false
     // 是否百分比
     var isPercent = actionValue1 == 2.0
-    if (detail1 >= 140) {
+    if (detail1 in 140..179) {
         isUp = !isUp
         isReceived = true
-        isPercent = true
     }
 
-    if (detail1 in 110..129) {
+    if ((detail1 in 110..129) || (detail1 >= 140)) {
         isPercent = true
     }
 

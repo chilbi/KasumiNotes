@@ -72,6 +72,21 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
         }
     }
 
+    if (actionType == 105) {
+        val allTarget = D.Format(
+            R.string.target_range_all_content1,
+            arrayOf(D.Format(R.string.target_enemy_and_friendly))
+        )
+        return if (isFullRangeTarget()) {
+            allTarget
+        } else {
+            D.Format(
+                R.string.target_range1_content2,
+                arrayOf(D.Text(targetRange.toString()), allTarget)
+            )
+        }
+    }
+
     return when (targetType) {
         0, 7 -> D.Format(R.string.target_self)
         1, 3, 34 -> {
@@ -132,7 +147,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             } else {//targetArea == 2 || targetArea == 3
                 if (targetCount == 1) {//一名目标
                     if (isFullRangeTarget()) {
-                        if (targetRange == 0 && targetNumber == 0 && targetAssignment != 1) {
+                        if (targetNumber == 0 && targetAssignment != 1) {
                             //targetArea==3、ゴブリングレート（UB）
                             D.Format(R.string.target_self)
                         } else {

@@ -163,6 +163,8 @@ fun getStatusContent(detail: Int): D {
         15 -> D.Format(R.string.received_damage)
         16 -> D.Format(R.string.received_physical_damage)
         17 -> D.Format(R.string.received_magic_damage)
+        18 -> D.Format(R.string.physical_damage)
+        19 -> D.Format(R.string.magic_damage)
         else -> D.Unknown
     }
 }
@@ -219,6 +221,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         133 -> D.Format(R.string.state_universe_seal)
         134 -> D.Format(R.string.state_beauty)
         135 -> D.Format(R.string.state_battery)
+        137 -> D.Format(R.string.state_kairai)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
 }

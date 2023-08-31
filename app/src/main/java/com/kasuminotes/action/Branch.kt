@@ -170,6 +170,16 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         in 6000..6999 -> {
             setStateBranch(branch,actionDetail1 - 6000, actionValue3)
         }
+        // ライラエル
+        in 3000..3999 -> {
+            val target = getTarget(depend)
+            val state = getStateContent(actionDetail1 - 3000, actionId)
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_target1_environment2, arrayOf(target, state)),
+                D.Format(R.string.action_branch_not_target1_environment2, arrayOf(target, state))
+            )
+        }
         // アキノ（サマー）
         2001 -> {
         val target = getTarget(depend)

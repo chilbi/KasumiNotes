@@ -180,7 +180,7 @@ class ActionBuilder(
             61 -> getFear()
             71 -> getKnightGuard(skillLevel, property)
             75 -> getHitCount()
-            79 -> D.Unknown/** [getAbnormalField] */
+            79 -> getFixedDamage()
             83 -> getSpeedOverlay()
             92 -> D.Unknown/** [getInjuredEnergy] */
             93 -> D.Unknown/** [getIgnoreProvocation] */
@@ -191,6 +191,7 @@ class ActionBuilder(
             99 -> getSpeedField()
             100 -> getAkinesiaInvalid()
             103 -> getDamageBaseAtk()
+            105 -> getEnvironment()
             else -> getUnknown()
         }
     }

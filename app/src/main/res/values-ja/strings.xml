@@ -265,6 +265,9 @@
     <string name="action_ignore_provocation">挑発を無視して、</string>
     <string name="action_akinesia_invalid_target1_time2">%1$sに受ける行動不能を無効化できる状態を付与する、効果時間%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">%1$sに受ける行動不能を最大%2$s回まで無効化できる状態を付与する、効果時間%3$s秒。</string>
+    <string name="action_fixed_damage_target1_formula2_time3">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける、効果時間%3$s秒。</string>
+    <string name="action_fixed_damage_target1_formula2_max3_time4">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける（毎回最大%3$sダメージを受ける）、効果時間%4$s秒。</string>
+    <string name="action_environment_target1_content2_time3">%1$sのいる環境を【%2$s】にする、効果時間%3$s秒。</string>
 
     <string name="action_branch_and">且つ</string>
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>
@@ -309,6 +312,8 @@
     <string name="action_branch_not_unit_target1_count2">%1$s全体の数が≠%2$sの場合、</string>
     <string name="action_branch_exists_magic">魔法攻撃をする敵がいる場合、</string>
     <string name="action_branch_not_exists_magic">魔法攻撃をする敵がいない場合、</string>
+    <string name="action_branch_target1_environment2">%1$sが【%2$s】環境にいる場合、</string>
+    <string name="action_branch_not_target1_environment2">%1$sが【%2$s】環境にいない場合、</string>
 
     <string name="summon_id1">【召喚物%s】を召喚する</string>
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
@@ -344,7 +349,7 @@
     <string name="content_regeneration_content1_formula2">の味方すべての%1$sを毎秒%2$s回復する</string>
     <string name="content_buff_target1_content2_formula3">の%1$sすべての%2$sを%3$sアップさせる</string>
     <string name="content_debuff_target1_content2_formula3">の%1$sすべての%2$sを%3$sダウンさせる</string>
-    <string name="content_poison_damage_by_behaviour_formula1">の敵すべてを行動する度に%sダメージを与える毒状態にする</string>
+    <string name="content_poison_damage_formula1">の敵すべてを行動する度に%sダメージを与える毒状態にする</string>
     <string name="content_speed_target1_formula2">の%1$sすべての行動速度を本来の%2$sにする</string>
     <string name="content_state_target1_abnormal2">の%1$sすべてを%2$s状態にする</string>
     <string name="content_attack_hit_enemy">自分の攻撃が敵に当たる度に、命中された対象</string>
@@ -399,6 +404,7 @@
     <string name="state_universe_seal">万象の刻印</string>
     <string name="state_beauty">美貌</string>
     <string name="state_battery">バッテリー</string>
+    <string name="state_kairai">界雷</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>
