@@ -65,6 +65,8 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             } else {
                 getDependMultiTarget(depend.getTarget(null, focused))
             }
+        } else if (depend.actionType == 105) {
+            this.copy(targetAssignment = 3).getTarget(null, focused)
         } else if (depend.depend != null) {
             depend.getTarget(depend.depend, focused)
         } else {
@@ -73,18 +75,12 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
     }
 
     if (actionType == 105) {
-        val allTarget = D.Format(
-            R.string.target_range_all_content1,
-            arrayOf(D.Format(R.string.target_enemy_and_friendly))
-        )
-        return if (isFullRangeTarget()) {
-            allTarget
-        } else {
-            D.Format(
-                R.string.target_range1_content2,
-                arrayOf(D.Text(targetRange.toString()), allTarget)
-            )
-        }
+        return this.copy(
+            actionType = 0,
+            targetType = 3,
+            targetCount = 99,
+            targetAssignment = 3
+        ).getTarget(null, focused)
     }
 
     return when (targetType) {
