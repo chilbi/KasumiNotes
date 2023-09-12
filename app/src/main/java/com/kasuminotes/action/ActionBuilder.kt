@@ -59,19 +59,24 @@ class ActionBuilder(
             /** [getInjuredEnergy] */
             if (action.actionType == 92) {
                 willRemoveIndexList.add(index)
+                val injuredEnergyContent = action.getInjuredEnergy()
                 val modifyTypes = arrayOf(1, 9, 36, 46, 79)
+                val willRemoveTypes = arrayOf(7, 93)
                 rawDepends.forEachIndexed { dependIndex, dependActionId ->
                     if (dependActionId == action.actionId) {
-                        val injuredEnergyContent = action.getInjuredEnergy()
                         val dependAction = actions[dependIndex]
                         if (dependAction.actionType in modifyTypes) {
                             originList[dependIndex] = originList[dependIndex].append(injuredEnergyContent)
-                        } else if (dependAction.actionType == 93) {
-                            val injuredEnergyModify = ModifyDescription(rawDepends, actions)
-                            val targetIndex = actions.indexOfFirst { it.actionId == dependAction.actionDetail1 }
-                            injuredEnergyModify.collectIgnoreProvocation(targetIndex, injuredEnergyContent)
-                            injuredEnergyModify.collectDepend()
-                            injuredEnergyModify.forEachModify { modifyIndex, modifyContent ->
+                        } else if (dependAction.actionType in willRemoveTypes) {
+                            val willRemoveModify = ModifyDescription(rawDepends, actions)
+                            val targetIndex = when (dependAction.actionType) {
+                                7 -> dependIndex
+                                93 -> actions.indexOfFirst { it.actionId == dependAction.actionDetail1 }
+                                else -> 0
+                            }
+                            willRemoveModify.collectModify(targetIndex, injuredEnergyContent)
+                            willRemoveModify.collectDepend()
+                            willRemoveModify.forEachModify { modifyIndex, modifyContent ->
                                 if (actions[modifyIndex].actionType in modifyTypes) {
                                     originList[modifyIndex] = originList[modifyIndex].append(modifyContent)
                                 }
@@ -108,8 +113,10 @@ class ActionBuilder(
             /** [getIgnoreProvocation] */
             if (action.actionType == 93) {
                 willRemoveIndexList.add(index)
+                val ignoreProvocation = action.getIgnoreProvocation()
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
-                ignoreProvocationModify.collectIgnoreProvocation(modifyIndex, action.getIgnoreProvocation())
+                ignoreProvocationModify.collectModify(modifyIndex, ignoreProvocation)
+                ignoreProvocationModify.collectModify(index, ignoreProvocation)
             }
         }
 
@@ -235,7 +242,7 @@ private class ModifyDescription(
         }
     }
 
-    fun collectIgnoreProvocation(modifyIndex: Int, modifyContent: D) {
+    fun collectModify(modifyIndex: Int, modifyContent: D) {
         if (!processedModifyIndexList.contains(modifyIndex)) {
             processedModifyIndexList.add(modifyIndex)
             willModifyList.add(modifyIndex to modifyContent)

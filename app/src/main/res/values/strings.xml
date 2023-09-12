@@ -406,6 +406,7 @@
     <string name="state_beauty">美貌</string>
     <string name="state_battery">电量</string>
     <string name="state_kairai">界雷</string>
+    <string name="state_roar_of_wolf_tooth">狼牙的咆哮</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>
