@@ -26,25 +26,29 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         giveValueCount = count
     }
 
-    val value2 = actionValue2 * giveValueCount
-    val value3 = actionValue3 * giveValueCount
-
     var isAdditive = true
+    var value2 = actionValue2 * giveValueCount
+    val value3 = actionValue3 * giveValueCount
 
     /** actionValue2, actionValue3 常量（如：(10 + 10 × 技能等级)） */
     val constantVariable = if (value3 == 0.0) {
+        var isPercent = false
         if (targetAction.actionType == 1 && actionDetail2 == 6) {
-            D.Text("${(value2 * 100).toNumStr()}%")
+            value2 *= 100
+            isPercent = true
         } else if (targetAction.actionType == 10 && actionType != 74 && targetAction.isStatusPercent()) {
-            D.Text("${value2.toNumStr()}%")
+            isPercent = true
         } else if (value2 < 0.0) {
             if (!(targetAction.actionType == 35 && actionDetail2 == 4)) {
                 isAdditive = false
             }
-            D.Text((-value2).toNumStr())
-        } else {
-            D.Text(value2.toNumStr())
+            if ((targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 2) && actionDetail2 == 1) {
+                value2 *= 100
+                isPercent = true
+            }
+            value2 *= -1
         }
+        D.Text(value2.toNumStr() + if (isPercent) "%" else "")
     } else {
         if (value2 > 0.0 && value3 > 0.0) {
             D.Format(
@@ -176,7 +180,9 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
                 else -> R.string.give_barrier_drain
             }
         )
-        8 -> D.Format(R.string.give_time)
+        8 -> if ((targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 2) &&
+            actionDetail2 == 1) D.Format(R.string.give_speed)
+        else D.Format(R.string.give_time)
         9 -> if (actionDetail2 == 3) D.Format(R.string.give_time)
         else D.Join(
             arrayOf(

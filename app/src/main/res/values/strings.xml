@@ -552,4 +552,5 @@
     <string name="give_mark_consume_state1">【%s】的消費数量</string>
     <string name="give_mark_max_state1">【%s】的最多追加数量</string>
     <string name="give_distance">距离</string>
+    <string name="give_speed">行动速度</string>
 </resources>
