@@ -406,6 +406,7 @@
     <string name="state_battery">バッテリー</string>
     <string name="state_kairai">界雷</string>
     <string name="state_roar_of_wolf_tooth">狼牙の咆哮</string>
+    <string name="state_fire_dance_seal">炎舞の刻印</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>
