@@ -39,6 +39,21 @@ suspend fun AppDatabase.initDatabase(defaultUserId: Int) = safelyUse {
             execSQL("ALTER TABLE skill_data ADD COLUMN boss_ub_cool_time REAL NOT NULL DEFAULT 0.0")
         } catch (_: Throwable) {}
     }
+    listOf(
+        "action_8",
+        "action_9",
+        "action_10",
+        "depend_action_8",
+        "depend_action_9",
+        "depend_action_10"
+    ).forEach { columnName ->
+        if (!existsColumn("skill_data", columnName)) {
+            try {
+                // 添加列 action_8-10,depend_action_8-10
+                execSQL("ALTER TABLE skill_data ADD COLUMN $columnName INTEGER NOT NULL DEFAULT 0")
+            } catch (_: Throwable) {}
+        }
+    }
     // TODO 国服实装限制tp上升最高上限后就删除该代码片段
     listOf(
         "sp_union_burst",

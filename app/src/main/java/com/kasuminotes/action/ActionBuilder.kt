@@ -256,7 +256,7 @@ private class ModifyDescription(
             D.Join(arrayOf(preContent, D.Format(R.string.action_branch_and), modifyContent))
         }
         val modifyIndex = actions.indexOfFirst { it.actionId == modifyActionId }
-        if (!processedModifyIndexList.contains(modifyIndex)) {
+        if (modifyIndex > -1 && !processedModifyIndexList.contains(modifyIndex)) {
             val modifyAction = actions[modifyIndex]
             if (modifyAction.isBranch()) {
                 val andBranch = modifyAction.getBranch()

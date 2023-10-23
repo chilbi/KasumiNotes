@@ -114,7 +114,7 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
                     val rawActions = mutableListOf<Int>()
                     val rawDepends = mutableListOf<Int>()
 
-                    while (i < 14) {
+                    while (i < 20) {
                         val actionId = it.getInt(i++)
                         if (actionId == 0) break
 
@@ -122,7 +122,7 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
                         rawDepends.add(it.getInt(i++))
                     }
 
-                    i = 14
+                    i = 20
 
                     SkillData(
                         it.getInt(i++),
