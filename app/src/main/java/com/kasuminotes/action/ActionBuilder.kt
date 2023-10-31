@@ -182,10 +182,10 @@ class ActionBuilder(
             58 -> getRelieveField()
             59 -> getHpRecoveryDown()
             60, 77, 101 -> getMark()
-            72 -> getDamageCut()
-            73 -> getDamageAttenuation()
             61 -> getFear()
             71 -> getKnightGuard(skillLevel, property)
+            72 -> getDamageCut()
+            73 -> getDamageAttenuation()
             75 -> getHitCount()
             79 -> getFixedDamage()
             83 -> getSpeedOverlay()
@@ -199,6 +199,7 @@ class ActionBuilder(
             100 -> getAkinesiaInvalid()
             103 -> getDamageBaseAtk()
             105 -> getEnvironment()
+            106 -> getFallenAngelGuard()
             else -> getUnknown()
         }
     }

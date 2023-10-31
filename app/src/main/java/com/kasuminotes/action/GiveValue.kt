@@ -143,7 +143,7 @@ private fun SkillAction.getGiveValueIndependentVariable(): D {
         }
         else -> {
             when (actionValue1.toInt()) {
-                0 -> D.Format(R.string.hp_remanent)
+                0 -> D.Format(R.string.hp_remnant)
                 1 -> D.Format(R.string.hp_lost)
                 2 -> D.Format(R.string.defeat_count)
                 4 -> D.Format(R.string.count_target1, arrayOf(getTarget(depend)))
@@ -155,6 +155,7 @@ private fun SkillAction.getGiveValueIndependentVariable(): D {
                 10 -> D.Format(R.string.of_s1_s2, arrayOf(getTarget(depend), D.Format(R.string.magic_def)))
                 12 -> D.Format(R.string.rear_friendly_count)
                 13 -> D.Join(arrayOf(getTarget(depend), D.Format(R.string.hp_lost_ratio)))
+                15 -> D.Format(R.string.hp_remnant_without_self_friendly)
                 else -> D.Unknown
             }
         }
