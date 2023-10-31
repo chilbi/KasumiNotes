@@ -85,7 +85,7 @@ dependencies {
     // kotlin-coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
     // core-ktx
-    implementation "androidx.core:core-ktx:1.10.1"
+    implementation "androidx.core:core-ktx:1.12.0"
     // activity-compose
     implementation 'androidx.activity:activity-compose:1.7.2'
     // appcompat
@@ -108,16 +108,14 @@ dependencies {
     implementation "androidx.compose.material:material-ripple:$compose_version"
     implementation "androidx.compose.material3:material3:$material3_version"
     // navigation-compose
-    implementation 'androidx.navigation:navigation-compose:2.7.0'
-    // navigation-animation
-//    implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+    implementation 'androidx.navigation:navigation-compose:2.7.3'
     // coil-compose
     implementation 'io.coil-kt:coil-compose:2.4.0'
 
     // okhttp
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
     // commons-compress
-    implementation 'org.apache.commons:commons-compress:1.23.0'
+    implementation 'org.apache.commons:commons-compress:1.24.0'
     // brotli
     implementation 'org.brotli:dec:0.1.2'
 
