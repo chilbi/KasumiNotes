@@ -525,7 +525,7 @@
     <string name="hp_ratio">残余HP比例</string>
     <string name="hp_remnant">残余的HP</string>
     <string name="hp_lost">损失的HP</string>
-    <string name="hp_remnant_without_self_friendly">自分を除く味方の残りＨＰ</string>
+    <string name="hp_remnant_without_self_friendly">自身以外的己方残余的HP</string>
     <string name="defeat_count">打倒敌人的数量</string>
     <string name="count_target1">%s的数量</string>
     <string name="count_state1">【%s】的数量</string>
