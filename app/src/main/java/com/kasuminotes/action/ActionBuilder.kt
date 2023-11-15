@@ -23,8 +23,12 @@ class ActionBuilder(
 
         val branchModify = ModifyDescription(rawDepends, actions)
         val ignoreProvocationModify = ModifyDescription(rawDepends, actions)
+        val totalCriticalModifyList = mutableListOf<Pair<Int, Int>>()
 
         actions.forEachIndexed { index, action ->
+            if (action.depend != null && action.depend!!.depend == action) {
+                willRemoveIndexList.add(index)
+            }
             /** [getTargetFocus], 94 [getUnknown] */
             if (action.actionType in arrayOf(7, 94)) {
                 willRemoveIndexList.add(index)
@@ -49,6 +53,12 @@ class ActionBuilder(
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
                 originList[modifyIndex] = originList[modifyIndex].append(originList[index])
+            }
+            /** [getTotalCritical] */
+            if (action.actionType == 107) {
+                willRemoveIndexList.add(index)
+                val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
+                totalCriticalModifyList.add(modifyIndex to index)
             }
             /** [getHitCount] */
             if (action.actionType == 75) {
@@ -117,6 +127,12 @@ class ActionBuilder(
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
                 ignoreProvocationModify.collectModify(modifyIndex, ignoreProvocation)
                 ignoreProvocationModify.collectModify(index, ignoreProvocation)
+            }
+        }
+
+        if (totalCriticalModifyList.isNotEmpty()) {
+            totalCriticalModifyList.forEach { item ->
+                originList[item.first] = originList[item.first].append(originList[item.second])
             }
         }
 
@@ -200,6 +216,7 @@ class ActionBuilder(
             103 -> getDamageBaseAtk()
             105 -> getEnvironment()
             106 -> getFallenAngelGuard()
+            107 -> getTotalCritical()
             else -> getUnknown()
         }
     }

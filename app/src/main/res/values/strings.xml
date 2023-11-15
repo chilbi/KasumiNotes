@@ -270,6 +270,7 @@
     <string name="action_fixed_damage_target1_formula2_time3">%1$s每次行动时就会受到最大HP的%2$s伤害，效果时间%3$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$s每次行动时都会受到最大HP的%2$s伤害（每次最多受到%3$s伤害），效果时间%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">使%1$s处于【%2$s】环境，效果时间%3$s秒。</string>
+    <string name="action_total_critical_target1">此技能的暴击值为%s的物理和魔法暴击的合计值。</string>
 
     <string name="action_branch_and">且</string>
     <string name="action_branch_striked_time1">%s秒的动作期间内受到攻击时，</string>

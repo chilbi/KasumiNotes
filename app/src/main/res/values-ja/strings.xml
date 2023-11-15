@@ -269,6 +269,7 @@
     <string name="action_fixed_damage_target1_formula2_time3">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける、効果時間%3$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける（毎回最大%3$sダメージを受ける）、効果時間%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">%1$sのいる環境を【%2$s】にする、効果時間%3$s秒。</string>
+    <string name="action_total_critical_target1">このスキルのクリティカルは%sの物理と魔法クリティカルの値を合わせる。</string>
 
     <string name="action_branch_and">且つ</string>
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>

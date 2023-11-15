@@ -68,7 +68,11 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
         } else if (depend.actionType == 105) {
             this.copy(targetAssignment = 3).getTarget(null, focused)
         } else if (depend.depend != null) {
-            depend.getTarget(depend.depend, focused)
+            if (depend.checkDependChain(depend.depend!!)) {
+                depend.getTarget(depend.depend, focused)
+            } else {
+                getTarget(null, focused);
+            }
         } else {
             getDependMultiTarget(depend.getTarget(null, focused))
         }
@@ -521,3 +525,18 @@ private fun SkillAction.isFullRangeTarget(): Boolean {
 
 /** if (actionType == 23 || actionType == 28) any_target else target */
 fun SkillAction.isBranch() = actionType in arrayOf(23, 28)
+
+private fun SkillAction.checkDependChain(depend: SkillAction): Boolean {
+    var temp = depend;
+    val list = mutableListOf<Int>()
+    list.add(actionId)
+    while (!list.contains(temp.actionId)) {
+        list.add(temp.actionId)
+        if (temp.depend != null) {
+            temp = temp.depend!!
+        } else {
+            return true
+        }
+    }
+    return false
+}
