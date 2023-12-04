@@ -203,7 +203,7 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
         )
         35 -> when (actionDetail2) {
             4 -> D.Format(
-                if (actionValue2 > 0.0) R.string.give_mark_add_state1 else R.string.give_mark_consume_state1,
+                if (actionValue2 < 0.0) R.string.give_mark_consume_state1 else R.string.give_mark_add_state1,
                 arrayOf(getStateContent(targetAction.actionValue2.toInt(), actionId))
             )
             3 -> D.Format(R.string.give_time)

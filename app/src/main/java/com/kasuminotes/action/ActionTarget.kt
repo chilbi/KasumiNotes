@@ -527,7 +527,7 @@ private fun SkillAction.isFullRangeTarget(): Boolean {
 fun SkillAction.isBranch() = actionType in arrayOf(23, 28)
 
 private fun SkillAction.checkDependChain(depend: SkillAction): Boolean {
-    var temp = depend;
+    var temp = depend
     val list = mutableListOf<Int>()
     list.add(actionId)
     while (!list.contains(temp.actionId)) {
