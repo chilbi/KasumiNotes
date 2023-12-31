@@ -7,7 +7,7 @@ fun SkillAction.getBranch(): Array<Pair<Int, D>> {
     return when (actionType) {
         23 -> getDependBranch()
         28 -> getNoDependBranch()
-        42 -> getStrikedBranch()
+        42 -> getCounterBranch()
         53 -> getExistsFieldBranch()
         else -> emptyArray()
     }
@@ -328,7 +328,18 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
     return branch.toTypedArray()
 }
 
-private fun SkillAction.getStrikedBranch(): Array<Pair<Int, D>> {
+private fun SkillAction.getCounterBranch(): Array<Pair<Int, D>> {
+    if (actionDetail1 == 14) {
+        val desc = D.Format(
+            R.string.action_branch_controled_time1,
+            arrayOf(D.Text(actionValue4.toNumStr()))
+        )
+        return arrayOf(
+            actionDetail2 to desc,
+            actionDetail3 to desc
+        )
+    }
+    // actionDetail1 == 2
     return arrayOf(
         actionDetail2 to D.Format(
             R.string.action_branch_striked_time1,

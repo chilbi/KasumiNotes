@@ -274,6 +274,7 @@
 
     <string name="action_branch_and">且</string>
     <string name="action_branch_striked_time1">%s秒的动作期间内受到攻击时，</string>
+    <string name="action_branch_controled_time1">%s秒的动作期间内受到行动不能、击飞、拉近时，</string>
     <string name="action_branch_exists_field_content1">%s的领域展开时，</string>
     <string name="action_branch_not_exists_field_content1">%s的领域没有展开时，</string>
     <string name="action_branch_have_target1_state2">%1$s持有【%2$s】时，</string>
