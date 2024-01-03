@@ -180,15 +180,34 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
                 D.Format(R.string.action_branch_not_target1_environment2, arrayOf(target, state))
             )
         }
-        // アキノ（サマー）
-        2001 -> {
-        val target = getTarget(depend)
-        setBranch(
-            branch,
-            D.Format(R.string.action_branch_exists_magic, arrayOf(target)),
-            D.Format(R.string.action_branch_not_exists_magic, arrayOf(target))
-        )
-    }
+        // アキノ（サマー）、ハツネ（ニューイヤー）
+        2000, 2001 -> {
+            if (targetCount == 1) {
+                val target = getTarget(depend)
+                val physical = D.Format(R.string.action_branch_physical_target1, arrayOf(target))
+                val magic = D.Format(R.string.action_branch_magic_target1, arrayOf(target))
+                var detail2 = actionDetail2
+                var detail3 = actionDetail3
+                if (actionDetail1 == 2001) {
+                    detail2 = actionDetail3
+                    detail3 = actionDetail2
+                }
+                if (detail2 != 0) {
+                    branch.add(detail2 to physical)
+                }
+                if (detail3 != 0) {
+                    branch.add(detail3 to magic)
+                }
+            } else {
+                val target = this.copy(actionType = -1).getTarget(depend).append(D.Format(R.string.target_in))
+                val type = D.Format(if (actionDetail1 == 2001) R.string.magic else R.string.physical)
+                setBranch(
+                    branch,
+                    D.Format(R.string.action_branch_exists_target1_type2, arrayOf(target, type)),
+                    D.Format(R.string.action_branch_not_exists_target1_type2, arrayOf(target, type))
+                )
+            }
+        }
         // ミミ（サマー）
         1800 -> {
             val target = getTarget(depend)

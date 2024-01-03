@@ -313,8 +313,8 @@
     <string name="action_branch_not_break_target1">%s的目标未陷入Break状态时，</string>
     <string name="action_branch_unit_target1_count2">%1$s全体的数量=%2$s时，</string>
     <string name="action_branch_not_unit_target1_count2">%1$s全体的数量≠%2$s时，</string>
-    <string name="action_branch_exists_magic">存在使用魔法攻击的敌人时，</string>
-    <string name="action_branch_not_exists_magic">不存在使用魔法攻击的敌人时，</string>
+    <string name="action_branch_exists_target1_type2">%1$s存在使用%2$s攻击的敌人时，</string>
+    <string name="action_branch_not_exists_target1_type2">%1$s不存在使用%2$s攻击的敌人时，</string>
     <string name="action_branch_target1_environment2">%1$s处于【%2$s】环境时，</string>
     <string name="action_branch_not_target1_environment2">%1$s不处于【%2$s】环境时，</string>
 
@@ -469,6 +469,7 @@
     <string name="target_distance1">自身前方%s距离</string>
     <string name="target_not_in_back_content1">不在自身后面的角色中，%s</string>
     <string name="target_any_content1">中的任意%s</string>
+    <string name="target_in">之中</string>
     <string name="target_all_summon_content1">%s所有的召唤物</string>
     <string name="target_all_summon_of_self">自身所有的召唤物</string>
     <string name="target_multi_target1">%s的所有多目标部位</string>
