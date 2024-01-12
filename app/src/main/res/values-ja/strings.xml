@@ -169,7 +169,7 @@
     <string name="equip_skill">装備スキル</string>
     <string name="full_stop">。</string>
 
-    <string name="action_unknown_s1">不明タイプ：%s</string>
+    <string name="action_unknown_s1">スキルパラメーター：%s</string>
     <string name="action_focus_target1">%sを中心とした</string>
     <string name="action_focus_front_target1">%sから</string>
     <string name="action_ex_passive_content1_formula2">バトル開始時に自分の%1$sを%2$sアップさせる、効果時間90秒。</string>
@@ -544,6 +544,7 @@
     <string name="give_damage">ダメージ量</string>
     <string name="give_damage_rate1">%s倍率</string>
     <string name="give_critical_damage">クリティカル時のダメージ量</string>
+    <string name="give_disregard_def_type1">無視%s防御力</string>
     <string name="give_hp_recovery">ＨＰの回復量</string>
 <!--    <string name="give_hp_decrement">ＨＰの下降量</string>-->
     <string name="give_energy_recovery">ＴＰの回復量</string>

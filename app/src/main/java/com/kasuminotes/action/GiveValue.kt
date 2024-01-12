@@ -170,6 +170,7 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
         1 -> when (actionDetail2) {
             3 -> D.Format(R.string.give_damage_rate1, arrayOf(getAtkType(targetAction.actionDetail1)))
             6 -> D.Format(R.string.give_critical_damage)
+            7 -> D.Format(R.string.give_disregard_def_type1, arrayOf(getDamageType(targetAction.actionDetail1)))
             else -> D.Format(R.string.give_damage)
         }
         3 -> D.Format(R.string.give_distance)
@@ -240,7 +241,7 @@ private fun SkillAction.getGiveValueFormula(
 ): D {
     val otherConstantVariable = when (targetAction.actionType) {
         1 -> when (actionDetail2) {
-            1, 3, 6 -> null
+            1, 3, 6, 7 -> null
             2 -> D.Format(R.string.skill_level)
             else -> D.Unknown
         }

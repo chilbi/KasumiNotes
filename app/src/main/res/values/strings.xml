@@ -169,7 +169,7 @@
     <string name="equip_skill">装备技能</string>
     <string name="full_stop">。</string>
 
-    <string name="action_unknown_s1">未知类型：%s</string>
+    <string name="action_unknown_s1">技能参数：%s</string>
     <string name="action_focus_target1">以%s为中心</string>
     <string name="action_focus_front_target1">%s的</string>
     <string name="action_ex_passive_content1_formula2">战斗开始时自身的%1$s提升%2$s，效果时间90秒。</string>
@@ -545,6 +545,7 @@
     <string name="give_damage">伤害量</string>
     <string name="give_damage_rate1">%s倍率</string>
     <string name="give_critical_damage">暴击伤害量</string>
+    <string name="give_disregard_def_type1">无视%s防御力</string>
     <string name="give_hp_recovery">HP的回复量</string>
 <!--    <string name="give_hp_decrement">HP的降低量</string>-->
     <string name="give_energy_recovery">TP的回复量</string>
