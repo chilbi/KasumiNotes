@@ -1,8 +1,79 @@
 package com.kasuminotes.db
 
+import android.util.Log
 import com.kasuminotes.common.QuestRange
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import org.json.JSONObject
+
+fun AppDatabase.getCreateTable(tableName: String): String? {
+    return try {
+        readableDatabase.rawQuery(
+            "SELECT sql FROM sqlite_master WHERE type='table' AND name='$tableName'",
+            null
+        ).use {
+            it.moveToNext()
+            it.getString(0)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+}
+
+fun AppDatabase.execTransaction(sqls: List<String>): Boolean {
+    writableDatabase.beginTransaction()
+    return try {
+        sqls.forEach {
+            writableDatabase.execSQL(it)
+        }
+        writableDatabase.setTransactionSuccessful()
+        true
+    } catch (e: Exception) {
+        e.printStackTrace()
+        false
+    } finally {
+        writableDatabase.endTransaction()
+    }
+}
+suspend fun AppDatabase.unHashDb(rainbowJson: JSONObject) = safelyUse {
+    val keysIterator = rainbowJson.keys()
+    while (keysIterator.hasNext()) {
+        val hashedTableName = keysIterator.next()
+        val colsObject = JSONObject(rainbowJson.get(hashedTableName).toString())
+        val colsIterator = colsObject.keys()
+
+        val intactTableName = colsObject.getString("--table_name")
+        var createTableStatement = getCreateTable(hashedTableName)
+        if (createTableStatement == null) {
+            Log.w("unHashDb", "CreateTableStatement for '$intactTableName' not found.")
+            continue
+        }
+        val hashedCols = mutableListOf<String>()
+        val intactCols = mutableListOf<String>()
+        while (colsIterator.hasNext()) {
+            val hashedColName = colsIterator.next()
+            val intactColName = colsObject.getString(hashedColName)
+            if (hashedColName != "--table_name") {
+                hashedCols.add(hashedColName)
+                intactCols.add(intactColName)
+            }
+            createTableStatement = createTableStatement?.replace(
+                if (hashedColName == "--table_name") hashedTableName else hashedColName,
+                if (hashedColName == "--table_name") intactTableName else intactColName
+            )
+        }
+        val insertStatement = "INSERT INTO $intactTableName(${intactCols.joinToString("`,`", "`", "`")}) SELECT ${hashedCols.joinToString("`,`", "`", "`")} FROM $hashedTableName"
+        val dropTableStatement = "DROP TABLE $hashedTableName"
+
+        val transactionCmd = listOf(createTableStatement!!, insertStatement, dropTableStatement)
+
+        if (execTransaction(transactionCmd)) {
+            Log.e("unHashDb", "Failed when executing a transaction for '$intactTableName' ($hashedTableName). Transaction: $transactionCmd")
+            continue
+        }
+    }
+}
 
 suspend fun AppDatabase.initDatabase(defaultUserId: Int) = safelyUse {
     // TODO 国服实装水怜专武后就删除该代码片段

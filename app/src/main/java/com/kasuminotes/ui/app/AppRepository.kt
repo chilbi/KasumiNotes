@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import java.io.File
 import java.util.Locale
 
@@ -149,6 +150,10 @@ class AppRepository(
 
     suspend fun fetchLastDbVersion(server: DbServer): String = withContext(ioDispatcher) {
         HttpUtil.fetchLastDbVersion(UrlUtil.lastVersionUrl[server]!!)
+    }
+
+    suspend fun fetchRainbowJson(): JSONObject = withContext(ioDispatcher) {
+        HttpUtil.fetchLastRainbowJson(UrlUtil.RainbowJsonUrl)
     }
 
     suspend fun fetchLatestAppReleaseInfo(): AppReleaseInfo? = withContext(ioDispatcher) {

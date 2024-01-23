@@ -1,5 +1,7 @@
 package com.kasuminotes.utils
 
+import android.util.Base64
+import android.util.Log
 import com.kasuminotes.BuildConfig
 import com.kasuminotes.common.DownloadState
 import com.kasuminotes.data.AppReleaseInfo
@@ -10,6 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import org.apache.commons.compress.compressors.brotli.BrotliCompressorInputStream
+import org.json.JSONObject
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -100,6 +103,30 @@ object HttpUtil {
             val pattern = "\"TruthVersion\"\\s*:\\s*\"(\\d+)\""
             val matchResult = Regex(pattern).find(body.string()) ?: throw Exception("regex match error")
             return matchResult.groupValues[1]
+        } catch (e: Throwable) {
+            call?.cancel()
+            throw e
+        } finally {
+            response?.close()
+        }
+    }
+
+    @Throws(Throwable::class)
+    fun fetchLastRainbowJson(url: String): JSONObject {
+        var call: Call? = null
+        var response: Response? = null
+        try {
+            val client = OkHttpClient.Builder().build()
+            val request = Request.Builder()
+                .url(url)
+                .header("User-Agent", userAgent)
+                .build()
+            call = client.newCall(request)
+            response = call.execute()
+            val body = response.body.string()
+            val content = JSONObject(body).getString("content")
+            val contentJsonStr = String(Base64.decode(content, Base64.DEFAULT))
+            return JSONObject(contentJsonStr)
         } catch (e: Throwable) {
             call?.cancel()
             throw e

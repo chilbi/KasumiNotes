@@ -11,6 +11,7 @@ import com.kasuminotes.db.getBackupUserDataList
 import com.kasuminotes.db.initDatabase
 import com.kasuminotes.db.initQuestDropData
 import com.kasuminotes.db.putUserDataList
+import com.kasuminotes.db.unHashDb
 import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.ui.app.DefaultUserId
 import kotlinx.coroutines.CoroutineScope
@@ -199,12 +200,20 @@ class DbState(
                 lastDbVersion = appRepository.fetchLastDbVersion(server)
                 tempDbFile.renameTo(dbFile)
                 db = appRepository.getDatabase(dbFile.name)
+                if (server == DbServer.JP) {
+                    val rainbowJson = appRepository.fetchRainbowJson()
+                    db.unHashDb(rainbowJson)
+                }
                 db.initDatabase(DefaultUserId)
             } else {
                 lastDbVersion = version
                 db = appRepository.getDatabase(dbFile.name)
                 val backupUserDataList = db.getBackupUserDataList(DefaultUserId)
                 tempDbFile.renameTo(dbFile)
+                if (server == DbServer.JP) {
+                    val rainbowJson = appRepository.fetchRainbowJson()
+                    db.unHashDb(rainbowJson)
+                }
                 db.initDatabase(DefaultUserId)
                 db.putUserDataList(backupUserDataList)
             }

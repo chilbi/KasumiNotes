@@ -30,6 +30,8 @@ object UrlUtil {
 
     // App Release URL
     const val APP_RELEASE_URL = "https://api.github.com/repos/chilbi/KasumiNotes/releases/latest"
+    // hashed TableNames ColumnNames
+    const val RainbowJsonUrl = "https://api.github.com/repos/MalitsPlus/ShizuruNotes/contents/app/src/main/res/raw/rainbow.json"
 
     val dbFileNameMap = mapOf(DbServer.CN to DB_FILE_NAME_CN, DbServer.JP to DB_FILE_NAME_JP)
     val dbFileUrlMap = mapOf(DbServer.CN to DB_FILE_URL_CN, DbServer.JP to DB_FILE_URL_JP)
