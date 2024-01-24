@@ -76,6 +76,7 @@ suspend fun AppDatabase.unHashDb(rainbowJson: JSONObject) = safelyUse {
 }
 
 suspend fun AppDatabase.initDatabase(defaultUserId: Int) = safelyUse {
+//    throw Exception("init error")
     // TODO 国服实装水怜专武后就删除该代码片段
     // 修改unit_unique_equipment表为unit_unique_equip
     if (existsTable("unit_unique_equipment")) {

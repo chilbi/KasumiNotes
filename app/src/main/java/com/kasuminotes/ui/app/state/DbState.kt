@@ -1,5 +1,6 @@
 package com.kasuminotes.ui.app.state
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -192,11 +193,12 @@ class DbState(
     }
 
     private suspend fun initDb(server: DbServer, version: String, tempDbFile: File) {
-        try {
-            val db: AppDatabase
-            val lastDbVersion: String
-            val dbFile = appRepository.getDbFile(server)
-            if (version == "0") {
+        val db: AppDatabase
+        val lastDbVersion: String
+        val dbFile = appRepository.getDbFile(server)
+        val backupDbFile = appRepository.getBackupDbFile(server)
+        if (version == "0") {
+            try {
                 lastDbVersion = appRepository.fetchLastDbVersion(server)
                 tempDbFile.renameTo(dbFile)
                 db = appRepository.getDatabase(dbFile.name)
@@ -205,7 +207,17 @@ class DbState(
                     db.unHashDb(rainbowJson)
                 }
                 db.initDatabase(DefaultUserId)
-            } else {
+            } catch (e: Throwable) {
+                downloadState = DownloadState.Error(e)
+                if (dbFile.exists()) {
+                    dbFile.delete()
+                }
+                changeDbServer(if (server == DbServer.JP) DbServer.CN else DbServer.JP)
+                return
+            }
+        } else {
+            try {
+                dbFile.copyTo(backupDbFile, true)
                 lastDbVersion = version
                 db = appRepository.getDatabase(dbFile.name)
                 val backupUserDataList = db.getBackupUserDataList(DefaultUserId)
@@ -216,18 +228,28 @@ class DbState(
                 }
                 db.initDatabase(DefaultUserId)
                 db.putUserDataList(backupUserDataList)
+            } catch (e: Throwable) {
+                downloadState = DownloadState.Error(e)
+                if (backupDbFile.exists()) {
+                    backupDbFile.copyTo(dbFile, true)
+                    return
+                } else {
+                    if (dbFile.exists()) {
+                        dbFile.delete()
+                    }
+                    changeDbServer(if (server == DbServer.JP) DbServer.CN else DbServer.JP)
+                    return
+                }
             }
-            userState.updateStateFromDb(db)
-            downloadingDbServer = null
-            downloadingDbVersion = null
-            syncDbServerVersion(server, lastDbVersion)
-            downloadState = null
-            questInitializing = true
-            db.initQuestDropData()
-            questInitializing = false
-        } catch (e: Throwable) {
-            downloadState = DownloadState.Error(e)
         }
+        userState.updateStateFromDb(db)
+        downloadingDbServer = null
+        downloadingDbVersion = null
+        syncDbServerVersion(server, lastDbVersion)
+        downloadState = null
+        questInitializing = true
+        db.initQuestDropData()
+        questInitializing = false
     }
 
     private fun syncDbServerVersion(server: DbServer, version: String) {

@@ -143,6 +143,8 @@ class AppRepository(
 
     fun getDbFile(server: DbServer): File = context.getDatabasePath(UrlUtil.dbFileNameMap[server]!!)
 
+    fun getBackupDbFile(server: DbServer): File = context.getDatabasePath("backup_" + UrlUtil.dbFileNameMap[server]!!)
+
     fun getDatabase(name: String) =
         AppDatabase.getInstance(context.applicationContext, name, ioDispatcher)
 
