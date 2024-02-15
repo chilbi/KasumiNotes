@@ -2,12 +2,11 @@ package com.kasuminotes.action
 
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
-import kotlin.math.floor
 import kotlin.math.ln
 
 fun SkillAction.getDamageAttenuation(): D {
     val limit = actionValue5 / 10000
-    val n4 = if (limit > 100.0) limit + 100.0 else floor(limit / 100.0) + 100.0
+    val n4 = if (limit > 100.0) limit + 100.0 else 100.0
     val n6 = n4 + 100.0
     val n8 = 999.0
     val s = actionValue5 / 10000
