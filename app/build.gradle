@@ -87,7 +87,7 @@ dependencies {
     // core-ktx
     implementation "androidx.core:core-ktx:1.12.0"
     // activity-compose
-    implementation 'androidx.activity:activity-compose:1.7.2'
+    implementation 'androidx.activity:activity-compose:1.8.2'
     // appcompat
     implementation 'androidx.appcompat:appcompat:1.6.1'
 
@@ -108,14 +108,14 @@ dependencies {
     implementation "androidx.compose.material:material-ripple:$compose_version"
     implementation "androidx.compose.material3:material3:$material3_version"
     // navigation-compose
-    implementation 'androidx.navigation:navigation-compose:2.7.3'
+    implementation 'androidx.navigation:navigation-compose:2.7.7'
     // coil-compose
-    implementation 'io.coil-kt:coil-compose:2.4.0'
+    implementation 'io.coil-kt:coil-compose:2.5.0'
 
     // okhttp
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.12'
     // commons-compress
-    implementation 'org.apache.commons:commons-compress:1.24.0'
+    implementation 'org.apache.commons:commons-compress:1.25.0'
     // brotli
     implementation 'org.brotli:dec:0.1.2'
 
