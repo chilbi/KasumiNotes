@@ -262,7 +262,7 @@
     <string name="action_summon_target1_content2">在%1$s身边，%2$s。</string>
     <string name="action_passive_battle_beginning">战斗开始时</string>
     <string name="action_passive_battle_began_passed_time1">战斗开始后经过%s秒时</string>
-    <string name="action_damage_attenuation_target1_limit2_time3_r4_r5_r6">对%1$s展开限制盾，受到每个动作的伤害超过%2$s万时，伤害将会被衰减，效果时间%3$s秒。\nf(100万)=%4$s万; f(200万)=%5$s万; f(999万)=%6$s万</string>
+    <string name="action_damage_attenuation_target1_limit2_time3_n4_r5_n6_r7_n8_r9">对%1$s展开限制盾，受到每个动作的伤害超过%2$s万时，伤害将会被衰减，效果时间%3$s秒。\nf(%4$s万)=%5$s万; f(%6$s万)=%7$s万; f(%8$s万)=%9$s万</string>
     <string name="action_stealth_time1">进入潜伏状态，效果时间%s秒。</string>
     <string name="action_ignore_provocation">无视挑衅，</string>
     <string name="action_akinesia_invalid_target1_time2">赋予%1$s可无效化受到的行动不能的状态，效果时间%2$s秒。</string>

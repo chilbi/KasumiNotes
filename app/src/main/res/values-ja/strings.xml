@@ -262,7 +262,7 @@
     <string name="action_summon_target1_content2">%1$sのそばに、%2$s。</string>
     <string name="action_passive_battle_beginning">バトル開始時に</string>
     <string name="action_passive_battle_began_passed_time1">バトル開始後%s秒経過時に</string>
-    <string name="action_damage_attenuation_target1_limit2_time3_r4_r5_r6">%1$sにリミットバリアを展開し、アクション毎に受けたダメージが%2$s万を超えた時、ダメージが減衰される、効果時間%4$s秒。\nf(100万)=%4$s万; f(200万)=%5$s万; f(999万)=%6$s万</string>
+    <string name="action_damage_attenuation_target1_limit2_time3_n4_r5_n6_r7_n8_r9">%1$sにリミットバリアを展開し、アクション毎に受けたダメージが%2$s万を超えた時、ダメージが減衰される、効果時間%3$s秒。\nf(%4$s万)=%5$s万; f(%6$s万)=%7$s万; f(%8$s万)=%9$s万</string>
     <string name="action_stealth_time1">潜伏状態に入る、効果時間%s秒。</string>
     <string name="action_ignore_provocation">挑発を無視して、</string>
     <string name="action_akinesia_invalid_target1_time2">%1$sに受ける行動不能を無効化できる状態を付与する、効果時間%2$s秒。</string>
