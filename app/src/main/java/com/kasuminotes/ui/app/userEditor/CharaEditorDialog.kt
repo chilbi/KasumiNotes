@@ -169,13 +169,14 @@ private fun EditorDialogContent(
             maxValue = 6,
             onValueChange = { rarity = it },
             checked = rarityChecked,
-            onCheckedChange = { rarityChecked = it }
-        ) {
-            LabelImage(
-                if (rarity > 5) R.drawable.star_large_6
-                else R.drawable.star_large_1
-            )
-        }
+            onCheckedChange = { rarityChecked = it },
+            label = {
+                LabelImage(
+                    if (rarity > 5) R.drawable.star_large_6
+                    else R.drawable.star_large_1
+                )
+            }
+        )
 
         SliderPlus(
             value = loveLevel,
@@ -183,10 +184,11 @@ private fun EditorDialogContent(
             maxValue = 12,
             onValueChange = { loveLevel = it },
             checked = loveLevelChecked,
-            onCheckedChange = { loveLevelChecked = it}
-        ) {
-            LabelImage(R.drawable.love_level)
-        }
+            onCheckedChange = { loveLevelChecked = it},
+            label = {
+                LabelImage(R.drawable.love_level)
+            }
+        )
 
         SliderPlus(
             value = uniqueLevel,
@@ -194,10 +196,11 @@ private fun EditorDialogContent(
             maxValue = maxUniqueLevel,
             onValueChange = { uniqueLevel = it },
             checked = uniqueLevelChecked,
-            onCheckedChange = { uniqueLevelChecked = it}
-        ) {
-            LabelImage(R.drawable.unique_large)
-        }
+            onCheckedChange = { uniqueLevelChecked = it },
+            label = {
+                LabelImage(R.drawable.unique_large)
+            }
+        )
 
         SliderPlus(
             value = charaLevel,
@@ -206,9 +209,10 @@ private fun EditorDialogContent(
             onValueChange = { charaLevel = it },
             checked = charaLevelChecked,
             onCheckedChange = { charaLevelChecked = it },
-        ) {
-            LabelText(stringResource(R.string.level))
-        }
+            label = {
+                LabelText(stringResource(R.string.level))
+            }
+        )
 
         val color = RaritiesColors.getRarityColors(promotionLevel.rankRarity).middle
 
@@ -218,13 +222,14 @@ private fun EditorDialogContent(
             maxValue = maxPromotionLevel,
             onValueChange = { promotionLevel = it },
             checked = promotionLevelChecked,
-            onCheckedChange = { promotionLevelChecked = it }
-        ) {
-            LabelText(
-                text = stringResource(R.string.rank),
-                color = color
-            )
-        }
+            onCheckedChange = { promotionLevelChecked = it },
+            label = {
+                LabelText(
+                    text = stringResource(R.string.rank),
+                    color = color
+                )
+            }
+        )
 
         SliderPlus(
             value = unlockSlot,
@@ -232,13 +237,14 @@ private fun EditorDialogContent(
             maxValue = 6,
             onValueChange = { unlockSlot = it },
             checked = unlockSlotChecked,
-            onCheckedChange = { unlockSlotChecked = it }
-        ) {
-            LabelText(
-                text = stringResource(R.string.slot),
-                color = color
-            )
-        }
+            onCheckedChange = { unlockSlotChecked = it },
+            label = {
+                LabelText(
+                    text = stringResource(R.string.slot),
+                    color = color
+                )
+            }
+        )
     }
 
     Row(Modifier.padding(8.dp)) {

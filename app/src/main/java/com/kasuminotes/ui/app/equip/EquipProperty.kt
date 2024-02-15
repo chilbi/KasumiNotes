@@ -3,19 +3,9 @@ package com.kasuminotes.ui.app.equip
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Remove
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,6 +17,7 @@ import com.kasuminotes.ui.components.FixedWidthLabel
 import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.Rarities
+import com.kasuminotes.ui.components.SliderPlus
 
 @Composable
 fun EquipProperty(
@@ -44,44 +35,21 @@ fun EquipProperty(
         )
 
         if (maxEnhanceLevel > 5) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                FixedWidthLabel(stringResource(R.string.promotion_level))
-
-                var value by rememberSaveable(enhanceLevel) {
-                    mutableFloatStateOf(enhanceLevel.toFloat())
+            SliderPlus(
+                value = enhanceLevel,
+                minValue = 1,
+                maxValue = maxEnhanceLevel,
+                onValueChange = onEnhanceLevelChange,
+                startDecoration = {
+                    FixedWidthLabel(stringResource(R.string.promotion_level))
+                    Text(
+                        text = it.toString(),
+                        modifier = Modifier.width(36.dp),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
-
-                val intValue = value.toInt()
-
-                Text(
-                    text = intValue.toString(),
-                    modifier = Modifier.width(36.dp),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-
-                IconButton(
-                    onClick = { onEnhanceLevelChange(enhanceLevel - 1) },
-                    enabled = enhanceLevel > 1
-                ) {
-                    Icon(Icons.Filled.Remove, null)
-                }
-
-                Slider(
-                    value = value,
-                    onValueChange = { value = it },
-                    modifier = Modifier.weight(1f),
-                    valueRange = 1f..maxEnhanceLevel.toFloat(),
-                    onValueChangeFinished = { onEnhanceLevelChange(intValue) }
-                )
-
-                IconButton(
-                    onClick = { onEnhanceLevelChange(enhanceLevel + 1) },
-                    enabled = enhanceLevel < maxEnhanceLevel
-                ) {
-                    Icon(Icons.Filled.Add, null)
-                }
-            }
+            )
         } else {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 FixedWidthLabel(stringResource(R.string.promotion_level))

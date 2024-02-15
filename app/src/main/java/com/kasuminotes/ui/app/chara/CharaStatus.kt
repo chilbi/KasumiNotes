@@ -71,42 +71,37 @@ fun CharaStatus(
                         value = userData.charaLevel,
                         minValue = 1,
                         maxValue = maxUserData.maxCharaLevel + userData.lvLimitBreak,
-                        onValueChange = onCharaLevelChange
-                    ) {
-                        LabelText(stringResource(R.string.level))
-                    }
+                        onValueChange = onCharaLevelChange,
+                        label = { LabelText(stringResource(R.string.level)) }
+                    )
                     SliderPlus(
                         value = userData.ubLevel,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, Label.ub) }
-                    ) {
-                        LabelText(Label.ub)
-                    }
+                        onValueChange = { onSkillLevelChange(it, Label.ub) },
+                        label = { LabelText(Label.ub)}
+                    )
                     SliderPlus(
                         value = userData.skill1Level,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, Label.skill + "1") }
-                    ) {
-                        LabelText(Label.skill + "1")
-                    }
+                        onValueChange = { onSkillLevelChange(it, Label.skill + "1") },
+                        label = { LabelText(Label.skill + "1") }
+                    )
                     SliderPlus(
                         value = userData.skill2Level,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, Label.skill + "2") }
-                    ) {
-                        LabelText(Label.skill + "2")
-                    }
+                        onValueChange = { onSkillLevelChange(it, Label.skill + "2") },
+                        label = { LabelText(Label.skill + "2") }
+                    )
                     SliderPlus(
                         value = userData.exLevel,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, Label.ex) }
-                    ) {
-                        LabelText(Label.ex)
-                    }
+                        onValueChange = { onSkillLevelChange(it, Label.ex) },
+                        label = { LabelText(Label.ex) }
+                    )
                 }
             }
         }
@@ -156,9 +151,8 @@ fun CharaStatus(
                             minValue = 0,
                             maxValue = maxUserData.maxUniqueLevel,
                             onValueChange = { onUniqueLevelChange(it, 1) },
-                        ) {
-                            LabelImage(R.drawable.unique_large)
-                        }
+                            label = { LabelImage(R.drawable.unique_large) }
+                        )
                     }
                 }
             }
@@ -178,10 +172,9 @@ fun CharaStatus(
                         value = userData.loveLevel,
                         minValue = 0,
                         maxValue = if (maxRarity > 5) 12 else 8,
-                        onValueChange = onLoveLevelChange
-                    ) {
-                        LabelImage(R.drawable.love_level)
-                    }
+                        onValueChange = onLoveLevelChange,
+                        label = { LabelImage(R.drawable.love_level) }
+                    )
                 }
             }
         }
