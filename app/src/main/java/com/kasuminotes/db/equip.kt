@@ -166,7 +166,7 @@ WHERE equipment_id=$equipmentId"""
     val sql = """SELECT ed.equipment_id,eer.description
 FROM equipment_data AS ed
 JOIN equipment_enhance_rate AS eer ON ed.equipment_id=eer.equipment_id
-WHERE ed.equipment_id<110000"""
+WHERE ed.equipment_id<110000 OR ed.equipment_id>10000000"""
 
     return safelyUse {
         rawQuery(sql, null).use {
@@ -209,7 +209,7 @@ WHERE ed.equipment_id<110000"""
 }
 
 suspend fun AppDatabase.getEquipMaterialPairList(): List<Pair<Int, List<EquipInfo>>> {
-    val sql = "SELECT equipment_id FROM equipment_data WHERE equipment_id<140000 AND craft_flg=0"
+    val sql = "SELECT equipment_id FROM equipment_data WHERE (equipment_id<140000 OR equipment_id>11000000) AND craft_flg=0"
 
     return safelyUse {
         rawQuery(sql, null).use {

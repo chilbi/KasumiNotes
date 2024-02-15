@@ -23,7 +23,8 @@ object Helper {
     private fun getEquipRarityString(equipId: Int): String {
         val idStr = equipId.toString()
         if (idStr.length < 6) return "-1"
-        return idStr.substring(2, 3) + idStr.substring(5, 6)
+        val rarityStr = idStr.substring(2, 3) + idStr.substring(5, 6)
+        return if (idStr.length > 6) "1$rarityStr" else rarityStr
     }
 
     fun getEquipRarity(equipId: Int): Int {
