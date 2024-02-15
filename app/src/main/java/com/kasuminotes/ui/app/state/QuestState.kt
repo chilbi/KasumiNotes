@@ -1,6 +1,7 @@
 package com.kasuminotes.ui.app.state
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.common.QuestMode
@@ -31,9 +32,9 @@ class QuestState(
         private set
     var questType by mutableStateOf(appRepository.getQuestMapType())
         private set
-    var area by mutableStateOf(appRepository.getQuestMapArea())
+    var area by mutableIntStateOf(appRepository.getQuestMapArea())
         private set
-    var searchId by mutableStateOf(appRepository.getQuestSearchId())
+    var searchId by mutableIntStateOf(appRepository.getQuestSearchId())
         private set
     var searchSet by mutableStateOf(appRepository.getQuestSearchSet())
         private set
@@ -41,13 +42,13 @@ class QuestState(
         private set
     var searchedList by mutableStateOf(searches.filter { it != 0 })
         private set
-    var searchTypes by mutableStateOf(QuestType.values())
+    var searchTypes by mutableStateOf(QuestType.entries.toTypedArray())
         private set
     var highlightList by mutableStateOf<List<Int>>(emptyList())
         private set
-    var maxArea by mutableStateOf(0)
+    var maxArea by mutableIntStateOf(0)
         private set
-    var visitIndex by mutableStateOf(0)
+    var visitIndex by mutableIntStateOf(0)
         private set
     var sortDesc by mutableStateOf(true)
         private set

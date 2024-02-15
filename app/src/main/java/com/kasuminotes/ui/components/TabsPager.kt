@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -43,7 +43,7 @@ fun TabsPager(
                 contentColor = contentColor,
                 edgePadding = edgePadding,
                 indicator = { tabPositions ->
-                    TabRowDefaults.Indicator(
+                    SecondaryIndicator(
                         Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
                         color = contentColor
                     )
@@ -57,7 +57,7 @@ fun TabsPager(
                 containerColor = containerColor,
                 contentColor = contentColor,
                 indicator = { tabPositions ->
-                    TabRowDefaults.Indicator(
+                    SecondaryIndicator(
                         Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
                         color = contentColor
                     )

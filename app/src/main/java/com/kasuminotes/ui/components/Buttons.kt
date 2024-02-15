@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Sort
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconToggleButton
@@ -29,7 +29,7 @@ import com.kasuminotes.ui.theme.Translucent
 @Composable
 fun BackButton(onBack: () -> Unit) {
     IconButton(onBack) {
-        Icon(Icons.Filled.ArrowBack, null)
+        Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
     }
 }
 
@@ -40,7 +40,7 @@ fun TranslucentBackButton(
 ) {
     IconButton(onBack, modifier) {
         Icon(
-            imageVector = Icons.Filled.ArrowBack,
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = null,
             modifier = Modifier
                 .background(Translucent, CircleShape)
@@ -57,7 +57,7 @@ fun SortIconButton(
 ) {
     IconButton(onClick = onToggle) {
         Icon(
-            imageVector = Icons.Filled.Sort,
+            imageVector = Icons.AutoMirrored.Filled.Sort,
             contentDescription = null,
             modifier = Modifier.rotate(if (sortDesc) 0f else 180f)
         )

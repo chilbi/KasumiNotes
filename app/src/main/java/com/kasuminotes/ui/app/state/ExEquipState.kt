@@ -1,6 +1,7 @@
 package com.kasuminotes.ui.app.state
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.ExEquipCategory
@@ -41,12 +42,12 @@ class ExEquipState(
         private set
     var isEquipping by mutableStateOf(false)
         private set
-    var maxEnhanceLevel by mutableStateOf(0)
+    var maxEnhanceLevel by mutableIntStateOf(0)
         private set
-    var enhanceLevel by mutableStateOf(0)
+    var enhanceLevel by mutableIntStateOf(0)
         private set
-    var originEnhanceLevel by mutableStateOf(0)
-        private set
+    private var originEnhanceLevel by mutableIntStateOf(0)
+//        private set
 
     fun initExEquipSlot(
         slot: ExEquipSlot,

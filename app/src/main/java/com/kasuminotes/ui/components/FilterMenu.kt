@@ -58,7 +58,7 @@ private fun RowScope.AtkTypeMenu(
         alignment = Alignment.CenterStart,
         label = stringResource(atkType.resId)
     ) { onCollapse ->
-        AtkType.values().forEach { type ->
+        AtkType.entries.forEach { type ->
             DropdownMenuItem(
                 text = { Text(stringResource(type.resId)) },
                 onClick = { onAtkTypeChange(type).also { onCollapse() } }
@@ -76,7 +76,7 @@ private fun RowScope.PositionMenu(
         alignment = Alignment.Center,
         label = stringResource(position.resId)
     ) { onCollapse ->
-        Position.values().forEach { pos ->
+        Position.entries.forEach { pos ->
             DropdownMenuItem(
                 text = { Text(stringResource(pos.resId)) },
                 onClick = { onPositionChange(pos).also { onCollapse() } }
@@ -95,7 +95,7 @@ private fun RowScope.OrderByMenu(
         alignment = Alignment.CenterEnd,
         label = stringResource(orderBy.resId) + stringResource(if (sortDesc) R.string.desc else R.string.asc)
     ) { onCollapse ->
-        OrderBy.values().forEach { order ->
+        OrderBy.entries.forEach { order ->
             DropdownMenuItem(
                 text = { Text(stringResource(order.resId)) },
                 onClick = { onOrderByChange(order).also { onCollapse() } }

@@ -50,7 +50,7 @@ class EquipState(
         private set
     var searchList by mutableStateOf<List<Int>?>(null)
         private set
-    var questTypes by mutableStateOf(QuestType.values())
+    var questTypes by mutableStateOf(QuestType.entries.toTypedArray())
         private set
     var sortDesc by mutableStateOf(true)
         private set

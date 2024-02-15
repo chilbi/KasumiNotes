@@ -148,20 +148,21 @@ fun CharaEditor(
         },
         content = { contentPadding ->
             val charaImageState = remember { CharaImageState(ImageVariant.Icon) }
-            val infiniteTransition = rememberInfiniteTransition()
+            val infiniteTransition = rememberInfiniteTransition(label = "CharaEditorInfiniteTransition")
             val layerAlpha = infiniteTransition.animateFloat(
                 initialValue = 0.0f,
                 targetValue = 1.0f,
                 animationSpec = infiniteRepeatable(
                     animation = keyframes {
                         durationMillis = 4500
-                        0.0f at 0 with FastOutSlowInEasing
-                        0.0f at 1750 with FastOutSlowInEasing
-                        1.0f at 2750 with FastOutSlowInEasing
-                        1.0f at 4500 with FastOutSlowInEasing
+                        0.0f at 0 using FastOutSlowInEasing
+                        0.0f at 1750 using FastOutSlowInEasing
+                        1.0f at 2750 using FastOutSlowInEasing
+                        1.0f at 4500 using FastOutSlowInEasing
                     },
                     repeatMode = RepeatMode.Reverse
-                )
+                ),
+                label = "CharaEditorFloatAnimation"
             )
 
             Box(Modifier.padding(contentPadding)) {

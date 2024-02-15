@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -100,7 +100,7 @@ fun UserHeader(
             onClick = onLogOut,
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
-            Icon(Icons.Filled.Logout, null)
+            Icon(Icons.AutoMirrored.Filled.Logout, null)
         }
     }
 }

@@ -76,7 +76,7 @@ private fun DownloadDialogContent(state: DownloadState) {
 
     Column {
         if (progress != null) {
-            LinearProgressIndicator(progress, modifier = Modifier.fillMaxWidth())
+            LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
         } else {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
         }

@@ -36,7 +36,7 @@ fun EquipDropList(
 
             Spacer(Modifier.weight(1f))
 
-            QuestType.values().forEach { type ->
+            QuestType.entries.forEach { type ->
                 val checked = questTypes.contains(type)
                 IconToggleButton(checked = checked, onCheckedChange = { onQuestTypesChange(type) }) {
                     QuestLabel(

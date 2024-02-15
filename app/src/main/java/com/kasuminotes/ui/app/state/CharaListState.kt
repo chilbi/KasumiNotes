@@ -11,7 +11,7 @@ import com.kasuminotes.data.UserProfile
 
 class CharaListState {
     var backupProfiles: List<UserProfile>? = null
-    var backSearchText: String? = null
+    private var backSearchText: String? = null
 
     var profiles by mutableStateOf<List<UserProfile>>(emptyList())
         private set

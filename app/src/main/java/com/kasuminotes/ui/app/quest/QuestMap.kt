@@ -61,7 +61,7 @@ fun QuestMap(
                         expanded = expanded,
                         onDismissRequest = { expanded = false }
                     ) {
-                        QuestType.values().forEach { type ->
+                        QuestType.entries.forEach { type ->
                             DropdownMenuItem(
                                 text = { QuestLabel(type) },
                                 onClick = {

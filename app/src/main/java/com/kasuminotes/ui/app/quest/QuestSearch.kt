@@ -17,9 +17,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -94,7 +94,7 @@ fun QuestSearch(
                     }
                 },
                 actions = {
-                    QuestType.values().forEach { type ->
+                    QuestType.entries.forEach { type ->
                         val checked = searchTypes.contains(type)
                         IconToggleButton(checked = checked, onCheckedChange = { onSearchTypesChange(type) }) {
                             QuestLabel(
@@ -147,7 +147,7 @@ fun QuestSearch(
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
-                Crossfade(targetState = visitIndex) { state ->
+                Crossfade(targetState = visitIndex, label = "QuestSearchCrossfade") { state ->
                     when (state) {
                         0 -> {
                             when {
@@ -275,7 +275,7 @@ private fun SearchSetMenu(
         }
     }) {
         Icon(
-            imageVector = if (visitIndex == 0) Icons.Filled.PlaylistAdd
+            imageVector = if (visitIndex == 0) Icons.AutoMirrored.Filled.PlaylistAdd
             else Icons.Filled.Search,
             contentDescription = null
         )

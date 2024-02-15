@@ -2,8 +2,8 @@ package com.kasuminotes.ui.app.drawer
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Android
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Update
 import androidx.compose.material3.Icon
@@ -56,6 +56,6 @@ fun AppMenuList(
         headlineContent = { Text(stringResource(R.string.about)) },
         modifier = Modifier.clickable(onClick = onAboutClick),
         leadingContent = { Icon(Icons.Filled.Info, null) },
-        trailingContent = { Icon(Icons.Filled.ArrowForward, null) }
+        trailingContent = { Icon(Icons.AutoMirrored.Filled.ArrowForward, null) }
     )
 }

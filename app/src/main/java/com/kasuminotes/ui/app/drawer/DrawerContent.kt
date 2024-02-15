@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -83,7 +83,7 @@ fun DrawerContent(
 
             UserInfo(maxUserData)
 
-            Divider(Modifier.padding(16.dp))
+            HorizontalDivider(Modifier.padding(16.dp))
 
             DatabaseMenuList(
                 dbServer,
@@ -95,7 +95,7 @@ fun DrawerContent(
                 onDbAutoUpdateToggle
             )
 
-            Divider(Modifier.padding(16.dp))
+            HorizontalDivider(Modifier.padding(16.dp))
 
             DisplayMenuList(
                 language,
@@ -106,7 +106,7 @@ fun DrawerContent(
                 onDarkThemeToggle
             )
 
-            Divider(Modifier.padding(16.dp))
+            HorizontalDivider(Modifier.padding(16.dp))
 
             AppMenuList(
                 appAutoUpdate,

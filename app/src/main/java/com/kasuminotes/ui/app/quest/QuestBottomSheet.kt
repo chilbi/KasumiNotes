@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForwardIos
+import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.Search
@@ -52,7 +52,7 @@ private fun QuestModeItem(
             Icon(imageVector, null)
         },
         trailingContent = {
-            Icon(Icons.Filled.ArrowForwardIos, null)
+            Icon(Icons.AutoMirrored.Filled.ArrowForwardIos, null)
         },
         tonalElevation = if (mode == questMode) 8.dp else 0.dp
     )
