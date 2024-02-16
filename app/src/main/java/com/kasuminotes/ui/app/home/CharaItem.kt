@@ -94,6 +94,12 @@ fun CharaItem(
             )
         }
 
+        Element(
+            padding,
+            userProfile.unitData.talentId,
+            charaImageState.positionSize
+        )
+
         Caption(userProfile.getStringOf(orderBy), layerAlpha, charaImageState)
     }
 }
@@ -149,7 +155,9 @@ private fun BoxScope.CharaImage(
         } else {
             getImageUrl(unitId, rarity)
         },
-        modifier = Modifier.clip(UnitImageShape).clickable { onClick() },
+        modifier = Modifier
+            .clip(UnitImageShape)
+            .clickable { onClick() },
         shape = UnitImageShape
     )
 }
@@ -224,6 +232,34 @@ private fun BoxScope.Position(
             painter = painterResource(id),
             contentDescription = null,
             modifier = Modifier.size(positionSize)
+        )
+    }
+}
+
+@Composable
+private fun BoxScope.Element(
+    padding: Dp,
+    talentId: Int,
+    elementSize: Dp
+) {
+    if (talentId == 0 ) return
+    Box(
+        Modifier
+            .padding(start = padding, top = padding)
+            .wrapContentSize()
+            .align(Alignment.TopStart)
+    ) {
+        val id = when (talentId) {
+            1 -> R.drawable.fire
+            2 -> R.drawable.water
+            3 -> R.drawable.wind
+            4 -> R.drawable.light
+            else -> R.drawable.dark
+        }
+        Image(
+            painter = painterResource(id),
+            contentDescription = null,
+            modifier = Modifier.size(elementSize)
         )
     }
 }

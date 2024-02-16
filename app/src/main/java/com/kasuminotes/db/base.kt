@@ -97,11 +97,26 @@ WHERE user_id=$userId AND unit_id IN (${deleteChara.joinToString(",")})"""
 }
 
 suspend fun AppDatabase.getUserProfileList(userId: Int): List<UserProfile> {
+    safelyUse {
+        if (!existsTable("unit_talent")) {
+            execSQL(
+                """CREATE TABLE `unit_talent`(
+'setting_id' INTEGER NOT NULL,
+'unit_id' INTEGER NOT NULL,
+'talent_id' INTEGER NOT NULL,
+PRIMARY KEY ('setting_id')
+)"""
+            )
+        }
+    }
+
     val sql = """SELECT ud.unit_id,
 ${UserData.getFields(pk = false, fk = false)},
-${UnitData.getFields(pk = false)}
+${UnitData.getFields(pk = false)},
+IFNULL(ut.talent_id, 0) AS talent_id
 FROM user_data AS ud
 LEFT JOIN chara_data AS cd ON ud.unit_id=cd.unit_id
+LEFT JOIN unit_talent AS ut ON ud.unit_id=ut.unit_id
 WHERE user_id=$userId"""
 
     return withIOContext {
@@ -164,7 +179,8 @@ WHERE user_id=$userId"""
                         it.getString(i++),
                         it.getString(i++),
                         it.getString(i++),
-                        it.getString(i)
+                        it.getString(i++),
+                        it.getInt(i)
                     )
 
                     list.add(UserProfile(userData, unitData))
@@ -281,6 +297,37 @@ suspend fun AppDatabase.getSummonData(unitId: Int): SummonData {
                 it.getFloat(3)
             )
         }
+    }
+}
+
+fun AppDatabase.getCreateTable(tableName: String): String? {
+    return try {
+        readableDatabase.rawQuery(
+            "SELECT sql FROM sqlite_master WHERE type='table' AND name='$tableName'",
+            null
+        ).use {
+            it.moveToNext()
+            it.getString(0)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+}
+
+fun AppDatabase.execTransaction(sqls: List<String>): Boolean {
+    writableDatabase.beginTransaction()
+    return try {
+        sqls.forEach {
+            writableDatabase.execSQL(it)
+        }
+        writableDatabase.setTransactionSuccessful()
+        true
+    } catch (e: Exception) {
+        e.printStackTrace()
+        false
+    } finally {
+        writableDatabase.endTransaction()
     }
 }
 

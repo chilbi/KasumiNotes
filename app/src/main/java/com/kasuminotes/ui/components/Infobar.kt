@@ -3,6 +3,7 @@ package com.kasuminotes.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +25,7 @@ fun Infobar(
     label: String,
     value: String,
     modifier: Modifier = Modifier,
+    endDecoration: (@Composable RowScope.() -> Unit)? = null,
     underlineStyle: UnderlineStyle = UnderlineStyle.Dashed,
     width: Dp = 72.dp,
     margin: PaddingValues = PaddingValues(4.dp),
@@ -40,6 +42,7 @@ fun Infobar(
         stringValue = value,
         annotatedStringValue = null,
         modifier = modifier,
+        endDecoration = endDecoration,
         underlineStyle = underlineStyle,
         width = width,
         margin = margin,
@@ -58,6 +61,7 @@ fun Infobar(
     label: String,
     value: AnnotatedString,
     modifier: Modifier = Modifier,
+    endDecoration: (@Composable RowScope.() -> Unit)? = null,
     underlineStyle: UnderlineStyle = UnderlineStyle.Dashed,
     width: Dp = 72.dp,
     margin: PaddingValues = PaddingValues(4.dp),
@@ -74,6 +78,7 @@ fun Infobar(
         stringValue = null,
         annotatedStringValue = value,
         modifier = modifier,
+        endDecoration = endDecoration,
         underlineStyle = underlineStyle,
         width = width,
         margin = margin,
@@ -93,6 +98,7 @@ private fun InfobarImpl(
     stringValue: String?,
     annotatedStringValue: AnnotatedString?,
     modifier: Modifier = Modifier,
+    endDecoration: (@Composable RowScope.() -> Unit)? = null,
     underlineStyle: UnderlineStyle = UnderlineStyle.Dashed,
     width: Dp = 72.dp,
     margin: PaddingValues = PaddingValues(4.dp),
@@ -148,6 +154,10 @@ private fun InfobarImpl(
                     maxLines = 1,
                     style = valueStyle
                 )
+        }
+
+        if (endDecoration != null) {
+            endDecoration()
         }
     }
 }

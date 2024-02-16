@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.kasuminotes.common.AtkType
+import com.kasuminotes.common.Element
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
 
@@ -20,11 +21,13 @@ fun UserEditorScaffold(
     searchText: String,
     atkType: AtkType,
     position: Position,
+    element: Element,
     orderBy: OrderBy,
     sortDesc: Boolean,
     onSearchTextChange: (String) -> Unit,
     onAtkTypeChange: (AtkType) -> Unit,
     onPositionChange: (Position) -> Unit,
+    onElementChange: (Element) -> Unit,
     onOrderByChange: (OrderBy) -> Unit,
     onBack: () -> Unit,
     floatingActionButton: @Composable () -> Unit = {},
@@ -38,11 +41,13 @@ fun UserEditorScaffold(
                 searchText,
                 atkType,
                 position,
+                element,
                 orderBy,
                 sortDesc,
                 onSearchTextChange,
                 onAtkTypeChange,
                 onPositionChange,
+                onElementChange,
                 onOrderByChange,
                 onBack,
                 topBarContent

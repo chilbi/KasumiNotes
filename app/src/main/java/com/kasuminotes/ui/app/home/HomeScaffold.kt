@@ -42,12 +42,14 @@ fun HomeScaffold(
                     listState.searchText,
                     listState.atkType,
                     listState.position,
+                    listState.element,
                     listState.orderBy,
                     listState.sortDesc,
                     uiState::toggleImageVariant,
                     listState::changeSearchText,
                     listState::changeAtkType,
                     listState::changePosition,
+                    listState::changeElement,
                     listState::changeOrderBy,
                     onDrawerOpen
                 )

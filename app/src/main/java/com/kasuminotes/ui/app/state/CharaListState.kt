@@ -1,9 +1,11 @@
 package com.kasuminotes.ui.app.state
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.common.AtkType
+import com.kasuminotes.common.Element
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
 import com.kasuminotes.data.UserData
@@ -22,6 +24,8 @@ class CharaListState {
     var atkType by mutableStateOf(AtkType.All)
         private set
     var position by mutableStateOf(Position.All)
+        private set
+    var element by mutableStateOf(Element.All)
         private set
     var orderBy by mutableStateOf(OrderBy.StartTime)
         private set
@@ -270,6 +274,11 @@ class CharaListState {
         derived()
     }
 
+    fun changeElement(value: Element) {
+        element = value
+        derived()
+    }
+
     fun changeOrderBy(value: OrderBy) {
         if (value == orderBy) {
             sortDesc = !sortDesc
@@ -284,7 +293,12 @@ class CharaListState {
     private fun derived() {
         val originProfiles = profiles
         val list =
-            if (searchText.isEmpty() && atkType == AtkType.All && position == Position.All) {
+            if (
+                searchText.isEmpty() &&
+                atkType == AtkType.All &&
+                position == Position.All &&
+                element == Element.All
+           ) {
                 originProfiles
             } else {
                 originProfiles.filter { userProfile ->
@@ -296,7 +310,9 @@ class CharaListState {
                             atkType == AtkType.All || atkType.ordinal == it.atkType
                         val positionMatch =
                             position == Position.All || position.ordinal == it.position
-                        searchTextMatch && atkTypeMatch && positionMatch
+                        val elementMatch =
+                            element == Element.All || element.ordinal == it.talentId
+                        searchTextMatch && atkTypeMatch && positionMatch && elementMatch
                     }
                 }
             }

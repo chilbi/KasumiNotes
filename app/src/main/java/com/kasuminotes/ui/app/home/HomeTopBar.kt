@@ -11,6 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import coil.compose.rememberAsyncImagePainter
 import com.kasuminotes.common.AtkType
+import com.kasuminotes.common.Element
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
 import com.kasuminotes.ui.components.FilterMenu
@@ -25,12 +26,14 @@ fun HomeTopBar(
     searchText: String,
     atkType: AtkType,
     position: Position,
+    element: Element,
     orderBy: OrderBy,
     sortDesc: Boolean,
     onToggleImageVariant: () -> Unit,
     onSearchTextChange: (String) -> Unit,
     onAtkTypeChange: (AtkType) -> Unit,
     onPositionChange: (Position) -> Unit,
+    onElementChange: (Element) -> Unit,
     onOrderByChange: (OrderBy) -> Unit,
     onDrawerOpen: () -> Unit
 ) {
@@ -57,10 +60,12 @@ fun HomeTopBar(
             FilterMenu(
                 atkType,
                 position,
+                element,
                 orderBy,
                 sortDesc,
                 onAtkTypeChange,
                 onPositionChange,
+                onElementChange,
                 onOrderByChange
             )
         }

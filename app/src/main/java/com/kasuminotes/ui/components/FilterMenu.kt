@@ -1,11 +1,13 @@
 package com.kasuminotes.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -27,23 +29,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.common.AtkType
+import com.kasuminotes.common.Element
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun FilterMenu(
     atkType: AtkType,
     position: Position,
+    element: Element,
     orderBy: OrderBy,
     sortDesc: Boolean,
     onAtkTypeChange: (AtkType) -> Unit,
     onPositionChange: (Position) -> Unit,
+    onElementChange: (Element) -> Unit,
     onOrderByChange: (OrderBy) -> Unit
 ) {
-    Row(Modifier.fillMaxWidth()) {
+    Row(
+        Modifier.fillMaxWidth(),
+        Arrangement.SpaceBetween
+    ) {
         AtkTypeMenu(atkType, onAtkTypeChange)
 
         PositionMenu(position, onPositionChange)
+
+        ElementMenu(element, onElementChange)
 
         OrderByMenu(orderBy, sortDesc, onOrderByChange)
     }
@@ -86,6 +97,24 @@ private fun RowScope.PositionMenu(
 }
 
 @Composable
+private fun RowScope.ElementMenu(
+    element: Element,
+    onElementChange: (Element) -> Unit
+) {
+    FilterMenuItem(
+        alignment = Alignment.Center,
+        label = stringResource(element.resId)
+    ) { onCollapse ->
+        Element.entries.forEach { ele ->
+            DropdownMenuItem(
+                text = { Text(stringResource(ele.resId)) },
+                onClick = { onElementChange(ele).also { onCollapse() } }
+            )
+        }
+    }
+}
+
+@Composable
 private fun RowScope.OrderByMenu(
     orderBy: OrderBy,
     sortDesc: Boolean,
@@ -110,7 +139,7 @@ private fun RowScope.FilterMenuItem(
     label: String,
     content: @Composable ColumnScope.(onCollapse: () -> Unit) -> Unit
 ) {
-    Box(Modifier.weight(1f)) {
+    Box(Modifier.wrapContentSize()) {
         Box(Modifier.align(alignment)) {
             var expanded by remember { mutableStateOf(false) }
             TextButton(

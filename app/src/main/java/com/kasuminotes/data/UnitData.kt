@@ -24,7 +24,8 @@ data class UnitData(
     val favorite: String,
     val voice: String,
     val catchCopy: String,
-    val selfText: String
+    val selfText: String,
+    val talentId: Int
 ) {
     val position: Int = when {
         searchAreaWidth < 300 -> 1

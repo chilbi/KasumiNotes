@@ -151,7 +151,11 @@ class AppRepository(
     fun getDatabase() = AppDatabase.getInstance(context.applicationContext, ioDispatcher)
 
     suspend fun fetchLastDbVersion(server: DbServer): String = withContext(ioDispatcher) {
-        HttpUtil.fetchLastDbVersion(UrlUtil.lastVersionUrl[server]!!)
+        if (UrlUtil.useWthee) {
+            HttpUtil.fetchWtheeLastDbVersion(UrlUtil.lastVersionApiUrl, server)
+        } else {
+            HttpUtil.fetchLastDbVersion(UrlUtil.lastVersionUrl[server]!!)
+        }
     }
 
     suspend fun fetchRainbowJson(): JSONObject = withContext(ioDispatcher) {

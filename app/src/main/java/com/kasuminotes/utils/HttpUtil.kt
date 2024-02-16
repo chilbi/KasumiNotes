@@ -1,15 +1,17 @@
 package com.kasuminotes.utils
 
 import android.util.Base64
-import android.util.Log
 import com.kasuminotes.BuildConfig
+import com.kasuminotes.common.DbServer
 import com.kasuminotes.common.DownloadState
 import com.kasuminotes.data.AppReleaseInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.Call
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.apache.commons.compress.compressors.brotli.BrotliCompressorInputStream
 import org.json.JSONObject
@@ -84,6 +86,36 @@ object HttpUtil {
             response?.close()
             fis?.close()
             fos?.close()
+        }
+    }
+
+    @Throws(Throwable::class)
+    fun fetchWtheeLastDbVersion(url: String, server: DbServer): String {
+        var call: Call? = null
+        var response: Response? = null
+        try {
+            val obj = JSONObject()
+            obj.put("regionCode", if (server == DbServer.CN) "cn" else "jp")
+            val requestBody = obj.toString().toRequestBody("application/json".toMediaType())
+            val client = OkHttpClient.Builder().build()
+            val request = Request.Builder()
+                .url(url)
+                .header("User-Agent", userAgent)
+                .post(requestBody)
+                .build()
+            call = client.newCall(request)
+            response = call.execute()
+            val responseJson = JSONObject(response.body.string())
+            val status = responseJson.getInt("status")
+            if (status != 0) {
+                throw Exception("fetch lastDbVersion error: status $status")
+            }
+            return responseJson.getJSONObject("data").getString("truthVersion")
+        } catch (e: Throwable) {
+            call?.cancel()
+            throw e
+        } finally {
+            response?.close()
         }
     }
 

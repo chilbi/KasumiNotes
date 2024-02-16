@@ -14,6 +14,7 @@ import com.kasuminotes.db.putUserDataList
 import com.kasuminotes.db.unHashDb
 import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.ui.app.DefaultUserId
+import com.kasuminotes.utils.UrlUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -201,7 +202,7 @@ class DbState(
                 lastDbVersion = appRepository.fetchLastDbVersion(server)
                 tempDbFile.renameTo(dbFile)
                 db = appRepository.getDatabase(dbFile.name)
-                if (server == DbServer.JP) {
+                if (!UrlUtil.useWthee && server == DbServer.JP) {
                     val rainbowJson = appRepository.fetchRainbowJson()
                     db.unHashDb(rainbowJson)
                 }
@@ -221,7 +222,7 @@ class DbState(
                 db = appRepository.getDatabase(dbFile.name)
                 val backupUserDataList = db.getBackupUserDataList(DefaultUserId)
                 tempDbFile.renameTo(dbFile)
-                if (server == DbServer.JP) {
+                if (!UrlUtil.useWthee && server == DbServer.JP) {
                     val rainbowJson = appRepository.fetchRainbowJson()
                     db.unHashDb(rainbowJson)
                 }

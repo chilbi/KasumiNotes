@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.kasuminotes.common.AtkType
+import com.kasuminotes.common.Element
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
 import com.kasuminotes.ui.components.BackButton
@@ -26,11 +27,13 @@ fun UserEditorTopBar(
     searchText: String,
     atkType: AtkType,
     position: Position,
+    element: Element,
     orderBy: OrderBy,
     sortDesc: Boolean,
     onSearchTextChange: (String) -> Unit,
     onAtkTypeChange: (AtkType) -> Unit,
     onPositionChange: (Position) -> Unit,
+    onElementChange: (Element) -> Unit,
     onOrderByChange: (OrderBy) -> Unit,
     onBack: () -> Unit,
     content: @Composable ColumnScope.() -> Unit = {}
@@ -67,10 +70,12 @@ fun UserEditorTopBar(
             FilterMenu(
                 atkType,
                 position,
+                element,
                 orderBy,
                 sortDesc,
                 onAtkTypeChange,
                 onPositionChange,
+                onElementChange,
                 onOrderByChange
             )
 
