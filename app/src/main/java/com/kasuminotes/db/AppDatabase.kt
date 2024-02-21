@@ -3,16 +3,12 @@ package com.kasuminotes.db
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.util.concurrent.atomic.AtomicInteger
 
 class AppDatabase(
     context: Context,
-    name: String,
-    private val ioDispatcher: CoroutineDispatcher
+    name: String
 ) : SQLiteOpenHelper(context, name, null, 1) {
     override fun onCreate(db: SQLiteDatabase?) {
     }
@@ -38,7 +34,7 @@ class AppDatabase(
         }
     }
 
-    fun <T> use(block: SQLiteDatabase.() -> T): T {
+    fun <T> useDatabase(block: SQLiteDatabase.() -> T): T {
         try {
             return openDatabase().block()
         } finally {
@@ -46,35 +42,25 @@ class AppDatabase(
         }
     }
 
-    suspend fun <T> withIOContext(block: suspend CoroutineScope.() -> T) = withContext(ioDispatcher, block)
-
-    suspend fun <T> safelyUse(block: SQLiteDatabase.() -> T): T {
-        return withIOContext {
-            use(block)
-        }
-    }
-
     companion object {
         private var currentName = ""
         private var instance: AppDatabase? = null
 
-        const val NullId = 999999
-
         @Synchronized
-        fun getInstance(context: Context, name: String, ioDispatcher: CoroutineDispatcher): AppDatabase {
+        fun getInstance(context: Context, name: String): AppDatabase {
             return if (name == currentName) {
-                instance ?: AppDatabase(context, name, ioDispatcher).also { instance = it }
+                instance ?: AppDatabase(context, name).also { instance = it }
             } else {
                 instance?.close()
                 currentName = name
-                AppDatabase(context, name, ioDispatcher).also { instance = it }
+                AppDatabase(context, name).also { instance = it }
             }
         }
 
         @Synchronized
-        fun getInstance(context: Context, ioDispatcher: CoroutineDispatcher): AppDatabase {
+        fun getInstance(context: Context): AppDatabase {
             if (currentName == "") throw Exception("The database is not uninitialized")
-            return getInstance(context, currentName, ioDispatcher)
+            return getInstance(context, currentName)
         }
     }
 }

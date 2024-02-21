@@ -16,6 +16,7 @@ import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.ui.app.DefaultUserId
 import com.kasuminotes.utils.UrlUtil
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -86,7 +87,7 @@ class DbState(
     }
 
     fun updateApp(info: AppReleaseInfo) {
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             appRepository.downloadApp(info)
             newAppReleaseInfo = null
         }
@@ -129,7 +130,7 @@ class DbState(
 
     private fun autoFetchLastDbVersion(mutableIsLastDb: Boolean) {
         if (!lastVersionFetching) {
-            scope.launch {
+            scope.launch(Dispatchers.IO) {
                 try {
                     lastVersionFetching = true
                     val lastDbVersion = appRepository.fetchLastDbVersion(dbServer)
@@ -148,7 +149,7 @@ class DbState(
 
     private fun autoFetchLatestAppReleaseInfo(mutableIsLatestApp: Boolean) {
         if (!latestAppReleaseInfoFetching) {
-            scope.launch {
+            scope.launch(Dispatchers.IO) {
                 try {
                     latestAppReleaseInfoFetching = true
                     val info = appRepository.fetchLatestAppReleaseInfo()
@@ -179,7 +180,7 @@ class DbState(
     }
 
     private fun downloadDbFile(server: DbServer, version: String) {
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             downloadState = DownloadState.Loading
             downloadingDbServer = server
             downloadingDbVersion = version

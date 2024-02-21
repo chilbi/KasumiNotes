@@ -12,7 +12,7 @@ class Property(init: (Int) -> Double) {
         }
     }
 
-    private val arr = DoubleArray(size, init)
+    private val arr = DoubleArray(SIZE, init)
     val hp: Double get() = arr[0]
     val atk: Double get() = arr[1]
     val def: Double get() = arr[2]
@@ -48,7 +48,7 @@ class Property(init: (Int) -> Double) {
     override fun hashCode() = arr.hashCode()
 
     companion object {
-        const val size = 17
+        const val SIZE = 17
         val zero = Property { 0.0 }
 
         fun getStrRes(index: Int): Int = when (index) {
@@ -69,7 +69,7 @@ class Property(init: (Int) -> Double) {
             14 -> R.string.hp_recovery_rate
             15 -> R.string.energy_reduce_rate
             16 -> R.string.accuracy
-            else -> throw IndexOutOfBoundsException("The index range should be 0-${size - 1}")
+            else -> throw IndexOutOfBoundsException("The index range should be 0-${SIZE - 1}")
         }
 
         val keys: Array<String>

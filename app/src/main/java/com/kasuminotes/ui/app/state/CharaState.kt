@@ -16,7 +16,6 @@ import com.kasuminotes.db.getUnitPromotionStatus
 import com.kasuminotes.db.getUnitRarity
 import com.kasuminotes.db.putUserData
 import com.kasuminotes.ui.app.AppRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,8 +23,7 @@ import kotlinx.coroutines.launch
 class CharaState(
     private val appRepository: AppRepository,
     private val scope: CoroutineScope,
-    private var onMaxUserDataChange: (userUniqueDiff: Int, userRarity6Diff: Int) -> Unit,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private var onMaxUserDataChange: (userUniqueDiff: Int, userRarity6Diff: Int) -> Unit
 ) {
     private var backupUnitRarity: UnitRarity? = null
     private var backupUnitPromotionStatus: UnitPromotionStatus? = null
@@ -59,9 +57,9 @@ class CharaState(
         if (data.property != null) {
             initData(data)
         } else {
-            scope.launch(defaultDispatcher) {
+            scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
-                data.load(db, profiles, defaultDispatcher)
+                data.load(db, profiles)
 
                 initData(data)
             }
@@ -130,7 +128,7 @@ class CharaState(
 
     fun changeRarity(value: Int) {
         if (value > 0 && value != userData!!.rarity) {
-            scope.launch(defaultDispatcher) {
+            scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
                 val unitRarity = db.getUnitRarity(userProfile!!.unitData.unitId, value)
                 userProfile!!.unitRarity = unitRarity
@@ -153,7 +151,7 @@ class CharaState(
 
     fun changePromotionLevel(value: Int) {
         if (value != userData!!.promotionLevel) {
-            scope.launch(defaultDispatcher) {
+            scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
                 val unitPromotionStatus = db.getUnitPromotionStatus(userProfile!!.unitData.unitId, value)
                 val promotions = userProfile!!.promotions
@@ -245,7 +243,7 @@ class CharaState(
         userProfile!!.setProperty(property, baseProperty, includeExEquipProperty)
         saveVisible = false
 
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             db.putUserData(userData!!)
         }

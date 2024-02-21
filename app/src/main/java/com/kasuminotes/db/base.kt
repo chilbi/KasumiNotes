@@ -8,14 +8,16 @@ import com.kasuminotes.data.User
 import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.DefaultUserId
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 
-suspend fun AppDatabase.getBackupUserDataList(defaultUserId: Int): List<UserData> {
+fun AppDatabase.getBackupUserDataList(defaultUserId: Int): List<UserData> {
     val sql = """SELECT ${UserData.getFields(pk = true, fk = true)} 
 FROM user_data WHERE user_id!=$defaultUserId"""
 
-    return safelyUse {
+    return useDatabase {
         val list = mutableListOf<UserData>()
         rawQuery(sql, null).use {
 
@@ -56,13 +58,13 @@ FROM user_data WHERE user_id!=$defaultUserId"""
     }
 }
 
-suspend fun AppDatabase.putUserData(userData: UserData) {
-    safelyUse {
+fun AppDatabase.putUserData(userData: UserData) {
+    useDatabase {
         execSQL("REPLACE INTO `user_data` VALUES (${userData.stringValues})")
     }
 }
 
-suspend fun AppDatabase.putUserDataList(userDataList: List<UserData>) {
+fun AppDatabase.putUserDataList(userDataList: List<UserData>) {
     if (userDataList.isEmpty()) return
 
     var sql = "REPLACE INTO `user_data`\nSELECT ${userDataList[0].stringValues}"
@@ -74,30 +76,31 @@ suspend fun AppDatabase.putUserDataList(userDataList: List<UserData>) {
         i++
     }
 
-    safelyUse {
+    useDatabase {
         execSQL(sql)
     }
 }
 
-suspend fun AppDatabase.deleteUser(userId: Int) {
-    safelyUse {
+fun AppDatabase.deleteUser(userId: Int) {
+    useDatabase {
         execSQL("DELETE FROM user_data WHERE user_id=$userId")
     }
 }
 
-suspend fun AppDatabase.deleteUserData(userId: Int, deleteChara: List<Int>) {
+fun AppDatabase.deleteUserData(userId: Int, deleteChara: List<Int>) {
     if (userId == DefaultUserId || deleteChara.isEmpty()) return
 
     val sql = """DELETE FROM user_data
 WHERE user_id=$userId AND unit_id IN (${deleteChara.joinToString(",")})"""
 
-    safelyUse {
+    useDatabase {
         execSQL(sql)
     }
 }
 
 suspend fun AppDatabase.getUserProfileList(userId: Int): List<UserProfile> {
-    safelyUse {
+    val list = mutableListOf<UserProfile>()
+    useDatabase {
         if (!existsTable("unit_talent")) {
             execSQL(
                 """CREATE TABLE `unit_talent`(
@@ -108,9 +111,8 @@ PRIMARY KEY ('setting_id')
 )"""
             )
         }
-    }
 
-    val sql = """SELECT ud.unit_id,
+        val sql = """SELECT ud.unit_id,
 ${UserData.getFields(pk = false, fk = false)},
 ${UnitData.getFields(pk = false)},
 IFNULL(ut.talent_id, 0) AS talent_id
@@ -118,88 +120,87 @@ FROM user_data AS ud
 LEFT JOIN chara_data AS cd ON ud.unit_id=cd.unit_id
 LEFT JOIN unit_talent AS ut ON ud.unit_id=ut.unit_id
 WHERE user_id=$userId"""
+        rawQuery(sql, null).use {
+            while (it.moveToNext()) {
+                var i = 0
 
-    return withIOContext {
-        val originalProfiles = use {
-            rawQuery(sql, null).use {
-                val list = mutableListOf<UserProfile>()
+                val unitId = it.getInt(i++)
+                val userData = UserData(
+                    userId,//同参数userId
+                    unitId,//i=0
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++)
+                )
 
-                while (it.moveToNext()) {
-                    var i = 0
+                val unitData = UnitData(
+                    unitId,//同
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getFloat(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getInt(i)
+                )
 
-                    val unitId = it.getInt(i++)
-                    val userData = UserData(
-                        userId,//同参数userId
-                        unitId,//i=0
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++)
-                    )
-
-                    val unitData = UnitData(
-                        unitId,//同
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getFloat(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getInt(i)
-                    )
-
-                    list.add(UserProfile(userData, unitData))
-                }
-
-                list
+                list.add(UserProfile(userData, unitData))
             }
         }
 
-        originalProfiles.map { userProfile ->
-            async {
-                userProfile.unitConversionData = getUnitConversionData(userProfile.unitData)
-                userProfile
-            }
-        }.awaitAll()
+    }
+
+    return if (existsTable("unit_conversion")) {
+        withContext(Dispatchers.IO) {
+            list.map { userProfile ->
+                async {
+                    userProfile.unitConversionData = getUnitConversionData(userProfile.unitData)
+                    userProfile
+                }
+            }.awaitAll()
+        }
+    } else {
+        list
     }
 }
 
-suspend fun AppDatabase.getMaxUserData(userId: Int): MaxUserData {
+fun AppDatabase.getMaxUserData(userId: Int): MaxUserData {
     val sql = """SELECT max_chara_level,max_promotion_level,max_unique_level,
 max_area,max_chara,max_unique,max_rarity_6,user_chara,user_unique,user_rarity_6
 FROM max_data
@@ -207,7 +208,7 @@ LEFT JOIN (SELECT COUNT(user_id) AS user_chara FROM user_data WHERE user_id=$use
 LEFT JOIN (SELECT COUNT(user_id) AS user_unique FROM user_data WHERE user_id=$userId AND unique1_level>0)
 LEFT JOIN (SELECT COUNT(user_id) AS user_rarity_6 FROM user_data WHERE user_id=$userId AND rarity=6)"""
 
-    return safelyUse {
+    return useDatabase {
         rawQuery(sql, null).use {
             it.moveToFirst()
             var i = 0
@@ -228,11 +229,11 @@ LEFT JOIN (SELECT COUNT(user_id) AS user_rarity_6 FROM user_data WHERE user_id=$
     }
 }
 
-suspend fun AppDatabase.getUserName(userId: Int): String {
+fun AppDatabase.getUserName(userId: Int): String {
     val unitId = userId / 100 * 100 + 1
     val sql = "SELECT actual_name FROM chara_data WHERE unit_id=$unitId"
 
-    return safelyUse {
+    return useDatabase {
         rawQuery(sql, null).use {
             if (it.moveToFirst()) {
                 it.getString(0)
@@ -243,10 +244,10 @@ suspend fun AppDatabase.getUserName(userId: Int): String {
     }
 }
 
-suspend fun AppDatabase.getAllUser(): List<Int> {
+fun AppDatabase.getAllUser(): List<Int> {
     val sql = "SELECT user_id FROM user_data GROUP BY user_id"
 
-    return safelyUse {
+    return useDatabase {
         rawQuery(sql, null).use {
             val list = mutableListOf<Int>()
 
@@ -259,12 +260,12 @@ suspend fun AppDatabase.getAllUser(): List<Int> {
     }
 }
 
-suspend fun AppDatabase.getUserList(): List<User> {
+fun AppDatabase.getUserList(): List<User> {
     val sql = """SELECT user_id,actual_name,user_chara
 FROM (SELECT user_id,COUNT(user_id) AS user_chara FROM user_data GROUP BY user_id) AS ud
 LEFT JOIN chara_data AS cd ON SUBSTR(ud.user_id,1,4)=SUBSTR(cd.unit_id,1,4)"""
 
-    return safelyUse {
+    return useDatabase {
         rawQuery(sql, null).use {
             val list = mutableListOf<User>()
 
@@ -283,10 +284,10 @@ LEFT JOIN chara_data AS cd ON SUBSTR(ud.user_id,1,4)=SUBSTR(cd.unit_id,1,4)"""
     }
 }
 
-suspend fun AppDatabase.getSummonData(unitId: Int): SummonData {
+fun AppDatabase.getSummonData(unitId: Int): SummonData {
     val sql = "SELECT ${SummonData.getFields()} FROM unit_data WHERE unit_id=$unitId"
 
-    return safelyUse {
+    return useDatabase {
         rawQuery(sql, null).use {
             it.moveToFirst()
             SummonData(
@@ -333,7 +334,7 @@ fun AppDatabase.execTransaction(sqls: List<String>): Boolean {
 
 fun AppDatabase.existsTable(tableName: String): Boolean {
     val sql = "SELECT count(*) FROM sqlite_master WHERE type=\"table\" AND name=\"$tableName\""
-    return use {
+    return useDatabase {
         rawQuery(sql, null).use {
             it.moveToFirst()
             it.getInt(0) > 0
@@ -343,55 +344,48 @@ fun AppDatabase.existsTable(tableName: String): Boolean {
 
 fun AppDatabase.existsColumn(tableName: String, columnName: String): Boolean {
     val sql = "SELECT * FROM sqlite_master WHERE name=\"$tableName\" AND sql LIKE \"%$columnName%\""
-    return use {
+    return useDatabase {
         rawQuery(sql, null).use {
             it.moveToFirst()
         }
     }
 }
 
-private suspend fun AppDatabase.getUnitConversionData(originalUnitData: UnitData): UnitConversionData? {
-    return if (originalUnitData.maxRarity > 5) {
-        if (existsTable("unit_conversion")) {
-            withIOContext {
-                val convertedUnitId = use {
-                    val sql = "SELECT unit_id FROM unit_conversion WHERE original_unit_id=${originalUnitData.unitId}"
-                    rawQuery(sql, null).use {
-                        if (it.moveToFirst()) {
-                            it.getInt(0)
-                        } else {
-                            null
-                        }
-                    }
-                }
-                if (convertedUnitId == null) {
-                    null
-                } else {
-                    use {
-                        val sql = """SELECT unit_name,kana,search_area_width,atk_type,normal_atk_cast_time,comment,start_time
-FROM unit_data WHERE unit_id=${convertedUnitId}"""
-                        rawQuery(sql, null).use {
-                            it.moveToFirst()
-                            UnitConversionData(
-                                convertedUnitId,
-                                originalUnitData.copy(
-                                    unitName = it.getString(0),
-                                    kana = it.getString(1),
-                                    searchAreaWidth = it.getInt(2),
-                                    atkType = it.getInt(3),
-                                    normalAtkCastTime = it.getFloat(4),
-                                    comment = it.getString(5),
-                                    startTime = it.getString(6)
-                                )
-                            )
-                        }
-                    }
-                }
-            }
-        } else {
+private fun AppDatabase.getUnitConversionData(originalUnitData: UnitData): UnitConversionData? {
+    if (originalUnitData.maxRarity < 6) return null
+    return useDatabase {
+        val convertedUnitId = rawQuery(
+            "SELECT unit_id FROM unit_conversion WHERE original_unit_id=${originalUnitData.unitId}",
             null
+        ).use {
+            if (it.moveToFirst()) {
+                it.getInt(0)
+            } else {
+                null
+            }
         }
-    } else {
-        null
+        if (convertedUnitId == null) {
+            null
+        } else {
+            rawQuery(
+                """SELECT unit_name,kana,search_area_width,atk_type,normal_atk_cast_time,comment,start_time
+FROM unit_data WHERE unit_id=${convertedUnitId}""",
+                null
+            ).use {
+                it.moveToFirst()
+                UnitConversionData(
+                    convertedUnitId,
+                    originalUnitData.copy(
+                        unitName = it.getString(0),
+                        kana = it.getString(1),
+                        searchAreaWidth = it.getInt(2),
+                        atkType = it.getInt(3),
+                        normalAtkCastTime = it.getFloat(4),
+                        comment = it.getString(5),
+                        startTime = it.getString(6)
+                    )
+                )
+            }
+        }
     }
 }

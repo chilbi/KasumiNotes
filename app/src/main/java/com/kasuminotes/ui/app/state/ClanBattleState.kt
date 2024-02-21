@@ -12,15 +12,13 @@ import com.kasuminotes.db.getClanBattleMapDataList
 import com.kasuminotes.db.getClanBattlePeriodList
 import com.kasuminotes.db.getMultiEnemyParts
 import com.kasuminotes.ui.app.AppRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ClanBattleState(
     private val appRepository: AppRepository,
-    private val scope: CoroutineScope,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val scope: CoroutineScope
 ) {
     var clanBattlePeriodList by mutableStateOf<List<ClanBattlePeriod>>(emptyList())
         private set
@@ -47,7 +45,7 @@ class ClanBattleState(
         private set
 
     fun initPeriodList() {
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             val list = db.getClanBattlePeriodList()
             clanBattlePeriodList = list.filter { clanBattlePeriod ->
@@ -58,7 +56,7 @@ class ClanBattleState(
 
     fun initPeriod(label: String, period: ClanBattlePeriod) {
         if (period.mapDataList.isEmpty()) {
-            scope.launch(defaultDispatcher) {
+            scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
                 var list = db.getClanBattleMapDataList(period.clanBattleId)
 
@@ -91,10 +89,10 @@ class ClanBattleState(
             enemy.unitSkillData == null ||
             enemy.unitAttackPatternList.isEmpty()
         ) {
-            scope.launch(defaultDispatcher) {
+            scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
                 enemy.enemyMultiParts = db.getMultiEnemyParts(enemy.multiParts)
-                enemy.load(db, defaultDispatcher)
+                enemy.load(db)
                 enemyMultiParts = enemy.enemyMultiParts
                 unitAttackPatternList = enemy.unitAttackPatternList
                 skillList = enemy.skillList

@@ -5,6 +5,7 @@ import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.db.getUnitAttackPatternList
 import com.kasuminotes.db.getUnitSkillData
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
@@ -30,10 +31,7 @@ data class EnemyData(
     override var skillList: List<SkillItem> = emptyList()
         private set
 
-    suspend fun load(
-        db: AppDatabase,
-        defaultDispatcher: CoroutineDispatcher
-    ) = withContext(defaultDispatcher) {
+    suspend fun load(db: AppDatabase) = withContext(Dispatchers.IO) {
         val list = awaitAll(
             async { db.getUnitAttackPatternList(unitId) },
             async { db.getUnitSkillData(unitId) }

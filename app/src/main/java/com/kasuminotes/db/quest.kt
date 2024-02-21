@@ -6,13 +6,15 @@ import com.kasuminotes.data.EnemyRewardData
 import com.kasuminotes.data.QuestData
 import com.kasuminotes.data.RewardData
 import com.kasuminotes.data.WaveGroupData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 
-private suspend fun AppDatabase.getEnemyRewardData(dropRewardId: Int): EnemyRewardData {
+private fun AppDatabase.getEnemyRewardData(dropRewardId: Int): EnemyRewardData {
     val sql = "SELECT ${EnemyRewardData.getFields()} FROM enemy_reward_data WHERE drop_reward_id=$dropRewardId"
 
-    return safelyUse {
+    return useDatabase {
         rawQuery(sql, null).use {
             it.moveToFirst()
             val rewardDataList = mutableListOf<RewardData>()
@@ -50,40 +52,40 @@ private suspend fun AppDatabase.getWaveGroupDataList(waveGroupIdList: List<Int>)
     }
     val sql = "SELECT ${WaveGroupData.getFields()} FROM wave_group_data WHERE $condition"
 
-    return withIOContext {
-        val rawWaveGroupDataList: List<RawWaveGroupData> = use {
-            rawQuery(sql, null).use {
-                val list = mutableListOf<RawWaveGroupData>()
+    val rawWaveGroupDataList: List<RawWaveGroupData> = useDatabase {
+        rawQuery(sql, null).use {
+            val list = mutableListOf<RawWaveGroupData>()
 
-                while (it.moveToNext()) {
-                    val enemyDropDataList = mutableListOf<RawEnemyDropData>()
-                    var i = 0
+            while (it.moveToNext()) {
+                val enemyDropDataList = mutableListOf<RawEnemyDropData>()
+                var i = 0
 
-                    while (i < 15) {
-                        val enemyId = it.getInt(i++)
-                        if (enemyId == 0) break
+                while (i < 15) {
+                    val enemyId = it.getInt(i++)
+                    if (enemyId == 0) break
 
-                        enemyDropDataList.add(
-                            RawEnemyDropData(
-                                enemyId,
-                                it.getInt(i++),
-                                it.getInt(i++)
-                            )
-                        )
-                    }
-
-                    list.add(
-                        RawWaveGroupData(
-                            it.getInt(15),
-                            enemyDropDataList
+                    enemyDropDataList.add(
+                        RawEnemyDropData(
+                            enemyId,
+                            it.getInt(i++),
+                            it.getInt(i++)
                         )
                     )
                 }
 
-                list
+                list.add(
+                    RawWaveGroupData(
+                        it.getInt(15),
+                        enemyDropDataList
+                    )
+                )
             }
-        }
 
+            list
+        }
+    }
+
+    return withContext(Dispatchers.IO) {
         rawWaveGroupDataList.map { item ->
             async {
                 val enemyDropDataList = item.enemyDropDataList.map { rawEnemyDropData ->
@@ -112,50 +114,50 @@ private suspend fun AppDatabase.getWaveGroupDataList(waveGroupIdList: List<Int>)
 }
 
 private suspend fun AppDatabase.getQuestDataList(sql: String): List<QuestData> {
-    return withIOContext {
-        val rawQuestList: List<RawQuestData> = use {
-            rawQuery(sql, null).use {
-                val list = mutableListOf<RawQuestData>()
+    val rawQuestList: List<RawQuestData> = useDatabase {
+        rawQuery(sql, null).use {
+            val list = mutableListOf<RawQuestData>()
 
-                while (it.moveToNext()) {
-                    val waveGroupIdList = mutableListOf<Int>()
-                    val rewardImageList = mutableListOf<Int>()
+            while (it.moveToNext()) {
+                val waveGroupIdList = mutableListOf<Int>()
+                val rewardImageList = mutableListOf<Int>()
 
-                    var i = 0
-                    while (i < 3) {
-                        val waveGroupId = it.getInt(i++)
-                        if (waveGroupId == 0) break
+                var i = 0
+                while (i < 3) {
+                    val waveGroupId = it.getInt(i++)
+                    if (waveGroupId == 0) break
 
-                        waveGroupIdList.add(waveGroupId)
-                    }
-
-                    i = 3
-                    while (i < 8) {
-                        val rewardImage = it.getInt(i++)
-                        if (rewardImage == 0) break
-
-                        rewardImageList.add(rewardImage)
-                    }
-
-                    i = 8
-
-                    if (rewardImageList.size > 0 && waveGroupIdList.size > 0) {
-                        list.add(
-                            RawQuestData(
-                                it.getInt(i++),
-                                it.getInt(i++),
-                                it.getString(i),
-                                waveGroupIdList,
-                                rewardImageList
-                            )
-                        )
-                    }
+                    waveGroupIdList.add(waveGroupId)
                 }
 
-                list
-            }
-        }
+                i = 3
+                while (i < 8) {
+                    val rewardImage = it.getInt(i++)
+                    if (rewardImage == 0) break
 
+                    rewardImageList.add(rewardImage)
+                }
+
+                i = 8
+
+                if (rewardImageList.size > 0 && waveGroupIdList.size > 0) {
+                    list.add(
+                        RawQuestData(
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getString(i),
+                            waveGroupIdList,
+                            rewardImageList
+                        )
+                    )
+                }
+            }
+
+            list
+        }
+    }
+
+    return withContext(Dispatchers.IO) {
         rawQuestList.map { item ->
             async {
                 val waveGroupDataList = getWaveGroupDataList(item.waveGroupIdList)
@@ -189,7 +191,7 @@ WHERE $rewardId IN (reward_id_1,reward_id_2,reward_id_3,reward_id_4,reward_id_5)
 }
 
 suspend fun AppDatabase.getQuestDataList(searchedList: List<Int>, sortDesc: Boolean): List<QuestData> {
-    return withIOContext {
+    return withContext(Dispatchers.IO) {
         val lists = searchedList.map { rewardId ->
             async { getQuestDataList(rewardId) }
         }.awaitAll()
@@ -210,41 +212,24 @@ suspend fun AppDatabase.getQuestDataList(searchedList: List<Int>, sortDesc: Bool
     }
 }
 
-//suspend fun AppDatabase.getDropRangeMap(): Map<Int, QuestRange> = safelyUse {
-//    val sql = "SELECT range_id,range_min,range_max FROM drop_range"
-//
-//    rawQuery(sql, null).use {
-//        val map = mutableMapOf<Int, QuestRange>()
-//
-//        while (it.moveToNext()) {
-//            val rangeId = it.getInt(0)
-//            val rangeMin = it.getInt(1)
-//            val rangeMax = it.getInt(2)
-//
-//            map[rangeId] = QuestRange(rangeMin, rangeMax)
-//        }
-//
-//        map
-//    }
-//}
-
-suspend fun AppDatabase.getMemoryPieces(): Array<List<Int>> = safelyUse {
+fun AppDatabase.getMemoryPieces(): Array<List<Int>> {
     val sql = "SELECT id FROM memory_piece ORDER BY id DESC"
+    return useDatabase {
+        rawQuery(sql, null).use {
+            val normalPieceList = mutableListOf<Int>()
+            val purePieceList = mutableListOf<Int>()
 
-    rawQuery(sql, null).use {
-        val normalPieceList = mutableListOf<Int>()
-        val purePieceList = mutableListOf<Int>()
-
-        while (it.moveToNext()) {
-            val id = it.getInt(0)
-            if (id < 32000) {
-                normalPieceList.add(id)
-            } else {
-                purePieceList.add(id)
+            while (it.moveToNext()) {
+                val id = it.getInt(0)
+                if (id < 32000) {
+                    normalPieceList.add(id)
+                } else {
+                    purePieceList.add(id)
+                }
             }
-        }
 
-        arrayOf(normalPieceList, purePieceList)
+            arrayOf(normalPieceList, purePieceList)
+        }
     }
 }
 

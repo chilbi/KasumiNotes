@@ -14,18 +14,12 @@ import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.AppReleaseInfo
 import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.utils.HttpUtil
-//import com.kasuminotes.utils.LocaleUtil
 import com.kasuminotes.utils.UrlUtil
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
 import java.util.Locale
 
 class AppRepository(
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val context: Context = MainApplication.context
 ) {
     val applicationContext: Context get() = context.applicationContext
@@ -145,33 +139,26 @@ class AppRepository(
 
     fun getBackupDbFile(server: DbServer): File = context.getDatabasePath("backup_" + UrlUtil.dbFileNameMap[server]!!)
 
-    fun getDatabase(name: String) =
-        AppDatabase.getInstance(context.applicationContext, name, ioDispatcher)
+    fun getDatabase(name: String) = AppDatabase.getInstance(context.applicationContext, name)
 
-    fun getDatabase() = AppDatabase.getInstance(context.applicationContext, ioDispatcher)
+    fun getDatabase() = AppDatabase.getInstance(context.applicationContext)
 
-    suspend fun fetchLastDbVersion(server: DbServer): String = withContext(ioDispatcher) {
-        if (UrlUtil.useWthee) {
-            HttpUtil.fetchWtheeLastDbVersion(UrlUtil.lastVersionApiUrl, server)
-        } else {
-            HttpUtil.fetchLastDbVersion(UrlUtil.lastVersionUrl[server]!!)
-        }
+    fun fetchLastDbVersion(server: DbServer): String  = if (UrlUtil.useWthee) {
+        HttpUtil.fetchWtheeLastDbVersion(UrlUtil.lastVersionApiUrl, server)
+    } else {
+        HttpUtil.fetchLastDbVersion(UrlUtil.lastVersionUrl[server]!!)
     }
 
-    suspend fun fetchRainbowJson(): JSONObject = withContext(ioDispatcher) {
-        HttpUtil.fetchLastRainbowJson(UrlUtil.RainbowJsonUrl)
-    }
+    fun fetchRainbowJson(): JSONObject = HttpUtil.fetchLastRainbowJson(UrlUtil.RainbowJsonUrl)
 
-    suspend fun fetchLatestAppReleaseInfo(): AppReleaseInfo? = withContext(ioDispatcher) {
-        HttpUtil.fetchLatestAppReleaseInfo(UrlUtil.APP_RELEASE_URL)
-    }
+    fun fetchLatestAppReleaseInfo(): AppReleaseInfo? = HttpUtil.fetchLatestAppReleaseInfo(UrlUtil.APP_RELEASE_URL)
 
     fun downloadTempDbFile(server: DbServer) = HttpUtil.downloadDbFile(
         UrlUtil.dbFileUrlMap[server]!!,
         context.getDatabasePath("temp_${UrlUtil.dbFileNameMap[server]!!}.br")
-    ).flowOn(ioDispatcher)
+    )
 
-    suspend fun downloadApp(info: AppReleaseInfo) = withContext(ioDispatcher) {
+    fun downloadApp(info: AppReleaseInfo) {
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request = DownloadManager.Request(Uri.parse(info.downloadURL)).apply {
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)

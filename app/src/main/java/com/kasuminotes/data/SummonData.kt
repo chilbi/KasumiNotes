@@ -8,7 +8,7 @@ import com.kasuminotes.db.getUnitPromotion
 import com.kasuminotes.db.getUnitPromotionStatus
 import com.kasuminotes.db.getUnitRarity
 import com.kasuminotes.db.getUnitSkillData
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
@@ -71,9 +71,8 @@ data class SummonData(
     suspend fun load(
         db: AppDatabase,
         level: Int,
-        userData: UserData,
-        defaultDispatcher: CoroutineDispatcher
-    ) = withContext(defaultDispatcher) {
+        userData: UserData
+    ) = withContext(Dispatchers.IO) {
         val list = awaitAll(
             async { db.getUnitRarity(unitId, userData.rarity) },
             async { db.getUnitPromotionStatus(unitId, userData.promotionLevel) },

@@ -15,10 +15,11 @@ import com.kasuminotes.db.getUnitPromotionStatus
 import com.kasuminotes.db.getUnitRarity
 import com.kasuminotes.db.getUnitSkillData
 import com.kasuminotes.utils.Helper
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
+import kotlin.math.roundToInt
 
 data class UserProfile(
     var userData: UserData,
@@ -213,11 +214,7 @@ data class UserProfile(
         return result
     }
 
-    suspend fun load(
-        db: AppDatabase,
-        profiles: List<UserProfile>,
-        defaultDispatcher: CoroutineDispatcher
-    ) = withContext(defaultDispatcher) {
+    suspend fun load(db: AppDatabase, profiles: List<UserProfile>) = withContext(Dispatchers.IO) {
         val list = awaitAll(
             async { db.getUnitRarity(unitData.unitId, userData.rarity) },
             async { db.getUnitPromotionStatus(unitData.unitId, userData.promotionLevel) },

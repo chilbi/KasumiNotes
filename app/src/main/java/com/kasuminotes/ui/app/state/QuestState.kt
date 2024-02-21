@@ -22,8 +22,7 @@ import kotlinx.coroutines.launch
 
 class QuestState(
     private val appRepository: AppRepository,
-    private val scope: CoroutineScope,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val scope: CoroutineScope
 ) {
 //    private var dropRangeMap: Map<Int, QuestRange>? = null
     private var allQuestDataList = emptyList<QuestData>()
@@ -289,7 +288,7 @@ class QuestState(
     }
 
     private fun changeQuestDataList() {
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             val questRange = when (questType) {
                 QuestType.S -> QuestRange.S
@@ -315,49 +314,16 @@ class QuestState(
             questDataList = emptyList()
         } else {
             questDataList = null
-            scope.launch(defaultDispatcher) {
+            scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
                 allQuestDataList = db.getQuestDataList(searchedList, sortDesc)
                 questDataList = QuestRange.getFilteredQuestDataList(allQuestDataList, searchTypes, min37)
-//                if (dropRangeMap == null) {
-//                    dropRangeMap = db.getDropRangeMap()
-//                }
-//
-//                val questRangeList = QuestRange.getQuestRangeList(
-//                    searchedList,
-//                    searchTypes,
-//                    dropRangeMap!!,
-//                    min37
-//                )
-//
-//                if (questRangeList.isEmpty()) {
-//                    questDataList = emptyList()
-//                } else {
-//                    val lists = questRangeList.map { item ->
-//                        async { db.getQuestDataList(item) }
-//                    }.awaitAll()
-//
-//                    val resultList = mutableListOf<QuestData>()
-//
-//                    for (list in lists) {
-//                        for (item in list) {
-//                            if (searchedList.any { item.contains(it) }) {
-//                                resultList.add(item)
-//                            }
-//                        }
-//                    }
-//                    questDataList = if (sortDesc) {
-//                        resultList.sortedByDescending { it.questId }
-//                    } else {
-//                        resultList.sortedBy { it.questId }
-//                    }
-//                }
             }
         }
     }
 
     private fun changeEquipInfoPairList() {
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             equipmentPairList = db.getEquipmentPairList()
             typePairList = EquipInfo.typePairList
@@ -366,7 +332,7 @@ class QuestState(
     }
 
     private fun changeMaterialPieces() {
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             val materials = async { db.getEquipMaterialPairList() }
             val pieces = async { db.getMemoryPieces() }

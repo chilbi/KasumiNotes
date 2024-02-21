@@ -12,7 +12,6 @@ import com.kasuminotes.db.getEquippableExList
 import com.kasuminotes.db.getExEquipCategory
 import com.kasuminotes.db.getExEquipData
 import com.kasuminotes.ui.app.AppRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -21,8 +20,7 @@ import kotlinx.coroutines.launch
 
 class ExEquipState(
     private val appRepository: AppRepository,
-    private val scope: CoroutineScope,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val scope: CoroutineScope
 ) {
     private var onExEquipDataChange: ((slotNum: Int, exEquip: ExEquipData?) -> Unit)? = null
     private var onEnhanceLevelChange: ((slotNum: Int, level: Int) -> Unit)? = null
@@ -56,7 +54,7 @@ class ExEquipState(
         onExEquipChange: ((slotNum: Int, exEquip: ExEquipData?) -> Unit)? = null,
         onLevelChange: ((slotNum: Int, level: Int) -> Unit)? = null
     ) {
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             val list = awaitAll(
                 async { db.getExEquipCategory(slot.category) },
@@ -84,7 +82,7 @@ class ExEquipState(
     }
 
     fun initExEquip(exEquipId: Int) {
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             val exEquip = db.getExEquipData(exEquipId)
             exEquipData = exEquip

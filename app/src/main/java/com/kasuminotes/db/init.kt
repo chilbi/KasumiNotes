@@ -2,19 +2,13 @@ package com.kasuminotes.db
 
 import android.util.Log
 import com.kasuminotes.common.QuestRange
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
-suspend fun AppDatabase.unHashDb(rainbowJson: JSONObject) = safelyUse {
-//    if (!rainbowJson.has("v1_946fc2f864670f2dbacb3961ebe7db0ad9f54aadad63a6a217fb3542e1de4246")) {
-//        val obj = JSONObject()
-//        obj.put("--table_name", "talent")
-//        obj.put("26b4100f1a1fd622c9e464a2ad24a6c631b8b178f489e1538063a1d14d7c5772", "talent_id")
-//        obj.put("ca2f98e91dd95389c23d1d1e6696c5d251fdd5085a56e68cd453422148173231", "talent_name")
-//        obj.put("806b4b8b1ad61b470fecefcd0b70456f00fa4907ee51c4eeed5dd74b42823dc6", "talent_color")
-//        rainbowJson.put("v1_946fc2f864670f2dbacb3961ebe7db0ad9f54aadad63a6a217fb3542e1de4246", obj)
-//    }
+fun AppDatabase.unHashDb(rainbowJson: JSONObject) = useDatabase {
     if (!rainbowJson.has("v1_f73230cf28c756fcc261293147bbe37216297c02426fb8ba1fe47fb2f8ed12e9")) {
         val obj = JSONObject()
         obj.put("--table_name", "unit_talent")
@@ -61,7 +55,7 @@ suspend fun AppDatabase.unHashDb(rainbowJson: JSONObject) = safelyUse {
     }
 }
 
-suspend fun AppDatabase.initDatabase(defaultUserId: Int) = safelyUse {
+fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
 //    throw Exception("init error")
     // TODO 国服实装水怜专武后就删除该代码片段
     // 修改unit_unique_equipment表为unit_unique_equip
@@ -251,37 +245,14 @@ FROM chara_data LEFT JOIN max_data"""
 }
 
 suspend fun AppDatabase.initQuestDropData() {
-    withIOContext {
+    withContext(Dispatchers.IO) {
         val list = listOf(
-//            async { getQuestDataList(QuestRange.N) },
             async { getQuestDataList(QuestRange.H) },
             async { getQuestDataList(QuestRange.VH) }
-//            async {
-//                use {
-//                    rawQuery(
-//                        "SELECT equipment_id FROM equipment_data WHERE equipment_id<110000",
-//                        null
-//                    ).use {
-//                        val set = mutableSetOf<Int>()
-//
-//                        while (it.moveToNext()) {
-//                            val equipId = it.getInt(0)
-//                            set.add(Helper.getEquipRarity(equipId))
-//                        }
-//
-//                        set.sortedBy { o -> o }
-//                    }
-//                }
-//            }
+
         ).awaitAll()
-//        @Suppress("UNCHECKED_CAST")
-//        val nQuestList = list[0] as List<QuestData>
-//        @Suppress("UNCHECKED_CAST")
-        val hQuestList = list[0]// as List<QuestData>
-//        @Suppress("UNCHECKED_CAST")
-        val vhQuestList = list[1]// as List<QuestData>
-//        @Suppress("UNCHECKED_CAST")
-//        val equipRarityList = list[3] as List<Int>
+        val hQuestList = list[0]
+        val vhQuestList = list[1]
 
         val pieceSet = mutableSetOf<Int>()
         hQuestList.forEach { item ->
@@ -302,65 +273,10 @@ suspend fun AppDatabase.initQuestDropData() {
                 memoryPieceSql += "\nUNION SELECT $rewardImage"
             }
         }
-/*
-        val dropRangeList = mutableListOf<Pair<Int, QuestRange>>()
-        val pairs = arrayOf(
-            QuestType.N.value to nQuestList,
-            QuestType.H.value to hQuestList,
-            QuestType.VH.value to vhQuestList
-        )
 
-        pairs.forEach { pair ->
-            val type = pair.first
-            val questList = pair.second
-            equipRarityList.forEach { rarity ->
-                val rarityStr = rarity.toString()
-                var rangeMin = 0
-                var rangeMax = 0
-                questList.forEach { item ->
-                    if (item.getDropList().any { rewardData ->
-                        Helper.getEquipRarityString(rewardData.rewardId) == rarityStr
-                    }) {
-                        val questId = item.questId
-                        if (rangeMin == 0) {
-                            rangeMin = questId
-                            rangeMax = questId
-                        }
-                        rangeMin = min(rangeMin, questId)
-                        rangeMax = max(rangeMax, questId)
-                    }
-                }
-                if (rangeMin != 0) {
-                    dropRangeList.add((type + rarity) to QuestRange(rangeMin, rangeMax))
-                }
-            }
-        }
-
-        val toValues: (Pair<Int, QuestRange>) -> String = { pair ->
-            "${pair.first},${pair.second.min},${pair.second.max}"
-        }
-
-        var dropRangeSql = "REPLACE INTO `drop_range`\nSELECT ${toValues(dropRangeList[0])}"
-        val dropRangeSize = dropRangeList.size
-        i = 1
-
-        while (i < dropRangeSize) {
-            dropRangeSql += "\nUNION SELECT ${toValues(dropRangeList[i++])}"
-        }
-*/
-        use {
+        useDatabase {
             execSQL("CREATE TABLE `memory_piece`('id' INTEGER NOT NULL,PRIMARY KEY('id'))")
             execSQL(memoryPieceSql)
-
-//            execSQL(
-//                """CREATE TABLE `drop_range`(
-//'range_id' INTEGER NOT NULL,
-//'range_min' INTEGER NOT NULL,
-//'range_max' INTEGER NOT NULL,
-//PRIMARY KEY('range_id')
-//)"""
-//            )
-//            execSQL(dropRangeSql)
         }
     }
 }

@@ -9,7 +9,6 @@ import com.kasuminotes.data.UserData
 import com.kasuminotes.db.getMultiEnemyParts
 import com.kasuminotes.db.getSummonData
 import com.kasuminotes.ui.app.AppRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -18,8 +17,7 @@ import kotlinx.coroutines.launch
 
 class SummonsState(
     private val appRepository: AppRepository,
-    private val scope: CoroutineScope,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val scope: CoroutineScope
 ) {
     var summonDataList by mutableStateOf<List<SummonData>>(emptyList())
         private set
@@ -29,12 +27,12 @@ class SummonsState(
 
     fun initSummons(summons: List<Int>, skillLevel: Int, userData: UserData) {
         destroy()
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             summonDataList = summons.map { unitId ->
                 async {
                     val summonData = db.getSummonData(unitId)
-                    summonData.load(db, skillLevel, userData, defaultDispatcher)
+                    summonData.load(db, skillLevel, userData)
                     summonData
                 }
             }.awaitAll()
@@ -43,12 +41,12 @@ class SummonsState(
 
     fun initMinionDataList(minions: List<Int>) {
         destroy()
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             val enemyDataList = db.getMultiEnemyParts(minions)
             minionDataList = enemyDataList.map { enemyData ->
                 async {
-                    enemyData.load(db, defaultDispatcher)
+                    enemyData.load(db)
                     enemyData
                 }
             }.awaitAll()

@@ -17,7 +17,6 @@ import com.kasuminotes.db.getEquipData
 import com.kasuminotes.db.getQuestDataList
 import com.kasuminotes.db.getUnique2Craft
 import com.kasuminotes.ui.app.AppRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,8 +24,7 @@ import kotlin.math.min
 
 class EquipState(
     private val appRepository: AppRepository,
-    private val scope: CoroutineScope,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val scope: CoroutineScope
 ) {
 //    private var dropRangeMap: Map<Int, QuestRange>? = null
     private var allQuestDataList = emptyList<QuestData>()
@@ -60,7 +58,7 @@ class EquipState(
         private set
 
     fun initEquip(maxArea: Int, equipId: Int) {
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             val equipDataValue = db.getEquipData(equipId)
             initEquipData(equipDataValue, maxArea)
@@ -84,7 +82,7 @@ class EquipState(
         onEnhanceLevelChange = onLevelChange
         property = equipDataValue.getProperty(originEnhanceLevel)
         if (equipDataValue.craftFlg == 1) {
-            scope.launch(defaultDispatcher) {
+            scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
                 val equipCraft = db.getEquipCraft(equipDataValue.equipmentId)
                 equipCraftList = equipCraft.getCraftList()
@@ -235,7 +233,7 @@ class EquipState(
     }
 
     private fun changeUnique2Craft(equipmentId: Int) {
-        scope.launch(defaultDispatcher) {
+        scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             val memoryId = db.getUnique2Craft(equipmentId)
             val list = mutableListOf<UniqueCraft>()
@@ -254,43 +252,10 @@ class EquipState(
             questDataList = emptyList()
         } else {
             questDataList = null
-            scope.launch(defaultDispatcher) {
+            scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
                 allQuestDataList = db.getQuestDataList(searchedList, sortDesc)
                 questDataList = QuestRange.getFilteredQuestDataList(allQuestDataList, questTypes, min37)
-//                if (dropRangeMap == null) {
-//                    dropRangeMap = db.getDropRangeMap()
-//                }
-//
-//                val questRangeList = QuestRange.getQuestRangeList(
-//                    searchedList,
-//                    questTypes,
-//                    dropRangeMap!!,
-//                    min37
-//                )
-//
-//                if (questRangeList.isEmpty()) {
-//                    questDataList = emptyList()
-//                } else {
-//                    val lists = questRangeList.map { item ->
-//                        async { db.getQuestDataList(item) }
-//                    }.awaitAll()
-//
-//                    val resultList = mutableListOf<QuestData>()
-//
-//                    for (list in lists) {
-//                        for (item in list) {
-//                            if (searchedList.any { item.contains(it) }) {
-//                                resultList.add(item)
-//                            }
-//                        }
-//                    }
-//                    questDataList = if (sortDesc) {
-//                        resultList.sortedByDescending { it.questId }
-//                    } else {
-//                        resultList.sortedBy { it.questId }
-//                    }
-//                }
             }
         }
     }

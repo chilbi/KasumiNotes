@@ -1,6 +1,7 @@
 package com.kasuminotes.ui.app.state
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.MaxUserData
@@ -33,7 +34,7 @@ class UserState(
         private set
     var allUser by mutableStateOf<List<Int>>(emptyList())
         private set
-    var userId by mutableStateOf(appRepository.getUserId())
+    var userId by mutableIntStateOf(appRepository.getUserId())
         private set
     var userName by mutableStateOf("")
         private set

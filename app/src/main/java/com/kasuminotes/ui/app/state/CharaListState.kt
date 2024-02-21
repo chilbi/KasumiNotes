@@ -1,6 +1,5 @@
 package com.kasuminotes.ui.app.state
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -334,36 +333,43 @@ class CharaListState {
     private fun sort(list: List<UserProfile>, order: OrderBy, desc: Boolean): List<UserProfile> {
         return if (desc) list.sortedByDescending { it.getIntOf(order) }
         else list.sortedBy { it.getIntOf(order) }
-//        return if (isLoaded) {
-//            if (desc) list.sortedByDescending { it.getIntOf(order) }
-//            else list.sortedBy { it.getIntOf(order) }
-//        } else {
-//            when (order) {
-//                OrderBy.StartTime,
-//                OrderBy.CharaId,
-//                OrderBy.Rarity,
-//                OrderBy.SearchAreaWidth,
-//                OrderBy.Age,
-//                OrderBy.Height,
-//                OrderBy.Weight -> {
-//                    if (desc) list.sortedByDescending { it.getIntOf(order) }
-//                    else list.sortedBy { it.getIntOf(order) }
-//                }
-//                else -> {
-//                    scope.launch(defaultDispatcher) {
-//                        val db = appRepository.getDatabase()
-//                        profiles.map {
-//                            async {
-//                                it.load(db, profiles, defaultDispatcher)
-//                                it.calcProperty()
-//                            }
-//                        }.awaitAll()
-//                        isLoaded = true
-//                        derivedProfiles = sort(list, order, desc)
-//                    }
-//                    list
-//                }
-//            }
-//        }
+        /*return if (isLoaded) {
+            if (desc) list.sortedByDescending { it.getIntOf(order) }
+            else list.sortedBy { it.getIntOf(order) }
+        } else {
+            when (order) {
+                OrderBy.StartTime,
+                OrderBy.CharaId,
+                OrderBy.Rarity,
+                OrderBy.SearchAreaWidth,
+                OrderBy.Age,
+                OrderBy.Height,
+                OrderBy.Weight -> {
+                    if (desc) list.sortedByDescending { it.getIntOf(order) }
+                    else list.sortedBy { it.getIntOf(order) }
+                }
+                else -> {
+                    scope.launch(Dispatchers.IO) {
+                        val db = appRepository.getDatabase()
+                        profiles.map {
+                            async {
+                                it.load(db, profiles)
+                                val property = it.getProperty(it.userData)
+
+                                val exSkillProperty = it.getExSkillProperty(it.userData)
+                                val baseProperty = Property { i -> property[i] - exSkillProperty[i] }
+
+                                val exEquipProperty = it.getExEquipProperty(baseProperty, it.userData)
+                                val includeExEquipProperty = Property { i -> exEquipProperty[i] + property[i] }
+                                it.setProperty(property, baseProperty, includeExEquipProperty)
+                            }
+                        }.awaitAll()
+                        isLoaded = true
+                        derivedProfiles = sort(list, order, desc)
+                    }
+                    list
+                }
+            }
+        }*/
     }
 }

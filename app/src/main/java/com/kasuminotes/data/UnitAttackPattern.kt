@@ -1,7 +1,7 @@
 package com.kasuminotes.data
 
 import com.kasuminotes.common.Label
-import com.kasuminotes.db.AppDatabase
+import com.kasuminotes.utils.Helper
 import com.kasuminotes.utils.UrlUtil
 
 data class UnitAttackPattern(
@@ -51,7 +51,7 @@ data class UnitAttackPattern(
             iconUrl = if (skillData != null) {
                 UrlUtil.getSkillIconUrl(skillData.iconType)
             } else {
-                UrlUtil.getEquipIconUrl(AppDatabase.NullId)
+                UrlUtil.getEquipIconUrl(Helper.NullId)
             }
             var label = if (isSP) Label.sp else Label.skill
             label += n.toString()

@@ -6,14 +6,16 @@ import com.kasuminotes.data.SkillData
 import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitSkillData
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 
-suspend fun AppDatabase.getUnitAttackPatternList(unitId: Int): List<UnitAttackPattern> {
+fun AppDatabase.getUnitAttackPatternList(unitId: Int): List<UnitAttackPattern> {
     val sql = """SELECT ${UnitAttackPattern.getFields()}
 FROM unit_attack_pattern WHERE unit_id=$unitId ORDER BY pattern_id ASC"""
 
-    return safelyUse {
+    return useDatabase {
         rawQuery(sql, null).use {
             val list = mutableListOf<UnitAttackPattern>()
 
@@ -66,11 +68,11 @@ FROM unit_attack_pattern WHERE unit_id=$unitId ORDER BY pattern_id ASC"""
     }
 }
 
-suspend fun AppDatabase.getSkillAction(actionId: Int): SkillAction {
+fun AppDatabase.getSkillAction(actionId: Int): SkillAction {
     val sql = """SELECT ${SkillAction.getFields()}
 FROM skill_action WHERE action_id=$actionId"""
 
-    return safelyUse {
+    return useDatabase {
         rawQuery(sql ,null).use {
             it.moveToFirst()
             var i = 0
@@ -104,50 +106,49 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
     if (skillId == 0) return null
 
     val sql = "SELECT ${SkillData.getFields()} FROM skill_data WHERE skill_id=$skillId"
+    val skillData = useDatabase {
+        rawQuery(sql, null).use {
+            if (it.moveToFirst()) {
+                var i = 0
 
-    return withIOContext {
-        val skillData = use {
-            rawQuery(sql, null).use {
-                if (it.moveToFirst()) {
-                    var i = 0
+                val rawActions = mutableListOf<Int>()
+                val rawDepends = mutableListOf<Int>()
 
-                    val rawActions = mutableListOf<Int>()
-                    val rawDepends = mutableListOf<Int>()
+                while (i < 20) {
+                    val actionId = it.getInt(i++)
+                    if (actionId == 0) break
 
-                    while (i < 20) {
-                        val actionId = it.getInt(i++)
-                        if (actionId == 0) break
-
-                        rawActions.add(actionId)
-                        rawDepends.add(it.getInt(i++))
-                    }
-
-                    i = 20
-
-                    SkillData(
-                        it.getInt(i++),
-                        it.getString(i++),
-                        it.getString(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getFloat(i++),
-                        it.getFloat(i),
-                        rawActions,
-                        rawDepends,
-                        emptyList(),
-                        null,
-                        false
-                    )
-                } else {
-                    null
+                    rawActions.add(actionId)
+                    rawDepends.add(it.getInt(i++))
                 }
+
+                i = 20
+
+                SkillData(
+                    it.getInt(i++),
+                    it.getString(i++),
+                    it.getString(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getFloat(i++),
+                    it.getFloat(i),
+                    rawActions,
+                    rawDepends,
+                    emptyList(),
+                    null,
+                    false
+                )
+            } else {
+                null
             }
         }
+    }
 
-        if (skillData == null) {
-            null
-        } else {
+    return if (skillData == null) {
+        null
+    } else {
+        withContext(Dispatchers.IO) {
             val actions = skillData.rawActions.map { actionId ->
                 async { getSkillAction(actionId) }
             }.awaitAll()
@@ -160,79 +161,75 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
 private suspend fun AppDatabase.getRfSkillData(skillId: Int): RfSkillData? {
     if (skillId == 0) return null
 
-    return withIOContext {
-        if (existsTable("unit_skill_data_rf")) {
-            val sql = """SELECT rf_skill_id,min_lv,max_lv
+    return if (existsTable("unit_skill_data_rf")) {
+        val sql = """SELECT rf_skill_id,min_lv,max_lv
 FROM unit_skill_data_rf WHERE skill_id=$skillId"""
 
-            val rawRfSkillData = use {
-                rawQuery(sql, null).use {
-                    if (it.moveToFirst()) {
-                        RawRfSkillData(
-                            it.getInt(0),
-                            it.getInt(1),
-                            it.getInt(2)
-                        )
-                    } else {
-                        null
-                    }
+        val rawRfSkillData = useDatabase {
+            rawQuery(sql, null).use {
+                if (it.moveToFirst()) {
+                    RawRfSkillData(
+                        it.getInt(0),
+                        it.getInt(1),
+                        it.getInt(2)
+                    )
+                } else {
+                    null
                 }
             }
-            rawRfSkillData?.let { raw ->
-                val rfSkill = getSkillData(raw.rfSkillId)
-                rfSkill?.let {
-                    RfSkillData(raw.minLv, raw.maxLv, it.copy(isRfSkill = true))
-                }
-            }
-        } else {
-            null
         }
-    }
+        rawRfSkillData?.let { raw ->
+            val rfSkill = getSkillData(raw.rfSkillId)
+            rfSkill?.let {
+                RfSkillData(raw.minLv, raw.maxLv, it.copy(isRfSkill = true))
+            }
+        }
+    } else null
 }
 
 suspend fun AppDatabase.getUnitSkillData(unitId: Int): UnitSkillData {
     val sql = """SELECT ${UnitSkillData.getFields()}
 FROM unit_skill_data WHERE unit_id=$unitId"""
 
-    return withIOContext {
-        val raw = use {
-            rawQuery(sql, null).use {
-                it.moveToFirst()
+    val raw = useDatabase {
+        rawQuery(sql, null).use {
+            it.moveToFirst()
 
-                val getSkillList: (Int, Int) -> List<Int> = { start, end ->
-                    val list = mutableListOf<Int>()
-                    var i = start
-                    while (i < end) {
-                        val skillId = it.getInt(i++)
-                        if (skillId == 0) break
-                        list.add(skillId)
-                    }
-                    list
+            val getSkillList: (Int, Int) -> List<Int> = { start, end ->
+                val list = mutableListOf<Int>()
+                var i = start
+                while (i < end) {
+                    val skillId = it.getInt(i++)
+                    if (skillId == 0) break
+                    list.add(skillId)
                 }
-
-                val mainSkillList = getSkillList(0, 10)
-                val mainSkillEvolutionList = getSkillList(10, 12)
-                val spSkillList = getSkillList(12, 17)
-                val spSkillEvolutionList = getSkillList(17, 19)
-                val exSkillList = getSkillList(19, 24)
-                val exSkillEvolutionList = getSkillList(24, 29)
-
-                var i = 29
-
-                RawUnitSkillData(
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i),
-                    mainSkillList,
-                    mainSkillEvolutionList,
-                    spSkillList,
-                    spSkillEvolutionList,
-                    exSkillList,
-                    exSkillEvolutionList
-                )
+                list
             }
-        }
 
+            val mainSkillList = getSkillList(0, 10)
+            val mainSkillEvolutionList = getSkillList(10, 12)
+            val spSkillList = getSkillList(12, 17)
+            val spSkillEvolutionList = getSkillList(17, 19)
+            val exSkillList = getSkillList(19, 24)
+            val exSkillEvolutionList = getSkillList(24, 29)
+
+            var i = 29
+
+            RawUnitSkillData(
+                it.getInt(i++),
+                it.getInt(i++),
+                it.getInt(i),
+                mainSkillList,
+                mainSkillEvolutionList,
+                spSkillList,
+                spSkillEvolutionList,
+                exSkillList,
+                exSkillEvolutionList
+            )
+        }
+    }
+
+    return withContext(Dispatchers.IO) {
         val getDeferredSkillDataList: suspend (List<Int>) -> Deferred<List<SkillData?>> = { list ->
             async {
                 list.map { skillId ->
@@ -248,7 +245,13 @@ FROM unit_skill_data WHERE unit_id=$unitId"""
         }
 
         val list = listOf(
-            getDeferredSkillDataList(listOf(raw.unionBurst, raw.spUnionBurst, raw.unionBurstEvolution)),
+            getDeferredSkillDataList(
+                listOf(
+                    raw.unionBurst,
+                    raw.spUnionBurst,
+                    raw.unionBurstEvolution
+                )
+            ),
             getDeferredSkillDataList(raw.mainSkillList),
             getDeferredSkillDataList(raw.spSkillList),
             getDeferredSkillDataList(raw.exSkillList),
