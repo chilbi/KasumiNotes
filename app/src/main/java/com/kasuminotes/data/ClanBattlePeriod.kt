@@ -8,7 +8,7 @@ data class ClanBattlePeriod(
     val bossUnitIdList: List<Int>,// 1-5
     var mapDataList: List<ClanBattleMapData> = emptyList()
 ) {
-    val periodNum: Int = clanBattleId - 1000
+    var periodNum: Int = clanBattleId - 1000
 
     val constellation: Int by lazy {
         val n = periodNum % 12

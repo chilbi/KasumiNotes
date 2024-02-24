@@ -11,31 +11,44 @@ import kotlinx.coroutines.withContext
 
 suspend fun AppDatabase.getClanBattlePeriodList(limit: Boolean): List<ClanBattlePeriod> {
     var sql = "SELECT clan_battle_id,start_time FROM clan_battle_period ORDER BY clan_battle_id DESC"
-    if (limit) sql += " LIMIT 12"
+    if (limit) {
+        sql += " LIMIT 13"
+    }
 
-        val result = useDatabase {
-            rawQuery(sql, null).use {
-                val list = mutableListOf<ClanBattlePeriod>()
-                while (it.moveToNext()) {
-                    list.add(
-                        ClanBattlePeriod(
-                            it.getInt(0),
-                            it.getString(1),
-                            emptyList()
-                        )
+    val result = useDatabase {
+        rawQuery(sql, null).use {
+            val list = mutableListOf<ClanBattlePeriod>()
+            while (it.moveToNext()) {
+                list.add(
+                    ClanBattlePeriod(
+                        it.getInt(0),
+                        it.getString(1),
+                        emptyList()
                     )
-                }
-                list
+                )
             }
+            list
         }
+    }
 
     return withContext(Dispatchers.IO) {
-        val list = result.map {
+        var list = result.map {
             async { it.copy(bossUnitIdList = getBossUnitIdList(it.clanBattleId)) }
         }.awaitAll()
-        list.filter { clanBattlePeriod ->
+        if (list.isNotEmpty() && list[0].clanBattleId > 1061) {
+            val p62 = list.find { it.clanBattleId == 1062 }
+            if (p62 == null || p62.bossUnitIdList.isEmpty()) {
+                list.forEach {
+                    if (it.clanBattleId > 1062) {
+                        it.periodNum -= 1
+                    }
+                }
+            }
+        }
+        list = list.filter { clanBattlePeriod ->
             clanBattlePeriod.bossUnitIdList.isNotEmpty()
         }
+        list
     }
 }
 

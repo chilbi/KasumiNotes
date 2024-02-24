@@ -5,7 +5,7 @@ buildscript {
         kasuminotes_version_code = 215
         kotlin_version = '1.9.22'
 
-        compose_version = '1.6.1'
+        compose_version = '1.6.2'
         material3_version = '1.2.0'
         kotlin_compiler_version = '1.5.9'
         lifecycle_viewmodel_version = '2.7.0'

@@ -47,7 +47,7 @@ fun ClanBattlePeriodList(
             ClanBattlePeriodItem(clanBattlePeriod, color, onPeriodClick)
         }
         if (!clanBattleState.isAll) {
-            item("read_more") {
+            item {
                 if (!clanBattleState.isAll) {
                     Button(clanBattleState::loadAll) {
                         Text(stringResource(R.string.load_more))
