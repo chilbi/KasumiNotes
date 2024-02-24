@@ -11,7 +11,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ReadMore
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,15 +25,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.ClanBattlePeriod
+import com.kasuminotes.ui.app.state.ClanBattleState
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.LabelContainer
+import com.kasuminotes.ui.components.SyncIcon
 import com.kasuminotes.ui.theme.UnitImageShape
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun ClanBattlePeriodList(
-    clanBattlePeriodList: List<ClanBattlePeriod>,
-    onPeriodClick: (label: String, period: ClanBattlePeriod) -> Unit,
+    clanBattleState: ClanBattleState,
+    onPeriodClick: (label: String, period: ClanBattlePeriod) -> Unit
 ) {
     val color = MaterialTheme.colorScheme.primary
     LazyVerticalGrid(
@@ -35,8 +43,22 @@ fun ClanBattlePeriodList(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(4.dp)
     ) {
-        items(clanBattlePeriodList, { it.clanBattleId }) { clanBattlePeriod ->
+        items(clanBattleState.clanBattlePeriodList, { it.clanBattleId }) { clanBattlePeriod ->
             ClanBattlePeriodItem(clanBattlePeriod, color, onPeriodClick)
+        }
+        if (!clanBattleState.isAll) {
+            item("read_more") {
+                if (!clanBattleState.isAll) {
+                    Button(clanBattleState::loadAll) {
+                        Text(stringResource(R.string.load_more))
+                        if (clanBattleState.loading) {
+                            SyncIcon(true, contentColorFor(MaterialTheme.colorScheme.primary))
+                        } else {
+                            Icon(Icons.AutoMirrored.Filled.ReadMore, null)
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -56,7 +78,9 @@ private fun ClanBattlePeriodItem(
     )
     LabelContainer(label, color, onClick = { onPeriodClick(label, clanBattlePeriod) }) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(4.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             clanBattlePeriod.bossUnitIdList.forEach { unitId ->

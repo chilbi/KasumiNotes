@@ -88,6 +88,7 @@
     <string name="rarity">★の数</string>
     <string name="search_area_width">攻撃距離</string>
     <string name="summons_info">召喚物情報</string>
+    <string name="load_more">すべてをロードする</string>
 
     <string name="actual_name">本名</string>
     <string name="kana">平仮名</string>

@@ -44,13 +44,27 @@ class ClanBattleState(
     var unitSkillData by mutableStateOf<UnitSkillData?>(null)
         private set
 
+    var isAll by mutableStateOf(false)
+        private set
+
+    var loading by mutableStateOf(false)
+        private set
+
+    fun loadAll() {
+        scope.launch(Dispatchers.IO) {
+            loading = true
+            val db = appRepository.getDatabase()
+            clanBattlePeriodList = db.getClanBattlePeriodList(false)
+            isAll = true
+            loading = false
+        }
+    }
+
     fun initPeriodList() {
         scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
-            val list = db.getClanBattlePeriodList()
-            clanBattlePeriodList = list.filter { clanBattlePeriod ->
-                clanBattlePeriod.bossUnitIdList.isNotEmpty()
-            }
+            clanBattlePeriodList = db.getClanBattlePeriodList(true)
+            isAll = false
         }
     }
 

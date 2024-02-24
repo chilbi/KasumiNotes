@@ -9,8 +9,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 
-suspend fun AppDatabase.getClanBattlePeriodList(): List<ClanBattlePeriod> {
-    val sql = "SELECT clan_battle_id,start_time FROM clan_battle_period ORDER BY clan_battle_id DESC"
+suspend fun AppDatabase.getClanBattlePeriodList(limit: Boolean): List<ClanBattlePeriod> {
+    var sql = "SELECT clan_battle_id,start_time FROM clan_battle_period ORDER BY clan_battle_id DESC"
+    if (limit) sql += " LIMIT 12"
 
         val result = useDatabase {
             rawQuery(sql, null).use {
@@ -29,9 +30,12 @@ suspend fun AppDatabase.getClanBattlePeriodList(): List<ClanBattlePeriod> {
         }
 
     return withContext(Dispatchers.IO) {
-        result.map {
+        val list = result.map {
             async { it.copy(bossUnitIdList = getBossUnitIdList(it.clanBattleId)) }
         }.awaitAll()
+        list.filter { clanBattlePeriod ->
+            clanBattlePeriod.bossUnitIdList.isNotEmpty()
+        }
     }
 }
 

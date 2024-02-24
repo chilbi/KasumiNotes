@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.kasuminotes.BuildConfig
 import com.kasuminotes.R
+import com.kasuminotes.ui.components.SyncIcon
 
 @Composable
 fun AppMenuList(

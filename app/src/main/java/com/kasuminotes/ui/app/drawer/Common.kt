@@ -1,10 +1,5 @@
 package com.kasuminotes.ui.app.drawer
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
@@ -16,7 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -29,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -84,30 +77,4 @@ fun ListItemWithDropdownMenu(
 @Composable
 fun CheckIcon() {
     Icon(Icons.Filled.Check, null)
-}
-
-@Composable
-fun SyncIcon(enable: Boolean) {
-    if (enable) {
-        val infiniteTransition = rememberInfiniteTransition(label = "SyncInfiniteTransition")
-        val degrees by infiniteTransition.animateFloat(
-            initialValue = 0f,
-            targetValue = -360f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(
-                    durationMillis = 1000,
-                    easing = LinearEasing
-                )
-            ),
-            label = "SyncFloatAnimation"
-        )
-        Icon(
-            imageVector = Icons.Filled.Sync,
-            contentDescription = null,
-            modifier = Modifier.rotate(degrees),
-            tint = MaterialTheme.colorScheme.primary
-        )
-    } else {
-        Icon(Icons.Filled.Sync, null)
-    }
 }

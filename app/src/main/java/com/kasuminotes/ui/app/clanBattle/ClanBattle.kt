@@ -47,7 +47,7 @@ fun ClanBattle(
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
-                ClanBattlePeriodList(clanBattleState.clanBattlePeriodList, onNavigateToMapList)
+                ClanBattlePeriodList(clanBattleState, onNavigateToMapList)
             }
         }
     )
