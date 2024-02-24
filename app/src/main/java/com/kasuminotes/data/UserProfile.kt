@@ -19,7 +19,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
-import kotlin.math.roundToInt
 
 data class UserProfile(
     var userData: UserData,
@@ -156,15 +155,15 @@ data class UserProfile(
         OrderBy.Age -> unitData.age.toIntOrNull() ?: 9999
         OrderBy.Height -> unitData.height.toIntOrNull() ?: 9999
         OrderBy.Weight -> unitData.weight.toIntOrNull() ?: 9999
-        /*OrderBy.Hp -> property?.hp?.roundToInt() ?: 0
-        OrderBy.Atk -> property?.atk?.roundToInt() ?: 0
-        OrderBy.MagicStr -> property?.magicStr?.roundToInt() ?: 0
-        OrderBy.Def -> property?.def?.roundToInt() ?: 0
-        OrderBy.MagicDef -> property?.magicDef?.roundToInt() ?: 0
-        OrderBy.PhysicalCritical -> property?.physicalCritical?.roundToInt() ?: 0
-        OrderBy.MagicCritical -> property?.magicCritical?.roundToInt() ?: 0
-        OrderBy.EnergyRecoveryRate -> property?.energyRecoveryRate?.roundToInt() ?: 0
-        OrderBy.EnergyReduceRate -> property?.energyReduceRate?.roundToInt() ?: 0*/
+        /*OrderBy.Hp -> includeExEquipProperty?.hp?.roundToInt() ?: 0
+        OrderBy.Atk -> includeExEquipProperty?.atk?.roundToInt() ?: 0
+        OrderBy.MagicStr -> includeExEquipProperty?.magicStr?.roundToInt() ?: 0
+        OrderBy.Def -> includeExEquipProperty?.def?.roundToInt() ?: 0
+        OrderBy.MagicDef -> includeExEquipProperty?.magicDef?.roundToInt() ?: 0
+        OrderBy.PhysicalCritical -> includeExEquipProperty?.physicalCritical?.roundToInt() ?: 0
+        OrderBy.MagicCritical -> includeExEquipProperty?.magicCritical?.roundToInt() ?: 0
+        OrderBy.EnergyRecoveryRate -> includeExEquipProperty?.energyRecoveryRate?.roundToInt() ?: 0
+        OrderBy.EnergyReduceRate -> includeExEquipProperty?.energyReduceRate?.roundToInt() ?: 0*/
     }
 
     fun getStringOf(orderBy: OrderBy): String = when (orderBy) {
@@ -175,15 +174,15 @@ data class UserProfile(
         OrderBy.Age -> unitData.age
         OrderBy.Height -> unitData.height
         OrderBy.Weight -> unitData.weight
-        /*OrderBy.Hp -> (property?.hp?.roundToInt() ?: 0).toString()
-        OrderBy.Atk -> (property?.atk?.roundToInt() ?: 0).toString()
-        OrderBy.MagicStr -> (property?.magicStr?.roundToInt() ?: 0).toString()
-        OrderBy.Def -> (property?.def?.roundToInt() ?: 0).toString()
-        OrderBy.MagicDef -> (property?.magicDef?.roundToInt() ?: 0).toString()
-        OrderBy.PhysicalCritical -> (property?.physicalCritical?.roundToInt() ?: 0).toString()
-        OrderBy.MagicCritical -> (property?.magicCritical?.roundToInt() ?: 0).toString()
-        OrderBy.EnergyRecoveryRate -> (property?.energyRecoveryRate?.roundToInt() ?: 0).toString()
-        OrderBy.EnergyReduceRate -> (property?.energyReduceRate?.roundToInt() ?: 0).toString()*/
+        /*OrderBy.Hp -> (includeExEquipProperty?.hp?.roundToInt() ?: 0).toString()
+        OrderBy.Atk -> (includeExEquipProperty?.atk?.roundToInt() ?: 0).toString()
+        OrderBy.MagicStr -> (includeExEquipProperty?.magicStr?.roundToInt() ?: 0).toString()
+        OrderBy.Def -> (includeExEquipProperty?.def?.roundToInt() ?: 0).toString()
+        OrderBy.MagicDef -> (includeExEquipProperty?.magicDef?.roundToInt() ?: 0).toString()
+        OrderBy.PhysicalCritical -> (includeExEquipProperty?.physicalCritical?.roundToInt() ?: 0).toString()
+        OrderBy.MagicCritical -> (includeExEquipProperty?.magicCritical?.roundToInt() ?: 0).toString()
+        OrderBy.EnergyRecoveryRate -> (includeExEquipProperty?.energyRecoveryRate?.roundToInt() ?: 0).toString()
+        OrderBy.EnergyReduceRate -> (includeExEquipProperty?.energyReduceRate?.roundToInt() ?: 0).toString()*/
     }
 
     fun setProperty(p: Property, base: Property, includeExEquip: Property) {

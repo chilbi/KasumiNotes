@@ -37,6 +37,8 @@ class CharaListState {
     var selectedChara by mutableStateOf<List<Int>>(emptyList())
         private set
 
+//    private var loadedCount = 0
+//    private var isLoading = false
 //    private var isLoaded = false
 
     fun initImages(allUserProfile: List<UserProfile>) {
@@ -285,39 +287,37 @@ class CharaListState {
         } else {
             orderBy = value
             if (!sortDesc) sortDesc = true
-            derivedProfiles = sort(derivedProfiles, value, true)
+            sort(derivedProfiles, value, true)
         }
     }
 
     private fun derived() {
         val originProfiles = profiles
-        val list =
-            if (
-                searchText.isEmpty() &&
-                atkType == AtkType.All &&
-                position == Position.All &&
-                element == Element.All
-           ) {
-                originProfiles
-            } else {
-                originProfiles.filter { userProfile ->
-                    userProfile.getRealUnitData(userProfile.userData.rarity).let {
-                        val searchTextMatch = searchText.isEmpty() ||
-                                (it.unitId.toString() + it.unitName + it.kana + it.actualName)
-                                    .contains(searchText)
-                        val atkTypeMatch =
-                            atkType == AtkType.All || atkType.ordinal == it.atkType
-                        val positionMatch =
-                            position == Position.All || position.ordinal == it.position
-                        val elementMatch =
-                            element == Element.All || element.ordinal == it.talentId
-                        searchTextMatch && atkTypeMatch && positionMatch && elementMatch
-                    }
+        val list = if (
+            searchText.isEmpty() &&
+            atkType == AtkType.All &&
+            position == Position.All &&
+            element == Element.All
+        ) {
+            originProfiles
+        } else {
+            originProfiles.filter { userProfile ->
+                userProfile.getRealUnitData(userProfile.userData.rarity).let {
+                    val searchTextMatch = searchText.isEmpty() ||
+                            (it.unitId.toString() + it.unitName + it.kana + it.actualName)
+                                .contains(searchText)
+                    val atkTypeMatch =
+                        atkType == AtkType.All || atkType.ordinal == it.atkType
+                    val positionMatch =
+                        position == Position.All || position.ordinal == it.position
+                    val elementMatch =
+                        element == Element.All || element.ordinal == it.talentId
+                    searchTextMatch && atkTypeMatch && positionMatch && elementMatch
                 }
             }
-        val sortedList = sort(list, orderBy, sortDesc)
+        }
         derivedLocked(list)
-        derivedProfiles = sortedList
+        sort(list, orderBy, sortDesc)
     }
 
     private fun derivedLocked(derivedList: List<UserProfile>) {
@@ -330,11 +330,11 @@ class CharaListState {
         }
     }
 
-    private fun sort(list: List<UserProfile>, order: OrderBy, desc: Boolean): List<UserProfile> {
-        return if (desc) list.sortedByDescending { it.getIntOf(order) }
+    private fun sort(list: List<UserProfile>, order: OrderBy, desc: Boolean) {
+        derivedProfiles = if (desc) list.sortedByDescending { it.getIntOf(order) }
         else list.sortedBy { it.getIntOf(order) }
-        /*return if (isLoaded) {
-            if (desc) list.sortedByDescending { it.getIntOf(order) }
+        /*if (isLoaded) {
+            derivedProfiles = if (desc) list.sortedByDescending { it.getIntOf(order) }
             else list.sortedBy { it.getIntOf(order) }
         } else {
             when (order) {
@@ -345,29 +345,31 @@ class CharaListState {
                 OrderBy.Age,
                 OrderBy.Height,
                 OrderBy.Weight -> {
-                    if (desc) list.sortedByDescending { it.getIntOf(order) }
+                    derivedProfiles = if (desc) list.sortedByDescending { it.getIntOf(order) }
                     else list.sortedBy { it.getIntOf(order) }
                 }
                 else -> {
+                    if (isLoading) return
                     scope.launch(Dispatchers.IO) {
+                        isLoading = true
                         val db = appRepository.getDatabase()
                         profiles.map {
-                            async {
-                                it.load(db, profiles)
-                                val property = it.getProperty(it.userData)
+                            it.load(db, profiles)
+                            val property = it.getProperty(it.userData)
 
-                                val exSkillProperty = it.getExSkillProperty(it.userData)
-                                val baseProperty = Property { i -> property[i] - exSkillProperty[i] }
+                            val exSkillProperty = it.getExSkillProperty(it.userData)
+                            val baseProperty = Property { i -> property[i] - exSkillProperty[i] }
 
-                                val exEquipProperty = it.getExEquipProperty(baseProperty, it.userData)
-                                val includeExEquipProperty = Property { i -> exEquipProperty[i] + property[i] }
-                                it.setProperty(property, baseProperty, includeExEquipProperty)
-                            }
-                        }.awaitAll()
+                            val exEquipProperty = it.getExEquipProperty(baseProperty, it.userData)
+                            val includeExEquipProperty = Property { i -> exEquipProperty[i] + property[i] }
+                            it.setProperty(property, baseProperty, includeExEquipProperty)
+                            loadedCount += 1
+                        }
+                        isLoading = false
                         isLoaded = true
-                        derivedProfiles = sort(list, order, desc)
+                        derivedProfiles = if (desc) list.sortedByDescending { it.getIntOf(order) }
+                        else list.sortedBy { it.getIntOf(order) }
                     }
-                    list
                 }
             }
         }*/

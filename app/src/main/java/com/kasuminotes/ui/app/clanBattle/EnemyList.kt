@@ -72,7 +72,7 @@ private fun ListLabel(
 ) {
     val label: String = if (to == -1) {
         stringResource(R.string.round_after_d, from)
-    } else if (from == to) {
+    } else if (from == to || to < -1) {
         stringResource(R.string.round_d, from)
     } else {
         stringResource(R.string.round_from1_to2, from, to)
