@@ -70,7 +70,7 @@
     <string name="all_type">タイプ</string>
     <string name="physical">物理</string>
     <string name="magic">魔法</string>
-    <string name="all_position">ポジション</string>
+    <string name="all_position">位置</string>
     <string name="front">前衛</string>
     <string name="center">中衛</string>
     <string name="back">後衛</string>
