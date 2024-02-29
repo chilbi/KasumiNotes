@@ -199,7 +199,7 @@ class ActionBuilder(
             59 -> getHpRecoveryDown()
             60, 77, 101 -> getMark()
             61 -> getFear()
-            71 -> getKnightGuard(skillLevel, property)
+            71 -> getResurrection(skillLevel, property)
             72 -> getDamageCut()
             73 -> getDamageAttenuation()
             75 -> getHitCount()

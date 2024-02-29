@@ -252,7 +252,7 @@
     <string name="action_change_mark_target1_state2_add3_max4_time5">为%1$s追加%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。</string>
     <string name="action_change_mark_target1_state2_consume3">消费掉%3$s个%1$s的【%2$s】。</string>
     <string name="action_change_mark_consume_target1_state2">消费掉%1$s的【%2$s】。</string>
-    <string name="action_knight_guard_target1_formula2_time3">赋予%1$s【骑士的加护】。当HP归零时，不会被击倒而是消耗掉【骑士的加护】同时HP回复%2$s，效果时间%3$s秒。</string>
+    <string name="action_resurrection_target1_state2_formula3_time4">赋予%1$s【%2$s】。当HP归零时，不会被击倒而是消耗掉【%2$s】同时HP回复%3$s，效果时间%4$s秒。</string>
     <string name="action_fallen_angel_guard_target1_time2">赋予%1$s【堕天使的加护】。【堕天使的加护】期间，代替该角色承受敌人的攻击，效果时间%2$s秒。</string>
     <string name="action_shield_counter_target1_content2_add3_max4_consume5_formula6">为%1$s追加%3$s个【%2$s】，最多可以追加%4$s个。【%2$s】每无效1次伤害就会消耗%5$s个，同时对进攻的敌人造成%6$s伤害。</string>
     <string name="action_hit_count_target1_time2_count3">%1$s在%2$s秒内，每当造成%3$s次伤害时，</string>
@@ -420,6 +420,8 @@
     <string name="state_roar_of_wolf_tooth">狼牙的咆哮</string>
     <string name="state_fire_dance_seal">炎舞的刻印</string>
     <string name="state_puukichi_cushion">噗吉靠垫</string>
+    <string name="state_knight_guard">骑士的加护</string>
+    <string name="state_returning_rose">回归的蔷薇</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>
