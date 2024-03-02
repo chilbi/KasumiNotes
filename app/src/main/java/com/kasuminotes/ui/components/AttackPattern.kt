@@ -34,35 +34,79 @@ fun AttackPattern(
     if (size == 0) return
     val hasMultiPattern = size > 1
 
-    unitAttackPatternList.forEachIndexed { i, pattern ->
-        Container {
-            var text = stringResource(R.string.pattern)
-            if (hasMultiPattern) {
-                text += i + 1
-            }
-            AdaptiveWidthLabel(text)
-
-            VerticalGrid(
-                size = pattern.atkPatternList.size,
-                cells = VerticalGridCells.Adaptive(56.dp)
-            ) { index ->
-                val atkPattern = pattern.getAtkPattern(
+    if (hasMultiPattern) {
+        Column {
+            unitAttackPatternList.forEachIndexed { index, unitAttackPattern ->
+                AttackPatternItem(
                     index,
-                    atkType,
+                    hasMultiPattern,
                     hasUnique1,
                     hasUnique2,
-                    unitSkillData
-                )
-
-                PatternItem(
-                    atkPattern.loopLabel,
-                    atkPattern.iconUrl,
-                    atkPattern.atkLabel,
+                    atkType,
+                    unitAttackPattern,
+                    unitSkillData,
                     loopLabelColor,
                     atkLabelColor,
                     style
                 )
             }
+        }
+    } else {
+        AttackPatternItem(
+            0,
+            hasMultiPattern,
+            hasUnique1,
+            hasUnique2,
+            atkType,
+            unitAttackPatternList[0],
+            unitSkillData,
+            loopLabelColor,
+            atkLabelColor,
+            style
+        )
+    }
+}
+
+@Composable
+private fun AttackPatternItem(
+    index: Int,
+    hasMultiPattern: Boolean,
+    hasUnique1: Boolean,
+    hasUnique2: Boolean,
+    atkType: Int,
+    unitAttackPattern: UnitAttackPattern,
+    unitSkillData: UnitSkillData,
+    loopLabelColor: Color,
+    atkLabelColor: Color,
+    style: TextStyle
+) {
+    Container {
+        var text = stringResource(R.string.pattern)
+        if (hasMultiPattern) {
+            text += index + 1
+        }
+        AdaptiveWidthLabel(text)
+
+        VerticalGrid(
+            size = unitAttackPattern.atkPatternList.size,
+            cells = VerticalGridCells.Adaptive(56.dp)
+        ) { index ->
+            val atkPattern = unitAttackPattern.getAtkPattern(
+                index,
+                atkType,
+                hasUnique1,
+                hasUnique2,
+                unitSkillData
+            )
+
+            PatternItem(
+                atkPattern.loopLabel,
+                atkPattern.iconUrl,
+                atkPattern.atkLabel,
+                loopLabelColor,
+                atkLabelColor,
+                style
+            )
         }
     }
 }
