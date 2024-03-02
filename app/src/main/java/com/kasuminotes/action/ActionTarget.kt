@@ -71,7 +71,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             if (depend.checkDependChain(depend.depend!!)) {
                 depend.getTarget(depend.depend, focused)
             } else {
-                getTarget(null, focused);
+                getTarget(null, focused)
             }
         } else {
             getDependMultiTarget(depend.getTarget(null, focused))
@@ -354,6 +354,11 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
     }
 }
 
+fun SkillAction.isSelf() = targetType in arrayOf(0, 7)
+
+/** if (actionType == 23 || actionType == 28) any_target else target */
+fun SkillAction.isBranch() = actionType in arrayOf(23, 28)
+
 /**
  * when (targetAssignment) {
  *
@@ -522,9 +527,6 @@ private fun SkillAction.getDependMultiTarget(dependTarget: D): D {
 private fun SkillAction.isFullRangeTarget(): Boolean {
     return targetRange <= 0 || targetRange >= 2160
 }
-
-/** if (actionType == 23 || actionType == 28) any_target else target */
-fun SkillAction.isBranch() = actionType in arrayOf(23, 28)
 
 private fun SkillAction.checkDependChain(depend: SkillAction): Boolean {
     var temp = depend

@@ -1,6 +1,7 @@
 package com.kasuminotes.data
 
 import com.kasuminotes.action.getStatusIndex
+import com.kasuminotes.action.isSelf
 import kotlin.math.ceil
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -81,11 +82,10 @@ data class ExEquipData(
             if (action.actionType in arrayOf(901, 902) && action.actionDetail1 == 0) {
                 var statusActionIndex = index + 1
                 if (actions[statusActionIndex].actionType in arrayOf(26, 27, 74)) {
-                    statusActionIndex =
-                        actions.indexOfFirst { it.actionId == actions[statusActionIndex].actionDetail1 }
+                    statusActionIndex = actions.indexOfFirst { it.actionId == actions[statusActionIndex].actionDetail1 }
                 }
                 val statusAction = actions[statusActionIndex]
-                if (statusAction.actionType == 10) {
+                if (statusAction.isSelf() && statusAction.actionType == 10) {
                     val key = getStatusIndex(statusAction.actionDetail1 / 10)
                     if (key != null) {
                         var value = if (statusAction.actionValue1 == 2.0) {

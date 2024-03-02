@@ -70,10 +70,12 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
         val percent = if (actionValue3 == 0.0) {
             var str = "${actionValue2.roundToInt()}%"// TODO 不确定的取整方式
             // 计算EX装备被动技能加的百分比数值
-            val index = getStatusIndex(detail1 / 10)
-            if (property != null && index != null) {
-                str += if (isUp) "(+" else "(-"
-                str += "${(property[index] * actionValue2 / 100).roundToInt()})"// TODO 不确定的取整方式
+            if (isSelf()) {
+                val index = getStatusIndex(detail1 / 10)
+                if (property != null && index != null) {
+                    str += if (isUp) "(+" else "(-"
+                    str += "${(property[index] * actionValue2 / 100).roundToInt()})"// TODO 不确定的取整方式
+                }
             }
             D.Text(str)
         } else {
