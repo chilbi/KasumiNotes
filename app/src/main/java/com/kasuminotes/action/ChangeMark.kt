@@ -15,10 +15,19 @@ fun SkillAction.getChangeMark(): D {
                 arrayOf(target, state, D.Text((-actionValue4).toNumStr()))
             )
         } else {
-            D.Format(
-                R.string.action_change_mark_target1_state2_add3_max4_time5,
-                arrayOf(target, state, D.Text(actionValue4.toNumStr()), D.Text(actionValue1.toNumStr()), time)
-            )
+            val add = D.Text(actionValue4.toNumStr())
+            val max = D.Text(actionValue1.toNumStr())
+            if (actionValue5 < 1.0) {
+                D.Format(
+                    R.string.action_change_mark_target1_state2_add3_max4_time5,
+                    arrayOf(target, state, add, max, time)
+                )
+            } else {
+                D.Format(
+                    R.string.action_change_mark_target1_state2_add3_max4_sub5_time6,
+                    arrayOf(target, state, add, max, D.Text(actionValue5.toNumStr()), time)
+                )
+            }
         }
     } else {
         if (actionValue4 < 0.0) {

@@ -250,6 +250,7 @@
     <string name="action_skill_counter1_max2">【%1$s】の数を1増やせる、最大%2$sまで増やせる。</string>
     <string name="action_change_mark_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。</string>
     <string name="action_change_mark_target1_state2_add3_max4_time5">%1$sに【%2$s】を%3$sつ追加する、最大%4$sまで追加される、効果時間%5$s秒。</string>
+    <string name="action_change_mark_target1_state2_add3_max4_sub5_time6">%1$sに【%2$s】を%3$sつ追加する、最大%4$sまで追加される、１回ダメージを受けると%5$sつ減少する、効果時間%6$s秒。</string>
     <string name="action_change_mark_target1_state2_consume3">%1$sの【%2$s】を%3$sつ消費する。</string>
     <string name="action_change_mark_consume_target1_state2">%1$sの【%2$s】を消費する。</string>
     <string name="action_resurrection_target1_state2_formula3_time4">%1$sに【%2$s】を付与する。ＨＰが0になると、倒れずに【%2$s】を消費してＨＰを%3$s回復する、効果時間%4$s秒。</string>
@@ -421,6 +422,7 @@
     <string name="state_puukichi_cushion">ぷうきちクッション</string>
     <string name="state_knight_guard">騎士の加護</string>
     <string name="state_returning_rose">回帰の薔薇</string>
+    <string name="state_peace_by_the_waterfront">水際の安寧</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>
