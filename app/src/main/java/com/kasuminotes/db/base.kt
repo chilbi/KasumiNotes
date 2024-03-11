@@ -183,9 +183,7 @@ WHERE user_id=$userId"""
                 list.add(UserProfile(userData, unitData))
             }
         }
-
     }
-
     return if (existsTable("unit_conversion")) {
         withContext(Dispatchers.IO) {
             list.map { userProfile ->

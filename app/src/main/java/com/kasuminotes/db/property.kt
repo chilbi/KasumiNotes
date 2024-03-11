@@ -169,13 +169,21 @@ suspend fun AppDatabase.getUniqueData(equipId: Int): UniqueData? {
 }
 
 fun AppDatabase.getCharaStoryStatus(charaId: Int): CharaStoryStatus {
-    // charaId > 10000 即是 unitId，转为 charaId
-    val selfId = if (charaId > 10000) charaId / 100 else charaId
-
-    val sql = """SELECT ${CharaStoryStatus.getFields()}
-FROM chara_story_status WHERE chara_id_1=$selfId"""
-
     return useDatabase {
+        if (!existsColumn("chara_story_status", "chara_id_11")) {
+            (11..20).forEach { num ->
+                try {
+                    // 添加列 chara_id_11-20
+                    execSQL("ALTER TABLE chara_story_status ADD COLUMN chara_id_$num INTEGER NOT NULL DEFAULT 0")
+                } catch (_: Throwable) {
+                }
+            }
+        }
+
+        // charaId > 10000 即是 unitId，转为 charaId
+        val selfId = if (charaId > 10000) charaId / 100 else charaId
+        val sql = """SELECT ${CharaStoryStatus.getFields()}
+FROM chara_story_status WHERE chara_id_1=$selfId"""
         rawQuery(sql, null).use {
             val status = mutableListOf<Property>()
             val sharedChara = mutableListOf<Int>()

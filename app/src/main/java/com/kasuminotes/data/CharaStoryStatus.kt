@@ -60,7 +60,7 @@ data class CharaStoryStatus(
                 val statusFields = (1..5).joinToString(",") { i ->
                     "status_type_$i,status_rate_$i"
                 }
-                val charaFields = (2..10).joinToString(",") { i ->
+                val charaFields = (2..20).joinToString(",") { i ->
                     "chara_id_$i"
                 }
                 fields = "$statusFields,$charaFields"
