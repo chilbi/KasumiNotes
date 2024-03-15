@@ -141,6 +141,7 @@ class DbState(
                         isLastDb = true
                     }
                 } catch (e: Throwable) {
+                    downloadState = DownloadState.Error(e)
                     lastVersionFetching = false
                 }
             }

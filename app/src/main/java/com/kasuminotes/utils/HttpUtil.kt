@@ -100,15 +100,14 @@ object HttpUtil {
             val client = OkHttpClient.Builder().build()
             val request = Request.Builder()
                 .url(url)
-                .header("User-Agent", userAgent)
+                .header("app-version", "9.9.9")
                 .post(requestBody)
                 .build()
             call = client.newCall(request)
             response = call.execute()
             val responseJson = JSONObject(response.body.string())
-            val status = responseJson.getInt("status")
-            if (status != 0) {
-                throw Exception("fetch lastDbVersion error: status $status")
+            if (responseJson.getInt("status") != 0) {
+                throw Exception("fetch lastDbVersion error!\n${responseJson.toString(2)}")
             }
             return responseJson.getJSONObject("data").getString("truthVersion")
         } catch (e: Throwable) {
