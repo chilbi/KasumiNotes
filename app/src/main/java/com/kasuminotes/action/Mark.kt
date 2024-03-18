@@ -6,16 +6,16 @@ import com.kasuminotes.data.SkillAction
 fun SkillAction.getMark(): D {
     val content = D.Format(
         if (actionType == 60 || actionType == 101) {
-            if (actionDetail1 == 4) {
+            if (actionDetail1 == 4) {//チエル
                 R.string.content_attack_critical_target1
             } else {
-                if (actionDetail3 == 0) {
-                    R.string.content_attack_hit_enemy
-                } else {
+                if (actionDetail3 == 0) {//クロエ、クロエ（ウィンター）、シノブ（パイレーツ）、キョウカ（サマー）
+                    R.string.content_attack_hit_enemy_target1
+                } else {//ルナ、ルカ（ニューイヤー）、チエル（聖学祭）
                     R.string.content_attack_hit_target1
                 }
             }
-        } else {
+        } else {//アキノ（クリスマス）、ユキ（儀装束）、アン＆グレア
             R.string.content_status_up_target1
         },
         arrayOf(getTarget(depend))

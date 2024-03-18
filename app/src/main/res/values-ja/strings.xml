@@ -364,10 +364,10 @@
     <string name="content_poison_damage_formula1">の敵すべてを行動する度に%sダメージを与える毒状態にする</string>
     <string name="content_speed_target1_formula2">の%1$sすべての行動速度を本来の%2$sにする</string>
     <string name="content_state_target1_abnormal2">の%1$sすべてを%2$s状態にする</string>
-    <string name="content_attack_hit_enemy">自分の攻撃が敵に当たる度に、命中された対象</string>
-    <string name="content_attack_hit_target1">自分の攻撃が敵に当たる度に、%s</string>
-    <string name="content_attack_critical_target1">自分の攻撃がクリティカルでダメージを与える度に、%s</string>
-    <string name="content_status_up_target1">自分がステータスアップ効果を受ける度に、%s</string>
+    <string name="content_attack_hit_enemy_target1">%sの攻撃が敵に当たる度に、命中された対象</string>
+    <string name="content_attack_hit_target1">%sの攻撃が敵に当たる度に、自分</string>
+    <string name="content_attack_critical_target1">%sの攻撃がクリティカルでダメージを与える度に、自分</string>
+    <string name="content_status_up_target1">%sがステータスアップ効果を受ける度に、自分</string>
     <string name="content_initial_value1">初期値の%s</string>
     <string name="content_lower_defense">低い側の防御力で防御する</string>
     <string name="content_disregard_def1_value_2">%1$sを%2$sを無視する</string>
@@ -423,6 +423,7 @@
     <string name="state_knight_guard">騎士の加護</string>
     <string name="state_returning_rose">回帰の薔薇</string>
     <string name="state_peace_by_the_waterfront">水際の安寧</string>
+    <string name="state_moon_water">水月</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>

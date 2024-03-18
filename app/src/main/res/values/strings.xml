@@ -365,10 +365,10 @@
     <string name="content_poison_damage_formula1">所有敌人陷入每当行动时就会受到%s伤害的中毒状态</string>
     <string name="content_speed_target1_formula2">所有%1$s的行动速度变为原来的%2$s</string>
     <string name="content_state_target1_abnormal2">所有%1$s陷入%2$s状态</string>
-    <string name="content_attack_hit_enemy">每当自身的攻击命中敌人时，就会为被命中的目标</string>
-    <string name="content_attack_hit_target1">每当自身的攻击命中敌人时，就会为%s</string>
-    <string name="content_attack_critical_target1">每当自身的攻击暴击时，就会为%s</string>
-    <string name="content_status_up_target1">每当自身受到状态提升时，就会为%s</string>
+    <string name="content_attack_hit_enemy_target1">每当%s的攻击命中敌人时，就会为被命中的目标</string>
+    <string name="content_attack_hit_target1">每当%s的攻击命中敌人时，就会为自身</string>
+    <string name="content_attack_critical_target1">每当%s的攻击暴击时，就会为自身</string>
+    <string name="content_status_up_target1">每当%s受到状态提升时，就会为自身</string>
     <string name="content_initial_value1">初始值的%s</string>
     <string name="content_lower_defense">物理、魔法防御力中较低一方的防御力作为防御的</string>
     <string name="content_disregard_def1_value_2">无视%2$s%1$s的</string>
@@ -424,6 +424,7 @@
     <string name="state_knight_guard">骑士的加护</string>
     <string name="state_returning_rose">回归的蔷薇</string>
     <string name="state_peace_by_the_waterfront">水边的安宁</string>
+    <string name="state_moon_water">水月</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>
