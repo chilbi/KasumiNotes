@@ -5,9 +5,9 @@ buildscript {
         kasuminotes_version_code = 219
         kotlin_version = '1.9.22'
 
-        compose_version = '1.6.2'
-        material3_version = '1.2.0'
-        kotlin_compiler_version = '1.5.9'
+        compose_version = '1.6.3'
+        material3_version = '1.2.1'
+        kotlin_compiler_version = '1.5.10'
         lifecycle_viewmodel_version = '2.7.0'
     }
     repositories {
@@ -20,7 +20,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.0.2'
+        classpath 'com.android.tools.build:gradle:8.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
