@@ -23,6 +23,7 @@ suspend fun AppDatabase.getClanBattlePeriodList(limit: Boolean): List<ClanBattle
                     ClanBattlePeriod(
                         it.getInt(0),
                         it.getString(1),
+                        emptyList(),
                         emptyList()
                     )
                 )
@@ -33,11 +34,17 @@ suspend fun AppDatabase.getClanBattlePeriodList(limit: Boolean): List<ClanBattle
 
     return withContext(Dispatchers.IO) {
         var list = result.map {
-            async { it.copy(bossUnitIdList = getBossUnitIdList(it.clanBattleId)) }
+            async {
+                val bossIdList = getBossIdList(it.clanBattleId)
+                it.copy(
+                    bossIdList = bossIdList,
+                    bossTalentWeaknessList = getBossTalentWeaknessList(bossIdList)
+                )
+            }
         }.awaitAll()
         if (list.isNotEmpty() && list[0].clanBattleId > 1061) {
             val p62 = list.find { it.clanBattleId == 1062 }
-            if (p62 == null || p62.bossUnitIdList.isEmpty()) {
+            if (p62 == null || p62.bossIdList.isEmpty()) {
                 list.forEach {
                     if (it.clanBattleId > 1062) {
                         it.periodNum -= 1
@@ -46,7 +53,7 @@ suspend fun AppDatabase.getClanBattlePeriodList(limit: Boolean): List<ClanBattle
             }
         }
         list = list.filter { clanBattlePeriod ->
-            clanBattlePeriod.bossUnitIdList.isNotEmpty()
+            clanBattlePeriod.bossIdList.isNotEmpty()
         }
         list
     }
@@ -214,19 +221,47 @@ WHERE wave_group_id IN (${waveGroupIdList.joinToString(",")})"""
     }
 }
 
-private fun AppDatabase.getBossUnitIdList(clanBattleId: Int): List<Int> {
-    val sql = """SELECT unit_id FROM enemy_parameter WHERE enemy_id IN (
+private fun AppDatabase.getBossIdList(clanBattleId: Int): List<Pair<Int, Int>> {
+    val sql = """SELECT unit_id,enemy_id FROM enemy_parameter WHERE enemy_id IN (
 SELECT enemy_id_1 FROM wave_group_data,
 (SELECT * FROM clan_battle_2_map_data WHERE clan_battle_id=$clanBattleId AND lap_num_to=-1)
 WHERE wave_group_id IN (wave_group_id_1,wave_group_id_2,wave_group_id_3,wave_group_id_4,wave_group_id_5))"""
 
     return useDatabase {
         rawQuery(sql, null).use {
-            val list = mutableListOf<Int>()
+            val list = mutableListOf<Pair<Int, Int>>()
             while (it.moveToNext()) {
-                list.add(it.getInt(0))
+                list.add(it.getInt(0) to it.getInt(1))
             }
             list
+        }
+    }
+}
+
+private fun AppDatabase.getBossTalentWeaknessList(bossIdList: List<Pair<Int, Int>>): List<List<Int>> {
+    return useDatabase {
+        if (existsTable("enemy_talent_weakness")) {
+            bossIdList.map { bossId ->
+                rawQuery(
+                    """SELECT talent_1,talent_2,talent_3,talent_4,talent_5
+FROM enemy_talent_weakness as etw
+LEFT JOIN talent_weakness as tw ON etw.resist_id=tw.resist_id
+WHERE enemy_id=${bossId.second}""", null
+                ).use {
+                    if (it.moveToFirst()) {
+                        val list = mutableListOf<Int>()
+                        var i = 0
+                        while (i < 5) {
+                            list.add(it.getInt(i++))
+                        }
+                        list
+                    } else {
+                        List(5) { 100 }
+                    }
+                }
+            }
+        } else {
+            List(bossIdList.size) { List(5) { 100 } }
         }
     }
 }

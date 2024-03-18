@@ -27,7 +27,7 @@ import com.kasuminotes.ui.theme.phaseColors
 @Composable
 fun ClanBattleMapList(
     clanBattleState: ClanBattleState,
-    onNavigateToEnemy: (EnemyData) -> Unit,
+    onNavigateToEnemy: (enemyData: EnemyData, talentWeaknessList: List<Int>) -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(
@@ -44,6 +44,7 @@ fun ClanBattleMapList(
             Box(Modifier.padding(contentPadding)) {
                 MapTabsPanel(
                     mapDataList = clanBattleState.clanBattlePeriod?.mapDataList,
+                    bossTalentWeaknessList = clanBattleState.clanBattlePeriod?.bossTalentWeaknessList,
                     onEnemyClick = onNavigateToEnemy
                 )
             }
@@ -54,9 +55,10 @@ fun ClanBattleMapList(
 @Composable
 private fun MapTabsPanel(
     mapDataList: List<ClanBattleMapData>?,
-    onEnemyClick: (EnemyData) -> Unit
+    bossTalentWeaknessList: List<List<Int>>?,
+    onEnemyClick: (enemyData: EnemyData, talentWeaknessList: List<Int>) -> Unit
 ) {
-    if (mapDataList != null) {
+    if (mapDataList != null && bossTalentWeaknessList != null) {
         val pagerState = rememberPagerState { mapDataList.size }
         val unSelectedColor = MaterialTheme.colorScheme.onSurface.copy(0.5f)
         val style = MaterialTheme.typography.titleSmall
@@ -76,6 +78,7 @@ private fun MapTabsPanel(
             pageContent = { page ->
                 EnemyList(
                     mapData = mapDataList[page],
+                    bossTalentWeaknessList = bossTalentWeaknessList,
                     onEnemyClick = onEnemyClick
                 )
             }

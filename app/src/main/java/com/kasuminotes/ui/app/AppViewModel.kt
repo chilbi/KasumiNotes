@@ -166,8 +166,8 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         navController.navigate(AppNavData.ClanBattleMapList.route)
     }
 
-    fun navigateToEnemy(enemyData: EnemyData) {
-        clanBattleState.initEnemy(enemyData)
+    fun navigateToEnemy(enemyData: EnemyData, talentWeaknessList: List<Int>) {
+        clanBattleState.initEnemy(enemyData, talentWeaknessList)
         navController.navigate(AppNavData.ClanBattleEnemy.route)
     }
 

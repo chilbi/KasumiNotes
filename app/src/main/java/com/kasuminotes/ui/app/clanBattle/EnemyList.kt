@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +32,7 @@ import com.kasuminotes.data.Property
 import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.Infobar
+import com.kasuminotes.ui.components.UnitElement
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
 import com.kasuminotes.ui.theme.phaseColors
@@ -39,7 +41,8 @@ import com.kasuminotes.utils.UrlUtil
 @Composable
 fun EnemyList(
     mapData: ClanBattleMapData,
-    onEnemyClick: (EnemyData) -> Unit
+    bossTalentWeaknessList: List<List<Int>>,
+    onEnemyClick: (enemyData: EnemyData, talentWeaknessList: List<Int>) -> Unit
 ) {
     Column(Modifier.fillMaxSize().padding(4.dp)) {
         ListLabel(
@@ -54,9 +57,9 @@ fun EnemyList(
             cells = VerticalGridCells.Adaptive(400.dp),
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) { index ->
-            val enemyData = list[index]
             EnemyListItem(
-                enemyData = enemyData,
+                enemyData = list[index],
+                talentWeaknessList = bossTalentWeaknessList[index],
                 scoreCoefficient = mapData.scoreCoefficientList[index],
                 onEnemyClick = onEnemyClick
             )
@@ -107,37 +110,54 @@ private fun RowScope.LabelDivider() {
 @Composable
 private fun EnemyListItem(
     enemyData: EnemyData,
+    talentWeaknessList: List<Int>,
     scoreCoefficient: Float,
-    onEnemyClick: (EnemyData) -> Unit
+    onEnemyClick: (enemyData: EnemyData, talentWeaknessList: List<Int>) -> Unit
 ) {
-    Container(onClick = { onEnemyClick(enemyData) }) {
+    Container(onClick = { onEnemyClick(enemyData, talentWeaknessList) }) {
         val atkTypeStr = stringResource(
             if (enemyData.atkType == 1) R.string.physical
             else R.string.magic
         )
-        ImageCard(
-            imageUrl = UrlUtil.getBossUnitIconUrl(enemyData.unitId),
-            primaryText = enemyData.name,
-            secondaryText = "【$atkTypeStr】",
-            imageSize = 56.dp
-        ) {
-            if (enemyData.multiParts.isNotEmpty()) {
-                Text(
-                    text = stringResource(R.string.multi_target_d, enemyData.multiParts.size),
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    color = MaterialTheme.colorScheme.primary,
-                    style = MaterialTheme.typography.labelLarge
+        Box(Modifier.wrapContentSize()) {
+            ImageCard(
+                imageUrl = UrlUtil.getBossUnitIconUrl(enemyData.unitId),
+                primaryText = enemyData.name,
+                secondaryText = "【$atkTypeStr】",
+                imageSize = 56.dp
+            ) {
+                if (enemyData.multiParts.isNotEmpty()) {
+                    Text(
+                        text = stringResource(R.string.multi_target_d, enemyData.multiParts.size),
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+                Spacer(Modifier.weight(1f))
+                Infobar(
+                    label = "Lv",
+                    value = enemyData.level.toString(),
+                    modifier = Modifier.width(72.dp),
+                    width = 26.dp,
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    textAlign = TextAlign.Center
                 )
             }
-            Spacer(Modifier.weight(1f))
-            Infobar(
-                label = "Lv",
-                value = enemyData.level.toString(),
-                modifier = Modifier.width(72.dp),
-                width = 26.dp,
-                color = MaterialTheme.colorScheme.primaryContainer,
-                textAlign = TextAlign.Center
-            )
+
+            if (talentWeaknessList.any { weakness -> weakness > 100 }) {
+                Row(Modifier.padding(top = 8.dp, end = 8.dp).align(Alignment.TopEnd)) {
+                    talentWeaknessList.forEachIndexed { index, weakness ->
+                        if (weakness > 100) {
+                            UnitElement(
+                                padding = 2.dp,
+                                talentId = index + 1,
+                                elementSize = 16.dp
+                            )
+                        }
+                    }
+                }
+            }
         }
 
         Row {

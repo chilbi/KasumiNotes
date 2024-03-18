@@ -29,6 +29,9 @@ class ClanBattleState(
     var title by mutableStateOf("")
         private set
 
+    var talentWeaknessList: List<Int> by mutableStateOf(emptyList())
+        private set
+
     var enemyData by mutableStateOf<EnemyData?>(null)
         private set
 
@@ -92,8 +95,9 @@ class ClanBattleState(
         }
     }
 
-    fun initEnemy(enemy: EnemyData) {
+    fun initEnemy(enemy: EnemyData, weaknessList: List<Int>) {
         enemyData = enemy
+        talentWeaknessList = weaknessList
         enemyMultiParts = enemy.enemyMultiParts
         unitAttackPatternList = enemy.unitAttackPatternList
         skillList = enemy.skillList

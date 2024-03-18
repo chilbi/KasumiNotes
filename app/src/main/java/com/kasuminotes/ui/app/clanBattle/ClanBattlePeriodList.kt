@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.ui.app.state.ClanBattleState
+import com.kasuminotes.ui.components.UnitElement
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.SyncIcon
@@ -83,12 +85,23 @@ private fun ClanBattlePeriodItem(
                 .padding(4.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            clanBattlePeriod.bossUnitIdList.forEach { unitId ->
+            clanBattlePeriod.bossIdList.forEachIndexed { i, bossId ->
                 Box(Modifier.size(56.dp)) {
                     PlaceImage(
-                        url = UrlUtil.getBossUnitIconUrl(unitId),
+                        url = UrlUtil.getBossUnitIconUrl(bossId.first),
                         shape = UnitImageShape
                     )
+                    Row(Modifier.align(Alignment.BottomStart)) {
+                        clanBattlePeriod.bossTalentWeaknessList[i].forEachIndexed { index, weakness ->
+                            if (weakness > 100) {
+                                UnitElement(
+                                    padding = 0.dp,
+                                    talentId = index + 1,
+                                    elementSize = 14.dp
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }

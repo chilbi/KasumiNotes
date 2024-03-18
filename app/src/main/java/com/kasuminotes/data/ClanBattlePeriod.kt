@@ -5,7 +5,8 @@ import com.kasuminotes.R
 data class ClanBattlePeriod(
     val clanBattleId: Int,
     val startTime: String,
-    val bossUnitIdList: List<Int>,// 1-5
+    val bossIdList: List<Pair<Int, Int>>,// 1-5
+    val bossTalentWeaknessList: List<List<Int>>,
     var mapDataList: List<ClanBattleMapData> = emptyList()
 ) {
     var periodNum: Int = clanBattleId - 1000

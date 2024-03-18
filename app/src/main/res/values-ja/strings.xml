@@ -74,6 +74,7 @@
     <string name="front">前衛</string>
     <string name="center">中衛</string>
     <string name="back">後衛</string>
+    <string name="weakness">弱点</string>
     <string name="element">属性</string>
     <string name="all_element">属性</string>
     <string name="fire">火</string>
