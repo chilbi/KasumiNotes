@@ -12,18 +12,24 @@ data class SkillData(
     val rawActions: List<Int>,//1-10
     val rawDepends: List<Int>,//1-10
     val actions: List<SkillAction>,
-    val rfSkillData: RfSkillData?,
+    val rfSkillDataList: List<RfSkillData?>,
     val isRfSkill: Boolean
 ) {
     fun getSkillOrRfSkill(level: Int): SkillData {
-        return if (rfSkillData == null) {
+        return if (rfSkillDataList.isEmpty()) {
            this
         } else {
-            if (level < rfSkillData.minLv) {
-                this
-            } else {
-                rfSkillData.rfSkill
-            }
+            var skillData: SkillData = this
+            var i = 0
+            val size = rfSkillDataList.size
+            do {
+                val rfSkillData = rfSkillDataList[i]
+                if (rfSkillData != null && level >= rfSkillData.minLv) {
+                    skillData = rfSkillData.rfSkill
+                }
+                i++
+            } while (i < size && rfSkillData != null && rfSkillData.maxLv != -1 && level > rfSkillData.maxLv)
+            skillData
         }
     }
 

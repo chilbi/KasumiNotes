@@ -136,7 +136,7 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
                     rawActions,
                     rawDepends,
                     emptyList(),
-                    null,
+                    emptyList(),
                     false
                 )
             } else {
@@ -158,33 +158,32 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
     }
 }
 
-private suspend fun AppDatabase.getRfSkillData(skillId: Int): RfSkillData? {
-    if (skillId == 0) return null
+private suspend fun AppDatabase.getRfSkillDataList(skillId: Int): List<RfSkillData?> {
+    if (skillId == 0) return emptyList()
+    if (!existsTable("unit_skill_data_rf")) return emptyList()
 
-    return if (existsTable("unit_skill_data_rf")) {
-        val sql = """SELECT rf_skill_id,min_lv,max_lv
+    val sql = """SELECT rf_skill_id,min_lv,max_lv
 FROM unit_skill_data_rf WHERE skill_id=$skillId"""
 
-        val rawRfSkillData = useDatabase {
-            rawQuery(sql, null).use {
-                if (it.moveToFirst()) {
-                    RawRfSkillData(
-                        it.getInt(0),
-                        it.getInt(1),
-                        it.getInt(2)
-                    )
-                } else {
-                    null
+    val rawRfSkillDataList = useDatabase {
+        rawQuery(sql, null).use {
+            val list = mutableListOf<RawRfSkillData>()
+            while (it.moveToNext()) {
+                list.add(RawRfSkillData(it.getInt(0), it.getInt(1), it.getInt(2)))
+            }
+            list
+        }
+    }
+    return withContext(Dispatchers.IO) {
+        rawRfSkillDataList.map { raw ->
+            async {
+                val rfSkill = getSkillData(raw.rfSkillId)
+                rfSkill?.let {
+                    RfSkillData(raw.minLv, raw.maxLv, it.copy(isRfSkill = true))
                 }
             }
-        }
-        rawRfSkillData?.let { raw ->
-            val rfSkill = getSkillData(raw.rfSkillId)
-            rfSkill?.let {
-                RfSkillData(raw.minLv, raw.maxLv, it.copy(isRfSkill = true))
-            }
-        }
-    } else null
+        }.awaitAll()
+    }
 }
 
 suspend fun AppDatabase.getUnitSkillData(unitId: Int): UnitSkillData {
@@ -235,11 +234,12 @@ FROM unit_skill_data WHERE unit_id=$unitId"""
                 list.map { skillId ->
                     val skillAndRfSkill = awaitAll(
                         async { getSkillData(skillId) },
-                        async { getRfSkillData(skillId) }
+                        async { getRfSkillDataList(skillId) }
                     )
                     val skillData = skillAndRfSkill[0] as SkillData?
-                    val rfSkillData = skillAndRfSkill[1] as RfSkillData?
-                    skillData?.copy(rfSkillData = rfSkillData)
+                    @Suppress("UNCHECKED_CAST")
+                    val rfSkillDataList = skillAndRfSkill[1] as List<RfSkillData?>
+                    skillData?.copy(rfSkillDataList = rfSkillDataList)
                 }
             }
         }
