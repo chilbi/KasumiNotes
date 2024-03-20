@@ -2,6 +2,7 @@ package com.kasuminotes.db
 
 import com.kasuminotes.data.CharaStoryStatus
 import com.kasuminotes.data.ExSkillData
+import com.kasuminotes.data.LvRange
 import com.kasuminotes.data.PromotionBonus
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
@@ -115,8 +116,8 @@ suspend fun AppDatabase.getUniqueData(equipId: Int): UniqueData? {
                                 it.getString(i++),
                                 it.getString(i),
                                 baseProperty,
-                                Property.zero,
-                                null
+                                emptyList(),
+                                emptyList()
                             )
                         } else {
                             null
@@ -124,46 +125,32 @@ suspend fun AppDatabase.getUniqueData(equipId: Int): UniqueData? {
                     }
                 }
             },
-            // growthProperty
+            // growthProperties,growthLvRanges
             async {
-                val sql = "SELECT ${Property.getFields()} FROM unique_equipment_enhance_rate WHERE equipment_id=$equipId AND min_lv<261"
+                val sql = "SELECT ${Property.getFields()},min_lv,max_lv FROM unique_equipment_enhance_rate WHERE equipment_id=$equipId"
                 useDatabase {
                     rawQuery(sql, null).use {
-                        if (it.moveToFirst()) {
+                        val growthProperties = mutableListOf<Property>()
+                        val growthLvRanges = mutableListOf<LvRange>()
+                        while (it.moveToNext()) {
                             var i = 0
                             val growthProperty = Property { _ ->
                                 it.getDouble(i++)
                             }
-                            growthProperty
-                        } else {
-                            Property.zero
+                            growthProperties.add(growthProperty)
+                            growthLvRanges.add(LvRange(it.getInt(i++), it.getInt(i)))
                         }
-                    }
-                }
-            },
-            // rfGrowthProperty
-            async {
-                val sql = "SELECT ${Property.getFields()} FROM unique_equipment_enhance_rate WHERE equipment_id=$equipId AND min_lv=261"
-                useDatabase {
-                    rawQuery(sql, null).use {
-                        if (it.moveToFirst()) {
-                            var i = 0
-                            val rfGrowthProperty = Property { _ ->
-                                it.getDouble(i++)
-                            }
-                            rfGrowthProperty
-                        } else {
-                            null
-                        }
+                        growthProperties to growthLvRanges
                     }
                 }
             }
         ).awaitAll()
 
         val unique1Data = list[0] as UniqueData?
+        @Suppress("UNCHECKED_CAST")
         unique1Data?.copy(
-            growthProperty = list[1] as Property,
-            rfGrowthProperty = list[2] as Property?
+            growthProperties = (list[1] as Pair<List<Property>, List<LvRange>>).first,
+            growthLvRanges = (list[1] as Pair<List<Property>, List<LvRange>>).second
         )
     }
 }
