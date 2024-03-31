@@ -29,8 +29,8 @@ fun SkillAction.isStatusPercent(): Boolean {
     return isPercent
 }
 
-fun SkillAction.isStatusUp(): Boolean {
-    var detail1 = actionDetail1
+fun SkillAction.isStatusUp(value: Int = actionDetail1): Boolean {
+    var detail1 = value
     if (detail1 > 1000) {
         detail1 -= 1000
     }

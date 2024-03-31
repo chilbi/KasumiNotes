@@ -277,6 +277,7 @@
     <string name="action_ignore_provocation">挑発を無視して、</string>
     <string name="action_akinesia_invalid_target1_time2">%1$sに受ける行動不能を無効化できる状態を付与する、効果時間%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">%1$sに受ける行動不能を最大%2$s回まで無効化できる状態を付与する、効果時間%3$s秒。</string>
+    <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$sに与えらるダメージの量を%2$sアップさせる、最大%3$sアップさせる、効果時間%4$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_time3">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける、効果時間%3$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける（毎回最大%3$sダメージを受ける）、効果時間%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">%1$sのいる環境を【%2$s】にする、効果時間%3$s秒。</string>
@@ -315,8 +316,8 @@
     <string name="action_branch_failure_odds1">%s確率で失敗する、失敗の場合、</string>
     <string name="action_branch_exist_summon1">%sが味方にいる場合、</string>
     <string name="action_branch_not_exist_summon1">%sが味方にいない場合、</string>
-    <string name="action_branch_def_down_target1">%sがこのスキル発動時既に魔法防御力ダウン状態の場合、</string>
-    <string name="action_branch_not_def_down_target1">%sがこのスキル発動時既に魔法防御力ダウン状態でない場合、</string>
+    <string name="action_branch_status_change_target1_content2_">%1$sがこのスキル発動時既に%2$s状態の場合、</string>
+    <string name="action_branch_not_status_change_target1_content2">%1$sがこのスキル発動時既に%2$s状態でない場合、</string>
     <string name="action_branch_barrier_target1">%sはバリアが展開されている場合、</string>
     <string name="action_branch_not_barrier_target1">%sはバリアが展開されていない場合、</string>
     <string name="action_branch_break_target1">%sのターゲットがBreak状態の場合、</string>
@@ -553,6 +554,7 @@
     <string name="counter_num1">カウンター%s</string>
     <string name="of_s1_s2">%1$sの%2$s</string>
     <string name="atk_or_magic_str">物理攻撃力、魔法攻撃力いずれかで攻撃力</string>
+    <string name="count_of_abnormal_state_and_status_down_effect_target1">%sの状態異常効果およびステータスダウン効果の数</string>
 
     <string name="give_time">効果時間</string>
     <string name="give_damage">ダメージ量</string>

@@ -220,10 +220,19 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         // キャル（サマー）
         1700 -> {
             val target = getTarget(depend)
+            var detail1 = actionValue3.toInt()
+            val isUp = isStatusUp(detail1)
+            if (detail1 > 1000) {
+                detail1 -= 1000
+            }
+            val content = D.Join(arrayOf(
+                getStatusContent(detail1 / 10),
+                D.Format(if (isUp) R.string.content_up else R.string.content_down)
+            ))
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_def_down_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_def_down_target1, arrayOf(target))
+                D.Format(R.string.action_branch_status_change_target1_content2_, arrayOf(target, content)),
+                D.Format(R.string.action_branch_not_status_change_target1_content2, arrayOf(target, content))
             )
         }
         // イノリ（怪盗）

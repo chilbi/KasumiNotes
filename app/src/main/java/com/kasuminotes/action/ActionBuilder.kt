@@ -203,6 +203,7 @@ class ActionBuilder(
             72 -> getDamageCut()
             73 -> getDamageAttenuation()
             75 -> getHitCount()
+            78 -> getPassiveDamageUp()
             79 -> getFixedDamage()
             83 -> getSpeedOverlay()
             92 -> D.Unknown/** [getInjuredEnergy] */
