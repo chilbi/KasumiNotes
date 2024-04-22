@@ -10,10 +10,10 @@ fun SkillAction.getDotDamageUp(): D {
         var dot: D? = null
         arrayOf(actionValue3, actionValue4, actionValue5, actionValue6).forEach { value ->
             if (value > -1.0) {
-                if (dot == null) {
-                    dot = getAbnormalDamageContent(value.toInt())
+                dot = if (dot == null) {
+                    getAbnormalDamageContent(value.toInt())
                 } else {
-                    dot = dot!!.append(D.Join(arrayOf(
+                    dot!!.append(D.Join(arrayOf(
                         D.Format(R.string.comma),
                         getAbnormalDamageContent(value.toInt())
                     )))
