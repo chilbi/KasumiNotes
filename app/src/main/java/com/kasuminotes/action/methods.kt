@@ -121,24 +121,31 @@ fun getBaseLvFormula(
 
 fun getAbnormalContent(detail: Int): D {
     return when (detail) {
+        1 -> D.Format(R.string.slow)
+        2 -> D.Format(R.string.haste)
         3 -> D.Format(R.string.numbness)
         4 -> D.Format(R.string.freeze)
         5 -> D.Format(R.string.fetter)
         6 -> D.Format(R.string.sleep)
         7 -> D.Format(R.string.stand)
         8 -> D.Format(R.string.petrifaction)
+        9 -> D.Format(R.string.detention)
+        10 -> D.Format(R.string.coma)
         11 -> D.Format(R.string.stop)
+        13 -> D.Format(R.string.crystallization)
         else -> D.Unknown
     }
 }
 
 fun getAbnormalDamageContent(detail: Int): D {
     return when (detail) {
+        0 -> D.Format(R.string.detention_damage)
         1 -> D.Format(R.string.poison)
         2 -> D.Format(R.string.burn)
         3 -> D.Format(R.string.curse)
         4 -> D.Format(R.string.fierce_poison)
         5 -> D.Format(R.string.beshrew)
+        9 -> D.Format(R.string.black_fire)
         else -> D.Unknown
     }
 }
