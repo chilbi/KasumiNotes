@@ -218,6 +218,7 @@ class ActionBuilder(
             105 -> getEnvironment()
             106 -> getFallenAngelGuard()
             107 -> getTotalCritical()
+            110 -> getDotDamageUp()
             else -> getUnknown()
         }
     }

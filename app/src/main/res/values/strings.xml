@@ -176,6 +176,7 @@
     <string name="same_category_equip">同类装备</string>
     <string name="equip_property">装备属性</string>
     <string name="equip_skill">装备技能</string>
+    <string name="comma">、</string>
     <string name="full_stop">。</string>
 
     <string name="action_unknown_s1">技能参数：%s</string>
@@ -278,6 +279,7 @@
     <string name="action_akinesia_invalid_target1_time2">赋予%1$s可无效化受到的行动不能的状态，效果时间%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">赋予%1$s可无效化最多%2$s次受到的行动不能的状态，效果时间%3$s秒。</string>
     <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$s受到的伤害量提高%2$s，最大提高%3$s，效果时间%4$s秒。</string>
+    <string name="action_dot_damage_up_target1_content2_formula3_time4">%1$s受到的%2$s伤害提高%3$s，效果时间%4$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_time3">%1$s每次行动时就会受到最大HP的%2$s伤害，效果时间%3$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$s每次行动时都会受到最大HP的%2$s伤害（每次最多受到%3$s伤害），效果时间%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">使%1$s处于【%2$s】环境，效果时间%3$s秒。</string>
@@ -383,6 +385,7 @@
     <string name="content_kizuna_certificate">【情谊的证明】解放期间，</string>
     <string name="content_full_charge">赋予自身【满电】状态，</string>
     <string name="content_system_down">使自身陷入【系统宕机】状态，</string>
+    <string name="content_dot">持续</string>
 
     <string name="state_unknown">标记%s</string>
     <string name="state_hiding">隐密</string>

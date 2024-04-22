@@ -176,6 +176,7 @@
     <string name="same_category_equip">同種装備</string>8
     <string name="equip_property">装備ステータス</string>
     <string name="equip_skill">装備スキル</string>
+    <string name="comma">、</string>
     <string name="full_stop">。</string>
 
     <string name="action_unknown_s1">スキルパラメーター：%s</string>
@@ -278,6 +279,7 @@
     <string name="action_akinesia_invalid_target1_time2">%1$sに受ける行動不能を無効化できる状態を付与する、効果時間%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">%1$sに受ける行動不能を最大%2$s回まで無効化できる状態を付与する、効果時間%3$s秒。</string>
     <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$sに与えらるダメージの量を%2$sアップさせる、最大%3$sアップさせる、効果時間%4$s秒。</string>
+    <string name="action_dot_damage_up_target1_content2_formula3_time4">%1$sに与えられる%2$sダメージを%3$sアップさせる、効果時間%4$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_time3">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける、効果時間%3$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける（毎回最大%3$sダメージを受ける）、効果時間%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">%1$sのいる環境を【%2$s】にする、効果時間%3$s秒。</string>
@@ -382,6 +384,7 @@
     <string name="content_kizuna_certificate">【絆の証】解放中、</string>
     <string name="content_full_charge">自分が【フルチャージ】状態になり、</string>
     <string name="content_system_down">自分が【システムダウン】状態になり、</string>
+    <string name="content_dot">継続</string>
 
     <string name="state_unknown">マーク%s</string>
     <string name="state_hiding">隠密</string>
