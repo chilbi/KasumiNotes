@@ -279,7 +279,7 @@
     <string name="action_akinesia_invalid_target1_time2">%1$sに受ける行動不能を無効化できる状態を付与する、効果時間%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">%1$sに受ける行動不能を最大%2$s回まで無効化できる状態を付与する、効果時間%3$s秒。</string>
     <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$sに与えらるダメージの量を%2$sアップさせる、最大%3$sアップさせる、効果時間%4$s秒。</string>
-    <string name="action_dot_damage_up_target1_content2_formula3_time4">%1$sに与えられる%2$sダメージを%3$sアップさせる、効果時間%4$s秒。</string>
+    <string name="action_dot_damage_up_target1_content2_formula3_max4_time5">%1$sに与えられる%2$sダメージを%3$sアップさせる、最大%4$sまでアップさせる、効果時間%5$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_time3">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける、効果時間%3$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける（毎回最大%3$sダメージを受ける）、効果時間%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">%1$sのいる環境を【%2$s】にする、効果時間%3$s秒。</string>

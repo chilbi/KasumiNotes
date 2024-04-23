@@ -211,7 +211,7 @@
     <string name="action_speed_target1_formula2_time3">%1$s的行动速度变为原来的%2$s，效果时间%3$s秒。</string>
     <string name="action_abnormal_target1_content2_time3">使%1$s陷入%2$s状态，效果时间%3$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_time4">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，效果时间%4$s秒。</string>
-    <string name="action_abnormal_target1_content2_formula3_percent4_time5">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，每秒提高初始值的%4$s%2$s伤害，效果时间%5$s秒。</string>
+    <string name="action_abnormal_target1_content2_formula3_percent4_time5">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，每秒提升初始值的%4$s%2$s伤害，效果时间%5$s秒。</string>
     <string name="action_state_target1_content2_time3">赋予%1$s%2$s状态，效果时间%3$s秒。</string>
     <string name="action_haulin_oneself_target1_formula2">将%1$s拉进到自身前方%2$s距离。</string>
     <string name="action_haulin_target1_formula2">拉近%1$s%2$s距离。</string>
@@ -278,8 +278,8 @@
     <string name="action_ignore_provocation">无视挑衅，</string>
     <string name="action_akinesia_invalid_target1_time2">赋予%1$s可无效化受到的行动不能的状态，效果时间%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">赋予%1$s可无效化最多%2$s次受到的行动不能的状态，效果时间%3$s秒。</string>
-    <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$s受到的伤害量提高%2$s，最大提高%3$s，效果时间%4$s秒。</string>
-    <string name="action_dot_damage_up_target1_content2_formula3_time4">%1$s受到的%2$s伤害提高%3$s，效果时间%4$s秒。</string>
+    <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$s受到的伤害量提升%2$s，最大提升%3$s，效果时间%4$s秒。</string>
+    <string name="action_dot_damage_up_target1_content2_formula3_max4_time5">%1$s受到的%2$s伤害提升%3$s，最大提升到%4$s，效果时间%5$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_time3">%1$s每次行动时就会受到最大HP的%2$s伤害，效果时间%3$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$s每次行动时都会受到最大HP的%2$s伤害（每次最多受到%3$s伤害），效果时间%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">使%1$s处于【%2$s】环境，效果时间%3$s秒。</string>
