@@ -257,7 +257,7 @@
     <string name="action_change_mark_consume_target1_state2">%1$sの【%2$s】を消費する。</string>
     <string name="action_resurrection_target1_state2_formula3_time4">%1$sに【%2$s】を付与する。ＨＰが0になると、倒れずに【%2$s】を消費してＨＰを%3$s回復する、効果時間%4$s秒。</string>
     <string name="action_fallen_angel_guard_target1_time2">%1$sに【堕天使の加護】を付与する。【堕天使の加護】が付与されている間、そのキャラへの敵の攻撃を代わりに受け、効果時間%2$s秒。</string>
-    <string name="action_shield_counter_target1_content2_add3_max4_consume5_formula6">%1$sに【%2$s】を%3$sつ追加する、最大%4$sまで追加される。【%2$s】は１回ダメージを無効化する毎に%5$sつ消耗され、同時に攻撃してきた敵に%6$sダメージを与える。</string>
+    <string name="action_shield_counter_target1_content2_add3_formula4">%1$sに【%2$s】を%3$sつ追加する。【%2$s】は１回ダメージを無効化する毎に１つ消耗され、同時に攻撃してきた敵に%4$sダメージを与える。</string>
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$sに【%2$s】が%3$sつ追加されるようになる、最大%4$sまで追加される、効果時間%5$s秒。</string>
     <string name="action_speed_overlay_target1_content2_formula3_time4">%1$sの行動速度を%3$s%2$sさせる、効果時間%4$s秒。（このスキルの効果は他の行動速度変化スキルと重複する）</string>
@@ -390,6 +390,7 @@
     <string name="state_hiding">隠密</string>
     <string name="state_omemechan">オメメちゃん</string>
     <string name="state_light_shield">光の盾</string>
+    <string name="state_utsusemi">空蝉</string>
     <string name="state_servant_intensive">英霊の加護</string>
     <string name="state_otomodachi">おともだち</string>
     <string name="state_coin">コイン</string>
@@ -429,6 +430,8 @@
     <string name="state_returning_rose">回帰の薔薇</string>
     <string name="state_peace_by_the_waterfront">水際の安寧</string>
     <string name="state_moon_water">水月</string>
+    <string name="state_flower_trick">フラワートリック</string>
+    <string name="state_poison_flick">ポイズンフリック</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>
@@ -568,6 +571,7 @@
 
     <string name="give_time">効果時間</string>
     <string name="give_damage">ダメージ量</string>
+    <string name="give_dot_damage">継続ダメージ量</string>
     <string name="give_damage_rate1">%s倍率</string>
     <string name="give_critical_damage">クリティカル時のダメージ量</string>
     <string name="give_disregard_def_type1">無視%s防御力</string>

@@ -196,6 +196,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         1 -> D.Format(R.string.state_hiding)
         2 -> D.Format(R.string.state_omemechan)
         4 -> D.Format(R.string.state_light_shield)
+        5 -> D.Format(R.string.state_utsusemi)
         50 -> D.Format(R.string.state_servant_intensive)
         57 -> D.Format(R.string.state_flinch)
         60 -> D.Format(R.string.state_otomodachi)
@@ -235,7 +236,9 @@ fun getStateContent(detail: Int, actionId: Int): D {
         142 -> D.Format(R.string.state_returning_rose)
         145 -> D.Format(R.string.state_puukichi_cushion)
         156 -> D.Format(R.string.state_peace_by_the_waterfront)
+        152 -> D.Format(R.string.state_flower_trick)
         157 -> D.Format(R.string.state_moon_water)
+        158 -> D.Format(R.string.state_poison_flick)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
 }

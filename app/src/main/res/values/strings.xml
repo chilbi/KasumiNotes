@@ -257,7 +257,7 @@
     <string name="action_change_mark_consume_target1_state2">消费掉%1$s的【%2$s】。</string>
     <string name="action_resurrection_target1_state2_formula3_time4">赋予%1$s【%2$s】。当HP归零时，不会被击倒而是消耗掉【%2$s】同时HP回复%3$s，效果时间%4$s秒。</string>
     <string name="action_fallen_angel_guard_target1_time2">赋予%1$s【堕天使的加护】。【堕天使的加护】期间，代替该角色承受敌人的攻击，效果时间%2$s秒。</string>
-    <string name="action_shield_counter_target1_content2_add3_max4_consume5_formula6">为%1$s追加%3$s个【%2$s】，最多可以追加%4$s个。【%2$s】每无效1次伤害就会消耗%5$s个，同时对进攻的敌人造成%6$s伤害。</string>
+    <string name="action_shield_counter_target1_content2_add3_formula4">为%1$s追加%3$s个【%2$s】。【%2$s】每无效1次伤害就会消耗1个，同时对进攻的敌人造成%4$s伤害。</string>
     <string name="action_hit_count_target1_time2_count3">%1$s在%2$s秒内，每当造成%3$s次伤害时，</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$s追加%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。</string>
     <string name="action_speed_overlay_target1_content2_formula3_time4">%1$s的行动速度%2$s%3$s，效果时间%4$s秒。（此技能的效果可以和其它行动速度变化技能叠加）</string>
@@ -391,6 +391,7 @@
     <string name="state_hiding">隐密</string>
     <string name="state_omemechan">小眼睛</string>
     <string name="state_light_shield">光之盾</string>
+    <string name="state_utsusemi">空蝉</string>
     <string name="state_servant_intensive">英灵的加护</string>
     <string name="state_otomodachi">好朋友</string>
     <string name="state_coin">硬币</string>
@@ -403,7 +404,7 @@
     <string name="state_study_time">学习的时间</string>
     <string name="state_strength_seal">力之魔字</string>
     <string name="state_dragon_eye">龙眼</string>
-    <string name="state_overload_structure">超载结构</string>
+    <string name="state_overload_structure">超负荷构建</string>
     <string name="state_sword_seal">剑之刻印</string>
     <string name="state_soul_anchor_seal">灵锚之刻印</string>
     <string name="state_happy_times">幸福的时刻</string>
@@ -430,6 +431,8 @@
     <string name="state_returning_rose">回归的蔷薇</string>
     <string name="state_peace_by_the_waterfront">水边的安宁</string>
     <string name="state_moon_water">水月</string>
+    <string name="state_flower_trick">花陷阱</string>
+    <string name="state_poison_flick">毒击</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>
@@ -569,6 +572,7 @@
 
     <string name="give_time">效果时间</string>
     <string name="give_damage">伤害量</string>
+    <string name="give_dot_damage">持续伤害量</string>
     <string name="give_damage_rate1">%s倍率</string>
     <string name="give_critical_damage">暴击伤害量</string>
     <string name="give_disregard_def_type1">无视%s防御力</string>

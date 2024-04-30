@@ -214,6 +214,14 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
             )
             else -> D.Unknown
         }
+        36 -> when (actionDetail2) {
+            5 -> D.Format(R.string.give_time)
+            else -> D.Format(R.string.give_dot_damage)
+        }
+        37 -> when (actionDetail2) {
+            5 -> D.Format(R.string.give_time)
+            else -> D.Format(R.string.give_hp_regeneration)
+        }
         38 -> if (actionDetail2 == 3) D.Format(R.string.give_time)
         else D.Format(
             if (targetAction.actionDetail1 % 10 == 0) R.string.give_up_amount_content1
@@ -242,7 +250,7 @@ private fun SkillAction.getGiveValueFormula(
     val otherConstantVariable = when (targetAction.actionType) {
         1 -> when (actionDetail2) {
             1, 3, 6, 7 -> null
-            2 -> D.Format(R.string.skill_level)
+            2, 4 -> D.Format(R.string.skill_level)
             else -> D.Unknown
         }
         3 -> null
@@ -261,6 +269,11 @@ private fun SkillAction.getGiveValueFormula(
         10 -> when (actionDetail2) {
             2, 4 -> null
             3 -> D.Format(R.string.skill_level)
+            else -> D.Unknown
+        }
+        36, 37 -> when (actionDetail2) {
+            1, 3, 7 -> null
+            2, 4, 6 -> D.Format(R.string.skill_level)
             else -> D.Unknown
         }
         46 -> when (actionDetail2) {
