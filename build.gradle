@@ -3,11 +3,11 @@ buildscript {
     ext {
         kasuminotes_version = '2.2.5'
         kasuminotes_version_code = 225
-        kotlin_version = '1.9.22'
+        kotlin_version = '1.9.23'
 
-        compose_version = '1.6.3'
+        compose_version = '1.6.7'
         material3_version = '1.2.1'
-        kotlin_compiler_version = '1.5.10'
+        kotlin_compiler_version = '1.5.13'
         lifecycle_viewmodel_version = '2.7.0'
     }
     repositories {
@@ -29,5 +29,5 @@ buildscript {
 }
 
 tasks.register('clean', Delete) {
-    delete rootProject.buildDir
+    delete rootProject.layout.buildDirectory
 }
