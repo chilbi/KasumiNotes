@@ -3,6 +3,7 @@ package com.kasuminotes.ui.app
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,6 +29,10 @@ fun App(appViewModel: AppViewModel = viewModel()) {
     val uiState = appViewModel.uiState
     val dbState = appViewModel.dbState
     val userState = dbState.userState
+    
+    LaunchedEffect(Unit) {
+        dbState.init()
+    }
 
     KasumiNotesTheme(uiState.themeIndex, uiState.darkTheme) {
         val drawerState = rememberDrawerState(DrawerValue.Closed)
