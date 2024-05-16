@@ -6,9 +6,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.kasuminotes.ui.app.App
 import com.kasuminotes.utils.LocaleUtil
@@ -17,15 +19,16 @@ class MainActivity : ComponentActivity() {
     private var broadcastReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         instance = this
-
+        val splashScreen = installSplashScreen()
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            splashScreen.setOnExitAnimationListener { splashScreenView -> splashScreenView.remove() }
+        }
+        super.onCreate(savedInstanceState)
         setContent {
             App()
         }
-
     }
 
     override fun attachBaseContext(base: Context) {
