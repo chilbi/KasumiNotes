@@ -205,6 +205,7 @@
     <string name="action_sustain_time1">维持动作%s秒</string>
     <string name="action_sustain_damage_rate1">，使下次攻击伤害提升{ %s × 期间受到的伤害 }。</string>
     <string name="action_sustain_status_content1_count2">，期间%1$s，受到%2$s次攻击就会中断此动作。</string>
+    <string name="action_energy_recovery_fixed_target1_formula2">%1$s的TP回复%2$s固定值。</string>
     <string name="action_energy_recovery_target1_formula2">%1$s的TP回复%2$s。</string>
     <string name="action_energy_down_target1_formula2">使%1$s的TP降低%2$s。</string>
     <string name="action_hp_recovery_target1_formula2">%1$s的HP回复%2$s。</string>

@@ -205,6 +205,7 @@
     <string name="action_sustain_time1">モーションを%s秒維持する</string>
     <string name="action_sustain_damage_rate1">、次の攻撃ダメージを{ %s × この間に受けたダメージ }アップさせる。</string>
     <string name="action_sustain_status_content1_count2">、この間%1$s、%2$s回攻撃を受けるとモーションが中断される。</string>
+    <string name="action_energy_recovery_fixed_target1_formula2">%1$sのＴＰを固定量で%2$s回復する。</string>
     <string name="action_energy_recovery_target1_formula2">%1$sのＴＰを%2$s回復する。</string>
     <string name="action_energy_down_target1_formula2">%1$sのＴＰを%2$sダウンさせる。</string>
     <string name="action_hp_recovery_target1_formula2">%1$sのＨＰを%2$s回復する。</string>
