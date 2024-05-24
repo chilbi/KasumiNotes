@@ -125,7 +125,9 @@ class ActionBuilder(
                 willRemoveIndexList.add(index)
                 val ignoreProvocation = action.getIgnoreProvocation()
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
-                ignoreProvocationModify.collectModify(modifyIndex, ignoreProvocation)
+                if (modifyIndex > -1) {
+                    ignoreProvocationModify.collectModify(modifyIndex, ignoreProvocation)
+                }
                 ignoreProvocationModify.collectModify(index, ignoreProvocation)
             }
         }
@@ -233,11 +235,13 @@ private class ModifyDescription(
 
     private fun collectDependIndex(index: Int): List<Int> {
         val list = mutableListOf<Int>()
-        rawDepends.forEachIndexed { dependIndex, dependActionId ->
-            if (dependActionId == actions[index].actionId && !processedModifyIndexList.contains(dependIndex)) {
-                processedModifyIndexList.add(dependIndex)
-                list.add(dependIndex)
-                list.addAll(collectDependIndex(dependIndex))
+        if (index > -1) {
+            rawDepends.forEachIndexed { dependIndex, dependActionId ->
+                if (dependActionId == actions[index].actionId && !processedModifyIndexList.contains(dependIndex)) {
+                    processedModifyIndexList.add(dependIndex)
+                    list.add(dependIndex)
+                    list.addAll(collectDependIndex(dependIndex))
+                }
             }
         }
         return list
