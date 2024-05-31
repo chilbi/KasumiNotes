@@ -411,7 +411,7 @@
     <string name="state_happy_times">幸福的时刻</string>
     <string name="state_water_blade_intensive">水刃的加护</string>
     <string name="state_butterfly_seal">蝴蝶印记</string>
-    <string name="state_fuwafuwa_wool">轻飘飘羊毛</string>
+    <string name="state_fuwafuwa_wool">软绵绵羊毛</string>
     <string name="state_dark_night_intensive">暗夜的加护</string>
     <string name="state_soul_ability">灵力</string>
     <string name="state_yasakaninomagatama">八尺琼勾玉・减葬</string>
@@ -434,6 +434,7 @@
     <string name="state_moon_water">水月</string>
     <string name="state_flower_trick">花陷阱</string>
     <string name="state_poison_flick">毒击</string>
+    <string name="state_curtain_call">谢幕</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>

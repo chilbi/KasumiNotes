@@ -433,6 +433,7 @@
     <string name="state_moon_water">水月</string>
     <string name="state_flower_trick">フラワートリック</string>
     <string name="state_poison_flick">ポイズンフリック</string>
+    <string name="state_curtain_call">カーテンコール</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>
