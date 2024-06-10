@@ -258,7 +258,10 @@
     <string name="action_change_mark_consume_target1_state2">消费掉%1$s的【%2$s】。</string>
     <string name="action_resurrection_target1_state2_formula3_time4">赋予%1$s【%2$s】。当HP归零时，不会被击倒而是消耗掉【%2$s】同时HP回复%3$s，效果时间%4$s秒。</string>
     <string name="action_fallen_angel_guard_target1_time2">赋予%1$s【堕天使的加护】。【堕天使的加护】期间，代替该角色承受敌人的攻击，效果时间%2$s秒。</string>
-    <string name="action_shield_counter_target1_content2_add3_formula4">为%1$s追加%3$s个【%2$s】。【%2$s】每无效1次伤害就会消耗1个，同时对进攻的敌人造成%4$s伤害。</string>
+    <string name="action_shield_counter_target1_content2_add3">为%1$s追加%3$s个【%2$s】。【%2$s】每无效1次伤害就会消耗1个</string>
+    <string name="action_shield_counter_target1_content2">赋予%1$s【%2$s】。【%2$s】无效1次伤害就会被消耗掉</string>
+    <string name="action_shield_counter_formula1">，同时对进攻的敌人造成%s伤害。</string>
+    <string name="action_shield_counter_damage1">，同时%s</string>
     <string name="action_hit_count_target1_time2_count3">%1$s在%2$s秒内，每当造成%3$s次伤害时，</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$s追加%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。</string>
     <string name="action_speed_overlay_target1_content2_formula3_time4">%1$s的行动速度%2$s%3$s，效果时间%4$s秒。（此技能的效果可以和其它行动速度变化技能叠加）</string>
@@ -393,6 +396,7 @@
     <string name="state_omemechan">小眼睛</string>
     <string name="state_light_shield">光之盾</string>
     <string name="state_utsusemi">空蝉</string>
+    <string name="state_ocean_type">绝海之型</string>
     <string name="state_servant_intensive">英灵的加护</string>
     <string name="state_otomodachi">好朋友</string>
     <string name="state_coin">硬币</string>
@@ -496,6 +500,7 @@
     <string name="target_all_summon_content1">%s所有的召唤物</string>
     <string name="target_all_summon_of_self">自身所有的召唤物</string>
     <string name="target_multi_target1">%s的所有多目标部位</string>
+    <string name="target_attacking_enemy">进攻的敌人</string>
 
     <string name="skill_level">技能等级</string>
     <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × 技能等级 + (%3$s + %4$s × 技能等级) × %5$s } = %6$s</string>

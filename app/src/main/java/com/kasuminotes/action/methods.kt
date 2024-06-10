@@ -197,6 +197,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         2 -> D.Format(R.string.state_omemechan)
         4 -> D.Format(R.string.state_light_shield)
         5 -> D.Format(R.string.state_utsusemi)
+        6 -> D.Format(R.string.state_ocean_type)
         50 -> D.Format(R.string.state_servant_intensive)
         57 -> D.Format(R.string.state_flinch)
         60 -> D.Format(R.string.state_otomodachi)

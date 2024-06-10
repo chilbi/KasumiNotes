@@ -37,6 +37,11 @@ class ActionBuilder(
             if (action.actionType == 18 && action.actionValue1 == 0.0) {
                 willRemoveIndexList.add(rawDepends.indexOfFirst { it == action.actionId })
             }
+            /** [getShieldCounter] */
+            if (action.actionType == 33 && action.actionDetail3 != 0) {
+                val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail3 }
+                willRemoveIndexList.add(modifyIndex)
+            }
             /** [getAbnormalField] */
             if (action.actionType == 39) {
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
@@ -180,7 +185,7 @@ class ActionBuilder(
             26, 27, 74 -> getGiveValue(skillLevel, actions)
             30 -> getDestroy()
             32 -> getLifeSteal(skillLevel)
-            33 -> getShieldCounter(skillLevel)
+            33 -> getShieldCounter(skillLevel, property, actions)
             34 -> getAccumulativeDamage(skillLevel)
             35 -> getChangeMark()
             36 -> getDamageField(skillLevel, property)
