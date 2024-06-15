@@ -9,6 +9,7 @@ fun SkillAction.getBranch(): Array<Pair<Int, D>> {
         28 -> getNoDependBranch()
         42 -> getCounterBranch()
         53 -> getExistsFieldBranch()
+        111 -> getStatusUpBranch()
         else -> emptyArray()
     }
 }
@@ -385,6 +386,14 @@ private fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
         D.Format(R.string.action_branch_not_exists_field_content1, arrayOf(content))
     )
     return branch.toTypedArray()
+}
+
+private fun SkillAction.getStatusUpBranch(): Array<Pair<Int, D>> {
+    val desc = D.Format(
+        R.string.action_branch_status_up_target1_max2,
+        arrayOf(getTarget(depend), D.Text(actionValue3.toNumStr()))
+    )
+    return arrayOf(actionDetail2 to desc)
 }
 
 private fun SkillAction.setBranch(branch: MutableList<Pair<Int, D>>, yes: D, not: D) {

@@ -110,7 +110,7 @@ class ActionBuilder(
                 originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
             }
             /** [getBranch] */
-            if (action.actionType in arrayOf(23, 28, 42, 53)) {
+            if (action.actionType in arrayOf(23, 28, 42, 53, 111)) {
                 val branch = action.getBranch()
                 if (branch.isEmpty()) {
                     if (action.actionDetail2 == 0 && action.actionDetail3 == 0) {
@@ -181,7 +181,7 @@ class ActionBuilder(
             20 -> getProvoke(skillLevel)
             21 -> getNoDamage(skillLevel)
             22 -> getChangePattern()
-            23, 28, 42, 53 -> D.Unknown/** [getBranch] */
+            23, 28, 42, 53, 111 -> D.Unknown/** [getBranch] */
             26, 27, 74 -> getGiveValue(skillLevel, actions)
             30 -> getDestroy()
             32 -> getLifeSteal(skillLevel)

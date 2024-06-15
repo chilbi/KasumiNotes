@@ -290,6 +290,7 @@
     <string name="action_total_critical_target1">此技能的暴击值为%s的物理和魔法暴击的合计值。</string>
 
     <string name="action_branch_and">且</string>
+    <string name="action_branch_status_up_target1_max2">每当%1$s受到状态提升时（最多%2$s次），</string>
     <string name="action_branch_striked_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_branch_controled_time1">%s秒的动作期间内受到行动不能、击飞、拉近时，</string>
     <string name="action_branch_exists_field_content1">%s的领域展开时，</string>
@@ -438,6 +439,7 @@
     <string name="state_moon_water">水月</string>
     <string name="state_flower_trick">花陷阱</string>
     <string name="state_poison_flick">毒击</string>
+    <string name="state_kababankun">かばばん君</string>
     <string name="state_curtain_call">谢幕</string>
 
     <string name="target">对象</string>

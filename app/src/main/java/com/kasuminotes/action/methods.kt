@@ -240,6 +240,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         152 -> D.Format(R.string.state_flower_trick)
         157 -> D.Format(R.string.state_moon_water)
         158 -> D.Format(R.string.state_poison_flick)
+        159 -> D.Format(R.string.state_kababankun)
         183 -> D.Format(R.string.state_curtain_call)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
