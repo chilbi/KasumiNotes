@@ -3,12 +3,12 @@ buildscript {
     ext {
         kasuminotes_version = '2.3.2'
         kasuminotes_version_code = 232
-        kotlin_version = '1.9.23'
+        kotlin_version = '1.9.24'
 
-        compose_version = '1.6.7'
+        compose_version = '1.6.8'
         material3_version = '1.2.1'
-        kotlin_compiler_version = '1.5.13'
-        lifecycle_viewmodel_version = '2.7.0'
+        kotlin_compiler_version = '1.5.14'
+        lifecycle_viewmodel_version = '2.8.2'
     }
     repositories {
         maven { url 'https://maven.aliyun.com/repository/central' }

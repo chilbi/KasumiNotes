@@ -50,7 +50,7 @@ sealed class AppNavData(
 
     data object ClanBattle : AppNavData(
         route = "clanBattle",
-        child = listOf("clanBattleMapList")
+        child = listOf("clanBattleMapList", "dungeon")
     )
 
     data object ClanBattleMapList : AppNavData(
@@ -61,8 +61,14 @@ sealed class AppNavData(
 
     data object ClanBattleEnemy : AppNavData(
         route = "clanBattleEnemy",
-        parent = listOf("clanBattleMapList"),
+        parent = listOf("clanBattleMapList", "dungeon"),
         child = listOf("summons")
+    )
+
+    data object Dungeon : AppNavData(
+        route = "dungeon",
+        parent = listOf("clanBattle"),
+        child = listOf("clanBattleEnemy")
     )
 
     data object About : AppNavData(

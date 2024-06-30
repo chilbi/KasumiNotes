@@ -11,17 +11,24 @@ import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.db.getClanBattleMapDataList
 import com.kasuminotes.db.getClanBattlePeriodList
-import com.kasuminotes.db.getEnemyData
+import com.kasuminotes.db.getDungeonAreaDataList
+import com.kasuminotes.db.getEnemyTalentWeaknessMap
 import com.kasuminotes.db.getMultiEnemyParts
 import com.kasuminotes.ui.app.AppRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ClanBattleState(
+class DungeonState(
     private val appRepository: AppRepository,
     private val scope: CoroutineScope
 ) {
+    var dungeonAreaDataGrouped by mutableStateOf<Map<Int, List<DungeonAreaData>>>(emptyMap())
+        private set
+
+    var enemyTalentWeaknessMap by mutableStateOf<Map<Int, List<Int>>>(emptyMap())
+        private set
+
     var clanBattlePeriodList by mutableStateOf<List<ClanBattlePeriod>>(emptyList())
         private set
 
@@ -62,6 +69,16 @@ class ClanBattleState(
             clanBattlePeriodList = db.getClanBattlePeriodList(false)
             isAll = true
             loading = false
+        }
+    }
+
+    fun initAreaDataList() {
+        scope.launch(Dispatchers.IO) {
+            val db = appRepository.getDatabase()
+            val dungeonAreaDataList = db.getDungeonAreaDataList()
+            val enemyIdList = dungeonAreaDataList.map { it.enemyId }
+            enemyTalentWeaknessMap = db.getEnemyTalentWeaknessMap(enemyIdList)
+            dungeonAreaDataGrouped = dungeonAreaDataList.groupBy { it.dungeonAreaId }
         }
     }
 
@@ -119,16 +136,6 @@ class ClanBattleState(
                 unitSkillData = enemy.unitSkillData
             }
         }
-    }
-
-fun initEnemy(enemyId: Int, weaknessList: List<Int>): Boolean {
-        val db = appRepository.getDatabase()
-        val enemy = db.getEnemyData(enemyId)
-        if (enemy != null) {
-            initEnemy(enemy, weaknessList)
-            return true
-        }
-        return false
     }
 
     fun destroy() {

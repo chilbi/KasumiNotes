@@ -14,6 +14,7 @@ import com.kasuminotes.ui.app.chara.Chara
 import com.kasuminotes.ui.app.clanBattle.ClanBattle
 import com.kasuminotes.ui.app.clanBattle.ClanBattleEnemy
 import com.kasuminotes.ui.app.clanBattle.ClanBattleMapList
+import com.kasuminotes.ui.app.dungeon.Dungeon
 import com.kasuminotes.ui.app.equip.Equip
 import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
@@ -136,6 +137,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 ClanBattle(
                     appViewModel.clanBattleState,
                     appViewModel::navigateToMapList,
+                    appViewModel::navigateToDungeon,
                     appViewModel::navigateTo,
                     navigateToHomeAndOpenDrawer
                 )
@@ -159,6 +161,17 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 ClanBattleEnemy(
                     appViewModel.clanBattleState,
                     appViewModel::navigateToMinions,
+                    appViewModel::popBackStack
+                )
+            }
+            composable(
+                route = AppNavData.Dungeon.route,
+                enterTransition = AppNavData.Dungeon.enterTransition,
+                exitTransition = AppNavData.Dungeon.exitTransition
+            ) {
+                Dungeon(
+                    appViewModel.dungeonState,
+                    appViewModel::navigateToEnemyById,
                     appViewModel::popBackStack
                 )
             }

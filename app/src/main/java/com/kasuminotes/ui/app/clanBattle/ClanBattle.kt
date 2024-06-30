@@ -3,13 +3,23 @@ package com.kasuminotes.ui.app.clanBattle
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Security
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,6 +34,7 @@ import com.kasuminotes.ui.components.TopBar
 fun ClanBattle(
     clanBattleState: ClanBattleState,
     onNavigateToMapList: (label: String, period: ClanBattlePeriod) -> Unit,
+    onNavigateToDungeon: () -> Unit,
     onNavigateTo: (Int) -> Unit,
     onDrawerOpen: () -> Unit
 ) {
@@ -36,7 +47,7 @@ fun ClanBattle(
 //        }
 //    }
     Scaffold(
-        topBar = { ClanBattleTopBar() },
+        topBar = { ClanBattleTopBar(onNavigateToDungeon) },
         bottomBar = { BottomBar(2, onNavigateTo, onDrawerOpen) },
 //        snackbarHost = { SnackbarHost(snackbarHostState) },
 //        floatingActionButton = {
@@ -54,7 +65,7 @@ fun ClanBattle(
 }
 
 @Composable
-private fun ClanBattleTopBar() {
+private fun ClanBattleTopBar(onNavigateToDungeon: () -> Unit) {
     TopBar(
         title = {
             Text(stringResource(R.string.clan_battle))
@@ -65,6 +76,25 @@ private fun ClanBattleTopBar() {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(Icons.Filled.Security, null)
+            }
+        },
+        actions = {
+            var expanded by remember { mutableStateOf(false) }
+
+            Box(modifier = Modifier.wrapContentSize(Alignment.TopStart)) {
+                IconButton(onClick = { expanded = true }) {
+                    Icon(Icons.Filled.Menu, null)
+                }
+                DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.dungeon)) },
+                        onClick = {
+                            expanded = false
+                            onNavigateToDungeon()
+                        },
+                        leadingIcon = { Icon(Icons.AutoMirrored.Filled.ArrowForward, null) }
+                    )
+                }
             }
         }
     )

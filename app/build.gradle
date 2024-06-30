@@ -83,15 +83,15 @@ dependencies {
     // kotlin-stdlib
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     // kotlin-coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
     // core-ktx
-    implementation "androidx.core:core-ktx:1.13.0"
+    implementation "androidx.core:core-ktx:1.13.1"
     // core-splashscreen
     implementation "androidx.core:core-splashscreen:1.0.1"
     // activity-compose
     implementation 'androidx.activity:activity-compose:1.9.0'
     // appcompat
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
 
     // lifecycle-viewmodel-compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_viewmodel_version"
@@ -117,7 +117,7 @@ dependencies {
     // okhttp
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.14'
     // commons-compress
-    implementation 'org.apache.commons:commons-compress:1.26.1'
+    implementation 'org.apache.commons:commons-compress:1.26.2'
     // brotli
     implementation 'org.brotli:dec:0.1.2'
 
