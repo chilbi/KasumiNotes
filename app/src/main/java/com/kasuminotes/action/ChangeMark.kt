@@ -4,7 +4,9 @@ import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getChangeMark(): D {
-    val target = getTarget(depend)
+    val target = if (depend != null && depend!!.actionType == 1)
+        D.Format(R.string.target_attacking_enemy)
+    else getTarget(depend)
     val state = getStateContent(actionValue2.toInt(), actionId)
     val time = D.Text(actionValue3.toNumStr())
 

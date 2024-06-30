@@ -24,15 +24,10 @@ fun SkillAction.getTrigger(): D {
                 )
             }
         }
-        8 -> {
-            D.Format(R.string.action_trigger_stealth)
-        }
-        9 -> {
-            D.Format(R.string.action_trigger_break)
-        }
-        11 -> {
-            D.Format(R.string.action_trigger_all_break)
-        }
+        8 -> D.Format(R.string.action_trigger_stealth)
+        9 -> D.Format(R.string.action_trigger_break)
+        11 -> D.Format(R.string.action_trigger_all_break)
+        14 -> D.Format(R.string.action_trigger_be_harmed_target1, arrayOf(getTarget(depend)))
         else -> getUnknown()
     }
 }

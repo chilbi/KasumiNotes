@@ -13,10 +13,13 @@ class ActionBuilder(
         val originList = mutableListOf<D>()
         val willRemoveIndexList = mutableListOf<Int>()
 
+        val isTriggerBeHarmed = actions.isNotEmpty() && actions[0].actionType == 17 && actions[0].actionDetail1 == 14
         actions.forEachIndexed { index, action ->
             val dependId = rawDepends[index]
             if (dependId != 0) {
                 action.depend = actions.find { it.actionId == dependId }
+            } else if (index != 0 && action.targetAssignment == 1 && isTriggerBeHarmed) {
+                action.depend = actions[0]
             }
             originList.add(action.getDescription(skillLevel, property))
         }
@@ -26,7 +29,7 @@ class ActionBuilder(
         val totalCriticalModifyList = mutableListOf<Pair<Int, Int>>()
 
         actions.forEachIndexed { index, action ->
-            if (action.depend != null && action.depend!!.depend == action) {
+            if (action.depend != null && !action.checkDependChain(action.depend!!)) {
                 willRemoveIndexList.add(index)
             }
             /** [getTargetFocus], 94 [getUnknown] */
@@ -70,6 +73,28 @@ class ActionBuilder(
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
                 originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
+            }
+            /** [getTriggeredWhenAttacked] */
+            if (action.actionType == 114) {
+                var num = 1
+                arrayOf(action.actionDetail1, action.actionDetail2, action.actionDetail3).forEach { triggerActionId ->
+                    if (triggerActionId != 0) {
+                        val triggerActionIndex = actions.indexOfFirst { action -> action.actionId == triggerActionId }
+                        if (triggerActionIndex > -1) {
+                            willRemoveIndexList.add(triggerActionIndex)
+                            val numDesc = D.Text("\n(${num++}) ")
+                            val triggerAction = actions[triggerActionIndex]
+                            val triggerActionDesc = if (triggerAction.actionType == 1) {
+                                triggerAction.getDamage(skillLevel, property, D.Format(R.string.target_attacking_enemy))
+                            } else if (triggerAction.actionType == 46) {
+                                triggerAction.getRatioDamage(skillLevel, D.Format(R.string.target_attacking_enemy))
+                            } else {
+                                originList[triggerActionIndex]
+                            }
+                            originList[index] = D.Join(arrayOf(originList[index], numDesc, triggerActionDesc))
+                        }
+                    }
+                }
             }
             /** [getInjuredEnergy] */
             if (action.actionType == 92) {
@@ -169,7 +194,7 @@ class ActionBuilder(
             7 -> D.Unknown/** [getTargetFocus] */
             8 -> getAbnormal(skillLevel)
             9 -> getAbnormalDamage(skillLevel)
-            10 -> getStatus(skillLevel, actions, if (isExEquipPassive) property else null)
+            10, 115 -> getStatus(skillLevel, actions, if (isExEquipPassive) property else null)
             11 -> getCharm()
             12 -> getDarkness()
             13 -> getSilence()
@@ -226,6 +251,7 @@ class ActionBuilder(
             106 -> getFallenAngelGuard()
             107 -> getTotalCritical()
             110 -> getDotDamageUp()
+            114 -> getTriggeredWhenAttacked()
             else -> getUnknown()
         }
     }

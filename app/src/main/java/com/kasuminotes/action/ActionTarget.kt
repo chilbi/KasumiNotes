@@ -24,6 +24,14 @@ private val magicStrTypes = magicStrHighTypes.plus(arrayOf(17, 32))
 private val atkOrMagicStrHighTypes = arrayOf(38)
 /** 加上物理攻击力或魔法攻击力最低的 */
 private val atkOrMagicStrTypes = atkOrMagicStrHighTypes.plus(39)
+/** 物理防御力最高的 */
+private val defHighTypes = arrayOf(46)
+/** 加上物理防御力最低的 */
+private val defTypes = defHighTypes.plus(45)
+/** 魔法防御力最高的 */
+private val magicDefHighTypes = arrayOf(48)
+/** 加上魔法防御力最低的 */
+private val magicDefTypes = magicDefHighTypes.plus(47)
 /** 自身以外的（还有34在其它地方处理了） */
 private val withoutSelfTypes = arrayOf(41, 43, 44)
 /** 不在自身后面的 */
@@ -34,16 +42,22 @@ private val allMostTypes = hpRatioTypes
     .plus(atkTypes)
     .plus(magicStrTypes)
     .plus(atkOrMagicStrTypes)
+    .plus(defTypes)
+    .plus(magicDefTypes)
 /** 所有最高的类型 */
 private val allMostHighTypes = hpRatioHighTypes
     .plus(energyHighTypes)
     .plus(atkHighTypes)
     .plus(magicStrHighTypes)
     .plus(atkOrMagicStrHighTypes)
+    .plus(defHighTypes)
+    .plus(magicDefHighTypes)
 
 fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
     if (depend != null) {
-        return if (depend.actionType == 1 || depend.actionId == actionId) {
+        return if (targetAssignment == 1 && depend.actionType == 17 && depend.actionDetail1 == 14) {
+            getDependMultiTarget(D.Format(R.string.target_attacking_enemy))
+        } else if (depend.actionType == 1 || depend.actionId == actionId) {
             getDependMultiTarget(D.Format(R.string.target_damaged))
         } else if (depend.targetType in arrayOf(2, 8) && depend.actionType !in arrayOf(26, 27, 74)) {
             getDependMultiTarget(D.Format(R.string.target_randomized))
@@ -61,7 +75,11 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             if (depend.targetCount > 1) {
                 getDependMultiTarget(D.Format(R.string.target_eligible))
             } else if (depend.depend != null) {
-                getDependMultiTarget(depend.getTarget(depend.depend!!.copy(actionType = 23), focused))
+                if (depend.targetAssignment == 1 && depend.depend!!.actionType == 17 && depend.depend!!.actionDetail1 == 14) {
+                    depend.getTarget(depend.depend, focused)
+                } else {
+                    getDependMultiTarget(depend.getTarget(depend.depend!!.copy(actionType = 23), focused))
+                }
             } else {
                 getDependMultiTarget(depend.getTarget(null, focused))
             }
@@ -307,7 +325,9 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                 in energyTypes -> R.string.energy
                 in atkTypes -> R.string.atk
                 in magicStrTypes -> R.string.magic_str
-                else -> R.string.atk_or_magic_str//in atkOrMagicStrTypes
+                in atkOrMagicStrTypes -> R.string.atk_or_magic_str
+                in defTypes -> R.string.def
+                else -> R.string.magic_def//in magicDefTypes
             }
             val mostTarget = D.Format(
                 R.string.target_most_content1_extent2_assignment_count3,
@@ -528,7 +548,8 @@ private fun SkillAction.isFullRangeTarget(): Boolean {
     return targetRange <= 0 || targetRange >= 2160
 }
 
-private fun SkillAction.checkDependChain(depend: SkillAction): Boolean {
+/** 检测依赖是否正常 */
+fun SkillAction.checkDependChain(depend: SkillAction): Boolean {
     var temp = depend
     val list = mutableListOf<Int>()
     list.add(actionId)

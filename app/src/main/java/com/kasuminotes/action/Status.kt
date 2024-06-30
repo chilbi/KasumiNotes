@@ -10,11 +10,30 @@ fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property:
     val contentDesc = arr[0]!!
     val timeDesc = D.Format(R.string.action_time1, arrayOf(arr[1]!!))
     val constDesc = arr[2]
-    return if (constDesc == null) {
+    val desc = if (constDesc == null) {
         D.Join(arrayOf(contentDesc, timeDesc))
     } else {
         D.Join(arrayOf(contentDesc, timeDesc, constDesc))
     }
+    return if (actionType == 115) {
+        val content = D.Format(
+            if (isStatusUp()) R.string.give_up_amount_content1
+            else R.string.give_down_amount_content1,
+            arrayOf(getStatusContent(actionDetail1 / 10))
+        )
+        val formula = D.Format(R.string.formula_m1, arrayOf(
+            D.Format(R.string.count_state1, arrayOf(getStateContent(actionDetail2, actionId)))
+        ))
+        D.Join(arrayOf(
+            desc,
+            D.Format(
+                R.string.action_multiply_content1_formula2,
+                arrayOf(content, formula)
+            ),
+            D.Format(R.string.full_stop)
+        ))
+    }
+    else desc
 }
 
 fun SkillAction.isStatusPercent(): Boolean {

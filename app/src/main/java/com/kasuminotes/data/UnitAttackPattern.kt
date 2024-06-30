@@ -38,11 +38,20 @@ data class UnitAttackPattern(
             atkLabel = Label.a
         } else {
             val n = atkPattern % 10
-            val isEvolution = (hasUnique1 && n == 1) || (hasUnique2 && n == 2)
+            var isEvolution = (hasUnique1 && n == 1) || (hasUnique2 && n == 2)
             val isSP = atkPattern > 2000
             val skillList = if (isEvolution) {
-                if (isSP) unitSkillData.spSkillEvolutionList
-                else unitSkillData.mainSkillEvolutionList
+                if (isSP) {
+                    unitSkillData.spSkillEvolutionList.ifEmpty {
+                        isEvolution = false
+                        unitSkillData.spSkillList
+                    }
+                } else {
+                    unitSkillData.mainSkillEvolutionList.ifEmpty {
+                        isEvolution = false
+                        unitSkillData.mainSkillList
+                    }
+                }
             } else {
                 if (isSP) unitSkillData.spSkillList
                 else unitSkillData.mainSkillList

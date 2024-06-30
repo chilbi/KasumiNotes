@@ -184,6 +184,7 @@
     <string name="action_focus_front_target1">%sから</string>
     <string name="action_ex_passive_content1_formula2">バトル開始時に自分の%1$sを%2$sアップさせる、効果時間90秒。</string>
     <string name="action_damage_target1_formula2_content3">%1$sに%2$sの%3$sダメージを与える。</string>
+    <string name="action_max_ratio_damage1">（最大%sまでのダメージを与える）</string>
     <string name="action_damage_must_hit">この攻撃は必ず命中する。</string>
     <string name="action_damage_must_critical">この攻撃の１ヒットのダメージは必ずクリティカルする。</string>
     <string name="action_damage_must_hit_and_critical">この攻撃は必ず命中し、１ヒットのダメージは必ずクリティカルする。</string>
@@ -234,6 +235,7 @@
     <string name="action_trigger_battle_began_passed_time1">バトル開始後%s秒経過時に発動する。</string>
     <string name="action_trigger_stealth">潜伏状態時に発動する。</string>
     <string name="action_trigger_break">Break状態時に発動する。</string>
+    <string name="action_trigger_be_harmed_target1">%sが敵からダメージを受けた時に発動する。</string>
     <string name="action_trigger_all_break">全ターゲットがBreakの時に発動する。</string>
     <string name="action_destroy_target1">%sを戦闘不能状態にする。</string>
     <string name="action_accumulative_damage_formula1_tier2">敵を攻撃する度に、その敵に与えるダメージを%1$s増加させる。この効果は最大%2$s回まで累積する。</string>
@@ -288,6 +290,7 @@
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける（毎回最大%3$sダメージを受ける）、効果時間%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">%1$sのいる環境を【%2$s】にする、効果時間%3$s秒。</string>
     <string name="action_total_critical_target1">このスキルのクリティカルは%sの物理と魔法クリティカルの値を合わせる。</string>
+    <string name="action_triggered_when_attacked_target1_state2_count3_time4_cut5">%1$sに【%2$s】を%3$sを追加する、効果時間%4$s秒。\n付与される間、味方全体が敵から受けるダメージを%5$s軽減する。\n味方が敵からダメージを受ける度、【%2$s】を１つ消費し、同時に以下の効果を発動する：</string>
 
     <string name="action_branch_and">且つ</string>
     <string name="action_branch_status_up_target1_max2">%1$sがステータスアップ効果を受ける度に（最大%2$s回）、</string>
@@ -439,6 +442,9 @@
     <string name="state_flower_trick">フラワートリック</string>
     <string name="state_poison_flick">ポイズンフリック</string>
     <string name="state_kababankun">かばばん君</string>
+    <string name="state_nebaneba">ネバネバ</string>
+    <string name="state_iron_guard">鉄気ノ護リ</string>
+    <string name="state_boumajin">防魔塵</string>
     <string name="state_curtain_call">カーテンコール</string>
 
     <string name="target">対象</string>
@@ -510,6 +516,7 @@
     <string name="formula_lv1_result2">{ %1$s × スキルLv } = %2$s</string>
     <string name="formula_atk1_plus2_type3_result4">{ (%1$s + %2$s × スキルLv) × %3$s } = %4$s</string>
     <string name="formula_atk1_type2_result3">{ %1$s × %2$s } = %3$s</string>
+    <string name="formula_m1">{ %s }</string>
     <string name="formula_m1_m2">{ %1$s × %2$s }</string>
     <string name="formula_m1_m2_m3">{ %1$s × %2$s × %3$s }</string>
     <string name="formula_m1_m2_m3_m4">{ %1$s × %2$s × %3$s × %4$s }</string>

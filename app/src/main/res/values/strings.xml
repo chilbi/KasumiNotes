@@ -184,6 +184,7 @@
     <string name="action_focus_front_target1">%s的</string>
     <string name="action_ex_passive_content1_formula2">战斗开始时自身的%1$s提升%2$s，效果时间90秒。</string>
     <string name="action_damage_target1_formula2_content3">对%1$s造成%2$s%3$s伤害。</string>
+    <string name="action_max_ratio_damage1">（最多造成%s伤害）</string>
     <string name="action_damage_must_hit">此攻击必定命中。</string>
     <string name="action_damage_must_critical">此攻击的第1击的伤害必定暴击。</string>
     <string name="action_damage_must_hit_and_critical">此攻击必定命中，且第1击的伤害必定暴击。</string>
@@ -235,6 +236,7 @@
     <string name="action_trigger_stealth">潜伏状态时发动。</string>
     <string name="action_trigger_break">Break状态时发动。</string>
     <string name="action_trigger_all_break">所有目标Break时发动。</string>
+    <string name="action_trigger_be_harmed_target1">%s受到敌人的伤害时发动。</string>
     <string name="action_destroy_target1">使%s陷入无法战斗状态。</string>
     <string name="action_accumulative_damage_formula1_tier2">每当对敌人进行攻击，对该敌人造成的伤害便会提升%1$s。此效果最多叠加%2$s次。</string>
     <string name="action_barrier_guard_target1_formula2_content3_time4">对%1$s展开可无效%2$s%3$s伤害的护盾，效果时间%4$s秒。</string>
@@ -288,6 +290,7 @@
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$s每次行动时都会受到最大HP的%2$s伤害（每次最多受到%3$s伤害），效果时间%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">使%1$s处于【%2$s】环境，效果时间%3$s秒。</string>
     <string name="action_total_critical_target1">此技能的暴击值为%s的物理和魔法暴击的合计值。</string>
+    <string name="action_triggered_when_attacked_target1_state2_count3_time4_cut5">为%1$s追加%3$s个【%2$s】，效果时间%4$s秒。\n赋予期间，己方全体受到敌人的伤害减少%5$s。\n每当己方受到敌人的伤害时，消耗1个【%2$s】，同时发动以下效果：</string>
 
     <string name="action_branch_and">且</string>
     <string name="action_branch_status_up_target1_max2">每当%1$s受到状态提升时（最多%2$s次），</string>
@@ -440,6 +443,9 @@
     <string name="state_flower_trick">花陷阱</string>
     <string name="state_poison_flick">毒击</string>
     <string name="state_kababankun">かばばん君</string>
+    <string name="state_nebaneba">黏黏糊糊</string>
+    <string name="state_iron_guard">铁气的护卫</string>
+    <string name="state_boumajin">防魔塵</string>
     <string name="state_curtain_call">谢幕</string>
 
     <string name="target">对象</string>
@@ -511,6 +517,7 @@
     <string name="formula_lv1_result2">{ %1$s × 技能等级 } = %2$s</string>
     <string name="formula_atk1_plus2_type3_result4">{ (%1$s + %2$s × 技能等级) × %3$s } = %4$s</string>
     <string name="formula_atk1_type2_result3">{ %1$s × %2$s } = %3$s</string>
+    <string name="formula_m1">{ %s }</string>
     <string name="formula_m1_m2">{ %1$s × %2$s }</string>
     <string name="formula_m1_m2_m3">{ %1$s × %2$s × %3$s }</string>
     <string name="formula_m1_m2_m3_m4">{ %1$s × %2$s × %3$s × %4$s }</string>
