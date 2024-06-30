@@ -21,8 +21,8 @@ class ActionBuilder(
             } else if (index != 0 && action.targetAssignment == 1 && isTriggerBeHarmed) {
                 action.depend = actions[0]
             }
-            originList.add(action.getDescription(skillLevel, property))
         }
+        actions.forEach { action -> originList.add(action.getDescription(skillLevel, property)) }
 
         val branchModify = ModifyDescription(rawDepends, actions)
         val ignoreProvocationModify = ModifyDescription(rawDepends, actions)
