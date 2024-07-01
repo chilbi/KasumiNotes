@@ -193,6 +193,8 @@
     <string name="action_damage_base_atk1_target2">此攻击以%2$s的%1$s为基础造成伤害。</string>
     <string name="action_move_target1">移动到%s的面前。</string>
     <string name="action_move_velocity1_target2_distance3">以%1$s的速度移动到%2$s的前方%3$s距离的位置。</string>
+    <string name="action_move_forward_distance1">移动到前方%s距离的位置。</string>
+    <string name="aciton_move_backward_distance1">移动到后方%s距离的位置。</string>
     <string name="action_move_return">技能结束后回到原来的位置。</string>
     <string name="action_move_part1_distance2">使部位%1$s向前移动%2$s距离，随后使其回到原来的位置。</string>
     <string name ="action_time1">，效果时间%s秒。</string>
@@ -232,8 +234,10 @@
     <string name="action_life_steal_target1_formula2">赋予%1$s下次攻击提升%2$sHP吸收效果。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">赋予%1$s每秒回复%2$s%3$s的持续%2$s回复状态，效果时间%4$s秒。</string>
     <string name="action_trigger_hp_target1_formula2">当%1$s的HP低于最大HP的%2$s时发动。</string>
+    <string name="action_trigger_dead">死亡时发动。</string>
     <string name="action_trigger_battle_beginning">战斗开始时发动。</string>
     <string name="action_trigger_battle_began_passed_time1">战斗开始后经过%s秒时发动。</string>
+    <string name="action_trigger_battle_remaining_time1">战斗时间剩余%s秒时发动。</string>
     <string name="action_trigger_stealth">潜伏状态时发动。</string>
     <string name="action_trigger_break">Break状态时发动。</string>
     <string name="action_trigger_all_break">所有目标Break时发动。</string>
@@ -280,6 +284,7 @@
     <string name="action_summon_target1_content2">在%1$s身边，%2$s。</string>
     <string name="action_passive_battle_beginning">战斗开始时</string>
     <string name="action_passive_battle_began_passed_time1">战斗开始后经过%s秒时</string>
+    <string name="action_passive_battle_remaining_time1">战斗时间剩余%s秒时</string>
     <string name="action_damage_attenuation_target1_limit2_time3_n4_r5_n6_r7_n8_r9">对%1$s展开限制盾，受到每个动作的伤害超过%2$s万时，伤害将会被衰减，效果时间%3$s秒。\nf(%4$s万)=%5$s万; f(%6$s万)=%7$s万; f(%8$s万)=%9$s万</string>
     <string name="action_stealth_time1">进入潜伏状态，效果时间%s秒。</string>
     <string name="action_ignore_provocation">无视挑衅，</string>
@@ -292,6 +297,9 @@
     <string name="action_environment_target1_content2_time3">使%1$s处于【%2$s】环境，效果时间%3$s秒。</string>
     <string name="action_total_critical_target1">此技能的暴击值为%s的物理和魔法暴击的合计值。</string>
     <string name="action_triggered_when_attacked_target1_state2_count3_time4_cut5">为%1$s追加%3$s个【%2$s】，效果时间%4$s秒。\n赋予期间，己方全体受到敌人的伤害减少%5$s。\n每当己方受到敌人的伤害时，消耗1个【%2$s】，同时发动以下效果：</string>
+    <string name="action_change_body_width1_target2">使%2$s的模型宽度变为%1$s。</string>
+    <string name="action_change_body_width1_target2_num3">使%2$s的目标%3$s的模型宽度变为%1$s。</string>
+    <string name="action_revival_target1_hp2">使%1$s复活，HP回复%2$s。</string>
 
     <string name="action_branch_and">且</string>
     <string name="action_branch_status_up_target1_max2">每当%1$s受到状态提升时（最多%2$s次），</string>
@@ -299,6 +307,8 @@
     <string name="action_branch_controled_time1">%s秒的动作期间内受到行动不能、击飞、拉近时，</string>
     <string name="action_branch_exists_field_content1">%s的领域展开时，</string>
     <string name="action_branch_not_exists_field_content1">%s的领域没有展开时，</string>
+    <string name="action_branch_damage_received_time1_value2">%1$s秒期间累计受到伤害不超过%2$s时，</string>
+    <string name="action_branch_not_damage_received_time1_value2">%1$s秒期间累计受到伤害超过%2$s时，</string>
     <string name="action_branch_have_target1_state2">%1$s持有【%2$s】时，</string>
     <string name="action_branch_not_have_target1_state2">%1$s未持有【%2$s】时，</string>
     <string name="action_branch_target1_state2_above3">%1$s的【%2$s】的数量≧%3$s时，</string>
@@ -340,7 +350,7 @@
     <string name="action_branch_target1_environment2">%1$s处于【%2$s】环境时，</string>
     <string name="action_branch_not_target1_environment2">%1$s不处于【%2$s】环境时，</string>
 
-    <string name="summon_id1">召唤【召唤物%s】</string>
+    <string name="summon_id1">召唤【%s】</string>
     <string name="summon_403101">召唤一个能够攻击前方一名敌人的骷髅老爹</string>
     <string name="summon_403102">召唤一个能够攻击前方一名敌人的骷髅老爹（各种状态得到提升）</string>
     <string name="summon_404201">咏唱召唤一个能够攻击前方一名敌人的精灵</string>
@@ -356,14 +366,13 @@
     <string name="summon_426202">召唤眷属(426202)</string>
     <string name="summon_427101">召唤骷髅老爹(427101)</string>
 
-    <string name="summon_unknown_id1">【召唤物%s】</string>
+    <string name="summon_unknown_id1">【%s】</string>
     <string name="summon_ore_dragon">矿石飞龙</string>
     <string name="summon_shadow_425801">暗影(425801)</string>
     <string name="summon_shadow_425802">暗影(425802)</string>
     <string name="summon_family_426201">眷属(426201)</string>
     <string name="summon_family_426202">眷属(426202)</string>
     <string name="summon_skull_427101">骷髅老爹(427101)</string>
-
 
     <string name="mode_id1">自身变化为姿态(%s)，</string>
     <string name="mode_return">自身恢复为原来的姿态，</string>
@@ -382,6 +391,7 @@
     <string name="content_attack_hit_target1">每当%s的攻击命中敌人时，就会为自身</string>
     <string name="content_attack_critical_target1">每当%s的攻击暴击时，就会为自身</string>
     <string name="content_status_up_target1">每当%s受到状态提升时，就会为自身</string>
+    <string name="content_damage_received_target1">每当%s受到伤害时，就会为自身</string>
     <string name="content_initial_value1">初始值的%s</string>
     <string name="content_lower_defense">物理、魔法防御力中较低一方的防御力作为防御的</string>
     <string name="content_disregard_def1_value_2">无视%2$s%1$s的</string>

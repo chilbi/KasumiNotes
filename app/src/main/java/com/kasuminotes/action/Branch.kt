@@ -9,6 +9,7 @@ fun SkillAction.getBranch(): Array<Pair<Int, D>> {
         28 -> getNoDependBranch()
         42 -> getCounterBranch()
         53 -> getExistsFieldBranch()
+        63 -> getDamageReceivedBranch()
         111 -> getStatusUpBranch()
         else -> emptyArray()
     }
@@ -282,7 +283,7 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         }
         // ランファ
         720 -> {
-            val summon = getSummonText(actionValue3.toInt())
+            val summon = getUnitName(actionValue3.toInt())
             setBranch(
                 branch,
                 D.Format(R.string.action_branch_exist_summon1, arrayOf(summon)),
@@ -384,6 +385,18 @@ private fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
         branch,
         D.Format(R.string.action_branch_exists_field_content1, arrayOf(content)),
         D.Format(R.string.action_branch_not_exists_field_content1, arrayOf(content))
+    )
+    return branch.toTypedArray()
+}
+
+private fun SkillAction.getDamageReceivedBranch(): Array<Pair<Int, D>> {
+    val branch = mutableListOf<Pair<Int, D>>()
+    val time = D.Text(actionValue2.toNumStr())
+    val value = D.Text(actionValue3.toNumStr())
+    setBranch(
+        branch,
+        D.Format(R.string.action_branch_damage_received_time1_value2, arrayOf(time, value)),
+        D.Format(R.string.action_branch_not_damage_received_time1_value2, arrayOf(time, value))
     )
     return branch.toTypedArray()
 }

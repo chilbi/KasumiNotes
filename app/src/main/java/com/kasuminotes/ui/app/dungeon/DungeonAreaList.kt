@@ -1,5 +1,6 @@
 package com.kasuminotes.ui.app.dungeon
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.data.DungeonAreaData
@@ -96,18 +98,29 @@ private fun DungeonAreaListItem(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                var secondaryText = ""
-                if (dungeonAreaData.mode != 0) {
-                    secondaryText += "M${dungeonAreaData.mode}"
-                }
-                if (dungeonAreaData.pattern != 0) {
-                    secondaryText += "P${dungeonAreaData.pattern}"
-                }
                 Text(
-                    text = secondaryText,
+                    text = dungeonAreaData.unitId.toString(),
                     color = LocalContentColor.current.copy(0.75f),
                     style = MaterialTheme.typography.titleSmall
                 )
+                var modeOrPattern = ""
+                if (dungeonAreaData.mode != 0) {
+                    modeOrPattern += "Mode${dungeonAreaData.mode}"
+                }
+                if (dungeonAreaData.pattern != 0) {
+                    modeOrPattern += "Pattern${dungeonAreaData.pattern}"
+                }
+                if ( modeOrPattern != "") {
+                    Text(
+                        text =  modeOrPattern,
+                        modifier = Modifier
+                            .padding(start = 2.dp)
+                            .background(MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.shapes.small)
+                            .padding(horizontal = 4.dp),
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
                 weaknessList?.forEachIndexed { index, weakness ->
                     if (weakness > 100) {
                         UnitElement(

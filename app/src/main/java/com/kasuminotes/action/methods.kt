@@ -249,7 +249,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
     }
 }
 
-fun getSummonText(id: Int): D {
+fun getUnitName(id: Int): D {
     return when (id) {
         418101 -> D.Format(R.string.summon_ore_dragon)
         425801 -> D.Format(R.string.summon_shadow_425801)

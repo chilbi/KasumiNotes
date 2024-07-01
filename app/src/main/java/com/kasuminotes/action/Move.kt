@@ -2,6 +2,7 @@ package com.kasuminotes.action
 
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
+import kotlin.math.absoluteValue
 
 fun SkillAction.getMove(): D {
     return when (actionDetail1) {
@@ -30,6 +31,13 @@ fun SkillAction.getMove(): D {
                     getTarget(depend),
                     D.Text(actionValue1.toNumStr())
                 )
+            )
+        }
+        7 -> {
+            D.Format(
+                if (actionValue1 > 0.0) R.string.action_move_forward_distance1
+                else R.string.aciton_move_backward_distance1,
+                arrayOf(D.Text(actionValue1.absoluteValue.toNumStr()))
             )
         }
         else -> getUnknown()

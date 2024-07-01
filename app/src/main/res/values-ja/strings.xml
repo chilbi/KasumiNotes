@@ -193,6 +193,8 @@
     <string name="action_damage_base_atk1_target2">この攻撃は%2$sの%1$sをもとにしたダメージを与える。</string>
     <string name="action_move_target1">%sの目の前に移動する。</string>
     <string name="action_move_velocity1_target2_distance3">%1$sの速度で%2$sの前の%3$s距離の位置に移動する。</string>
+    <string name="action_move_forward_distance1">前方%s距離の位置に移動する。</string>
+    <string name="aciton_move_backward_distance1">後方%s距離の位置に移動する。</string>
     <string name="action_move_return">スキル終了後もとの位置に戻る。</string>
     <string name="action_move_part1_distance2">部位%1$sを%2$s距離前へ移動させ、その後元の位置に戻させる。</string>
     <string name="action_time1">、効果時間%s秒。</string>
@@ -232,8 +234,10 @@
     <string name="action_life_steal_target1_formula2">%1$sの次の攻撃に%2$sＨＰ吸収をアップさせる効果を付与する。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">%1$sに毎秒%2$sを%3$s回復する継続%2$s回復状態を付与する、効果時間%4$s秒。</string>
     <string name="action_trigger_hp_target1_formula2">%1$sのＨＰが最大のＨＰの%2$s以下になった時に発動する。</string>
+    <string name="action_trigger_dead">死亡時に発動する。</string>
     <string name="action_trigger_battle_beginning">バトル開始時に発動する。</string>
     <string name="action_trigger_battle_began_passed_time1">バトル開始後%s秒経過時に発動する。</string>
+    <string name="action_trigger_battle_remaining_time1">バトルの残り時間が%s秒を切る時に発動する。</string>
     <string name="action_trigger_stealth">潜伏状態時に発動する。</string>
     <string name="action_trigger_break">Break状態時に発動する。</string>
     <string name="action_trigger_be_harmed_target1">%sが敵からダメージを受けた時に発動する。</string>
@@ -280,6 +284,7 @@
     <string name="action_summon_target1_content2">%1$sのそばに、%2$s。</string>
     <string name="action_passive_battle_beginning">バトル開始時に</string>
     <string name="action_passive_battle_began_passed_time1">バトル開始後%s秒経過時に</string>
+    <string name="action_passive_battle_remaining_time1">バトルの残り時間が%s秒を切る時に</string>
     <string name="action_damage_attenuation_target1_limit2_time3_n4_r5_n6_r7_n8_r9">%1$sにリミットバリアを展開し、アクション毎に受けたダメージが%2$s万を超えた時、ダメージが減衰される、効果時間%3$s秒。\nf(%4$s万)=%5$s万; f(%6$s万)=%7$s万; f(%8$s万)=%9$s万</string>
     <string name="action_stealth_time1">潜伏状態に入る、効果時間%s秒。</string>
     <string name="action_ignore_provocation">挑発を無視して、</string>
@@ -292,6 +297,9 @@
     <string name="action_environment_target1_content2_time3">%1$sのいる環境を【%2$s】にする、効果時間%3$s秒。</string>
     <string name="action_total_critical_target1">このスキルのクリティカルは%sの物理と魔法クリティカルの値を合わせる。</string>
     <string name="action_triggered_when_attacked_target1_state2_count3_time4_cut5">%1$sに【%2$s】を%3$sを追加する、効果時間%4$s秒。\n付与される間、味方全体が敵から受けるダメージを%5$s軽減する。\n味方が敵からダメージを受ける度、【%2$s】を１つ消費し、同時に以下の効果を発動する：</string>
+    <string name="action_change_body_width1_target2">%2$sのモデルの幅を%1$sにする。</string>
+    <string name="action_change_body_width1_target2_num3">%2$sのターゲット%3$sのモデルの幅を%1$sにする。</string>
+    <string name="action_revival_target1_hp2">%1$sを復活させ、ＨＰを%2$s回復させる。</string>
 
     <string name="action_branch_and">且つ</string>
     <string name="action_branch_status_up_target1_max2">%1$sがステータスアップ効果を受ける度に（最大%2$s回）、</string>
@@ -299,6 +307,8 @@
     <string name="action_branch_controled_time1">%s秒のモーションの間に行動不能、吹き飛ばし、引き寄せを受けた場合、</string>
     <string name="action_branch_exists_field_content1">%sのフィールド展開中場合、</string>
     <string name="action_branch_not_exists_field_content1">%sのフィールド展開中でない場合、</string>
+    <string name="action_branch_damage_received_time1_value2">%1$s秒の間に累計受けたダメージが%2$sを超えた場合、</string>
+    <string name="action_branch_not_damage_received_time1_value2">%1$s秒の間に累計受けたダメージが%2$sを超えなかった場合、</string>
     <string name="action_branch_have_target1_state2">%1$sが【%2$s】を持っている場合、</string>
     <string name="action_branch_not_have_target1_state2">%1$sが【%2$s】を持っていない場合、</string>
     <string name="action_branch_target1_state2_above3">%1$sの【%2$s】の数が≧%3$sの場合、</string>
@@ -340,7 +350,7 @@
     <string name="action_branch_target1_environment2">%1$sが【%2$s】環境にいる場合、</string>
     <string name="action_branch_not_target1_environment2">%1$sが【%2$s】環境にいない場合、</string>
 
-    <string name="summon_id1">【召喚物%s】を召喚する</string>
+    <string name="summon_id1">【%s】を召喚する</string>
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
     <string name="summon_403102">目の前の敵１キャラを攻撃するドクロ父親（各種のステータスがアップする）を召喚する</string>
     <string name="summon_404201">目の前の敵１キャラを攻撃する精霊を唱喚する</string>
@@ -356,7 +366,7 @@
     <string name="summon_426202">眷属(426202)を召喚する</string>
     <string name="summon_427101">ドクロ親父(427101)を召喚する</string>
 
-    <string name="summon_unknown_id1">【召喚物%s】</string>
+    <string name="summon_unknown_id1">【%s】</string>
     <string name="summon_ore_dragon">ネフライトワイバーン</string>
     <string name="summon_shadow_425801">シャドウ(425801)</string>
     <string name="summon_shadow_425802">シャドウ(425802)</string>
@@ -381,6 +391,7 @@
     <string name="content_attack_hit_target1">%sの攻撃が敵に当たる度に、自分</string>
     <string name="content_attack_critical_target1">%sの攻撃がクリティカルでダメージを与える度に、自分</string>
     <string name="content_status_up_target1">%sがステータスアップ効果を受ける度に、自分</string>
+    <string name="content_damage_received_target1">%sがダメージを受ける度に、自分</string>
     <string name="content_initial_value1">初期値の%s</string>
     <string name="content_lower_defense">低い側の防御力で防御する</string>
     <string name="content_disregard_def1_value_2">%1$sを%2$sを無視する</string>

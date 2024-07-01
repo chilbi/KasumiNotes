@@ -37,9 +37,9 @@ data class UnitAttackPattern(
             iconUrl = UrlUtil.getAtkIconUrl(atkType)
             atkLabel = Label.a
         } else {
-            val n = atkPattern % 10
-            var isEvolution = (hasUnique1 && n == 1) || (hasUnique2 && n == 2)
             val isSP = atkPattern > 2000
+            val n = if (isSP) atkPattern - 2000 else atkPattern - 1000
+            var isEvolution = (hasUnique1 && n == 1) || (hasUnique2 && n == 2)
             val skillList = if (isEvolution) {
                 if (isSP) {
                     unitSkillData.spSkillEvolutionList.ifEmpty {

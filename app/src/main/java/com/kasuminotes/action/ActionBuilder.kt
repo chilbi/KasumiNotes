@@ -32,8 +32,8 @@ class ActionBuilder(
             if (action.depend != null && !action.checkDependChain(action.depend!!)) {
                 willRemoveIndexList.add(index)
             }
-            /** [getTargetFocus], 94 [getUnknown] */
-            if (action.actionType in arrayOf(7, 94)) {
+            /** [getTargetFocus],82,94 [getUnknown] */
+            if (action.actionType in arrayOf(7, 82, 94)) {
                 willRemoveIndexList.add(index)
             }
             /** [getSustainDamage] */
@@ -135,7 +135,7 @@ class ActionBuilder(
                 originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
             }
             /** [getBranch] */
-            if (action.actionType in arrayOf(23, 28, 42, 53, 111)) {
+            if (action.actionType in arrayOf(23, 28, 42, 53, 63, 111)) {
                 val branch = action.getBranch()
                 if (branch.isEmpty()) {
                     if (action.actionDetail2 == 0 && action.actionDetail3 == 0) {
@@ -206,7 +206,8 @@ class ActionBuilder(
             20 -> getProvoke(skillLevel)
             21 -> getNoDamage(skillLevel)
             22 -> getChangePattern()
-            23, 28, 42, 53, 111 -> D.Unknown/** [getBranch] */
+            23, 28, 42, 53, 63, 111 -> D.Unknown/** [getBranch] */
+            24 -> getRevival()
             26, 27, 74 -> getGiveValue(skillLevel, actions)
             30 -> getDestroy()
             32 -> getLifeSteal(skillLevel)
@@ -223,6 +224,7 @@ class ActionBuilder(
             48 -> getRegeneration(skillLevel, property)
             49 -> getDispel()
             50 -> getSustainStatus(skillLevel)
+            52 -> getChangeBodyWidth()
             54 -> getStealth()
             55 -> getMoveParts()
             56 -> getBlind()
@@ -237,6 +239,7 @@ class ActionBuilder(
             75 -> getHitCount()
             78 -> getPassiveDamageUp()
             79 -> getFixedDamage()
+            82 -> D.Unknown
             83 -> getSpeedOverlay()
             92 -> D.Unknown/** [getInjuredEnergy] */
             93 -> D.Unknown/** [getIgnoreProvocation] */

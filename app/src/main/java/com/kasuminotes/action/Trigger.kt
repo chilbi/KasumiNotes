@@ -14,12 +14,13 @@ fun SkillAction.getTrigger(): D {
                 )
             )
         }
+        4 -> D.Format(R.string.action_trigger_dead)
         7 -> {
             if (actionValue3 == 90.0) {
                 D.Format(R.string.action_trigger_battle_beginning)
             } else {
                 D.Format(
-                    R.string.action_trigger_battle_began_passed_time1,
+                    R.string.action_trigger_battle_remaining_time1,
                     arrayOf(D.Text(actionValue3.toNumStr()))
                 )
             }

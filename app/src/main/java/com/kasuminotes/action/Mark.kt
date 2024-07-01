@@ -15,8 +15,12 @@ fun SkillAction.getMark(): D {
                     R.string.content_attack_hit_target1
                 }
             }
-        } else {//アキノ（クリスマス）、ユキ（儀装束）、アン＆グレア
-            R.string.content_status_up_target1
+        } else {//actionType == 77
+            if (actionDetail1 == 1) {//アキノ（クリスマス）、ユキ（儀装束）、アン＆グレア
+                R.string.content_status_up_target1
+            } else {//ゴブリンメイスター
+                R.string.content_damage_received_target1
+            }
         },
         arrayOf(getTarget(depend))
     )
