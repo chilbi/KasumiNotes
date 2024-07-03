@@ -276,7 +276,7 @@
     <string name="action_no_injured_energy">由此动作造成的伤害不回复TP。</string>
     <string name="action_hiding_target1_time2">赋予%1$s隐密状态，效果时间%2$s秒。</string>
     <string name="action_injured_energy1_mark2_add3_max4_time5_target6">赋予%6$s%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。【%2$s】在受到伤害时就会消耗1个，同时TP回复%1$s。</string>
-    <string name="action_hp_recovery_down_target1_formula2_time3">%1$s的HP回复量减少%2$s，效果时间%3$s秒。</string>
+    <string name="action_hp_recovery_down_target1_formula2_time3">%1$s的HP回复量降低%2$s，效果时间%3$s秒。</string>
     <string name="action_odds1">%s概率</string>
     <string name="action_dispel_target1_content2">解除%1$s的%2$s。</string>
     <string name="action_summon_target1_front_distance2_content3">在%1$s的前方%2$s距离，%3$s。</string>
@@ -604,6 +604,7 @@
     <string name="give_critical_damage">暴击伤害量</string>
     <string name="give_disregard_def_type1">无视%s防御力</string>
     <string name="give_hp_recovery">HP的回复量</string>
+    <string name="give_hp_recovery_down">HP回复的降低量</string>
 <!--    <string name="give_hp_decrement">HP的降低量</string>-->
     <string name="give_energy_recovery">TP的回复量</string>
     <string name="give_energy_decrement">TP的降低量</string>

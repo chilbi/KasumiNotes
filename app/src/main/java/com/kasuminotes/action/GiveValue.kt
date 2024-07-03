@@ -234,6 +234,8 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
             if (targetAction.actionDetail2 == 1) R.string.give_hp_regeneration
             else R.string.give_energy_regeneration
         )
+        59 -> if (actionDetail2 == 1) D.Format(R.string.give_hp_recovery_down)
+        else D.Format(R.string.give_time)
         else -> D.Unknown
     }
 }
@@ -287,6 +289,7 @@ private fun SkillAction.getGiveValueFormula(
             3 -> getAtkType(targetAction.actionDetail1)
             else -> D.Unknown
         }
+        59 -> null
         else -> D.Unknown
     }
     val nonNullElements = listOfNotNull(

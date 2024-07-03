@@ -9,7 +9,7 @@ fun SkillAction.getHpRecoveryDown(): D {
         arrayOf(
             getTarget(depend),
             D.Text("${(actionValue1 * 100).toNumStr()}%"),
-            D.Text(actionValue2.toNumStr())
+            D.Text((if (actionValue2 == 0.0) actionValue3 else actionValue2).toNumStr())
         )
     )
 }
