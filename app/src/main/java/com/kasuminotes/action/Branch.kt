@@ -341,15 +341,16 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         }
         // スズメ
         in 1..99 -> {
+            val event = (actionId % 10).toString()
             setBranch(
                 branch,
                 D.Format(
-                    R.string.action_branch_success_odds1,
-                    arrayOf(D.Text("${actionDetail1}%"))
+                    R.string.action_branch_success_odds1_event2,
+                    arrayOf(D.Text("${actionDetail1}%"), D.Text(event))
                 ),
                 D.Format(
-                    R.string.action_branch_failure_odds1,
-                    arrayOf(D.Text("${100 - actionDetail1}%"))
+                    R.string.action_branch_failure_odds1_event2,
+                    arrayOf(D.Text("${100 - actionDetail1}%"), D.Text(event))
                 )
             )
         }

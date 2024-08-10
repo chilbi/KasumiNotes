@@ -319,7 +319,7 @@ private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction):
             if (targetAction.actionType == 1 && actionDetail2 == 6) {
                 D.Text("${(actionValue4 * 100).toNumStr()}%")
             } else if (
-                (targetAction.actionType == 10 && (targetAction.actionDetail1 == 141 || targetAction.actionValue1 == 2.0)) ||
+                (targetAction.actionType == 10 && targetAction.isStatusPercent()) ||
                 targetAction.actionType == 46
             ) {
                 D.Text("${actionValue4.toNumStr()}%")

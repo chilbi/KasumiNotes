@@ -333,8 +333,8 @@
     <string name="action_branch_not_critical">此技能没有暴击时，</string>
     <string name="action_branch_physical_target1">%s是使用物理攻击的角色时，</string>
     <string name="action_branch_magic_target1">%s是使用魔法攻击的角色时，</string>
-    <string name="action_branch_success_odds1">%s概率成功，成功时，</string>
-    <string name="action_branch_failure_odds1">%s概率失败，失败时，</string>
+    <string name="action_branch_success_odds1_event2">[%1$s]事件%2$s成功时，</string>
+    <string name="action_branch_failure_odds1_event2">[%1$s]事件%2$s失败时，</string>
     <string name="action_branch_exist_summon1">%s已存在己方场上时，</string>
     <string name="action_branch_not_exist_summon1">%s不存在己方场上时，</string>
     <string name="action_branch_status_change_target1_content2_">%1$s在此技能发动时已处于%2$s状态时，</string>
@@ -457,6 +457,7 @@
     <string name="state_nebaneba">黏黏糊糊</string>
     <string name="state_iron_guard">铁气的护卫</string>
     <string name="state_boumajin">妨魔塵</string>
+    <string name="state_storm">PSI★猛攻</string>
     <string name="state_curtain_call">谢幕</string>
 
     <string name="target">对象</string>
@@ -574,9 +575,11 @@
     <string name="silence">沉默</string>
     <string name="invincible">无敌</string>
     <string name="physical_invalid">回避所有的物理攻击的</string>
+    <string name="magic_invalid">回避所有的魔法攻击的</string>
     <string name="break_immunity">Break免疫</string>
     <string name="provoke">挑衅</string>
     <string name="fear">恐慌</string>
+    <string name="persistence">执着</string>
     <string name="harmed_remove_content1">%s只当受到攻击时才能解除。</string>
 
     <string name="max_hp">最大HP</string>

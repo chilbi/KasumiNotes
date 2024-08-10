@@ -255,6 +255,7 @@ class ActionBuilder(
             107 -> getTotalCritical()
             110 -> getDotDamageUp()
             114 -> getTriggeredWhenAttacked()
+            116 -> getPersistence(skillLevel)
             else -> getUnknown()
         }
     }
