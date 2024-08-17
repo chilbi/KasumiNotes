@@ -16,10 +16,10 @@ fun SkillAction.getMark(): D {
                 }
             }
         } else {//actionType == 77
-            if (actionDetail1 == 1) {//アキノ（クリスマス）、ユキ（儀装束）、アン＆グレア
-                R.string.content_status_up_target1
-            } else {//ゴブリンメイスター
-                R.string.content_damage_received_target1
+            when (actionDetail1) {
+                1 -> R.string.content_status_up_target1//アキノ（クリスマス）、ユキ（儀装束）、アン＆グレア
+                3 -> R.string.content_status_down_target1//ホマレ（サマー）
+                else -> R.string.content_damage_received_target1//2, ゴブリンメイスター
             }
         },
         arrayOf(getTarget(depend))

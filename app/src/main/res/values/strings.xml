@@ -192,9 +192,11 @@
     <string name="action_damage_critical_rate1">当此攻击暴击时，暴击伤害倍率为%s倍。</string>
     <string name="action_damage_base_atk1_target2">此攻击以%2$s的%1$s为基础造成伤害。</string>
     <string name="action_move_target1">移动到%s的面前。</string>
+    <string name="action_move_forward_target1_distance2">移动到%1$s前方%2$s距离的位置。</string>
+    <string name="action_move_backward_target1_distance2">移动到%1$s后方%2$s距离的位置。</string>
     <string name="action_move_velocity1_target2_distance3">以%1$s的速度移动到%2$s的前方%3$s距离的位置。</string>
     <string name="action_move_forward_distance1">移动到前方%s距离的位置。</string>
-    <string name="aciton_move_backward_distance1">移动到后方%s距离的位置。</string>
+    <string name="action_move_backward_distance1">移动到后方%s距离的位置。</string>
     <string name="action_move_return">技能结束后回到原来的位置。</string>
     <string name="action_move_part1_distance2">使部位%1$s向前移动%2$s距离，随后使其回到原来的位置。</string>
     <string name ="action_time1">，效果时间%s秒。</string>
@@ -390,7 +392,8 @@
     <string name="content_attack_hit_enemy_target1">每当%s的攻击命中敌人时，就会为被命中的目标</string>
     <string name="content_attack_hit_target1">每当%s的攻击命中敌人时，就会为自身</string>
     <string name="content_attack_critical_target1">每当%s的攻击暴击时，就会为自身</string>
-    <string name="content_status_up_target1">每当%s受到状态提升时，就会为自身</string>
+    <string name="content_status_up_target1">每当%s受到状态提升效果时，就会为自身</string>
+    <string name="content_status_down_target1">每当%s受到状态降低效果时，就会为该目标</string>
     <string name="content_damage_received_target1">每当%s受到伤害时，就会为自身</string>
     <string name="content_initial_value1">初始值的%s</string>
     <string name="content_lower_defense">物理、魔法防御力中较低一方的防御力作为防御的</string>
@@ -458,6 +461,7 @@
     <string name="state_iron_guard">铁气的护卫</string>
     <string name="state_boumajin">妨魔塵</string>
     <string name="state_storm">PSI★猛攻</string>
+    <string name="state_solar_eclipse">日食</string>
     <string name="state_curtain_call">谢幕</string>
 
     <string name="target">对象</string>

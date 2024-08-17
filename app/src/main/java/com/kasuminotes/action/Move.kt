@@ -18,10 +18,23 @@ fun SkillAction.getMove(): D {
             )
         }
         3 -> {
-            D.Format(
-                R.string.action_move_target1,
-                arrayOf(getTarget(depend))
-            )
+            val target = getTarget(depend)
+            if (actionValue1 > 0.0) {
+                D.Format(
+                    R.string.action_move_forward_target1_distance2,
+                    arrayOf(target, D.Text(actionValue1.toNumStr()))
+                )
+            } else if (actionValue1 < 0.0) {
+                D.Format(
+                    R.string.action_move_backward_target1_distance2,
+                    arrayOf(target, D.Text(actionValue1.absoluteValue.toNumStr()))
+                )
+            } else {
+                D.Format(
+                    R.string.action_move_target1,
+                    arrayOf(getTarget(depend))
+                )
+            }
         }
         5 -> {
             D.Format(
@@ -36,7 +49,7 @@ fun SkillAction.getMove(): D {
         7 -> {
             D.Format(
                 if (actionValue1 > 0.0) R.string.action_move_forward_distance1
-                else R.string.aciton_move_backward_distance1,
+                else R.string.action_move_backward_distance1,
                 arrayOf(D.Text(actionValue1.absoluteValue.toNumStr()))
             )
         }
