@@ -6,25 +6,20 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getDamage(skillLevel: Int, property: Property, target: D = getTarget(depend)): D {
     val mustHit = actionDetail1 == 3
-    var mustCritical = actionValue5 == 1.0
+    val mustCritical = actionValue5 == 1.0 || actionValue5 == -1.0
     val hasCriticalDamageRate = actionValue6 > 1.0
     val damageType = getDamageType(actionDetail1)
 
     val content = if (actionDetail2 == 1) {
         D.Format(R.string.content_lower_defense).append(damageType)
-    } else if (actionValue5 == -1.0) {
-        mustCritical = true
-        if (actionValue7 > 0.0) {
-            D.Format(
-                R.string.content_disregard_def1_value_2,
-                arrayOf(
-                    getDefType(actionDetail1),
-                    D.Text(actionValue7.toNumStr())
-                )
-            ).append(damageType)
-        } else {
-            damageType
-        }
+    } else if (actionValue7 > 0.0) {
+        D.Format(
+            R.string.content_disregard_def1_value_2,
+            arrayOf(
+                getDefType(actionDetail1),
+                D.Text(actionValue7.toNumStr())
+            )
+        ).append(damageType)
     } else {
         damageType
     }

@@ -246,6 +246,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         162 -> D.Format(R.string.state_boumajin)
         171 -> D.Format(R.string.state_storm)
         173 -> D.Format(R.string.state_solar_eclipse)
+        175 -> D.Format(R.string.state_ice)
         183 -> D.Format(R.string.state_curtain_call)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }

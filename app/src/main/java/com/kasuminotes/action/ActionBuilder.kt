@@ -212,7 +212,7 @@ class ActionBuilder(
             30 -> getDestroy()
             32 -> getLifeSteal(skillLevel)
             33 -> getShieldCounter(skillLevel, property, actions)
-            34 -> getAccumulativeDamage(skillLevel)
+            34, 102 -> getAccumulativeDamage(skillLevel)
             35 -> getChangeMark()
             36 -> getDamageField(skillLevel, property)
             37 -> getHealField(skillLevel, property)
