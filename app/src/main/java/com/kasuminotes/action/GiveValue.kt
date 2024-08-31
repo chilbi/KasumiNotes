@@ -304,7 +304,11 @@ private fun SkillAction.getGiveValueFormula(
         nonNullElements
     )
     return if (targetAction.actionType == 46) {
-        D.Format(R.string.content_max_hp_ratio1, arrayOf(result.append(D.Text("%"))))
+        D.Format(
+            if (targetAction.actionDetail1 == 2) R.string.content_hp_ratio1
+            else R.string.content_max_hp_ratio1,
+            arrayOf(result.append(D.Text("%")))
+        )
     } else {
         result
     }

@@ -367,6 +367,7 @@
     <string name="summon_426201">召唤眷属(426201)</string>
     <string name="summon_426202">召唤眷属(426202)</string>
     <string name="summon_427101">召唤骷髅老爹(427101)</string>
+    <string name="summon_431901">制造出一个一定时间后就会消失的冰之壁</string>
 
     <string name="summon_unknown_id1">【%s】</string>
     <string name="summon_ore_dragon">矿石飞龙</string>
@@ -463,6 +464,8 @@
     <string name="state_storm">PSI★猛攻</string>
     <string name="state_solar_eclipse">日食</string>
     <string name="state_ice">绝冰</string>
+    <string name="state_kika">鬼化</string>
+    <string name="state_mania">狂骚</string>
     <string name="state_curtain_call">谢幕</string>
 
     <string name="target">对象</string>

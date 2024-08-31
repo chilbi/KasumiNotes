@@ -367,6 +367,7 @@
     <string name="summon_426201">眷属(426201)を召喚する</string>
     <string name="summon_426202">眷属(426202)を召喚する</string>
     <string name="summon_427101">ドクロ親父(427101)を召喚する</string>
+    <string name="summon_431901">一定時間後に消滅する氷の壁を生成する</string>
 
     <string name="summon_unknown_id1">【%s】</string>
     <string name="summon_ore_dragon">ネフライトワイバーン</string>
@@ -463,6 +464,8 @@
     <string name="state_storm">PSI★ストーム</string>
     <string name="state_solar_eclipse">日食</string>
     <string name="state_ice">絶氷</string>
+    <string name="state_kika">鬼化</string>
+    <string name="state_mania">狂騒</string>
     <string name="state_curtain_call">カーテンコール</string>
 
     <string name="target">対象</string>

@@ -21,6 +21,7 @@ fun SkillAction.getSummon(): D {
         426201 -> D.Format(R.string.summon_426201)
         426202 -> D.Format(R.string.summon_426202)
         427101 -> D.Format(R.string.summon_427101)
+        431901 -> D.Format(R.string.summon_431901)
         else -> D.Format(R.string.summon_id1, arrayOf(D.Text(actionDetail2.toString())))
     }
 
@@ -34,10 +35,12 @@ fun SkillAction.getSummon(): D {
         val distance: Double
 
         if (actionValue7 > 0) {
-            resId = R.string.action_summon_target1_front_distance2_content3
+            resId =  if (targetAssignment == 2) R.string.action_summon_target1_front_distance2_content3
+            else R.string.action_summon_target1_back_distance2_content3
             distance = actionValue7
         } else {
-            resId = R.string.action_summon_target1_back_distance2_content3
+            resId = if (targetAssignment == 2) R.string.action_summon_target1_back_distance2_content3
+            else R.string.action_summon_target1_front_distance2_content3
             distance = -actionValue7
         }
 

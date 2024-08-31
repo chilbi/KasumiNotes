@@ -4,17 +4,11 @@ import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getRatioDamage(skillLevel: Int, target: D = getTarget(depend)): D {
+    val value = getBaseLvFormula(actionValue1, actionValue2, skillLevel) { it }
     val formula = D.Format(
-        if (actionDetail1 == 1) R.string.content_max_hp_ratio1
-        else R.string.content_hp_ratio1,
-        arrayOf(
-            D.Join(
-                arrayOf(
-                    getBaseLvFormula(actionValue1, actionValue2, skillLevel) { it },
-                    D.Text("%")
-                )
-            )
-        )
+        if (actionDetail1 == 2) R.string.content_hp_ratio1
+        else R.string.content_max_hp_ratio1,
+        arrayOf(value.append(D.Text("%")))
     )
 
     val desc = D.Format(
