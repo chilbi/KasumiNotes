@@ -6,12 +6,15 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Comment
@@ -28,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -86,26 +90,38 @@ fun SkillDetail(
                 )
             }
             @StringRes
-            val labelId: Int
-            val value: Int
-            val color: Color
             if (searchAreaWidth == 0) {
-                labelId = R.string.skill_level
-                value = skillLevel
-                color = MaterialTheme.colorScheme.primaryContainer
+                Infobar(
+                    label = stringResource(R.string.skill_level),
+                    value = skillLevel.toString(),
+                    modifier = Modifier.width(110.dp),
+                    width = 64.dp,
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    textAlign = TextAlign.Center
+                )
             } else {
-                labelId = R.string.search_area_width
-                value = searchAreaWidth
-                color = MaterialTheme.colorScheme.secondary
+                Infobar(
+                    label = stringResource( R.string.search_area_width),
+                    value =  searchAreaWidth.toString(),
+                    modifier = Modifier.width(130.dp),
+                    endDecoration = {
+                        Image(
+                            painter = painterResource(
+                                when {
+                                    searchAreaWidth < 300 -> R.drawable.position_1
+                                    searchAreaWidth < 600 -> R.drawable.position_2
+                                    else -> R.drawable.position_3
+                                }
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier.padding(start = 4.dp).size(18.dp)
+                        )
+                    },
+                    width = 64.dp,
+                    color = MaterialTheme.colorScheme.secondary,
+                    textAlign = TextAlign.Center
+                )
             }
-            Infobar(
-                label = stringResource(labelId),
-                value = value.toString(),
-                modifier = Modifier.width(110.dp),
-                width = 64.dp,
-                color = color,
-                textAlign = TextAlign.Center
-            )
         }
 
         val primaryText = name.ifBlank { label }
