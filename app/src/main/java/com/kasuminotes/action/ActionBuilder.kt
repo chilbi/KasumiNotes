@@ -256,6 +256,8 @@ class ActionBuilder(
             110 -> getDotDamageUp()
             114 -> getTriggeredWhenAttacked()
             116 -> getPersistence(skillLevel)
+            121 -> getTriggeredWhenHpZero()
+            123 -> getIllusion()
             else -> getUnknown()
         }
     }

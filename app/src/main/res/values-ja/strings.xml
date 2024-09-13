@@ -276,7 +276,7 @@
     <string name="action_speed_overlay_target1_content2_formula3_time4">%1$sの行動速度を%3$s%2$sさせる、効果時間%4$s秒。（このスキルの効果は他の行動速度変化スキルと重複する）</string>
     <string name="action_injured_energy1">このアクションによるダメージではＴＰ回復量は本来の%sになる。</string>
     <string name="action_no_injured_energy">このアクションによるダメージではＴＰが回復しない。</string>
-    <string name="action_hiding_target1_time2">%1$sを隠密状態にする、効果時間%2$s秒。</string>
+    <string name="action_hiding_target1_time2">%1$sを【隠密】状態にする、効果時間%2$s秒。</string>
     <string name="action_injured_energy1_mark2_add3_max4_time5_target6">%6$sに【%2$s】を%3$sつ付与する、最大%4$sまで追加される、効果時間%5$s秒。【%2$s】はダメージを受けるたびに1つ消費され、ＴＰを%1$s回復する。</string>
     <string name="action_hp_recovery_down_target1_formula2_time3">%1$sのＨＰ回復量を%2$sダウンさせる、効果時間%3$s秒。</string>
     <string name="action_odds1">%s確率で</string>
@@ -302,6 +302,9 @@
     <string name="action_change_body_width1_target2">%2$sのモデルの幅を%1$sにする。</string>
     <string name="action_change_body_width1_target2_num3">%2$sのターゲット%3$sのモデルの幅を%1$sにする。</string>
     <string name="action_revival_target1_hp2">%1$sを復活させ、ＨＰを%2$s回復させる。</string>
+    <string name="action_triggered_when_hp_zero_target1">%sのＨＰが０になった時に発動する。</string>
+    <string name="action_trigger_count1">（このスキルはバトル中%s回しか発動しない）</string>
+    <string name="action_illusion_target1_time2_cut3">%1$sを【幻化】状態にする、効果時間%2$s秒。【幻化】状態の間は%1$sが受けるダメージを%3$s軽減する。%1$sより前に味方がいない場合、【幻化】状態は解除される。</string>
 
     <string name="action_branch_and">且つ</string>
     <string name="action_branch_status_up_target1_max2">%1$sがステータスアップ効果を受ける度に（最大%2$s回）、</string>
@@ -464,6 +467,7 @@
     <string name="state_storm">PSI★ストーム</string>
     <string name="state_solar_eclipse">日食</string>
     <string name="state_ice">絶氷</string>
+    <string name="state_illusion">幻化</string>
     <string name="state_kika">鬼化</string>
     <string name="state_mania">狂騒</string>
     <string name="state_curtain_call">カーテンコール</string>
