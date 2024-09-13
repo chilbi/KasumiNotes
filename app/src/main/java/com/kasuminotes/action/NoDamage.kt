@@ -16,7 +16,7 @@ fun SkillAction.getNoDamage(skillLevel: Int): D {
         R.string.action_state_target1_content2_time3,
         arrayOf(
             getTarget(depend),
-            content,
+            content.style(underline = true),
             getBaseLvFormula(actionValue1, actionValue2, skillLevel) { it }
         )
     )

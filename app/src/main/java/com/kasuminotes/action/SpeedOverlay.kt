@@ -16,8 +16,8 @@ fun SkillAction.getSpeedOverlay(): D {
         arrayOf(
             getTarget(depend),
             D.Format(if (actionDetail1 == 1) R.string.content_down else R.string.content_up),
-            D.Text("${(actionValue1 * 100).toNumStr()}%"),
-            D.Text(actionValue3.toNumStr())
+            D.Text("${(actionValue1 * 100).toNumStr()}%").style(primary = true, bold = true),
+            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
         )
     ))
 }

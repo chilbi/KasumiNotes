@@ -11,7 +11,7 @@ fun SkillAction.getAbnormal(skillLevel: Int): D {
             R.string.action_speed_target1_formula2_time3,
             arrayOf(
                 getTarget(depend),
-                D.Text("${(actionValue1 * 100).toNumStr()}%"),
+                D.Text("${(actionValue1 * 100).toNumStr()}%").style(primary = true, bold = true),
                 time
             )
         )
@@ -20,7 +20,7 @@ fun SkillAction.getAbnormal(skillLevel: Int): D {
             R.string.action_abnormal_target1_content2_time3,
             arrayOf(
                 getTarget(depend),
-                getAbnormalContent(actionDetail1),
+                getAbnormalContent(actionDetail1).style(underline = true),
                 time
             )
         )

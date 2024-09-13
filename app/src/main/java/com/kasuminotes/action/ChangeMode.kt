@@ -5,13 +5,13 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getChangeMode(): D {
     val hasMode = actionValue4 == 1.0
-    val patternNum = D.Text((actionDetail2 % 10).toString())
+    val patternNum = D.Text((actionDetail2 % 10).toString()).style(primary = true, bold = true)
     return when (actionDetail1) {
         1, 2 -> {
             val pattern = D.Format(
                 if (actionDetail1 == 1) R.string.action_mode_pattern1_time2
                 else R.string.action_mode_pattern1_energy2,
-                arrayOf(patternNum, D.Text(actionValue1.toNumStr()))
+                arrayOf(patternNum, D.Text(actionValue1.toNumStr()).style(primary = true, bold = true))
             )
             if (hasMode) {
                 val mode = when (actionValue3) {

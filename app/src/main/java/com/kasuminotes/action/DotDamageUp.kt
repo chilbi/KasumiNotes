@@ -27,9 +27,9 @@ fun SkillAction.getDotDamageUp(): D {
         arrayOf(
             getTarget(depend),
             content,
-            D.Text("${actionValue1.toNumStr()}%"),
-            D.Text(actionValue7.toNumStr()),
-            D.Text(actionValue2.toNumStr())
+            D.Text("${actionValue1.toNumStr()}%").style(primary = true, bold = true),
+            D.Text(actionValue7.toNumStr()).style(primary = true, bold = true),
+            D.Text(actionValue2.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

@@ -4,7 +4,7 @@ import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getChangePattern(): D {
-    val pattern = D.Text((actionDetail2 % 10).toString())
+    val pattern = D.Text((actionDetail2 % 10).toString()).style(primary = true, bold = true)
 
     return if (actionValue1 < 0) {
         D.Format(
@@ -16,7 +16,7 @@ fun SkillAction.getChangePattern(): D {
             R.string.action_mode_pattern1_time2,
             arrayOf(
                 pattern,
-                D.Text(actionValue1.toNumStr())
+                D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
             )
         )
     }

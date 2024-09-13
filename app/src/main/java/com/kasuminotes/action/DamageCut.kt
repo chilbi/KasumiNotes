@@ -17,9 +17,9 @@ fun SkillAction.getDamageCut(): D {
         R.string.action_received_down_target1_content2_formula3_time4,
         arrayOf(
             getTarget(depend),
-            content,
-            D.Text("${actionValue1.toNumStr()}%"),
-            D.Text(actionValue3.toNumStr())
+            content.style(underline = true),
+            D.Text("${actionValue1.toNumStr()}%").style(primary = true, bold = true),
+            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

@@ -183,7 +183,7 @@
     <string name="action_unknown_s1">スキルパラメーター：%s</string>
     <string name="action_focus_target1">%sを中心とした</string>
     <string name="action_focus_front_target1">%sから</string>
-    <string name="action_ex_passive_content1_formula2">バトル開始時に自分の%1$sを%2$sアップさせる、効果時間90秒。</string>
+    <string name="action_ex_passive_content1_formula2_time3">バトル開始時に自分の%1$sを%2$sアップさせる、効果時間%3$s秒。</string>
     <string name="action_damage_target1_formula2_content3">%1$sに%2$sの%3$sダメージを与える。</string>
     <string name="action_max_ratio_damage1">（最大%sまでのダメージを与える）</string>
     <string name="action_damage_must_hit">この攻撃は必ず命中する。</string>
@@ -288,7 +288,7 @@
     <string name="action_passive_battle_began_passed_time1">バトル開始後%s秒経過時に</string>
     <string name="action_passive_battle_remaining_time1">バトルの残り時間が%s秒を切る時に</string>
     <string name="action_damage_attenuation_target1_limit2_time3_n4_r5_n6_r7_n8_r9">%1$sにリミットバリアを展開し、アクション毎に受けたダメージが%2$s万を超えた時、ダメージが減衰される、効果時間%3$s秒。\nf(%4$s万)=%5$s万; f(%6$s万)=%7$s万; f(%8$s万)=%9$s万</string>
-    <string name="action_stealth_time1">潜伏状態に入る、効果時間%s秒。</string>
+    <string name="action_stealth_time1">【潜伏】状態に入る、効果時間%s秒。</string>
     <string name="action_ignore_provocation">挑発を無視して、</string>
     <string name="action_akinesia_invalid_target1_time2">%1$sに受ける行動不能を無効化できる状態を付与する、効果時間%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">%1$sに受ける行動不能を最大%2$s回まで無効化できる状態を付与する、効果時間%3$s秒。</string>
@@ -383,7 +383,7 @@
     <string name="mode_id1">自分を姿(%s)に変化させる、</string>
     <string name="mode_return">自分をもとの姿に戻させる、</string>
     <string name="mode_1158100">自分を人の姿に変化させる、</string>
-    <string name="mode_fly">自分を飛行状態にする、</string>
+    <string name="mode_fly">自分を【飛行】状態にする、</string>
 
     <string name="content_max_hp_ratio1">最大ＨＰの%s</string>
     <string name="content_hp_ratio1">残りＨＰの%s</string>

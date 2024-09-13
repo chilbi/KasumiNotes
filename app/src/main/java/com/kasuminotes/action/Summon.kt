@@ -44,6 +44,6 @@ fun SkillAction.getSummon(): D {
             distance = -actionValue7
         }
 
-        D.Format(resId, arrayOf(target, D.Text(distance.toNumStr()), content))
+        D.Format(resId, arrayOf(target, D.Text(distance.toNumStr()).style(primary = true, bold = true), content))
     }
 }

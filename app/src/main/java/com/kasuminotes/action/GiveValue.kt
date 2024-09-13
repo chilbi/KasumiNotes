@@ -119,10 +119,10 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         }
     }
 
-    val result = D.Format(actionRes, arrayOf(content, formula))
+    val result = D.Format(actionRes, arrayOf(content.style(underline = true), formula.style(primary = true)))
     return result.append(
         if (maxValue == null) D.Format(R.string.full_stop)
-        else D.Format(maxRes, arrayOf(maxValue))
+        else D.Format(maxRes, arrayOf(maxValue.style(primary = true, bold = true)))
     )
 }
 

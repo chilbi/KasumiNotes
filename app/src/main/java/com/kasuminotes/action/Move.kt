@@ -22,12 +22,12 @@ fun SkillAction.getMove(): D {
             if (actionValue1 > 0.0) {
                 D.Format(
                     R.string.action_move_forward_target1_distance2,
-                    arrayOf(target, D.Text(actionValue1.toNumStr()))
+                    arrayOf(target, D.Text(actionValue1.toNumStr()).style(primary = true, bold = true))
                 )
             } else if (actionValue1 < 0.0) {
                 D.Format(
                     R.string.action_move_backward_target1_distance2,
-                    arrayOf(target, D.Text(actionValue1.absoluteValue.toNumStr()))
+                    arrayOf(target, D.Text(actionValue1.absoluteValue.toNumStr()).style(primary = true, bold = true))
                 )
             } else {
                 D.Format(
@@ -40,9 +40,9 @@ fun SkillAction.getMove(): D {
             D.Format(
                 R.string.action_move_velocity1_target2_distance3,
                 arrayOf(
-                    D.Text(actionValue2.toNumStr()),
+                    D.Text(actionValue2.toNumStr()).style(primary = true, bold = true),
                     getTarget(depend),
-                    D.Text(actionValue1.toNumStr())
+                    D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
                 )
             )
         }
@@ -50,7 +50,7 @@ fun SkillAction.getMove(): D {
             D.Format(
                 if (actionValue1 > 0.0) R.string.action_move_forward_distance1
                 else R.string.action_move_backward_distance1,
-                arrayOf(D.Text(actionValue1.absoluteValue.toNumStr()))
+                arrayOf(D.Text(actionValue1.absoluteValue.toNumStr()).style(primary = true, bold = true))
             )
         }
         else -> getUnknown()

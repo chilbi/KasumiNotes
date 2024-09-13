@@ -8,7 +8,7 @@ fun SkillAction.getMoveParts(): D {
         R.string.action_move_part1_distance2,
         arrayOf(
             D.Text(actionValue4.toNumStr()),
-            D.Text((-actionValue1).toNumStr())
+            D.Text((-actionValue1).toNumStr()).style(primary = true, bold = true)
         )
     )
 }

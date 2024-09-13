@@ -21,7 +21,7 @@ fun SkillAction.getTrigger(): D {
             } else {
                 D.Format(
                     R.string.action_trigger_battle_remaining_time1,
-                    arrayOf(D.Text(actionValue3.toNumStr()))
+                    arrayOf(D.Text(actionValue3.toNumStr()).style(primary = true, bold = true))
                 )
             }
         }

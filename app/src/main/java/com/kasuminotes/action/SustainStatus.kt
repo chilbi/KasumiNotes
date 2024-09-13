@@ -13,7 +13,7 @@ fun SkillAction.getSustainStatus(skillLevel: Int): D {
     val result = sustainTime.append(
         D.Format(
             R.string.action_sustain_status_content1_count2,
-            arrayOf(contentDesc, D.Text(actionDetail3.toString()))
+            arrayOf(contentDesc, D.Text(actionDetail3.toString()).style(primary = true, bold = true))
         )
     )
 

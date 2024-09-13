@@ -21,7 +21,7 @@ fun SkillAction.getRegeneration(skillLevel: Int, property: Property): D {
             getTarget(depend),
             content,
             formula,
-            D.Text(actionValue5.toNumStr())
+            D.Text(actionValue5.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

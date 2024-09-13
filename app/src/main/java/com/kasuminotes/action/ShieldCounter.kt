@@ -10,7 +10,7 @@ fun SkillAction.getShieldCounter(skillLevel: Int, property: Property, actions: L
     val desc = if (actionValue3 > 1.0) {
         D.Format(
             R.string.action_shield_counter_target1_content2_add3,
-            arrayOf(target, content, D.Text(actionValue3.toNumStr()))
+            arrayOf(target, content, D.Text(actionValue3.toNumStr()).style(primary = true, bold = true))
         )
     } else {
         D.Format(

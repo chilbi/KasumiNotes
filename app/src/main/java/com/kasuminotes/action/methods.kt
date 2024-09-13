@@ -37,39 +37,39 @@ fun getBaseLvAtkFormula(
         atk = property.magicStr
     }
     val result = callback(base + lvCoefficient * skillLevel + (atkCoefficient + plusAtkCoefficient * skillLevel) * atk)
-    return if (base == 0.0 && lvCoefficient == 0.0) {
+    val formula = if (base == 0.0 && lvCoefficient == 0.0) {
         if (plusAtkCoefficient == 0.0) {
             D.Format(
                 R.string.formula_atk1_type2_result3,
                 arrayOf(
-                    D.Text(atkCoefficient.toNumStr()),
+                    D.Text(atkCoefficient.toNumStr()).style(bold = true),
                     D.Format(atkType),
-                    D.Text(result.toNumStr())
+                    D.Text(result.toNumStr()).style(bold = true)
                 )
             )
         } else {
             D.Format(
                 R.string.formula_atk1_plus2_type3_result4,
                 arrayOf(
-                    D.Text(atkCoefficient.toNumStr()),
+                    D.Text(atkCoefficient.toNumStr()).style(bold = true),
                     D.Text(plusAtkCoefficient.toString()),
                     D.Format(atkType),
-                    D.Text(result.toNumStr())
+                    D.Text(result.toNumStr()).style(bold = true)
                 )
             )
         }
     } else if (plusAtkCoefficient == 0.0) {
         if (atkCoefficient== 0.0 && lvCoefficient == 0.0) {
-            D.Text(result.toNumStr())
+            D.Text(result.toNumStr()).style(bold = true)
         } else {
             D.Format(
                 R.string.formula_base1_lv2_atk3_type4_result5,
                 arrayOf(
                     D.Text(base.toNumStr()),
                     D.Text(lvCoefficient.toNumStr()),
-                    D.Text(atkCoefficient.toNumStr()),
+                    D.Text(atkCoefficient.toNumStr()).style(bold = true),
                     D.Format(atkType),
-                    D.Text(result.toNumStr())
+                    D.Text(result.toNumStr()).style(bold = true)
                 )
             )
         }
@@ -79,13 +79,14 @@ fun getBaseLvAtkFormula(
             arrayOf(
                 D.Text(base.toNumStr()),
                 D.Text(lvCoefficient.toNumStr()),
-                D.Text(atkCoefficient.toNumStr()),
+                D.Text(atkCoefficient.toNumStr()).style(bold = true),
                 D.Text(plusAtkCoefficient.toNumStr()),
                 D.Format(atkType),
                 D.Text(result.toNumStr())
             )
         )
     }
+    return formula.style(primary = true)
 }
 
 fun getBaseLvFormula(
@@ -94,16 +95,16 @@ fun getBaseLvFormula(
     skillLevel: Int,
     callback: (Double) -> Double = { ceil(it) }// TODO 不确定的取整方式
 ): D {
-    return if (lvCoefficient == 0.0) {
-        D.Text(base.toNumStr())
+    val formula = if (lvCoefficient == 0.0) {
+        D.Text(base.toNumStr()).style(bold = true)
     } else {
         val result = callback(base + lvCoefficient * skillLevel)
         if (base == 0.0) {
             D.Format(
                 R.string.formula_lv1_result2,
                 arrayOf(
-                    D.Text(lvCoefficient.toNumStr()),
-                    D.Text(result.toNumStr())
+                    D.Text(lvCoefficient.toNumStr()).style(bold = true),
+                    D.Text(result.toNumStr()).style(bold = true)
                 )
             )
         } else {
@@ -111,12 +112,13 @@ fun getBaseLvFormula(
                 R.string.formula_base1_lv2_result3,
                 arrayOf(
                     D.Text(base.toNumStr()),
-                    D.Text(lvCoefficient.toNumStr()),
-                    D.Text(result.toNumStr())
+                    D.Text(lvCoefficient.toNumStr()).style(bold = true),
+                    D.Text(result.toNumStr()).style(bold = true)
                 )
             )
         }
     }
+    return formula.style(primary = true)
 }
 
 fun getAbnormalContent(detail: Int): D {

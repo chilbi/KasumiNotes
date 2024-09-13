@@ -11,15 +11,15 @@ fun SkillAction.getDamage(skillLevel: Int, property: Property, target: D = getTa
     val damageType = getDamageType(actionDetail1)
 
     val content = if (actionDetail2 == 1) {
-        D.Format(R.string.content_lower_defense).append(damageType)
+        D.Format(R.string.content_lower_defense).style(underline = true).append(damageType)
     } else if (actionValue7 > 0.0) {
         D.Format(
             R.string.content_disregard_def1_value_2,
             arrayOf(
                 getDefType(actionDetail1),
-                D.Text(actionValue7.toNumStr())
+                D.Text(actionValue7.toNumStr()).style(primary = true, bold = true)
             )
-        ).append(damageType)
+        ).style(underline = true).append(damageType)
     } else {
         damageType
     }

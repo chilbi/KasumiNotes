@@ -10,13 +10,13 @@ fun SkillAction.getDarkness(): D {
                 R.string.action_abnormal_target1_content2_time3,
                 arrayOf(
                     getTarget(depend),
-                    D.Format(R.string.darkness),
-                    D.Text(actionValue1.toNumStr())
+                    D.Format(R.string.darkness).style(underline = true),
+                    D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
                 )
             ),
             D.Format(
                 R.string.action_darkness_formula1,
-                arrayOf(D.Text("${actionDetail1}%"))
+                arrayOf(D.Text("${actionDetail1}%").style(primary = true, bold = true))
             )
         )
     )

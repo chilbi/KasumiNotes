@@ -9,7 +9,7 @@ fun SkillAction.getEnvironment(): D {
         arrayOf(
             getTarget(depend),
             getStateContent(actionDetail2, actionId),
-            D.Text(actionValue1.toNumStr())
+            D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

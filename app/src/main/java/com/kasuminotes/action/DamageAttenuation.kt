@@ -16,8 +16,8 @@ fun SkillAction.getDamageAttenuation(): D {
         R.string.action_damage_attenuation_target1_limit2_time3_n4_r5_n6_r7_n8_r9,
         arrayOf(
             getTarget(depend),
-            D.Text(limit.toNumStr()),
-            D.Text(actionValue3.toNumStr()),
+            D.Text(limit.toNumStr()).style(primary = true, bold = true),
+            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true),
             D.Text(n4.toNumStr()),
             getDamageText(n4, s, m),
             D.Text(n6.toNumStr()),

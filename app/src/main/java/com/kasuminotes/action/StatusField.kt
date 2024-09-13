@@ -4,10 +4,9 @@ import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getStatusField(skillLevel: Int): D {
-    val formula = when (actionDetail2) {
-        1 -> getBaseLvFormula(actionValue1, actionValue2, skillLevel)
-        2 -> getBaseLvFormula(actionValue1, actionValue2, skillLevel).append(D.Text("%"))
-        else -> D.Unknown
+    var formula = getBaseLvFormula(actionValue1, actionValue2, skillLevel)
+    if (actionDetail2 == 2) {
+        formula = formula.append(D.Text("%").style(primary = true, bold = true))
     }
 
     val content = D.Format(
@@ -15,7 +14,7 @@ fun SkillAction.getStatusField(skillLevel: Int): D {
         else R.string.content_debuff_target1_content2_formula3,
         arrayOf(
             getAssignment(),
-            getStatusContent(actionDetail1 / 10),
+            getStatusContent(actionDetail1 / 10).style(underline = true),
             formula
         )
     )
@@ -26,7 +25,7 @@ fun SkillAction.getStatusField(skillLevel: Int): D {
             getTarget(depend),
             D.Text(actionValue5.toNumStr()),
             content,
-            D.Text(actionValue3.toNumStr()),
+            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

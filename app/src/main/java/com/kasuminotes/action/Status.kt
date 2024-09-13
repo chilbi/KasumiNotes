@@ -20,10 +20,10 @@ fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property:
             if (isStatusUp()) R.string.give_up_amount_content1
             else R.string.give_down_amount_content1,
             arrayOf(getStatusContent(actionDetail1 / 10))
-        )
+        ).style(underline = true)
         val formula = D.Format(R.string.formula_m1, arrayOf(
             D.Format(R.string.count_state1, arrayOf(getStateContent(actionDetail2, actionId)))
-        ))
+        )).style(primary = true)
         D.Join(arrayOf(
             desc,
             D.Format(
@@ -96,9 +96,9 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
                     str += "${(property[index] * actionValue2 / 100).roundToInt()})"// TODO 不确定的取整方式
                 }
             }
-            D.Text(str)
+            D.Text(str).style(primary = true, bold = true)
         } else {
-            getBaseLvFormula(actionValue2, actionValue3, skillLevel).append(D.Text("%"))
+            getBaseLvFormula(actionValue2, actionValue3, skillLevel).append(D.Text("%").style(primary = true, bold = true))
         }
         // 10-40为物魔攻防，估计只有这4项值加的百分比值是以初始值为基础的
         if (detail1 < 50) D.Format(R.string.content_initial_value1, arrayOf(percent))
@@ -107,7 +107,7 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
         getBaseLvFormula(actionValue2, actionValue3, skillLevel)
     }
 
-    val content = getStatusContent(detail1 / 10)
+    val content = getStatusContent(detail1 / 10).style(underline = true)
 
     val resId = if (isUp) {
         if (isReceived) {
@@ -132,7 +132,7 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
 
     val contentDesc = D.Format(resId, arrayOf(getTarget(depend), content, formula))
 
-    val timeDesc = D.Text(time.toNumStr())
+    val timeDesc = D.Text(time.toNumStr()).style(primary = true, bold = true)
 
     val constDesc = if (isConst) {
         D.Format(

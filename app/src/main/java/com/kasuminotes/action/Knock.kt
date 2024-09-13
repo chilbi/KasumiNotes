@@ -11,7 +11,7 @@ fun SkillAction.getKnock(): D {
                 R.string.action_diaup_target1_formula2,
                 arrayOf(
                     target,
-                    D.Text(actionValue1.toNumStr())
+                    D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
                 )
             )
         }
@@ -21,7 +21,7 @@ fun SkillAction.getKnock(): D {
                     R.string.action_knockback_target1_formula2,
                     arrayOf(
                         target,
-                        D.Text(actionValue1.toNumStr())
+                        D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
                     )
                 )
             } else {
@@ -29,7 +29,7 @@ fun SkillAction.getKnock(): D {
                     R.string.action_haulin_target1_formula2,
                     arrayOf(
                         target,
-                        D.Text((-actionValue1).toNumStr())
+                        D.Text((-actionValue1).toNumStr()).style(primary = true, bold = true)
                     )
                 )
             }
@@ -39,7 +39,7 @@ fun SkillAction.getKnock(): D {
                 R.string.action_haulin_oneself_target1_formula2,
                 arrayOf(
                     target,
-                    D.Text(actionValue1.toNumStr())
+                    D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
                 )
             )
         }

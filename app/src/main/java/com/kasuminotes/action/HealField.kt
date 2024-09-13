@@ -17,7 +17,7 @@ fun SkillAction.getHealField(skillLevel: Int, property: Property): D {
                     getBaseLvAtkFormula(actionDetail1, actionValue1, actionValue2, actionValue3, actionValue4, skillLevel, property)
                 )
             ),
-            D.Text(actionValue5.toNumStr()),
+            D.Text(actionValue5.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

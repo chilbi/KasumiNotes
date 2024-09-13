@@ -8,7 +8,7 @@ fun SkillAction.getFallenAngelGuard(): D {
         R.string.action_fallen_angel_guard_target1_time2,
         arrayOf(
             getTarget(depend),
-            D.Text(actionValue3.toNumStr())
+            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

@@ -11,7 +11,7 @@ fun SkillAction.getResurrection(skillLevel: Int, property: Property): D {
             getTarget(depend),
             getStateContent(actionDetail2, actionId),
             getBaseLvAtkFormula(actionDetail1, actionValue2, actionValue3, actionValue4, actionValue5, skillLevel, property),
-            D.Text(actionValue6.toNumStr())
+            D.Text(actionValue6.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

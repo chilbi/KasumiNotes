@@ -9,9 +9,9 @@ fun SkillAction.getTriggeredWhenAttacked(): D {
         arrayOf(
             getTarget(depend),
             getStateContent(actionValue1.toInt(), actionId),
-            D.Text(actionValue2.toNumStr()),
-            D.Text(actionValue4.toNumStr()),
-            D.Text("${actionValue3.toNumStr()}%")
+            D.Text(actionValue2.toNumStr()).style(primary = true, bold = true),
+            D.Text(actionValue4.toNumStr()).style(primary = true, bold = true),
+            D.Text("${actionValue3.toNumStr()}%").style(primary = true, bold = true)
         )
     )
 }

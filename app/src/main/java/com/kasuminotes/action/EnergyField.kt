@@ -16,7 +16,7 @@ fun SkillAction.getEnergyField(skillLevel: Int): D {
                     getBaseLvFormula(actionValue1, actionValue2, skillLevel)
                 )
             ),
-            D.Text(actionValue3.toNumStr())
+            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

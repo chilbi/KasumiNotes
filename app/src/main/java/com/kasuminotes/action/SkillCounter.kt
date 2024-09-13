@@ -11,7 +11,7 @@ fun SkillAction.getSkillCounter(): D {
                 R.string.counter_num1,
                 arrayOf(D.Text(actionDetail1.toString()))
             ),
-            D.Text(actionValue1.toNumStr())
+            D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

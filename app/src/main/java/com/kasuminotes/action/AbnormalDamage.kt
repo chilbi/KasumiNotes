@@ -5,9 +5,9 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getAbnormalDamage(skillLevel: Int): D {
     val target = getTarget(depend)
-    val content = getAbnormalDamageContent(actionDetail1)
+    val content = getAbnormalDamageContent(actionDetail1).style(underline = true)
     val formula = getBaseLvFormula(actionValue1, actionValue2, skillLevel)
-    val time = D.Text(actionValue3.toNumStr())
+    val time = D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
 
     return if (actionValue5 == 0.0) {
         D.Format(

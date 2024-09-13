@@ -13,7 +13,7 @@ fun SkillAction.getAbnormalField(skillLevel: Int, actions: List<SkillAction>): D
                     R.string.content_speed_target1_formula2,
                     arrayOf(
                         getAssignment(),
-                        D.Text("${(modifyAction.actionValue1 * 100).toNumStr()}%")
+                        D.Text("${(modifyAction.actionValue1 * 100).toNumStr()}%").style(primary = true, bold = true)
                     )
                 )
             } else {
@@ -21,7 +21,7 @@ fun SkillAction.getAbnormalField(skillLevel: Int, actions: List<SkillAction>): D
                     R.string.content_state_target1_abnormal2,
                     arrayOf(
                         getAssignment(),
-                        getAbnormalContent(modifyAction.actionDetail1)
+                        getAbnormalContent(modifyAction.actionDetail1).style(underline = true)
                     )
                 )
             }
@@ -41,7 +41,7 @@ fun SkillAction.getAbnormalField(skillLevel: Int, actions: List<SkillAction>): D
             getTarget(depend),
             D.Text(actionValue3.toNumStr()),
             content,
-            D.Text(actionValue1.toNumStr())
+            D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

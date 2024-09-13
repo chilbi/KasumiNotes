@@ -8,8 +8,8 @@ fun SkillAction.getSilence(): D {
         R.string.action_state_target1_content2_time3,
         arrayOf(
             getTarget(depend),
-            D.Format(R.string.silence),
-            D.Text(actionValue1.toNumStr())
+            D.Format(R.string.silence).style(underline = true),
+            D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

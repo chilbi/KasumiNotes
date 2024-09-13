@@ -8,7 +8,7 @@ fun SkillAction.getCountDown(): D {
         R.string.action_count_down_target1_count2,
         arrayOf(
             getTarget(depend),
-            D.Text(actionValue1.toNumStr())
+            D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

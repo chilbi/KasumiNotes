@@ -15,7 +15,7 @@ fun SkillAction.getDispel(): D {
         R.string.action_dispel_target1_content2,
         arrayOf(
             getTarget(depend),
-            content
+            content.style(underline = true)
         )
     )
 
@@ -23,7 +23,7 @@ fun SkillAction.getDispel(): D {
         result.insert(
             D.Format(
                 R.string.action_odds1,
-                arrayOf(D.Text("${actionValue1.toNumStr()}%"))
+                arrayOf(D.Text("${actionValue1.toNumStr()}%").style(primary = true, bold = true))
             )
         )
     } else {

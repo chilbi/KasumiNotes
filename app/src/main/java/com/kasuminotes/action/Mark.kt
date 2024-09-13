@@ -30,9 +30,9 @@ fun SkillAction.getMark(): D {
         arrayOf(
             content,
             getStateContent(actionValue2.toInt(), actionId),
-            D.Text(actionDetail2.toString()),
-            D.Text(actionValue1.toNumStr()),
-            D.Text(actionValue3.toNumStr())
+            D.Text(actionDetail2.toString()).style(primary = true, bold = true),
+            D.Text(actionValue1.toNumStr()).style(primary = true, bold = true),
+            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

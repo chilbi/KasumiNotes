@@ -8,7 +8,7 @@ fun SkillAction.getRevival(): D {
         R.string.action_revival_target1_hp2,
         arrayOf(
             getTarget(depend),
-            D.Text("${(actionValue2 * 100).toNumStr()}%")
+            D.Text("${(actionValue2 * 100).toNumStr()}%").style(primary = true, bold = true)
         )
     )
 }

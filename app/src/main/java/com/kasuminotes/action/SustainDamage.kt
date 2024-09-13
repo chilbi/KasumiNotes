@@ -6,7 +6,7 @@ import com.kasuminotes.data.SkillAction
 fun SkillAction.getSustainDamage(): D {
     val sustainTime = D.Format(
         R.string.action_sustain_time1,
-        arrayOf(D.Text(actionValue3.toNumStr()))
+        arrayOf(D.Text(actionValue3.toNumStr()).style(primary = true, bold = true))
     )
     return if (actionValue1 == 0.0) {
         sustainTime.append(D.Format(R.string.full_stop))
@@ -14,7 +14,7 @@ fun SkillAction.getSustainDamage(): D {
         sustainTime.append(
             D.Format(
                 R.string.action_sustain_damage_rate1,
-                arrayOf(D.Text(actionValue1.toNumStr()))
+                arrayOf(D.Text(actionValue1.toNumStr()).style(primary = true, bold = true))
             )
         )
     }

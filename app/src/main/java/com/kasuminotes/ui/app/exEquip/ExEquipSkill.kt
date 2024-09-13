@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.action.ActionBuilder
 import com.kasuminotes.action.D
+import com.kasuminotes.action.annotatedStringDescription
 import com.kasuminotes.action.getUnknown
 import com.kasuminotes.action.stringDescription
 import com.kasuminotes.data.Property
@@ -107,7 +108,7 @@ private fun ExEquipSkillItem(
             Row(Modifier.padding(4.dp)) {
                 ActionLabel(index + 1)
                 Text(
-                    text = stringDescription(d),
+                    text = annotatedStringDescription(stringDescription(d)),
                     modifier = Modifier.padding(start = 4.dp),
                     style = MaterialTheme.typography.bodyMedium
                 )

@@ -9,7 +9,7 @@ fun SkillAction.getBlind(): D {
             R.string.action_blind_target1_count2,
             arrayOf(
                 getTarget(depend),
-                D.Text(actionValue2.toNumStr())
+                D.Text(actionValue2.toNumStr()).style(primary = true, bold = true)
             )
         )
     } else {

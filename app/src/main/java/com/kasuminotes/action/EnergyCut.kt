@@ -9,8 +9,8 @@ fun SkillAction.getEnergyCut(): D {
         arrayOf(
             getTarget(depend),
             D.Format(R.string.energy_down),
-            D.Text("${(100 - actionValue1 * 100).toNumStr()}%"),
-            D.Text(actionValue2.toNumStr())
+            D.Text("${(100 - actionValue1 * 100).toNumStr()}%").style(primary = true, bold = true),
+            D.Text(actionValue2.toNumStr()).style(primary = true, bold = true)
         )
     )
 }

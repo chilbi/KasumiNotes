@@ -8,8 +8,8 @@ fun SkillAction.getFear(): D {
         R.string.action_abnormal_target1_content2_time3,
         arrayOf(
             getTarget(depend),
-            D.Format(R.string.fear),
-            D.Text(actionValue1.toNumStr())
+            D.Format(R.string.fear).style(underline = true),
+            D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
         )
     )
 }
