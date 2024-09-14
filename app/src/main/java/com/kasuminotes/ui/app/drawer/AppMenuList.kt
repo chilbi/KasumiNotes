@@ -9,11 +9,9 @@ import androidx.compose.material.icons.filled.Update
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.kasuminotes.BuildConfig
 import com.kasuminotes.R
@@ -43,12 +41,7 @@ fun AppMenuList(
         trailingContent = {
             Switch(
                 checked = appAutoUpdate,
-                onCheckedChange = null,
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color.White,
-                    uncheckedThumbColor = Color.White,
-                    uncheckedBorderColor = Color.Transparent
-                )
+                onCheckedChange = null
             )
         }
     )

@@ -48,7 +48,7 @@ fun ClanBattlePeriodList(
         items(clanBattleState.clanBattlePeriodList, { it.clanBattleId }) { clanBattlePeriod ->
             ClanBattlePeriodItem(clanBattlePeriod, color, onPeriodClick)
         }
-        if (!clanBattleState.isAll) {
+        if (clanBattleState.clanBattlePeriodList.isNotEmpty() && !clanBattleState.isAll) {
             item {
                 if (!clanBattleState.isAll) {
                     Button(clanBattleState::loadAll) {

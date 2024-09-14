@@ -38,23 +38,9 @@ fun ClanBattle(
     onNavigateTo: (Int) -> Unit,
     onDrawerOpen: () -> Unit
 ) {
-//    val snackbarHostState = remember { SnackbarHostState() }
-//    val scope = rememberCoroutineScope()
-//    val message = stringResource(R.string.functionality_not_implemented)
-//    val onClick: () -> Unit = {
-//        scope.launch {
-//            snackbarHostState.showSnackbar(message)
-//        }
-//    }
     Scaffold(
         topBar = { ClanBattleTopBar(onNavigateToDungeon) },
         bottomBar = { BottomBar(2, onNavigateTo, onDrawerOpen) },
-//        snackbarHost = { SnackbarHost(snackbarHostState) },
-//        floatingActionButton = {
-//            FloatingActionButton(onClick) {
-//                Icon(Icons.Filled.Dashboard, null)
-//            }
-//        },
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
