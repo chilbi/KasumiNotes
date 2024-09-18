@@ -471,6 +471,7 @@
     <string name="state_kika">鬼化</string>
     <string name="state_mania">狂骚</string>
     <string name="state_curtain_call">谢幕</string>
+    <string name="state_passionate_bouquet">热情的花束</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>
