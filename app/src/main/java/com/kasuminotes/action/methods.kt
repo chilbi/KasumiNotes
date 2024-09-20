@@ -254,6 +254,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         178 -> D.Format(R.string.state_mania)
         183 -> D.Format(R.string.state_curtain_call)
         188 -> D.Format(R.string.state_passionate_bouquet)
+        189 -> D.Format(R.string.state_teapot)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
 }
