@@ -199,7 +199,7 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
             arrayOf(getStatusContent(targetAction.actionDetail1 / 10))
         )
         16 -> D.Format(
-            if (targetAction.actionDetail1 == 1) R.string.give_energy_recovery
+            if (targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 4) R.string.give_energy_recovery
             else R.string.give_energy_decrement
         )
         35 -> when (actionDetail2) {

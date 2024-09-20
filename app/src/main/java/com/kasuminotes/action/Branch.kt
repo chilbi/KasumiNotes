@@ -210,6 +210,15 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
                 )
             }
         }
+        //グレーターゴーレム
+        1900 -> {
+            val target = getTarget(depend)
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_barrier_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_barrier_target1, arrayOf(target))
+            )
+        }
         // ミミ（サマー）
         1800 -> {
             val target = getTarget(depend)
