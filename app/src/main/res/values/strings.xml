@@ -473,6 +473,8 @@
     <string name="state_curtain_call">谢幕</string>
     <string name="state_passionate_bouquet">热情的花束</string>
     <string name="state_teapot">茶壶</string>
+    <string name="state_alchemical_material">炼金素材</string>
+    <string name="state_perfume">香水</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>

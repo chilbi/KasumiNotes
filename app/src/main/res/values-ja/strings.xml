@@ -473,6 +473,8 @@
     <string name="state_curtain_call">カーテンコール</string>
     <string name="state_passionate_bouquet">情熱の花束</string>
     <string name="state_teapot">ティーポット</string>
+    <string name="state_alchemical_material">炼金素材</string>
+    <string name="state_perfume">香水</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>
