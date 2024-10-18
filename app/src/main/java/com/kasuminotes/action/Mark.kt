@@ -17,7 +17,7 @@ fun SkillAction.getMark(): D {
             }
         } else {//actionType == 77
             when (actionDetail1) {
-                1 -> R.string.content_status_up_target1//アキノ（クリスマス）、ユキ（儀装束）、アン＆グレア
+                1 -> R.string.content_status_up_target1//アキノ（クリスマス）、ユキ（儀装束）、アン＆グレア、ヴルム
                 3 -> R.string.content_status_down_target1//ホマレ（サマー）
                 else -> R.string.content_damage_received_target1//2, ゴブリンメイスター
             }
@@ -25,14 +25,27 @@ fun SkillAction.getMark(): D {
         arrayOf(getTarget(depend))
     )
 
-    return D.Format(
-        R.string.action_mark_content1_state2_add3_max4_time5,
-        arrayOf(
-            content,
-            getStateContent(actionValue2.toInt(), actionId),
-            D.Text(actionDetail2.toString()).style(primary = true, bold = true),
-            D.Text(actionValue1.toNumStr()).style(primary = true, bold = true),
-            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
+    val count = if (actionType == 77) actionValue7.toInt() else actionDetail2
+
+    return if (count > 0) {
+        D.Format(
+            R.string.action_mark_content1_state2_add3_max4_time5,
+            arrayOf(
+                content,
+                getStateContent(actionValue2.toInt(), actionId),
+                D.Text(count.toString()).style(primary = true, bold = true),
+                D.Text(actionValue1.toNumStr()).style(primary = true, bold = true),
+                D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
+            )
         )
-    )
+    } else {
+        D.Format(
+            R.string.action_mark_content1_state2_consume3,
+            arrayOf(
+                content,
+                getStateContent(actionValue2.toInt(), actionId),
+                D.Text((-count).toString()).style(primary = true, bold = true)
+            )
+        )
+    }
 }
