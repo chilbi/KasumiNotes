@@ -7,15 +7,24 @@ import kotlin.math.absoluteValue
 fun SkillAction.getMove(): D {
     return when (actionDetail1) {
         1 -> {
-            D.Join(
-                arrayOf(
-                    D.Format(
-                        R.string.action_move_target1,
-                        arrayOf(getTarget(depend))
-                    ),
-                    D.Format(R.string.action_move_return)
+            val target = getTarget(depend)
+            val desc = if (actionValue1 > 0.0) {
+                D.Format(
+                    R.string.action_move_forward_target1_distance2,
+                    arrayOf(target, D.Text(actionValue1.toNumStr()).style(primary = true, bold = true))
                 )
-            )
+            } else if (actionValue1 < 0.0) {
+                D.Format(
+                    R.string.action_move_backward_target1_distance2,
+                    arrayOf(target, D.Text((-actionValue1).toNumStr()).style(primary = true, bold = true))
+                )
+            } else {
+                D.Format(
+                    R.string.action_move_target1,
+                    arrayOf(target)
+                )
+            }
+            D.Join(arrayOf(desc, D.Format(R.string.action_move_return)))
         }
         3 -> {
             val target = getTarget(depend)

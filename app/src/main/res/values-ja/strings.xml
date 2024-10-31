@@ -306,6 +306,7 @@
     <string name="action_triggered_when_hp_zero_target1">%sのＨＰが０になった時に発動する。</string>
     <string name="action_trigger_count1">（このスキルはバトル中%s回しか発動しない）</string>
     <string name="action_illusion_target1_time2_cut3">%1$sを【幻化】状態にする、効果時間%2$s秒。【幻化】状態の間は%1$sが受けるダメージを%3$s軽減する。%1$sより前に味方がいない場合、【幻化】状態は解除される。</string>
+    <string name="action_friendly_barrier_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。【%2$s】が付与されている間、自分への攻撃を【%2$s】が付与されている味方１キャラが代わりに受ける。</string>
 
     <string name="action_branch_and">且つ</string>
     <string name="action_branch_status_up_target1_max2">%1$sがステータスアップ効果を受ける度に（最大%2$s回）、</string>
@@ -323,6 +324,8 @@
     <string name="action_branch_not_counter1_above2">【%1$s】の数が＜%2$sの場合、</string>
     <string name="action_branch_hp_target1_above2">%1$sの残りＨＰが≧%2$sの場合、</string>
     <string name="action_branch_not_hp_target1_above2">%1$sの残りＨＰが＜%2$sの場合、</string>
+    <string name="action_branch_hp_max_target1">%sのＨＰが最大の場合、</string>
+    <string name="action_branch_not_hp_max_target1">%sのＨＰが最大じゃないの場合、</string>
     <string name="action_branch_target1_state2">%1$sが%2$s状態の場合、</string>
     <string name="action_branch_not_target1_state2">%1$sが%2$s状態でない場合、</string>
     <string name="action_branch_speed_up_target1">%sが行動速度アップ状態の場合、</string>
@@ -477,6 +480,7 @@
     <string name="state_alchemical_material">錬金素材</string>
     <string name="state_perfume">パフューム</string>
     <string name="state_laze_tempt">サボりの誘惑</string>
+    <string name="state_friendly_barrier">味方バリアー♡</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>

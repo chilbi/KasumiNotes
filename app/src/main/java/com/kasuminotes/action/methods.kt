@@ -258,6 +258,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         190 -> D.Format(R.string.state_alchemical_material)
         191 -> D.Format(R.string.state_perfume)
         192 -> D.Format(R.string.state_laze_tempt)
+        193 -> D.Format(R.string.state_friendly_barrier)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
 }

@@ -192,8 +192,8 @@
     <string name="action_damage_critical_rate1">当此攻击暴击时，暴击伤害倍率为%s倍。</string>
     <string name="action_damage_base_atk1_target2">此攻击以%2$s的%1$s为基础造成伤害。</string>
     <string name="action_move_target1">移动到%s的面前。</string>
-    <string name="action_move_forward_target1_distance2">移动到%1$s前方%2$s距离的位置。</string>
-    <string name="action_move_backward_target1_distance2">移动到%1$s后方%2$s距离的位置。</string>
+    <string name="action_move_forward_target1_distance2">移动到%1$s的前方%2$s距离的位置。</string>
+    <string name="action_move_backward_target1_distance2">移动到%1$s的后方%2$s距离的位置。</string>
     <string name="action_move_velocity1_target2_distance3">以%1$s的速度移动到%2$s的前方%3$s距离的位置。</string>
     <string name="action_move_forward_distance1">移动到前方%s距离的位置。</string>
     <string name="action_move_backward_distance1">移动到后方%s距离的位置。</string>
@@ -246,8 +246,8 @@
     <string name="action_trigger_be_harmed_target1">%s受到敌人的伤害时发动。</string>
     <string name="action_destroy_target1">使%s陷入无法战斗状态。</string>
     <string name="action_accumulative_damage_formula1_tier2">每当对敌人进行攻击，对该敌人造成的伤害便会提升%1$s。此效果最多叠加%2$s次。</string>
-    <string name="action_barrier_guard_target1_formula2_content3_time4">对%1$s展开可无效%2$s%3$s伤害的护盾，效果时间%4$s秒。</string>
-    <string name="action_barrier_drain_target1_formula2_content3_time4">对%1$s展开可吸收%2$s%3$s伤害的护盾，效果时间%4$s秒。</string>
+    <string name="action_barrier_guard_target1_formula2_content3_time4">对%1$s展开可无效%2$s%3$s伤害的屏障，效果时间%4$s秒。</string>
+    <string name="action_barrier_drain_target1_formula2_content3_time4">对%1$s展开可吸收%2$s%3$s伤害的屏障，效果时间%4$s秒。</string>
     <string name="action_damage_field_target1_range2_formula3_content4_time5">以%1$s为中心，展开对%2$s范围内所有敌人每秒造成%3$s%4$s伤害的领域，效果时间%5$s秒。</string>
     <string name="action_field_target1_range2_content3_time4">以%1$s为中心，展开%2$s范围内%3$s的领域，效果时间%4$s秒。</string>
     <string name="action_wave_start_idle_time1">战斗开始%s秒后入场。</string>
@@ -306,6 +306,7 @@
     <string name="action_triggered_when_hp_zero_target1">当%s的HP变为0时发动。</string>
     <string name="action_trigger_count1">（此技能战斗中只能发动%s次）</string>
     <string name="action_illusion_target1_time2_cut3">赋予%1$s【幻化】状态，效果时间%2$s秒。【幻化】状态期间%1$s受到的伤害减少%3$s。%1$s的前方没有己方角色时，就会解除【幻化】状态。</string>
+    <string name="action_friendly_barrier_target1_state2_time3">赋予%1$s【%2$s】状态，效果时间%3$s秒。【%2$s】赋予期间，对自身的攻击将由被赋予【%2$s】状态的一名己方角色代替承受伤害。</string>
 
     <string name="action_branch_and">且</string>
     <string name="action_branch_status_up_target1_max2">每当%1$s受到状态提升时（最多%2$s次），</string>
@@ -323,6 +324,8 @@
     <string name="action_branch_not_counter1_above2">【%1$s】的数量＜%2$s时，</string>
     <string name="action_branch_hp_target1_above2">%1$s的残余的HP≧%2$s时，</string>
     <string name="action_branch_not_hp_target1_above2">%1$s的残余的HP＜%2$s时，</string>
+    <string name="action_branch_hp_max_target1">%s的HP为最大时，</string>
+    <string name="action_branch_not_hp_max_target1">%s的HP不为最大时，</string>
     <string name="action_branch_target1_state2">%1$s已陷入%2$s状态时，</string>
     <string name="action_branch_not_target1_state2">%1$s未陷入%2$s状态时，</string>
     <string name="action_branch_speed_up_target1">%s已处于加速状态时，</string>
@@ -345,8 +348,8 @@
     <string name="action_branch_not_exist_summon1">%s不存在己方场上时，</string>
     <string name="action_branch_status_change_target1_content2_">%1$s在此技能发动时已处于%2$s状态时，</string>
     <string name="action_branch_not_status_change_target1_content2">%1$ss在此技能发动时未处于%2$s状态时，</string>
-    <string name="action_branch_barrier_target1">%s有护盾展开时，</string>
-    <string name="action_branch_not_barrier_target1">%s没有护盾展开时，</string>
+    <string name="action_branch_barrier_target1">%s有屏障展开时，</string>
+    <string name="action_branch_not_barrier_target1">%s没有屏障展开时，</string>
     <string name="action_branch_break_target1">%s的目标已陷入Break状态时，</string>
     <string name="action_branch_not_break_target1">%s的目标未陷入Break状态时，</string>
     <string name="action_branch_unit_target1_count2">%1$s全体的数量=%2$s时，</string>
@@ -407,7 +410,7 @@
     <string name="content_status_down_effect">状态降低效果</string>
     <string name="content_up">提升</string>
     <string name="content_down">降低</string>
-    <string name="content_barrier">护盾</string>
+    <string name="content_barrier">屏障</string>
     <string name="content_strength_seal">【力之魔字】刻印期间，</string>
     <string name="content_kizuna_certificate">【情谊的证明】解放期间，</string>
     <string name="content_full_charge">赋予自身【满电】状态，</string>
@@ -477,6 +480,7 @@
     <string name="state_alchemical_material">炼金素材</string>
     <string name="state_perfume">香水</string>
     <string name="state_laze_tempt">偷懒的诱惑</string>
+    <string name="state_friendly_barrier">友军屏障♡</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>
@@ -631,8 +635,8 @@
     <string name="give_energy_decrement">TP的降低量</string>
     <string name="give_hp_regeneration">HP的持续回复量</string>
     <string name="give_energy_regeneration">TP的持续回复量</string>
-    <string name="give_barrier_guard">护盾的无效伤害量</string>
-    <string name="give_barrier_drain">护盾的吸收伤害量</string>
+    <string name="give_barrier_guard">屏障的无效伤害量</string>
+    <string name="give_barrier_drain">屏障的吸收伤害量</string>
     <string name="give_up_amount_content1">%s的提升量</string>
     <string name="give_down_amount_content1">%s的降低量</string>
     <string name="give_mark_add_state1">【%s】的追加数量</string>

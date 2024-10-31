@@ -112,10 +112,14 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                 if (targetCount == 1) {//一名目标
                     if (isFullRangeTarget()) {
                         if (targetNumber > 0) {
-                            D.Format(
-                                R.string.target_front_number1_assignment2,
-                                arrayOf(getNumber(), getAssignmentOne())
-                            )
+                            if (targetNumber == 99) {
+                                D.Format(R.string.target_first_assignment_count1, arrayOf(getAssignmentCount()))
+                            } else {
+                                D.Format(
+                                    R.string.target_front_number1_assignment2,
+                                    arrayOf(getNumber(), getAssignmentOne())
+                                )
+                            }
                         } else {//targetNumber == 0
                             D.Join(arrayOf(D.Format(R.string.target_forward), getAssignmentCount()))
                         }

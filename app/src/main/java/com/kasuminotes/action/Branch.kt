@@ -61,12 +61,19 @@ private fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
             )
         }
         // ぺコリーヌ（プリンセス）、レイ（ハロウィン）
-        in 900..999 -> {
+        in 901..999 -> {
             val above = D.Text("${actionDetail1 % 100}%")
             setBranch(
                 branch,
                 D.Format(R.string.action_branch_not_hp_target1_above2, arrayOf(target, above)),
                 D.Format(R.string.action_branch_hp_target1_above2, arrayOf(target, above))
+            )
+        }
+        900 -> {
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_hp_max_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_hp_max_target1, arrayOf(target))
             )
         }
         // 天秤座
@@ -277,13 +284,22 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
             )
         }
         // ぺコリーヌ（ニューイヤー）
-        in 900..999 -> {
+        in 901..999 -> {
             val target = getTarget(depend)
             val above = D.Text("${actionDetail1 % 100}%")
             setBranch(
                 branch,
                 D.Format(R.string.action_branch_not_hp_target1_above2, arrayOf(target, above)),
                 D.Format(R.string.action_branch_hp_target1_above2, arrayOf(target, above))
+            )
+        }
+        // フブキ
+        900 -> {
+            val target = getTarget(depend)
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_hp_max_target1, arrayOf(target)),
+                D.Format(R.string.action_branch_not_hp_max_target1, arrayOf(target))
             )
         }
         // ホマレ

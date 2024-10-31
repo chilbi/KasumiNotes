@@ -26,6 +26,7 @@ class ActionBuilder(
 
         val branchModify = ModifyDescription(rawDepends, actions)
         val ignoreProvocationModify = ModifyDescription(rawDepends, actions)
+        val giveValueModifyList = mutableListOf<Pair<Int, Int>>()
         val totalCriticalModifyList = mutableListOf<Pair<Int, Int>>()
 
         actions.forEachIndexed { index, action ->
@@ -54,7 +55,7 @@ class ActionBuilder(
             if (action.actionType in arrayOf(26, 27, 74)) {
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
-                originList[modifyIndex] = originList[modifyIndex].append(originList[index])
+                giveValueModifyList.add(modifyIndex to index)
             }
             /** [getDamageBaseAtk] */
             if (action.actionType == 103) {
@@ -162,12 +163,6 @@ class ActionBuilder(
             }
         }
 
-        if (totalCriticalModifyList.isNotEmpty()) {
-            totalCriticalModifyList.forEach { item ->
-                originList[item.first] = originList[item.first].append(originList[item.second])
-            }
-        }
-
         branchModify.collectDepend()
         branchModify.forEachModify { modifyIndex, modifyContent ->
             originList[modifyIndex] = originList[modifyIndex].insert(modifyContent)
@@ -176,6 +171,18 @@ class ActionBuilder(
         ignoreProvocationModify.collectDepend()
         ignoreProvocationModify.forEachModify { modifyIndex, modifyContent ->
             originList[modifyIndex] = originList[modifyIndex].insert(modifyContent)
+        }
+
+        if (giveValueModifyList.isNotEmpty()) {
+            giveValueModifyList.forEach {item ->
+                originList[item.first] = originList[item.first].append(originList[item.second])
+            }
+        }
+
+        if (totalCriticalModifyList.isNotEmpty()) {
+            totalCriticalModifyList.forEach { item ->
+                originList[item.first] = originList[item.first].append(originList[item.second])
+            }
         }
 
         return if (willRemoveIndexList.isEmpty()) originList
@@ -258,6 +265,7 @@ class ActionBuilder(
             116 -> getPersistence(skillLevel)
             121 -> getTriggeredWhenHpZero()
             123 -> getIllusion()
+            124 -> getFriendlyBarrier()
             else -> getUnknown()
         }
     }
