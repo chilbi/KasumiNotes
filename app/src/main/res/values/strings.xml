@@ -308,8 +308,10 @@
     <string name="action_illusion_target1_time2_cut3">赋予%1$s【幻化】状态，效果时间%2$s秒。【幻化】状态期间%1$s受到的伤害减少%3$s。%1$s的前方没有己方角色时，就会解除【幻化】状态。</string>
     <string name="action_friendly_barrier_target1_state2_time3">赋予%1$s【%2$s】状态，效果时间%3$s秒。【%2$s】赋予期间，对自身的攻击将由被赋予【%2$s】状态的一名己方角色代替承受伤害。</string>
 
+    <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>
     <string name="action_branch_status_up_target1_max2">每当%1$s受到状态提升时（最多%2$s次），</string>
+    <string name="action_branch_attack_critical_target1">每当%s的攻击暴击时，</string>
     <string name="action_branch_striked_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_branch_controled_time1">%s秒的动作期间内受到行动不能、击飞、拉近时，</string>
     <string name="action_branch_exists_field_content1">%s的领域展开时，</string>
@@ -464,7 +466,7 @@
     <string name="state_moon_water">水月</string>
     <string name="state_flower_trick">花陷阱</string>
     <string name="state_poison_flick">毒击</string>
-    <string name="state_kababankun">かばばん君</string>
+    <string name="state_kababankun">卡巴邦君</string>
     <string name="state_nebaneba">黏黏糊糊</string>
     <string name="state_iron_guard">铁气的护卫</string>
     <string name="state_boumajin">妨魔塵</string>
@@ -481,6 +483,7 @@
     <string name="state_perfume">香水</string>
     <string name="state_laze_tempt">偷懒的诱惑</string>
     <string name="state_friendly_barrier">友军屏障♡</string>
+    <string name="state_bandit_dice">盗贼骰子</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>
