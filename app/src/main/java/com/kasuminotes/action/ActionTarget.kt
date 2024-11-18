@@ -105,6 +105,13 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
         ).getTarget(null, focused)
     }
 
+    if (targetType in 13001..13999) {
+        return D.Format(
+            R.string.target_state1,
+            arrayOf(getStateContent(targetType - 13000, actionId))
+        )
+    }
+
     return when (targetType) {
         0, 7 -> D.Format(R.string.target_self)
         1, 3, 34 -> {

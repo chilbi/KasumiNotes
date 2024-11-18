@@ -266,7 +266,7 @@
     <string name="action_change_mark_target1_state2_consume3">消费掉%3$s个%1$s的【%2$s】。</string>
     <string name="action_change_mark_consume_target1_state2">消费掉%1$s的【%2$s】。</string>
     <string name="action_resurrection_target1_state2_formula3_time4">赋予%1$s【%2$s】。当HP归零时，不会被击倒而是消耗掉【%2$s】同时HP回复%3$s，效果时间%4$s秒。</string>
-    <string name="action_fallen_angel_guard_target1_time2">赋予%1$s【堕天使的加护】。【堕天使的加护】期间，代替该角色承受敌人的攻击，效果时间%2$s秒。</string>
+    <string name="action_vicarious_injury_guard_target1_state2_time3">赋予%1$s【%2$s】。【%2$s】期间，代替该对象承受敌人的攻击，效果时间%3$s秒。</string>
     <string name="action_shield_counter_target1_content2_add3">为%1$s追加%3$s个【%2$s】。【%2$s】每无效1次伤害就会消耗1个</string>
     <string name="action_shield_counter_target1_content2">赋予%1$s【%2$s】。【%2$s】无效1次伤害就会被消耗掉</string>
     <string name="action_shield_counter_formula1">，同时对进攻的敌人造成%s伤害。</string>
@@ -377,6 +377,7 @@
     <string name="summon_426202">召唤眷属(426202)</string>
     <string name="summon_427101">召唤骷髅老爹(427101)</string>
     <string name="summon_431901">制造出一个一定时间后就会消失的冰之壁</string>
+    <string name="summon_430101">召唤一个尖刺兄弟。</string>
 
     <string name="summon_unknown_id1">【%s】</string>
     <string name="summon_ore_dragon">矿石飞龙</string>
@@ -459,6 +460,7 @@
     <string name="state_kairai">界雷</string>
     <string name="state_roar_of_wolf_tooth">狼牙的咆哮</string>
     <string name="state_fire_dance_seal">炎舞的刻印</string>
+    <string name="state_fallen_angel_guard">堕天使的加护</string>
     <string name="state_puukichi_cushion">噗吉靠垫</string>
     <string name="state_knight_guard">骑士的加护</string>
     <string name="state_returning_rose">回归的蔷薇</string>
@@ -484,6 +486,7 @@
     <string name="state_laze_tempt">偷懒的诱惑</string>
     <string name="state_friendly_barrier">友军屏障♡</string>
     <string name="state_bandit_dice">盗贼骰子</string>
+    <string name="state_spike_guard">尖刺守护</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>
@@ -546,6 +549,7 @@
     <string name="target_all_summon_of_self">自身所有的召唤物</string>
     <string name="target_multi_target1">%s的所有多目标部位</string>
     <string name="target_attacking_enemy">进攻的敌人</string>
+    <string name="target_state1">持有【%s】的对象</string>
 
     <string name="skill_level">技能等级</string>
     <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × 技能等级 + (%3$s + %4$s × 技能等级) × %5$s } = %6$s</string>

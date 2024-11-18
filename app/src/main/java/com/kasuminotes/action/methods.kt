@@ -236,6 +236,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         137 -> D.Format(R.string.state_kairai)
         139 -> D.Format(R.string.state_roar_of_wolf_tooth)
         140 -> D.Format(R.string.state_fire_dance_seal)
+        141 -> D.Format(R.string.state_fallen_angel_guard)
         142 -> D.Format(R.string.state_returning_rose)
         145 -> D.Format(R.string.state_puukichi_cushion)
         156 -> D.Format(R.string.state_peace_by_the_waterfront)
@@ -260,6 +261,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         192 -> D.Format(R.string.state_laze_tempt)
         193 -> D.Format(R.string.state_friendly_barrier)
         194 -> D.Format(R.string.state_bandit_dice)
+        195 -> D.Format(R.string.state_spike_guard)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
 }

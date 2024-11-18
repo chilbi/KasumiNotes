@@ -258,7 +258,7 @@ class ActionBuilder(
             100 -> getAkinesiaInvalid()
             103 -> getDamageBaseAtk()
             105 -> getEnvironment()
-            106 -> getFallenAngelGuard()
+            106 -> getVicariousInjuryGuard()
             107 -> getTotalCritical()
             110 -> getDotDamageUp()
             114 -> getTriggeredWhenAttacked()

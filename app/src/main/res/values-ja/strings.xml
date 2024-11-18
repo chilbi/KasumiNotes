@@ -266,7 +266,7 @@
     <string name="action_change_mark_target1_state2_consume3">%1$sの【%2$s】を%3$sつ消費する。</string>
     <string name="action_change_mark_consume_target1_state2">%1$sの【%2$s】を消費する。</string>
     <string name="action_resurrection_target1_state2_formula3_time4">%1$sに【%2$s】を付与する。ＨＰが0になると、倒れずに【%2$s】を消費してＨＰを%3$s回復する、効果時間%4$s秒。</string>
-    <string name="action_fallen_angel_guard_target1_time2">%1$sに【堕天使の加護】を付与する。【堕天使の加護】が付与されている間、そのキャラへの敵の攻撃を代わりに受け、効果時間%2$s秒。</string>
+    <string name="action_vicarious_injury_guard_target1_state2_time3">%1$sに【%2$s】を付与する。【%2$s】が付与されている間、その対象への敵の攻撃を代わりに受け、効果時間%3$s秒。</string>
     <string name="action_shield_counter_target1_content2_add3">%1$sに【%2$s】を%3$sつ追加する。【%2$s】は１回ダメージを無効化する毎に１つ消耗される</string>
     <string name="action_shield_counter_target1_content2">%1$sに【%2$s】を付与する。【%2$s】は１回ダメージを無効化すると消耗される</string>
     <string name="action_shield_counter_formula1">、同時に攻撃してきた敵に%sダメージを与える。</string>
@@ -378,6 +378,7 @@
     <string name="summon_426202">眷属(426202)を召喚する</string>
     <string name="summon_427101">ドクロ親父(427101)を召喚する</string>
     <string name="summon_431901">一定時間後に消滅する氷の壁を生成する</string>
+    <string name="summon_430101">スパイクブラザーズを呼び出す。</string>
 
     <string name="summon_unknown_id1">【%s】</string>
     <string name="summon_ore_dragon">ネフライトワイバーン</string>
@@ -460,6 +461,7 @@
     <string name="state_kairai">界雷</string>
     <string name="state_roar_of_wolf_tooth">狼牙の咆哮</string>
     <string name="state_fire_dance_seal">炎舞の刻印</string>
+    <string name="state_fallen_angel_guard">堕天使の加護</string>
     <string name="state_puukichi_cushion">ぷうきちクッション</string>
     <string name="state_knight_guard">騎士の加護</string>
     <string name="state_returning_rose">回帰の薔薇</string>
@@ -485,6 +487,7 @@
     <string name="state_laze_tempt">サボりの誘惑</string>
     <string name="state_friendly_barrier">味方バリアー♡</string>
     <string name="state_bandit_dice">バンディダイス</string>
+    <string name="state_spike_guard">スパイクガード</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>
@@ -547,6 +550,7 @@
     <string name="target_all_summon_of_self">自分の召喚物すべて</string>
     <string name="target_multi_target1">%sのマルチターゲット部位すべて</string>
     <string name="target_attacking_enemy">攻撃してきた敵</string>
+    <string name="target_state1">【%s】を持っている対象</string>
 
     <string name="skill_level">スキルLv</string>
     <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × スキルLv + (%3$s + %4$s × スキルLv) × %5$s } = %6$s</string>
