@@ -274,6 +274,7 @@ fun getUnitName(id: Int): D {
         426201 -> D.Format(R.string.summon_family_426201)
         426202 -> D.Format(R.string.summon_family_426202)
         427101 -> D.Format(R.string.summon_skull_427101)
+        430101 -> D.Format(R.string.summon_spike_brothers)
         else -> D.Format(R.string.summon_unknown_id1, arrayOf(D.Text(id.toString())))
     }
 }

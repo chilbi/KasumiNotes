@@ -378,7 +378,7 @@
     <string name="summon_426202">眷属(426202)を召喚する</string>
     <string name="summon_427101">ドクロ親父(427101)を召喚する</string>
     <string name="summon_431901">一定時間後に消滅する氷の壁を生成する</string>
-    <string name="summon_430101">スパイクブラザーズを呼び出す。</string>
+    <string name="summon_430101">スパイクブラザーズを呼び出す</string>
 
     <string name="summon_unknown_id1">【%s】</string>
     <string name="summon_ore_dragon">ネフライトワイバーン</string>
@@ -387,6 +387,7 @@
     <string name="summon_family_426201">眷属(426201)</string>
     <string name="summon_family_426202">眷属(426202)</string>
     <string name="summon_skull_427101">ドクロ親父(427101)</string>
+    <string name="summon_spike_brothers">スパイクブラザーズ</string>
 
     <string name="mode_id1">自分を姿(%s)に変化させる、</string>
     <string name="mode_return">自分をもとの姿に戻させる、</string>

@@ -24,6 +24,7 @@ class ActionBuilder(
         }
         actions.forEach { action -> originList.add(action.getDescription(skillLevel, property)) }
 
+        var exEquipPassive: D? = null
         val branchModify = ModifyDescription(rawDepends, actions)
         val ignoreProvocationModify = ModifyDescription(rawDepends, actions)
         val giveValueModifyList = mutableListOf<Pair<Int, Int>>()
@@ -129,11 +130,12 @@ class ActionBuilder(
             /** [getExEquipPassive] */
             if (action.actionType in arrayOf(901, 902)) {
                 willRemoveIndexList.add(index)
-                var modifyIndex = index + 1
-                if (actions[modifyIndex].actionType in arrayOf(26, 27, 74)) {
-                    modifyIndex = actions.indexOfFirst { it.actionId == actions[modifyIndex].actionDetail1 }
-                }
-                originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
+                exEquipPassive = originList[index]
+//                var modifyIndex = index + 1
+//                if (actions[modifyIndex].actionType in arrayOf(26, 27, 74)) {
+//                    modifyIndex = actions.indexOfFirst { it.actionId == actions[modifyIndex].actionDetail1 }
+//                }
+//                originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
             }
             /** [getBranch] */
             if (action.actionType in arrayOf(23, 28, 42, 53, 63, 111)) {
@@ -182,6 +184,12 @@ class ActionBuilder(
         if (totalCriticalModifyList.isNotEmpty()) {
             totalCriticalModifyList.forEach { item ->
                 originList[item.first] = originList[item.first].append(originList[item.second])
+            }
+        }
+
+        if (exEquipPassive != null) {
+            originList.forEachIndexed { index, _ ->
+                originList[index] = originList[index].insert(exEquipPassive!!)
             }
         }
 
