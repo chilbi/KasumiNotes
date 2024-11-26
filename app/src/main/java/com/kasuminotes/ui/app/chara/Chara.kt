@@ -19,6 +19,7 @@ import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.CharaState
+import com.kasuminotes.ui.app.state.DbState
 import com.kasuminotes.ui.components.BackdropScaffold
 import com.kasuminotes.ui.components.BackdropScaffoldDefaults
 import com.kasuminotes.ui.components.BackdropValue
@@ -28,6 +29,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun Chara(
     charaState: CharaState,
+    dbState: DbState,
     maxUserData: MaxUserData,
     onBack: () -> Unit,
     onEquipmentClick: (equipData: EquipData, slot: Int?) -> Unit,
@@ -78,7 +80,7 @@ fun Chara(
     val onCharaChange = remember<(UserProfile) -> Unit>(userProfile) {{ otherChara ->
         charaState.initUserProfile(
             otherChara,
-            userProfile.sharedProfiles!!.plus(userProfile),
+            dbState.userState.charaListState.profiles,
             maxUserData.maxCharaLevel
         )
     }}

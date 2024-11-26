@@ -78,6 +78,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             ) {
                 Chara(
                     appViewModel.charaState,
+                    appViewModel.dbState,
                     userState.maxUserData!!,
                     appViewModel::popBackStack,
                     appViewModel::navigateToEquip,
