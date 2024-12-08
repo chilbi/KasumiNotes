@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.ClanBattlePeriod
-import com.kasuminotes.data.DungeonAreaData
 import com.kasuminotes.data.EnemyData
 import com.kasuminotes.data.SkillItem
 import com.kasuminotes.data.UnitAttackPattern
@@ -121,9 +120,9 @@ class ClanBattleState(
         }
     }
 
-fun initEnemy(enemyId: Int, weaknessList: List<Int>): Boolean {
+    fun initEnemy(enemyId: Int, weaknessList: List<Int>, epTableName: String = "enemy_parameter"): Boolean {
         val db = appRepository.getDatabase()
-        val enemy = db.getEnemyData(enemyId)
+        val enemy = db.getEnemyData(enemyId, epTableName)
         if (enemy != null) {
             initEnemy(enemy, weaknessList)
             return true

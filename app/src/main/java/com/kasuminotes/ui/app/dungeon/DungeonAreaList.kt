@@ -20,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.data.DungeonAreaData
@@ -78,7 +77,7 @@ private fun DungeonAreaListItem(
     Row(Modifier.padding(4.dp).clickable { onItemClick(dungeonAreaData.enemyId, weaknessList ?: emptyList()) }) {
         Box(Modifier.size(56.dp)) {
             PlaceImage(
-                url = UrlUtil.getBossUnitIconUrl(dungeonAreaData.unitId),
+                url = UrlUtil.getEnemyUnitIconUrl(dungeonAreaData.unitId),
                 shape = UnitImageShape
             )
         }

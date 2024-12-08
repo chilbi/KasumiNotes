@@ -123,9 +123,17 @@ fun EnemyDetail(
 
 @Composable
 private fun EnemyComment(comment: String) {
+    if (comment == "") return
+
     val comments = remember {
         val list = comment.split("\\n").toMutableList()
-        listOf(list.removeAt(0), list.removeAt(0)) to list.toList()
+        if (list.size > 2) {
+            listOf(list.removeAt(0), list.removeAt(0)) to list.toList()
+        } else if (list.size > 1) {
+            listOf(list.removeAt(0), "") to list
+        } else {
+            list to listOf("")
+        }
     }
 
     Box {

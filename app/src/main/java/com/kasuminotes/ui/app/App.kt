@@ -20,6 +20,7 @@ import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
 import com.kasuminotes.ui.app.quest.Quest
 import com.kasuminotes.ui.app.summons.Summons
+import com.kasuminotes.ui.app.talentQuest.TalentQuest
 import com.kasuminotes.ui.app.userEditor.CharaEditor
 import com.kasuminotes.ui.app.userEditor.UserImages
 import com.kasuminotes.ui.theme.KasumiNotesTheme
@@ -139,6 +140,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     appViewModel.clanBattleState,
                     appViewModel::navigateToMapList,
                     appViewModel::navigateToDungeon,
+                    appViewModel::navigateToTalentQuest,
                     appViewModel::navigateTo,
                     navigateToHomeAndOpenDrawer
                 )
@@ -173,6 +175,17 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 Dungeon(
                     appViewModel.dungeonState,
                     appViewModel::navigateToEnemyById,
+                    appViewModel::popBackStack
+                )
+            }
+            composable(
+                route = AppNavData.TalentQuest.route,
+                enterTransition = AppNavData.TalentQuest.enterTransition,
+                exitTransition = AppNavData.TalentQuest.exitTransition
+            ) {
+                TalentQuest(
+                    appViewModel.talentQuestState,
+                    appViewModel::navigateToTalentQuestEnemy,
                     appViewModel::popBackStack
                 )
             }

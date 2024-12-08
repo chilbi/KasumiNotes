@@ -35,11 +35,12 @@ fun ClanBattle(
     clanBattleState: ClanBattleState,
     onNavigateToMapList: (label: String, period: ClanBattlePeriod) -> Unit,
     onNavigateToDungeon: () -> Unit,
+    onNavigateToTalentQuest: () -> Unit,
     onNavigateTo: (Int) -> Unit,
     onDrawerOpen: () -> Unit
 ) {
     Scaffold(
-        topBar = { ClanBattleTopBar(onNavigateToDungeon) },
+        topBar = { ClanBattleTopBar(onNavigateToDungeon, onNavigateToTalentQuest) },
         bottomBar = { BottomBar(2, onNavigateTo, onDrawerOpen) },
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
@@ -51,7 +52,10 @@ fun ClanBattle(
 }
 
 @Composable
-private fun ClanBattleTopBar(onNavigateToDungeon: () -> Unit) {
+private fun ClanBattleTopBar(
+    onNavigateToDungeon: () -> Unit,
+    onNavigateToTalentQuest: () -> Unit
+) {
     TopBar(
         title = {
             Text(stringResource(R.string.clan_battle))
@@ -77,6 +81,14 @@ private fun ClanBattleTopBar(onNavigateToDungeon: () -> Unit) {
                         onClick = {
                             expanded = false
                             onNavigateToDungeon()
+                        },
+                        leadingIcon = { Icon(Icons.AutoMirrored.Filled.ArrowForward, null) }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.talent_quest)) },
+                        onClick = {
+                            expanded = false
+                            onNavigateToTalentQuest()
                         },
                         leadingIcon = { Icon(Icons.AutoMirrored.Filled.ArrowForward, null) }
                     )

@@ -121,7 +121,7 @@ private fun EnemyListItem(
         )
         Box(Modifier.wrapContentSize()) {
             ImageCard(
-                imageUrl = UrlUtil.getBossUnitIconUrl(enemyData.unitId),
+                imageUrl = UrlUtil.getEnemyUnitIconUrl(enemyData.unitId),
                 primaryText = enemyData.name,
                 secondaryText = "【$atkTypeStr】",
                 imageSize = 56.dp

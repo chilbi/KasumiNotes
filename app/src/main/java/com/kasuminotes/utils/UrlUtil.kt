@@ -23,6 +23,7 @@ object UrlUtil {
     private const val STILL_UNIT_URL = "$ESTERTION_API_URL/card/full/%d.webp"
     private const val UNIT_PLATE_URL = "$ESTERTION_API_URL/icon/plate/%d.webp"
     private const val ICON_UNIT_URL = "$ESTERTION_API_URL/icon/unit/%d.webp"
+    private const val ICON_UNIT_SHADOW_URL = "$ESTERTION_API_URL/icon/unit_shadow/%d.webp"
     private const val ICON_SKILL_URL = "$ESTERTION_API_URL/icon/skill/%d.webp"
     private const val ICON_EQUIPMENT_URL = "$ESTERTION_API_URL/icon/equipment/%d.webp"
     private const val ICON_ITEM_URL = "$ESTERTION_API_URL/icon/item/%d.webp"
@@ -54,8 +55,14 @@ object UrlUtil {
     fun getUnitIconUrl(unitId: Int, rarity: Int) =
         String.format(ICON_UNIT_URL, getImageId(unitId, rarity))
 
-    fun getBossUnitIconUrl(unitId: Int) =
-        String.format(ICON_UNIT_URL, if (unitId == 301305) 301300 else unitId)
+    fun getEnemyUnitIconUrl(unitId: Int): String {
+        val id = if (unitId == 301305) 301300 else unitId
+        return if (unitId in 600001..699999) {
+            String.format(ICON_UNIT_SHADOW_URL, "1${unitId.toString().substring(1, 4)}31".toInt())
+        } else {
+            String.format(ICON_UNIT_URL, id)
+        }
+    }
 
     fun getUserIconUrl(userId: Int) = String.format(ICON_UNIT_URL, userId)
 

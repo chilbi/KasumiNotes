@@ -88,7 +88,7 @@ private fun ClanBattlePeriodItem(
             clanBattlePeriod.bossIdList.forEachIndexed { i, bossId ->
                 Box(Modifier.size(56.dp)) {
                     PlaceImage(
-                        url = UrlUtil.getBossUnitIconUrl(bossId.first),
+                        url = UrlUtil.getEnemyUnitIconUrl(bossId.first),
                         shape = UnitImageShape
                     )
                     Row(Modifier.align(Alignment.BottomStart)) {

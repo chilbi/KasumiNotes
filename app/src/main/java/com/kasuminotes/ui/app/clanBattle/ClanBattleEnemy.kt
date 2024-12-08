@@ -62,7 +62,7 @@ private fun EnemyTopBar(
         title = {
             Box(Modifier.wrapContentSize()) {
                 ImageCard(
-                    imageUrl = UrlUtil.getBossUnitIconUrl(enemyData.unitId),
+                    imageUrl = UrlUtil.getEnemyUnitIconUrl(enemyData.unitId),
                     primaryText = enemyData.name,
                     secondaryText = "lv${enemyData.level}"
                 )

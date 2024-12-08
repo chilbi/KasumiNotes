@@ -92,9 +92,9 @@ WHERE enemy_id=$enemyId""", null).use {
     }
 }
 
-fun AppDatabase.getEnemyData(enemyId: Int): EnemyData? {
+fun AppDatabase.getEnemyData(enemyId: Int, epTableName: String = "enemy_parameter"): EnemyData? {
     val sql = """SELECT ${EnemyData.getFields()}
-FROM enemy_parameter AS ep
+FROM $epTableName AS ep
 LEFT JOIN enemy_m_parts AS emp ON emp.enemy_id=ep.enemy_id
 LEFT JOIN unit_enemy_data AS ued ON ued.unit_id=ep.unit_id
 WHERE ep.enemy_id=$enemyId"""
