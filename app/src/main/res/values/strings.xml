@@ -489,6 +489,7 @@
     <string name="state_friendly_barrier">友军屏障♡</string>
     <string name="state_bandit_dice">盗贼骰子</string>
     <string name="state_spike_guard">尖刺守护</string>
+    <string name="state_demon_kiss">恶魔之吻</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>

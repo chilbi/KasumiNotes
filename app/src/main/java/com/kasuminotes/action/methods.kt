@@ -262,6 +262,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         193 -> D.Format(R.string.state_friendly_barrier)
         194 -> D.Format(R.string.state_bandit_dice)
         195 -> D.Format(R.string.state_spike_guard)
+        196 -> D.Format(R.string.state_demon_kiss)
         else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
     }
 }

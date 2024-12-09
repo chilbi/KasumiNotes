@@ -490,6 +490,7 @@
     <string name="state_friendly_barrier">味方バリアー♡</string>
     <string name="state_bandit_dice">バンディダイス</string>
     <string name="state_spike_guard">スパイクガード</string>
+    <string name="state_demon_kiss">悪魔の口づけ</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>

@@ -17,7 +17,7 @@ private val atkHighTypes = arrayOf(14, 29, 43)
 /** 加上物理攻击力最低的 */
 private val atkTypes = atkHighTypes.plus(arrayOf(15, 30))
 /** 魔法攻击力最高的 */
-private val magicStrHighTypes = arrayOf(16, 31)
+private val magicStrHighTypes = arrayOf(16, 31, 50)
 /** 加上魔法攻击力最低的 */
 private val magicStrTypes = magicStrHighTypes.plus(arrayOf(17, 32))
 /** 物理攻击力或魔法攻击力最高的 */
@@ -33,7 +33,7 @@ private val magicDefHighTypes = arrayOf(48)
 /** 加上魔法防御力最低的 */
 private val magicDefTypes = magicDefHighTypes.plus(46)
 /** 自身以外的（还有34在其它地方处理了） */
-private val withoutSelfTypes = arrayOf(41, 43, 44)
+private val withoutSelfTypes = arrayOf(41, 43, 44, 50)
 /** 不在自身后面的 */
 private val notInBackTypes = arrayOf(35, 36)
 /** 所有 "{0}最{1高|低}的{2}" 的类型 */
