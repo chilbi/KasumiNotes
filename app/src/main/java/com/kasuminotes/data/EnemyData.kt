@@ -4,7 +4,6 @@ import com.kasuminotes.common.SummonMinion
 import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.db.getUnitAttackPatternList
 import com.kasuminotes.db.getUnitSkillData
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -18,6 +17,7 @@ data class EnemyData(
     override val atkType: Int,
     override val normalAtkCastTime: Float,
     val comment: String,
+    val uniqueEquipmentFlag1: Int,//0,1,2
     val rarity: Int,
     val promotionLevel: Int,
     val level: Int,
@@ -67,6 +67,7 @@ data class EnemyData(
                         "atk_type," +
                         "normal_atk_cast_time," +
                         "comment," +
+                        "unique_equipment_flag_1," +
                         "rarity," +
                         "promotion_level," +
                         "level," +

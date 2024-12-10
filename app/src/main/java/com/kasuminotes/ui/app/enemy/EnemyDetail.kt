@@ -36,14 +36,17 @@ import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.SkillDetail
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.MultiLineText
+import com.kasuminotes.utils.Helper
 import com.kasuminotes.utils.UrlUtil
 
-private val clanBattleEnemyIndices = listOf(0, 16, 1, 3, 2, 4, 13, 15)
-private val clanBattleEnemyPartIndices = listOf(0, 16, 1, 3, 2, 4)
+private val shadowCharaIndices: List<Int> = listOf(1, 3, 5, 6, 2, 4, 16, 7, 0, 8, 13, 15, 14)
+private val enemyIndices = listOf(0, 16, 1, 3, 2, 4, 13, 15)
+private val enemyPartIndices = listOf(0, 16, 1, 3, 2, 4)
 
 @Composable
 fun EnemyDetail(
     enemyData: EnemyData,
+    isShadowChara: Boolean,
     enemyMultiParts: List<EnemyData>,
     unitAttackPatternList: List<UnitAttackPattern>,
     skillList: List<SkillItem>,
@@ -61,7 +64,7 @@ fun EnemyDetail(
         Container {
             PropertyTable(
                 property = enemyData.property,
-                indices = clanBattleEnemyIndices
+                indices = if (isShadowChara) shadowCharaIndices else enemyIndices
             )
         }
 
@@ -73,7 +76,7 @@ fun EnemyDetail(
                 ) {
                     PropertyTable(
                         property = part.property,
-                        indices = clanBattleEnemyPartIndices
+                        indices = enemyPartIndices
                     )
                 }
             }

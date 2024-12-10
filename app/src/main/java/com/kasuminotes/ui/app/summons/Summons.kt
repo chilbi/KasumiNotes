@@ -23,10 +23,7 @@ import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TabsPager
 import com.kasuminotes.ui.components.TopBar
 
-private val summonPropertyIndices: List<Int> = listOf(
-    1, 3, 5, 6, 2, 4, 16, 7, 0, 8, 9, 10, 13, 15, 14
-)
-
+private val summonPropertyIndices: List<Int> = listOf(1, 3, 5, 6, 2, 4, 16, 7, 0, 8, 13, 15, 14)
 private val minionPropertyIndices: List<Int> = listOf(0, 16, 1, 3, 2, 4, 13, 15)
 
 @Composable

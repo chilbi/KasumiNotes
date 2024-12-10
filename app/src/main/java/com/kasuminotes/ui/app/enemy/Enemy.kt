@@ -26,6 +26,7 @@ import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.UnitElement
+import com.kasuminotes.utils.Helper
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -34,18 +35,26 @@ fun Enemy(
     onMinionsClick: (minions: List<Int>, skillLevel: Int, enemyData: EnemyData) -> Unit,
     onBack: () -> Unit
 ) {
+    val enemyData = clanBattleState.enemyData!!
+    val isShadowChara = Helper.isShadowChara(enemyData.unitId)
+
     Scaffold(
-        topBar = { EnemyTopBar(clanBattleState.enemyData!!, clanBattleState.talentWeaknessList, onBack) },
-        bottomBar = { Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars)) },
+        topBar = {
+            EnemyTopBar(enemyData, isShadowChara, clanBattleState.talentWeaknessList, onBack)
+        },
+        bottomBar = {
+            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
+        },
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
                 EnemyDetail(
-                    enemyData = clanBattleState.enemyData!!,
-                    enemyMultiParts = clanBattleState.enemyMultiParts,
-                    unitAttackPatternList = clanBattleState.unitAttackPatternList,
-                    skillList = clanBattleState.skillList,
-                    unitSkillData = clanBattleState.unitSkillData,
-                    onMinionsClick = onMinionsClick
+                    enemyData,
+                    isShadowChara,
+                    clanBattleState.enemyMultiParts,
+                    clanBattleState.unitAttackPatternList,
+                    clanBattleState.skillList,
+                    clanBattleState.unitSkillData,
+                    onMinionsClick
                 )
             }
         }
@@ -55,16 +64,30 @@ fun Enemy(
 @Composable
 private fun EnemyTopBar(
     enemyData: EnemyData,
+    isShadowChara: Boolean,
     talentWeaknessList: List<Int>,
     onBack: () -> Unit
 ) {
     TopBar(
         title = {
             Box(Modifier.wrapContentSize()) {
+                var secondaryText = "lv${enemyData.level}"
+                if (isShadowChara) {
+                    if (enemyData.uniqueEquipmentFlag1 > 0) {
+                        val uniqueEquip = stringResource(R.string.unique_equip)
+                        secondaryText += "; ${uniqueEquip}1"
+                        if (enemyData.uniqueEquipmentFlag1 > 1) {
+                            secondaryText += "; ${uniqueEquip}2"
+                        }
+                    }
+                    if (enemyData.rarity > 5) {
+                        secondaryText += "; ${stringResource(R.string.rarity_6)}"
+                    }
+                }
                 ImageCard(
                     imageUrl = UrlUtil.getEnemyUnitIconUrl(enemyData.unitId),
                     primaryText = enemyData.name,
-                    secondaryText = "lv${enemyData.level}"
+                    secondaryText = secondaryText
                 )
                 if (talentWeaknessList.any { weakness -> weakness > 100 }) {
                     Infobar(
