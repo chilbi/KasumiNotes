@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -179,6 +180,7 @@ private fun BoxScope.RankBonusButton(rankBonusProperty: Property?) {
         colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.tertiary),
         enabled = hasBonus
     ) {
+        Icon(if (hasBonus) Icons.Filled.Check else Icons.Filled.Close, null)
         Text(
             text = label,
             textDecoration = TextDecoration.Underline

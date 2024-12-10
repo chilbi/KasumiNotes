@@ -6,7 +6,7 @@ import com.kasuminotes.db.getCharaStoryStatus
 import com.kasuminotes.db.getExEquipData
 import com.kasuminotes.db.getExSkillData
 import com.kasuminotes.db.getPromotionBonusList
-import com.kasuminotes.db.getPromotions
+//import com.kasuminotes.db.getPromotions
 import com.kasuminotes.db.getUniqueData
 import com.kasuminotes.db.getUnitAttackPatternList
 import com.kasuminotes.db.getUnitExEquipSlots
@@ -30,7 +30,7 @@ data class UserProfile(
     var unique2Data: UniqueData? = null,
     var charaStoryStatus: CharaStoryStatus? = null,
     var sharedProfiles: List<UserProfile>? = null,
-    var promotions: List<UnitPromotion> = emptyList(),
+//    var promotions: List<UnitPromotion> = emptyList(),
     var unitAttackPatternList: List<UnitAttackPattern> = emptyList(),
     var unitSkillData: UnitSkillData? = null,
     var exSkillData: ExSkillData? = null,
@@ -221,7 +221,7 @@ data class UserProfile(
             async { db.getUniqueData(unitData.equip1Id) },
             async { db.getUniqueData(unitData.equip2Id) },
             async { charaStoryStatus ?: db.getCharaStoryStatus(unitData.unitId) },
-            async { db.getPromotions(unitData.unitId) },
+            async { /*db.getPromotions(unitData.unitId)*/null },
             async { db.getUnitAttackPatternList(unitData.unitId) },
             async { db.getUnitSkillData(unitData.unitId) },
             async { db.getExSkillData(unitData.unitId) },
@@ -240,8 +240,8 @@ data class UserProfile(
         unique1Data = list[3] as UniqueData?
         unique2Data = list[4] as UniqueData?
         charaStoryStatus = list[5] as CharaStoryStatus
-        @Suppress("UNCHECKED_CAST")
-        promotions = list[6] as List<UnitPromotion>
+//        @Suppress("UNCHECKED_CAST")
+//        promotions = list[6] as List<UnitPromotion>
         @Suppress("UNCHECKED_CAST")
         unitAttackPatternList = list[7] as List<UnitAttackPattern>
         unitSkillData = list[8] as UnitSkillData

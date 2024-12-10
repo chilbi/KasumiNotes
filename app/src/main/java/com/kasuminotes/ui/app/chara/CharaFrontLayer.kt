@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+//import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -25,13 +25,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.CharaStoryStatus
-import com.kasuminotes.data.EquipData
+//import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.StoryItem
-import com.kasuminotes.data.UniqueData
+//import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitData
-import com.kasuminotes.data.UnitPromotion
+//import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
@@ -47,18 +47,18 @@ fun CharaFrontLayer(
     unitData: UnitData,
     charaStoryStatus: CharaStoryStatus?,
     sharedProfiles: List<UserProfile>?,
-    unique1Data: UniqueData?,
-    promotions: List<UnitPromotion>,
+//    unique1Data: UniqueData?,
+//    promotions: List<UnitPromotion>,
     unitAttackPatternList: List<UnitAttackPattern>,
     unitSkillData: UnitSkillData?,
     property: Property,
-    onEquipClick: (EquipData) -> Unit,
-    onUniqueClick: (uniqueData: UniqueData, slot: Int) -> Unit,
+//    onEquipClick: (EquipData) -> Unit,
+//    onUniqueClick: (uniqueData: UniqueData, slot: Int) -> Unit,
     onSummonsClick: (summons: List<Int>, skillLevel: Int) -> Unit,
     onCharaChange: (UserProfile) -> Unit,
     onToggle: () -> Unit
 ) {
-    val titles = remember { listOf(R.string.profile, R.string.story, R.string.equipment, R.string.skill) }
+    val titles = remember { listOf(R.string.skill, R.string.story/*, R.string.equipment*/, R.string.profile) }
 
     FrontLayerWrapper(
         titles.size,
@@ -84,7 +84,7 @@ fun CharaFrontLayer(
         val scope = rememberCoroutineScope()
         val profileScrollState = rememberScrollState()
         val storyScrollState = rememberScrollState()
-        val equipmentGridState = rememberLazyGridState()
+//        val equipmentGridState = rememberLazyGridState()
         val skillScrollState = rememberScrollState()
         val storyPagerState = rememberPagerState { stories.size }
         val onStoryTabClick = remember<(page: Int) -> Unit>(sharedProfiles) {
@@ -102,7 +102,7 @@ fun CharaFrontLayer(
 
         TabsPager(
             scrollable = false,
-            pagerState = rememberPagerState(3) { titles.size },
+            pagerState = rememberPagerState { titles.size },
             modifier = Modifier.height(BackdropScaffoldDefaults.HeaderHeight),
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.primary,
@@ -118,26 +118,6 @@ fun CharaFrontLayer(
             pageContent = { page ->
                 when (page) {
                     0 -> {
-                        CharaProfile(unitData, profileScrollState)
-                    }
-                    1 -> {
-                        CharaStory(
-                            stories,
-                            storyScrollState,
-                            storyPagerState,
-                            onStoryTabClick,
-                        )
-                    }
-                    2 -> {
-                        CharaEquips(
-                            unique1Data,
-                            promotions,
-                            equipmentGridState,
-                            onEquipClick,
-                            onUniqueClick
-                        )
-                    }
-                    3 -> {
                         CharaSkill(
                             userData,
                             unitData,
@@ -147,6 +127,26 @@ fun CharaFrontLayer(
                             skillScrollState,
                             onSummonsClick
                         )
+                    }
+                    1 -> {
+                        CharaStory(
+                            stories,
+                            storyScrollState,
+                            storyPagerState,
+                            onStoryTabClick,
+                        )
+                    }
+//                    2 -> {
+//                        CharaEquips(
+//                            unique1Data,
+//                            promotions,
+//                            equipmentGridState,
+//                            onEquipClick,
+//                            onUniqueClick
+//                        )
+//                    }
+                    2 -> {
+                        CharaProfile(unitData, profileScrollState)
                     }
                 }
             }
@@ -171,7 +171,7 @@ private fun FrontLayerWrapper(
             content = content
         )
 
-        val offsetX = remember(maxWidth) { maxWidth / titlesSize * 3 - 28.dp }
+        val offsetX = remember(maxWidth) { maxWidth / titlesSize * (titlesSize - 1) - 28.dp }
         Box(
             Modifier
                 .offset(offsetX)

@@ -12,6 +12,7 @@ import com.kasuminotes.data.UnitPromotionStatus
 import com.kasuminotes.data.UnitRarity
 import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
+import com.kasuminotes.db.getUnitPromotion
 import com.kasuminotes.db.getUnitPromotionStatus
 import com.kasuminotes.db.getUnitRarity
 import com.kasuminotes.db.putUserData
@@ -154,8 +155,9 @@ class CharaState(
             scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
                 val unitPromotionStatus = db.getUnitPromotionStatus(userProfile!!.unitData.unitId, value)
-                val promotions = userProfile!!.promotions
-                val unitPromotion = promotions[promotions.size - value]
+//                val promotions = userProfile!!.promotions
+//                val unitPromotion = promotions[promotions.size - value]
+                val unitPromotion = db.getUnitPromotion(userProfile!!.unitData.unitId, value)
                 userProfile!!.unitPromotionStatus = unitPromotionStatus
                 userProfile!!.unitPromotion = unitPromotion
                 userData = userData!!.copy(

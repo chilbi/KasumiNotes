@@ -73,9 +73,9 @@ fun Chara(
         }
     }}
 
-    val onEquipClick = remember<(EquipData) -> Unit> {{ equipData ->
-        onEquipmentClick(equipData, null)
-    }}
+//    val onEquipClick = remember<(EquipData) -> Unit> {{ equipData ->
+//        onEquipmentClick(equipData, null)
+//    }}
 
     val onCharaChange = remember<(UserProfile) -> Unit>(userProfile) {{ otherChara ->
         charaState.initUserProfile(
@@ -152,13 +152,13 @@ fun Chara(
                 unitData,
                 userProfile.charaStoryStatus,
                 userProfile.sharedProfiles,
-                userProfile.unique1Data,
-                userProfile.promotions,
+//                userProfile.unique1Data,
+//                userProfile.promotions,
                 userProfile.getRealUnitAttackPatternList(userData.rarity),
                 userProfile.getRealUnitSkillData(userData.rarity),
                 property,
-                onEquipClick,
-                onUniqueClick,
+//                onEquipClick,
+//                onUniqueClick,
                 onSummonsClick,
                 onCharaChange,
                 onToggle

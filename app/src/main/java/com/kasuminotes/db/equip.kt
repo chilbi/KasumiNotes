@@ -44,50 +44,50 @@ WHERE ed.equipment_id=$equipmentId"""
     }
 }
 
-suspend fun AppDatabase.getPromotions(unitId: Int): List<UnitPromotion> {
-    val sql = """SELECT ${UnitPromotion.getFields()}
-FROM unit_promotion WHERE unit_id=$unitId ORDER BY promotion_level DESC"""
-
-    val slotsList = useDatabase {
-        rawQuery(sql, null).use {
-            val list = mutableListOf<List<Int>>()
-
-            while (it.moveToNext()) {
-                val slots = mutableListOf<Int>()
-                var i = 0
-
-                while (i < 6) {
-                    slots.add(it.getInt(i++))
-                }
-
-                list.add(slots)
-            }
-
-            list
-        }
-    }
-
-    return withContext(Dispatchers.IO) {
-        slotsList.map { slots ->
-            async {
-                val equips = slots.map { slotId ->
-                    async {
-                        if (slotId != Helper.NullId) getEquipData(slotId) else null
-                    }
-                }.awaitAll()
-
-                UnitPromotion(
-                    equips[0],
-                    equips[1],
-                    equips[2],
-                    equips[3],
-                    equips[4],
-                    equips[5]
-                )
-            }
-        }.awaitAll()
-    }
-}
+//suspend fun AppDatabase.getPromotions(unitId: Int): List<UnitPromotion> {
+//    val sql = """SELECT ${UnitPromotion.getFields()}
+//FROM unit_promotion WHERE unit_id=$unitId ORDER BY promotion_level DESC"""
+//
+//    val slotsList = useDatabase {
+//        rawQuery(sql, null).use {
+//            val list = mutableListOf<List<Int>>()
+//
+//            while (it.moveToNext()) {
+//                val slots = mutableListOf<Int>()
+//                var i = 0
+//
+//                while (i < 6) {
+//                    slots.add(it.getInt(i++))
+//                }
+//
+//                list.add(slots)
+//            }
+//
+//            list
+//        }
+//    }
+//
+//    return withContext(Dispatchers.IO) {
+//        slotsList.map { slots ->
+//            async {
+//                val equips = slots.map { slotId ->
+//                    async {
+//                        if (slotId != Helper.NullId) getEquipData(slotId) else null
+//                    }
+//                }.awaitAll()
+//
+//                UnitPromotion(
+//                    equips[0],
+//                    equips[1],
+//                    equips[2],
+//                    equips[3],
+//                    equips[4],
+//                    equips[5]
+//                )
+//            }
+//        }.awaitAll()
+//    }
+//}
 
 private fun AppDatabase.isCraft(equipmentId: Int): Boolean {
     val sql = "SELECT craft_flg FROM equipment_data WHERE equipment_id=$equipmentId"
