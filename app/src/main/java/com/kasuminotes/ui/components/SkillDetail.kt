@@ -1,6 +1,5 @@
 package com.kasuminotes.ui.components
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -88,12 +87,12 @@ fun SkillDetail(
                     modifier = Modifier.height(28.dp)
                 )
             }
-            @StringRes
             if (searchAreaWidth == 0) {
+                val lvText = skillLevel.toString()
                 Infobar(
                     label = stringResource(R.string.skill_level),
-                    value = skillLevel.toString(),
-                    modifier = Modifier.width(110.dp),
+                    value = lvText,
+                    modifier = Modifier.width((70 + 10 * lvText.length).dp),
                     width = 64.dp,
                     color = MaterialTheme.colorScheme.primaryContainer,
                     textAlign = TextAlign.Center
