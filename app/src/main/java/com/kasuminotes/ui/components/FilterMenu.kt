@@ -50,13 +50,28 @@ fun FilterMenu(
         Modifier.fillMaxWidth(),
         Arrangement.SpaceBetween
     ) {
-        AtkTypeMenu(atkType, onAtkTypeChange)
-
-        PositionMenu(position, onPositionChange)
-
         ElementMenu(element, onElementChange)
-
+        AtkTypeMenu(atkType, onAtkTypeChange)
+        PositionMenu(position, onPositionChange)
         OrderByMenu(orderBy, sortDesc, onOrderByChange)
+    }
+}
+
+@Composable
+private fun RowScope.ElementMenu(
+    element: Element,
+    onElementChange: (Element) -> Unit
+) {
+    FilterMenuItem(
+        alignment = Alignment.CenterStart,
+        label = stringResource(element.resId)
+    ) { onCollapse ->
+        Element.entries.forEach { ele ->
+            DropdownMenuItem(
+                text = { Text(stringResource(ele.resId)) },
+                onClick = { onElementChange(ele).also { onCollapse() } }
+            )
+        }
     }
 }
 
@@ -66,7 +81,7 @@ private fun RowScope.AtkTypeMenu(
     onAtkTypeChange: (AtkType) -> Unit
 ) {
     FilterMenuItem(
-        alignment = Alignment.CenterStart,
+        alignment = Alignment.Center,
         label = stringResource(atkType.resId)
     ) { onCollapse ->
         AtkType.entries.forEach { type ->
@@ -91,24 +106,6 @@ private fun RowScope.PositionMenu(
             DropdownMenuItem(
                 text = { Text(stringResource(pos.resId)) },
                 onClick = { onPositionChange(pos).also { onCollapse() } }
-            )
-        }
-    }
-}
-
-@Composable
-private fun RowScope.ElementMenu(
-    element: Element,
-    onElementChange: (Element) -> Unit
-) {
-    FilterMenuItem(
-        alignment = Alignment.Center,
-        label = stringResource(element.resId)
-    ) { onCollapse ->
-        Element.entries.forEach { ele ->
-            DropdownMenuItem(
-                text = { Text(stringResource(ele.resId)) },
-                onClick = { onElementChange(ele).also { onCollapse() } }
             )
         }
     }

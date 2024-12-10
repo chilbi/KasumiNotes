@@ -4,7 +4,7 @@ import com.kasuminotes.data.EquipCraft
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.EquipInfo
 import com.kasuminotes.data.Property
-import com.kasuminotes.data.UnitPromotion
+//import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.utils.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

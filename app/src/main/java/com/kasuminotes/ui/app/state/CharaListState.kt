@@ -30,6 +30,12 @@ class CharaListState {
         private set
     var sortDesc by mutableStateOf(true)
         private set
+    var rarity6 by mutableStateOf(false)
+        private set
+    var unique1 by mutableStateOf(false)
+        private set
+    var unique2 by mutableStateOf(false)
+        private set
     var lockedChara by mutableStateOf<List<Int>>(emptyList())
         private set
     var derivedLockedChara by mutableStateOf<List<Int>>(emptyList())
@@ -291,28 +297,66 @@ class CharaListState {
         }
     }
 
+    fun toggleRarity6() {
+        if (rarity6) {
+            rarity6 = false
+        } else {
+            rarity6 = true
+            unique1 = false
+            unique2 = false
+        }
+        derived()
+    }
+
+    fun toggleUnique1() {
+        if (unique1) {
+            unique1 = false
+        } else {
+            rarity6 = false
+            unique1 = true
+            unique2 = false
+        }
+        derived()
+    }
+
+    fun toggleUnique2() {
+        if (unique2) {
+            unique2 = false
+        } else {
+            rarity6 = false
+            unique1 = false
+            unique2 = true
+        }
+        derived()
+    }
+
     private fun derived() {
         val originProfiles = profiles
         val list = if (
             searchText.isEmpty() &&
             atkType == AtkType.All &&
             position == Position.All &&
-            element == Element.All
+            element == Element.All &&
+            !rarity6 &&
+            !unique1 &&
+            !unique2
         ) {
             originProfiles
         } else {
             originProfiles.filter { userProfile ->
                 userProfile.getRealUnitData(userProfile.userData.rarity).let {
+                    val rarity6Match = !rarity6 || it.maxRarity == 6
+                    val unique1Match = !unique1 || it.hasUnique1
+                    val unique2Match = !unique2 || it.hasUnique2
+                    val elementMatch = element == Element.All || element.ordinal == it.talentId
+                    val atkTypeMatch = atkType == AtkType.All || atkType.ordinal == it.atkType
+                    val positionMatch = position == Position.All || position.ordinal == it.position
                     val searchTextMatch = searchText.isEmpty() ||
                             (it.unitId.toString() + it.unitName + it.kana + it.actualName)
                                 .contains(searchText)
-                    val atkTypeMatch =
-                        atkType == AtkType.All || atkType.ordinal == it.atkType
-                    val positionMatch =
-                        position == Position.All || position.ordinal == it.position
-                    val elementMatch =
-                        element == Element.All || element.ordinal == it.talentId
-                    searchTextMatch && atkTypeMatch && positionMatch && elementMatch
+
+                    rarity6Match && unique1Match && unique2Match &&
+                            atkTypeMatch && positionMatch && elementMatch && searchTextMatch
                 }
             }
         }
