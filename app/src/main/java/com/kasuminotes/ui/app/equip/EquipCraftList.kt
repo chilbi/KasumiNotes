@@ -27,7 +27,8 @@ fun EquipCraftList(
         ) { index ->
             val craftItem = craftList[index]
             CraftItem(
-                imageUrl = UrlUtil.getEquipIconUrl(craftItem.equipmentId),
+                itemIdList = listOf(craftItem.equipmentId),
+                imageUrl = UrlUtil::getEquipIconUrl,
                 consumeSum = craftItem.consumeSum,
                 selected = searchList.contains(craftItem.equipmentId),
                 enabled = enabledSearch,

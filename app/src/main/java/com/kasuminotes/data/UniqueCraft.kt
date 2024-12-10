@@ -4,6 +4,6 @@ data class UniqueCraft(
     val unlockLevel: Int,
     val heartId: Int,
     val heartSum: Int,
-    val memoryId: Int,
+    val memoryIdList: List<Int>,
     val memorySum: Int
 )

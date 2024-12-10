@@ -3,6 +3,7 @@ package com.kasuminotes.ui.app.equip
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,7 +20,8 @@ import com.kasuminotes.ui.components.selectedContainerColor
 
 @Composable
 fun CraftItem(
-    imageUrl: String,
+    itemIdList: List<Int>,
+    imageUrl: (itemId: Int) -> String,
     consumeSum: Int,
     selected: Boolean,
     enabled: Boolean,
@@ -32,15 +34,15 @@ fun CraftItem(
             .clickable(enabled, onClick = onClick),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(Modifier.size(44.dp)) {
-            PlaceImage(imageUrl)
+        itemIdList.forEach { itemId ->
+            Box(Modifier.size(44.dp)) {
+                PlaceImage(imageUrl(itemId))
+            }
+            Spacer(Modifier.size(4.dp))
         }
-
         Text(
             text = stringResource(R.string.times_d, consumeSum),
-            modifier = Modifier
-                .width(32.dp)
-                .padding(start = 4.dp),
+            modifier = Modifier.width(32.dp),
             style = MaterialTheme.typography.bodyMedium
         )
     }

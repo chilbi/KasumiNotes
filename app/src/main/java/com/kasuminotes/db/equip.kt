@@ -149,15 +149,18 @@ private suspend fun AppDatabase.getEquipCraft(equipmentId: Int, consumeNum: Int,
     }
 }
 
-fun AppDatabase.getUnique2Craft(equipmentId: Int): Int {
+fun AppDatabase.getUnique2Craft(equipmentId: Int): List<Int> {
     val sql = """SELECT item_id FROM unique_equip_craft_enhance
-jOIN unique_equip_consume_group ON consume_group_id=group_id
+JOIN unique_equip_consume_group ON consume_group_id=group_id
 WHERE equipment_id=$equipmentId"""
 
     return useDatabase {
         rawQuery(sql, null).use {
-            it.moveToFirst()
-            it.getInt(0)
+            val list = mutableListOf<Int>()
+            while (it.moveToNext()) {
+                list.add(it.getInt(0))
+            }
+            list
         }
     }
 }

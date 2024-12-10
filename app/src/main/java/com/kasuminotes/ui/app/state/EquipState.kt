@@ -209,23 +209,23 @@ class EquipState(
     }
 
     private fun changeUnique1Craft(equipmentId: Int, maxUnlockLevel: Int) {
-        val memoryId = "31${equipmentId.toString().substring(2, 5)}".toInt()
+        val memoryIdList = listOf("31${equipmentId.toString().substring(2, 5)}".toInt())
         val list = mutableListOf<UniqueCraft>()
-        list.add(UniqueCraft(30, 140000, 3, memoryId, 50))
-        list.add(UniqueCraft(50, 140001, 5, memoryId, 10))
-        list.add(UniqueCraft(70, 140001, 5, memoryId, 10))
-        list.add(UniqueCraft(90, 140001, 8, memoryId, 10))
-        list.add(UniqueCraft(110, 140001, 10, memoryId, 10))
-        list.add(UniqueCraft(130, 140001, 10, memoryId, 10))
+        list.add(UniqueCraft(30, 140000, 3, memoryIdList, 50))
+        list.add(UniqueCraft(50, 140001, 5, memoryIdList, 10))
+        list.add(UniqueCraft(70, 140001, 5, memoryIdList, 10))
+        list.add(UniqueCraft(90, 140001, 8, memoryIdList, 10))
+        list.add(UniqueCraft(110, 140001, 10, memoryIdList, 10))
+        list.add(UniqueCraft(130, 140001, 10, memoryIdList, 10))
         var unlockLevel = 140
         val craft15Level = min(maxUnlockLevel, 230)
         while (unlockLevel <= craft15Level) {
-            list.add(UniqueCraft(unlockLevel, 140001, 10, memoryId, 15))
+            list.add(UniqueCraft(unlockLevel, 140001, 10, memoryIdList, 15))
             unlockLevel += 10
         }
         if (maxUnlockLevel > 230) {
             while (unlockLevel <= maxUnlockLevel) {
-                list.add(UniqueCraft(unlockLevel, 140001, 10, memoryId, 5))
+                list.add(UniqueCraft(unlockLevel, 140001, 10, memoryIdList, 5))
                 unlockLevel += 10
             }
         }
@@ -235,14 +235,14 @@ class EquipState(
     private fun changeUnique2Craft(equipmentId: Int) {
         scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
-            val memoryId = db.getUnique2Craft(equipmentId)
+            val memoryIdList = db.getUnique2Craft(equipmentId)
             val list = mutableListOf<UniqueCraft>()
-            list.add(UniqueCraft(0, -1, -1, memoryId, 50))
-            list.add(UniqueCraft(1, -1, -1, memoryId, 10))
-            list.add(UniqueCraft(2, -1, -1, memoryId, 15))
-            list.add(UniqueCraft(3, -1, -1, memoryId, 20))
-            list.add(UniqueCraft(4, -1, -1, memoryId, 25))
-            list.add(UniqueCraft(5, -1, -1, memoryId, 30))
+            list.add(UniqueCraft(0, -1, -1, memoryIdList, 50))
+            list.add(UniqueCraft(1, -1, -1, memoryIdList, 10))
+            list.add(UniqueCraft(2, -1, -1, memoryIdList, 15))
+            list.add(UniqueCraft(3, -1, -1, memoryIdList, 20))
+            list.add(UniqueCraft(4, -1, -1, memoryIdList, 25))
+            list.add(UniqueCraft(5, -1, -1, memoryIdList, 30))
             uniqueCraftList = list
         }
     }

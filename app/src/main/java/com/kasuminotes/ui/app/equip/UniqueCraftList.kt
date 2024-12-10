@@ -41,7 +41,8 @@ fun UniqueCraftList(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     if (craftItem.heartId != -1) {
                         CraftItem(
-                            imageUrl = UrlUtil.getEquipIconUrl(craftItem.heartId),
+                            itemIdList = listOf(craftItem.heartId),
+                            imageUrl = UrlUtil::getEquipIconUrl,
                             consumeSum = craftItem.heartSum,
                             selected = false,
                             enabled = false,
@@ -50,7 +51,8 @@ fun UniqueCraftList(
                         Spacer(Modifier.width(8.dp))
                     }
                     CraftItem(
-                        imageUrl = UrlUtil.getItemIconUrl(craftItem.memoryId),
+                        itemIdList = craftItem.memoryIdList,
+                        imageUrl = UrlUtil::getItemIconUrl,
                         consumeSum = craftItem.memorySum,
                         selected = false,
                         enabled = false,
