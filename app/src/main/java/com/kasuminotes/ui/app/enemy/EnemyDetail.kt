@@ -1,4 +1,4 @@
-package com.kasuminotes.ui.app.clanBattle
+package com.kasuminotes.ui.app.enemy
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically

@@ -12,7 +12,7 @@ import androidx.navigation.compose.composable
 import com.kasuminotes.ui.app.about.About
 import com.kasuminotes.ui.app.chara.Chara
 import com.kasuminotes.ui.app.clanBattle.ClanBattle
-import com.kasuminotes.ui.app.clanBattle.ClanBattleEnemy
+import com.kasuminotes.ui.app.enemy.Enemy
 import com.kasuminotes.ui.app.clanBattle.ClanBattleMapList
 import com.kasuminotes.ui.app.dungeon.Dungeon
 import com.kasuminotes.ui.app.equip.Equip
@@ -157,11 +157,11 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
-                route = AppNavData.ClanBattleEnemy.route,
-                enterTransition = AppNavData.ClanBattleEnemy.enterTransition,
-                exitTransition = AppNavData.ClanBattleEnemy.exitTransition
+                route = AppNavData.Enemy.route,
+                enterTransition = AppNavData.Enemy.enterTransition,
+                exitTransition = AppNavData.Enemy.exitTransition
             ) {
-                ClanBattleEnemy(
+                Enemy(
                     appViewModel.clanBattleState,
                     appViewModel::navigateToMinions,
                     appViewModel::popBackStack

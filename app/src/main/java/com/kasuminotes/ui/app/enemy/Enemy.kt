@@ -1,4 +1,4 @@
-package com.kasuminotes.ui.app.clanBattle
+package com.kasuminotes.ui.app.enemy
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,7 +29,7 @@ import com.kasuminotes.ui.components.UnitElement
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
-fun ClanBattleEnemy(
+fun Enemy(
     clanBattleState: ClanBattleState,
     onMinionsClick: (minions: List<Int>, skillLevel: Int, enemyData: EnemyData) -> Unit,
     onBack: () -> Unit

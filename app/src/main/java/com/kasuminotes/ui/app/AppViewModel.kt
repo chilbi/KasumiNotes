@@ -197,20 +197,20 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
 
     fun navigateToEnemy(enemyData: EnemyData, talentWeaknessList: List<Int>) {
         clanBattleState.initEnemy(enemyData, talentWeaknessList)
-        navController.navigate(AppNavData.ClanBattleEnemy.route)
+        navController.navigate(AppNavData.Enemy.route)
     }
 
     fun navigateToEnemyById(enemyId: Int, talentWeaknessList: List<Int>) {
         val isSucceed = clanBattleState.initEnemy(enemyId, talentWeaknessList)
         if (isSucceed) {
-            navController.navigate(AppNavData.ClanBattleEnemy.route)
+            navController.navigate(AppNavData.Enemy.route)
         }
     }
 
     fun navigateToTalentQuestEnemy(enemyId: Int) {
         val isSucceed = clanBattleState.initEnemy(enemyId, emptyList(), "talent_quest_enemy_parameter")
         if (isSucceed) {
-            navController.navigate(AppNavData.ClanBattleEnemy.route)
+            navController.navigate(AppNavData.Enemy.route)
         }
     }
 
