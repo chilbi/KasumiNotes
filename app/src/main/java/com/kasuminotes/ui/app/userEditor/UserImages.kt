@@ -30,24 +30,13 @@ fun UserImages(
     onBack: () -> Unit,
     onConfirm: (userId: Int, userName: String) -> Unit
 ) {
-    val listState = userState.charaListState
     var selectedItem by remember {
         mutableStateOf<UserProfile?>(null)
     }
 
     UserEditorScaffold(
+        userState.charaListState,
         title = stringResource(R.string.select_user_image),
-        searchText = listState.searchText,
-        atkType = listState.atkType,
-        position = listState.position,
-        element = listState.element,
-        orderBy = listState.orderBy,
-        sortDesc = listState.sortDesc,
-        onSearchTextChange = listState::changeSearchText,
-        onAtkTypeChange = listState::changeAtkType,
-        onPositionChange = listState::changePosition,
-        onElementChange = listState::changeElement,
-        onOrderByChange = listState::changeOrderBy,
         onBack = onBack,
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
@@ -56,7 +45,7 @@ fun UserImages(
                     contentPadding = PaddingValues(4.dp),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    items(listState.derivedProfiles) { userProfile ->
+                    items( userState.charaListState.derivedProfiles) { userProfile ->
                         SizedBox(1f) {
                             PlaceImage(
                                 url = UrlUtil.getUnitIconUrl(userProfile.unitData.unitId, 3),

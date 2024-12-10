@@ -94,18 +94,8 @@ fun CharaEditor(
     }
 
     UserEditorScaffold(
+        listState,
         title = stringResource(R.string.edit_chara),
-        searchText = listState.searchText,
-        atkType = listState.atkType,
-        position = listState.position,
-        element = listState.element,
-        orderBy = listState.orderBy,
-        sortDesc = listState.sortDesc,
-        onSearchTextChange = listState::changeSearchText,
-        onAtkTypeChange = listState::changeAtkType,
-        onPositionChange = listState::changePosition,
-        onElementChange = listState::changeElement,
-        onOrderByChange = listState::changeOrderBy,
         onBack = onBack,
         floatingActionButton = {
             ExtendedFloatingActionButton(

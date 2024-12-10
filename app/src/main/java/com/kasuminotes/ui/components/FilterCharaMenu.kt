@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.wrapContentSize
@@ -32,33 +31,23 @@ import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.Element
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import com.kasuminotes.ui.app.state.CharaListState
 
 @Composable
-fun FilterMenu(
-    atkType: AtkType,
-    position: Position,
-    element: Element,
-    orderBy: OrderBy,
-    sortDesc: Boolean,
-    onAtkTypeChange: (AtkType) -> Unit,
-    onPositionChange: (Position) -> Unit,
-    onElementChange: (Element) -> Unit,
-    onOrderByChange: (OrderBy) -> Unit
-) {
+fun FilterCharaMenu(charaListState: CharaListState) {
     Row(
         Modifier.fillMaxWidth(),
         Arrangement.SpaceBetween
     ) {
-        ElementMenu(element, onElementChange)
-        AtkTypeMenu(atkType, onAtkTypeChange)
-        PositionMenu(position, onPositionChange)
-        OrderByMenu(orderBy, sortDesc, onOrderByChange)
+        ElementMenu(charaListState.element, charaListState::changeElement)
+        AtkTypeMenu(charaListState.atkType, charaListState::changeAtkType)
+        PositionMenu(charaListState.position, charaListState::changePosition)
+        OrderByMenu(charaListState.orderBy, charaListState.sortDesc, charaListState::changeOrderBy)
     }
 }
 
 @Composable
-private fun RowScope.ElementMenu(
+private fun ElementMenu(
     element: Element,
     onElementChange: (Element) -> Unit
 ) {
@@ -76,7 +65,7 @@ private fun RowScope.ElementMenu(
 }
 
 @Composable
-private fun RowScope.AtkTypeMenu(
+private fun AtkTypeMenu(
     atkType: AtkType,
     onAtkTypeChange: (AtkType) -> Unit
 ) {
@@ -94,7 +83,7 @@ private fun RowScope.AtkTypeMenu(
 }
 
 @Composable
-private fun RowScope.PositionMenu(
+private fun PositionMenu(
     position: Position,
     onPositionChange: (Position) -> Unit
 ) {
@@ -112,7 +101,7 @@ private fun RowScope.PositionMenu(
 }
 
 @Composable
-private fun RowScope.OrderByMenu(
+private fun OrderByMenu(
     orderBy: OrderBy,
     sortDesc: Boolean,
     onOrderByChange: (OrderBy) -> Unit
@@ -131,7 +120,7 @@ private fun RowScope.OrderByMenu(
 }
 
 @Composable
-private fun RowScope.FilterMenuItem(
+private fun FilterMenuItem(
     alignment: Alignment,
     label: String,
     content: @Composable ColumnScope.(onCollapse: () -> Unit) -> Unit

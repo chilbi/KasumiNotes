@@ -12,29 +12,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import com.kasuminotes.common.AtkType
-import com.kasuminotes.common.Element
-import com.kasuminotes.common.OrderBy
-import com.kasuminotes.common.Position
+import com.kasuminotes.ui.app.state.CharaListState
 import com.kasuminotes.ui.components.BackButton
-import com.kasuminotes.ui.components.FilterMenu
+import com.kasuminotes.ui.components.FilterCharaButton
+import com.kasuminotes.ui.components.FilterCharaMenu
 import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.SearchBar
 
 @Composable
 fun UserEditorTopBar(
+    charaListState: CharaListState,
     title: String,
-    searchText: String,
-    atkType: AtkType,
-    position: Position,
-    element: Element,
-    orderBy: OrderBy,
-    sortDesc: Boolean,
-    onSearchTextChange: (String) -> Unit,
-    onAtkTypeChange: (AtkType) -> Unit,
-    onPositionChange: (Position) -> Unit,
-    onElementChange: (Element) -> Unit,
-    onOrderByChange: (OrderBy) -> Unit,
     onBack: () -> Unit,
     content: @Composable ColumnScope.() -> Unit = {}
 ) {
@@ -43,7 +31,7 @@ fun UserEditorTopBar(
     TopBar(
         title = {
             if (visibleSearch) {
-                SearchBar(searchText, onSearchTextChange)
+                SearchBar(charaListState.searchText, charaListState::changeSearchText)
             } else {
                 Text(title)
             }
@@ -55,7 +43,7 @@ fun UserEditorTopBar(
             IconButton(onClick = {
                 if (visibleSearch) {
                     visibleSearch = false
-                    onSearchTextChange("")
+                    charaListState.changeSearchText("")
                 } else {
                     visibleSearch = true
                 }
@@ -65,19 +53,10 @@ fun UserEditorTopBar(
                     null
                 )
             }
+            FilterCharaButton(charaListState)
         },
         content = {
-            FilterMenu(
-                atkType,
-                position,
-                element,
-                orderBy,
-                sortDesc,
-                onAtkTypeChange,
-                onPositionChange,
-                onElementChange,
-                onOrderByChange
-            )
+            FilterCharaMenu(charaListState)
 
             content()
         }

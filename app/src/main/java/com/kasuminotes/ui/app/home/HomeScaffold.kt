@@ -31,32 +31,12 @@ fun HomeScaffold(
     onNavigateTo: (Int) -> Unit,
     onDrawerOpen: () -> Unit
 ) {
-    val listState = userState.charaListState
-
     ModalDrawer(drawerState, userState, dbState, uiState, onImageClick, onNavigateToAbout) {
         Scaffold(
             topBar = {
                 HomeTopBar(
-                    userState.userId,
-                    uiState.charaImageState.vector,
-                    listState.searchText,
-                    listState.atkType,
-                    listState.position,
-                    listState.element,
-                    listState.orderBy,
-                    listState.sortDesc,
-                    listState.rarity6,
-                    listState.unique1,
-                    listState.unique2,
-                    listState::toggleRarity6,
-                    listState::toggleUnique1,
-                    listState::toggleUnique2,
-                    uiState::toggleImageVariant,
-                    listState::changeSearchText,
-                    listState::changeAtkType,
-                    listState::changePosition,
-                    listState::changeElement,
-                    listState::changeOrderBy,
+                    userState,
+                    uiState,
                     onDrawerOpen
                 )
             },
@@ -73,8 +53,8 @@ fun HomeScaffold(
                 Box(Modifier.padding(contentPadding)) {
                     CharaList(
                         uiState.charaImageState,
-                        listState.derivedProfiles,
-                        listState.orderBy,
+                        userState.charaListState.derivedProfiles,
+                        userState.charaListState.orderBy,
                         onNavigateToChara
                     )
                 }
