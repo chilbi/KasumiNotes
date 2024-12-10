@@ -57,7 +57,7 @@ object UrlUtil {
 
     fun getEnemyUnitIconUrl(unitId: Int): String {
         val id = if (unitId == 301305) 301300 else unitId
-        return if (unitId in 600001..699999) {
+        return if (Helper.isShadowChara(unitId)) {
             String.format(ICON_UNIT_SHADOW_URL, "1${unitId.toString().substring(1, 4)}31".toInt())
         } else {
             String.format(ICON_UNIT_URL, id)

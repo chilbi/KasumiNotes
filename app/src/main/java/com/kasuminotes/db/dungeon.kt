@@ -135,6 +135,8 @@ WHERE ep.enemy_id=$enemyId"""
                     it.getFloat(i++),
                     it.getString(i++),
                     it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
                     it.getInt(i),
                     mainSkillLvList,
                     exSkillLvList,

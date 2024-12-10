@@ -5,6 +5,8 @@ import com.kasuminotes.common.QuestType
 object Helper {
     const val NullId = 999999
 
+    fun isShadowChara(unitId: Int): Boolean = unitId in 600001..699999
+
     fun getStoryDiffCount(statusSize: Int, maxRarity: Int): Int {
         val maxSize = if (maxRarity < 6) {
             if (statusSize < 5)  4 else 8

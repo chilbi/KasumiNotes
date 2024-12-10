@@ -18,6 +18,8 @@ data class EnemyData(
     override val atkType: Int,
     override val normalAtkCastTime: Float,
     val comment: String,
+    val rarity: Int,
+    val promotionLevel: Int,
     val level: Int,
     val unionBurstLevel: Int,
     val mainSkillLvList: List<Int>,// 1-10
@@ -65,6 +67,8 @@ data class EnemyData(
                         "atk_type," +
                         "normal_atk_cast_time," +
                         "comment," +
+                        "rarity," +
+                        "promotion_level," +
                         "level," +
                         "union_burst_level"
             }

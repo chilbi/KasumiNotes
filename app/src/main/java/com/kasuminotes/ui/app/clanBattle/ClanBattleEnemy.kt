@@ -31,7 +31,7 @@ import com.kasuminotes.utils.UrlUtil
 @Composable
 fun ClanBattleEnemy(
     clanBattleState: ClanBattleState,
-    onMinionsClick: (minions: List<Int>, skillLevel: Int) -> Unit,
+    onMinionsClick: (minions: List<Int>, skillLevel: Int, enemyData: EnemyData) -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(

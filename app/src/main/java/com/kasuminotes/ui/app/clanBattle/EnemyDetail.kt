@@ -48,7 +48,7 @@ fun EnemyDetail(
     unitAttackPatternList: List<UnitAttackPattern>,
     skillList: List<SkillItem>,
     unitSkillData: UnitSkillData?,
-    onMinionsClick: (minions: List<Int>, skillLevel: Int) -> Unit
+    onMinionsClick: (minions: List<Int>, skillLevel: Int, enemyData: EnemyData) -> Unit
 ) {
     Column(
         Modifier
@@ -114,7 +114,7 @@ fun EnemyDetail(
                     property = property,
                     rawDepends = item.skillData.rawDepends,
                     actions = item.skillData.actions,
-                    onSummonsClick = onMinionsClick
+                    onSummonsClick = { summons, skillLevel -> onMinionsClick(summons, skillLevel, enemyData) }
                 )
             }
         }

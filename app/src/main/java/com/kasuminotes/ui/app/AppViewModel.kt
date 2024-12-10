@@ -13,6 +13,7 @@ import com.kasuminotes.data.EnemyData
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.UniqueData
+import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.state.CharaState
 import com.kasuminotes.ui.app.state.ClanBattleState
@@ -24,6 +25,7 @@ import com.kasuminotes.ui.app.state.QuestState
 import com.kasuminotes.ui.app.state.SummonsState
 import com.kasuminotes.ui.app.state.TalentQuestState
 import com.kasuminotes.ui.app.state.UiState
+import com.kasuminotes.utils.Helper
 import kotlinx.coroutines.launch
 
 class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel() {
@@ -159,9 +161,32 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         navController.navigate(AppNavData.Summons.route)
     }
 
-    fun navigateToMinions(minions: List<Int>, skillLevel: Int) {
-        skillLevel + 0
-        summonsState.initMinionDataList(minions)
+    fun navigateToMinions(minions: List<Int>, skillLevel: Int, enemyData: EnemyData) {
+        if (Helper.isShadowChara(enemyData.unitId)) {
+            val shadowUserData = UserData(
+                0,
+                enemyData.unitId,
+                enemyData.rarity,
+                enemyData.level,
+                0,
+                0,
+                0,
+                enemyData.promotionLevel,
+                enemyData.unionBurstLevel,
+                enemyData.mainSkillLvList[0],
+                enemyData.mainSkillLvList[1],
+                enemyData.exSkillLvList[0],
+                5,
+                5,
+                5,
+                5,
+                5,
+                5
+            )
+            summonsState.initSummons(minions, skillLevel, shadowUserData)
+        } else {
+            summonsState.initMinionDataList(minions)
+        }
         navController.navigate(AppNavData.Summons.route)
     }
 

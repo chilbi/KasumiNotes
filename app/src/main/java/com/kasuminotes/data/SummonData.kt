@@ -35,6 +35,9 @@ data class SummonData(
     override var skillList: List<SkillItem> = emptyList()
         private set
 
+    // 不确定的属性计算方式：召唤物等级按召唤技能的等级来算
+    // 没算专武属性，rank奖励属性等等
+    // 目前只算了星级属性，rank属性，当前rank的6件武器的属性，ex技能属性
     private fun setProperty(level: Int, userData: UserData) {
         if (
             unitRarity != null &&
