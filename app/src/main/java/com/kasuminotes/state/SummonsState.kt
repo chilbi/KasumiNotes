@@ -53,7 +53,7 @@ class SummonsState(
             val enemyDataList = db.getMultiEnemyParts(minions, epTableName)
             minionDataList = enemyDataList.map { enemyData ->
                 async {
-                    enemyData.load(db)
+                    enemyData.load(db, epTableName)
                     enemyData
                 }
             }.awaitAll()

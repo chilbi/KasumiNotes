@@ -56,7 +56,7 @@ class EnemyState(
             scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
                 enemy.enemyMultiParts = db.getMultiEnemyParts(enemy.multiParts, epName)
-                enemy.load(db)
+                enemy.load(db, epName)
                 enemyMultiParts = enemy.enemyMultiParts
                 unitAttackPatternList = enemy.unitAttackPatternList
                 skillList = enemy.skillList

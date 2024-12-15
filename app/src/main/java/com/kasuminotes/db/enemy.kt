@@ -125,12 +125,12 @@ WHERE ep.enemy_id IN (${multiParts.joinToString(",")})"""
     }
 }
 
-fun AppDatabase.getExtraEffectData(targetId: Int): ExtraEffectData? {
+fun AppDatabase.getExtraEffectData(targetId: Int, epTableName: String): ExtraEffectData? {
     if (!existsTable("extra_effect_data")) return null
 
     val sql = """SELECT ${ExtraEffectData.getFields()}
 FROM extra_effect_data AS eed
-JOIN enemy_parameter AS ep ON ep.enemy_id in (eed.enemy_id_1,eed.enemy_id_2,eed.enemy_id_3,eed.enemy_id_4,eed.enemy_id_5)
+JOIN $epTableName AS ep ON ep.enemy_id in (eed.enemy_id_1,eed.enemy_id_2,eed.enemy_id_3,eed.enemy_id_4,eed.enemy_id_5)
 WHERE $targetId IN (eed.target_value_1,eed.target_value_2)"""
 
     return useDatabase {

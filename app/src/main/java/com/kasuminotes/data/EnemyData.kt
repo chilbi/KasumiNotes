@@ -36,11 +36,11 @@ data class EnemyData(
     override var skillList: List<SkillItem> = emptyList()
         private set
 
-    suspend fun load(db: AppDatabase) = withContext(Dispatchers.IO) {
+    suspend fun load(db: AppDatabase, epTableName: String) = withContext(Dispatchers.IO) {
         val list = awaitAll(
             async { db.getUnitAttackPatternList(unitId) },
             async { db.getUnitSkillData(unitId) },
-            async { db.getExtraEffectData(if (waveGroupId == null) enemyId else waveGroupId!!) }
+            async { db.getExtraEffectData(if (waveGroupId == null) enemyId else waveGroupId!!, epTableName) }
         )
         @Suppress("UNCHECKED_CAST")
         unitAttackPatternList = list[0] as List<UnitAttackPattern>
