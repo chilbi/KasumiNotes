@@ -206,7 +206,7 @@ fun getStateContent(detail: Int, actionId: Int): D {
         61 -> D.Format(R.string.state_coin)
         63 -> D.Format(R.string.state_black_star)
         72 -> D.Format(R.string.state_knight_guard)
-        76 -> D.Format(R.string.state_cheru)
+        76, 197 -> D.Format(R.string.state_cheru)
         77 -> D.Format(R.string.state_wind_sword)
         90 -> D.Format(R.string.state_tiger_claw)
         92 -> D.Format(R.string.state_holly_night_brilliance)
