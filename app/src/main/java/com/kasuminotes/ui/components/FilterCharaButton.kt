@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
-import com.kasuminotes.ui.app.state.CharaListState
+import com.kasuminotes.state.CharaListState
 
 @Composable
 fun FilterCharaButton(charaListState: CharaListState) {

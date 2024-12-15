@@ -1,12 +1,10 @@
 package com.kasuminotes.db
 
 import com.kasuminotes.data.DungeonAreaData
-import com.kasuminotes.data.EnemyData
-import com.kasuminotes.data.Property
 
 fun AppDatabase.getDungeonAreaDataList(): List<DungeonAreaData> {
     val sql = if (existsTable("dungeon_area")) {
-        """SELECT t.dungeon_area_id,t.dungeon_name,t.floor_num,t.mode,t.pattern,ep.enemy_id,ep.unit_id,ep.name
+        """SELECT t.dungeon_area_id,t.dungeon_name,t.floor_num,t.mode,t.pattern,ep.enemy_id,ep.unit_id,ep.name,wgd.wave_group_id
 FROM (
 SELECT da.dungeon_area_id,da.dungeon_name,dqd.floor_num,0 AS mode,0 AS pattern,dqd.wave_group_id
 FROM dungeon_area AS da
@@ -33,7 +31,7 @@ JOIN enemy_parameter AS ep
 ON ep.enemy_id IN (wgd.enemy_id_1,wgd.enemy_id_2,wgd.enemy_id_3,wgd.enemy_id_4,wgd.enemy_id_5)
 ORDER BY t.dungeon_area_id DESC,t.floor_num DESC,t.mode ASC,t.pattern ASC"""
     } else {
-        """SELECT dad.dungeon_area_id,dad.dungeon_name,0 AS floor_num,0 AS mode,0 AS pattern,ep.enemy_id,ep.unit_id,ep.name
+        """SELECT dad.dungeon_area_id,dad.dungeon_name,0 AS floor_num,0 AS mode,0 AS pattern,ep.enemy_id,ep.unit_id,ep.name,wgd.wave_group_id
 FROM dungeon_area_data AS dad
 JOIN wave_group_data AS wgd
 ON dad.wave_group_id=wgd.wave_group_id
@@ -54,7 +52,8 @@ ORDER BY dad.dungeon_area_id DESC"""
                     it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
-                    it.getString(i)
+                    it.getString(i++),
+                    it.getInt(i)
                 ))
             }
             list
@@ -89,64 +88,5 @@ WHERE enemy_id=$enemyId""", null).use {
             }
         }
         map
-    }
-}
-
-fun AppDatabase.getEnemyData(enemyId: Int, epTableName: String = "enemy_parameter"): EnemyData? {
-    val sql = """SELECT ${EnemyData.getFields()}
-FROM $epTableName AS ep
-LEFT JOIN enemy_m_parts AS emp ON emp.enemy_id=ep.enemy_id
-LEFT JOIN unit_enemy_data AS ued ON ued.unit_id=ep.unit_id
-WHERE ep.enemy_id=$enemyId"""
-
-    return useDatabase {
-        rawQuery(sql, null).use {
-            if (it.moveToFirst()) {
-                var i = 0
-
-                val mainSkillLvList = mutableListOf<Int>()
-                while (i < 10) {
-                    mainSkillLvList.add(it.getInt(i++))
-                }
-
-                val exSkillLvList = mutableListOf<Int>()
-                while (i < 15) {
-                    exSkillLvList.add(it.getInt(i++))
-                }
-
-                val multiParts = mutableListOf<Int>()
-                while (i < 20) {
-                    val id = it.getInt(i++)
-                    if (id != 0) {
-                        multiParts.add(id)
-                    }
-                }
-
-                val property = Property { _ ->
-                    it.getDouble(i++)
-                }
-
-                EnemyData(
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getString(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getFloat(i++),
-                    it.getString(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i),
-                    mainSkillLvList,
-                    exSkillLvList,
-                    multiParts,
-                    property
-                )
-            } else {
-                null
-            }
-        }
     }
 }

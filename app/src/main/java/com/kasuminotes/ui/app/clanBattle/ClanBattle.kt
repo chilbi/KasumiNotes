@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.ui.components.BottomBar
-import com.kasuminotes.ui.app.state.ClanBattleState
+import com.kasuminotes.state.ClanBattleState
 import com.kasuminotes.ui.components.TopBar
 
 @Composable

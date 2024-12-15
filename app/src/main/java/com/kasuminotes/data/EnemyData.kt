@@ -2,6 +2,7 @@ package com.kasuminotes.data
 
 import com.kasuminotes.common.SummonMinion
 import com.kasuminotes.db.AppDatabase
+import com.kasuminotes.db.getExtraEffectData
 import com.kasuminotes.db.getUnitAttackPatternList
 import com.kasuminotes.db.getUnitSkillData
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +29,9 @@ data class EnemyData(
     override val property: Property,
     var enemyMultiParts: List<EnemyData> = emptyList(),
     override var unitAttackPatternList: List<UnitAttackPattern> = emptyList(),
-    override var unitSkillData: UnitSkillData? = null
+    override var unitSkillData: UnitSkillData? = null,
+    var extraEffectData: ExtraEffectData? = null,
+    var waveGroupId: Int? = null
 ): SummonMinion {
     override var skillList: List<SkillItem> = emptyList()
         private set
@@ -36,11 +39,13 @@ data class EnemyData(
     suspend fun load(db: AppDatabase) = withContext(Dispatchers.IO) {
         val list = awaitAll(
             async { db.getUnitAttackPatternList(unitId) },
-            async { db.getUnitSkillData(unitId) }
+            async { db.getUnitSkillData(unitId) },
+            async { db.getExtraEffectData(if (waveGroupId == null) enemyId else waveGroupId!!) }
         )
         @Suppress("UNCHECKED_CAST")
         unitAttackPatternList = list[0] as List<UnitAttackPattern>
         unitSkillData = list[1] as UnitSkillData
+        extraEffectData = list[2] as ExtraEffectData?
         skillList = unitSkillData!!.getSkillList(unionBurstLevel, mainSkillLvList, exSkillLvList)
     }
 

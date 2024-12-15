@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
-import com.kasuminotes.ui.app.state.TalentQuestState
+import com.kasuminotes.state.TalentQuestState
 import com.kasuminotes.ui.components.CenterText
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.PlaceImage
@@ -25,7 +25,7 @@ import com.kasuminotes.utils.UrlUtil
 @Composable
 fun TalentQuestAreaList(
     taLentQuestState: TalentQuestState,
-    onNavigateToEnemy: (enemyId: Int) -> Unit
+    onEnemyClick: (enemyId: Int, waveGroupId: Int?) -> Unit
 ) {
     if (taLentQuestState.hasTalentQuest) {
         Column(Modifier.verticalScroll(rememberScrollState())) {
@@ -39,7 +39,7 @@ fun TalentQuestAreaList(
                             Box(Modifier
                                 .padding(4.dp)
                                 .size(56.dp)
-                                .clickable { onNavigateToEnemy(data.enemyId) }
+                                .clickable { onEnemyClick(data.enemyId, data.waveGroupId) }
                             ) {
                                 PlaceImage(
                                     url = UrlUtil.getEnemyUnitIconUrl(data.unitId),

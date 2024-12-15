@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import com.kasuminotes.ui.app.state.CharaListState
+import com.kasuminotes.state.CharaListState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.FilterCharaButton
 import com.kasuminotes.ui.components.FilterCharaMenu

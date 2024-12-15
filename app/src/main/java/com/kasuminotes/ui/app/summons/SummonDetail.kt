@@ -20,6 +20,8 @@ import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun SummonDetail(
+    isExtraEffect: Boolean,
+    visible: Boolean,
     searchAreaWidth: Int,
     atkType: Int,
     normalAtkCastTime: Float,
@@ -34,28 +36,32 @@ fun SummonDetail(
             .verticalScroll(rememberScrollState())
             .padding(4.dp)
     ) {
-        Container {
-            PropertyTable(
-                property = property,
-                indices = propertyIndices
-            )
+        if (!isExtraEffect || visible) {
+            Container {
+                PropertyTable(
+                    property = property,
+                    indices = propertyIndices
+                )
+            }
         }
 
         if (unitSkillData != null) {
-            AttackPattern(
-                hasUnique1 = false,
-                hasUnique2 = false,
-                atkType = atkType,
-                unitAttackPatternList = unitAttackPatternList,
-                unitSkillData = unitSkillData
-            )
+            if (!isExtraEffect || visible) {
+                AttackPattern(
+                    hasUnique1 = false,
+                    hasUnique2 = false,
+                    atkType = atkType,
+                    unitAttackPatternList = unitAttackPatternList,
+                    unitSkillData = unitSkillData
+                )
 
-            AttackDetail(
-                atkType,
-                normalAtkCastTime,
-                searchAreaWidth,
-                property
-            )
+                AttackDetail(
+                    atkType,
+                    normalAtkCastTime,
+                    searchAreaWidth,
+                    property
+                )
+            }
 
             skillList.forEach { item ->
                 SkillDetail(

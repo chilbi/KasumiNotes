@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.ClanBattleMapData
 import com.kasuminotes.data.EnemyData
-import com.kasuminotes.ui.app.state.ClanBattleState
+import com.kasuminotes.state.ClanBattleState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.TabsPager

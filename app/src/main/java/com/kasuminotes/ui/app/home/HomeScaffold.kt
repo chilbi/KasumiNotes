@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.components.BottomBar
 import com.kasuminotes.ui.app.drawer.ModalDrawer
-import com.kasuminotes.ui.app.state.DbState
-import com.kasuminotes.ui.app.state.UiState
-import com.kasuminotes.ui.app.state.UserState
+import com.kasuminotes.state.DbState
+import com.kasuminotes.state.UiState
+import com.kasuminotes.state.UserState
 
 @Composable
 fun HomeScaffold(

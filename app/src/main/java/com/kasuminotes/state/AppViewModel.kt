@@ -1,4 +1,4 @@
-package com.kasuminotes.ui.app
+package com.kasuminotes.state
 
 import android.content.Intent
 import android.net.Uri
@@ -15,16 +15,8 @@ import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
-import com.kasuminotes.ui.app.state.CharaState
-import com.kasuminotes.ui.app.state.ClanBattleState
-import com.kasuminotes.ui.app.state.DbState
-import com.kasuminotes.ui.app.state.DungeonState
-import com.kasuminotes.ui.app.state.EquipState
-import com.kasuminotes.ui.app.state.ExEquipState
-import com.kasuminotes.ui.app.state.QuestState
-import com.kasuminotes.ui.app.state.SummonsState
-import com.kasuminotes.ui.app.state.TalentQuestState
-import com.kasuminotes.ui.app.state.UiState
+import com.kasuminotes.ui.app.AppNavData
+import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.utils.Helper
 import kotlinx.coroutines.launch
 
@@ -36,6 +28,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     val questState = QuestState(appRepository, viewModelScope)
     val exEquipState = ExEquipState(appRepository, viewModelScope)
     val summonsState = SummonsState(appRepository, viewModelScope)
+    val enemyState = EnemyState(appRepository, viewModelScope)
     val clanBattleState = ClanBattleState(appRepository, viewModelScope)
     val dungeonState = DungeonState(appRepository, viewModelScope)
     val talentQuestState = TalentQuestState(appRepository, viewModelScope)
@@ -157,11 +150,13 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToSummons(summons: List<Int>, skillLevel: Int) {
+        summonsState.setIsExtraEffect(false)
         summonsState.initSummons(summons, skillLevel, charaState.userData!!)
         navController.navigate(AppNavData.Summons.route)
     }
 
-    fun navigateToMinions(minions: List<Int>, skillLevel: Int, enemyData: EnemyData) {
+    fun navigateToMinions(minions: List<Int>, skillLevel: Int, enemyData: EnemyData, epTableName: String) {
+        summonsState.setIsExtraEffect(false)
         if (Helper.isShadowChara(enemyData.unitId)) {
             val shadowUserData = UserData(
                 0,
@@ -185,8 +180,14 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             )
             summonsState.initSummons(minions, skillLevel, shadowUserData)
         } else {
-            summonsState.initMinionDataList(minions)
+            summonsState.initMinionDataList(minions, epTableName)
         }
+        navController.navigate(AppNavData.Summons.route)
+    }
+
+    fun navigateToExtraEffect(enemyIdList: List<Int>, epTableName: String) {
+        summonsState.setIsExtraEffect(true)
+        summonsState.initMinionDataList(enemyIdList, epTableName)
         navController.navigate(AppNavData.Summons.route)
     }
 
@@ -195,20 +196,20 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         navController.navigate(AppNavData.ClanBattleMapList.route)
     }
 
-    fun navigateToEnemy(enemyData: EnemyData, talentWeaknessList: List<Int>) {
-        clanBattleState.initEnemy(enemyData, talentWeaknessList)
+    fun navigateToClanBattleEnemy(enemyData: EnemyData, talentWeaknessList: List<Int>) {
+        enemyState.initEnemy(enemyData, talentWeaknessList, "enemy_parameter", null)
         navController.navigate(AppNavData.Enemy.route)
     }
 
-    fun navigateToEnemyById(enemyId: Int, talentWeaknessList: List<Int>) {
-        val isSucceed = clanBattleState.initEnemy(enemyId, talentWeaknessList)
+    fun navigateToDungeonEnemy(enemyId: Int, talentWeaknessList: List<Int>, waveGroupId: Int?) {
+        val isSucceed = enemyState.initEnemy(enemyId, talentWeaknessList, "enemy_parameter", waveGroupId)
         if (isSucceed) {
             navController.navigate(AppNavData.Enemy.route)
         }
     }
 
-    fun navigateToTalentQuestEnemy(enemyId: Int) {
-        val isSucceed = clanBattleState.initEnemy(enemyId, emptyList(), "talent_quest_enemy_parameter")
+    fun navigateToTalentQuestEnemy(enemyId: Int, waveGroupId: Int?) {
+        val isSucceed = enemyState.initEnemy(enemyId, emptyList(), "talent_quest_enemy_parameter", waveGroupId)
         if (isSucceed) {
             navController.navigate(AppNavData.Enemy.route)
         }

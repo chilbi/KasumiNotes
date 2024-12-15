@@ -30,7 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
-import com.kasuminotes.ui.app.state.TalentQuestState
+import com.kasuminotes.state.TalentQuestState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.UnitElement
@@ -38,7 +38,7 @@ import com.kasuminotes.ui.components.UnitElement
 @Composable
 fun TalentQuest(
     taLentQuestState: TalentQuestState,
-    onNavigateToEnemy: (enemyId: Int) -> Unit,
+    onNavigateToEnemy: (enemyId: Int, waveGroupId: Int?) -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(

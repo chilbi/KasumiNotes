@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.EnemyData
-import com.kasuminotes.ui.app.state.ClanBattleState
+import com.kasuminotes.state.EnemyState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.Infobar
@@ -31,16 +31,17 @@ import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun Enemy(
-    clanBattleState: ClanBattleState,
-    onMinionsClick: (minions: List<Int>, skillLevel: Int, enemyData: EnemyData) -> Unit,
+    enemyState: EnemyState,
+    onExtraEffectClick: (enemyIdList: List<Int>, epTableName: String) -> Unit,
+    onMinionsClick: (minions: List<Int>, skillLevel: Int, enemyData: EnemyData, epTableName: String) -> Unit,
     onBack: () -> Unit
 ) {
-    val enemyData = clanBattleState.enemyData!!
+    val enemyData = enemyState.enemyData!!
     val isShadowChara = Helper.isShadowChara(enemyData.unitId)
 
     Scaffold(
         topBar = {
-            EnemyTopBar(enemyData, isShadowChara, clanBattleState.talentWeaknessList, onBack)
+            EnemyTopBar(enemyData, isShadowChara, enemyState.talentWeaknessList, onBack)
         },
         bottomBar = {
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
@@ -48,12 +49,9 @@ fun Enemy(
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
                 EnemyDetail(
-                    enemyData,
+                    enemyState,
                     isShadowChara,
-                    clanBattleState.enemyMultiParts,
-                    clanBattleState.unitAttackPatternList,
-                    clanBattleState.skillList,
-                    clanBattleState.unitSkillData,
+                    onExtraEffectClick,
                     onMinionsClick
                 )
             }

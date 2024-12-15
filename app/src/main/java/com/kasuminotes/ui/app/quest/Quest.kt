@@ -2,7 +2,7 @@ package com.kasuminotes.ui.app.quest
 
 import androidx.compose.runtime.Composable
 import com.kasuminotes.ui.components.BottomBar
-import com.kasuminotes.ui.app.state.QuestState
+import com.kasuminotes.state.QuestState
 import com.kasuminotes.ui.components.SortIconButton
 
 @Composable

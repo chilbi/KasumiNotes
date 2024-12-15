@@ -9,8 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import coil.compose.rememberAsyncImagePainter
-import com.kasuminotes.ui.app.state.UiState
-import com.kasuminotes.ui.app.state.UserState
+import com.kasuminotes.state.UiState
+import com.kasuminotes.state.UserState
 import com.kasuminotes.ui.components.FilterCharaButton
 import com.kasuminotes.ui.components.FilterCharaMenu
 import com.kasuminotes.ui.components.TopBar

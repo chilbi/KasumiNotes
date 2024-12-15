@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.data.UserProfile
-import com.kasuminotes.ui.app.state.CharaImageState
+import com.kasuminotes.state.CharaImageState
 import com.kasuminotes.ui.components.UnitElement
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox

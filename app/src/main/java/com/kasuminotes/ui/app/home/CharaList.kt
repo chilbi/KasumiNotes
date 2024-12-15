@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.data.UserProfile
-import com.kasuminotes.ui.app.state.CharaImageState
+import com.kasuminotes.state.CharaImageState
 
 @Composable
 fun CharaList(

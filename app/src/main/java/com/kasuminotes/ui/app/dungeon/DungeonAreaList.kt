@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.data.DungeonAreaData
-import com.kasuminotes.ui.app.state.DungeonState
+import com.kasuminotes.state.DungeonState
 import com.kasuminotes.ui.components.FixedWidthLabel
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.PlaceImage
@@ -34,7 +34,7 @@ import com.kasuminotes.utils.UrlUtil
 @Composable
 fun DungeonAreaList(
     dungeonState: DungeonState,
-    onNavigateToEnemy: (enemyId: Int, talentWeaknessList: List<Int>) -> Unit
+    onNavigateToEnemy: (enemyId: Int, talentWeaknessList: List<Int>, waveGroupId: Int?) -> Unit
 ) {
     Column(Modifier.verticalScroll(rememberScrollState())) {
         dungeonState.dungeonAreaDataGrouped.forEach { group ->
@@ -72,9 +72,15 @@ fun DungeonAreaList(
 private fun DungeonAreaListItem(
     dungeonAreaData: DungeonAreaData,
     weaknessList: List<Int>?,
-    onItemClick: (enemyId: Int, talentWeaknessList: List<Int>) -> Unit
+    onItemClick: (enemyId: Int, talentWeaknessList: List<Int>, waveGroupId: Int?) -> Unit
 ) {
-    Row(Modifier.padding(4.dp).clickable { onItemClick(dungeonAreaData.enemyId, weaknessList ?: emptyList()) }) {
+    Row(Modifier.padding(4.dp).clickable {
+        onItemClick(
+            dungeonAreaData.enemyId,
+            weaknessList ?: emptyList(),
+            dungeonAreaData.waveGroupId
+        )
+    }) {
         Box(Modifier.size(56.dp)) {
             PlaceImage(
                 url = UrlUtil.getEnemyUnitIconUrl(dungeonAreaData.unitId),

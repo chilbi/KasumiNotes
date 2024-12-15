@@ -16,8 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.data.Property
-import com.kasuminotes.ui.app.state.DbState
-import com.kasuminotes.ui.app.state.EquipState
+import com.kasuminotes.state.DbState
+import com.kasuminotes.state.EquipState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.ImageCard

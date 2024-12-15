@@ -92,6 +92,7 @@
     <string name="search_area_width">攻击距离</string>
     <string name="summons_info">召唤物情报</string>
     <string name="load_more">加载全部</string>
+    <string name="extra_effect">额外效果</string>
 
     <string name="actual_name">本名</string>
     <string name="kana">平假名</string>

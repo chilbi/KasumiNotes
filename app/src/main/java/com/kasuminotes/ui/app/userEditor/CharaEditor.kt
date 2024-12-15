@@ -44,8 +44,8 @@ import com.kasuminotes.common.ImageVariant
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.ui.app.home.CharaItem
-import com.kasuminotes.ui.app.state.CharaImageState
-import com.kasuminotes.ui.app.state.UserState
+import com.kasuminotes.state.CharaImageState
+import com.kasuminotes.state.UserState
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
 import com.kasuminotes.ui.components.imageSize

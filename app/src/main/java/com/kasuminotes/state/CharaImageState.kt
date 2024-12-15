@@ -1,4 +1,4 @@
-package com.kasuminotes.ui.app.state
+package com.kasuminotes.state
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.lazy.grid.GridCells

@@ -18,8 +18,8 @@ import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UserProfile
-import com.kasuminotes.ui.app.state.CharaState
-import com.kasuminotes.ui.app.state.DbState
+import com.kasuminotes.state.CharaState
+import com.kasuminotes.state.DbState
 import com.kasuminotes.ui.components.BackdropScaffold
 import com.kasuminotes.ui.components.BackdropScaffoldDefaults
 import com.kasuminotes.ui.components.BackdropValue

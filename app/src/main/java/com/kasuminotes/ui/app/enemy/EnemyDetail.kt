@@ -8,15 +8,19 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,19 +28,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.kasuminotes.R
 import com.kasuminotes.data.EnemyData
-import com.kasuminotes.data.SkillItem
-import com.kasuminotes.data.UnitAttackPattern
-import com.kasuminotes.data.UnitSkillData
+import com.kasuminotes.state.EnemyState
 import com.kasuminotes.ui.components.AttackDetail
 import com.kasuminotes.ui.components.AttackPattern
 import com.kasuminotes.ui.components.Container
+import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.SkillDetail
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.MultiLineText
-import com.kasuminotes.utils.Helper
 import com.kasuminotes.utils.UrlUtil
 
 private val shadowCharaIndices: List<Int> = listOf(1, 3, 5, 6, 2, 4, 16, 7, 0, 8, 13, 15, 14)
@@ -45,14 +49,13 @@ private val enemyPartIndices = listOf(0, 16, 1, 3, 2, 4)
 
 @Composable
 fun EnemyDetail(
-    enemyData: EnemyData,
+    enemyState: EnemyState,
     isShadowChara: Boolean,
-    enemyMultiParts: List<EnemyData>,
-    unitAttackPatternList: List<UnitAttackPattern>,
-    skillList: List<SkillItem>,
-    unitSkillData: UnitSkillData?,
-    onMinionsClick: (minions: List<Int>, skillLevel: Int, enemyData: EnemyData) -> Unit
+    onExtraEffectClick: (enemyIdList: List<Int>, epTableName: String) -> Unit,
+    onMinionsClick: (minions: List<Int>, skillLevel: Int, enemyData: EnemyData, epTableName: String) -> Unit
 ) {
+    val enemyData = enemyState.enemyData!!
+
     Column(
         Modifier
             .fillMaxSize()
@@ -68,8 +71,8 @@ fun EnemyDetail(
             )
         }
 
-        if (enemyMultiParts.isNotEmpty()) {
-            enemyMultiParts.forEach { part ->
+        if (enemyState.enemyMultiParts.isNotEmpty()) {
+            enemyState.enemyMultiParts.forEach { part ->
                 LabelContainer(
                     label = part.name,
                     color = MaterialTheme.colorScheme.primary
@@ -82,19 +85,53 @@ fun EnemyDetail(
             }
         }
 
-        if (unitSkillData != null) {
+        if (enemyData.extraEffectData != null) {
+            Container {
+                Row {
+                    Infobar(
+                        label = "content_type",
+                        value = enemyData.extraEffectData!!.contentType.toString(),
+                        modifier = Modifier.weight(1f),
+                        width = 95.dp,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                    Infobar(
+                        label = "exec_timing",
+                        value = enemyData.extraEffectData!!.execTimingList.joinToString(","),
+                        modifier = Modifier.weight(1f),
+                        width =  88.dp,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                }
+                Button(
+                    onClick = {
+                        onExtraEffectClick(
+                            enemyData.extraEffectData!!.enemyIdList,
+                            enemyState.epTableName
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 4.dp)
+                ) {
+                    Text(stringResource(R.string.extra_effect))
+                }
+            }
+        }
+
+        if (enemyState.unitSkillData != null) {
             AttackPattern(
                 hasUnique1 = false,
                 hasUnique2 = false,
                 atkType = enemyData.atkType,
-                unitAttackPatternList = unitAttackPatternList,
-                unitSkillData = unitSkillData
+                unitAttackPatternList = enemyState.unitAttackPatternList,
+                unitSkillData = enemyState.unitSkillData!!
             )
 
-            val property = if (enemyMultiParts.isEmpty()) {
+            val property = if (enemyState.enemyMultiParts.isEmpty()) {
                 enemyData.property
             } else {
-                enemyMultiParts[0].property
+                enemyState.enemyMultiParts[0].property
             }
 
             AttackDetail(
@@ -104,7 +141,7 @@ fun EnemyDetail(
                 property
             )
 
-            skillList.forEach { item ->
+            enemyState.skillList.forEach { item ->
                 SkillDetail(
                     label = item.label,
                     isRfSkill = item.skillData.isRfSkill,
@@ -117,7 +154,9 @@ fun EnemyDetail(
                     property = property,
                     rawDepends = item.skillData.rawDepends,
                     actions = item.skillData.actions,
-                    onSummonsClick = { summons, skillLevel -> onMinionsClick(summons, skillLevel, enemyData) }
+                    onSummonsClick = { summons, skillLevel ->
+                        onMinionsClick(summons, skillLevel, enemyData, enemyState.epTableName)
+                    }
                 )
             }
         }

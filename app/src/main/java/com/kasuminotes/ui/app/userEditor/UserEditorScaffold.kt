@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.kasuminotes.ui.app.state.CharaListState
+import com.kasuminotes.state.CharaListState
 
 @Composable
 fun UserEditorScaffold(

@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.kasuminotes.R
 import com.kasuminotes.data.Property
-import com.kasuminotes.ui.app.state.DbState
-import com.kasuminotes.ui.app.state.EquipState
+import com.kasuminotes.state.DbState
+import com.kasuminotes.state.EquipState
 
 @Composable
 fun Equip(

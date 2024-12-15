@@ -31,7 +31,7 @@ import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.Element
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
-import com.kasuminotes.ui.app.state.CharaListState
+import com.kasuminotes.state.CharaListState
 
 @Composable
 fun FilterCharaMenu(charaListState: CharaListState) {

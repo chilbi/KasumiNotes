@@ -18,8 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.UserProfile
-import com.kasuminotes.ui.app.state.CharaImageState
-import com.kasuminotes.ui.app.state.UserState
+import com.kasuminotes.state.CharaImageState
+import com.kasuminotes.state.UserState
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
 import com.kasuminotes.utils.UrlUtil

@@ -3,8 +3,8 @@ package com.kasuminotes.ui.app.home
 import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
 import com.kasuminotes.data.UserProfile
-import com.kasuminotes.ui.app.state.DbState
-import com.kasuminotes.ui.app.state.UiState
+import com.kasuminotes.state.DbState
+import com.kasuminotes.state.UiState
 
 @Composable
 fun Home(

@@ -9,6 +9,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.kasuminotes.state.AppViewModel
 import com.kasuminotes.ui.app.about.About
 import com.kasuminotes.ui.app.chara.Chara
 import com.kasuminotes.ui.app.clanBattle.ClanBattle
@@ -152,7 +153,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             ) {
                 ClanBattleMapList(
                     appViewModel.clanBattleState,
-                    appViewModel::navigateToEnemy,
+                    appViewModel::navigateToClanBattleEnemy,
                     appViewModel::popBackStack
                 )
             }
@@ -162,7 +163,8 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 exitTransition = AppNavData.Enemy.exitTransition
             ) {
                 Enemy(
-                    appViewModel.clanBattleState,
+                    appViewModel.enemyState,
+                    appViewModel::navigateToExtraEffect,
                     appViewModel::navigateToMinions,
                     appViewModel::popBackStack
                 )
@@ -174,7 +176,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
             ) {
                 Dungeon(
                     appViewModel.dungeonState,
-                    appViewModel::navigateToEnemyById,
+                    appViewModel::navigateToDungeonEnemy,
                     appViewModel::popBackStack
                 )
             }

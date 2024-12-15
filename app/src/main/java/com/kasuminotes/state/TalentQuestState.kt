@@ -1,6 +1,7 @@
-package com.kasuminotes.ui.app.state
+package com.kasuminotes.state
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.TalentQuestAreaData
@@ -28,10 +29,10 @@ class TalentQuestState(
     var selectedArea by mutableStateOf<TalentQuestAreaData?>(null)
         private set
 
-    var selectedNum by mutableStateOf(1)
+    var selectedNum by mutableIntStateOf(1)
         private set
 
-    var maxNum by mutableStateOf(1)
+    var maxNum by mutableIntStateOf(1)
         private set
 
     var talentQuestDataGrouped by mutableStateOf<Map<Int, List<TalentQuestData>>>(emptyMap())

@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
-import com.kasuminotes.ui.app.state.ExEquipState
+import com.kasuminotes.state.ExEquipState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.PlaceImage

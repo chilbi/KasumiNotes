@@ -8,5 +8,6 @@ data class DungeonAreaData(
     val pattern: Int,
     val enemyId: Int,
     val unitId: Int,
-    val name: String
+    val name: String,
+    val waveGroupId: Int
 )

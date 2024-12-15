@@ -13,14 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.kasuminotes.R
 import com.kasuminotes.data.DungeonAreaData
-import com.kasuminotes.ui.app.state.DungeonState
+import com.kasuminotes.state.DungeonState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
 
 @Composable
 fun Dungeon(
     dungeonState: DungeonState,
-    onNavigateToEnemy: (enemyId: Int, talentWeaknessList: List<Int>) -> Unit,
+    onNavigateToEnemy: (enemyId: Int, talentWeaknessList: List<Int>, waveGroupId: Int?) -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(

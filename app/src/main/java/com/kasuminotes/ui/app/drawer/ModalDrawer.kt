@@ -5,9 +5,9 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import com.kasuminotes.ui.app.state.DbState
-import com.kasuminotes.ui.app.state.UiState
-import com.kasuminotes.ui.app.state.UserState
+import com.kasuminotes.state.DbState
+import com.kasuminotes.state.UiState
+import com.kasuminotes.state.UserState
 import kotlinx.coroutines.launch
 
 @Composable

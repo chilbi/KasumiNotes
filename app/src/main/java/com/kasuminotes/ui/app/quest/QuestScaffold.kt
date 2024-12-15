@@ -13,7 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.kasuminotes.common.QuestMode
-import com.kasuminotes.ui.app.state.QuestState
+import com.kasuminotes.state.QuestState
 import kotlinx.coroutines.launch
 
 @Composable

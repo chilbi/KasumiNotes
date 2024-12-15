@@ -1,4 +1,4 @@
-package com.kasuminotes.ui.app.state
+package com.kasuminotes.state
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf

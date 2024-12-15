@@ -103,68 +103,6 @@ WHERE clan_battle_id=$clanBattleId GROUP BY lap_num_from ORDER BY lap_num_from D
     }
 }
 
-fun AppDatabase.getMultiEnemyParts(multiParts: List<Int>): List<EnemyData> {
-    val sql = """SELECT ${EnemyData.getFields()}
-FROM enemy_parameter AS ep
-LEFT JOIN enemy_m_parts AS emp ON emp.enemy_id=ep.enemy_id
-LEFT JOIN unit_enemy_data AS ued ON ued.unit_id=ep.unit_id
-WHERE ep.enemy_id IN (${multiParts.joinToString(",")})"""
-
-    return useDatabase {
-        rawQuery(sql, null).use {
-            val list = mutableListOf<EnemyData>()
-            while (it.moveToNext()) {
-                var i = 0
-
-                val mainSkillLvList = mutableListOf<Int>()
-                while (i < 10) {
-                    mainSkillLvList.add(it.getInt(i++))
-                }
-
-                val exSkillLvList = mutableListOf<Int>()
-                while (i < 15) {
-                    exSkillLvList.add(it.getInt(i++))
-                }
-
-                val parts = emptyList<Int>()
-                i = 20
-//                while (i < 20) {
-//                    val id = it.getInt(i++)
-//                    if (id != 0) {
-//                        parts.add(id)
-//                    }
-//                }
-
-                val property = Property { _ ->
-                    it.getDouble(i++)
-                }
-
-                list.add(
-                    EnemyData(
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getString(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getFloat(i++),
-                        it.getString(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i++),
-                        it.getInt(i),
-                        mainSkillLvList,
-                        exSkillLvList,
-                        parts,
-                        property
-                    )
-                )
-            }
-            list
-        }
-    }
-}
-
 private fun AppDatabase.getEnemyDataList(waveGroupIdList: List<Int>): List<EnemyData> {
     val sql = """SELECT ${EnemyData.getFields()}
 FROM wave_group_data AS wgd

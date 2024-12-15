@@ -8,17 +8,26 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.common.SummonMinion
-import com.kasuminotes.ui.app.state.SummonsState
+import com.kasuminotes.state.SummonsState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TabsPager
 import com.kasuminotes.ui.components.TopBar
@@ -31,8 +40,11 @@ fun Summons(
     summonsState: SummonsState,
     onBack: () -> Unit
 ) {
+    var visible by remember { mutableStateOf(false) }
+    val toggle = { visible = !visible }
+
     Scaffold(
-        topBar = { SummonsTopBar(onBack) },
+        topBar = { SummonsTopBar(summonsState.isExtraEffect, visible, toggle, onBack) },
         bottomBar = { Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars)) },
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
@@ -48,6 +60,8 @@ fun Summons(
                 }
 
                 SummonsTabsPanel(
+                    summonsState.isExtraEffect,
+                    visible,
                     summonMinionList,
                     propertyIndices
                 )
@@ -57,15 +71,33 @@ fun Summons(
 }
 
 @Composable
-private fun SummonsTopBar(onBack: () -> Unit) {
+private fun SummonsTopBar(
+    isExtraEffect: Boolean,
+    visible: Boolean,
+    onToggle: () -> Unit,
+    onBack: () -> Unit
+) {
     TopBar(
-        title = { Text(stringResource(R.string.summons_info)) },
-        navigationIcon = { BackButton(onBack) }
+        title = {
+            Text(stringResource(if (isExtraEffect) R.string.extra_effect else R.string.summons_info))
+        },
+        navigationIcon = {
+            BackButton(onBack)
+        },
+        actions = {
+            if (isExtraEffect) {
+                IconButton(onToggle) {
+                    Icon(if (visible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff, null)
+                }
+            }
+        }
     )
 }
 
 @Composable
 private fun SummonsTabsPanel(
+    isExtraEffect: Boolean,
+    visible: Boolean,
     summonMinionList: List<SummonMinion>,
     propertyIndices: List<Int>
 ) {
@@ -88,6 +120,8 @@ private fun SummonsTabsPanel(
             pageContent = { page ->
                 val summonMinion = summonMinionList[page]
                 SummonDetail(
+                    isExtraEffect,
+                    visible,
                     summonMinion.searchAreaWidth,
                     summonMinion.atkType,
                     summonMinion.normalAtkCastTime,
