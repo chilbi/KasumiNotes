@@ -245,7 +245,7 @@ class ActionBuilder(
             56 -> getBlind()
             57 -> getCountDown()
             58 -> getRelieveField()
-            59 -> getHpRecoveryDown()
+            59 -> getHpRecoveryDown(skillLevel)
             60, 77, 101 -> getMark()
             61 -> getFear()
             71 -> getResurrection(skillLevel, property)
