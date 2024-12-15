@@ -15,6 +15,15 @@ fun SkillAction.getRatioDamage(skillLevel: Int, target: D = getTarget(depend)): 
         R.string.action_damage_target1_formula2_content3,
         arrayOf(target, formula, getDamageType(actionDetail2))
     )
-    return if (actionValue3 == 0.0) desc
-    else desc.append(D.Format(R.string.action_max_ratio_damage1, arrayOf(D.Text(actionValue3.toNumStr()).style(primary = true, bold = true))))
+
+    val damage = if (actionValue3 > 0.0) {
+        desc.append(D.Format(
+            R.string.action_max_ratio_damage1,
+            arrayOf(D.Text(actionValue3.toNumStr()).style(primary = true, bold = true))
+        ))
+    } else {
+        desc
+    }
+
+    return appendInjuredEnergy(damage)
 }

@@ -10,7 +10,7 @@ fun SkillAction.getDamageField(skillLevel: Int, property: Property): D {
     if (actionDetail1 > 4) {
         content = content.insert(D.Format(R.string.content_lower_defense).style(underline = true))
     }
-    return D.Format(
+    val damage = D.Format(
         R.string.action_damage_field_target1_range2_formula3_content4_time5,
         arrayOf(
             getTarget(depend, true),
@@ -20,4 +20,6 @@ fun SkillAction.getDamageField(skillLevel: Int, property: Property): D {
             D.Text(actionValue5.toNumStr()).style(primary = true, bold = true)
         )
     )
+
+    return appendInjuredEnergy(damage)
 }

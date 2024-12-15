@@ -50,5 +50,5 @@ fun SkillAction.getDamage(skillLevel: Int, property: Property, target: D = getTa
         )
     }
 
-    return damage
+    return appendInjuredEnergy(damage)
 }
