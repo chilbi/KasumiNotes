@@ -218,6 +218,7 @@
     <string name="action_energy_down_target1_formula2">%1$sのＴＰを%2$sダウンさせる。</string>
     <string name="action_hp_recovery_target1_formula2">%1$sのＨＰを%2$s回復する。</string>
     <string name="action_speed_target1_formula2_time3">%1$sの行動速度を本来の%2$sにする、効果時間%3$s秒。</string>
+    <string name="action_energy_cut_target1_formula2_time3">%1$sに受けるＴＰダウン効果を本来の%2$sにする、効果時間%3$s秒。</string>
     <string name="action_abnormal_target1_content2_time3">%1$sを%2$s状態にする、効果時間%3$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_time4">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、効果時間%4$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_percent4_time5">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、毎秒%2$sダメージが初期値の%4$sずつアップする、効果時間%5$s秒。</string>
@@ -568,6 +569,7 @@
     <string name="formula_m1_m2_m3">{ %1$s × %2$s × %3$s }</string>
     <string name="formula_m1_m2_m3_m4">{ %1$s × %2$s × %3$s × %4$s }</string>
     <string name="sub_formula_base1_lv2">(%1$s + %2$s × スキルLv)</string>
+    <string name="sub_formula_lv1">%s × スキルLv</string>
 
     <string name="move_speed">移動速度</string>
     <string name="damage">ダメージ</string>
@@ -643,6 +645,7 @@
     <string name="give_hp_recovery">ＨＰの回復量</string>
     <string name="give_hp_recovery_down">ＨＰ回復の下降量</string>
 <!--    <string name="give_hp_decrement">ＨＰの下降量</string>-->
+    <string name="give_energy_cut_effect">受けるＴＰダウン効果</string>
     <string name="give_energy_recovery">ＴＰの回復量</string>
     <string name="give_energy_decrement">ＴＰの下降量</string>
     <string name="give_hp_regeneration">継続ＨＰ回復量</string>

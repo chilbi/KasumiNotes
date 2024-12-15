@@ -5,11 +5,10 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getEnergyCut(): D {
     return D.Format(
-        R.string.action_received_down_target1_content2_formula3_time4,
+        R.string.action_energy_cut_target1_formula2_time3,
         arrayOf(
             getTarget(depend),
-            D.Format(R.string.energy_down),
-            D.Text("${(100 - actionValue1 * 100).toNumStr()}%").style(primary = true, bold = true),
+            D.Text("${(actionValue1 * 100).toNumStr()}%").style(primary = true, bold = true),
             D.Text(actionValue2.toNumStr()).style(primary = true, bold = true)
         )
     )

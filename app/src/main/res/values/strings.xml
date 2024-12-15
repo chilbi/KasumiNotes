@@ -218,6 +218,7 @@
     <string name="action_energy_down_target1_formula2">使%1$s的TP降低%2$s。</string>
     <string name="action_hp_recovery_target1_formula2">%1$s的HP回复%2$s。</string>
     <string name="action_speed_target1_formula2_time3">%1$s的行动速度变为原来的%2$s，效果时间%3$s秒。</string>
+    <string name="action_energy_cut_target1_formula2_time3">%1$s受到的TP降低效果变为原来的%2$s，效果时间%3$s秒。</string>
     <string name="action_abnormal_target1_content2_time3">使%1$s陷入%2$s状态，效果时间%3$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_time4">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，效果时间%4$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_percent4_time5">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，每秒提升初始值的%4$s%2$s伤害，效果时间%5$s秒。</string>
@@ -567,6 +568,7 @@
     <string name="formula_m1_m2_m3">{ %1$s × %2$s × %3$s }</string>
     <string name="formula_m1_m2_m3_m4">{ %1$s × %2$s × %3$s × %4$s }</string>
     <string name="sub_formula_base1_lv2">(%1$s + %2$s × 技能等级)</string>
+    <string name="sub_formula_lv1">%s × 技能等级</string>
 
     <string name="move_speed">移动速度</string>
     <string name="damage">伤害</string>
@@ -642,6 +644,7 @@
     <string name="give_hp_recovery">HP的回复量</string>
     <string name="give_hp_recovery_down">HP回复的降低量</string>
 <!--    <string name="give_hp_decrement">HP的降低量</string>-->
+    <string name="give_energy_cut_effect">受到的TP降低效果</string>
     <string name="give_energy_recovery">TP的回复量</string>
     <string name="give_energy_decrement">TP的降低量</string>
     <string name="give_hp_regeneration">HP的持续回复量</string>

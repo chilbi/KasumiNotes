@@ -28,7 +28,7 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 
     var isAdditive = true
     var value2 = actionValue2 * giveValueCount
-    val value3 = actionValue3 * giveValueCount
+    var value3 = actionValue3 * giveValueCount
 
     /** actionValue2, actionValue3 常量（如：(10 + 10 × 技能等级)） */
     val constantVariable = if (value3 == 0.0) {
@@ -38,7 +38,10 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
             isPercent = true
         } else if (targetAction.actionType == 10 && actionType != 74 && targetAction.isStatusPercent()) {
             isPercent = true
-        } else if (value2 < 0.0) {
+        } else if (targetAction.actionType == 98  && actionDetail2 == 1) {
+            value2 *= 100
+            isPercent = true
+        }  else if (value2 < 0.0) {
             if (!(targetAction.actionType == 35 && actionDetail2 == 4)) {
                 isAdditive = false
             }
@@ -50,7 +53,10 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         }
         D.Text(value2.toNumStr() + if (isPercent) "%" else "")
     } else {
-        if (value2 > 0.0 && value3 > 0.0) {
+        if (targetAction.actionType == 98  && actionDetail2 == 1) {
+            val value = (value2 + value3 * skillLevel) * 100
+            D.Text("${value.toNumStr()}%")
+        } else if (value2 > 0.0 && value3 > 0.0) {
             D.Format(
                 R.string.sub_formula_base1_lv2,
                 arrayOf(
@@ -236,6 +242,8 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
         )
         59 -> if (actionDetail2 == 1) D.Format(R.string.give_hp_recovery_down)
         else D.Format(R.string.give_time)
+        98 -> if (actionDetail2 == 1) D.Format(R.string.give_energy_cut_effect)
+        else D.Format(R.string.give_time)
         else -> D.Unknown
     }
 }
@@ -290,6 +298,7 @@ private fun SkillAction.getGiveValueFormula(
             else -> D.Unknown
         }
         59 -> null
+        98 -> null
         else -> D.Unknown
     }
     val nonNullElements = listOfNotNull(
