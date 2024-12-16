@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -28,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.state.TalentQuestState
@@ -132,9 +134,15 @@ private fun SelectNumMenu(taLentQuestState: TalentQuestState) {
                 onDismissRequest = { expanded = false },
                 modifier = Modifier.heightIn(max = 420.dp)
             ) {
-                (1..taLentQuestState.maxNum).forEach { num ->
+                for (num in taLentQuestState.maxNum downTo 1) {
                     DropdownMenuItem(
-                        text= { Text(num.toString()) },
+                        text= {
+                            Text(
+                                text = num.toString(),
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
+                            )
+                        },
                         onClick = {
                             taLentQuestState.selectNum(num)
                             expanded = false
