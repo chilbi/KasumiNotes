@@ -82,7 +82,7 @@ private fun SelectItem(schedule: AbyssSchedule) {
 
 @Composable
 private fun SelectScheduleMenu(abyssQuestState: AbyssQuestState) {
-    if (abyssQuestState.selectedSchedule == null) return
+    if (abyssQuestState.selectedSchedule == null || !abyssQuestState.hasAbyssQuest) return
 
     Box(Modifier.wrapContentSize()) {
         Box(Modifier.align(Alignment.CenterEnd)) {
