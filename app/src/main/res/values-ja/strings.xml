@@ -228,6 +228,7 @@
     <string name="action_abnormal_target1_content2_formula3_percent4_time5">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、毎秒%2$sダメージが初期値の%4$sずつアップする、効果時間%5$s秒。</string>
     <string name="action_state_target1_content2_time3">%1$sに%2$s状態を付与する、効果時間%3$s秒。</string>
     <string name="action_haulin_oneself_target1_formula2">%1$sを目の前%2$s距離まで引き寄せる。</string>
+    <string name="action_haulin_first_target1">%1$sを一番前にいる敵の位置まで引き寄せる。</string>
     <string name="action_haulin_target1_formula2">%1$sを%2$s距離引き寄せる。</string>
     <string name="action_knockback_target1_formula2">%1$sを%2$s距離吹き飛ばす。</string>
     <string name="action_diaup_target1_formula2">%1$sを%2$s高度吹き飛ばす。</string>
@@ -597,6 +598,7 @@
     <string name="black_fire">黒炎</string>
     <string name="curse_or_beshrew">呪いか呪詛</string>
     <string name="poison_or_fierce_poison">毒か猛毒</string>
+    <string name="poison_or_fierce_poison_or_curse_or_beshre_or_burn">毒、猛毒、呪い、呪詛、火傷</string>
     <string name="slow">スロウ</string>
     <string name="haste">ヘイスト</string>
     <string name="numbness">麻痺</string>

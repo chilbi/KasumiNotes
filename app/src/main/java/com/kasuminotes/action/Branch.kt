@@ -52,6 +52,14 @@ private fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
                 D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
             )
         }
+        in 1501..1599 -> {
+            val state = getAbnormalContent(actionDetail1 - 1500)
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_target1_state2, arrayOf(target, state)),
+                D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
+            )
+        }
         // タマキ、ミサト（サマー）
         1300 -> {
             setBranch(
@@ -106,6 +114,7 @@ private fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
                 4 -> D.Format(R.string.beshrew)
                 11 -> D.Format(R.string.curse_or_beshrew)
                 12 -> D.Format(R.string.poison_or_fierce_poison)
+                99 -> D.Format(R.string.poison_or_fierce_poison_or_curse_or_beshre_or_burn)
                 else -> D.Unknown
             }
             var yes = actionDetail2
@@ -257,6 +266,15 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         1601 -> {
             setStateBranch(branch,actionDetail1 - 1600, actionValue3)
         }
+        in 1501..1599 -> {
+            val target = getTarget(depend)
+            val state = getAbnormalContent(actionDetail1 - 1500)
+            setBranch(
+                branch,
+                D.Format(R.string.action_branch_target1_state2, arrayOf(target, state)),
+                D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
+            )
+        }
         // アリサ、カヤ、スズナ（サマー）、ルカ（サマー）、クロエ（聖学祭）
         in 1200..1299 -> {
             val counter = D.Format(R.string.counter_num1, arrayOf(D.Text((actionDetail1 / 10 % 10).toString())))
@@ -345,6 +363,42 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         // レイ、ルナ、クリスティーナ（クリスマス）、チエル（聖学祭）
         in 600..699 -> {
             setStateBranch(branch,actionDetail1 - 600, actionValue3)
+        }
+        in 500..599 -> {
+            val target = getTarget(depend)
+            val state = when (actionDetail1 - 500) {
+                0 -> D.Format(R.string.burn)
+                1 -> D.Format(R.string.curse)
+                2 -> D.Format(R.string.poison)
+                3 -> D.Format(R.string.fierce_poison)
+                4 -> D.Format(R.string.beshrew)
+                11 -> D.Format(R.string.curse_or_beshrew)
+                12 -> D.Format(R.string.poison_or_fierce_poison)
+                99 -> D.Format(R.string.poison_or_fierce_poison_or_curse_or_beshre_or_burn)
+                else -> D.Unknown
+            }
+            var yes = actionDetail2
+            var not = actionDetail3
+            if (actionId == 104001201) {// TODO アオイ S1+ 谜之顺序
+                yes = actionDetail3
+                not = actionDetail2
+            }
+            if (yes != 0) {
+                branch.add(
+                    yes to D.Format(
+                        R.string.action_branch_target1_state2,
+                        arrayOf(target, state)
+                    )
+                )
+            }
+            if (not != 0) {
+                branch.add(
+                    not to D.Format(
+                        R.string.action_branch_not_target1_state2,
+                        arrayOf(target, state)
+                    )
+                )
+            }
         }
         // カヤ（タイムトラベル）
         101 -> {

@@ -34,6 +34,9 @@ fun SkillAction.getKnock(): D {
                 )
             }
         }
+        6 -> {
+            D.Format(R.string.action_haulin_first_target1, arrayOf(target))
+        }
         8 -> {
             D.Format(
                 R.string.action_haulin_oneself_target1_formula2,

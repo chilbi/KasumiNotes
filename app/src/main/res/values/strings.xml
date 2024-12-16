@@ -228,6 +228,7 @@
     <string name="action_abnormal_target1_content2_formula3_percent4_time5">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，每秒提升初始值的%4$s%2$s伤害，效果时间%5$s秒。</string>
     <string name="action_state_target1_content2_time3">赋予%1$s%2$s状态，效果时间%3$s秒。</string>
     <string name="action_haulin_oneself_target1_formula2">将%1$s拉进到自身前方%2$s距离。</string>
+    <string name="action_haulin_first_target1">将%s拉进到最前方的敌人的位置。</string>
     <string name="action_haulin_target1_formula2">拉近%1$s%2$s距离。</string>
     <string name="action_knockback_target1_formula2">击飞%1$s%2$s距离。</string>
     <string name="action_diaup_target1_formula2">击飞%1$s%2$s高度。</string>
@@ -596,6 +597,7 @@
     <string name="black_fire">黑炎</string>
     <string name="curse_or_beshrew">诅咒或恶咒</string>
     <string name="poison_or_fierce_poison">毒或猛毒</string>
+    <string name="poison_or_fierce_poison_or_curse_or_beshre_or_burn">毒、猛毒、诅咒、恶咒、火伤</string>
     <string name="slow">减速</string>
     <string name="haste">加速</string>
     <string name="numbness">麻痹</string>
