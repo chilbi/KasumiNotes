@@ -67,6 +67,10 @@
     <string name="clan_battle">公会战</string>
     <string name="dungeon">地下城</string>
     <string name="talent_quest">深域</string>
+    <string name="abyss_quest">深渊讨伐战</string>
+    <string name="mirage_quest">追忆的领域</string>
+    <string name="mirage_floor_quest">追忆战</string>
+    <string name="mirage_nemesis_quest">追忆战・霸</string>
     <string name="user">用户</string>
     <string name="all">全部</string>
     <string name="all_type">类型</string>

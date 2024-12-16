@@ -1,13 +1,15 @@
 package com.kasuminotes.db
 
 import com.kasuminotes.data.TalentQuestAreaData
-import com.kasuminotes.data.TalentQuestData
+import com.kasuminotes.data.QuestWaveGroupEnemy
 
 fun AppDatabase.hasTalentQuest(): Boolean {
-    return existsTable("talent_quest_area_data") &&
-            existsTable("talent_quest_data") &&
-            existsTable("talent_quest_wave_group_data") &&
-            existsTable("talent_quest_enemy_parameter")
+    return existsTables(listOf(
+        "talent_quest_area_data",
+        "talent_quest_data",
+        "talent_quest_wave_group_data",
+        "talent_quest_enemy_parameter"
+    ))
 }
 
 fun AppDatabase.getTalentQuestAreaDataList(): List<TalentQuestAreaData> {
@@ -29,20 +31,22 @@ fun AppDatabase.getTalentQuestAreaDataList(): List<TalentQuestAreaData> {
     }
 }
 
-fun AppDatabase.getTalentQuestDataList(areaId: Int): List<TalentQuestData> {
-    val sql = """SELECT tqd.quest_id,tqd.quest_name,tqwgd.wave_group_id,tqep.enemy_id,tqep.unit_id,tqep.name
-FROM talent_quest_data AS tqd
-JOIN talent_quest_wave_group_data AS tqwgd ON tqwgd.wave_group_id IN (tqd.wave_group_id_1,tqd.wave_group_id_2,tqd.wave_group_id_3)
-JOIN talent_quest_enemy_parameter AS tqep ON tqep.enemy_id IN (tqwgd.id,tqwgd.enemy_id_1,tqwgd.enemy_id_2,tqwgd.enemy_id_3,tqwgd.enemy_id_4,tqwgd.enemy_id_5)
-WHERE tqd.area_id=$areaId
-ORDER BY tqd.quest_id DESC"""
+fun AppDatabase.getTalentQuestDataList(areaId: Int): List<QuestWaveGroupEnemy> {
+    val sql = """SELECT qd.quest_id,qd.quest_name,wgd.wave_group_id,ep.enemy_id,ep.unit_id,ep.name
+FROM talent_quest_data AS qd
+JOIN talent_quest_wave_group_data AS wgd
+ON wgd.wave_group_id IN (qd.wave_group_id_1,qd.wave_group_id_2,qd.wave_group_id_3)
+JOIN talent_quest_enemy_parameter AS ep
+ON ep.enemy_id IN (wgd.id,wgd.enemy_id_1,wgd.enemy_id_2,wgd.enemy_id_3,wgd.enemy_id_4,wgd.enemy_id_5)
+WHERE qd.area_id=$areaId
+ORDER BY qd.quest_id DESC"""
 
     return useDatabase {
         rawQuery(sql, null).use {
-            val list = mutableListOf<TalentQuestData>()
+            val list = mutableListOf<QuestWaveGroupEnemy>()
             while (it.moveToNext()) {
                 var i = 0
-                list.add(TalentQuestData(
+                list.add(QuestWaveGroupEnemy(
                     it.getInt(i++),
                     it.getString(i++),
                     it.getInt(i++),

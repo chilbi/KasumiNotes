@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.TalentQuestAreaData
-import com.kasuminotes.data.TalentQuestData
+import com.kasuminotes.data.QuestWaveGroupEnemy
 import com.kasuminotes.db.getTalentQuestAreaDataList
 import com.kasuminotes.db.getTalentQuestDataList
 import com.kasuminotes.db.hasTalentQuest
@@ -18,7 +18,7 @@ class TalentQuestState(
     private val appRepository: AppRepository,
     private val scope: CoroutineScope
 ) {
-    private var talentQuestDataList: List<TalentQuestData> = emptyList()
+    private var talentQuestDataList: List<QuestWaveGroupEnemy> = emptyList()
 
     var hasTalentQuest by mutableStateOf(false)
         private set
@@ -35,7 +35,7 @@ class TalentQuestState(
     var maxNum by mutableIntStateOf(1)
         private set
 
-    var talentQuestDataGrouped by mutableStateOf<Map<Int, List<TalentQuestData>>>(emptyMap())
+    var talentQuestDataGrouped by mutableStateOf<Map<Int, List<QuestWaveGroupEnemy>>>(emptyMap())
         private set
 
     fun initTalentQuestDataList() {
@@ -46,7 +46,11 @@ class TalentQuestState(
             hasTalentQuest = db.hasTalentQuest()
             if (hasTalentQuest) {
                 talentQuestAreaDataList = db.getTalentQuestAreaDataList()
-                selectArea(talentQuestAreaDataList[0])
+                if (talentQuestAreaDataList.isEmpty()) {
+                    hasTalentQuest = false
+                } else {
+                    selectArea(talentQuestAreaDataList[0])
+                }
             }
         }
     }
@@ -55,10 +59,14 @@ class TalentQuestState(
         scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             talentQuestDataList = db.getTalentQuestDataList(areaData.areaId)
-            maxNum = (talentQuestDataList.maxOf { it.questId } % 1000) / 10
-            selectedArea = areaData
-            selectedNum = maxNum
-            selectTalentQuestDataList()
+            if (talentQuestDataList.isEmpty()) {
+                hasTalentQuest = false
+            } else {
+                maxNum = (talentQuestDataList.maxOf { it.questId } % 1000) / 10
+                selectedArea = areaData
+                selectedNum = maxNum
+                selectTalentQuestDataList()
+            }
         }
     }
 

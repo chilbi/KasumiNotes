@@ -32,6 +32,8 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     val clanBattleState = ClanBattleState(appRepository, viewModelScope)
     val dungeonState = DungeonState(appRepository, viewModelScope)
     val talentQuestState = TalentQuestState(appRepository, viewModelScope)
+    val abyssQuestState = AbyssQuestState(appRepository, viewModelScope)
+    val mirageQuestState = MirageQuestState(appRepository, viewModelScope)
 
     val navController = NavHostController(appRepository.applicationContext).apply {
         navigatorProvider.addNavigator(ComposeNavigator())
@@ -215,6 +217,20 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         }
     }
 
+    fun navigateToAbyssQuestEnemy(enemyId: Int, waveGroupId: Int?) {
+        val isSucceed = enemyState.initEnemy(enemyId, emptyList(), "abyss_enemy_parameter", waveGroupId)
+        if (isSucceed) {
+            navController.navigate(AppNavData.Enemy.route)
+        }
+    }
+
+    fun navigateToMirageQuestEnemy(enemyId: Int, waveGroupId: Int?) {
+        val isSucceed = enemyState.initEnemy(enemyId, emptyList(), "mirage_enemy_parameter", waveGroupId)
+        if (isSucceed) {
+            navController.navigate(AppNavData.Enemy.route)
+        }
+    }
+
     fun navigateToDungeon() {
         dungeonState.initAreaDataList()
         navController.navigate(AppNavData.Dungeon.route)
@@ -223,6 +239,16 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     fun navigateToTalentQuest() {
         talentQuestState.initTalentQuestDataList()
         navController.navigate(AppNavData.TalentQuest.route)
+    }
+
+    fun navigateToAbyssQuest() {
+        abyssQuestState.initAbyssScheduleList()
+        navController.navigate(AppNavData.AbyssQuest.route)
+    }
+
+    fun navigateToMirageQuest() {
+        mirageQuestState.initMirageQuest()
+        navController.navigate(AppNavData.MirageQuest.route)
     }
 
     fun navigateToImagesForChangeUserImage() {

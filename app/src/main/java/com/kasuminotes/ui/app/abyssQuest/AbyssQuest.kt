@@ -1,10 +1,10 @@
-package com.kasuminotes.ui.app.talentQuest
+package com.kasuminotes.ui.app.abyssQuest
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
@@ -17,6 +17,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -30,28 +31,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
-import com.kasuminotes.state.TalentQuestState
+import com.kasuminotes.data.AbyssSchedule
+import com.kasuminotes.state.AbyssQuestState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.UnitElement
 
 @Composable
-fun TalentQuest(
-    taLentQuestState: TalentQuestState,
+fun AbyssQuest(
+    abyssQuestState: AbyssQuestState,
     onNavigateToEnemy: (enemyId: Int, waveGroupId: Int?) -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
             TopBar(
-                title = { Text(stringResource(R.string.talent_quest)) },
+                title = { Text(stringResource(R.string.abyss_quest)) },
                 navigationIcon = { BackButton(onBack) },
-                actions = {
-                    if (taLentQuestState.hasTalentQuest) {
-                        SelectAreaMenu(taLentQuestState)
-                        SelectNumMenu(taLentQuestState)
-                    }
-                }
+                actions = { SelectScheduleMenu(abyssQuestState) }
             )
         },
         bottomBar = {
@@ -59,15 +56,33 @@ fun TalentQuest(
         },
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
-                TalentQuestAreaList(taLentQuestState, onNavigateToEnemy)
+                AbyssQuestAreaList(abyssQuestState, onNavigateToEnemy)
             }
         }
     )
 }
 
 @Composable
-private fun SelectAreaMenu(taLentQuestState: TalentQuestState) {
-    if (taLentQuestState.selectedArea == null) return
+private fun SelectItem(schedule: AbyssSchedule) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            UnitElement(0.dp, schedule.talentId, 16.dp)
+            Text(
+                text = schedule.title,
+                modifier = Modifier.padding(start = 2.dp),
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
+        Text(
+            text = schedule.startTimeText,
+            style = MaterialTheme.typography.labelSmall
+        )
+    }
+}
+
+@Composable
+private fun SelectScheduleMenu(abyssQuestState: AbyssQuestState) {
+    if (abyssQuestState.selectedSchedule == null) return
 
     Box(Modifier.wrapContentSize()) {
         Box(Modifier.align(Alignment.CenterEnd)) {
@@ -76,11 +91,7 @@ private fun SelectAreaMenu(taLentQuestState: TalentQuestState) {
                 onClick = { expanded = true },
                 colors = ButtonDefaults.textButtonColors(contentColor = LocalContentColor.current)
             ) {
-                UnitElement(0.dp, taLentQuestState.selectedArea!!.talentId, 16.dp)
-                Text(
-                    taLentQuestState.selectedArea!!.areaName,
-                    Modifier.padding(start = 2.dp)
-                )
+                SelectItem(abyssQuestState.selectedSchedule!!)
                 Icon(
                     imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
                     contentDescription = null
@@ -90,53 +101,13 @@ private fun SelectAreaMenu(taLentQuestState: TalentQuestState) {
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                taLentQuestState.talentQuestAreaDataList.forEach { areaData ->
+                abyssQuestState.abyssScheduleList.forEach { schedule ->
                     DropdownMenuItem(
                         text= {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                UnitElement(0.dp, areaData.talentId, 16.dp)
-                                Text(
-                                    areaData.areaName,
-                                    Modifier.padding(start = 2.dp)
-                                )
-                            }
+                            SelectItem(schedule)
                         },
                         onClick = {
-                            taLentQuestState.selectArea(areaData)
-                            expanded = false
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun SelectNumMenu(taLentQuestState: TalentQuestState) {
-    Box(Modifier.wrapContentSize()) {
-        Box(Modifier.align(Alignment.CenterEnd)) {
-            var expanded by remember { mutableStateOf(false) }
-            TextButton(
-                onClick = { expanded = true },
-                colors = ButtonDefaults.textButtonColors(contentColor = LocalContentColor.current)
-            ) {
-                Text(taLentQuestState.selectedNum.toString())
-                Icon(
-                    imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                    contentDescription = null
-                )
-            }
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier.heightIn(max = 420.dp)
-            ) {
-                (1..taLentQuestState.maxNum).forEach { num ->
-                    DropdownMenuItem(
-                        text= { Text(num.toString()) },
-                        onClick = {
-                            taLentQuestState.selectNum(num)
+                            abyssQuestState.selectSchedule(schedule)
                             expanded = false
                         }
                     )

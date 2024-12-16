@@ -36,11 +36,20 @@ fun ClanBattle(
     onNavigateToMapList: (label: String, period: ClanBattlePeriod) -> Unit,
     onNavigateToDungeon: () -> Unit,
     onNavigateToTalentQuest: () -> Unit,
+    onNavigateToAbyssQuest: () -> Unit,
+    onNavigateToMirageQuest: () -> Unit,
     onNavigateTo: (Int) -> Unit,
     onDrawerOpen: () -> Unit
 ) {
     Scaffold(
-        topBar = { ClanBattleTopBar(onNavigateToDungeon, onNavigateToTalentQuest) },
+        topBar = {
+            ClanBattleTopBar(
+                onNavigateToDungeon,
+                onNavigateToTalentQuest,
+                onNavigateToAbyssQuest,
+                onNavigateToMirageQuest
+            )
+        },
         bottomBar = { BottomBar(2, onNavigateTo, onDrawerOpen) },
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
@@ -54,7 +63,9 @@ fun ClanBattle(
 @Composable
 private fun ClanBattleTopBar(
     onNavigateToDungeon: () -> Unit,
-    onNavigateToTalentQuest: () -> Unit
+    onNavigateToTalentQuest: () -> Unit,
+    onNavigateToAbyssQuest: () -> Unit,
+    onNavigateToMirageQuest: () -> Unit
 ) {
     TopBar(
         title = {
@@ -69,6 +80,12 @@ private fun ClanBattleTopBar(
             }
         },
         actions = {
+            val arr = arrayOf(
+                R.string.dungeon to onNavigateToDungeon,
+                R.string.talent_quest to onNavigateToTalentQuest,
+                R.string.abyss_quest to onNavigateToAbyssQuest,
+                R.string.mirage_quest to onNavigateToMirageQuest
+            )
             var expanded by remember { mutableStateOf(false) }
 
             Box(modifier = Modifier.wrapContentSize(Alignment.TopStart)) {
@@ -76,22 +93,16 @@ private fun ClanBattleTopBar(
                     Icon(Icons.Filled.Menu, null)
                 }
                 DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.dungeon)) },
-                        onClick = {
-                            expanded = false
-                            onNavigateToDungeon()
-                        },
-                        leadingIcon = { Icon(Icons.AutoMirrored.Filled.ArrowForward, null) }
-                    )
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.talent_quest)) },
-                        onClick = {
-                            expanded = false
-                            onNavigateToTalentQuest()
-                        },
-                        leadingIcon = { Icon(Icons.AutoMirrored.Filled.ArrowForward, null) }
-                    )
+                    arr.forEach { pair ->
+                        DropdownMenuItem(
+                            text = { Text(stringResource(pair.first)) },
+                            onClick = {
+                                expanded = false
+                                pair.second.invoke()
+                            },
+                            leadingIcon = { Icon(Icons.AutoMirrored.Filled.ArrowForward, null) }
+                        )
+                    }
                 }
             }
         }

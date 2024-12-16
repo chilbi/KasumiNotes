@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.kasuminotes.state.AppViewModel
 import com.kasuminotes.ui.app.about.About
+import com.kasuminotes.ui.app.abyssQuest.AbyssQuest
 import com.kasuminotes.ui.app.chara.Chara
 import com.kasuminotes.ui.app.clanBattle.ClanBattle
 import com.kasuminotes.ui.app.enemy.Enemy
@@ -19,6 +20,7 @@ import com.kasuminotes.ui.app.dungeon.Dungeon
 import com.kasuminotes.ui.app.equip.Equip
 import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
+import com.kasuminotes.ui.app.mirageQuest.MirageQuest
 import com.kasuminotes.ui.app.quest.Quest
 import com.kasuminotes.ui.app.summons.Summons
 import com.kasuminotes.ui.app.talentQuest.TalentQuest
@@ -142,6 +144,8 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     appViewModel::navigateToMapList,
                     appViewModel::navigateToDungeon,
                     appViewModel::navigateToTalentQuest,
+                    appViewModel::navigateToAbyssQuest,
+                    appViewModel::navigateToMirageQuest,
                     appViewModel::navigateTo,
                     navigateToHomeAndOpenDrawer
                 )
@@ -188,6 +192,28 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 TalentQuest(
                     appViewModel.talentQuestState,
                     appViewModel::navigateToTalentQuestEnemy,
+                    appViewModel::popBackStack
+                )
+            }
+            composable(
+                route = AppNavData.AbyssQuest.route,
+                enterTransition = AppNavData.AbyssQuest.enterTransition,
+                exitTransition = AppNavData.AbyssQuest.exitTransition
+            ) {
+                AbyssQuest(
+                    appViewModel.abyssQuestState,
+                    appViewModel::navigateToAbyssQuestEnemy,
+                    appViewModel::popBackStack
+                )
+            }
+            composable(
+                route = AppNavData.MirageQuest.route,
+                enterTransition = AppNavData.MirageQuest.enterTransition,
+                exitTransition = AppNavData.MirageQuest.exitTransition
+            ) {
+                MirageQuest(
+                    appViewModel.mirageQuestState,
+                    appViewModel::navigateToMirageQuestEnemy,
                     appViewModel::popBackStack
                 )
             }

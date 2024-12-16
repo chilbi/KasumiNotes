@@ -50,7 +50,7 @@ sealed class AppNavData(
 
     data object ClanBattle : AppNavData(
         route = "clanBattle",
-        child = listOf("clanBattleMapList", "dungeon", "talentQuest")
+        child = listOf("clanBattleMapList", "dungeon", "talentQuest", "abyssQuest", "mirageQuest")
     )
 
     data object ClanBattleMapList : AppNavData(
@@ -61,7 +61,7 @@ sealed class AppNavData(
 
     data object Enemy : AppNavData(
         route = "enemy",
-        parent = listOf("clanBattleMapList", "dungeon", "talentQuest"),
+        parent = listOf("clanBattleMapList", "dungeon", "talentQuest", "abyssQuest", "mirageQuest"),
         child = listOf("summons")
     )
 
@@ -73,6 +73,18 @@ sealed class AppNavData(
 
     data object TalentQuest : AppNavData(
         route = "talentQuest",
+        parent = listOf("clanBattle"),
+        child = listOf("enemy")
+    )
+
+    data object AbyssQuest : AppNavData(
+        route = "abyssQuest",
+        parent = listOf("clanBattle"),
+        child = listOf("enemy")
+    )
+
+    data object MirageQuest : AppNavData(
+        route = "mirageQuest",
         parent = listOf("clanBattle"),
         child = listOf("enemy")
     )

@@ -340,6 +340,18 @@ fun AppDatabase.existsTable(tableName: String): Boolean {
     }
 }
 
+fun AppDatabase.existsTables(tableNames: List<String>): Boolean {
+    return useDatabase {
+        tableNames.all { tableName ->
+            val sql = "SELECT count(*) FROM sqlite_master WHERE type=\"table\" AND name=\"$tableName\""
+            rawQuery(sql, null).use {
+                it.moveToFirst()
+                it.getInt(0) > 0
+            }
+        }
+    }
+}
+
 fun AppDatabase.existsColumn(tableName: String, columnName: String): Boolean {
     val sql = "SELECT * FROM sqlite_master WHERE name=\"$tableName\" AND sql LIKE \"%$columnName%\""
     return useDatabase {
