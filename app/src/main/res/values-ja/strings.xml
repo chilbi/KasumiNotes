@@ -223,6 +223,7 @@
     <string name="action_hp_recovery_target1_formula2">%1$sのＨＰを%2$s回復する。</string>
     <string name="action_speed_target1_formula2_time3">%1$sの行動速度を本来の%2$sにする、効果時間%3$s秒。</string>
     <string name="action_energy_cut_target1_formula2_time3">%1$sに受けるＴＰダウン効果を本来の%2$sにする、効果時間%3$s秒。</string>
+    <string name="action_energy_recovery_rate_ceiling_restriction_target1_formula2_time3">%1$sのＴＰ上昇の上限を%2$sに制限する、効果時間%3$s秒。</string>
     <string name="action_abnormal_target1_content2_time3">%1$sを%2$s状態にする、効果時間%3$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_time4">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、効果時間%4$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_percent4_time5">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、毎秒%2$sダメージが初期値の%4$sずつアップする、効果時間%5$s秒。</string>

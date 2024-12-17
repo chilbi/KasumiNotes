@@ -7,13 +7,11 @@ fun SkillAction.getAbnormal(skillLevel: Int): D {
     val time = getBaseLvFormula(actionValue3, actionValue4, skillLevel)
 
     return if (actionDetail1 == 1 || actionDetail1 == 2) {
+        val formula = getBaseLvFormula(actionValue1 * 100, actionValue2 * 100, skillLevel)
+            .append(D.Text("%").style(primary = true, bold = true))
         D.Format(
             R.string.action_speed_target1_formula2_time3,
-            arrayOf(
-                getTarget(depend),
-                D.Text("${(actionValue1 * 100).toNumStr()}%").style(primary = true, bold = true),
-                time
-            )
+            arrayOf(getTarget(depend), formula, time)
         )
     } else {
         val abnormal = D.Format(

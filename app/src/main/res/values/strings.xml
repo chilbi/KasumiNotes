@@ -223,6 +223,7 @@
     <string name="action_hp_recovery_target1_formula2">%1$s的HP回复%2$s。</string>
     <string name="action_speed_target1_formula2_time3">%1$s的行动速度变为原来的%2$s，效果时间%3$s秒。</string>
     <string name="action_energy_cut_target1_formula2_time3">%1$s受到的TP降低效果变为原来的%2$s，效果时间%3$s秒。</string>
+    <string name="action_energy_recovery_rate_ceiling_restriction_target1_formula2_time3">%1$s的TP上升的上限限制为%2$s，效果时间%3$s秒。</string>
     <string name="action_abnormal_target1_content2_time3">使%1$s陷入%2$s状态，效果时间%3$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_time4">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，效果时间%4$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_percent4_time5">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，每秒提升初始值的%4$s%2$s伤害，效果时间%5$s秒。</string>
