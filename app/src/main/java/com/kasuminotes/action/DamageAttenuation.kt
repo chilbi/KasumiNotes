@@ -42,7 +42,7 @@ fun SkillAction.getDamageAttenuationEffect(skillLevel: Int): SkillEffect {
         ),
         actionValue3,
         1f,
-        9999
+        SkillEffect.damageAttenuation
     )
 }
 

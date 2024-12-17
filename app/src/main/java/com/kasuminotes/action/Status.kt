@@ -181,7 +181,7 @@ fun SkillAction.getStatusEffect(skillLevel: Int): SkillEffect {
     } else {
         D.Text(formula.toNumStr())
     }
-    val order = 100 - (detail1 / 10)
+    val order = SkillEffect.status - (detail1 / 10)
     return SkillEffect(
         getTarget(null),
         label,

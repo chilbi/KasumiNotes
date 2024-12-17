@@ -22,6 +22,6 @@ fun SkillAction.getHpRecoveryDownEffect(skillLevel: Int): SkillEffect {
         D.Text("${((actionValue1 + actionValue4 * skillLevel) * 100).toNumStr()}%"),
         if (actionValue2 == 0.0) actionValue3 else actionValue2,
         0.5f,
-        10
+        SkillEffect.hpRecoveryDown
     )
 }

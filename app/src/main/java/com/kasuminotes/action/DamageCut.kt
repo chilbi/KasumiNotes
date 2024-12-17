@@ -43,6 +43,6 @@ fun SkillAction.getDamageCutEffect(skillLevel: Int): SkillEffect {
         D.Text("${(actionValue1 + actionValue2 * skillLevel).toNumStr()}%"),
         actionValue3,
         0.5f,
-        30
+        SkillEffect.damageCut
     )
 }

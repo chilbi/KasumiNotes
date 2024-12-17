@@ -34,7 +34,7 @@ fun SkillAction.getAbnormal(skillLevel: Int): D {
     }
 }
 
-fun SkillAction.getAbnormalEffect(skillLevel: Int): SkillEffect? {
+fun SkillAction.getAbnormalEffect(skillLevel: Int): SkillEffect {
     return if (actionDetail1 == 1 || actionDetail1 == 2) {
         SkillEffect(
             getTarget(null),
@@ -42,9 +42,9 @@ fun SkillAction.getAbnormalEffect(skillLevel: Int): SkillEffect? {
             D.Text("${((actionValue1 + actionValue2 * skillLevel) * 100).toNumStr()}%"),
             actionValue3 + actionValue4 * skillLevel,
             0.5f,
-            20
+            SkillEffect.abnormal
         )
     } else {
-        null
+        getUnknownEffect()
     }
 }

@@ -2,6 +2,7 @@ package com.kasuminotes.action
 
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
+import com.kasuminotes.data.SkillEffect
 
 fun SkillAction.getUnknown(): D {
     val str = StringBuilder()
@@ -33,5 +34,16 @@ fun SkillAction.getUnknown(): D {
     return D.Format(
         R.string.action_unknown_s1,
         arrayOf(D.Text(str.toString()))
+    )
+}
+
+fun SkillAction.getUnknownEffect(): SkillEffect {
+    return SkillEffect(
+        getTarget(null),
+        D.Format(R.string.effect_unknown),
+        D.Text(actionType.toString()),
+        0.0,
+        0.5f,
+        SkillEffect.unknownType
     )
 }

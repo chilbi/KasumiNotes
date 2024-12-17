@@ -12,4 +12,17 @@ data class SkillEffect(
     var targetText: String = "",
     var labelText: String = "",
     var valueText: String = ""
-)
+) {
+    companion object {
+        const val damageAttenuation = 999//受到的伤害衰减
+        const val status = 100//属性值80-100，固定防御力*10
+        const val energyCut = 399//受到的TP降低效果
+        const val damageCut = 398//受到的物理/魔法伤害降低
+        const val abnormal = 69//行动速度
+        const val energyRestriction = 4//TP上升的上限
+        const val hpRecoveryDown = 3//HP回复量降低
+        const val changeEnergy = 2//TP回复
+        const val regeneration = 1//持续HP/TP回复
+        const val unknownType = 0//未知
+    }
+}

@@ -270,7 +270,7 @@ class ActionBuilder(
             105 -> getEnvironment()
             106 -> getVicariousInjuryGuard()
             107 -> getTotalCritical()
-            109 -> getEnergyRecoveryRateCeilingRestriction(skillLevel)
+            109 -> getEnergyRestriction(skillLevel)
             110 -> getDotDamageUp()
             114 -> getTriggeredWhenAttacked()
             116 -> getPersistence(skillLevel)
@@ -314,9 +314,9 @@ private fun getSkillEffect(skillLevel: Int, actions: List<SkillAction>): SkillEf
             }
             return action1.getEnergyCutEffect(giveValue)
         }
-        109 -> return action1.getEnergyRecoveryRateCeilingRestrictionEffect(skillLevel)
+        109 -> return action1.getEnergyRestrictionEffect(skillLevel)
     }
-    return null
+    return action1.getUnknownEffect()
 }
 
 private class ModifyDescription(

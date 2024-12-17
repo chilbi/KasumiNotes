@@ -22,6 +22,6 @@ fun SkillAction.getEnergyCutEffect(giveValue: Double): SkillEffect {
         D.Text("${((actionValue1 + giveValue) * 100).toNumStr()}%"),
         actionValue2,
         0.5f,
-        69
+        SkillEffect.energyCut
     )
 }

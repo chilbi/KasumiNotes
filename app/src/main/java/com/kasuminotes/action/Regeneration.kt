@@ -38,6 +38,6 @@ fun SkillAction.getRegenerationEffect(skillLevel: Int): SkillEffect {
         D.Text((actionValue1 + actionValue2 * skillLevel).toNumStr()),
         actionValue5,
         0.5f,
-        10
+        SkillEffect.regeneration
     )
 }

@@ -352,12 +352,12 @@ private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction):
     }
 }
 
-fun SkillAction.getGiveValueEffect(skillLevel: Int, actions: List<SkillAction>): SkillEffect? {
+fun SkillAction.getGiveValueEffect(skillLevel: Int, actions: List<SkillAction>): SkillEffect {
     val targetAction = actions.find { it.actionId == actionDetail1 }
     if (targetAction != null) {
         if (targetAction.actionType == 98) {
             return targetAction.getEnergyCutEffect(actionValue2 + actionValue3 * skillLevel)
         }
     }
-    return null
+    return getUnknownEffect()
 }

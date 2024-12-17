@@ -27,9 +27,9 @@ fun SkillAction.getChangeEnergyEffect(skillLevel: Int): SkillEffect {
     return SkillEffect(
         getTarget(null),
         label,
-        D.Text("${(actionValue1 + actionValue2 * skillLevel).toNumStr()}%"),
+        D.Text((actionValue1 + actionValue2 * skillLevel).toNumStr()),
         0.0,
         0.5f,
-        1
+        SkillEffect.changeEnergy
     )
 }
