@@ -2,6 +2,7 @@ package com.kasuminotes.action
 
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
+import com.kasuminotes.data.SkillEffect
 
 fun SkillAction.getAbnormal(skillLevel: Int): D {
     val time = getBaseLvFormula(actionValue3, actionValue4, skillLevel)
@@ -30,5 +31,20 @@ fun SkillAction.getAbnormal(skillLevel: Int): D {
         } else {
             abnormal
         }
+    }
+}
+
+fun SkillAction.getAbnormalEffect(skillLevel: Int): SkillEffect? {
+    return if (actionDetail1 == 1 || actionDetail1 == 2) {
+        SkillEffect(
+            getTarget(null),
+            D.Format(R.string.effect_speed),
+            D.Text("${((actionValue1 + actionValue2 * skillLevel) * 100).toNumStr()}%"),
+            actionValue3 + actionValue4 * skillLevel,
+            0.5f,
+            20
+        )
+    } else {
+        null
     }
 }

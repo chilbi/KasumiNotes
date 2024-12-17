@@ -2,6 +2,7 @@ package com.kasuminotes.action
 
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
+import com.kasuminotes.data.SkillEffect
 
 fun SkillAction.getChangeEnergy(skillLevel: Int): D {
     return D.Format(
@@ -14,5 +15,21 @@ fun SkillAction.getChangeEnergy(skillLevel: Int): D {
             getTarget(depend),
             getBaseLvFormula(actionValue1, actionValue2, skillLevel)
         )
+    )
+}
+
+fun SkillAction.getChangeEnergyEffect(skillLevel: Int): SkillEffect {
+    val label = when (actionDetail1) {
+        1 -> D.Format(R.string.effect_energy_recovery)
+        4 -> D.Format(R.string.effect_const).append(D.Format(R.string.effect_energy_recovery))
+        else -> D.Format(R.string.effect_energy_down)
+    }
+    return SkillEffect(
+        getTarget(null),
+        label,
+        D.Text("${(actionValue1 + actionValue2 * skillLevel).toNumStr()}%"),
+        0.0,
+        0.5f,
+        1
     )
 }

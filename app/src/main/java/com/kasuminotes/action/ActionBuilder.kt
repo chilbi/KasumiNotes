@@ -3,6 +3,8 @@ package com.kasuminotes.action
 import com.kasuminotes.R
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
+import com.kasuminotes.data.SkillEffect
+import com.kasuminotes.data.SkillItem
 
 class ActionBuilder(
     private val rawDepends: List<Int>,
@@ -250,7 +252,7 @@ class ActionBuilder(
             61 -> getFear()
             71 -> getResurrection(skillLevel, property)
             72 -> getDamageCut(skillLevel)
-            73 -> getDamageAttenuation()
+            73 -> getDamageAttenuation(skillLevel)
             75 -> getHitCount()
             78 -> getPassiveDamageUp()
             79 -> getFixedDamage()
@@ -278,6 +280,43 @@ class ActionBuilder(
             else -> getUnknown()
         }
     }
+}
+
+fun getSkillEffectList(effectSkills: List<SkillItem>): List<SkillEffect> {
+    val list = mutableListOf<SkillEffect>()
+    effectSkills.forEach { skill ->
+        if (skill.level > 0 && skill.skillData.actions.isNotEmpty()) {
+            val skillEffect = getSkillEffect(skill.level, skill.skillData.actions)
+            if (skillEffect != null) {
+                list.add(skillEffect)
+            }
+        }
+    }
+    return list.sortedByDescending { it.order }
+}
+
+private fun getSkillEffect(skillLevel: Int, actions: List<SkillAction>): SkillEffect? {
+    val action1 = actions[0]
+    when (action1.actionType) {
+        8 -> return action1.getAbnormalEffect(skillLevel)
+        10 -> return action1.getStatusEffect(skillLevel)
+        16 -> return action1.getChangeEnergyEffect(skillLevel)
+        26 -> return action1.getGiveValueEffect(skillLevel, actions)
+        48 -> return action1.getRegenerationEffect(skillLevel)
+        59 -> return action1.getHpRecoveryDownEffect(skillLevel)
+        72 -> return action1.getDamageCutEffect(skillLevel)
+        73 -> return action1.getDamageAttenuationEffect(skillLevel)
+        98 -> {
+            var giveValue = 0.0
+            val giveValueAction = actions.find { it.actionType == 26 && it.actionDetail1 == action1.actionId }
+            if (giveValueAction != null) {
+                giveValue = giveValueAction.actionValue2 + giveValueAction.actionValue3 * skillLevel
+            }
+            return action1.getEnergyCutEffect(giveValue)
+        }
+        109 -> return action1.getEnergyRecoveryRateCeilingRestrictionEffect(skillLevel)
+    }
+    return null
 }
 
 private class ModifyDescription(

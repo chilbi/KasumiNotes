@@ -50,6 +50,7 @@ fun SkillDetail(
     coolTime: Float,
     castTime: Float,
     description: String,
+    isExtraEffect: Boolean = false,
     searchAreaWidth: Int = 0,
     skillLevel: Int = 0,
     property: Property? = null,
@@ -65,7 +66,12 @@ fun SkillDetail(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            AdaptiveWidthLabel(label)
+            AdaptiveWidthLabel(
+                text = label,
+                color = if (!isExtraEffect) MaterialTheme.colorScheme.primary
+                else if (skillLevel < 1) MaterialTheme.colorScheme.secondary
+                else MaterialTheme.colorScheme.error
+            )
             if (isRfSkill) {
                 AdaptiveWidthLabel(
                     text = "RF",
@@ -92,7 +98,7 @@ fun SkillDetail(
                 Infobar(
                     label = stringResource(R.string.skill_level),
                     value = lvText,
-                    modifier = Modifier.width((70 + 10 * lvText.length).dp),
+                    modifier = Modifier.width((72 + 10 * lvText.length).dp),
                     width = 64.dp,
                     color = MaterialTheme.colorScheme.primaryContainer,
                     textAlign = TextAlign.Center

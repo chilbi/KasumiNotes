@@ -1,8 +1,10 @@
 package com.kasuminotes.data
 
+import com.kasuminotes.action.getSkillEffectList
 import com.kasuminotes.common.SummonMinion
 import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.db.getExtraEffectData
+import com.kasuminotes.db.getMultiEnemyParts
 import com.kasuminotes.db.getUnitAttackPatternList
 import com.kasuminotes.db.getUnitSkillData
 import kotlinx.coroutines.Dispatchers
@@ -47,6 +49,22 @@ data class EnemyData(
         unitSkillData = list[1] as UnitSkillData
         extraEffectData = list[2] as ExtraEffectData?
         skillList = unitSkillData!!.getSkillList(unionBurstLevel, mainSkillLvList, exSkillLvList)
+
+        if (extraEffectData != null) {
+            val enemyDataList = db.getMultiEnemyParts(extraEffectData!!.enemyIdList, epTableName)
+            val effectSkills = enemyDataList.map { enemyData ->
+                async {
+                    val skillData = db.getUnitSkillData(enemyData.unitId)
+                    val skills = skillData.getSkillList(
+                        enemyData.unionBurstLevel,
+                        enemyData.mainSkillLvList,
+                        enemyData.exSkillLvList
+                    )
+                    skills
+                }
+            }.awaitAll().flatten()
+            extraEffectData!!.skillEffectList = getSkillEffectList(effectSkills)
+        }
     }
 
     companion object {

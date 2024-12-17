@@ -3,6 +3,7 @@ package com.kasuminotes.action
 import androidx.annotation.StringRes
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
+import com.kasuminotes.data.SkillEffect
 import kotlin.math.ceil
 
 fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
@@ -28,7 +29,7 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 
     var isAdditive = true
     var value2 = actionValue2 * giveValueCount
-    var value3 = actionValue3 * giveValueCount
+    val value3 = actionValue3 * giveValueCount
 
     /** actionValue2, actionValue3 常量（如：(10 + 10 × 技能等级)） */
     val constantVariable = if (value3 == 0.0) {
@@ -349,4 +350,14 @@ private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction):
             }
         }
     }
+}
+
+fun SkillAction.getGiveValueEffect(skillLevel: Int, actions: List<SkillAction>): SkillEffect? {
+    val targetAction = actions.find { it.actionId == actionDetail1 }
+    if (targetAction != null) {
+        if (targetAction.actionType == 98) {
+            return targetAction.getEnergyCutEffect(actionValue2 + actionValue3 * skillLevel)
+        }
+    }
+    return null
 }

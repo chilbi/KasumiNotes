@@ -72,6 +72,7 @@ fun SummonDetail(
                     coolTime = item.skillData.bossUbCoolTime,
                     castTime = item.skillData.skillCastTime,
                     description = item.skillData.description,
+                    isExtraEffect = isExtraEffect,
                     skillLevel = item.level,
                     property = property,
                     rawDepends = item.skillData.rawDepends,

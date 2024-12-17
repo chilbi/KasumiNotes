@@ -6,7 +6,8 @@ data class ExtraEffectData(
     val contentType: Int,
     val targetValueList: List<Int>,//1-2
     val enemyIdList: List<Int>,//1-5
-    val execTimingList: List<Int>//1-5
+    val execTimingList: List<Int>,//1-5
+    var skillEffectList: List<SkillEffect> = emptyList()
 ) {
     companion object {
         private var fields: String? = null

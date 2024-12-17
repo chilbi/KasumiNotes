@@ -665,4 +665,18 @@
     <string name="give_mark_max_state1">【%s】的最多追加数量</string>
     <string name="give_distance">距离</string>
     <string name="give_speed">行动速度</string>
+
+    <string name="effect_damage_attenuation">受到的伤害衰减</string>
+    <string name="effect_damage_attenuation_limit1_coefficient2">%1$s万以上%2$s万衰减系数</string>
+    <string name="effect_const">固定</string>
+    <string name="effect_down">降低</string>
+    <string name="effect_energy_cut">受到的TP降低效果</string>
+    <string name="effect_damage_cut_content1">受到的%s降低</string>
+    <string name="effect_speed">行动速度</string>
+    <string name="effect_energy_recovery">TP回复</string>
+    <string name="effect_energy_down">TP下降</string>
+    <string name="effect_hp_regeneration">持续HP回复</string>
+    <string name="effect_energy_regeneration">持续TP回复</string>
+    <string name="effect_hp_recovery_down">HP回复量降低</string>
+    <string name="effect_energy_recovery_rate_ceiling_restriction">TP上升的上限</string>
 </resources>

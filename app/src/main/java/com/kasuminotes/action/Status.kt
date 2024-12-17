@@ -3,6 +3,7 @@ package com.kasuminotes.action
 import com.kasuminotes.R
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
+import com.kasuminotes.data.SkillEffect
 import kotlin.math.roundToInt
 
 fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property: Property?): D {
@@ -144,4 +145,49 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
     }
 
     return arrayOf(contentDesc, timeDesc, constDesc)
+}
+
+fun SkillAction.getStatusEffect(skillLevel: Int): SkillEffect {
+    // 不受技能影响
+    var isConst = false
+    var detail1 = actionDetail1
+    if (detail1 > 1000) {
+        detail1 -= 1000
+        isConst = true
+    }
+
+    // 提升或下降
+    var isUp = detail1 % 10 == 0
+    // 是否受身
+    var isReceived = false
+    // 是否百分比
+    var isPercent = actionValue1 == 2.0
+    if (detail1 in 140..179) {
+        isUp = !isUp
+        isReceived = true
+    }
+
+    if ((detail1 in 110..129) || (detail1 >= 140)) {
+        isPercent = true
+    }
+    val content = getStatusContent(detail1 / 10)
+    val formula = actionValue2 + actionValue3 * skillLevel
+    var label = if (isConst) content.insert(D.Format(R.string.effect_const)) else content
+    if (!isUp) {
+        label = label.append(D.Format(R.string.effect_down))
+    }
+    val value = if (isPercent) {
+        D.Text("${formula.toNumStr()}%")
+    } else {
+        D.Text(formula.toNumStr())
+    }
+    val order = 100 - (detail1 / 10)
+    return SkillEffect(
+        getTarget(null),
+        label,
+        value,
+        actionValue4,
+        0.5f,
+        if (isConst) order * 10 else order
+    )
 }

@@ -3,6 +3,7 @@ package com.kasuminotes.action
 import com.kasuminotes.R
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
+import com.kasuminotes.data.SkillEffect
 
 fun SkillAction.getRegeneration(skillLevel: Int, property: Property): D {
     val content: D
@@ -23,5 +24,20 @@ fun SkillAction.getRegeneration(skillLevel: Int, property: Property): D {
             formula,
             D.Text(actionValue5.toNumStr()).style(primary = true, bold = true)
         )
+    )
+}
+
+fun SkillAction.getRegenerationEffect(skillLevel: Int): SkillEffect {
+    val label = D.Format(
+        if (actionDetail1 == 1) R.string.effect_hp_regeneration
+        else R.string.effect_energy_regeneration
+    )
+    return SkillEffect(
+        getTarget(null),
+        label,
+        D.Text((actionValue1 + actionValue2 * skillLevel).toNumStr()),
+        actionValue5,
+        0.5f,
+        10
     )
 }

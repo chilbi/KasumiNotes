@@ -8,19 +8,15 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,15 +24,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.kasuminotes.R
 import com.kasuminotes.data.EnemyData
 import com.kasuminotes.state.EnemyState
 import com.kasuminotes.ui.components.AttackDetail
 import com.kasuminotes.ui.components.AttackPattern
 import com.kasuminotes.ui.components.Container
-import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.SkillDetail
 import com.kasuminotes.ui.components.LabelContainer
@@ -86,37 +79,11 @@ fun EnemyDetail(
         }
 
         if (enemyData.extraEffectData != null) {
-            Container {
-                Row {
-                    Infobar(
-                        label = "content_type",
-                        value = enemyData.extraEffectData!!.contentType.toString(),
-                        modifier = Modifier.weight(1f),
-                        width = 95.dp,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-                    Infobar(
-                        label = "exec_timing",
-                        value = enemyData.extraEffectData!!.execTimingList.joinToString(","),
-                        modifier = Modifier.weight(1f),
-                        width =  88.dp,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-                }
-                Button(
-                    onClick = {
-                        onExtraEffectClick(
-                            enemyData.extraEffectData!!.enemyIdList,
-                            enemyState.epTableName
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 4.dp)
-                ) {
-                    Text(stringResource(R.string.extra_effect))
-                }
-            }
+            ExtraEffect(
+                enemyData.extraEffectData!!,
+                enemyState.epTableName,
+                onExtraEffectClick
+            )
         }
 
         if (enemyState.unitSkillData != null) {

@@ -666,4 +666,18 @@
     <string name="give_mark_max_state1">【%s】の最大追加数</string>
     <string name="give_distance">距離</string>
     <string name="give_speed">行動速度</string>
+
+    <string name="effect_damage_attenuation">受けるダメージ減衰</string>
+    <string name="effect_damage_attenuation_limit1_coefficient2">%1$s万以上%2$s万減衰係数</string>
+    <string name="effect_const">固定</string>
+    <string name="effect_down">下降</string>
+    <string name="effect_energy_cut">受けるＴＰダウン効果</string>
+    <string name="effect_damage_cut_content1">受ける%s下降</string>
+    <string name="effect_speed">行動速度</string>
+    <string name="effect_energy_recovery">ＴＰ回復</string>
+    <string name="effect_energy_down">ＴＰ下降</string>
+    <string name="effect_hp_regeneration">継続ＨＰ回復</string>
+    <string name="effect_energy_regeneration">継続ＴＰ回復</string>
+    <string name="effect_hp_recovery_down">ＨＰ回復量下降</string>
+    <string name="effect_energy_recovery_rate_ceiling_restriction">ＴＰ上昇の上限</string>
 </resources>
