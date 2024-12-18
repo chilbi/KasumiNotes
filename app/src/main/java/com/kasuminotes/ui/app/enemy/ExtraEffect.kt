@@ -1,6 +1,5 @@
 package com.kasuminotes.ui.app.enemy
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,7 +8,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -17,7 +15,6 @@ import com.kasuminotes.R
 import com.kasuminotes.action.stringDescription
 import com.kasuminotes.data.ExtraEffectData
 import com.kasuminotes.data.SkillEffect
-import com.kasuminotes.ui.components.AdaptiveWidthLabel
 import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.components.UnderlineLabel
@@ -28,39 +25,34 @@ import com.kasuminotes.ui.components.VerticalGridCells
 fun ExtraEffect(
     extraEffectData: ExtraEffectData,
     epTableName: String,
-    onExtraEffectClick: (enemyIdList: List<Int>, epTableName: String) -> Unit
+    onExtraEffectClick: (extraEffectData: ExtraEffectData, epTableName: String) -> Unit
 ) {
     Container {
         Button(
-            onClick = {
-                onExtraEffectClick(
-                    extraEffectData.enemyIdList,
-                    epTableName
-                )
-            },
+            onClick = { onExtraEffectClick(extraEffectData, epTableName) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 4.dp)
         ) {
-            Text(stringResource(R.string.extra_effect))
+            Text(stringResource(R.string.extra_effect) + "<type${extraEffectData.contentType}>")
         }
 
-        Row {
-            Infobar(
-                label = "content_type",
-                value = extraEffectData.contentType.toString(),
-                modifier = Modifier.weight(1f),
-                width = 95.dp,
-                color = MaterialTheme.colorScheme.secondary
-            )
-            Infobar(
-                label = "exec_timing",
-                value = extraEffectData.execTimingList.filter { it > 0 }.joinToString(","),
-                modifier = Modifier.weight(1f),
-                width =  88.dp,
-                color = MaterialTheme.colorScheme.secondary
-            )
-        }
+//        Row {
+//            Infobar(
+//                label = "content_type",
+//                value = extraEffectData.contentType.toString(),
+//                modifier = Modifier.weight(1f),
+//                width = 95.dp,
+//                color = MaterialTheme.colorScheme.secondary
+//            )
+//            Infobar(
+//                label = "exec_timing",
+//                value = extraEffectData.execTimingList.filter { it > 0 }.joinToString(","),
+//                modifier = Modifier.weight(1f),
+//                width =  88.dp,
+//                color = MaterialTheme.colorScheme.secondary
+//            )
+//        }
 
         SkillEffectList(extraEffectData.skillEffectList)
     }

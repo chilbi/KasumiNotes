@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.EnemyData
+import com.kasuminotes.data.ExtraEffectData
 import com.kasuminotes.data.SummonData
 import com.kasuminotes.data.UserData
 import com.kasuminotes.db.getMultiEnemyParts
@@ -19,7 +20,7 @@ class SummonsState(
     private val appRepository: AppRepository,
     private val scope: CoroutineScope
 ) {
-    var isExtraEffect by mutableStateOf(false)
+    var extraEffectData by mutableStateOf<ExtraEffectData?>(null)
         private set
 
     var summonDataList by mutableStateOf<List<SummonData>>(emptyList())
@@ -27,10 +28,6 @@ class SummonsState(
 
     var minionDataList by mutableStateOf<List<EnemyData>>(emptyList())
         private set
-
-    fun setIsExtraEffect(value: Boolean) {
-        isExtraEffect = value
-    }
 
     fun initSummons(summons: List<Int>, skillLevel: Int, userData: UserData) {
         destroy()
@@ -46,7 +43,7 @@ class SummonsState(
         }
     }
 
-    fun initMinionDataList(minions: List<Int>, epTableName: String) {
+    fun initMinionDataList(minions: List<Int>, epTableName: String, extraEffect: ExtraEffectData?) {
         destroy()
         scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
@@ -57,10 +54,12 @@ class SummonsState(
                     enemyData
                 }
             }.awaitAll()
+            extraEffectData = extraEffect
         }
     }
 
-    fun destroy() {
+    private fun destroy() {
+        extraEffectData = null
         summonDataList = emptyList()
         minionDataList = emptyList()
     }

@@ -429,6 +429,7 @@
     <string name="content_full_charge">赋予自身【满电】状态，</string>
     <string name="content_system_down">使自身陷入【系统宕机】状态，</string>
     <string name="content_dot">持续</string>
+    <string name="content_fixed">固定</string>
 
     <string name="state_unknown">标记%s</string>
     <string name="state_hiding">隐密</string>
@@ -677,6 +678,7 @@
     <string name="effect_energy_down">TP下降</string>
     <string name="effect_hp_regeneration">持续HP回复</string>
     <string name="effect_energy_regeneration">持续TP回复</string>
+    <string name="effect_fixed_energy_regeneration">持续固定TP回复</string>
     <string name="effect_hp_recovery_down">HP回复量降低</string>
     <string name="effect_energy_restriction">TP上升的上限</string>
     <string name="effect_unknown">未知类型</string>

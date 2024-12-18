@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.common.SummonMinion
+import com.kasuminotes.data.ExtraEffectData
 import com.kasuminotes.state.SummonsState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TabsPager
@@ -44,7 +45,7 @@ fun Summons(
     val toggle = { visible = !visible }
 
     Scaffold(
-        topBar = { SummonsTopBar(summonsState.isExtraEffect, visible, toggle, onBack) },
+        topBar = { SummonsTopBar(summonsState.extraEffectData != null, visible, toggle, onBack) },
         bottomBar = { Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars)) },
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
@@ -60,8 +61,8 @@ fun Summons(
                 }
 
                 SummonsTabsPanel(
-                    summonsState.isExtraEffect,
                     visible,
+                    summonsState.extraEffectData,
                     summonMinionList,
                     propertyIndices
                 )
@@ -96,11 +97,12 @@ private fun SummonsTopBar(
 
 @Composable
 private fun SummonsTabsPanel(
-    isExtraEffect: Boolean,
     visible: Boolean,
+    extraEffectData: ExtraEffectData?,
     summonMinionList: List<SummonMinion>,
     propertyIndices: List<Int>
 ) {
+    val isExtraEffect = extraEffectData != null
     val size = summonMinionList.size
     if (size > 0) {
         TabsPager(
@@ -114,7 +116,8 @@ private fun SummonsTabsPanel(
                 SummonHeader(
                     summonMinion.unitId,
                     summonMinion.enemyId,
-                    summonMinion.name
+                    summonMinion.name,
+                    extraEffectData
                 )
             },
             pageContent = { page ->

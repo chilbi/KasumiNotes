@@ -12,6 +12,7 @@ import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.data.EnemyData
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.ExEquipSlot
+import com.kasuminotes.data.ExtraEffectData
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
@@ -152,13 +153,11 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToSummons(summons: List<Int>, skillLevel: Int) {
-        summonsState.setIsExtraEffect(false)
         summonsState.initSummons(summons, skillLevel, charaState.userData!!)
         navController.navigate(AppNavData.Summons.route)
     }
 
     fun navigateToMinions(minions: List<Int>, skillLevel: Int, enemyData: EnemyData, epTableName: String) {
-        summonsState.setIsExtraEffect(false)
         if (Helper.isShadowChara(enemyData.unitId)) {
             val shadowUserData = UserData(
                 0,
@@ -182,14 +181,13 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             )
             summonsState.initSummons(minions, skillLevel, shadowUserData)
         } else {
-            summonsState.initMinionDataList(minions, epTableName)
+            summonsState.initMinionDataList(minions, epTableName, null)
         }
         navController.navigate(AppNavData.Summons.route)
     }
 
-    fun navigateToExtraEffect(enemyIdList: List<Int>, epTableName: String) {
-        summonsState.setIsExtraEffect(true)
-        summonsState.initMinionDataList(enemyIdList, epTableName)
+    fun navigateToExtraEffect(extraEffectData: ExtraEffectData, epTableName: String) {
+        summonsState.initMinionDataList(extraEffectData.enemyIdList, epTableName, extraEffectData)
         navController.navigate(AppNavData.Summons.route)
     }
 

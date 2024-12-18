@@ -21,7 +21,7 @@ fun SkillAction.getChangeEnergy(skillLevel: Int): D {
 fun SkillAction.getChangeEnergyEffect(skillLevel: Int): SkillEffect {
     val label = when (actionDetail1) {
         1 -> D.Format(R.string.effect_energy_recovery)
-        4 -> D.Format(R.string.effect_const).append(D.Format(R.string.effect_energy_recovery))
+        4 -> D.Join(arrayOf(D.Format(R.string.content_fixed), D.Format(R.string.effect_energy_recovery)))
         else -> D.Format(R.string.effect_energy_down)
     }
     return SkillEffect(

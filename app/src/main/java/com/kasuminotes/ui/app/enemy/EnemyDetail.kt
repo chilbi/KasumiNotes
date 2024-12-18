@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.data.EnemyData
+import com.kasuminotes.data.ExtraEffectData
 import com.kasuminotes.state.EnemyState
 import com.kasuminotes.ui.components.AttackDetail
 import com.kasuminotes.ui.components.AttackPattern
@@ -44,7 +45,7 @@ private val enemyPartIndices = listOf(0, 16, 1, 3, 2, 4)
 fun EnemyDetail(
     enemyState: EnemyState,
     isShadowChara: Boolean,
-    onExtraEffectClick: (enemyIdList: List<Int>, epTableName: String) -> Unit,
+    onExtraEffectClick: (extraEffectData: ExtraEffectData, epTableName: String) -> Unit,
     onMinionsClick: (minions: List<Int>, skillLevel: Int, enemyData: EnemyData, epTableName: String) -> Unit
 ) {
     val enemyData = enemyState.enemyData!!

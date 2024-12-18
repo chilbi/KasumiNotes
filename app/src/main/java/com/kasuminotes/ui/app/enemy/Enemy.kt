@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.EnemyData
+import com.kasuminotes.data.ExtraEffectData
 import com.kasuminotes.state.EnemyState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.ImageCard
@@ -32,7 +33,7 @@ import com.kasuminotes.utils.UrlUtil
 @Composable
 fun Enemy(
     enemyState: EnemyState,
-    onExtraEffectClick: (enemyIdList: List<Int>, epTableName: String) -> Unit,
+    onExtraEffectClick: (extraEffectData: ExtraEffectData, epTableName: String) -> Unit,
     onMinionsClick: (minions: List<Int>, skillLevel: Int, enemyData: EnemyData, epTableName: String) -> Unit,
     onBack: () -> Unit
 ) {

@@ -430,6 +430,7 @@
     <string name="content_full_charge">自分が【フルチャージ】状態になり、</string>
     <string name="content_system_down">自分が【システムダウン】状態になり、</string>
     <string name="content_dot">継続</string>
+    <string name="content_fixed">固定</string>
 
     <string name="state_unknown">マーク%s</string>
     <string name="state_hiding">隠密</string>
@@ -678,6 +679,7 @@
     <string name="effect_energy_down">ＴＰ下降</string>
     <string name="effect_hp_regeneration">継続ＨＰ回復</string>
     <string name="effect_energy_regeneration">継続ＴＰ回復</string>
+    <string name="effect_fixed_energy_regeneration">継続固定ＴＰ回復</string>
     <string name="effect_hp_recovery_down">ＨＰ回復量下降</string>
     <string name="effect_energy_restriction">ＴＰ上昇の上限</string>
     <string name="effect_unknown">未知タイプ</string>
