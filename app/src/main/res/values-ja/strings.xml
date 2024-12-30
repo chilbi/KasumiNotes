@@ -425,6 +425,7 @@
     <string name="content_up">アップ</string>
     <string name="content_down">ダウン</string>
     <string name="content_barrier">バリア</string>
+    <string name="content_magic_def_down_effect">魔法防御力ダウン効果</string>
     <string name="content_strength_seal">【力の魔字】が刻まれている間、</string>
     <string name="content_kizuna_certificate">【絆の証】解放中、</string>
     <string name="content_full_charge">自分が【フルチャージ】状態になり、</string>
@@ -675,6 +676,8 @@
     <string name="effect_energy_cut">受けるＴＰダウン効果</string>
     <string name="effect_damage_cut_content1">受ける%s下降</string>
     <string name="effect_speed">行動速度</string>
+    <string name="effect_abnormal_damage1">継続%sダメージ</string>
+    <string name="effect_abnormal_damage_up1">（毎秒%sアップ）</string>
     <string name="effect_energy_recovery">ＴＰ回復</string>
     <string name="effect_energy_down">ＴＰ下降</string>
     <string name="effect_hp_regeneration">継続ＨＰ回復</string>

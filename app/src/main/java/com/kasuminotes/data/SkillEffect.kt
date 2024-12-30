@@ -20,9 +20,10 @@ data class SkillEffect(
         const val energyRestriction = 299//TP上升的上限
         const val status = 100//属性值80-100，固定防御力*10
         const val abnormal = 69//行动速度
-        const val hpRecoveryDown = 3//HP回复量降低
-        const val changeEnergy = 2//TP回复
-        const val regeneration = 1//持续HP/TP回复
+        const val hpRecoveryDown = 4//HP回复量降低
+        const val changeEnergy = 3//TP回复
+        const val regeneration = 2//持续HP/TP回复
+        const val abnormalDamage = 1//持续伤害
         const val unknownType = 0//未知
     }
 }

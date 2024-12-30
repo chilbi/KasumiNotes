@@ -8,6 +8,7 @@ fun SkillAction.getDispel(): D {
         1, 3 -> D.Format(R.string.content_status_up_effect)
         2 -> D.Format(R.string.content_status_down_effect)
         10 -> D.Format(R.string.content_barrier)
+        20 -> D.Format(R.string.content_magic_def_down_effect)
         else -> D.Unknown
     }
 

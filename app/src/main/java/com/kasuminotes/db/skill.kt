@@ -24,11 +24,11 @@ FROM unit_attack_pattern WHERE unit_id=$unitId ORDER BY pattern_id ASC"""
                 var i = 0
 
                 while (i < 20) {
-                    // 删除第14动
-                    if (i == 13) {
-                        i++
-                        continue
-                    }
+                    // 删除第14动 コッコロ（プリンセス）
+//                    if (i == 13) {
+//                        i++
+//                        continue
+//                    }
 
                     val atkPattern = it.getInt(i++)
                     if (atkPattern == 0) break
@@ -42,15 +42,21 @@ FROM unit_attack_pattern WHERE unit_id=$unitId ORDER BY pattern_id ASC"""
                 var loopEnd = it.getInt(i)
 
                 // 如果删除了第14动，14动后的循坏开始和结束就应该相应地减1
-                if (loopStart > 13) {
-                    loopStart -= 1
-                }
-                if (loopEnd > 13) {
-                    loopEnd -= 1
-                }
+//                if (loopStart > 13) {
+//                    loopStart -= 1
+//                }
+//                if (loopEnd > 13) {
+//                    loopEnd -= 1
+//                }
 
                 if (atkPatternList.size > loopEnd) {
                     atkPatternList = atkPatternList.subList(0, loopEnd)
+                }
+                if (loopEnd > atkPatternList.size) {
+                    loopEnd = atkPatternList.size
+                }
+                if (loopStart < 1 || loopStart >= loopEnd) {
+                    loopStart = 1
                 }
 
                 list.add(

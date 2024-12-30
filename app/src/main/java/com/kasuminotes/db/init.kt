@@ -137,16 +137,6 @@ fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
             } catch (_: Throwable) {}
         }
     }
-    // TODO 雪菲专武实装的话后就删除该代码片段
-    val hasUnique1 = rawQuery(
-        "SELECT equip_id FROM unit_unique_equip WHERE unit_id=106401", null
-    ).use { it.moveToFirst() }
-    if (!hasUnique1) {
-        try {
-            // 删除错误的雪菲专武
-            execSQL("UPDATE unit_skill_data SET main_skill_evolution_1=0 WHERE unit_id=106401")
-        } catch (_: Throwable) {}
-    }
 
     execSQL(
 """CREATE TABLE `chara_data`(

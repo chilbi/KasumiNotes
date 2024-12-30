@@ -204,7 +204,7 @@ class DbState(
                 lastDbVersion = appRepository.fetchLastDbVersion(server)
                 tempDbFile.renameTo(dbFile)
                 db = appRepository.getDatabase(dbFile.name)
-                if (!UrlUtil.useWthee && server == DbServer.JP) {
+                if (!UrlUtil.useWtheeDb && server == DbServer.JP) {
                     val rainbowJson = appRepository.fetchRainbowJson()
                     db.unHashDb(rainbowJson)
                 }
@@ -224,7 +224,7 @@ class DbState(
                 db = appRepository.getDatabase(dbFile.name)
                 val backupUserDataList = db.getBackupUserDataList(DefaultUserId)
                 tempDbFile.renameTo(dbFile)
-                if (!UrlUtil.useWthee && server == DbServer.JP) {
+                if (!UrlUtil.useWtheeDb && server == DbServer.JP) {
                     val rainbowJson = appRepository.fetchRainbowJson()
                     db.unHashDb(rainbowJson)
                 }

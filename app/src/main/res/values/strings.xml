@@ -319,7 +319,7 @@
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>
-    <string name="action_branch_status_up_target1_max2">每当%1$s受到状态提升时（最多%2$s次），</string>
+    <string name="action_branch_status_up_target1_max2">每当%1$s受到状态提升效果时（最多%2$s次），</string>
     <string name="action_branch_attack_critical_target1">每当%s的攻击暴击时，</string>
     <string name="action_branch_striked_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_branch_controled_time1">%s秒的动作期间内受到行动不能、击飞、拉近时，</string>
@@ -424,6 +424,7 @@
     <string name="content_up">提升</string>
     <string name="content_down">降低</string>
     <string name="content_barrier">屏障</string>
+    <string name="content_magic_def_down_effect">魔法防御力降低效果</string>
     <string name="content_strength_seal">【力之魔字】刻印期间，</string>
     <string name="content_kizuna_certificate">【情谊的证明】解放期间，</string>
     <string name="content_full_charge">赋予自身【满电】状态，</string>
@@ -674,8 +675,10 @@
     <string name="effect_energy_cut">受到的TP降低效果</string>
     <string name="effect_damage_cut_content1">受到的%s降低</string>
     <string name="effect_speed">行动速度</string>
+    <string name="effect_abnormal_damage1">持续%s伤害</string>
+    <string name="effect_abnormal_damage_up1">（每秒提升%s）</string>
     <string name="effect_energy_recovery">TP回复</string>
-    <string name="effect_energy_down">TP下降</string>
+    <string name="effect_energy_down">TP降低</string>
     <string name="effect_hp_regeneration">持续HP回复</string>
     <string name="effect_energy_regeneration">持续TP回复</string>
     <string name="effect_fixed_energy_regeneration">持续固定TP回复</string>

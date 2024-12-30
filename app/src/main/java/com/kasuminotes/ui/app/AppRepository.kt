@@ -143,7 +143,7 @@ class AppRepository(
 
     fun getDatabase() = AppDatabase.getInstance(context.applicationContext)
 
-    fun fetchLastDbVersion(server: DbServer): String  = if (UrlUtil.useWthee) {
+    fun fetchLastDbVersion(server: DbServer): String  = if (UrlUtil.useWtheeDb) {
         HttpUtil.fetchWtheeLastDbVersion(UrlUtil.lastVersionApiUrl, server)
     } else {
         HttpUtil.fetchLastDbVersion(UrlUtil.lastVersionUrl[server]!!)

@@ -2,6 +2,7 @@ package com.kasuminotes.action
 
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
+import com.kasuminotes.data.SkillEffect
 
 fun SkillAction.getAbnormalDamage(skillLevel: Int): D {
     val target = getTarget(depend)
@@ -23,4 +24,28 @@ fun SkillAction.getAbnormalDamage(skillLevel: Int): D {
     }
 
     return appendInjuredEnergy(damage)
+}
+
+fun SkillAction.getAbnormalDamageEffect(skillLevel: Int): SkillEffect {
+    val label: D = D.Format(
+        R.string.effect_abnormal_damage1,
+        arrayOf(getAbnormalDamageContent(actionDetail1))
+    )
+    var value: D = D.Text((actionValue1 + actionValue2 * skillLevel).toNumStr())
+    var weight = 0.5f
+    if (actionValue5 != 0.0) {
+        value = value.append(D.Format(
+            R.string.effect_abnormal_damage_up1,
+            arrayOf(D.Text("${actionValue5.toNumStr()}%"))
+        ))
+        weight = 1f
+    }
+    return SkillEffect(
+        getTarget(null),
+        label,
+        value,
+        actionValue3,
+        weight,
+        SkillEffect.abnormalDamage
+    )
 }

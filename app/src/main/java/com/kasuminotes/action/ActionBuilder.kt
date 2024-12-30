@@ -299,6 +299,7 @@ private fun getSkillEffect(skillLevel: Int, actions: List<SkillAction>): SkillEf
     val action1 = actions[0]
     when (action1.actionType) {
         8 -> return action1.getAbnormalEffect(skillLevel)
+        9 -> return action1.getAbnormalDamageEffect(skillLevel)
         10 -> return action1.getStatusEffect(skillLevel)
         16 -> return action1.getChangeEnergyEffect(skillLevel)
         26 -> return action1.getGiveValueEffect(skillLevel, actions)
