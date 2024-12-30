@@ -22,14 +22,14 @@ object UrlUtil {
     private const val LAST_VERSION_URL_JP = "$ESTERTION_API_URL/last_version_jp.json"
 
     //  Resource URL
-    //wthee没有unit_shadow的图片
-    private val ICON_UNIT_SHADOW_URL = "$ESTERTION_API_URL/icon/unit_shadow/%d.webp"
     private val STILL_UNIT_URL = "$RES_URL/card/full/%d.webp"
     private val UNIT_PLATE_URL = "$RES_URL/icon/plate/%d.webp"
     private val ICON_UNIT_URL = "$RES_URL/icon/unit/%d.webp"
     private val ICON_SKILL_URL = "$RES_URL/icon/skill/%d.webp"
     private val ICON_EQUIPMENT_URL = "$RES_URL/icon/equipment/%d.webp"
     private val ICON_ITEM_URL = "$RES_URL/icon/item/%d.webp"
+    //wthee没有unit_shadow的图片
+    private val ICON_UNIT_SHADOW_URL = if (useWtheeRes) ICON_UNIT_URL else "$ESTERTION_API_URL/icon/unit_shadow/%d.webp"
     //estertion没有ex_equipment的图片
     private val ICON_EX_EQUIPMENT_URL = "$WTHEE_API_RESOURCE_URL/icon/ex_equipment/%d.webp"
     private val ICON_EX_EQUIPMENT_CATEGORY_URL = "$WTHEE_API_RESOURCE_URL/icon/ex_equipment/category/%d.webp"
