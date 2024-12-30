@@ -180,6 +180,7 @@ fun getStatusContent(detail: Int): D {
 
 fun getStatusIndex(detail: Int): Int? {
     return when (detail) {
+        0 -> 0
         1 -> 1
         2 -> 2
         3 -> 3
@@ -189,6 +190,7 @@ fun getStatusIndex(detail: Int): Int? {
         7 -> 6
         8 -> 13
         9 -> 8
+        13 -> 16
         else -> null
     }
 }
