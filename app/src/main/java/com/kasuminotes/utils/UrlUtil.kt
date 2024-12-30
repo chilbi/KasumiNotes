@@ -3,33 +3,36 @@ package com.kasuminotes.utils
 import com.kasuminotes.common.DbServer
 
 object UrlUtil {
-    const val useWthee = true
+    const val useWtheeDb = true
+    const val useWtheeRes = true
     // API URL
     private const val ESTERTION_API_URL = "https://redive.estertion.win"
     private const val WTHEE_API_URL = "https://wthee.xyz"
-    private const val ICON_EX_EQUIPMENT_DIR = "$WTHEE_API_URL/redive/jp/resource/icon/ex_equipment"
+    private const val WTHEE_API_RESOURCE_URL = "$WTHEE_API_URL/redive/jp/resource"
+    private val RES_URL = if (useWtheeRes) WTHEE_API_RESOURCE_URL else ESTERTION_API_URL
 
     //  CN database
     private const val DB_FILE_NAME_CN = "redive_cn.db"
-    private val DB_FILE_URL_CN = "${if (useWthee) WTHEE_API_URL else ESTERTION_API_URL}/db/$DB_FILE_NAME_CN.br"
+    private val DB_FILE_URL_CN = "${if (useWtheeDb) WTHEE_API_URL else ESTERTION_API_URL}/db/$DB_FILE_NAME_CN.br"
     private const val LAST_VERSION_URL_CN = "$ESTERTION_API_URL/last_version_cn.json"
 
     //  JP database
     private const val DB_FILE_NAME_JP = "redive_jp.db"
-    private val DB_FILE_URL_JP = "${if (useWthee) WTHEE_API_URL else ESTERTION_API_URL}/db/$DB_FILE_NAME_JP.br"
+    private val DB_FILE_URL_JP = "${if (useWtheeDb) WTHEE_API_URL else ESTERTION_API_URL}/db/$DB_FILE_NAME_JP.br"
     private const val LAST_VERSION_URL_JP = "$ESTERTION_API_URL/last_version_jp.json"
 
     //  Resource URL
-    private const val STILL_UNIT_URL = "$ESTERTION_API_URL/card/full/%d.webp"
-    private const val UNIT_PLATE_URL = "$ESTERTION_API_URL/icon/plate/%d.webp"
-    private const val ICON_UNIT_URL = "$ESTERTION_API_URL/icon/unit/%d.webp"
-    private const val ICON_UNIT_SHADOW_URL = "$ESTERTION_API_URL/icon/unit_shadow/%d.webp"
-    private const val ICON_SKILL_URL = "$ESTERTION_API_URL/icon/skill/%d.webp"
-    private const val ICON_EQUIPMENT_URL = "$ESTERTION_API_URL/icon/equipment/%d.webp"
-    private const val ICON_ITEM_URL = "$ESTERTION_API_URL/icon/item/%d.webp"
-    private const val ICON_EX_EQUIPMENT_URL = "$ICON_EX_EQUIPMENT_DIR/%d.webp"
-    private const val ICON_EX_EQUIPMENT_CATEGORY_URL = "$ICON_EX_EQUIPMENT_DIR/category/%d.webp"
-//    private const val ICON_EX_EQUIPMENT_MAP_URL = "$ICON_EX_EQUIPMENT_DIR/map/%d.webp"
+    //wthee没有unit_shadow的图片
+    private val ICON_UNIT_SHADOW_URL = "$ESTERTION_API_URL/icon/unit_shadow/%d.webp"
+    private val STILL_UNIT_URL = "$RES_URL/card/full/%d.webp"
+    private val UNIT_PLATE_URL = "$RES_URL/icon/plate/%d.webp"
+    private val ICON_UNIT_URL = "$RES_URL/icon/unit/%d.webp"
+    private val ICON_SKILL_URL = "$RES_URL/icon/skill/%d.webp"
+    private val ICON_EQUIPMENT_URL = "$RES_URL/icon/equipment/%d.webp"
+    private val ICON_ITEM_URL = "$RES_URL/icon/item/%d.webp"
+    //estertion没有ex_equipment的图片
+    private val ICON_EX_EQUIPMENT_URL = "$WTHEE_API_RESOURCE_URL/icon/ex_equipment/%d.webp"
+    private val ICON_EX_EQUIPMENT_CATEGORY_URL = "$WTHEE_API_RESOURCE_URL/icon/ex_equipment/category/%d.webp"
 
     // App Release URL
     const val APP_RELEASE_URL = "https://api.github.com/repos/chilbi/KasumiNotes/releases/latest"
@@ -78,7 +81,7 @@ object UrlUtil {
     fun getAtkIconUrl(atkType: Int) = getEquipIconUrl(if (atkType == 1) 101011 else 101251)
 
     fun getKanNaPlateUrl(unitId: Int, rarity: Int) =
-        "$WTHEE_API_URL/redive/cn/resource/icon/plate/${getImageId(unitId, rarity)}.webp"
+        "$WTHEE_API_RESOURCE_URL/icon/plate/${getImageId(unitId, rarity)}.webp"
 
     fun getExEquipUrl(exEquipId: Int) = String.format(ICON_EX_EQUIPMENT_URL, exEquipId)
 
