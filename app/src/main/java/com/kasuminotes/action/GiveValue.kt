@@ -94,7 +94,7 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 
 
     val maxValue = getMaxValue(skillLevel, targetAction)
-    val maxIndependentVariable = getMaxIndependentVariable(skillLevel, targetAction, independentVariable)
+    val maxIndependentVariable = getMaxIndependentVariable(skillLevel, targetAction)
     @StringRes
     val actionRes: Int
     @StringRes
@@ -359,7 +359,7 @@ private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction):
     }
 }
 
-private fun SkillAction.getMaxIndependentVariable(skillLevel: Int, targetAction: SkillAction, independentVariable: D): D {
+private fun SkillAction.getMaxIndependentVariable(skillLevel: Int, targetAction: SkillAction): D {
     var otherVariable: D? = null
     val max = actionValue4 + actionValue5 * skillLevel
     val constantVariable = actionValue2 + actionValue3 * skillLevel
