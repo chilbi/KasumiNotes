@@ -3,11 +3,12 @@ package com.kasuminotes.action
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
-fun SkillAction.getIllusion(): D  {
+fun SkillAction.getDamageCutState(): D  {
     return D.Format(
-        R.string.action_illusion_target1_time2_cut3,
+        R.string.action_damage_cut_target1_state2_time3_cut4,
         arrayOf(
             getTarget(depend),
+            getStateContent(actionDetail2, actionId),
             D.Text(actionValue3.toNumStr()).style(primary = true, bold = true),
             D.Text("${actionValue1.toNumStr()}%").style(primary = true, bold = true)
         )

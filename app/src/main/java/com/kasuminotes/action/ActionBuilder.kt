@@ -275,8 +275,9 @@ class ActionBuilder(
             114 -> getTriggeredWhenAttacked()
             116 -> getPersistence(skillLevel)
             121 -> getTriggeredWhenHpZero()
-            123 -> getIllusion()
+            123 -> getDamageCutState()
             124 -> getFriendlyBarrier()
+            125 -> getCannotBeTarget()
             else -> getUnknown()
         }
     }

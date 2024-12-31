@@ -94,7 +94,7 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 
 
     val maxValue = getMaxValue(skillLevel, targetAction)
-
+    val maxIndependentVariable = getMaxIndependentVariable(skillLevel, targetAction, independentVariable)
     @StringRes
     val actionRes: Int
     @StringRes
@@ -110,26 +110,33 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         26 -> {
             if (isAdditive) {
                 actionRes = R.string.action_additive_content1_formula2
-                maxRes = R.string.action_additive_max1
+                maxRes = R.string.action_additive_max1_content2_value3
             } else {
                 actionRes = R.string.action_reduce_content1_formula2
-                maxRes = R.string.action_reduce_max1
+                maxRes = R.string.action_reduce_max1_content2_value3
             }
         }
         27 -> {
             actionRes = R.string.action_multiply_content1_formula2
-            maxRes = R.string.action_multiply_max1
+            maxRes = R.string.action_multiply_max1_content2_value3
         }
         else -> {// 74
             actionRes = R.string.action_divide_content1_formula2
-            maxRes = R.string.action_divide_max1
+            maxRes = R.string.action_divide_max1_content2_value3
         }
     }
 
     val result = D.Format(actionRes, arrayOf(content.style(underline = true), formula.style(primary = true)))
     return result.append(
         if (maxValue == null) D.Format(R.string.full_stop)
-        else D.Format(maxRes, arrayOf(maxValue.style(primary = true, bold = true)))
+        else D.Format(
+            maxRes,
+            arrayOf(
+                maxValue.style(primary = true, bold = true),
+                independentVariable.style(primary = true),
+                maxIndependentVariable.style(primary = true, bold = true)
+            )
+        )
     )
 }
 
@@ -349,6 +356,93 @@ private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction):
                 D.Text(ceil((-actionValue4) + (-actionValue5) * skillLevel).toNumStr())// TODO 不确定的取整方式
             }
         }
+    }
+}
+
+private fun SkillAction.getMaxIndependentVariable(skillLevel: Int, targetAction: SkillAction, independentVariable: D): D {
+    var otherVariable: D? = null
+    val max = actionValue4 + actionValue5 * skillLevel
+    val constantVariable = actionValue2 + actionValue3 * skillLevel
+    val otherConstantVariable: Double = when (targetAction.actionType) {
+        1 -> when (actionDetail2) {
+            1, 3, 6, 7 -> 1.0
+            2, 4 -> skillLevel.toDouble()
+            else -> {
+                otherVariable = D.Unknown
+                1.0
+            }
+        }
+        3 -> 1.0
+        4 -> when (actionDetail2) {
+            2 -> 1.0
+            3 -> skillLevel.toDouble()
+            4 -> {
+                otherVariable = getAtkType(targetAction.actionDetail1)
+                1.0
+            }
+
+            else -> {
+                otherVariable = D.Unknown
+                1.0
+            }
+        }
+        6, 9, 38 -> when (actionDetail2) {
+            1, 3 -> 1.0
+            2 -> skillLevel.toDouble()
+            else -> {
+                otherVariable = D.Unknown
+                1.0
+            }
+        }
+        8, 16, 35 -> 1.0
+        10 -> when (actionDetail2) {
+            2, 4 -> 1.0
+            3 -> skillLevel.toDouble()
+            else -> {
+                otherVariable = D.Unknown
+                1.0
+            }
+        }
+        36, 37 -> when (actionDetail2) {
+            1, 3, 7 -> 1.0
+            2, 4, 6 -> skillLevel.toDouble()
+            else -> {
+                otherVariable = D.Unknown
+                1.0
+            }
+        }
+        46 -> when (actionDetail2) {
+            1 -> 1.0
+            2 -> skillLevel.toDouble()
+            else -> {
+                otherVariable = D.Unknown
+                1.0
+            }
+        }
+        48 -> when (actionDetail2) {
+            1, 5 -> 1.0
+            2 -> skillLevel.toDouble()
+            3 -> {
+                otherVariable = getAtkType(targetAction.actionDetail1)
+                1.0
+            }
+            else -> {
+                otherVariable = D.Unknown
+                1.0
+            }
+        }
+        59 -> 1.0
+        98 -> 1.0
+        else -> {
+            otherVariable = D.Unknown
+            1.0
+        }
+    }
+    val maxIndependentVariable = ceil(max / constantVariable / otherConstantVariable)
+    return if (otherVariable == null) {
+        D.Text(maxIndependentVariable.toNumStr())
+    } else {
+        D.Text("${maxIndependentVariable.toNumStr()} / ").append(otherVariable)
     }
 }
 

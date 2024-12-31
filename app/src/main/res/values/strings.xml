@@ -237,10 +237,10 @@
     <string name="action_reduce_content1_formula2">使%1$s减少%2$s</string>
     <string name="action_multiply_content1_formula2">使%1$s变为基础值的%2$s倍</string>
     <string name="action_divide_content1_formula2">使%1$s变为基础值的%2$s分之一</string>
-    <string name="action_additive_max1">，最多增加%s。</string>
-    <string name="action_reduce_max1">，最多减少%s。</string>
-    <string name="action_multiply_max1">，最多变为%s倍。</string>
-    <string name="action_divide_max1">，最多变为%s分之一。</string>
+    <string name="action_additive_max1_content2_value3">，最多增加%1$s（%2$s≧%3$s时）。</string>
+    <string name="action_reduce_max1_content2_value3">，最多减少%s（%2$s≧%3$s时）。</string>
+    <string name="action_multiply_max1_content2_value3">，最多变为%s倍（%2$s≧%3$s时）。</string>
+    <string name="action_divide_max1_content2_value3">，最多变为%s分之一（%2$s≧%3$s时）。</string>
     <string name="action_darkness_formula1">使物理攻击命中率降低到%s。</string>
     <string name="action_life_steal_target1_formula2">赋予%1$s下次攻击提升%2$sHP吸收效果。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">赋予%1$s每秒回复%2$s%3$s的持续%2$s回复状态，效果时间%4$s秒。</string>
@@ -314,8 +314,9 @@
     <string name="action_revival_target1_hp2">使%1$s复活，HP回复%2$s。</string>
     <string name="action_triggered_when_hp_zero_target1">当%s的HP变为0时发动。</string>
     <string name="action_trigger_count1">（此技能战斗中只能发动%s次）</string>
-    <string name="action_illusion_target1_time2_cut3">赋予%1$s【幻化】状态，效果时间%2$s秒。【幻化】状态期间%1$s受到的伤害减少%3$s。%1$s的前方没有己方角色时，就会解除【幻化】状态。</string>
+    <string name="action_damage_cut_target1_state2_time3_cut4">赋予%1$s【%2$s】状态，效果时间%3$s秒。【%2$s】状态期间%1$s受到的伤害减少%4$s。%1$s的前方没有己方角色时，就会解除【%2$s】状态。</string>
     <string name="action_friendly_barrier_target1_state2_time3">赋予%1$s【%2$s】状态，效果时间%3$s秒。【%2$s】赋予期间，对自身的攻击将由被赋予【%2$s】状态的一名己方角色代替承受伤害。</string>
+    <string name="action_cannot_be_target1_state2">赋予【%2$s】期间%1$s不会成为敌人的攻击对象。</string>
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>
@@ -500,6 +501,7 @@
     <string name="state_bandit_dice">盗贼骰子</string>
     <string name="state_spike_guard">尖刺守护</string>
     <string name="state_demon_kiss">恶魔之吻</string>
+    <string name="state_lace_body">蕾丝身体</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>

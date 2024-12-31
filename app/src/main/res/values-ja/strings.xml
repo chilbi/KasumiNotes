@@ -237,10 +237,10 @@
     <string name="action_reduce_content1_formula2">%1$sを%2$s減少させる</string>
     <string name="action_multiply_content1_formula2">%1$sを基礎値の%2$s倍にする</string>
     <string name="action_divide_content1_formula2">%1$sを基礎値の%2$s分の一にする</string>
-    <string name="action_additive_max1">、最大%sまで増加させる。</string>
-    <string name="action_reduce_max1">、最大%sまで減少させる。</string>
-    <string name="action_multiply_max1">、最大%s倍にする。</string>
-    <string name="action_divide_max1">、最大%s分の一にする。</string>
+    <string name="action_additive_max1_content2_value3">、最大%sまで増加させる（%2$s≧%3$sの時）。</string>
+    <string name="action_reduce_max1_content2_value3">、最大%sまで減少させる（%2$s≧%3$sの時）。</string>
+    <string name="action_multiply_max1_content2_value3">、最大%s倍にする（%2$s≧%3$sの時）。</string>
+    <string name="action_divide_max1_content2_value3">、最大%s分の一にする（%2$s≧%3$sの時）。</string>
     <string name="action_darkness_formula1">物理攻撃の命中率を%sにする。</string>
     <string name="action_life_steal_target1_formula2">%1$sの次の攻撃に%2$sＨＰ吸収をアップさせる効果を付与する。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">%1$sに毎秒%2$sを%3$s回復する継続%2$s回復状態を付与する、効果時間%4$s秒。</string>
@@ -314,9 +314,9 @@
     <string name="action_revival_target1_hp2">%1$sを復活させ、ＨＰを%2$s回復させる。</string>
     <string name="action_triggered_when_hp_zero_target1">%sのＨＰが０になった時に発動する。</string>
     <string name="action_trigger_count1">（このスキルはバトル中%s回しか発動しない）</string>
-    <string name="action_illusion_target1_time2_cut3">%1$sを【幻化】状態にする、効果時間%2$s秒。【幻化】状態の間は%1$sが受けるダメージを%3$s軽減する。%1$sより前に味方がいない場合、【幻化】状態は解除される。</string>
+    <string name="action_damage_cut_target1_state2_time3_cut4">%1$sを【%2$s】状態にする、効果時間%3$s秒。【%2$s】状態の間は%1$sが受けるダメージを%4$s軽減する。%1$sより前に味方がいない場合、【%2$s】状態は解除される。</string>
     <string name="action_friendly_barrier_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。【%2$s】が付与されている間、自分への攻撃を【%2$s】が付与されている味方１キャラが代わりに受ける。</string>
-
+    <string name="action_cannot_be_target1_state2">【%2$s】が付与されている間は%1$sが敵からの攻撃の対象にならない。</string>
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>
@@ -501,6 +501,7 @@
     <string name="state_bandit_dice">バンディダイス</string>
     <string name="state_spike_guard">スパイクガード</string>
     <string name="state_demon_kiss">悪魔の口づけ</string>
+    <string name="state_lace_body">レイスボディ</string>
 
     <string name="target">対象</string>
     <string name="target_damaged">ダメージを受けた対象</string>
