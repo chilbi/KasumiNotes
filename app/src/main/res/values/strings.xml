@@ -417,6 +417,7 @@
     <string name="content_status_up_target1">每当%s受到状态提升效果时，就会为自身</string>
     <string name="content_status_down_target1">每当%s受到状态降低效果时，就会为该目标</string>
     <string name="content_damage_received_target1">每当%s受到伤害时，就会为自身</string>
+    <string name="content_ub_counter_target1">每当己方使用UB时，就会为%s</string>
     <string name="content_initial_value1">初始值的%s</string>
     <string name="content_lower_defense">物理、魔法防御力中较低一方的防御力作为防御的</string>
     <string name="content_disregard_def1_value_2">无视%2$s%1$s的</string>
@@ -501,7 +502,8 @@
     <string name="state_bandit_dice">盗贼骰子</string>
     <string name="state_spike_guard">尖刺守护</string>
     <string name="state_demon_kiss">恶魔之吻</string>
-    <string name="state_lace_body">蕾丝身体</string>
+    <string name="state_reisu_body">灵体</string>
+    <string name="state_firebird">火鸟</string>
 
     <string name="target">对象</string>
     <string name="target_damaged">受到伤害的对象</string>

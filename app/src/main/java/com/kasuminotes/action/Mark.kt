@@ -18,8 +18,10 @@ fun SkillAction.getMark(): D {
         } else {//actionType == 77
             when (actionDetail1) {
                 1 -> R.string.content_status_up_target1//アキノ（クリスマス）、ユキ（儀装束）、アン＆グレア、ヴルム
+                2 -> R.string.content_damage_received_target1//ゴブリンメイスター
                 3 -> R.string.content_status_down_target1//ホマレ（サマー）
-                else -> R.string.content_damage_received_target1//2, ゴブリンメイスター
+                4 -> R.string.content_ub_counter_target1//サレン（ニューイヤー）
+                else -> R.string.action_branch_unknown
             }
         },
         arrayOf(getTarget(depend))
