@@ -45,6 +45,7 @@ class SummonsState(
 
     fun initMinionDataList(minions: List<Int>, epTableName: String, extraEffect: ExtraEffectData?) {
         destroy()
+        extraEffectData = extraEffect
         scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
             val enemyDataList = db.getMultiEnemyParts(minions, epTableName)
@@ -54,7 +55,6 @@ class SummonsState(
                     enemyData
                 }
             }.awaitAll()
-            extraEffectData = extraEffect
         }
     }
 
