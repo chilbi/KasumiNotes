@@ -204,6 +204,7 @@ class AppRepository(
                 while (langKeys.hasNext()) {
                     val langMap = mutableMapOf<String, Map<String, String>>()
                     val langKey = langKeys.next()
+                    if (langKey == "version") continue
                     val langValueJson = localJson.getJSONObject(langKey)
                     val typeKeys = langValueJson.keys()
                     while (typeKeys.hasNext()) {
