@@ -201,6 +201,29 @@ object HttpUtil {
             response?.close()
         }
     }
+
+    @Throws(Throwable::class)
+    fun fetchStringsJsonStr(url: String): String {
+        var call: Call? = null
+        var response: Response? = null
+        try {
+            val client = OkHttpClient.Builder().build()
+            val request = Request.Builder()
+                .url(url)
+                .header("User-Agent", userAgent)
+                .build()
+            call = client.newCall(request)
+            response = call.execute()
+            val body = response.body.string()
+            val content = JSONObject(body).getString("content")
+            return String(Base64.decode(content, Base64.DEFAULT))
+        } catch (e: Throwable) {
+            call?.cancel()
+            throw e
+        } finally {
+            response?.close()
+        }
+    }
 }
 
 //    private class DownloadResponseBody(

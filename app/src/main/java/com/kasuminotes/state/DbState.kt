@@ -56,6 +56,7 @@ class DbState(
 
     fun init() {
         updateDbState(dbServer, dbVersion)
+        appRepository.syncStrings()
         if (dbAutoUpdate) {
             autoFetchLastDbVersion(false)
         }

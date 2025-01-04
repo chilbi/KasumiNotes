@@ -191,7 +191,7 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         // ライラエル
         in 3000..3999 -> {
             val target = getTarget(depend)
-            val state = getStateContent(actionDetail1 - 3000, actionId)
+            val state = getMarkContent(actionDetail1 - 3000)
             setBranch(
                 branch,
                 D.Format(R.string.action_branch_target1_environment2, arrayOf(target, state)),
@@ -505,7 +505,7 @@ private fun SkillAction.setBranch(branch: MutableList<Pair<Int, D>>, yes: D, not
 }
 
 private fun SkillAction.setStateBranch(branch: MutableList<Pair<Int, D>>, stateId: Int, stateCount: Double) {
-    val state = getStateContent(stateId, actionId)
+    val state = getMarkContent(stateId)
     val target = getTarget(depend)
     if (stateCount == 0.0 || stateCount == 1.0) {
         setBranch(

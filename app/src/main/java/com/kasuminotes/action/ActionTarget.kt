@@ -108,7 +108,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
     if (targetType in 13001..13999) {
         return D.Format(
             R.string.target_state1,
-            arrayOf(getStateContent(targetType - 13000, actionId))
+            arrayOf(getMarkContent(targetType - 13000))
         )
     }
 

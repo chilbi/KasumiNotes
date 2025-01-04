@@ -8,7 +8,7 @@ fun SkillAction.getDamageCutState(): D  {
         R.string.action_damage_cut_target1_state2_time3_cut4,
         arrayOf(
             getTarget(depend),
-            getStateContent(actionDetail2, actionId),
+            getMarkContent(actionDetail2),
             D.Text(actionValue3.toNumStr()).style(primary = true, bold = true),
             D.Text("${actionValue1.toNumStr()}%").style(primary = true, bold = true)
         )

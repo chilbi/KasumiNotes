@@ -34,7 +34,7 @@ fun SkillAction.getMark(): D {
             R.string.action_mark_content1_state2_add3_max4_time5,
             arrayOf(
                 content,
-                getStateContent(actionValue2.toInt(), actionId),
+                getMarkContent(actionValue2.toInt()),
                 D.Text(count.toString()).style(primary = true, bold = true),
                 D.Text(actionValue1.toNumStr()).style(primary = true, bold = true),
                 D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
@@ -45,7 +45,7 @@ fun SkillAction.getMark(): D {
             R.string.action_mark_content1_state2_consume3,
             arrayOf(
                 content,
-                getStateContent(actionValue2.toInt(), actionId),
+                getMarkContent(actionValue2.toInt()),
                 D.Text((-count).toString()).style(primary = true, bold = true)
             )
         )

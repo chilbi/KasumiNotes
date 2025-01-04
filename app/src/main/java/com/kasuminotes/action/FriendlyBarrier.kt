@@ -8,7 +8,7 @@ fun SkillAction.getFriendlyBarrier(): D {
         R.string.action_friendly_barrier_target1_state2_time3,
         arrayOf(
             getTarget(depend),
-            getStateContent(actionDetail1, actionId),
+            getMarkContent(actionDetail1),
             D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
         )
     )

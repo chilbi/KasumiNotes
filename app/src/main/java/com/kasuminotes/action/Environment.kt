@@ -8,7 +8,7 @@ fun SkillAction.getEnvironment(): D {
         R.string.action_environment_target1_content2_time3,
         arrayOf(
             getTarget(depend),
-            getStateContent(actionDetail2, actionId),
+            getMarkContent(actionDetail2),
             D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
         )
     )

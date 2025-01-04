@@ -6,7 +6,7 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getShieldCounter(skillLevel: Int, property: Property, actions: List<SkillAction>): D {
     val target = getTarget(depend)
-    val content = getStateContent(actionDetail2, actionId)
+    val content = getMarkContent(actionDetail2)
     val desc = if (actionValue3 > 1.0) {
         D.Format(
             R.string.action_shield_counter_target1_content2_add3,

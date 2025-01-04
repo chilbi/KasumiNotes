@@ -434,6 +434,11 @@
     <string name="content_dot">持续</string>
     <string name="content_fixed">固定</string>
 
+    <string name="mark_unknown">标记%s</string>
+    <string name="summon_unknown">【召唤物%s】</string>
+    <string name="abnormal_unknown">【异常状态%s】</string>
+    <string name="dot_unknown">【持续伤害%s】</string>
+
     <string name="state_unknown">标记%s</string>
     <string name="state_hiding">隐密</string>
     <string name="state_omemechan">小眼睛</string>
@@ -595,7 +600,7 @@
     <string name="received_magic_damage">受到的魔法伤害</string>
     <string name="received_physical_or_magic_damage">受到的物理/魔法伤害</string>
     <string name="energy_down">TP降低效果</string>
-    <string name="detention_damage">拘留（ダメージ）</string>
+    <string name="detention_damage">拘留（伤害）</string>
     <string name="poison">毒</string>
     <string name="burn">火伤</string>
     <string name="curse">诅咒</string>

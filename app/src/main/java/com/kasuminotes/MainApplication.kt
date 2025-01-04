@@ -14,5 +14,11 @@ class MainApplication : Application() {
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
             private set
+
+        var strings:
+                Map<String/*CN|JP*/,
+                        Map<String/*mark|abnormal|summon*/,
+                                Map<String/*id*/,
+                                        String>>>? = null
     }
 }

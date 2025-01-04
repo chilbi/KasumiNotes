@@ -23,7 +23,7 @@ fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property:
             arrayOf(getStatusContent(actionDetail1 / 10))
         ).style(underline = true)
         val formula = D.Format(R.string.formula_m1, arrayOf(
-            D.Format(R.string.count_state1, arrayOf(getStateContent(actionDetail2, actionId)))
+            D.Format(R.string.count_state1, arrayOf(getMarkContent(actionDetail2)))
         )).style(primary = true)
         D.Join(arrayOf(
             desc,

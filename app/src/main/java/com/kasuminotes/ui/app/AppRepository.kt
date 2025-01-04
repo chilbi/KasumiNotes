@@ -13,6 +13,7 @@ import com.kasuminotes.common.QuestMode
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.AppReleaseInfo
 import com.kasuminotes.db.AppDatabase
+import com.kasuminotes.utils.FileUtil
 import com.kasuminotes.utils.HttpUtil
 import com.kasuminotes.utils.UrlUtil
 import org.json.JSONObject
@@ -173,5 +174,54 @@ class AppRepository(
         if (file.exists()) file.delete()
         val downloadId = downloadManager.enqueue(request)
         MainActivity.instance.listenerDownload(downloadId)
+    }
+
+    fun syncStrings() {
+        var localJson: JSONObject? = null
+        try {
+            val localStrings = FileUtil.readStrings(context)
+            if (localStrings != null) {
+                localJson = JSONObject(localStrings)
+            }
+            val newStrings = HttpUtil.fetchStringsJsonStr(UrlUtil.StringsJsonUrl)
+            val newJson = JSONObject(newStrings)
+            val newVersion = newJson.getString("version")
+            if (localStrings == null) {
+                localJson = newJson
+                FileUtil.writeStrings(context, newStrings)
+            } else {
+                val localVersion = localJson!!.getString("version")
+                if (localVersion != newVersion) {
+                    localJson = newJson
+                    FileUtil.writeStrings(context, newStrings)
+                }
+            }
+        } catch (_: Throwable) {
+        } finally {
+            if (localJson != null) {
+                val map = mutableMapOf<String, Map<String, Map<String, String>>>()
+                val langKeys = localJson.keys()
+                while (langKeys.hasNext()) {
+                    val langMap = mutableMapOf<String, Map<String, String>>()
+                    val langKey = langKeys.next()
+                    val langValueJson = localJson.getJSONObject(langKey)
+                    val typeKeys = langValueJson.keys()
+                    while (typeKeys.hasNext()) {
+                        val idMap = mutableMapOf<String, String>()
+                        val typeKey = typeKeys.next()
+                        val typeValueJson = langValueJson.getJSONObject(typeKey)
+                        val idKeys = typeValueJson.keys()
+                        while (idKeys.hasNext()) {
+                            val idKey = idKeys.next()
+                            val idValue = typeValueJson.getString(idKey)
+                            idMap[idKey] = idValue
+                        }
+                        langMap[langKey] = idMap
+                    }
+                    map[langKey] = langMap
+                }
+                MainApplication.strings = map;
+            }
+        }
     }
 }
