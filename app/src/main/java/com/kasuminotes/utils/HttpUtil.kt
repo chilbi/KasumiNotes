@@ -208,15 +208,13 @@ object HttpUtil {
         var response: Response? = null
         try {
             val client = OkHttpClient.Builder().build()
-            val request = Request.Builder()
-                .url(url)
-                .header("User-Agent", userAgent)
-                .build()
+            val request = Request.Builder().url(url).build()
             call = client.newCall(request)
             response = call.execute()
-            val body = response.body.string()
-            val content = JSONObject(body).getString("content")
-            return String(Base64.decode(content, Base64.DEFAULT))
+//            val body = response.body.string()
+//            val content = JSONObject(body).getString("content")
+//            return String(Base64.decode(content, Base64.DEFAULT))
+            return response.body.string()
         } catch (e: Throwable) {
             call?.cancel()
             throw e

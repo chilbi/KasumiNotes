@@ -55,8 +55,10 @@ class DbState(
     val userState = UserState(appRepository, scope)
 
     fun init() {
+        scope.launch(Dispatchers.IO) {
+            appRepository.syncStrings()
+        }
         updateDbState(dbServer, dbVersion)
-        appRepository.syncStrings()
         if (dbAutoUpdate) {
             autoFetchLastDbVersion(false)
         }

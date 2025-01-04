@@ -4,9 +4,11 @@ import androidx.annotation.StringRes
 import com.kasuminotes.MainApplication
 import com.kasuminotes.R
 import com.kasuminotes.common.Label
+import com.kasuminotes.common.Language
 import com.kasuminotes.data.Property
 import com.kasuminotes.ui.app.languageSP
 import java.text.NumberFormat
+import java.util.Locale
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -126,7 +128,10 @@ fun getBaseLvFormula(
 private fun getIdMap(type: String): Map<String, String>? {
     val stringsMap = MainApplication.strings
     return if (stringsMap != null) {
-        val lang = MainApplication.context.languageSP
+        val lang = when (MainApplication.context.languageSP) {
+            Locale.JAPANESE.language -> Language.JP.name
+            else -> Language.CN.name
+        }
         val langMap = stringsMap[lang]
         if (langMap != null) {
             langMap[type]
@@ -150,21 +155,6 @@ fun getAbnormalContent(detail: Int): D {
     } else {
         D.Text(abnormal)
     }
-//    return when (detail) {
-//        1 -> D.Format(R.string.slow)
-//        2 -> D.Format(R.string.haste)
-//        3 -> D.Format(R.string.numbness)
-//        4 -> D.Format(R.string.freeze)
-//        5 -> D.Format(R.string.fetter)
-//        6 -> D.Format(R.string.sleep)
-//        7 -> D.Format(R.string.stand)
-//        8 -> D.Format(R.string.petrifaction)
-//        9 -> D.Format(R.string.detention)
-//        10 -> D.Format(R.string.coma)
-//        11 -> D.Format(R.string.stop)
-//        13 -> D.Format(R.string.crystallization)
-//        else -> D.Unknown
-//    }
 }
 
 fun getAbnormalDamageContent(detail: Int): D {
@@ -179,16 +169,6 @@ fun getAbnormalDamageContent(detail: Int): D {
     } else {
         D.Text(abnormalDamage)
     }
-//    return when (detail) {
-//        0 -> D.Format(R.string.detention_damage)
-//        1 -> D.Format(R.string.poison)
-//        2 -> D.Format(R.string.burn)
-//        3 -> D.Format(R.string.curse)
-//        4 -> D.Format(R.string.fierce_poison)
-//        5 -> D.Format(R.string.beshrew)
-//        9 -> D.Format(R.string.black_fire)
-//        else -> D.Unknown
-//    }
 }
 
 fun getStatusContent(detail: Int): D {
@@ -246,78 +226,6 @@ fun getMarkContent(detail: Int): D {
     } else {
         D.Text(mark)
     }
-//    return when (detail) {
-//        1 -> D.Format(R.string.state_hiding)
-//        2 -> D.Format(R.string.state_omemechan)
-//        4 -> D.Format(R.string.state_light_shield)
-//        5 -> D.Format(R.string.state_utsusemi)
-//        6 -> D.Format(R.string.state_ocean_type)
-//        50 -> D.Format(R.string.state_servant_intensive)
-//        57 -> D.Format(R.string.state_flinch)
-//        60 -> D.Format(R.string.state_otomodachi)
-//        61 -> D.Format(R.string.state_coin)
-//        63 -> D.Format(R.string.state_black_star)
-//        72 -> D.Format(R.string.state_knight_guard)
-//        76, 197 -> D.Format(R.string.state_cheru)
-//        77 -> D.Format(R.string.state_wind_sword)
-//        90 -> D.Format(R.string.state_tiger_claw)
-//        92 -> D.Format(R.string.state_holly_night_brilliance)
-//        97 -> D.Format(R.string.state_ice_dragon_seal)
-//        98 -> D.Format(R.string.state_study_time)
-//        106 -> D.Format(R.string.state_strength_seal)
-//        107 -> D.Format(R.string.state_dragon_eye)
-//        111 -> D.Format(R.string.state_overload_structure)
-//        112 -> D.Format(R.string.state_sword_seal)
-//        113 -> D.Format(R.string.state_soul_anchor_seal)
-//        115 -> D.Format(R.string.state_happy_times)
-//        116 -> D.Format(R.string.state_water_blade_intensive)
-//        117 -> D.Format(R.string.state_butterfly_seal)
-//        118 -> D.Format(R.string.state_fuwafuwa_wool)
-//        119 -> D.Format(R.string.state_dark_night_intensive)
-//        120 -> D.Format(R.string.state_soul_ability)
-//        122 -> D.Format(R.string.state_yasakaninomagatama)
-//        125 -> D.Format(R.string.state_sword)
-//        126 -> D.Format(R.string.state_friendship_seal)
-//        127 -> D.Format(R.string.state_hazy)
-//        130 -> D.Format(R.string.state_kizuna_certificate)
-//        131 -> D.Format(R.string.state_psi_charge)
-//        133 -> D.Format(R.string.state_universe_seal)
-//        134 -> D.Format(R.string.state_beauty)
-//        135 -> D.Format(R.string.state_battery)
-//        137 -> D.Format(R.string.state_kairai)
-//        139 -> D.Format(R.string.state_roar_of_wolf_tooth)
-//        140 -> D.Format(R.string.state_fire_dance_seal)
-//        141 -> D.Format(R.string.state_fallen_angel_guard)
-//        142 -> D.Format(R.string.state_returning_rose)
-//        145 -> D.Format(R.string.state_puukichi_cushion)
-//        156 -> D.Format(R.string.state_peace_by_the_waterfront)
-//        152 -> D.Format(R.string.state_flower_trick)
-//        157 -> D.Format(R.string.state_moon_water)
-//        158 -> D.Format(R.string.state_poison_flick)
-//        159 -> D.Format(R.string.state_kababankun)
-//        160 -> D.Format(R.string.state_nebaneba)
-//        161 -> D.Format(R.string.state_iron_guard)
-//        162 -> D.Format(R.string.state_boumajin)
-//        171 -> D.Format(R.string.state_storm)
-//        173 -> D.Format(R.string.state_solar_eclipse)
-//        175 -> D.Format(R.string.state_ice)
-//        176 -> D.Format(R.string.state_illusion)
-//        177 -> D.Format(R.string.state_kika)
-//        178 -> D.Format(R.string.state_mania)
-//        183 -> D.Format(R.string.state_curtain_call)
-//        188 -> D.Format(R.string.state_passionate_bouquet)
-//        189 -> D.Format(R.string.state_teapot)
-//        190 -> D.Format(R.string.state_alchemical_material)
-//        191 -> D.Format(R.string.state_perfume)
-//        192 -> D.Format(R.string.state_laze_tempt)
-//        193 -> D.Format(R.string.state_friendly_barrier)
-//        194 -> D.Format(R.string.state_bandit_dice)
-//        195 -> D.Format(R.string.state_spike_guard)
-//        196 -> D.Format(R.string.state_demon_kiss)
-//        198 -> D.Format(R.string.state_reisu_body)
-//        199 -> D.Format(R.string.state_firebird)
-//        else -> D.Format(R.string.state_unknown, arrayOf(D.Text(detail.toString())))
-//    }
 }
 
 fun getUnitName(id: Int): D {
@@ -332,16 +240,6 @@ fun getUnitName(id: Int): D {
     } else {
         D.Text(unitName)
     }
-//    return when (id) {
-//        418101 -> D.Format(R.string.summon_ore_dragon)
-//        425801 -> D.Format(R.string.summon_shadow_425801)
-//        425802 -> D.Format(R.string.summon_shadow_425802)
-//        426201 -> D.Format(R.string.summon_family_426201)
-//        426202 -> D.Format(R.string.summon_family_426202)
-//        427101 -> D.Format(R.string.summon_skull_427101)
-//        430101 -> D.Format(R.string.summon_spike_brothers)
-//        else -> D.Format(R.string.summon_unknown_id1, arrayOf(D.Text(id.toString())))
-//    }
 }
 
 fun getSkillLabel(detail: Int): D {

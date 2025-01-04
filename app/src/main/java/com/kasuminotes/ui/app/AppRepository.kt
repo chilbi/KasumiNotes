@@ -176,6 +176,34 @@ class AppRepository(
         MainActivity.instance.listenerDownload(downloadId)
     }
 
+    private fun setStrings(localJson: JSONObject?) {
+        if (localJson != null) {
+            val map = mutableMapOf<String, Map<String, Map<String, String>>>()
+            val langKeys = localJson.keys()
+            while (langKeys.hasNext()) {
+                val langMap = mutableMapOf<String, Map<String, String>>()
+                val langKey = langKeys.next()
+                if (langKey == "version") continue
+                val langValueJson = localJson.getJSONObject(langKey)
+                val typeKeys = langValueJson.keys()
+                while (typeKeys.hasNext()) {
+                    val idMap = mutableMapOf<String, String>()
+                    val typeKey = typeKeys.next()
+                    val typeValueJson = langValueJson.getJSONObject(typeKey)
+                    val idKeys = typeValueJson.keys()
+                    while (idKeys.hasNext()) {
+                        val idKey = idKeys.next()
+                        val idValue = typeValueJson.getString(idKey)
+                        idMap[idKey] = idValue
+                    }
+                    langMap[typeKey] = idMap
+                }
+                map[langKey] = langMap
+            }
+            MainApplication.strings = map
+        }
+    }
+
     fun syncStrings() {
         var localJson: JSONObject? = null
         try {
@@ -198,31 +226,7 @@ class AppRepository(
             }
         } catch (_: Throwable) {
         } finally {
-            if (localJson != null) {
-                val map = mutableMapOf<String, Map<String, Map<String, String>>>()
-                val langKeys = localJson.keys()
-                while (langKeys.hasNext()) {
-                    val langMap = mutableMapOf<String, Map<String, String>>()
-                    val langKey = langKeys.next()
-                    if (langKey == "version") continue
-                    val langValueJson = localJson.getJSONObject(langKey)
-                    val typeKeys = langValueJson.keys()
-                    while (typeKeys.hasNext()) {
-                        val idMap = mutableMapOf<String, String>()
-                        val typeKey = typeKeys.next()
-                        val typeValueJson = langValueJson.getJSONObject(typeKey)
-                        val idKeys = typeValueJson.keys()
-                        while (idKeys.hasNext()) {
-                            val idKey = idKeys.next()
-                            val idValue = typeValueJson.getString(idKey)
-                            idMap[idKey] = idValue
-                        }
-                        langMap[langKey] = idMap
-                    }
-                    map[langKey] = langMap
-                }
-                MainApplication.strings = map;
-            }
+            setStrings(localJson)
         }
     }
 }
