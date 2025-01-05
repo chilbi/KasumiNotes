@@ -1,6 +1,7 @@
 package com.kasuminotes.utils
 
 import com.kasuminotes.common.DbServer
+import java.util.Locale
 
 object UrlUtil {
     const val useWtheeDb = true
@@ -51,42 +52,42 @@ object UrlUtil {
     private fun getImageId(unitId: Int, rarity: Int) = (if (rarity > 5) 6 else if (rarity > 2) 3 else 1) * 10 + unitId
 
     fun getUnitStillUrl(unitId: Int, rarity: Int) =
-        String.format(STILL_UNIT_URL, (if (rarity > 5) 6 else 3) * 10 + unitId)
+        String.format(Locale.US, STILL_UNIT_URL, (if (rarity > 5) 6 else 3) * 10 + unitId)
 
     fun getUnitPlateUrl(unitId: Int, rarity: Int) =
-        String.format(UNIT_PLATE_URL, getImageId(unitId, rarity))
+        String.format(Locale.US, UNIT_PLATE_URL, getImageId(unitId, rarity))
 
     fun getUnitIconUrl(unitId: Int, rarity: Int) =
-        String.format(ICON_UNIT_URL, getImageId(unitId, rarity))
+        String.format(Locale.US, ICON_UNIT_URL, getImageId(unitId, rarity))
 
     fun getEnemyUnitIconUrl(unitId: Int): String {
         val id = if (unitId == 301305) 301300 else unitId
         return if (Helper.isShadowChara(unitId)) {
-            String.format(ICON_UNIT_SHADOW_URL, "1${unitId.toString().substring(1, 4)}31".toInt())
+            String.format(Locale.US, ICON_UNIT_SHADOW_URL, "1${unitId.toString().substring(1, 4)}31".toInt())
         } else {
-            String.format(ICON_UNIT_URL, id)
+            String.format(Locale.US, ICON_UNIT_URL, id)
         }
     }
 
-    fun getUserIconUrl(userId: Int) = String.format(ICON_UNIT_URL, userId)
+    fun getUserIconUrl(userId: Int) = String.format(Locale.US, ICON_UNIT_URL, userId)
 
     fun getUserStillUrl(userId: Int) =
         getUnitStillUrl(userId / 100 * 100 + 1, (userId % 100 - 1) / 10)
 
-    fun getEquipIconUrl(equipId: Int) = String.format(ICON_EQUIPMENT_URL, equipId)
+    fun getEquipIconUrl(equipId: Int) = String.format(Locale.US, ICON_EQUIPMENT_URL, equipId)
 
-    fun getItemIconUrl(itemId: Int) = String.format(ICON_ITEM_URL, itemId)
+    fun getItemIconUrl(itemId: Int) = String.format(Locale.US, ICON_ITEM_URL, itemId)
 
-    fun getSkillIconUrl(iconType: Int) = String.format(ICON_SKILL_URL, iconType)
+    fun getSkillIconUrl(iconType: Int) = String.format(Locale.US, ICON_SKILL_URL, iconType)
 
     fun getAtkIconUrl(atkType: Int) = getEquipIconUrl(if (atkType == 1) 101011 else 101251)
 
     fun getKanNaPlateUrl(unitId: Int, rarity: Int) =
         "$WTHEE_API_RESOURCE_URL/icon/plate/${getImageId(unitId, rarity)}.webp"
 
-    fun getExEquipUrl(exEquipId: Int) = String.format(ICON_EX_EQUIPMENT_URL, exEquipId)
+    fun getExEquipUrl(exEquipId: Int) = String.format(Locale.US, ICON_EX_EQUIPMENT_URL, exEquipId)
 
-    fun getExEquipCategoryUrl(categoryId: Int) = String.format(ICON_EX_EQUIPMENT_CATEGORY_URL, categoryId)
+    fun getExEquipCategoryUrl(categoryId: Int) = String.format(Locale.US, ICON_EX_EQUIPMENT_CATEGORY_URL, categoryId)
 
 //    fun getExEquipMapUrl(mapId: Int) = String.format(ICON_EX_EQUIPMENT_MAP_URL, mapId)
 }
