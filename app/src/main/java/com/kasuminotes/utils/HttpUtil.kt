@@ -202,13 +202,33 @@ object HttpUtil {
         }
     }
 
-    @Throws(Throwable::class)
-    fun fetchStringsJsonStr(url: String): String {
+    fun fetchStringsVersion(): String? {
         var call: Call? = null
         var response: Response? = null
         try {
             val client = OkHttpClient.Builder().build()
-            val request = Request.Builder().url(url).build()
+            val request = Request.Builder()
+                .url("https://gitee.com/chilbi/strings/raw/main/version.txt")
+                .build()
+            call = client.newCall(request)
+            response = call.execute()
+            return response.body.string()
+        } catch (e: Throwable) {
+            call?.cancel()
+            return null
+        } finally {
+            response?.close()
+        }
+    }
+
+    fun fetchStrings(): String? {
+        var call: Call? = null
+        var response: Response? = null
+        try {
+            val client = OkHttpClient.Builder().build()
+            val request = Request.Builder()
+                .url("https://gitee.com/chilbi/strings/raw/main/strings.json")
+                .build()
             call = client.newCall(request)
             response = call.execute()
 //            val body = response.body.string()
@@ -217,7 +237,7 @@ object HttpUtil {
             return response.body.string()
         } catch (e: Throwable) {
             call?.cancel()
-            throw e
+            return null
         } finally {
             response?.close()
         }

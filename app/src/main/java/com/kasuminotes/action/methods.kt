@@ -12,6 +12,55 @@ import java.util.Locale
 import kotlin.math.ceil
 import kotlin.math.floor
 
+private fun getString(type: String, id: String): String? {
+    val stringsMap = MainApplication.strings
+    return if (stringsMap != null) {
+        val lang = when (MainApplication.context.languageSP) {
+            Locale.JAPANESE.language -> Language.JP.name
+            else -> Language.CN.name
+        }
+        stringsMap[lang]?.getValue(type)?.getValue(id)
+    } else {
+        null
+    }
+}
+
+fun getAbnormalContent(detail: Int): D {
+    val abnormal: String? = getString("abnormal", detail.toString())
+    return if (abnormal == null) {
+        D.Format(R.string.abnormal_unknown, arrayOf(D.Text(detail.toString())))
+    } else {
+        D.Text(abnormal)
+    }
+}
+
+fun getAbnormalDamageContent(detail: Int): D {
+    val abnormalDamage = getString("dot", detail.toString())
+    return if (abnormalDamage == null) {
+        D.Format(R.string.dot_unknown, arrayOf(D.Text(detail.toString())))
+    } else {
+        D.Text(abnormalDamage)
+    }
+}
+
+fun getMarkContent(detail: Int): D {
+    val mark = getString("mark",detail.toString())
+    return if (mark == null) {
+        D.Format(R.string.mark_unknown, arrayOf(D.Text(detail.toString())))
+    } else {
+        D.Text(mark)
+    }
+}
+
+fun getUnitName(id: Int): D {
+    val unitName = getString("summon", id.toString())
+    return if (unitName == null) {
+        D.Format(R.string.summon_unknown, arrayOf(D.Text(id.toString())))
+    } else {
+        D.Text(unitName)
+    }
+}
+
 fun isAtkType(detail: Int): Boolean = detail == 1 || detail == 3
 
 fun getAtkType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.atk else R.string.magic_str)
@@ -125,52 +174,6 @@ fun getBaseLvFormula(
     return formula.style(primary = true)
 }
 
-private fun getIdMap(type: String): Map<String, String>? {
-    val stringsMap = MainApplication.strings
-    return if (stringsMap != null) {
-        val lang = when (MainApplication.context.languageSP) {
-            Locale.JAPANESE.language -> Language.JP.name
-            else -> Language.CN.name
-        }
-        val langMap = stringsMap[lang]
-        if (langMap != null) {
-            langMap[type]
-        } else {
-            null
-        }
-    } else {
-        null
-    }
-}
-
-fun getAbnormalContent(detail: Int): D {
-    val abnormalMap = getIdMap("abnormal")
-    val abnormal: String? = if (abnormalMap == null) {
-        null
-    } else {
-        abnormalMap[detail.toString()]
-    }
-    return if (abnormal == null) {
-        D.Format(R.string.abnormal_unknown, arrayOf(D.Text(detail.toString())))
-    } else {
-        D.Text(abnormal)
-    }
-}
-
-fun getAbnormalDamageContent(detail: Int): D {
-    val dotMap = getIdMap("dot")
-    val abnormalDamage: String? = if (dotMap == null) {
-        null
-    } else {
-        dotMap[detail.toString()]
-    }
-    return if (abnormalDamage == null) {
-        D.Format(R.string.dot_unknown, arrayOf(D.Text(detail.toString())))
-    } else {
-        D.Text(abnormalDamage)
-    }
-}
-
 fun getStatusContent(detail: Int): D {
     return when (detail) {
         0 -> D.Format(R.string.max_hp)
@@ -211,34 +214,6 @@ fun getStatusIndex(detail: Int): Int? {
         9 -> 8
         13 -> 16
         else -> null
-    }
-}
-
-fun getMarkContent(detail: Int): D {
-    val markMap = getIdMap("mark")
-    val mark: String? = if (markMap == null) {
-        null
-    } else {
-        markMap[detail.toString()]
-    }
-    return if (mark == null) {
-        D.Format(R.string.mark_unknown, arrayOf(D.Text(detail.toString())))
-    } else {
-        D.Text(mark)
-    }
-}
-
-fun getUnitName(id: Int): D {
-    val summonMap = getIdMap("summon")
-    val unitName: String? = if (summonMap == null) {
-        null
-    } else {
-        summonMap[id.toString()]
-    }
-    return if (unitName == null) {
-        D.Format(R.string.summon_unknown, arrayOf(D.Text(id.toString())))
-    } else {
-        D.Text(unitName)
     }
 }
 

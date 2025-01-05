@@ -35,7 +35,6 @@ object UrlUtil {
     private val ICON_EX_EQUIPMENT_CATEGORY_URL = "$WTHEE_API_RESOURCE_URL/icon/ex_equipment/category/%d.webp"
 
 //    const val StringsJsonUrl = "https://api.github.com/repos/chilbi/KasumiNotes/contents/app/src/main/res/json/strings.json"
-    const val StringsJsonUrl = "https://gitee.com/chilbi/strings/raw/main/strings.json"
     // App Release URL
     const val APP_RELEASE_URL = "https://api.github.com/repos/chilbi/KasumiNotes/releases/latest"
     // hashed TableNames ColumnNames

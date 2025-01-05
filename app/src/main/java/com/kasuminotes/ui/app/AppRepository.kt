@@ -121,7 +121,7 @@ class AppRepository(
 
     fun getQuestSearchSet(): List<Pair<Int, Array<Int>>> {
         return context.questSearchSetSP.split(";").map { item ->
-           val numbs = item.split(",").map { n -> n.toInt() }
+            val numbs = item.split(",").map { n -> n.toInt() }
             val id = numbs[0]
             val searches = arrayOf(numbs[1], numbs[2], numbs[3])
             id to searches
@@ -138,13 +138,14 @@ class AppRepository(
 
     fun getDbFile(server: DbServer): File = context.getDatabasePath(UrlUtil.dbFileNameMap[server]!!)
 
-    fun getBackupDbFile(server: DbServer): File = context.getDatabasePath("backup_" + UrlUtil.dbFileNameMap[server]!!)
+    fun getBackupDbFile(server: DbServer): File =
+        context.getDatabasePath("backup_" + UrlUtil.dbFileNameMap[server]!!)
 
     fun getDatabase(name: String) = AppDatabase.getInstance(context.applicationContext, name)
 
     fun getDatabase() = AppDatabase.getInstance(context.applicationContext)
 
-    fun fetchLastDbVersion(server: DbServer): String  = if (UrlUtil.useWtheeDb) {
+    fun fetchLastDbVersion(server: DbServer): String = if (UrlUtil.useWtheeDb) {
         HttpUtil.fetchWtheeLastDbVersion(UrlUtil.lastVersionApiUrl, server)
     } else {
         HttpUtil.fetchLastDbVersion(UrlUtil.lastVersionUrl[server]!!)
@@ -152,7 +153,8 @@ class AppRepository(
 
     fun fetchRainbowJson(): JSONObject = HttpUtil.fetchLastRainbowJson(UrlUtil.RainbowJsonUrl)
 
-    fun fetchLatestAppReleaseInfo(): AppReleaseInfo? = HttpUtil.fetchLatestAppReleaseInfo(UrlUtil.APP_RELEASE_URL)
+    fun fetchLatestAppReleaseInfo(): AppReleaseInfo? =
+        HttpUtil.fetchLatestAppReleaseInfo(UrlUtil.APP_RELEASE_URL)
 
     fun downloadTempDbFile(server: DbServer) = HttpUtil.downloadDbFile(
         UrlUtil.dbFileUrlMap[server]!!,
@@ -170,63 +172,60 @@ class AppRepository(
                 "kasuminotes-release-${info.versionName}.apk"
             )
         }
-        val file = File("${context.filesDir.absolutePath}/kasuminotes-release-${info.versionName}.apk")
+        val file =
+            File("${context.filesDir.absolutePath}/kasuminotes-release-${info.versionName}.apk")
         if (file.exists()) file.delete()
         val downloadId = downloadManager.enqueue(request)
         MainActivity.instance.listenerDownload(downloadId)
     }
 
-    private fun setStrings(localJson: JSONObject?) {
-        if (localJson != null) {
-            val map = mutableMapOf<String, Map<String, Map<String, String>>>()
-            val langKeys = localJson.keys()
-            while (langKeys.hasNext()) {
-                val langMap = mutableMapOf<String, Map<String, String>>()
-                val langKey = langKeys.next()
-                if (langKey == "version") continue
-                val langValueJson = localJson.getJSONObject(langKey)
-                val typeKeys = langValueJson.keys()
-                while (typeKeys.hasNext()) {
-                    val idMap = mutableMapOf<String, String>()
-                    val typeKey = typeKeys.next()
-                    val typeValueJson = langValueJson.getJSONObject(typeKey)
-                    val idKeys = typeValueJson.keys()
-                    while (idKeys.hasNext()) {
-                        val idKey = idKeys.next()
-                        val idValue = typeValueJson.getString(idKey)
-                        idMap[idKey] = idValue
-                    }
-                    langMap[typeKey] = idMap
-                }
-                map[langKey] = langMap
+    fun syncStrings() {
+        val localStrings = FileUtil.readStrings(context)
+        if (localStrings == null) {
+            fetchAndSetLatestStrings()
+        } else {
+            val localJson = JSONObject(localStrings)
+            val localVersion = localJson.getString("version")
+            val newVersion = HttpUtil.fetchStringsVersion()
+            if (newVersion != null && newVersion != localVersion) {
+                fetchAndSetLatestStrings()
+            } else {
+                setStrings(localJson)
             }
-            MainApplication.strings = map
         }
     }
 
-    fun syncStrings() {
-        var localJson: JSONObject? = null
-        try {
-            val localStrings = FileUtil.readStrings(context)
-            if (localStrings != null) {
-                localJson = JSONObject(localStrings)
-            }
-            val newStrings = HttpUtil.fetchStringsJsonStr(UrlUtil.StringsJsonUrl)
-            val newJson = JSONObject(newStrings)
-            val newVersion = newJson.getString("version")
-            if (localStrings == null) {
-                localJson = newJson
-                FileUtil.writeStrings(context, newStrings)
-            } else {
-                val localVersion = localJson!!.getString("version")
-                if (localVersion != newVersion) {
-                    localJson = newJson
-                    FileUtil.writeStrings(context, newStrings)
-                }
-            }
-        } catch (_: Throwable) {
-        } finally {
-            setStrings(localJson)
+    private fun fetchAndSetLatestStrings() {
+        val newStrings = HttpUtil.fetchStrings()
+        if (newStrings != null) {
+            setStrings(JSONObject(newStrings))
+            FileUtil.writeStrings(context, newStrings)
         }
+    }
+
+    private fun setStrings(jsonObject: JSONObject) {
+        val map = mutableMapOf<String, Map<String, Map<String, String>>>()
+        val langKeys = jsonObject.keys()
+        while (langKeys.hasNext()) {
+            val langMap = mutableMapOf<String, Map<String, String>>()
+            val langKey = langKeys.next()
+            if (langKey == "version") continue
+            val langValueJson = jsonObject.getJSONObject(langKey)
+            val typeKeys = langValueJson.keys()
+            while (typeKeys.hasNext()) {
+                val idMap = mutableMapOf<String, String>()
+                val typeKey = typeKeys.next()
+                val typeValueJson = langValueJson.getJSONObject(typeKey)
+                val idKeys = typeValueJson.keys()
+                while (idKeys.hasNext()) {
+                    val idKey = idKeys.next()
+                    val idValue = typeValueJson.getString(idKey)
+                    idMap[idKey] = idValue
+                }
+                langMap[typeKey] = idMap
+            }
+            map[langKey] = langMap
+        }
+        MainApplication.strings = map
     }
 }
