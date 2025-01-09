@@ -19,7 +19,9 @@ private fun getString(type: String, id: String): String? {
             Locale.JAPANESE.language -> Language.JP.name
             else -> Language.CN.name
         }
-        stringsMap[lang]?.getValue(type)?.getValue(id)
+        stringsMap.getOrDefault(lang, null)
+            ?.getOrDefault(type, null)
+            ?.getOrDefault(id, null)
     } else {
         null
     }
