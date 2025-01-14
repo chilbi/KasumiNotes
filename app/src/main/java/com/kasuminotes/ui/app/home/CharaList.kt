@@ -57,11 +57,13 @@ fun CharaList(
                 onCharaClick
             )
         }
-        item("box1") {
-            Box(Modifier.imageSize(1f))
-        }
-        item("box2") {
-            Box(Modifier.imageSize(1f))
+        if (derivedProfiles.isNotEmpty()) {
+            item("box1") {
+                Box(Modifier.imageSize(1f))
+            }
+            item("box2") {
+                Box(Modifier.imageSize(1f))
+            }
         }
     }
 }
