@@ -20,6 +20,7 @@ import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.utils.Helper
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import com.kasuminotes.data.Property
 
 class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel() {
     val uiState = UiState(appRepository)
@@ -139,18 +140,48 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     fun navigateToExEquip(exEquipSlot: ExEquipSlot) {
         exEquipState.destroy()
         val slotNum = exEquipSlot.category / 100
-        val subPercent = charaState.userData!!.subPercentMap.getOrDefault(slotNum, null) ?: emptyList()
-        val level = when (slotNum) {
+        val originSubPercentList = charaState.userData!!.subPercentMap
+            .getOrDefault(slotNum, null) ?: emptyList()
+        val originLevel = when (slotNum) {
             1 -> charaState.userData!!.exEquip1Level
             2 -> charaState.userData!!.exEquip2Level
             else -> charaState.userData!!.exEquip3Level
         }
+        val base = charaState.baseProperty
+        val exSkill = charaState.exSkillProperty
+        val slots = charaState.userProfile!!.exEquipSlots
+        val userData = charaState.userData!!
+        val otherExEquipProperty = if (slots.isEmpty()) {
+            Property.zero
+        } else {
+            val propertyList = slots.mapIndexed { index, slot ->
+                if (slot.exEquipData == null || slotNum == index + 1) {
+                    Property.zero
+                } else {
+                    val percent = slot.exEquipData.getPercentProperty(
+                        when (index) {
+                            0 -> userData.exEquip1Level
+                            1 -> userData.exEquip2Level
+                            else -> userData.exEquip3Level
+                        }
+                    )
+                    val subPercentList = userData.subPercentMap
+                        .getOrDefault(index + 1, null) ?: emptyList()
+                    slot.exEquipData.getExEquipProperty(subPercentList, percent, base)
+                }
+            }
+            Property { i -> propertyList.sumOf { it[i] } }
+        }
+        val withoutSelfBattleProperty = Property { i ->
+            base[i] + exSkill[i] + otherExEquipProperty[i]
+        }
         exEquipState.initExEquipSlot(
+            slotNum,
             exEquipSlot,
             charaState.baseProperty,
-            charaState.exSkillProperty,
-            subPercent,
-            level,
+            withoutSelfBattleProperty,
+            originSubPercentList,
+            originLevel,
             charaState::changeExEquip,
             charaState::changeExEquipLevel,
             charaState::changeSubPercentList

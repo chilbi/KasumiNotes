@@ -44,8 +44,8 @@ data class ExEquipData(
     }
 
     fun getPercentProperty(enhanceLevel: Int): Property {
-        if (enhanceLevel < 0) return Property.zero
         if (rarity > 4) return  maxProperty
+        if (enhanceLevel < 0) return Property.zero
 
         return when (val level = min(enhanceLevel, maxEnhanceLevel)) {
             maxEnhanceLevel -> maxProperty
@@ -69,15 +69,13 @@ data class ExEquipData(
         }
     }
 
-    fun getProperty(
+    fun getExEquipProperty(
         subPercentList: List<Pair<Int, Double>>,
         percentProperty: Property,
         baseProperty: Property,
-        exSkillProperty: Property,
-        includeSkill: Boolean
     ): Property {
         val subPercentProperty = Property(subPercentList, true)
-        val equipProperty = Property { index ->
+        return Property { index ->
             val value = percentProperty[index] + subPercentProperty[index]
             if (index < 7) {
                 (baseProperty[index] * value / 10000).roundToInt().toDouble()// TODO 不确定的取整方式
@@ -85,21 +83,15 @@ data class ExEquipData(
                 value
             }
         }
-        return if (includeSkill) {
-            val skillProperty = getSkillProperty(baseProperty, exSkillProperty, equipProperty)
-            Property { index -> equipProperty[index] + skillProperty[index] }
-        } else {
-            equipProperty
-        }
     }
 
-    private fun getSkillProperty(
+    fun getSkillProperty(
         baseProperty: Property,
         exSkillProperty: Property,
-        equipProperty: Property
+        allExEquipProperty: Property
     ): Property {
-        val battleProperty = Property { index ->
-            baseProperty[index] + exSkillProperty[index] + equipProperty[index]
+        val battleProperty = Property { i ->
+            baseProperty[i] + exSkillProperty[i] + allExEquipProperty[i]
         }
         return if (passiveSkill1 == null && passiveSkill2 == null) {
             Property.zero

@@ -28,7 +28,9 @@ class ExEquipState(
     private var onEnhanceLevelChange: ((slotNum: Int, level: Int) -> Unit)? = null
     private var onSubPercentListChange: ((slotNum: Int, subPercentList: List<Pair<Int, Double>>) -> Unit)? = null
     private var slotNum = 0
-    private var exSkillProperty = Property.zero
+    private var withoutSelfBattleProperty = Property.zero
+//    private var exSkillProperty = Property.zero
+//    private var otherExEquipProperty = Property.zero
     private var originSubPercentList: List<Pair<Int, Double>> = emptyList()
     private var originEnhanceLevel = 0
 
@@ -56,9 +58,10 @@ class ExEquipState(
         private set
 
     fun initExEquipSlot(
+        slotN: Int,
         slot: ExEquipSlot,
         charaBaseProperty: Property,
-        charaExSkillProperty: Property,
+        otherBattleProperty: Property,
         originSubStatusPercentList: List<Pair<Int, Double>> = emptyList(),
         originLevel: Int = 0,
         onExEquipChange: ((slotNum: Int, exEquip: ExEquipData?) -> Unit)? = null,
@@ -72,9 +75,10 @@ class ExEquipState(
                 async { db.getEquippableExList(slot.category) }
             )
 
+            slotNum = slotN
             exEquipSlot = slot
             baseProperty = charaBaseProperty
-            exSkillProperty = charaExSkillProperty
+            withoutSelfBattleProperty = otherBattleProperty
             originSubPercentList = originSubStatusPercentList
             subPercentList = originSubStatusPercentList
             enhanceLevel = originLevel
@@ -83,7 +87,6 @@ class ExEquipState(
             onExEquipDataChange = onExEquipChange
             onEnhanceLevelChange = onLevelChange
             onSubPercentListChange = onSubChange
-            slotNum = slot.category / 100
             exEquipCategory = list[0] as ExEquipCategory
             @Suppress("UNCHECKED_CAST")
             equippableExList = list[1] as List<Int>
@@ -122,6 +125,7 @@ class ExEquipState(
         if (onSubPercentListChange != null && isEquipping) {
             onSubPercentListChange!!(slotNum, subPercentList)
         }
+        totalBattleProperty()
     }
 
     fun changeSubPercent(index: Int, status: Int) {
@@ -132,6 +136,7 @@ class ExEquipState(
         if (onSubPercentListChange != null && isEquipping) {
             onSubPercentListChange!!(slotNum, list)
         }
+        totalBattleProperty()
     }
 
     fun changeSubPercentValue(index: Int, value: Double) {
@@ -142,6 +147,7 @@ class ExEquipState(
         if (onSubPercentListChange != null && isEquipping) {
             onSubPercentListChange!!(slotNum, list)
         }
+        totalBattleProperty()
     }
 
     fun changeEnhanceLevel(level: Int) {
@@ -199,15 +205,11 @@ class ExEquipState(
     }
 
     private fun totalBattleProperty() {
-        val equipProperty = exEquipData!!.getProperty(
+        val selfExEquipProperty = exEquipData!!.getExEquipProperty(
             subPercentList,
             percentProperty,
-            baseProperty,
-            exSkillProperty,
-            false
+            baseProperty
         )
-        battleProperty = Property { index ->
-            baseProperty[index] + exSkillProperty[index] + equipProperty[index]
-        }
+        battleProperty = Property { i -> withoutSelfBattleProperty[i] + selfExEquipProperty[i] }
     }
 }

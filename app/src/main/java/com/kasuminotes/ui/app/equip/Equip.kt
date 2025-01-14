@@ -21,28 +21,28 @@ fun Equip(
 
     when {
         equipState.equipData != null -> {
-            val data = equipState.equipData!!
-            equipmentId = data.equipmentId
-            equipmentName = data.equipmentName
-            equipmentType = data.equipmentType
-            description = data.description
-            baseProperty = data.baseProperty
+            val equip = equipState.equipData!!
+            equipmentId = equip.equipmentId
+            equipmentName = equip.equipmentName
+            equipmentType = equip.equipmentType
+            description = equip.description
+            baseProperty = equip.baseProperty
         }
         equipState.unique1Data != null -> {
-            val data = equipState.unique1Data!!
-            equipmentId = data.equipmentId
-            equipmentName = data.equipmentName
+            val unique1 = equipState.unique1Data!!
+            equipmentId = unique1.equipmentId
+            equipmentName = unique1.equipmentName
             equipmentType = stringResource(R.string.unique_equip) + "1"
-            description = data.description
-            baseProperty = data.baseProperty
+            description = unique1.description
+            baseProperty = unique1.baseProperty
         }
         equipState.unique2Data != null -> {
-            val data = equipState.unique2Data!!
-            equipmentId = data.equipmentId
-            equipmentName = data.equipmentName
+            val unique2 = equipState.unique2Data!!
+            equipmentId = unique2.equipmentId
+            equipmentName = unique2.equipmentName
             equipmentType = stringResource(R.string.unique_equip) + "2"
-            description = data.description
-            baseProperty = data.baseProperty
+            description = unique2.description
+            baseProperty = unique2.baseProperty
         }
     }
 

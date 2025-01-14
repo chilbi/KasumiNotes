@@ -59,40 +59,52 @@ data class UserProfile(
         }?.bonusProperty
     }
 
-    fun getExSkillProperty(data: UserData): Property {
-        val realExSkillData = if (shouldConverted(data.rarity)) unitConversionData!!.exSkillData else exSkillData
-        return realExSkillData!!.getProperty(data.rarity, data.exLevel)
+    fun getExSkillProperty(user: UserData): Property {
+        val realExSkillData = if (shouldConverted(user.rarity)) unitConversionData!!.exSkillData else exSkillData
+        return realExSkillData!!.getProperty(user.rarity, user.exLevel)
     }
 
-    fun getExEquipProperty(base: Property, exSkill: Property, data: UserData): Property {
+    fun getExEquipProperty(base: Property, user: UserData): Property {
         return if (exEquipSlots.isEmpty()) {
             Property.zero
         } else {
-            val list = exEquipSlots.mapIndexed { index, slot ->
+            val propertyList = exEquipSlots.mapIndexed { index, slot ->
                 if (slot.exEquipData == null) {
                     Property.zero
                 } else {
                     val percent = slot.exEquipData.getPercentProperty(
                         when (index) {
-                            0 -> data.exEquip1Level
-                            1 -> data.exEquip2Level
-                            else -> data.exEquip3Level
+                            0 -> user.exEquip1Level
+                            1 -> user.exEquip2Level
+                            else -> user.exEquip3Level
                         }
                     )
-                    val subPercent = data.subPercentMap.getOrDefault(index + 1, null) ?: emptyList()
-                    slot.exEquipData.getProperty(subPercent, percent, base, exSkill, true)
+                    val subPercentList = user.subPercentMap
+                        .getOrDefault(index + 1, null) ?: emptyList()
+                    slot.exEquipData.getExEquipProperty(subPercentList, percent, base)
                 }
             }
-            Property { i ->
-                var value = 0.0
-                list.forEach { item -> value += item[i] }
-                value
+            Property { i -> propertyList.sumOf { it[i] } }
+        }
+    }
+
+    fun getExEquipSkillProperty(base: Property, exSkill: Property, allExEquipProperty: Property): Property {
+        return if (exEquipSlots.isEmpty()) {
+            Property.zero
+        } else {
+            val skillPropertyList = exEquipSlots.map { slot ->
+                if (slot.exEquipData == null) {
+                    Property.zero
+                } else {
+                    slot.exEquipData.getSkillProperty(base, exSkill, allExEquipProperty)
+                }
             }
+            Property { i -> skillPropertyList.sumOf { it[i] } }
         }
     }
 
     //rarity+promotionStatus+promotion+unique1&2+story+bonus
-    fun getBaseProperty(data: UserData): Property {
+    fun getBaseProperty(user: UserData): Property {
         return if (
             unitRarity != null &&
             unitPromotionStatus != null &&
@@ -100,12 +112,12 @@ data class UserProfile(
             charaStoryStatus != null
 //            exSkillData != null
         ) {
-            val rarityLevel = data.charaLevel + data.promotionLevel
-            val equipsLevel = data.equipsLevel
-            val unique1Property = unique1Data?.getUnique1Property(data.unique1Level)
-            val unique2Property = unique2Data?.getUnique2Property(data.unique2Level)
+            val rarityLevel = user.charaLevel + user.promotionLevel
+            val equipsLevel = user.equipsLevel
+            val unique1Property = unique1Data?.getUnique1Property(user.unique1Level)
+            val unique2Property = unique2Data?.getUnique2Property(user.unique2Level)
 //            val exSkillProperty = getExSkillProperty(data)
-            val rankBonusProperty = getRankBonusProperty(data.promotionLevel) ?: Property.zero
+            val rankBonusProperty = getRankBonusProperty(user.promotionLevel) ?: Property.zero
 
             Property { index ->
                 // unitRarity
@@ -126,7 +138,7 @@ data class UserProfile(
                     value += unique2Property[index]
                 }
                 // selfCharaStoryStatus
-                value += getStoryValue(index, data.loveLevel, charaStoryStatus!!.status, unitData.maxRarity)
+                value += getStoryValue(index, user.loveLevel, charaStoryStatus!!.status, unitData.maxRarity)
                 // sharedCharaStoryStatus
                 if (sharedProfiles != null && sharedProfiles!!.isNotEmpty()) {
                     sharedProfiles!!.forEach { item ->

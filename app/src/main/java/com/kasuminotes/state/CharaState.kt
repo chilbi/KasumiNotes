@@ -42,29 +42,29 @@ class CharaState(
     //rarity+promotionStatus+promotion+unique1&2+story+bonus
     var baseProperty by mutableStateOf(Property.zero)
         private set
-    //base+exSkill+exEquip
+    //base+exSkill+exEquip+exEquipSkill
     var totalProperty by mutableStateOf(Property.zero)
         private set
     var saveVisible by mutableStateOf(false)
         private set
 
-    fun initUserProfile(data: UserProfile, profiles: List<UserProfile>, maxCharaLevel: Int) {
+    fun initUserProfile(profile: UserProfile, profiles: List<UserProfile>, maxCharaLevel: Int) {
         restore()
-        if (data.userData.charaLevel > maxCharaLevel) {
-            data.userData = data.userData.copy(lvLimitBreak = 10)
+        if (profile.userData.charaLevel > maxCharaLevel) {
+            profile.userData = profile.userData.copy(lvLimitBreak = 10)
         }
-        userProfile = data
-        userData = data.userData
+        userProfile = profile
+        userData = profile.userData
         saveVisible = false
 
-        if (data.baseProperty != null) {
-            initData(data)
+        if (profile.baseProperty != null) {
+            initData(profile)
         } else {
             scope.launch(Dispatchers.IO) {
                 val db = appRepository.getDatabase()
-                data.load(db, profiles)
+                profile.load(db, profiles)
 
-                initData(data)
+                initData(profile)
             }
         }
     }
@@ -285,24 +285,26 @@ class CharaState(
         }
     }
 
-    private fun initData(data: UserProfile) {
-        backupUnitRarity = data.unitRarity
-        backupUnitPromotionStatus = data.unitPromotionStatus
-        backupUnitPromotion = data.unitPromotion
-        backupExEquipSlots = data.exEquipSlots
+    private fun initData(profile: UserProfile) {
+        backupUnitRarity = profile.unitRarity
+        backupUnitPromotionStatus = profile.unitPromotionStatus
+        backupUnitPromotion = profile.unitPromotion
+        backupExEquipSlots = profile.exEquipSlots
 
-        rankBonusProperty = data.getRankBonusProperty(userData!!.promotionLevel)
+        rankBonusProperty = profile.getRankBonusProperty(userData!!.promotionLevel)
         calcProperty()
-        data.setProperty(baseProperty, totalProperty)
+        profile.setProperty(baseProperty, totalProperty)
     }
 
+    //base+exSkill+exEquip+exEquipSkill
     private fun calcProperty() {
         val base = userProfile!!.getBaseProperty(userData!!)
         val exSkill = userProfile!!.getExSkillProperty(userData!!)
-        val exEquip = userProfile!!.getExEquipProperty(base, exSkill, userData!!)
+        val exEquip = userProfile!!.getExEquipProperty(base, userData!!)
+        val exEquipSkill = userProfile!!.getExEquipSkillProperty(base, exSkill, exEquip)
         exSkillProperty = exSkill
         baseProperty = base
-        totalProperty = Property { i -> base[i] + exSkill[i] + exEquip[i] }
+        totalProperty = Property { i -> base[i] + exSkill[i] + exEquip[i] + exEquipSkill[i] }
     }
 
     private fun changeState() {
