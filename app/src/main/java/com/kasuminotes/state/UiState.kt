@@ -1,6 +1,7 @@
 package com.kasuminotes.state
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.state.ToggleableState
@@ -12,7 +13,7 @@ class UiState(
 ) {
     var language by mutableStateOf(appRepository.getLanguage())
         private set
-    var themeIndex by mutableStateOf(appRepository.getThemeIndex())
+    var themeIndex by mutableIntStateOf(appRepository.getThemeIndex())
         private set
     var darkTheme by mutableStateOf(appRepository.getDarkTheme())
         private set

@@ -7,14 +7,17 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.state.CharaImageState
+import com.kasuminotes.ui.components.imageSize
 
 @Composable
 fun CharaList(
@@ -53,6 +56,12 @@ fun CharaList(
                 charaImageState,
                 onCharaClick
             )
+        }
+        item("box1") {
+            Box(Modifier.imageSize(1f))
+        }
+        item("box2") {
+            Box(Modifier.imageSize(1f))
         }
     }
 }
