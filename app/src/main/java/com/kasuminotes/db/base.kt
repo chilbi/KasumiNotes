@@ -18,6 +18,10 @@ fun AppDatabase.getBackupUserDataList(defaultUserId: Int): List<UserData> {
 FROM user_data WHERE user_id!=$defaultUserId"""
 
     return useDatabase {
+        if (!existsColumn("user_data", "sub_percent_json")) {
+            execSQL("ALTER TABLE user_data ADD COLUMN sub_percent_json TEXT NOT NULL DEFAULT ''")
+        }
+
         val list = mutableListOf<UserData>()
         rawQuery(sql, null).use {
 
@@ -48,7 +52,8 @@ FROM user_data WHERE user_id!=$defaultUserId"""
                     it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
-                    it.getInt(i)
+                    it.getInt(i++),
+                    it.getString(i)
                 )
 
                 list.add(userProfile)
@@ -101,6 +106,10 @@ WHERE user_id=$userId AND unit_id IN (${deleteChara.joinToString(",")})"""
 suspend fun AppDatabase.getUserProfileList(userId: Int): List<UserProfile> {
     val list = mutableListOf<UserProfile>()
     useDatabase {
+        if (!existsColumn("user_data", "sub_percent_json")) {
+            execSQL("ALTER TABLE user_data ADD COLUMN sub_percent_json TEXT NOT NULL DEFAULT ''")
+        }
+
         if (!existsTable("unit_talent")) {
             execSQL(
                 """CREATE TABLE `unit_talent`(
@@ -149,7 +158,8 @@ WHERE user_id=$userId"""
                     it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
-                    it.getInt(i++)
+                    it.getInt(i++),
+                    it.getString(i++)
                 )
 
                 val unitData = UnitData(

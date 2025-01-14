@@ -11,7 +11,7 @@ import com.kasuminotes.data.Property
 import kotlin.math.roundToInt
 
 private val propertyIndices: List<Int> = listOf(
-    1, 3, 5, 6, 2, 4, 16, 7, 0, 8, 9, 10, 13, 15, 14
+    1, 3, 5, 6, 2, 4, 11, 12, 16, 7, 0, 8, 9, 10, 13, 15, 14
 )
 
 @Composable

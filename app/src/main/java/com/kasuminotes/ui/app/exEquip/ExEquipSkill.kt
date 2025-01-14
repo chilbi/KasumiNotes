@@ -38,18 +38,18 @@ import com.kasuminotes.utils.UrlUtil
 fun ExEquipSkill(
     passiveSkill1: SkillData?,
     passiveSkill2: SkillData?,
-    baseProperty: Property
+    battleProperty: Property
 ) {
     LabelContainer(
         label = stringResource(R.string.equip_skill),
         color = MaterialTheme.colorScheme.primary
     ) {
         if (passiveSkill1 != null) {
-            ExEquipSkillItem(passiveSkill1, baseProperty)
+            ExEquipSkillItem(passiveSkill1, battleProperty)
         }
         if (passiveSkill2 != null) {
             HorizontalDivider(Modifier.padding(vertical = 4.dp))
-            ExEquipSkillItem(passiveSkill2, baseProperty)
+            ExEquipSkillItem(passiveSkill2, battleProperty)
         }
     }
 }
@@ -57,13 +57,13 @@ fun ExEquipSkill(
 @Composable
 private fun ExEquipSkillItem(
     passiveSkill: SkillData,
-    baseProperty: Property
+    battleProperty: Property
 ) {
     var visible by remember { mutableStateOf(false) }
-    val descriptionList: List<D> by remember(passiveSkill, baseProperty) {
+    val descriptionList: List<D> by remember(passiveSkill, battleProperty) {
         derivedStateOf {
             ActionBuilder(passiveSkill.rawDepends, passiveSkill.actions, true)
-                .buildDescriptionList(0, baseProperty)
+                .buildDescriptionList(0, battleProperty)
         }
     }
 

@@ -23,9 +23,10 @@ import kotlin.math.roundToInt
 @Composable
 fun ExEquipProperty(
     percentProperty: Property,
-    baseProperty: Property,
+    rarity: Int,
     maxEnhanceLevel: Int,
     enhanceLevel: Int,
+    valueDisplay: (index: Int, value: Double) -> String,
     onEnhanceLevelChange: (Int) -> Unit
 ) {
     LabelContainer(
@@ -38,25 +39,20 @@ fun ExEquipProperty(
             val label = stringResource(Property.getStrRes(index))
             val value = percentProperty[index]
 
-            Infobar(
-                label = label,
-                value = if (index < 7) {
-                    "${(value / 100).toNumStr()}%(+${(baseProperty[index] * value / 10000).roundToInt()})"// TODO 不确定的取整方式
-                } else {
-                    value.roundToInt().toString()// TODO 不确定的取整方式
-                }
-            )
+            Infobar(label, valueDisplay(index, value))
         }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            FixedWidthLabel(stringResource(R.string.promotion_level))
-            Spacer(Modifier.width(8.dp))
-            Rarities(
-                highlightCount = if (maxEnhanceLevel > 4) 2 else if (maxEnhanceLevel > 3) 1 else 0,
-                maxRarity = maxEnhanceLevel,
-                rarity = enhanceLevel,
-                onRarityChange = onEnhanceLevelChange
-            )
+        if (rarity < 5) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                FixedWidthLabel(stringResource(R.string.promotion_level))
+                Spacer(Modifier.width(8.dp))
+                Rarities(
+                    highlightCount = if (maxEnhanceLevel > 4) 2 else if (maxEnhanceLevel > 3) 1 else 0,
+                    maxRarity = maxEnhanceLevel,
+                    rarity = enhanceLevel,
+                    onRarityChange = onEnhanceLevelChange
+                )
+            }
         }
     }
 }

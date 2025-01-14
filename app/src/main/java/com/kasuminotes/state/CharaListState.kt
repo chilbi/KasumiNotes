@@ -252,6 +252,7 @@ class CharaListState {
                 userData.exEquip1Level,
                 userData.exEquip2Level,
                 userData.exEquip3Level,
+                userData.subPercentJson,
                 userData.lvLimitBreak
             )
         }

@@ -128,27 +128,29 @@ private fun ExEquipIcon(
                     url = UrlUtil.getExEquipUrl(exEquip.exEquipmentId),
                     onClick = { onExEquipClick(exEquipSlot) }
                 ) {
-                    Row(
-                        Modifier
-                            .align(Alignment.BottomStart)
-                            .padding(2.dp)
-                    ) {
-                        repeat(exEquip.maxEnhanceLevel) { i ->
-                            Image(
-                                painter = painterResource(
-                                    if (i < exEquipLevel) {
-                                        if (i > 2) {
-                                            R.drawable.star_small_6
+                    if (exEquip.rarity < 5) {
+                        Row(
+                            Modifier
+                                .align(Alignment.BottomStart)
+                                .padding(2.dp)
+                        ) {
+                            repeat(exEquip.maxEnhanceLevel) { i ->
+                                Image(
+                                    painter = painterResource(
+                                        if (i < exEquipLevel) {
+                                            if (i > 2) {
+                                                R.drawable.star_small_6
+                                            } else {
+                                                R.drawable.star_small_1
+                                            }
                                         } else {
-                                            R.drawable.star_small_1
+                                            R.drawable.star_small_0
                                         }
-                                    } else {
-                                        R.drawable.star_small_0
-                                    }
-                                ),
-                                contentDescription = null,
-                                modifier = Modifier.size((8.8f).dp)
-                            )
+                                    ),
+                                    contentDescription = null,
+                                    modifier = Modifier.size((8.8f).dp)
+                                )
+                            }
                         }
                     }
                 }

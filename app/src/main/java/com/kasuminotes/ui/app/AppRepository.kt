@@ -2,7 +2,6 @@ package com.kasuminotes.ui.app
 
 import android.app.DownloadManager
 import android.content.Context
-import android.net.Uri
 import androidx.compose.ui.state.ToggleableState
 import com.kasuminotes.MainActivity
 import com.kasuminotes.MainApplication
@@ -19,9 +18,10 @@ import com.kasuminotes.utils.UrlUtil
 import org.json.JSONObject
 import java.io.File
 import java.util.Locale
+import androidx.core.net.toUri
 
 class AppRepository(
-    private val context: Context = MainApplication.context
+    private val context: Context = MainApplication.context,
 ) {
     val applicationContext: Context get() = context.applicationContext
 
@@ -163,7 +163,7 @@ class AppRepository(
 
     fun downloadApp(info: AppReleaseInfo) {
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val request = DownloadManager.Request(Uri.parse(info.downloadURL)).apply {
+        val request = DownloadManager.Request(info.downloadURL.toUri()).apply {
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             setMimeType("application/vnd.android.package-archive")
             setDestinationInExternalFilesDir(

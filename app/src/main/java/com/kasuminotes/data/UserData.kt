@@ -1,6 +1,7 @@
 package com.kasuminotes.data
 
 import com.kasuminotes.ui.theme.rankRarity
+import org.json.JSONObject
 
 data class UserData(
     val userId: Int,
@@ -27,8 +28,11 @@ data class UserData(
     val exEquip1Level: Int = -1,
     val exEquip2Level: Int = -1,
     val exEquip3Level: Int = -1,
+    val subPercentJson: String = "",
     val lvLimitBreak: Int = 0
 ) {
+    val subPercentMap: Map<Int, List<Pair<Int, Double>>> = toSubPercentMap(subPercentJson)
+
     val rankRarity: Int
         get() = promotionLevel.rankRarity
 
@@ -60,7 +64,8 @@ data class UserData(
             exEquip3,
             exEquip1Level,
             exEquip2Level,
-            exEquip3Level
+            exEquip3Level,
+            "'$subPercentJson'"
         ).joinToString(",")
 
     fun getEquipLevel(slot: Int): Int = when (slot) {
@@ -98,9 +103,66 @@ data class UserData(
                         "ex_equip3," +
                         "ex_equip1_level," +
                         "ex_equip2_level," +
-                        "ex_equip3_level"
+                        "ex_equip3_level," +
+                        "sub_percent_json"
             }
             return (if (pk) "user_id," else "") + (if (fk) "unit_id," else "") + fields
+        }
+
+        fun toSubPercentJson(subPercentMap: Map<Int, List<Pair<Int, Double>>>): String {
+            return if (subPercentMap.isEmpty()) {
+                ""
+            } else {
+                val json = StringBuilder()
+                json.append("{")
+                var hasPrevSlot = false
+                for ((slotNum, subPercentList) in subPercentMap) {
+                    if (hasPrevSlot) {
+                        json.append(",")
+                    }
+                    json.append("\"$slotNum\":[")
+                    var hasPrevItem = false
+                    for (subPercent in subPercentList) {
+                        if (hasPrevItem) {
+                            json.append(",")
+                        }
+                        json.append("{")
+                        json.append("\"${subPercent.first}\":${subPercent.second}")
+                        json.append("}")
+                        hasPrevItem = true
+                    }
+                    json.append("]")
+                    hasPrevSlot = true
+                }
+                json.append("}")
+                json.toString()
+            }
+        }
+
+        fun toSubPercentMap(subPercentJson: String): Map<Int, List<Pair<Int, Double>>> {
+            return if (subPercentJson == "") {
+                emptyMap()
+            } else {
+                val map = mutableMapOf<Int, List<Pair<Int, Double>>>()
+                val jsonObject = JSONObject(subPercentJson)
+                val slotKeys = jsonObject.keys()
+                while (slotKeys.hasNext()) {
+                    val list = mutableListOf<Pair<Int, Double>>()
+                    val slotKey = slotKeys.next()
+                    val jsonArray = jsonObject.getJSONArray(slotKey)
+                    for (i in 0 until jsonArray.length()) {
+                        val itemObject = jsonArray.getJSONObject(i)
+                        val itemKeys = itemObject.keys()
+                        while (itemKeys.hasNext()) {
+                            val key = itemKeys.next()
+                            val value = itemObject.getDouble(key)
+                            list.add(key.toInt() to value)
+                        }
+                    }
+                    map[slotKey.toInt()] = list
+                }
+                map
+            }
         }
     }
 }

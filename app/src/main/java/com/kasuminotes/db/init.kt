@@ -234,6 +234,7 @@ LEFT JOIN (SELECT COUNT(*) AS max_rarity_6 FROM chara_data WHERE max_rarity=6)""
 'ex_equip1_level' INTEGER NOT NULL,
 'ex_equip2_level' INTEGER NOT NULL,
 'ex_equip3_level' INTEGER NOT NULL,
+'sub_percent_json' TEXT NOT NULL,
 PRIMARY KEY('user_id','unit_id')
 )"""
     )
@@ -247,7 +248,8 @@ CASE(equip2_id) WHEN 0 THEN -1 ELSE 5 END AS unique2_level,
 max_promotion_level AS promotion_level,
 max_chara_level AS ub_level,max_chara_level AS skill1_level,max_chara_level AS skill2_level,max_chara_level AS ex_level,
 5 AS equip1_level,5 AS equip2_level,5 AS equip3_level,5 AS equip4_level,5 AS equip5_level,5 AS equip6_level,
-0 AS ex_equip1,0 AS ex_equip2,0 AS ex_equip3,-1 AS ex_equip1_level,-1 AS ex_equip2_level,-1 AS ex_equip3_level
+0 AS ex_equip1,0 AS ex_equip2,0 AS ex_equip3,-1 AS ex_equip1_level,-1 AS ex_equip2_level,-1 AS ex_equip3_level,
+'' AS sub_percent_json
 FROM chara_data LEFT JOIN max_data"""
     )
 }

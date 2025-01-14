@@ -182,6 +182,8 @@
     <string name="skill_effect">スキル効果</string>
     <string name="same_category_equip">同種装備</string>8
     <string name="equip_property">装備ステータス</string>
+    <string name="sub_property">サブステータス</string>
+    <string name="forge">錬成</string>
     <string name="equip_skill">装備スキル</string>
     <string name="comma">、</string>
     <string name="full_stop">。</string>

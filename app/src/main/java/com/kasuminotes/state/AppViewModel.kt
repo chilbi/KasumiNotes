@@ -1,7 +1,6 @@
 package com.kasuminotes.state
 
 import android.content.Intent
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -20,6 +19,7 @@ import com.kasuminotes.ui.app.AppNavData
 import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.utils.Helper
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel() {
     val uiState = UiState(appRepository)
@@ -138,16 +138,22 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
 
     fun navigateToExEquip(exEquipSlot: ExEquipSlot) {
         exEquipState.destroy()
+        val slotNum = exEquipSlot.category / 100
+        val subPercent = charaState.userData!!.subPercentMap.getOrDefault(slotNum, null) ?: emptyList()
+        val level = when (slotNum) {
+            1 -> charaState.userData!!.exEquip1Level
+            2 -> charaState.userData!!.exEquip2Level
+            else -> charaState.userData!!.exEquip3Level
+        }
         exEquipState.initExEquipSlot(
             exEquipSlot,
             charaState.baseProperty,
-            when (exEquipSlot.category / 100) {
-                1 -> charaState.userData!!.exEquip1Level
-                2 -> charaState.userData!!.exEquip2Level
-                else -> charaState.userData!!.exEquip3Level
-            },
+            charaState.exSkillProperty,
+            subPercent,
+            level,
             charaState::changeExEquip,
-            charaState::changeExEquipLevel
+            charaState::changeExEquipLevel,
+            charaState::changeSubPercentList
         )
         navController.navigate(AppNavData.ExEquip.route)
     }
@@ -315,7 +321,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun linkTo(uriString: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uriString))
+        val intent = Intent(Intent.ACTION_VIEW, uriString.toUri())
         MainActivity.instance.startActivity(intent)
     }
 }

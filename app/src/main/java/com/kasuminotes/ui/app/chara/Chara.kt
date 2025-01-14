@@ -40,9 +40,9 @@ fun Chara(
     val userProfile = charaState.userProfile!!
     val userData = charaState.userData!!
     val unitData = userProfile.getRealUnitData(userData.rarity)
-    val property = charaState.includeExEquipProperty
-    val originProperty = remember(charaState.saveVisible, userProfile.includeExEquipProperty, property) {
-        userProfile.includeExEquipProperty ?: property
+    val property = charaState.totalProperty
+    val originProperty = remember(charaState.saveVisible, userProfile.totalProperty, property) {
+        userProfile.totalProperty ?: property
     }
 
     val scope = rememberCoroutineScope()

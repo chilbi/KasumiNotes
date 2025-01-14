@@ -5,6 +5,7 @@ import com.kasuminotes.action.isSelf
 import kotlin.math.ceil
 import kotlin.math.min
 import kotlin.math.roundToInt
+import kotlin.random.Random
 
 data class ExEquipData(
     val exEquipmentId: Int,
@@ -20,12 +21,31 @@ data class ExEquipData(
     val defaultProperty: Property,
     val maxProperty: Property,
     val passiveSkill1: SkillData?,
-    val passiveSkill2: SkillData?
+    val passiveSkill2: SkillData?,
+    val subStatusList: List<ExEquipSubStatus>?
 ) {
     val maxEnhanceLevel: Int = if (rarity > 2) 5 else rarity + 2
 
+    fun generateValue(subStatus: ExEquipSubStatus): Double {
+        return subStatus.values[Random.nextInt(subStatus.values.size)].toDouble()
+    }
+
+    fun generateSubPercentList(): List<Pair<Int, Double>> {
+        val list = mutableListOf<Pair<Int, Double>>()
+        if (!subStatusList.isNullOrEmpty()) {
+            var i = 0
+            while (i++ < 4) {
+                val randomSubStatus = subStatusList[Random.nextInt(subStatusList.size)]
+                val randomValue = generateValue(randomSubStatus)
+                list.add(randomSubStatus.status to randomValue)
+            }
+        }
+        return list
+    }
+
     fun getPercentProperty(enhanceLevel: Int): Property {
         if (enhanceLevel < 0) return Property.zero
+        if (rarity > 4) return  maxProperty
 
         return when (val level = min(enhanceLevel, maxEnhanceLevel)) {
             maxEnhanceLevel -> maxProperty
@@ -49,33 +69,52 @@ data class ExEquipData(
         }
     }
 
-    fun getProperty(percentProperty: Property, baseProperty: Property, includeSkillProperty: Boolean): Property {
-        val skillProperty = if (includeSkillProperty) getSkillProperty(baseProperty) else Property.zero
-        return Property { index ->
-            val value = percentProperty[index]
+    fun getProperty(
+        subPercentList: List<Pair<Int, Double>>,
+        percentProperty: Property,
+        baseProperty: Property,
+        exSkillProperty: Property,
+        includeSkill: Boolean
+    ): Property {
+        val subPercentProperty = Property(subPercentList, true)
+        val equipProperty = Property { index ->
+            val value = percentProperty[index] + subPercentProperty[index]
             if (index < 7) {
-                (baseProperty[index] * value / 10000).roundToInt().toDouble() + skillProperty[index]// TODO 不确定的取整方式
+                (baseProperty[index] * value / 10000).roundToInt().toDouble()// TODO 不确定的取整方式
             } else {
-                value + skillProperty[index]
+                value
             }
+        }
+        return if (includeSkill) {
+            val skillProperty = getSkillProperty(baseProperty, exSkillProperty, equipProperty)
+            Property { index -> equipProperty[index] + skillProperty[index] }
+        } else {
+            equipProperty
         }
     }
 
-    private fun getSkillProperty(baseProperty: Property): Property {
+    private fun getSkillProperty(
+        baseProperty: Property,
+        exSkillProperty: Property,
+        equipProperty: Property
+    ): Property {
+        val battleProperty = Property { index ->
+            baseProperty[index] + exSkillProperty[index] + equipProperty[index]
+        }
         return if (passiveSkill1 == null && passiveSkill2 == null) {
             Property.zero
         } else if (passiveSkill1 != null && passiveSkill2 == null) {
-            getPassive90SkillProperty(passiveSkill1, baseProperty)
+            getPassive90SkillProperty(passiveSkill1, battleProperty)
         } else if (passiveSkill1 == null && passiveSkill2 != null) {
-            getPassive90SkillProperty(passiveSkill2, baseProperty)
+            getPassive90SkillProperty(passiveSkill2, battleProperty)
         } else {
-            val p1 = getPassive90SkillProperty(passiveSkill1!!, baseProperty)
-            val p2 = getPassive90SkillProperty(passiveSkill2!!, baseProperty)
+            val p1 = getPassive90SkillProperty(passiveSkill1!!, battleProperty)
+            val p2 = getPassive90SkillProperty(passiveSkill2!!, battleProperty)
             Property { i -> p1[i] + p2[i] }
         }
     }
 
-    private fun getPassive90SkillProperty(passiveSkill: SkillData, baseProperty: Property): Property {
+    private fun getPassive90SkillProperty(passiveSkill: SkillData, battleProperty: Property): Property {
         val pairs = mutableListOf<Pair<Int, Double>>()
         val actions = passiveSkill.actions
         actions.forEachIndexed { index, action ->
@@ -89,7 +128,7 @@ data class ExEquipData(
                     val key = getStatusIndex(statusAction.actionDetail1 / 10)
                     if (key != null) {
                         var value = if (statusAction.actionValue1 == 2.0) {
-                            baseProperty[key] * statusAction.actionValue2 / 100
+                            battleProperty[key] * statusAction.actionValue2 / 100
                         } else {
                             statusAction.actionValue2
                         }

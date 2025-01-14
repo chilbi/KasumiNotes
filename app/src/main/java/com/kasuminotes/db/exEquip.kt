@@ -3,6 +3,7 @@ package com.kasuminotes.db
 import com.kasuminotes.data.ExEquipCategory
 import com.kasuminotes.data.ExEquipData
 import com.kasuminotes.data.ExEquipSlot
+import com.kasuminotes.data.ExEquipSubStatus
 import com.kasuminotes.data.Property
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -92,22 +93,61 @@ FROM ex_equipment_data WHERE ex_equipment_id=$exEquipId"""
                 defaultProperty,
                 maxProperty,
                 null,
+                null,
                 null
             )
         }
     }
 
+    val subStatusList = getSubStatusList(exEquipData)
+
     val passiveSkillId1 = exEquipData.passiveSkillId1
     val passiveSkillId2 = exEquipData.passiveSkillId2
     return if (passiveSkillId1 == 0 && passiveSkillId2 == 0) {
-        exEquipData
+        if (subStatusList == null) exEquipData
+        else exEquipData.copy(subStatusList = subStatusList)
     } else {
         withContext(Dispatchers.IO) {
             val skill1And2 = awaitAll(
                 async { getSkillData(passiveSkillId1) },
                 async { getSkillData(passiveSkillId2) }
             )
-            exEquipData.copy(passiveSkill1 = skill1And2[0], passiveSkill2 = skill1And2[1])
+            exEquipData.copy(
+                passiveSkill1 = skill1And2[0],
+                passiveSkill2 = skill1And2[1],
+                subStatusList = subStatusList
+            )
         }
+    }
+}
+
+private fun AppDatabase.getSubStatusList(exEquipData: ExEquipData): List<ExEquipSubStatus>? {
+    return if (
+        exEquipData.rarity > 4 &&
+        existsTables(listOf("ex_equipment_sub_status", "ex_equipment_sub_status_group"))
+    ) {
+        val sql = """SELECT ${ExEquipSubStatus.getFields()}
+FROM ex_equipment_sub_status_group AS a
+JOIN ex_equipment_sub_status AS b ON a.group_id=b.group_id
+WHERE a.ex_equipment_id=${exEquipData.exEquipmentId}"""
+        useDatabase {
+            rawQuery(sql, null).use {
+                val list = mutableListOf<ExEquipSubStatus>()
+                while (it.moveToNext()) {
+                    val values = mutableListOf<Int>()
+                    var i = 0
+                    while (i < 5) {
+                        values.add(it.getInt(i++))
+                    }
+                    list.add(ExEquipSubStatus(
+                        it.getInt(i),
+                        values
+                    ))
+                }
+                list
+            }
+        }
+    } else {
+        null
     }
 }

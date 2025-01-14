@@ -35,13 +35,15 @@ class CharaState(
         private set
     var userData by mutableStateOf<UserData?>(null)
         private set
-    var property by mutableStateOf(Property.zero)
-        private set
-    var baseProperty by mutableStateOf(Property.zero)
-        private set
     var rankBonusProperty by mutableStateOf<Property?>(null)
         private set
-    var includeExEquipProperty by mutableStateOf(Property.zero)
+    var exSkillProperty by mutableStateOf(Property.zero)
+        private set
+    //rarity+promotionStatus+promotion+unique1&2+story+bonus
+    var baseProperty by mutableStateOf(Property.zero)
+        private set
+    //base+exSkill+exEquip
+    var totalProperty by mutableStateOf(Property.zero)
         private set
     var saveVisible by mutableStateOf(false)
         private set
@@ -55,7 +57,7 @@ class CharaState(
         userData = data.userData
         saveVisible = false
 
-        if (data.property != null) {
+        if (data.baseProperty != null) {
             initData(data)
         } else {
             scope.launch(Dispatchers.IO) {
@@ -65,6 +67,14 @@ class CharaState(
                 initData(data)
             }
         }
+    }
+
+    fun changeSubPercentList(slotNum: Int, subPercentList: List<Pair<Int, Double>>) {
+        val map = userData!!.subPercentMap.toMutableMap()
+        map[slotNum] = subPercentList
+        val json = UserData.toSubPercentJson(map)
+        userData = userData!!.copy(subPercentJson = json)
+        changeState()
     }
 
     fun changeExEquip(slotNum: Int, exEquip: ExEquipData?) {
@@ -242,7 +252,7 @@ class CharaState(
         }
 
         userProfile!!.userData = userData!!
-        userProfile!!.setProperty(property, baseProperty, includeExEquipProperty)
+        userProfile!!.setProperty(baseProperty, totalProperty)
         saveVisible = false
 
         scope.launch(Dispatchers.IO) {
@@ -283,18 +293,16 @@ class CharaState(
 
         rankBonusProperty = data.getRankBonusProperty(userData!!.promotionLevel)
         calcProperty()
-        data.setProperty(property, baseProperty, includeExEquipProperty)
+        data.setProperty(baseProperty, totalProperty)
     }
 
     private fun calcProperty() {
-        val p = userProfile!!.getProperty(userData!!)
-        property = p
-
-        val exSkillProperty = userProfile!!.getExSkillProperty(userData!!)
-        baseProperty = Property { i -> property[i] - exSkillProperty[i] }
-
-        val exEquipProperty = userProfile!!.getExEquipProperty(baseProperty, userData!!)
-        includeExEquipProperty = Property { i -> exEquipProperty[i] + p[i] }
+        val base = userProfile!!.getBaseProperty(userData!!)
+        val exSkill = userProfile!!.getExSkillProperty(userData!!)
+        val exEquip = userProfile!!.getExEquipProperty(base, exSkill, userData!!)
+        exSkillProperty = exSkill
+        baseProperty = base
+        totalProperty = Property { i -> base[i] + exSkill[i] + exEquip[i] }
     }
 
     private fun changeState() {

@@ -26,7 +26,7 @@
     <string name="select_user_image">选择用户头像</string>
     <string name="edit">编辑</string>
     <string name="save_edit">保存</string>
-    <string name="equipping">装备上</string>
+    <string name="equipping">装上</string>
     <string name="demount_equip">卸下</string>
     <string name="edit_chara">编辑角色</string>
     <string name="registered">已注册</string>
@@ -182,6 +182,8 @@
     <string name="skill_effect">技能效果</string>
     <string name="same_category_equip">同类装备</string>
     <string name="equip_property">装备属性</string>
+    <string name="sub_property">副属性</string>
+    <string name="forge">炼成</string>
     <string name="equip_skill">装备技能</string>
     <string name="comma">、</string>
     <string name="full_stop">。</string>

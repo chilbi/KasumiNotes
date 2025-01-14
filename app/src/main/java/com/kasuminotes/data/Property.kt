@@ -6,9 +6,11 @@ import com.kasuminotes.R
 @Stable
 class Property(init: (Int) -> Double) {
 
-    constructor(pairs: List<Pair<Int, Double>>) : this({ 0.0 }) {
-        pairs.forEach { pair ->
-            arr[pair.first - 1] = pair.second
+    constructor(pairs: List<Pair<Int, Double>>, accumulation: Boolean = false) : this({ 0.0 }) {
+        if (accumulation) {
+            pairs.forEach { pair -> arr[pair.first - 1] += pair.second }
+        } else {
+            pairs.forEach { pair -> arr[pair.first - 1] = pair.second }
         }
     }
 

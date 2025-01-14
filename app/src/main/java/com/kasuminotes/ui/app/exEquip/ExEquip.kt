@@ -83,17 +83,29 @@ fun ExEquip(
 
                     ExEquipProperty(
                         exEquipState.percentProperty,
-                        exEquipState.baseProperty,
+                        exEquipData.rarity,
                         exEquipState.maxEnhanceLevel,
                         exEquipState.enhanceLevel,
+                        exEquipState::valueDisplay,
                         exEquipState::changeEnhanceLevel
                     )
+
+                    if (!exEquipData.subStatusList.isNullOrEmpty()) {
+                        ExEquipSubProperty(
+                            exEquipData.subStatusList,
+                            exEquipState.subPercentList,
+                            exEquipState::valueDisplay,
+                            exEquipState::changeSubPercentList,
+                            exEquipState::changeSubPercent,
+                            exEquipState::changeSubPercentValue
+                        )
+                    }
 
                     if (exEquipData.passiveSkill1 != null || exEquipData.passiveSkill2 != null) {
                         ExEquipSkill(
                             exEquipData.passiveSkill1,
                             exEquipData.passiveSkill2,
-                            exEquipState.baseProperty
+                            exEquipState.battleProperty
                         )
                     }
                 }

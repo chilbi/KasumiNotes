@@ -38,11 +38,11 @@ data class UserProfile(
     var unitConversionData: UnitConversionData? = null,
     var exEquipSlots: List<ExEquipSlot> = emptyList()
 ) {
-    var property: Property? = null
-        private set
+    //rarity+promotionStatus+promotion+unique1&2+story+bonus
     var baseProperty: Property? = null
         private set
-    var includeExEquipProperty: Property? = null
+    //base+exSkill+exEquip
+    var totalProperty: Property? = null
         private set
 
     fun getRealUnitData(rarity: Int): UnitData = if (shouldConverted(rarity)) unitConversionData!!.unitData else unitData
@@ -64,7 +64,7 @@ data class UserProfile(
         return realExSkillData!!.getProperty(data.rarity, data.exLevel)
     }
 
-    fun getExEquipProperty(base: Property, data: UserData): Property {
+    fun getExEquipProperty(base: Property, exSkill: Property, data: UserData): Property {
         return if (exEquipSlots.isEmpty()) {
             Property.zero
         } else {
@@ -79,7 +79,8 @@ data class UserProfile(
                             else -> data.exEquip3Level
                         }
                     )
-                    slot.exEquipData.getProperty(percent, base, true)
+                    val subPercent = data.subPercentMap.getOrDefault(index + 1, null) ?: emptyList()
+                    slot.exEquipData.getProperty(subPercent, percent, base, exSkill, true)
                 }
             }
             Property { i ->
@@ -90,19 +91,20 @@ data class UserProfile(
         }
     }
 
-    fun getProperty(data: UserData): Property {
+    //rarity+promotionStatus+promotion+unique1&2+story+bonus
+    fun getBaseProperty(data: UserData): Property {
         return if (
             unitRarity != null &&
             unitPromotionStatus != null &&
             unitPromotion != null &&
-            charaStoryStatus != null &&
-            exSkillData != null
+            charaStoryStatus != null
+//            exSkillData != null
         ) {
             val rarityLevel = data.charaLevel + data.promotionLevel
             val equipsLevel = data.equipsLevel
             val unique1Property = unique1Data?.getUnique1Property(data.unique1Level)
             val unique2Property = unique2Data?.getUnique2Property(data.unique2Level)
-            val exSkillProperty = getExSkillProperty(data)
+//            val exSkillProperty = getExSkillProperty(data)
             val rankBonusProperty = getRankBonusProperty(data.promotionLevel) ?: Property.zero
 
             Property { index ->
@@ -137,7 +139,7 @@ data class UserProfile(
                     }
                 }
                 // exSkillData
-                value += exSkillProperty[index]
+//                value += exSkillProperty[index]
                 // promotionBonus
                 value += rankBonusProperty[index]
                 value
@@ -185,10 +187,9 @@ data class UserProfile(
         OrderBy.EnergyReduceRate -> (includeExEquipProperty?.energyReduceRate?.roundToInt() ?: 0).toString()*/
     }
 
-    fun setProperty(p: Property, base: Property, includeExEquip: Property) {
-        property = p
+    fun setProperty(base: Property, total: Property) {
         baseProperty = base
-        includeExEquipProperty = includeExEquip
+        totalProperty = total
     }
 
     private fun shouldConverted(rarity: Int): Boolean = unitConversionData != null && rarity > 5
