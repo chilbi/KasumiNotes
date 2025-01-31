@@ -1,6 +1,7 @@
 package com.kasuminotes.action
 
 import com.kasuminotes.R
+import com.kasuminotes.common.Element
 import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getStatusField(skillLevel: Int): D {
@@ -9,11 +10,23 @@ fun SkillAction.getStatusField(skillLevel: Int): D {
         formula = formula.append(D.Text("%").style(primary = true, bold = true))
     }
 
+    var target = getAssignment()
+    if (actionValue7 > 0) {
+        val el = D.Format(when (actionValue7.toInt()) {
+            1 -> Element.Fire.resId
+            2 -> Element.Water.resId
+            3 -> Element.Wind.resId
+            4 -> Element.Light.resId
+            else -> R.drawable.dark
+        })
+        target = target.insert(D.Format(R.string.content_element1, arrayOf(el)))
+    }
+
     val content = D.Format(
         if (actionDetail1 % 10 == 0) R.string.content_buff_target1_content2_formula3
         else R.string.content_debuff_target1_content2_formula3,
         arrayOf(
-            getAssignment(),
+            target,
             getStatusContent(actionDetail1 / 10).style(underline = true),
             formula
         )

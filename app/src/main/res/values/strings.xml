@@ -396,6 +396,7 @@
     <string name="mode_1158100">自身变化为人类的姿态，</string>
     <string name="mode_fly">赋予自身【飞行】状态，</string>
 
+    <string name="content_element1">%s属性的</string>
     <string name="content_max_hp_ratio1">最大HP的%s</string>
     <string name="content_hp_ratio1">残余HP的%s</string>
     <string name="content_regeneration_content1_formula2">所有己方角色的%1$s每秒回复%2$s</string>

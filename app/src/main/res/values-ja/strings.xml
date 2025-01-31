@@ -396,6 +396,7 @@
     <string name="mode_1158100">自分を人の姿に変化させる、</string>
     <string name="mode_fly">自分を【飛行】状態にする、</string>
 
+    <string name="content_element1">%s属性の</string>
     <string name="content_max_hp_ratio1">最大ＨＰの%s</string>
     <string name="content_hp_ratio1">残りＨＰの%s</string>
     <string name="content_regeneration_content1_formula2">の味方すべての%1$sを毎秒%2$s回復する</string>
