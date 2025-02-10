@@ -13,6 +13,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import com.kasuminotes.ui.theme.DarkError
+import com.kasuminotes.ui.theme.DarkWarning
 import org.xmlpull.v1.XmlPullParser
 import java.io.StringReader
 
@@ -56,6 +58,14 @@ sealed class D {
         else Join(arrayOf(Text(tagStart), this.copy(), Text(tagEnd)))
     }
 
+    fun tag(yes: Boolean): D {
+        val tag = if (yes) "yes" else "no"
+        val tagStart = "<$tag>"
+        val tagEnd = "</$tag>"
+        return if (this is Text) Text(tagStart + this.value + tagEnd)
+        else Join(arrayOf(Text(tagStart), this.copy(), Text(tagEnd)))
+    }
+
     companion object {
         fun join(@StringRes vararg args: Int): D {
             return Join(args.map { Format(it) }.toTypedArray())
@@ -90,7 +100,9 @@ fun stringDescription(d: D): String {
 private data class DescStyle(
     val primary: Boolean,
     val bold: Boolean,
-    val underline: Boolean
+    val underline: Boolean,
+    val yes: Boolean,
+    val no: Boolean
 )
 
 @Composable
@@ -101,7 +113,7 @@ fun annotatedStringDescription(xmlString: String): AnnotatedString {
     return buildAnnotatedString {
         val styleMap = mutableMapOf<Int, DescStyle>()
         var styleNest = 0
-        styleMap[0] = DescStyle(primary = false, bold = false, underline = false)
+        styleMap[0] = DescStyle(false, false, false, false, false)
         var eventType = parser.eventType
         while (eventType != XmlPullParser.END_DOCUMENT) {
             when (eventType) {
@@ -112,18 +124,30 @@ fun annotatedStringDescription(xmlString: String): AnnotatedString {
                         val bold = prevDescStyle.bold || parser.getAttributeValue(null, "bold") == "true"
                         val underline = prevDescStyle.underline || parser.getAttributeValue(null, "underline") == "true"
                         styleNest++
-                        styleMap[styleNest] = DescStyle(primary, bold, underline)
+                        styleMap[styleNest] = prevDescStyle.copy(primary, bold, underline)
+                    } else if (parser.name == "yes") {
+                        val prevDescStyle = styleMap[styleNest]!!
+                        styleNest++
+                        styleMap[styleNest] = prevDescStyle.copy(yes = true)
+                    } else if (parser.name == "no") {
+                        val prevDescStyle = styleMap[styleNest]!!
+                        styleNest++
+                        styleMap[styleNest] = prevDescStyle.copy(no = true)
                     }
                 }
                 XmlPullParser.END_TAG -> {
-                    if (parser.name == "style") {
+                    if (arrayOf("style", "yes", "no").contains(parser.name)) {
                         styleNest--
                     }
                 }
                 XmlPullParser.TEXT -> {
                     val descStyle = styleMap[styleNest]!!
+                    val color = if (descStyle.yes) DarkWarning
+                    else if (descStyle.no) DarkError
+                    else if (descStyle.primary) MaterialTheme.colorScheme.primary
+                    else Color.Unspecified
                     withStyle(SpanStyle(
-                        color = if (descStyle.primary) MaterialTheme.colorScheme.primary else Color.Unspecified,
+                        color = color,
                         fontWeight = if (descStyle.bold) FontWeight.Bold else null,
                         textDecoration = if (descStyle.underline) TextDecoration.Underline else null
                     )) {

@@ -29,75 +29,74 @@ private fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
         }
         // アメス
         1900 -> {
+            val id = R.string.action_branch_barrier_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_barrier_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_barrier_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_barrier_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_barrier_no).tag(false)))
             )
         }
         // ミミ（サマー）
         1800 -> {
+            val id = R.string.action_branch_multi_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_multi_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_multi_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_multi_target_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_multi_target_no).tag(false)))
             )
         }
         // キャル（オーバーロード）
         1600 -> {
             val state = D.Format(R.string.fear)
-            setBranch(
-                branch,
-                D.Format(R.string.action_branch_target1_state2, arrayOf(target, state)),
-                D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
-            )
+            setAbnormalBranch(branch, target, state)
         }
         in 1501..1599 -> {
             val state = getAbnormalContent(actionDetail1 - 1500)
-            setBranch(
-                branch,
-                D.Format(R.string.action_branch_target1_state2, arrayOf(target, state)),
-                D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
-            )
+            setAbnormalBranch(branch, target, state)
         }
         // タマキ、ミサト（サマー）
         1300 -> {
+            val id = R.string.action_branch_atk_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_physical_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_magic_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_physical).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_magic).tag(false)))
             )
         }
         // ぺコリーヌ（プリンセス）、レイ（ハロウィン）
         in 901..999 -> {
-            val above = D.Text("${actionDetail1 % 100}%")
+            val value = D.Text("${actionDetail1 % 100}%")
+            val id = R.string.action_branch_hp_target1_value2_p3
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_not_hp_target1_above2, arrayOf(target, above)),
-                D.Format(R.string.action_branch_hp_target1_above2, arrayOf(target, above))
+                D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_lt).tag(true))),
+                D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_gt).tag(false)))
             )
         }
         900 -> {
+            val id = R.string.action_branch_hp_max_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_hp_max_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_hp_max_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_hp_max_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_hp_max_no).tag(false)))
             )
         }
         // 天秤座
         710 -> {
+            val id = R.string.action_branch_break_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_break_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_break_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_break_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_break_no).tag(false))),
             )
         }
         // マコト（サマー）
         700 -> {
+            val id = R.string.action_branch_single_target_p1
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_single_target),
-                D.Format(R.string.action_branch_not_single_target)
+                D.Format(id, arrayOf(D.Format(R.string.action_branch_single_target_yes).tag(true))),
+                D.Format(id, arrayOf(D.Format(R.string.action_branch_single_target_no).tag(false)))
             )
         }
         // ルナ、クリスティーナ（クリスマス）
@@ -106,73 +105,34 @@ private fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
         }
         // アオイ、アオイ（編入生）、ミツキ（オーエド）
         in 500..599 -> {
-            val state = when (actionDetail1 - 500) {
-                0 -> D.Format(R.string.burn)
-                1 -> D.Format(R.string.curse)
-                2 -> D.Format(R.string.poison)
-                3 -> D.Format(R.string.fierce_poison)
-                4 -> D.Format(R.string.beshrew)
-                11 -> D.Format(R.string.curse_or_beshrew)
-                12 -> D.Format(R.string.poison_or_fierce_poison)
-                99 -> D.Format(R.string.poison_or_fierce_poison_or_curse_or_beshre_or_burn)
-                else -> D.Unknown
-            }
-            var yes = actionDetail2
-            var not = actionDetail3
-            if (actionId == 104001201) {// TODO アオイ S1+ 谜之顺序
-                yes = actionDetail3
-                not = actionDetail2
-            }
-            if (yes != 0) {
-                branch.add(
-                    yes to D.Format(
-                        R.string.action_branch_target1_state2,
-                        arrayOf(target, state)
-                    )
-                )
-            }
-            if (not != 0) {
-                branch.add(
-                    not to D.Format(
-                        R.string.action_branch_not_target1_state2,
-                        arrayOf(target, state)
-                    )
-                )
-            }
+            setAbnormalDamageBranch(branch, target)
         }
         // イオ
         300 -> {
             val state = D.Format(R.string.charm)
-            setBranch(
-                branch,
-                D.Format(R.string.action_branch_target1_state2, arrayOf(target, state)),
-                D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
-            )
+            setAbnormalBranch(branch, target, state)
         }
         // 射手座
         200 -> {
             val state = D.Format(R.string.darkness)
-            setBranch(
-                branch,
-                D.Format(R.string.action_branch_target1_state2, arrayOf(target, state)),
-                D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
-            )
+            setAbnormalBranch(branch, target, state)
         }
         // カヤ（タイムトラベル）
         101 -> {
+            val id = R.string.action_branch_speed_up_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_speed_up_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_speed_up_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_speed_up_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_speed_up_no).tag(false)))
             )
         }
         // レム
         100 -> {
+            val id = R.string.action_branch_akinesia_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_akinesia_target1, arrayOf(target)
-                ),
-                D.Format(R.string.action_branch_not_akinesia_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_akinesia_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_akinesia_no).tag(false)))
             )
         }
     }
@@ -192,18 +152,20 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         in 3000..3999 -> {
             val target = getTarget(depend)
             val state = getMarkContent(actionDetail1 - 3000)
+            val id = R.string.action_branch_target1_environment2_p3
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_target1_environment2, arrayOf(target, state)),
-                D.Format(R.string.action_branch_not_target1_environment2, arrayOf(target, state))
+                D.Format(id, arrayOf(target, state, D.Format(R.string.action_branch_environment_yes).tag(true))),
+                D.Format(id, arrayOf(target, state, D.Format(R.string.action_branch_environment_no).tag(false)))
             )
         }
         // アキノ（サマー）、ハツネ（ニューイヤー）
         2000, 2001 -> {
             if (targetCount == 1) {
                 val target = getTarget(depend)
-                val physical = D.Format(R.string.action_branch_physical_target1, arrayOf(target))
-                val magic = D.Format(R.string.action_branch_magic_target1, arrayOf(target))
+                val id = R.string.action_branch_atk_target1_p2
+                val physical = D.Format(id, arrayOf(target, D.Format(R.string.action_branch_physical).tag(true)))
+                val magic = D.Format(id, arrayOf(target, D.Format(R.string.action_branch_magic).tag(false)))
                 var detail2 = actionDetail2
                 var detail3 = actionDetail3
                 if (actionDetail1 == 2001) {
@@ -219,29 +181,32 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
             } else {
                 val target = this.copy(actionType = -1).getTarget(depend).append(D.Format(R.string.target_in))
                 val type = D.Format(if (actionDetail1 == 2001) R.string.magic else R.string.physical)
+                val id = R.string.action_branch_exists_target1_type2_p3
                 setBranch(
                     branch,
-                    D.Format(R.string.action_branch_exists_target1_type2, arrayOf(target, type)),
-                    D.Format(R.string.action_branch_not_exists_target1_type2, arrayOf(target, type))
+                    D.Format(id, arrayOf(target, type, D.Format(R.string.action_branch_exists_type_yes).tag(true))),
+                    D.Format(id, arrayOf(target, type, D.Format(R.string.action_branch_exists_type_no).tag(false)))
                 )
             }
         }
         //グレーターゴーレム
         1900 -> {
             val target = getTarget(depend)
+            val id = R.string.action_branch_barrier_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_barrier_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_barrier_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_barrier_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_barrier_no).tag(false)))
             )
         }
         // ミミ（サマー）
         1800 -> {
             val target = getTarget(depend)
+            val id = R.string.action_branch_multi_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_multi_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_multi_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_multi_target_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_multi_target_no).tag(false)))
             )
         }
         // キャル（サマー）
@@ -256,10 +221,11 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
                 getStatusContent(detail1 / 10),
                 D.Format(if (isUp) R.string.content_up else R.string.content_down)
             ))
+            val id = R.string.action_branch_status_change_target1_content2_p3
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_status_change_target1_content2_, arrayOf(target, content)),
-                D.Format(R.string.action_branch_not_status_change_target1_content2, arrayOf(target, content))
+                D.Format(id, arrayOf(target, content, D.Format(R.string.action_branch_status_change_yes).tag(true))),
+                D.Format(id, arrayOf(target, content, D.Format(R.string.action_branch_status_change_no).tag(false)))
             )
         }
         // イノリ（怪盗）
@@ -269,55 +235,56 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         in 1501..1599 -> {
             val target = getTarget(depend)
             val state = getAbnormalContent(actionDetail1 - 1500)
-            setBranch(
-                branch,
-                D.Format(R.string.action_branch_target1_state2, arrayOf(target, state)),
-                D.Format(R.string.action_branch_not_target1_state2, arrayOf(target, state))
-            )
+            setAbnormalBranch(branch, target, state)
         }
         // アリサ、カヤ、スズナ（サマー）、ルカ（サマー）、クロエ（聖学祭）
         in 1200..1299 -> {
             val counter = D.Format(R.string.counter_num1, arrayOf(D.Text((actionDetail1 / 10 % 10).toString())))
-            val above = D.Text((actionDetail1 % 10).toString())
+            val count = D.Text((actionDetail1 % 10).toString())
+            val id = R.string.action_branch_counter1_count2_p3
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_counter1_above2, arrayOf(counter, above)),
-                D.Format(R.string.action_branch_not_counter1_above2, arrayOf(counter, above))
+                D.Format(id, arrayOf(counter, count, D.Format(R.string.action_branch_gt).tag(true))),
+                D.Format(id, arrayOf(counter, count, D.Format(R.string.action_branch_lt).tag(false)))
             )
         }
         // リノ（ワンダー）
         1001 -> {
+            val id = R.string.action_branch_critical_p1
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_critical),
-                D.Format(R.string.action_branch_not_critical)
+                D.Format(id, arrayOf(D.Format(R.string.action_branch_critical_yes).tag(true))),
+                D.Format(id, arrayOf(D.Format(R.string.action_branch_critical_no).tag(false))),
             )
         }
         // エリコ、ニノン、シノブ（ハロウィン）
         1000 -> {
+            val id = R.string.action_branch_overthrew_p1
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_overthrew),
-                D.Format(R.string.action_branch_not_overthrew)
+                D.Format(id, arrayOf(D.Format(R.string.action_branch_overthrew_yes).tag(true))),
+                D.Format(id, arrayOf(D.Format(R.string.action_branch_overthrew_no).tag(false)))
             )
         }
         // ぺコリーヌ（ニューイヤー）
         in 901..999 -> {
             val target = getTarget(depend)
-            val above = D.Text("${actionDetail1 % 100}%")
+            val value = D.Text("${actionDetail1 % 100}%")
+            val id = R.string.action_branch_hp_target1_value2_p3
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_not_hp_target1_above2, arrayOf(target, above)),
-                D.Format(R.string.action_branch_hp_target1_above2, arrayOf(target, above))
+                D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_lt).tag(true))),
+                D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_gt).tag(false)))
             )
         }
         // フブキ
         900 -> {
             val target = getTarget(depend)
+            val id = R.string.action_branch_hp_max_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_hp_max_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_hp_max_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_hp_max_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_hp_max_no).tag(false)))
             )
         }
         // ホマレ
@@ -327,37 +294,41 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         // ランファ
         720 -> {
             val summon = getUnitName(actionValue3.toInt())
+            val id = R.string.action_branch_summon1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_exist_summon1, arrayOf(summon)),
-                D.Format(R.string.action_branch_not_exist_summon1, arrayOf(summon))
+                D.Format(id, arrayOf(summon, D.Format(R.string.action_branch_summon_yes).tag(true))),
+                D.Format(id, arrayOf(summon, D.Format(R.string.action_branch_summon_no).tag(false)))
             )
         }
         // 水瓶座
         710 -> {
             val target = getTarget(depend)
+            val id = R.string.action_branch_break_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_break_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_break_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_break_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_break_no).tag(false)))
             )
         }
         // 魚座、蠍座
         in 701..709 -> {
             val target = getAssignmentSide()
             val count = D.Text((actionDetail1 - 700).toString())
+            val id = R.string.action_branch_unit_target1_count2_p3
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_unit_target1_count2, arrayOf(target, count)),
-                D.Format(R.string.action_branch_not_unit_target1_count2, arrayOf(target, count))
+                D.Format(id, arrayOf(target, count, D.Format(R.string.action_branch_unit_yes).tag(true))),
+                D.Format(id, arrayOf(target, count, D.Format(R.string.action_branch_unit_no).tag(false)))
             )
         }
         // マコト（サマー）、アンナ（サマー）
         700 -> {
+            val id = R.string.action_branch_single_target_p1
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_single_target),
-                D.Format(R.string.action_branch_not_single_target)
+                D.Format(id, arrayOf(D.Format(R.string.action_branch_single_target_yes).tag(true))),
+                D.Format(id, arrayOf(D.Format(R.string.action_branch_single_target_no).tag(false)))
             )
         }
         // レイ、ルナ、クリスティーナ（クリスマス）、チエル（聖学祭）
@@ -366,70 +337,41 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         }
         in 500..599 -> {
             val target = getTarget(depend)
-            val state = when (actionDetail1 - 500) {
-                0 -> D.Format(R.string.burn)
-                1 -> D.Format(R.string.curse)
-                2 -> D.Format(R.string.poison)
-                3 -> D.Format(R.string.fierce_poison)
-                4 -> D.Format(R.string.beshrew)
-                11 -> D.Format(R.string.curse_or_beshrew)
-                12 -> D.Format(R.string.poison_or_fierce_poison)
-                99 -> D.Format(R.string.poison_or_fierce_poison_or_curse_or_beshre_or_burn)
-                else -> D.Unknown
-            }
-            var yes = actionDetail2
-            var not = actionDetail3
-            if (actionId == 104001201) {// TODO アオイ S1+ 谜之顺序
-                yes = actionDetail3
-                not = actionDetail2
-            }
-            if (yes != 0) {
-                branch.add(
-                    yes to D.Format(
-                        R.string.action_branch_target1_state2,
-                        arrayOf(target, state)
-                    )
-                )
-            }
-            if (not != 0) {
-                branch.add(
-                    not to D.Format(
-                        R.string.action_branch_not_target1_state2,
-                        arrayOf(target, state)
-                    )
-                )
-            }
+            setAbnormalDamageBranch(branch, target)
         }
         // カヤ（タイムトラベル）
         101 -> {
             val target = getTarget(depend)
+            val id = R.string.action_branch_speed_up_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_speed_up_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_speed_up_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_speed_up_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_speed_up_no).tag(false)))
             )
         }
         // ミフユ
         100 -> {
             val target = getTarget(depend)
+            val id = R.string.action_branch_akinesia_target1_p2
             setBranch(
                 branch,
-                D.Format(R.string.action_branch_akinesia_target1, arrayOf(target)),
-                D.Format(R.string.action_branch_not_akinesia_target1, arrayOf(target))
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_akinesia_yes).tag(true))),
+                D.Format(id, arrayOf(target, D.Format(R.string.action_branch_akinesia_no).tag(false)))
             )
         }
         // スズメ
         in 1..99 -> {
-            val event = (actionId % 10).toString()
+            val event = D.Text((actionId % 10).toString())
+            val id = R.string.action_branch_odds1_event2_p3
             setBranch(
                 branch,
                 D.Format(
-                    R.string.action_branch_success_odds1_event2,
-                    arrayOf(D.Text("${actionDetail1}%"), D.Text(event))
+                    id,
+                    arrayOf(D.Text("${actionDetail1}%"), event, D.Format(R.string.action_branch_event_yes).tag(true))
                 ),
                 D.Format(
-                    R.string.action_branch_failure_odds1_event2,
-                    arrayOf(D.Text("${100 - actionDetail1}%"), D.Text(event))
+                    id,
+                    arrayOf(D.Text("${100 - actionDetail1}%"), event, D.Format(R.string.action_branch_event_no).tag(false))
                 )
             )
         }
@@ -461,22 +403,25 @@ private fun SkillAction.getCounterBranch(): Array<Pair<Int, D>> {
 private fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
     val branch = mutableListOf<Pair<Int, D>>()
     val content = getSkillLabel(actionDetail1)
+    val id = R.string.action_branch_field_content1_p2
     setBranch(
         branch,
-        D.Format(R.string.action_branch_exists_field_content1, arrayOf(content)),
-        D.Format(R.string.action_branch_not_exists_field_content1, arrayOf(content))
+        D.Format(id, arrayOf(content, D.Format(R.string.action_branch_field_yes).tag(true))),
+        D.Format(id, arrayOf(content, D.Format(R.string.action_branch_field_no).tag(false)))
     )
     return branch.toTypedArray()
 }
 
+//未知
 private fun SkillAction.getDamageReceivedBranch(): Array<Pair<Int, D>> {
     val branch = mutableListOf<Pair<Int, D>>()
     val time = D.Text(actionValue2.toNumStr())
     val value = D.Text(actionValue3.toNumStr())
+    val id = R.string.action_branch_damage_received_time1_value2_p3
     setBranch(
         branch,
-        D.Format(R.string.action_branch_damage_received_time1_value2, arrayOf(time, value)),
-        D.Format(R.string.action_branch_not_damage_received_time1_value2, arrayOf(time, value))
+        D.Format(id, arrayOf(time, value, D.Format(R.string.action_branch_damage_received_yes).tag(true))),
+        D.Format(id, arrayOf(time, value, D.Format(R.string.action_branch_damage_received_no).tag(false)))
     )
     return branch.toTypedArray()
 }
@@ -508,17 +453,59 @@ private fun SkillAction.setStateBranch(branch: MutableList<Pair<Int, D>>, stateI
     val state = getMarkContent(stateId)
     val target = getTarget(depend)
     if (stateCount == 0.0 || stateCount == 1.0) {
+        val id = R.string.action_branch_mark_target1_state2_p3
         setBranch(
             branch,
-            D.Format(R.string.action_branch_have_target1_state2, arrayOf(target, state)),
-            D.Format(R.string.action_branch_not_have_target1_state2, arrayOf(target, state))
+            D.Format(id, arrayOf(target, state, D.Format(R.string.action_branch_mark_yes).tag(true))),
+            D.Format(id, arrayOf(target, state, D.Format(R.string.action_branch_mark_no).tag(false)))
         )
     } else {
-        val above = D.Text(stateCount.toNumStr())
+        val count = D.Text(stateCount.toNumStr())
+        val id = R.string.action_branch_mark_target1_state2_count3_p4
         setBranch(
             branch,
-            D.Format(R.string.action_branch_target1_state2_above3, arrayOf(target, state, above)),
-            D.Format(R.string.action_branch_not_target1_state2_above3, arrayOf(target, state, above))
+            D.Format(id, arrayOf(target, state, count, D.Format(R.string.action_branch_gt).tag(true))),
+            D.Format(id, arrayOf(target, state, count, D.Format(R.string.action_branch_lt).tag(false)))
+        )
+    }
+}
+
+private fun SkillAction.setAbnormalBranch(branch: MutableList<Pair<Int, D>>, target: D, state: D) {
+    val id = R.string.action_branch_abnormal_target1_state2_p3
+    setBranch(
+        branch,
+        D.Format(id, arrayOf(target, state, D.Format(R.string.action_branch_abnormal_yes).tag(true))),
+        D.Format(id, arrayOf(target, state, D.Format(R.string.action_branch_abnormal_no).tag(false)))
+    )
+}
+
+private fun SkillAction.setAbnormalDamageBranch(branch: MutableList<Pair<Int, D>>, target: D) {
+    val state = when (actionDetail1 - 500) {
+        0 -> D.Format(R.string.burn)
+        1 -> D.Format(R.string.curse)
+        2 -> D.Format(R.string.poison)
+        3 -> D.Format(R.string.fierce_poison)
+        4 -> D.Format(R.string.beshrew)
+        11 -> D.Format(R.string.curse_or_beshrew)
+        12 -> D.Format(R.string.poison_or_fierce_poison)
+        99 -> D.Format(R.string.poison_or_fierce_poison_or_curse_or_beshre_or_burn)
+        else -> D.Unknown
+    }
+    val id = R.string.action_branch_abnormal_target1_state2_p3
+    var yes = actionDetail2
+    var no = actionDetail3
+    if (actionId == 104001201) {// TODO アオイ S1+ 谜之顺序
+        yes = actionDetail3
+        no = actionDetail2
+    }
+    if (yes != 0) {
+        branch.add(
+            yes to D.Format(id, arrayOf(target, state, D.Format(R.string.action_branch_abnormal_yes).tag(true)))
+        )
+    }
+    if (no != 0) {
+        branch.add(
+            no to D.Format(id, arrayOf(target, state, D.Format(R.string.action_branch_abnormal_no).tag(false)))
         )
     }
 }
