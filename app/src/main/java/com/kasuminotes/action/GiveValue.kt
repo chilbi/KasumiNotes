@@ -46,7 +46,10 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
             if (!(targetAction.actionType == 35 && actionDetail2 == 4)) {
                 isAdditive = false
             }
-            if ((targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 2) && actionDetail2 == 1) {
+            if (targetAction.actionType != 16 &&
+                (targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 2) &&
+                actionDetail2 == 1
+            ) {
                 value2 *= 100
                 isPercent = true
             }
@@ -57,7 +60,7 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         if (targetAction.actionType == 98  && actionDetail2 == 1) {
             val value = (value2 + value3 * skillLevel) * 100
             D.Text("${value.toNumStr()}%")
-        } else if (value2 > 0.0 && value3 > 0.0) {
+        } else if (value2 > 0.0 || value3 > 0.0) {
             D.Format(
                 R.string.sub_formula_base1_lv2,
                 arrayOf(
