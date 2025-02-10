@@ -1,7 +1,6 @@
 package com.kasuminotes.action
 
 import com.kasuminotes.R
-import com.kasuminotes.common.Element
 import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getStatusField(skillLevel: Int): D {
@@ -12,14 +11,9 @@ fun SkillAction.getStatusField(skillLevel: Int): D {
 
     var target = getAssignment()
     if (actionValue7 > 0) {
-        val el = D.Format(when (actionValue7.toInt()) {
-            1 -> Element.Fire.resId
-            2 -> Element.Water.resId
-            3 -> Element.Wind.resId
-            4 -> Element.Light.resId
-            else -> R.drawable.dark
-        })
-        target = target.insert(D.Format(R.string.content_element1, arrayOf(el)))
+        target = target.insert(
+            D.Format(R.string.content_element1, arrayOf(getElementType(actionValue7.toInt())))
+        )
     }
 
     val content = D.Format(

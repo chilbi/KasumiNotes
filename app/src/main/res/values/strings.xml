@@ -495,6 +495,7 @@
     <string name="target_multi_target1">%s的所有多目标部位</string>
     <string name="target_attacking_enemy">进攻的敌人</string>
     <string name="target_state1">持有【%s】的对象</string>
+    <string name="target_element1">%s属性的</string>
 
     <string name="skill_level">技能等级</string>
     <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × 技能等级 + (%3$s + %4$s × 技能等级) × %5$s } = %6$s</string>

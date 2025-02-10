@@ -3,6 +3,7 @@ package com.kasuminotes.action
 import androidx.annotation.StringRes
 import com.kasuminotes.MainApplication
 import com.kasuminotes.R
+import com.kasuminotes.common.Element
 import com.kasuminotes.common.Label
 import com.kasuminotes.common.Language
 import com.kasuminotes.data.Property
@@ -19,9 +20,9 @@ private fun getString(type: String, id: String): String? {
             Locale.JAPANESE.language -> Language.JP.name
             else -> Language.CN.name
         }
-        stringsMap.getOrDefault(lang, null)
-            ?.getOrDefault(type, null)
-            ?.getOrDefault(id, null)
+        stringsMap.getOrElse(lang) { null }
+            ?.getOrElse(type) { null }
+            ?.getOrElse(id) { null }
     } else {
         null
     }
@@ -70,6 +71,14 @@ fun getAtkType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.atk else 
 fun getDefType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.def else R.string.magic_def)
 
 fun getDamageType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.physical else R.string.magic)
+
+fun getElementType(detail: Int) = D.Format(when (detail) {
+    1 -> Element.Fire.resId
+    2 -> Element.Water.resId
+    3 -> Element.Wind.resId
+    4 -> Element.Light.resId
+    else -> Element.Dark.resId
+})
 
 fun getBaseLvAtkFormula(
     detail: Int,

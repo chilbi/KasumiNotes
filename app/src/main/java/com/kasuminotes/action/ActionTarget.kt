@@ -110,6 +110,13 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             R.string.target_state1,
             arrayOf(getMarkContent(targetType - 13000))
         )
+    } else if (targetType in 14001..14999) {
+        return D.Format(
+            R.string.target_element1,
+            arrayOf(getElementType(targetType - 14000))
+        ).append(
+            this.copy(targetType = 1).getTarget(null)
+        )
     }
 
     return when (targetType) {
