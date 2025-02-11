@@ -326,7 +326,7 @@
     <string name="action_branch_attack_critical_target1">%sの攻撃がクリティカルでダメージを与える度に、</string>
     <string name="action_branch_striked_time1">%s秒のモーションの間に攻撃された場合、</string>
     <string name="action_branch_controled_time1">%s秒のモーションの間に行動不能、吹き飛ばし、引き寄せを受けた場合、</string>
-    <string name="action_branch_field_content1_p2">%1$s%sのフィールド%2$s場合、</string>
+    <string name="action_branch_field_content1_p2">%1$sのフィールド%2$s場合、</string>
     <string name="action_branch_field_yes">展開中</string>
     <string name="action_branch_field_no">展開中ではない</string>
     <string name="action_branch_damage_received_time1_value2_p3">%1$s秒の間に累計受けたダメージが%2$sを%3$s場合、</string>
