@@ -60,7 +60,7 @@ fun getUnitName(id: Int): D {
     return if (unitName == null) {
         D.Format(R.string.summon_unknown, arrayOf(D.Text(id.toString())))
     } else {
-        D.Text(unitName)
+        D.Format(R.string.brackets, arrayOf(D.Text(unitName)))
     }
 }
 

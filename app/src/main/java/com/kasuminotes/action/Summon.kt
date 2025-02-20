@@ -15,15 +15,15 @@ fun SkillAction.getSummon(): D {
         408401 -> D.Format(R.string.summon_408401)//チカ（クリスマス）
         408402 -> D.Format(R.string.summon_408402)//チカ（クリスマス）
         408403 -> D.Format(R.string.summon_408403)//チカ（クリスマス）
-        418101 -> D.Format(R.string.summon_418101)//ランファ
+//        418101 -> D.Format(R.string.summon_418101)//ランファ
         425801 -> D.Format(R.string.summon_425801)
         425802 -> D.Format(R.string.summon_425802)
-        426201 -> D.Format(R.string.summon_426201)
-        426202 -> D.Format(R.string.summon_426202)
-        427101 -> D.Format(R.string.summon_427101)
+//        426201 -> D.Format(R.string.summon_426201)
+//        426202 -> D.Format(R.string.summon_426202)
+//        427101 -> D.Format(R.string.summon_427101)
         431901 -> D.Format(R.string.summon_431901)
-        430101 -> D.Format(R.string.summon_430101)
-        else -> D.Format(R.string.summon_id1, arrayOf(D.Text(actionDetail2.toString())))
+//        430101 -> D.Format(R.string.summon_430101)
+        else -> D.Format(R.string.summon_id1, arrayOf(getUnitName(actionDetail2)))
     }
 
     return if (actionValue7 == 0.0) {

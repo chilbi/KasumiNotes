@@ -392,7 +392,7 @@
     <string name="action_branch_environment_yes">いる</string>
     <string name="action_branch_environment_no">いない</string>
 
-    <string name="summon_id1">【%s】を召喚する</string>
+    <string name="summon_id1">%sを召喚する</string>
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
     <string name="summon_403102">目の前の敵１キャラを攻撃するドクロ父親（各種のステータスがアップする）を召喚する</string>
     <string name="summon_404201">目の前の敵１キャラを攻撃する精霊を唱喚する</string>
@@ -401,14 +401,14 @@
     <string name="summon_408401">魔法攻撃を行う精霊を唱喚する</string>
     <string name="summon_408402">最も残りＨＰ割合が低い味方１キャラのＨＰを回復する精霊を唱喚する</string>
     <string name="summon_408403">味方全体のＴＰを回復する精霊を唱喚する</string>
-    <string name="summon_418101">ネフライトワイバーンを召喚する</string>
+<!--    <string name="summon_418101">ネフライトワイバーンを召喚する</string>-->
     <string name="summon_425801">UBを使用しない、自分のシャドウ(425801)を生成する</string>
     <string name="summon_425802">UBを使用しない、自分のシャドウ(425802)を生成する</string>
-    <string name="summon_426201">眷属(426201)を召喚する</string>
-    <string name="summon_426202">眷属(426202)を召喚する</string>
-    <string name="summon_427101">ドクロ親父(427101)を召喚する</string>
+<!--    <string name="summon_426201">眷属(426201)を召喚する</string>-->
+<!--    <string name="summon_426202">眷属(426202)を召喚する</string>-->
+<!--    <string name="summon_427101">ドクロ親父(427101)を召喚する</string>-->
     <string name="summon_431901">一定時間後に消滅する氷の壁を生成する</string>
-    <string name="summon_430101">スパイクブラザーズを呼び出す</string>
+<!--    <string name="summon_430101">スパイクブラザーズを呼び出す</string>-->
 
     <string name="mode_id1">自分を姿(%s)に変化させる、</string>
     <string name="mode_return">自分をもとの姿に戻させる、</string>
@@ -448,6 +448,7 @@
     <string name="content_fixed">固定</string>
 
     <string name="mark_unknown">マーク%s</string>
+    <string name="brackets">【%s】</string>
     <string name="summon_unknown">【召喚物%s】</string>
     <string name="abnormal_unknown">【異常状態%s】</string>
     <string name="dot_unknown">【継続ダメージ%s】</string>
