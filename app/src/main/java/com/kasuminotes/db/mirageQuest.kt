@@ -8,8 +8,8 @@ fun AppDatabase.hasMirageQuest(): Boolean {
         "mirage_nemesis_quest_display",
         "mirage_floor_quest",
         "mirage_nemesis_quest",
-        "abyss_wave_group_data",
-        "abyss_enemy_parameter"
+        "mirage_wave_group_data",
+        "mirage_enemy_parameter"
     ))
 }
 
