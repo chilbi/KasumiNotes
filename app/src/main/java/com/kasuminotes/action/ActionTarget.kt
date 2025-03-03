@@ -111,7 +111,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             arrayOf(getMarkContent(targetType - 13000))
         )
     } else if (targetType in 14001..14999) {
-        return return D.Join(arrayOf(
+        return D.Join(arrayOf(
             D.Format(R.string.target_element1, arrayOf(getElementType(targetType - 14000))),
             this.copy(targetType = 1).getTarget(null)
         ))
@@ -187,7 +187,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             } else {//targetArea == 2 || targetArea == 3
                 if (targetCount == 1) {//一名目标
                     if (isFullRangeTarget()) {
-                        if (targetNumber == 0 && targetAssignment != 1) {
+                        if (targetType != 34 && targetNumber == 0 && targetAssignment != 1) {
                             //targetArea==3、ゴブリングレート（UB）
                             D.Format(R.string.target_self)
                         } else {
