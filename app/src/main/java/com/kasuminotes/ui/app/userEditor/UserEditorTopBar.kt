@@ -18,6 +18,7 @@ import com.kasuminotes.ui.components.FilterCharaButton
 import com.kasuminotes.ui.components.FilterCharaMenu
 import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.SearchBar
+import com.kasuminotes.ui.components.SortCharaButton
 
 @Composable
 fun UserEditorTopBar(
@@ -54,6 +55,7 @@ fun UserEditorTopBar(
                 )
             }
             FilterCharaButton(charaListState)
+            SortCharaButton(charaListState)
         },
         content = {
             FilterCharaMenu(charaListState)

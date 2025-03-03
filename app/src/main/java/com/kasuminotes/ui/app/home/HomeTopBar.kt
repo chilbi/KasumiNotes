@@ -15,6 +15,7 @@ import com.kasuminotes.ui.components.FilterCharaButton
 import com.kasuminotes.ui.components.FilterCharaMenu
 import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.SearchBar
+import com.kasuminotes.ui.components.SortCharaButton
 import com.kasuminotes.utils.UrlUtil
 
 @Composable
@@ -46,6 +47,7 @@ fun HomeTopBar(
                 Icon(uiState.charaImageState.vector, null)
             }
             FilterCharaButton(userState.charaListState)
+            SortCharaButton(userState.charaListState)
         },
         content = {
             FilterCharaMenu(userState.charaListState)

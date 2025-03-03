@@ -13,13 +13,13 @@ import androidx.compose.ui.unit.Dp
 import com.kasuminotes.R
 
 @Composable
-fun UnitElement(
+fun UnitRole(
     padding: Dp,
-    talentId: Int,
-    elementSize: Dp,
+    unitRoleId: Int,
+    roleSize: Dp,
     modifier: Modifier = Modifier
 ) {
-    if (talentId == 0 ) return
+    if (unitRoleId == 0 ) return
     Box(
         Modifier
             .padding(start = padding, top = padding)
@@ -27,17 +27,20 @@ fun UnitElement(
             .then(modifier)
     ) {
         @DrawableRes
-        val resId = when (talentId) {
-            1 -> R.drawable.fire
-            2 -> R.drawable.water
-            3 -> R.drawable.wind
-            4 -> R.drawable.light
-            else -> R.drawable.dark
+        val resId = when (unitRoleId) {
+            1 -> R.drawable.attacker
+            2 -> R.drawable.breaker
+            3 -> R.drawable.buffer
+            4 -> R.drawable.debuffer
+            5 -> R.drawable.booster
+            6 -> R.drawable.healer
+            7 -> R.drawable.tank
+            else -> R.drawable.jammer
         }
         Image(
             painter = painterResource(resId),
             contentDescription = null,
-            modifier = Modifier.size(elementSize)
+            modifier = Modifier.size(roleSize)
         )
     }
 }

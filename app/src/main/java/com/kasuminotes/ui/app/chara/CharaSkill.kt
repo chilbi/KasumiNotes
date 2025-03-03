@@ -1,16 +1,21 @@
 package com.kasuminotes.ui.app.chara
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -18,9 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.common.Element
+import com.kasuminotes.common.Role
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitData
@@ -28,7 +35,6 @@ import com.kasuminotes.data.UnitSkillData
 import com.kasuminotes.data.UserData
 import com.kasuminotes.ui.components.AttackDetail
 import com.kasuminotes.ui.components.AttackPattern
-import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.components.SkillDetail
 import com.kasuminotes.utils.UrlUtil
 
@@ -67,47 +73,7 @@ fun CharaSkill(
                     unitSkillData = unitSkillData!!
                 )
 
-                if (unitData.talentId != 0) {
-                    val imgId: Int
-                    val strId: Int
-                    when (unitData.talentId) {
-                        1 -> {
-                            imgId = R.drawable.fire
-                            strId = Element.Fire.resId
-                        }
-                        2 -> {
-                            imgId = R.drawable.water
-                            strId = Element.Water.resId
-                        }
-                        3 -> {
-                            imgId = R.drawable.wind
-                            strId = Element.Wind.resId
-                        }
-                        4 -> {
-                            imgId = R.drawable.light
-                            strId = Element.Light.resId
-                        }
-                        else -> {
-                            imgId = R.drawable.dark
-                            strId = Element.Dark.resId
-                        }
-                    }
-                    Infobar(
-                        label = stringResource(R.string.element),
-                        value = stringResource(strId),
-                        modifier = Modifier.padding(8.dp).width(110.dp).align(Alignment.TopEnd),
-                        endDecoration = {
-                            Image(
-                                painter = painterResource(imgId),
-                                contentDescription = null,
-                                modifier = Modifier.padding(start = 4.dp).size(18.dp)
-                            )
-                        },
-                        width = 48.dp,
-                        color = MaterialTheme.colorScheme.secondary,
-                        textAlign = TextAlign.Center
-                    )
-                }
+                TalentAndRole(unitData.talentId, unitData.unitRoleId)
             }
 
             AttackDetail(
@@ -131,6 +97,111 @@ fun CharaSkill(
                     rawDepends = item.skillData.rawDepends,
                     actions = item.skillData.actions,
                     onSummonsClick = onSummonsClick
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun BoxScope.TalentAndRole(talentId: Int, unitRoleId: Int) {
+    if (talentId != 0) {
+        @DrawableRes
+        val talentImgId: Int
+        @StringRes
+        val talentStrId: Int
+        when (talentId) {
+            1 -> {
+                talentImgId = R.drawable.fire
+                talentStrId = Element.Fire.resId
+            }
+            2 -> {
+                talentImgId = R.drawable.water
+                talentStrId = Element.Water.resId
+            }
+            3 -> {
+                talentImgId = R.drawable.wind
+                talentStrId = Element.Wind.resId
+            }
+            4 -> {
+                talentImgId = R.drawable.light
+                talentStrId = Element.Light.resId
+            }
+            else -> {
+                talentImgId = R.drawable.dark
+                talentStrId = Element.Dark.resId
+            }
+        }
+        Row(
+            modifier = Modifier.padding(8.dp).align(Alignment.TopEnd),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(talentImgId),
+                contentDescription = null,
+                modifier = Modifier.padding(end = 4.dp).size(18.dp)
+            )
+            Text(
+                text = stringResource(talentStrId),
+                textAlign = TextAlign.End,
+                overflow = TextOverflow.Ellipsis,
+                softWrap = false,
+                maxLines = 1,
+                style = MaterialTheme.typography.bodySmall
+            )
+
+            if (unitRoleId != 0) {
+                @DrawableRes
+                val roleImgId: Int
+                @StringRes
+                val roleStrId: Int
+                when (unitRoleId) {
+                    1 -> {
+                        roleImgId = R.drawable.attacker
+                        roleStrId = Role.Attacker.resId
+                    }
+                    2 -> {
+                        roleImgId = R.drawable.breaker
+                        roleStrId = Role.Breaker.resId
+                    }
+                    3 -> {
+                        roleImgId = R.drawable.buffer
+                        roleStrId = Role.Buffer.resId
+                    }
+                    4 -> {
+                        roleImgId = R.drawable.debuffer
+                        roleStrId = Role.Debuffer.resId
+                    }
+                    5 -> {
+                        roleImgId = R.drawable.booster
+                        roleStrId = Role.Booster.resId
+                    }
+                    6 -> {
+                        roleImgId = R.drawable.healer
+                        roleStrId = Role.Healer.resId
+                    }
+                    7 -> {
+                        roleImgId = R.drawable.tank
+                        roleStrId = Role.Tank.resId
+                    }
+                    else -> {
+                        roleImgId = R.drawable.jammer
+                        roleStrId = Role.Jammer.resId
+                    }
+                }
+                Spacer(Modifier.size(8.dp))
+                Image(
+                    painter = painterResource(roleImgId),
+                    contentDescription = null,
+                    modifier = Modifier.padding(end = 4.dp).size(18.dp)
+                )
+                Text(
+                    text = stringResource(roleStrId),
+                    textAlign = TextAlign.End,
+                    overflow = TextOverflow.Ellipsis,
+                    softWrap = false,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }

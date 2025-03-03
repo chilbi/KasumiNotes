@@ -88,6 +88,16 @@
     <string name="wind">风</string>
     <string name="light">光</string>
     <string name="dark">暗</string>
+    <string name="role">职业</string>
+    <string name="all_role">职业</string>
+    <string name="attacker">攻击者</string>
+    <string name="breaker">破坏者</string>
+    <string name="buffer">增益者</string>
+    <string name="debuffer">减益者</string>
+    <string name="booster">加速者</string>
+    <string name="healer">治疗者</string>
+    <string name="tank">坦克</string>
+    <string name="jammer">干扰者</string>
     <string name="asc">升序</string>
     <string name="desc">降序</string>
     <string name="start_time">更新日</string>

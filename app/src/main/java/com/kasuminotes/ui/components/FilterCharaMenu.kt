@@ -26,11 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.kasuminotes.R
 import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.Element
-import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
+import com.kasuminotes.common.Role
 import com.kasuminotes.state.CharaListState
 
 @Composable
@@ -40,9 +39,10 @@ fun FilterCharaMenu(charaListState: CharaListState) {
         Arrangement.SpaceBetween
     ) {
         ElementMenu(charaListState.element, charaListState::changeElement)
+        RoleMenu(charaListState.role, charaListState::changeRole)
         AtkTypeMenu(charaListState.atkType, charaListState::changeAtkType)
         PositionMenu(charaListState.position, charaListState::changePosition)
-        OrderByMenu(charaListState.orderBy, charaListState.sortDesc, charaListState::changeOrderBy)
+//        OrderByMenu(charaListState.orderBy, charaListState.sortDesc, charaListState::changeOrderBy)
     }
 }
 
@@ -59,6 +59,24 @@ private fun ElementMenu(
             DropdownMenuItem(
                 text = { Text(stringResource(ele.resId)) },
                 onClick = { onElementChange(ele).also { onCollapse() } }
+            )
+        }
+    }
+}
+
+@Composable
+private fun RoleMenu(
+    role: Role,
+    onRoleChange: (Role) -> Unit
+) {
+    FilterMenuItem(
+        alignment = Alignment.Center,
+        label = stringResource(role.resId)
+    ) { onCollapse ->
+        Role.entries.forEach { r ->
+            DropdownMenuItem(
+                text = { Text(stringResource(r.resId)) },
+                onClick = { onRoleChange(r).also { onCollapse() } }
             )
         }
     }
@@ -88,7 +106,7 @@ private fun PositionMenu(
     onPositionChange: (Position) -> Unit
 ) {
     FilterMenuItem(
-        alignment = Alignment.Center,
+        alignment = Alignment.CenterEnd,
         label = stringResource(position.resId)
     ) { onCollapse ->
         Position.entries.forEach { pos ->
@@ -100,24 +118,24 @@ private fun PositionMenu(
     }
 }
 
-@Composable
-private fun OrderByMenu(
-    orderBy: OrderBy,
-    sortDesc: Boolean,
-    onOrderByChange: (OrderBy) -> Unit
-) {
-    FilterMenuItem(
-        alignment = Alignment.CenterEnd,
-        label = stringResource(orderBy.resId) + stringResource(if (sortDesc) R.string.desc else R.string.asc)
-    ) { onCollapse ->
-        OrderBy.entries.forEach { order ->
-            DropdownMenuItem(
-                text = { Text(stringResource(order.resId)) },
-                onClick = { onOrderByChange(order).also { onCollapse() } }
-            )
-        }
-    }
-}
+//@Composable
+//private fun OrderByMenu(
+//    orderBy: OrderBy,
+//    sortDesc: Boolean,
+//    onOrderByChange: (OrderBy) -> Unit
+//) {
+//    FilterMenuItem(
+//        alignment = Alignment.CenterEnd,
+//        label = stringResource(orderBy.resId) + stringResource(if (sortDesc) R.string.desc else R.string.asc)
+//    ) { onCollapse ->
+//        OrderBy.entries.forEach { order ->
+//            DropdownMenuItem(
+//                text = { Text(stringResource(order.resId)) },
+//                onClick = { onOrderByChange(order).also { onCollapse() } }
+//            )
+//        }
+//    }
+//}
 
 @Composable
 private fun FilterMenuItem(
@@ -141,7 +159,7 @@ private fun FilterMenuItem(
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier.heightIn(max = 420.dp)
+                modifier = Modifier.heightIn(max = 450.dp)
             ) {
                 content { expanded = false }
             }

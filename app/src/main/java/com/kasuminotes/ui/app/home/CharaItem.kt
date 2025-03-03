@@ -6,7 +6,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -33,6 +35,7 @@ import com.kasuminotes.state.CharaImageState
 import com.kasuminotes.ui.components.UnitElement
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
+import com.kasuminotes.ui.components.UnitRole
 import com.kasuminotes.ui.theme.UnitImageShape
 import com.kasuminotes.ui.theme.ShadowColor
 import com.kasuminotes.utils.UrlUtil
@@ -95,12 +98,19 @@ fun CharaItem(
             )
         }
 
-        UnitElement(
-            padding,
-            userProfile.unitData.talentId,
-            charaImageState.positionSize,
-            Modifier.align(Alignment.TopStart)
-        )
+        Column(Modifier.align(Alignment.TopStart).padding(start = padding, top = padding)) {
+            UnitElement(
+                0.dp,
+                userProfile.unitData.talentId,
+                charaImageState.positionSize
+            )
+            Spacer(Modifier.size(padding))
+            UnitRole(
+                0.dp,
+                userProfile.unitData.unitRoleId,
+                charaImageState.positionSize
+            )
+        }
 
         Caption(userProfile.getStringOf(orderBy), layerAlpha, charaImageState)
     }

@@ -7,6 +7,7 @@ import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.Element
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
+import com.kasuminotes.common.Role
 import com.kasuminotes.data.UserData
 import com.kasuminotes.data.UserProfile
 
@@ -20,11 +21,13 @@ class CharaListState {
         private set
     var searchText by mutableStateOf("")
         private set
+    var element by mutableStateOf(Element.All)
+        private set
+    var role by mutableStateOf(Role.All)
+        private set
     var atkType by mutableStateOf(AtkType.All)
         private set
     var position by mutableStateOf(Position.All)
-        private set
-    var element by mutableStateOf(Element.All)
         private set
     var orderBy by mutableStateOf(OrderBy.StartTime)
         private set
@@ -287,6 +290,11 @@ class CharaListState {
         derived()
     }
 
+    fun changeRole(value: Role) {
+        role = value
+        derived()
+    }
+
     fun changeOrderBy(value: OrderBy) {
         if (value == orderBy) {
             sortDesc = !sortDesc
@@ -335,9 +343,10 @@ class CharaListState {
         val originProfiles = profiles
         val list = if (
             searchText.isEmpty() &&
+            element == Element.All &&
+            role == Role.All &&
             atkType == AtkType.All &&
             position == Position.All &&
-            element == Element.All &&
             !rarity6 &&
             !unique1 &&
             !unique2
@@ -350,14 +359,15 @@ class CharaListState {
                     val unique1Match = !unique1 || it.hasUnique1
                     val unique2Match = !unique2 || it.hasUnique2
                     val elementMatch = element == Element.All || element.ordinal == it.talentId
+                    val roleMatch = role == Role.All || role.ordinal == it.unitRoleId
                     val atkTypeMatch = atkType == AtkType.All || atkType.ordinal == it.atkType
                     val positionMatch = position == Position.All || position.ordinal == it.position
                     val searchTextMatch = searchText.isEmpty() ||
                             (it.unitId.toString() + it.unitName + it.kana + it.actualName)
                                 .contains(searchText)
 
-                    rarity6Match && unique1Match && unique2Match &&
-                            atkTypeMatch && positionMatch && elementMatch && searchTextMatch
+                    rarity6Match && unique1Match && unique2Match && elementMatch && roleMatch &&
+                            atkTypeMatch && positionMatch && searchTextMatch
                 }
             }
         }
