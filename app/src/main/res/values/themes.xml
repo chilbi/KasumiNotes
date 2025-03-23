@@ -7,7 +7,6 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenIconBackgroundColor">@color/ic_launcher_background</item>
         <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_background</item>
         <item name="windowSplashScreenAnimationDuration">1000</item>

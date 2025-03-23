@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -22,8 +23,9 @@ class MainActivity : ComponentActivity() {
         instance = this
         val splashScreen = installSplashScreen()
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            splashScreen.setOnExitAnimationListener { splashScreenView -> splashScreenView.remove() }
+        splashScreen.setKeepOnScreenCondition {
+            SystemClock.sleep(1000)
+            false
         }
         super.onCreate(savedInstanceState)
         setContent {

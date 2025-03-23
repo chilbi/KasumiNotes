@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/ic_launcher_background" />
     <item android:gravity="center"
-        android:width="341dp"
-        android:height="256dp"
+        android:width="160dp"
+        android:height="160dp"
         tools:targetApi="m"
         tools:ignore="UnusedAttribute">
         <bitmap
-            android:gravity="fill_horizontal|fill_vertical"
+            android:gravity="clip_horizontal|clip_vertical"
             android:src="@drawable/splash" />
     </item>
 </layer-list>
