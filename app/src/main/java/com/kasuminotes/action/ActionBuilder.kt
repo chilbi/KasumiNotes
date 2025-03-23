@@ -272,6 +272,7 @@ class ActionBuilder(
             107 -> getTotalCritical()
             109 -> getEnergyRestriction(skillLevel)
             110 -> getDotDamageUp()
+            112 -> getDurationExtension()
             114 -> getTriggeredWhenAttacked()
             116 -> getPersistence(skillLevel)
             121 -> getTriggeredWhenHpZero()

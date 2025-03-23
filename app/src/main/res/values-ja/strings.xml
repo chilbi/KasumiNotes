@@ -329,6 +329,7 @@
     <string name="action_damage_cut_target1_state2_time3_cut4">%1$sを【%2$s】状態にする、効果時間%3$s秒。【%2$s】状態の間は%1$sが受けるダメージを%4$s軽減する。%1$sより前に味方がいない場合、【%2$s】状態は解除される。</string>
     <string name="action_friendly_barrier_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。【%2$s】が付与されている間、自分への攻撃を【%2$s】が付与されている味方１キャラが代わりに受ける。</string>
     <string name="action_cannot_be_target1_state2">【%2$s】が付与されている間は%1$sが敵からの攻撃の対象にならない。</string>
+    <string name="action_duration_extension_target1_content2_value3">%1$sが受ける%2$sの効果時間延長%3$s。</string>
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>
