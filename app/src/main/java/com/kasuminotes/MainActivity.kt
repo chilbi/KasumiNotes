@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -23,9 +22,8 @@ class MainActivity : ComponentActivity() {
         instance = this
         val splashScreen = installSplashScreen()
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        splashScreen.setKeepOnScreenCondition {
-            SystemClock.sleep(1000)
-            false
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            splashScreen.setOnExitAnimationListener { splashScreenView -> splashScreenView.remove() }
         }
         super.onCreate(savedInstanceState)
         setContent {
@@ -58,7 +56,7 @@ class MainActivity : ComponentActivity() {
             override fun onReceive(context: Context, intent: Intent) {
                 val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if (downloadId == id) {
-                    val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                    val downloadManager = context.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
                     val downloadUri = downloadManager.getUriForDownloadedFile(downloadId)
                     val install = Intent(Intent.ACTION_VIEW).apply {
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
