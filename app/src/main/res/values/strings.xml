@@ -329,7 +329,7 @@
     <string name="action_damage_cut_target1_state2_time3_cut4">赋予%1$s【%2$s】状态，效果时间%3$s秒。【%2$s】状态期间%1$s受到的伤害减少%4$s。%1$s的前方没有己方角色时，就会解除【%2$s】状态。</string>
     <string name="action_friendly_barrier_target1_state2_time3">赋予%1$s【%2$s】状态，效果时间%3$s秒。【%2$s】赋予期间，对自身的攻击将由被赋予【%2$s】状态的一名己方角色代替承受伤害。</string>
     <string name="action_cannot_be_target1_state2">赋予【%2$s】期间%1$s不会成为敌人的攻击对象。</string>
-    <string name="action_duration_extension_target1_content2_value3">使%1$s受到%2$s的效果时间延长%3$s。</string>
+    <string name="action_duration_extension_target1_content2_value3">使%1$s受到%2$s的效果时间变为原来的%3$s。</string>
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>

@@ -11,7 +11,7 @@ fun SkillAction.getDurationExtension(): D {
                 abnormal = if (abnormal == null) {
                     getAbnormalContent(value.toInt())
                 } else {
-                    abnormal!!.append(D.Join(arrayOf(
+                    abnormal.append(D.Join(arrayOf(
                         D.Format(R.string.comma),
                         getAbnormalContent(value.toInt())
                     )))
@@ -25,7 +25,7 @@ fun SkillAction.getDurationExtension(): D {
                 R.string.action_duration_extension_target1_content2_value3,
                 arrayOf(
                     getTarget(depend),
-                    abnormal!!,
+                    abnormal,
                     D.Text("${(actionValue2 * 100).toNumStr()}%")
                 )
             )
