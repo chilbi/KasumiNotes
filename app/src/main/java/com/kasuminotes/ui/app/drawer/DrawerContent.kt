@@ -63,7 +63,7 @@ fun DrawerContent(
             Modifier
                 .sizeIn(
                     minWidth = 240.dp,// MinimumDrawerWidth,
-                    maxWidth = DrawerDefaults.MaximumDrawerWidth
+                    maxWidth = 320.dp,// MaximumDrawerWidth
                 )
                 .fillMaxHeight()
                 .navigationBarsPadding()

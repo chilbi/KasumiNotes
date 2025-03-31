@@ -3,9 +3,6 @@ package com.kasuminotes.state
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.ComposeNavigator
-import androidx.navigation.compose.DialogNavigator
 import com.kasuminotes.MainActivity
 import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.data.EnemyData
@@ -20,6 +17,7 @@ import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.utils.Helper
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import androidx.navigation.NavController
 import com.kasuminotes.data.Property
 
 class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel() {
@@ -37,19 +35,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     val abyssQuestState = AbyssQuestState(appRepository, viewModelScope)
     val mirageQuestState = MirageQuestState(appRepository, viewModelScope)
 
-    val navController = NavHostController(appRepository.applicationContext).apply {
-        navigatorProvider.addNavigator(ComposeNavigator())
-        navigatorProvider.addNavigator(DialogNavigator())
-
-        addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.route) {
-                AppNavData.Home.route -> {
-                    charaState.destroy()
-                    dbState.userState.charaListState.destroy()
-                }
-            }
-        }
-    }
+    lateinit var navController: NavController
 
     fun popBackStack() {
         navController.popBackStack()
@@ -141,7 +127,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         exEquipState.destroy()
         val slotNum = exEquipSlot.category / 100
         val originSubPercentList = charaState.userData!!.subPercentMap
-            .getOrDefault(slotNum, null) ?: emptyList()
+            .getOrElse(slotNum) { null } ?: emptyList()
         val originLevel = when (slotNum) {
             1 -> charaState.userData!!.exEquip1Level
             2 -> charaState.userData!!.exEquip2Level
@@ -166,7 +152,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                         }
                     )
                     val subPercentList = userData.subPercentMap
-                        .getOrDefault(index + 1, null) ?: emptyList()
+                        .getOrElse(index + 1) { null } ?: emptyList()
                     slot.exEquipData.getExEquipProperty(subPercentList, percent, base)
                 }
             }

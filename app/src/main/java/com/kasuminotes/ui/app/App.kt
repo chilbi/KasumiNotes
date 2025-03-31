@@ -9,6 +9,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.kasuminotes.state.AppViewModel
 import com.kasuminotes.ui.app.about.About
 import com.kasuminotes.ui.app.abyssQuest.AbyssQuest
@@ -34,9 +35,20 @@ fun App(appViewModel: AppViewModel = viewModel()) {
     val uiState = appViewModel.uiState
     val dbState = appViewModel.dbState
     val userState = dbState.userState
+
+    val navController = rememberNavController()
     
-    LaunchedEffect(Unit) {
+    LaunchedEffect(appViewModel) {
         dbState.init()
+        appViewModel.navController = navController
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.route) {
+                AppNavData.Home.route -> {
+                    appViewModel.charaState.destroy()
+                    dbState.userState.charaListState.destroy()
+                }
+            }
+        }
     }
 
     KasumiNotesTheme(uiState.themeIndex, uiState.darkTheme) {
@@ -51,7 +63,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
         }}
 
         NavHost(
-            navController = appViewModel.navController,
+            navController = navController,
             startDestination = AppNavData.Home.route,
             enterTransition = AppNavTransitions.enterTransition,
             exitTransition = AppNavTransitions.exitTransition
