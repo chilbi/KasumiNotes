@@ -106,12 +106,13 @@ PRIMARY KEY('unit_id')
     execSQL(
 """INSERT INTO `chara_data`
 SELECT ud.unit_id,ud.unit_name,kana,IFNULL(aub.unit_name,ud.kana) AS actual_name,
-IFNULL(ur.max_rarity, 5) AS max_rarity,IFNULL(uue1.equip_id, 0) AS equip1_id,IFNULL(uue2.equip_id, 0) AS equip2_id,
+max_rarity,IFNULL(uue1.equip_id, 0) AS equip1_id,IFNULL(uue2.equip_id, 0) AS equip2_id,
 search_area_width,atk_type,normal_atk_cast_time,comment,start_time,
 age,guild,race,height,weight,birth_month,birth_day,blood_type,favorite,voice,catch_copy,self_text
-FROM unit_data AS ud JOIN unit_profile AS up ON ud.unit_id=up.unit_id
+FROM unit_data AS ud
+JOIN unit_profile AS up ON ud.unit_id=up.unit_id
+JOIN (SELECT unit_id,COUNT(unit_id) AS max_rarity FROM unit_rarity GROUP BY unit_id) AS ur ON ud.unit_id=ur.unit_id
 LEFT JOIN actual_unit_background AS aub ON SUBSTR(ud.unit_id,1,4)=SUBSTR(aub.unit_id,1,4)
-LEFT JOIN (SELECT unit_id,COUNT(unit_id) AS max_rarity FROM unit_rarity GROUP BY unit_id) AS ur ON ud.unit_id=ur.unit_id
 LEFT JOIN unit_unique_equip AS uue1 ON ud.unit_id=uue1.unit_id AND uue1.equip_slot=1
 LEFT JOIN unit_unique_equip AS uue2 ON ud.unit_id=uue2.unit_id AND uue2.equip_slot=2
 WHERE comment!='' AND ud.unit_id<400000"""
