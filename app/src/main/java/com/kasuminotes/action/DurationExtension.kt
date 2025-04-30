@@ -26,7 +26,7 @@ fun SkillAction.getDurationExtension(): D {
                 arrayOf(
                     getTarget(depend),
                     abnormal,
-                    D.Text("${(actionValue2 * 100).toNumStr()}%")
+                    D.Text("${(actionValue2 * 100).toNumStr()}%").style(primary = true, bold = true)
                 )
             )
         }

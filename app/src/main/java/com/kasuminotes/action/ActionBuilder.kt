@@ -279,6 +279,8 @@ class ActionBuilder(
             123 -> getDamageCutState()
             124 -> getFriendlyBarrier()
             125 -> getCannotBeTarget()
+            128 -> getAbnormalDamageExtension()
+            129 -> getConvertToDot()
             else -> getUnknown()
         }
     }

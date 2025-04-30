@@ -239,6 +239,7 @@
     <string name="action_abnormal_target1_content2_time3">使%1$s陷入%2$s状态，效果时间%3$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_time4">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，效果时间%4$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_percent4_time5">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，每秒提升初始值的%4$s%2$s伤害，效果时间%5$s秒。</string>
+    <string name="action_abnormal_target1_content2_formula3_max4_time5">使%1$s陷入%2$s状态，每秒造成最大HP的%3$s%2$s伤害（每次最大造成%4$s伤害），效果时间%5$s秒。</string>
     <string name="action_state_target1_content2_time3">赋予%1$s%2$s状态，效果时间%3$s秒。</string>
     <string name="action_haulin_oneself_target1_formula2">将%1$s拉进到自身前方%2$s距离。</string>
     <string name="action_haulin_first_target1">将%s拉进到最前方的敌人的位置。</string>
@@ -330,6 +331,8 @@
     <string name="action_friendly_barrier_target1_state2_time3">赋予%1$s【%2$s】状态，效果时间%3$s秒。【%2$s】赋予期间，对自身的攻击将由被赋予【%2$s】状态的一名己方角色代替承受伤害。</string>
     <string name="action_cannot_be_target1_state2">赋予【%2$s】期间%1$s不会成为敌人的攻击对象。</string>
     <string name="action_duration_extension_target1_content2_value3">使%1$s受到%2$s的效果时间变为原来的%3$s。</string>
+    <string name="action_abnormal_damage_extension_target1_formula2_time3">使%1$s造成持续伤害状态异常的伤害的发生间隔和效果时间提高%2$s，效果时间%3$s秒。</string>
+    <string name="action_convert_to_dot_target1_formula2_duration3_time4">使%1$s受到敌人的特定伤害的%2$s转换为%3$s秒的持续伤害，效果时间%4$s秒。（转换的持续伤害不回复TP）</string>
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>

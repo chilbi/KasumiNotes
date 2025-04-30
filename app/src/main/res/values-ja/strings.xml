@@ -239,6 +239,7 @@
     <string name="action_abnormal_target1_content2_time3">%1$sを%2$s状態にする、効果時間%3$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_time4">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、効果時間%4$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_percent4_time5">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、毎秒%2$sダメージが初期値の%4$sずつアップする、効果時間%5$s秒。</string>
+    <string name="action_abnormal_target1_content2_formula3_max4_time5">%1$sを%2$s状態にする、毎秒最大ＨＰの%3$s%2$sダメージを与える（最大%4$sダメージ）、効果時間%5$s秒。</string>
     <string name="action_state_target1_content2_time3">%1$sに%2$s状態を付与する、効果時間%3$s秒。</string>
     <string name="action_haulin_oneself_target1_formula2">%1$sを目の前%2$s距離まで引き寄せる。</string>
     <string name="action_haulin_first_target1">%1$sを一番前にいる敵の位置まで引き寄せる。</string>
@@ -316,8 +317,8 @@
     <string name="action_akinesia_invalid_target1_count2_time3">%1$sに受ける行動不能を最大%2$s回まで無効化できる状態を付与する、効果時間%3$s秒。</string>
     <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$sに与えらるダメージの量を%2$sアップさせる、最大%3$sアップさせる、効果時間%4$s秒。</string>
     <string name="action_dot_damage_up_target1_content2_formula3_max4_time5">%1$sに与えられる%2$sダメージを%3$sアップさせる、最大%4$sまでアップさせる、効果時間%5$s秒。</string>
-    <string name="action_fixed_damage_target1_formula2_time3">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける、効果時間%3$s秒。</string>
-    <string name="action_fixed_damage_target1_formula2_max3_time4">%1$sが行動する度に最大ＨＰの%2$s割合ダメージを受ける（毎回最大%3$sダメージを受ける）、効果時間%4$s秒。</string>
+    <string name="action_fixed_damage_target1_formula2_time3">%1$sが行動する度に最大ＨＰの%2$sダメージを受ける、効果時間%3$s秒。</string>
+    <string name="action_fixed_damage_target1_formula2_max3_time4">%1$sが行動する度に最大ＨＰの%2$sダメージを受ける（毎回最大%3$sダメージを受ける）、効果時間%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">%1$sのいる環境を【%2$s】にする、効果時間%3$s秒。</string>
     <string name="action_total_critical_target1">このスキルのクリティカルは%sの物理と魔法クリティカルの値を合わせる。</string>
     <string name="action_triggered_when_attacked_target1_state2_count3_time4_cut5">%1$sに【%2$s】を%3$sを追加する、効果時間%4$s秒。\n付与される間、味方全体が敵から受けるダメージを%5$s軽減する。\n味方が敵からダメージを受ける度、【%2$s】を１つ消費し、同時に以下の効果を発動する：</string>
@@ -330,6 +331,8 @@
     <string name="action_friendly_barrier_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。【%2$s】が付与されている間、自分への攻撃を【%2$s】が付与されている味方１キャラが代わりに受ける。</string>
     <string name="action_cannot_be_target1_state2">【%2$s】が付与されている間は%1$sが敵からの攻撃の対象にならない。</string>
     <string name="action_duration_extension_target1_content2_value3">%1$sが受ける%2$sの効果時間を本来の%3$sにする。</string>
+    <string name="action_abnormal_damage_extension_target1_formula2_time3">%1$sが継続ダメージを与える状態異常のダメージの発生間隔と効果時間を%2$sアップさせる、効果時間%3$s秒。</string>
+    <string name="action_convert_to_dot_target1_formula2_duration3_time4">%1$sが敵から受ける特定のダメージの%2$sを%3$s秒の継続ダメージに変換させる、効果時間%4$s秒。（変換される継続ダメージではＴＰは回復しない）</string>
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>

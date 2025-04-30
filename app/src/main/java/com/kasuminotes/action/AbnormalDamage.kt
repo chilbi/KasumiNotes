@@ -10,17 +10,28 @@ fun SkillAction.getAbnormalDamage(skillLevel: Int): D {
     val formula = getBaseLvFormula(actionValue1, actionValue2, skillLevel)
     val time = D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
 
-    val damage = if (actionValue5 == 0.0) {
-        D.Format(
-            R.string.action_abnormal_target1_content2_formula3_time4,
-            arrayOf(target, content, formula, time)
-        )
-    } else {
-        val percent = D.Text("${actionValue5.toNumStr()}%")
-        D.Format(
-            R.string.action_abnormal_target1_content2_formula3_percent4_time5,
-            arrayOf(target, content, formula, percent, time)
-        )
+    val damage = when (actionDetail1) {
+        5 -> {
+            val percent = D.Text("${actionValue5.toNumStr()}%").style(primary = true, bold = true)
+            D.Format(
+                R.string.action_abnormal_target1_content2_formula3_percent4_time5,
+                arrayOf(target, content, formula, percent, time)
+            )
+        }
+        11 -> {
+            val percent = formula.append(D.Text("%").style(primary = true, bold = true))
+            val max = D.Text(actionValue5.toNumStr()).style(primary = true, bold = true)
+            D.Format(
+                R.string.action_abnormal_target1_content2_formula3_max4_time5,
+                arrayOf(target, content, percent, max, time)
+            )
+        }
+        else -> {
+            D.Format(
+                R.string.action_abnormal_target1_content2_formula3_time4,
+                arrayOf(target, content, formula, time)
+            )
+        }
     }
 
     return appendInjuredEnergy(damage)
