@@ -333,6 +333,7 @@
     <string name="action_duration_extension_target1_content2_value3">使%1$s受到%2$s的效果时间变为原来的%3$s。</string>
     <string name="action_abnormal_damage_extension_target1_formula2_time3">使%1$s造成持续伤害状态异常的伤害的发生间隔和效果时间提高%2$s，效果时间%3$s秒。</string>
     <string name="action_convert_to_dot_target1_formula2_duration3_time4">使%1$s受到敌人的特定伤害的%2$s转换为%3$s秒的持续伤害，效果时间%4$s秒。（转换的持续伤害不回复TP）</string>
+    <string name="action_reconcile_target1_time2">赋予%1$s调和状态，调和状态期间根据物理防御力和魔法防御力中较高一方的防御力计算受到的伤害，效果时间%2$s秒。</string>
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>

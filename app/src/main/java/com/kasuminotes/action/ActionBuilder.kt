@@ -281,6 +281,7 @@ class ActionBuilder(
             125 -> getCannotBeTarget()
             128 -> getAbnormalDamageExtension()
             129 -> getConvertToDot()
+            130 -> getReconcile()
             else -> getUnknown()
         }
     }

@@ -333,6 +333,7 @@
     <string name="action_duration_extension_target1_content2_value3">%1$sが受ける%2$sの効果時間を本来の%3$sにする。</string>
     <string name="action_abnormal_damage_extension_target1_formula2_time3">%1$sが継続ダメージを与える状態異常のダメージの発生間隔と効果時間を%2$sアップさせる、効果時間%3$s秒。</string>
     <string name="action_convert_to_dot_target1_formula2_duration3_time4">%1$sが敵から受ける特定のダメージの%2$sを%3$s秒の継続ダメージに変換させる、効果時間%4$s秒。（変換される継続ダメージではＴＰは回復しない）</string>
+    <string name="action_reconcile_target1_time2">%1$sに調和状態を付与する、調和状態の間は物理防御力と魔法防御力のうち高い方によって計算されたダメージを受ける、効果時間%2$s秒。</string>
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>

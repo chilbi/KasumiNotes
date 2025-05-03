@@ -8,7 +8,7 @@ fun SkillAction.getRatioDamage(skillLevel: Int, target: D = getTarget(depend)): 
     val formula = D.Format(
         if (actionDetail1 == 2) R.string.content_hp_ratio1
         else R.string.content_max_hp_ratio1,
-        arrayOf(value.append(D.Text("%")).style(primary = true, bold = true))
+        arrayOf(value.append(D.Text("%").style(primary = true, bold = true)))
     )
 
     val desc = D.Format(
