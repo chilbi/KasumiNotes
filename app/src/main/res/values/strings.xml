@@ -457,7 +457,7 @@
     <string name="content_magic_def_down_effect">魔法防御力降低效果</string>
     <string name="content_strength_seal">【力之魔字】刻印期间，</string>
     <string name="content_kizuna_certificate">【情谊的证明】解放期间，</string>
-    <string name="content_full_charge">赋予自身【满电】状态，</string>
+    <string name="content_full_charge">赋予自身【完全充能】状态，</string>
     <string name="content_system_down">使自身陷入【系统宕机】状态，</string>
     <string name="content_dot">持续</string>
     <string name="content_fixed">固定</string>
