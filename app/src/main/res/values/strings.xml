@@ -406,6 +406,9 @@
     <string name="action_branch_target1_environment2_p3">%1$s%3$s【%2$s】环境时，</string>
     <string name="action_branch_environment_yes">处于</string>
     <string name="action_branch_environment_no">不处于</string>
+    <string name="action_branch_target1_element2_p3">%1$s%3$s%2$s属性时，</string>
+    <string name="action_branch_element_yes">是</string>
+    <string name="action_branch_element_no">不是</string>
 
     <string name="summon_id1">召唤%s</string>
     <string name="summon_403101">召唤一个能够攻击前方一名敌人的骷髅老爹</string>

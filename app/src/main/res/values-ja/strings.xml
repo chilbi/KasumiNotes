@@ -406,6 +406,9 @@
     <string name="action_branch_target1_environment2_p3">%1$sが【%2$s】環境に%3$s場合、</string>
     <string name="action_branch_environment_yes">いる</string>
     <string name="action_branch_environment_no">いない</string>
+    <string name="action_branch_target1_element2_p3">%1$sが%2$s属性%3$s場合、</string>
+    <string name="action_branch_element_yes">の</string>
+    <string name="action_branch_element_no">でない</string>
 
     <string name="summon_id1">%sを召喚する</string>
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
