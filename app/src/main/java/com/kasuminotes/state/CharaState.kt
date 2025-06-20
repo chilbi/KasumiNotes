@@ -301,7 +301,7 @@ class CharaState(
         val base = userProfile!!.getBaseProperty(userData!!)
         val exSkill = userProfile!!.getExSkillProperty(userData!!)
         val exEquip = userProfile!!.getExEquipProperty(base, userData!!)
-        val exEquipSkill = userProfile!!.getExEquipSkillProperty(base, exSkill, exEquip)
+        val exEquipSkill = userProfile!!.getExEquipSkillProperty(base, exSkill, exEquip, userProfile!!.unitData.talentId)
         exSkillProperty = exSkill
         baseProperty = base
         totalProperty = Property { i -> base[i] + exSkill[i] + exEquip[i] + exEquipSkill[i] }

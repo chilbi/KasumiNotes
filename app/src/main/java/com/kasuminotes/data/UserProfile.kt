@@ -79,8 +79,7 @@ data class UserProfile(
                             else -> user.exEquip3Level
                         }
                     )
-                    val subPercentList = user.subPercentMap
-                        .getOrDefault(index + 1, null) ?: emptyList()
+                    val subPercentList = user.subPercentMap.getOrElse(index + 1) { emptyList() }
                     slot.exEquipData.getExEquipProperty(subPercentList, percent, base)
                 }
             }
@@ -88,7 +87,7 @@ data class UserProfile(
         }
     }
 
-    fun getExEquipSkillProperty(base: Property, exSkill: Property, allExEquipProperty: Property): Property {
+    fun getExEquipSkillProperty(base: Property, exSkill: Property, exEquip: Property, talentId: Int): Property {
         return if (exEquipSlots.isEmpty()) {
             Property.zero
         } else {
@@ -96,7 +95,7 @@ data class UserProfile(
                 if (slot.exEquipData == null) {
                     Property.zero
                 } else {
-                    slot.exEquipData.getSkillProperty(base, exSkill, allExEquipProperty)
+                    slot.exEquipData.getExEquipSkillProperty(base, exSkill, exEquip, talentId)
                 }
             }
             Property { i -> skillPropertyList.sumOf { it[i] } }

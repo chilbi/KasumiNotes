@@ -1,6 +1,7 @@
 package com.kasuminotes.data
 
 import com.kasuminotes.action.getStatusIndex
+import com.kasuminotes.action.isBranch
 import com.kasuminotes.action.isSelf
 import kotlin.math.ceil
 import kotlin.math.min
@@ -85,38 +86,43 @@ data class ExEquipData(
         }
     }
 
-    fun getSkillProperty(
+    fun getExEquipSkillProperty(
         baseProperty: Property,
         exSkillProperty: Property,
-        allExEquipProperty: Property
+        exEquipProperty: Property,
+        talentId: Int
     ): Property {
         val battleProperty = Property { i ->
-            baseProperty[i] + exSkillProperty[i] + allExEquipProperty[i]
+            baseProperty[i] + exSkillProperty[i] + exEquipProperty[i]
         }
         return if (passiveSkill1 == null && passiveSkill2 == null) {
             Property.zero
         } else if (passiveSkill1 != null && passiveSkill2 == null) {
-            getPassive90SkillProperty(passiveSkill1, battleProperty)
+            getPassive90SkillProperty(passiveSkill1, battleProperty, talentId)
         } else if (passiveSkill1 == null && passiveSkill2 != null) {
-            getPassive90SkillProperty(passiveSkill2, battleProperty)
+            getPassive90SkillProperty(passiveSkill2, battleProperty, talentId)
         } else {
-            val p1 = getPassive90SkillProperty(passiveSkill1!!, battleProperty)
-            val p2 = getPassive90SkillProperty(passiveSkill2!!, battleProperty)
+            val p1 = getPassive90SkillProperty(passiveSkill1!!, battleProperty, talentId)
+            val p2 = getPassive90SkillProperty(passiveSkill2!!, battleProperty, talentId)
             Property { i -> p1[i] + p2[i] }
         }
     }
 
-    private fun getPassive90SkillProperty(passiveSkill: SkillData, battleProperty: Property): Property {
+    private fun getPassive90SkillProperty(passiveSkill: SkillData, battleProperty: Property, talentId: Int): Property {
         val pairs = mutableListOf<Pair<Int, Double>>()
         val actions = passiveSkill.actions
-        actions.forEachIndexed { index, action ->
-            if (action.actionType in arrayOf(901, 902) && action.actionDetail1 == 0) {
-                var statusActionIndex = index + 1
-                if (actions[statusActionIndex].actionType in arrayOf(26, 27, 74)) {
-                    statusActionIndex = actions.indexOfFirst { it.actionId == actions[statusActionIndex].actionDetail1 }
+        val action1 = actions.getOrNull(0)
+        if (action1 != null && action1.actionType in arrayOf(901, 902) && action1.actionDetail1 == 0) {
+            var statusActionIndex = 1
+            val action2 = actions.getOrNull(statusActionIndex)
+            if (action2 != null) {
+                if (action2.actionType in arrayOf(26, 27, 74)) {
+                    statusActionIndex = actions.indexOfFirst { it.actionId == action2.actionDetail1 }
+                } else if (action2.isBranch() && action2.actionDetail1 in 4001..4999 && action2.actionDetail1 - 4000 == talentId) {
+                    statusActionIndex = actions.indexOfFirst { it.actionId == action2.actionDetail2 }
                 }
-                val statusAction = actions[statusActionIndex]
-                if (statusAction.isSelf() && statusAction.actionType == 10) {
+                val statusAction = actions.getOrNull(statusActionIndex)
+                if (statusAction != null && statusAction.isSelf() && statusAction.actionType == 10) {
                     val key = getStatusIndex(statusAction.actionDetail1 / 10)
                     if (key != null) {
                         var value = if (statusAction.actionValue1 == 2.0) {
