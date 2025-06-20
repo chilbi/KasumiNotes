@@ -84,15 +84,15 @@ dependencies {
     // kotlin-stdlib
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     // kotlin-coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
     // core-ktx
-    implementation "androidx.core:core-ktx:1.15.0"
+    implementation "androidx.core:core-ktx:1.16.0"
     // core-splashscreen
     implementation "androidx.core:core-splashscreen:1.0.1"
     // activity-compose
     implementation 'androidx.activity:activity-compose:1.10.1'
     // appcompat
-    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
 
     // lifecycle-viewmodel-compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_viewmodel_version"
@@ -107,16 +107,16 @@ dependencies {
     implementation "androidx.compose.ui:ui-util:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation "androidx.compose.animation:animation:$compose_version"
-    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    implementation "androidx.compose.material:material-icons-extended:1.7.8"
     implementation "androidx.compose.material:material-ripple:$compose_version"
     implementation "androidx.compose.material3:material3:$material3_version"
     // navigation-compose
-    implementation 'androidx.navigation:navigation-compose:2.8.9'
+    implementation 'androidx.navigation:navigation-compose:2.9.0'
     // coil-compose
     implementation 'io.coil-kt:coil-compose:2.7.0'
 
     // okhttp
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.14'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.16'
     // commons-compress
     implementation 'org.apache.commons:commons-compress:1.27.1'
     // brotli
