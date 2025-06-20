@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -44,7 +45,9 @@ fun ImageCard(
         ) {
             Text(
                 text = primaryText,
-                style = primaryStyle
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                style = primaryStyle,
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -53,6 +56,8 @@ fun ImageCard(
                 Text(
                     text = secondaryText,
                     color = LocalContentColor.current.copy(0.75f),
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
                     style = secondaryStyle
                 )
 
