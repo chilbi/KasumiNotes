@@ -205,7 +205,7 @@ FROM unit_skill_data WHERE unit_id=$unitId"""
                 var i = start
                 while (i < end) {
                     val skillId = it.getInt(i++)
-                    if (skillId == 0) break
+//                    if (skillId == 0) break
                     list.add(skillId)
                 }
                 list

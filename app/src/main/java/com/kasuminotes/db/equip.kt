@@ -150,7 +150,10 @@ private suspend fun AppDatabase.getEquipCraft(equipmentId: Int, consumeNum: Int,
 }
 
 fun AppDatabase.getUnique2Craft(equipmentId: Int): List<Int> {
-    if (!existsTable("unique_equip_craft_enhance")) {
+    if (!existsTables(listOf("unique_equip_craft_enhance", "unique_equip_consume_group"))) {
+        return emptyList()
+    }
+    if (!existsColumn("unique_equip_consume_group", "item_id")) {
         return emptyList()
     }
     val sql = """SELECT item_id FROM unique_equip_craft_enhance
