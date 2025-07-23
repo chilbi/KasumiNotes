@@ -641,7 +641,7 @@
     <string name="give_speed">行动速度</string>
 
     <string name="effect_damage_attenuation">受到的伤害衰减</string>
-    <string name="effect_damage_attenuation_limit1_coefficient2">%1$s万以上%2$s万衰减系数</string>
+    <string name="effect_damage_attenuation_limit1_convergence2">%1$s万以上收敛于%2$s万</string>
     <string name="effect_const">固定</string>
     <string name="effect_down">降低</string>
     <string name="effect_energy_cut">受到的TP降低效果</string>

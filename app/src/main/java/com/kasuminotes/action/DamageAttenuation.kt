@@ -10,8 +10,8 @@ fun SkillAction.getDamageAttenuation(skillLevel: Int): D {
     val n4 = if (limit > 100.0) limit + 100.0 else 100.0
     val n6 = n4 + 100.0
     val n8 = 999.0
-    val s = actionValue5 / 10000
-    val m = (actionValue1 + actionValue2 * skillLevel) / 10000
+    val breakpoint = actionValue5 / 10000
+    val attenuationCoefficient = (actionValue1 + actionValue2 * skillLevel) / 10000
 
     return D.Format(
         R.string.action_damage_attenuation_target1_limit2_time3_n4_r5_n6_r7_n8_r9,
@@ -20,24 +20,26 @@ fun SkillAction.getDamageAttenuation(skillLevel: Int): D {
             D.Text(limit.toNumStr()).style(primary = true, bold = true),
             D.Text(actionValue3.toNumStr()).style(primary = true, bold = true),
             D.Text(n4.toNumStr()),
-            getDamageText(n4, s, m),
+            getDamageText(n4, breakpoint, attenuationCoefficient),
             D.Text(n6.toNumStr()),
-            getDamageText(n6, s, m),
+            getDamageText(n6, breakpoint, attenuationCoefficient),
             D.Text(n8.toNumStr()),
-            getDamageText(n8, s, m)
+            getDamageText(n8, breakpoint, attenuationCoefficient)
         )
     )
 }
 
 fun SkillAction.getDamageAttenuationEffect(skillLevel: Int): SkillEffect {
+    val breakpoint = actionValue5 / 10000
+    val attenuationCoefficient = (actionValue1 + actionValue2 * skillLevel) / 10000
     return SkillEffect(
         getTarget(null),
         D.Format(R.string.effect_damage_attenuation),
         D.Format(
-            R.string.effect_damage_attenuation_limit1_coefficient2,
+            R.string.effect_damage_attenuation_limit1_convergence2,
             arrayOf(
-                D.Text((actionValue5 / 10000).toNumStr()),
-                D.Text(((actionValue1 + actionValue2 * skillLevel) / 10000).toNumStr())
+                D.Text(breakpoint.toNumStr()),
+                getDamageText(999.0, breakpoint, attenuationCoefficient)
             )
         ),
         actionValue3,
@@ -46,7 +48,7 @@ fun SkillAction.getDamageAttenuationEffect(skillLevel: Int): SkillEffect {
     )
 }
 
-private fun getDamageText(d: Double, s: Double, m: Double): D {
-    val damage = d * ((m * ln((d - s) / m + 1) + s) / d)
-    return D.Text(damage.toInt().toString())
+private fun getDamageText(damage: Double, breakpoint: Double, attenuationCoefficient: Double): D {
+    val result = damage * ((attenuationCoefficient * ln((damage - breakpoint) / attenuationCoefficient + 1) + breakpoint) / damage)
+    return D.Text(result.toInt().toString())
 }

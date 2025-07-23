@@ -641,7 +641,7 @@
     <string name="give_speed">行動速度</string>
 
     <string name="effect_damage_attenuation">受けるダメージ減衰</string>
-    <string name="effect_damage_attenuation_limit1_coefficient2">%1$s万以上%2$s万減衰係数</string>
+    <string name="effect_damage_attenuation_limit1_convergence2">%1$s万以上%2$s万に収束</string>
     <string name="effect_const">固定</string>
     <string name="effect_down">下降</string>
     <string name="effect_energy_cut">受けるＴＰダウン効果</string>
