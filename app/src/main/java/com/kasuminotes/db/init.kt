@@ -1,5 +1,6 @@
 package com.kasuminotes.db
 
+import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import com.kasuminotes.common.QuestRange
 import kotlinx.coroutines.Dispatchers
@@ -8,8 +9,28 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
+// 修复S2+和SP2+的错乱
+private fun SQLiteDatabase.fixSkillEvolution2() {
+    val hasError = rawQuery("SELECT sp_skill_evolution_2,main_skill_evolution_2 FROM unit_skill_data WHERE unit_id=107901", null).use {
+        if (it.moveToFirst()) {
+            val sp2 = it.getInt(0)
+            val main2 = it.getInt(1)
+            sp2 != 0 && main2 == 0
+        } else {
+            false
+        }
+    }
+    if (hasError) {
+        val tempName = "temp_name_sp2"
+        execSQL("ALTER TABLE unit_skill_data RENAME COLUMN sp_skill_evolution_2 TO $tempName")
+        execSQL("ALTER TABLE unit_skill_data RENAME COLUMN main_skill_evolution_2 TO sp_skill_evolution_2")
+        execSQL("ALTER TABLE unit_skill_data RENAME COLUMN $tempName TO main_skill_evolution_2")
+    }
+}
+
 fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
 //    throw Exception("init error")
+    fixSkillEvolution2()
     // TODO 国服实装水怜专武后就删除该代码片段
     // 修改unit_unique_equipment表为unit_unique_equip
     if (existsTable("unit_unique_equipment")) {

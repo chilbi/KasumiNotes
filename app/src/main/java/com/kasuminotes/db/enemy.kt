@@ -165,6 +165,84 @@ WHERE $targetId IN (eed.target_value_1,eed.target_value_2)"""
             }
         }
     } catch (_: SQLiteException) {
-        return null
+        if (fix) {
+            return null
+        } else {
+            fix = true
+            if (fixExtraEffectData()) {
+                return getExtraEffectData(targetId, epTableName)
+            }
+            return null
+        }
+    }
+}
+
+var fix = false
+// 硬编码修复extra_effect_data表未解密
+private fun AppDatabase.fixExtraEffectData(): Boolean {
+    //extra_effect_id=430001386 exec_timing_5==4 enemy_id_3!=0 enemy_id_5!=0
+    //extra_effect_id=441004012 exec_timing_5==0 enemy_id_3!=0 enemy_id_5==0
+    return useDatabase {
+        val columns = mutableListOf<String>()
+        try {
+            rawQuery("PRAGMA table_info(extra_effect_data)", null).use {
+                val nameIndex = it.getColumnIndex("name")
+                if (nameIndex > -1) {
+                    while (it.moveToNext()) {
+                        columns.add(it.getString(nameIndex))
+                    }
+                }
+            }
+            if (columns.isNotEmpty()) {
+                val fields = ExtraEffectData.getFields().split(",")
+                val hashColumns = columns.filter { col -> !fields.contains(col) }
+                if (hashColumns.isNotEmpty()) {
+                    val renames = mutableListOf<Pair<String, String>>()
+                    if (!columns.contains("exec_timing_5")) {
+                        rawQuery("SELECT ${hashColumns.joinToString(",") { "\"$it\"" }} FROM extra_effect_data WHERE extra_effect_id=430001386", null).use {
+                            if (it.moveToFirst()) {
+                                for (hashCol in hashColumns) {
+                                    val index = it.getColumnIndex(hashCol)
+                                    if (index > -1) {
+                                        val value = it.getInt(index)
+                                        if (value < 10 && value > 0) {//==4
+                                            renames.add(hashCol to "exec_timing_5")
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (renames.isNotEmpty() && !columns.contains("enemy_id_3") && !columns.contains("enemy_id_5")) {
+                        val execTiming5HashName = renames[0].first
+                        val enemyIdHashNames = hashColumns.filter { col -> col != execTiming5HashName }
+                        rawQuery("SELECT ${enemyIdHashNames.joinToString(",") { "\"$it\"" }} FROM extra_effect_data WHERE extra_effect_id=441004012", null).use {
+                            if (it.moveToFirst()) {
+                                for (hashCol in enemyIdHashNames) {
+                                    val index = it.getColumnIndex(hashCol)
+                                    if (index > - 1) {
+                                        val value = it.getInt(index)
+                                        if (value > 10) {
+                                            renames.add(hashCol to "enemy_id_3")
+                                        } else {
+                                            renames.add(hashCol to "enemy_id_5")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    renames.forEach { rename ->
+                        execSQL("ALTER TABLE extra_effect_data RENAME COLUMN \"${rename.first}\" TO ${rename.second}")
+                    }
+                }
+                true
+            } else {
+                false
+            }
+        } catch (_: SQLiteException) {
+            false
+        }
     }
 }
