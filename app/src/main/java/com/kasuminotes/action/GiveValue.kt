@@ -37,7 +37,7 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         if (targetAction.actionType == 1 && actionDetail2 == 6) {
             value2 *= 100
             isPercent = true
-        } else if (targetAction.actionType == 10 && actionType != 74 && targetAction.isStatusPercent()) {
+        } else if (targetAction.actionType == 10 && actionType != 27 && actionType != 74 && targetAction.isStatusPercent()) {
             isPercent = true
         } else if (targetAction.actionType == 98  && actionDetail2 == 1) {
             value2 *= 100
