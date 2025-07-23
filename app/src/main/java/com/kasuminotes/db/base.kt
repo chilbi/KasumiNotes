@@ -1,5 +1,7 @@
 package com.kasuminotes.db
 
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.SummonData
 import com.kasuminotes.data.User
@@ -207,4 +209,68 @@ fun AppDatabase.existsColumn(tableName: String, columnName: String): Boolean {
             it.moveToFirst()
         }
     }
+}
+
+fun SQLiteDatabase.renameColumn(tableName: String, oldName: String, newName: String) {
+
+    val escapedTable = tableName.escapeSqlIdentifier()
+    val escapedOld = oldName.escapeSqlIdentifier()
+    val escapedNew = newName.escapeSqlIdentifier()
+
+    try {
+        execSQL("ALTER TABLE $escapedTable RENAME COLUMN $escapedOld TO $escapedNew")
+        return
+    } catch (e: SQLiteException) {
+        if (!e.message.orEmpty().contains("syntax error", ignoreCase = true)) {
+            throw e
+        }
+    }
+
+    try {
+        beginTransaction()
+
+        val cursor = rawQuery("PRAGMA table_info($tableName)", null)
+        val columns = mutableListOf<String>()
+        val columnNames = mutableListOf<String>()
+        while (cursor.moveToNext()) {
+            val name = cursor.getString(cursor.getColumnIndexOrThrow("name"))
+            val type = cursor.getString(cursor.getColumnIndexOrThrow("type"))
+            val notNull = cursor.getInt(cursor.getColumnIndexOrThrow("notnull")) == 1
+            val defaultValue = cursor.getString(cursor.getColumnIndexOrThrow("dflt_value"))
+            val pk = cursor.getInt(cursor.getColumnIndexOrThrow("pk")) == 1
+
+            val columnDef = buildString {
+                append(if (name == escapedOld.removeSurrounding("`")) escapedNew else name.escapeSqlIdentifier())
+                append(" $type")
+                if (notNull) append(" NOT NULL")
+                if (defaultValue != null) append(" DEFAULT $defaultValue")
+                if (pk) append(" PRIMARY KEY")
+            }
+            columns.add(columnDef)
+            columnNames.add(if (name == escapedOld.removeSurrounding("`")) escapedNew else name.escapeSqlIdentifier())
+        }
+        cursor.close()
+
+        val tempTable = "${tableName.removeSurrounding("`")}_temp".escapeSqlIdentifier()
+        execSQL("CREATE TABLE $tempTable (${columns.joinToString(", ")})")
+
+        val selectColumns = columnNames.joinToString(", ") { name ->
+            if (name == escapedNew) escapedOld else name
+        }
+        val insertColumns = columnNames.joinToString(", ")
+        execSQL("INSERT INTO $tempTable ($insertColumns) SELECT $selectColumns FROM $tableName")
+
+        execSQL("DROP TABLE $tableName")
+
+        execSQL("ALTER TABLE $tempTable RENAME TO $tableName")
+
+        setTransactionSuccessful()
+    } finally {
+        endTransaction()
+    }
+}
+
+private fun String.escapeSqlIdentifier(): String {
+    if (startsWith("`") && endsWith("`")) return this
+    return "`$this`"
 }

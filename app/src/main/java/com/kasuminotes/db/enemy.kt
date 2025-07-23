@@ -234,7 +234,7 @@ private fun AppDatabase.fixExtraEffectData(): Boolean {
                         }
                     }
                     renames.forEach { rename ->
-                        execSQL("ALTER TABLE extra_effect_data RENAME COLUMN \"${rename.first}\" TO ${rename.second}")
+                        renameColumn("extra_effect_data", rename.first, rename.second)
                     }
                 }
                 true

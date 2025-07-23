@@ -22,9 +22,9 @@ private fun SQLiteDatabase.fixSkillEvolution2() {
     }
     if (hasError) {
         val tempName = "temp_name_sp2"
-        execSQL("ALTER TABLE unit_skill_data RENAME COLUMN sp_skill_evolution_2 TO $tempName")
-        execSQL("ALTER TABLE unit_skill_data RENAME COLUMN main_skill_evolution_2 TO sp_skill_evolution_2")
-        execSQL("ALTER TABLE unit_skill_data RENAME COLUMN $tempName TO main_skill_evolution_2")
+        renameColumn("unit_skill_data", "sp_skill_evolution_2", tempName)
+        renameColumn("unit_skill_data", "main_skill_evolution_2", " sp_skill_evolution_2")
+        renameColumn("unit_skill_data", tempName, "main_skill_evolution_2")
     }
 }
 
