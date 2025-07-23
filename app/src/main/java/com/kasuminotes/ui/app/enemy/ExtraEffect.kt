@@ -64,7 +64,8 @@ private fun SkillEffectList(list: List<SkillEffect>) {
         item.targetText = stringDescription(item.target)
         item.labelText = stringDescription(item.label)
         item.valueText = stringDescription(item.value)
-        if (item.labelText.length > 10) {
+        val labelLength = item.labelText.length
+        if (labelLength > 7 || labelLength + item.valueText.length > 11) {
             item.weight = 1f
         }
         item
