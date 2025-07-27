@@ -31,6 +31,7 @@ class ActionBuilder(
         val ignoreProvocationModify = ModifyDescription(rawDepends, actions)
         val giveValueModifyList = mutableListOf<Pair<Int, Int>>()
         val totalCriticalModifyList = mutableListOf<Pair<Int, Int>>()
+        val hitCountModifyList = mutableListOf<Pair<Int, Int>>()
 
         actions.forEachIndexed { index, action ->
             if (action.depend != null && !action.checkDependChain(action.depend!!)) {
@@ -76,7 +77,8 @@ class ActionBuilder(
             if (action.actionType == 75) {
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
-                originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
+                hitCountModifyList.add(modifyIndex to index)
+//                originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
             }
             /** [getTriggeredWhenAttacked] */
             if (action.actionType == 114) {
@@ -189,9 +191,15 @@ class ActionBuilder(
             }
         }
 
+        if (hitCountModifyList.isNotEmpty()) {
+            hitCountModifyList.forEach { item ->
+                originList[item.first] = originList[item.first].insert(originList[item.second])
+            }
+        }
+
         if (exEquipPassive != null) {
             originList.forEachIndexed { index, _ ->
-                originList[index] = originList[index].insert(exEquipPassive!!)
+                originList[index] = originList[index].insert(exEquipPassive)
             }
         }
 
