@@ -104,12 +104,12 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
     val maxRes: Int
 
     /** 26：加减，27：倍，74：{0}分之一 */
-    var type = actionType
-    if (type == 27 && targetAction.actionType == 1 && actionDetail2 == 3) {
-        type = 26
-    }
+//    var type = actionType
+//    if (type == 27 && targetAction.actionType == 1 && actionDetail2 == 3) {
+//        type = 26
+//    }
 
-    when (type) {
+    when (actionType) {
         26 -> {
             if (isAdditive) {
                 actionRes = R.string.action_additive_content1_formula2
