@@ -180,7 +180,7 @@ class ActionBuilder(
         }
 
         if (giveValueModifyList.isNotEmpty()) {
-            giveValueModifyList.forEach {item ->
+            giveValueModifyList.forEach { item ->
                 originList[item.first] = originList[item.first].append(originList[item.second])
             }
         }

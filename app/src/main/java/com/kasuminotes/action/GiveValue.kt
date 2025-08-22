@@ -11,11 +11,11 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
     val targetAction = actions.find { it.actionId == actionDetail1 }!!
 
     /** 嵌套修饰的目标动作 */
-    val nestTargetAction = if (targetAction.actionType == 26 || targetAction.actionType == 27) {
-        actions.find { it.actionId == targetAction.actionDetail1 }!!
-    } else {
-        null
-    }
+//    val nestTargetAction = if (targetAction.actionType == 26 || targetAction.actionType == 27) {
+//        actions.find { it.actionId == targetAction.actionDetail1 }!!
+//    } else {
+//        null
+//    }
 
     var giveValueCount = 1
     // 击杀数动作会叠算
@@ -82,18 +82,22 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 
     val independentVariable = getGiveValueIndependentVariable()
 
-    val content = getGiveValueContent(nestTargetAction ?: targetAction)
+    val content = getGiveValueContent(targetAction)
 
-    val formula = if (nestTargetAction == null) {
-        getGiveValueFormula(targetAction, constantVariable, independentVariable, null)
-    } else {
-        targetAction.getGiveValueFormula(
-            nestTargetAction,
-            constantVariable,
-            independentVariable,
-            targetAction.getGiveValueIndependentVariable()
-        )
-    }
+    val formula = getGiveValueFormula(targetAction, constantVariable, independentVariable, null)
+
+//    val content = getGiveValueContent(nestTargetAction ?: targetAction)
+//
+//    val formula = if (nestTargetAction == null) {
+//        getGiveValueFormula(targetAction, constantVariable, independentVariable, null)
+//    } else {
+//        targetAction.getGiveValueFormula(
+//            nestTargetAction,
+//            constantVariable,
+//            independentVariable,
+//            targetAction.getGiveValueIndependentVariable()
+//        )
+//    }
 
 
     val maxValue = getMaxValue(skillLevel, targetAction)
@@ -220,6 +224,10 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
             if (targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 4) R.string.give_energy_recovery
             else R.string.give_energy_decrement
         )
+        26, 27, 74 -> when (actionDetail2) {
+            2 -> D.Format(R.string.give_base_value1, arrayOf(D.Text(targetAction.actionValue2.toNumStr())))
+            else -> D.Unknown
+        }
         35 -> when (actionDetail2) {
             4 -> D.Format(
                 if (actionValue2 < 0.0) R.string.give_mark_consume_state1 else R.string.give_mark_add_state1,
@@ -293,6 +301,7 @@ private fun SkillAction.getGiveValueFormula(
             3 -> D.Format(R.string.skill_level)
             else -> D.Unknown
         }
+        26, 27, 74 -> null
         36, 37 -> when (actionDetail2) {
             1, 3, 7 -> null
             2, 4, 6 -> D.Format(R.string.skill_level)
