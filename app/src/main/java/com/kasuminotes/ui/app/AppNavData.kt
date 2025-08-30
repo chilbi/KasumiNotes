@@ -143,9 +143,9 @@ sealed class AppNavData(
 }
 
 object AppNavTransitions {
-    private const val durationMillis = 500
-    private val intOffsetSpec: FiniteAnimationSpec<IntOffset> = tween(durationMillis)
-    private val floatSpec: FiniteAnimationSpec<Float> = tween(durationMillis)
+    private const val DURATION_MILLIS = 500
+    private val intOffsetSpec: FiniteAnimationSpec<IntOffset> = tween(DURATION_MILLIS)
+    private val floatSpec: FiniteAnimationSpec<Float> = tween(DURATION_MILLIS)
     private val fadeIn = fadeIn(floatSpec)
     private val fadeOut = fadeOut(floatSpec)
 

@@ -17,7 +17,8 @@ import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.utils.Helper
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import com.kasuminotes.data.Property
 
 class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel() {
@@ -35,30 +36,30 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     val abyssQuestState = AbyssQuestState(appRepository, viewModelScope)
     val mirageQuestState = MirageQuestState(appRepository, viewModelScope)
 
-    lateinit var navController: NavController
+    lateinit var navController: NavHostController
 
     fun popBackStack() {
-        navController.popBackStack()
+        navController.popBackStackSafe()
     }
 
     fun navigateTo(selectedIndex: Int) {
         when (selectedIndex) {
             0 -> {
                 if (navController.currentDestination?.route != AppNavData.Home.route) {
-                    navController.popBackStack()
+                    navController.popBackStackSafe()
                 }
             }
             1 -> {
                 if (!dbState.questInitializing) {
                     questState.initQuest(dbState.userState.maxUserData!!.maxArea)
-                    navController.navigate(AppNavData.Quest.route) {
+                    navController.navigateSafe(AppNavData.Quest.route) {
                         popUpTo(AppNavData.Home.route)
                     }
                 }
             }
             2 -> {
                 clanBattleState.initPeriodList()
-                navController.navigate(AppNavData.ClanBattle.route) {
+                navController.navigateSafe(AppNavData.ClanBattle.route) {
                     popUpTo(AppNavData.Home.route)
                 }
             }
@@ -66,7 +67,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     }
 
     fun navigateToAbout() {
-        navController.navigate(AppNavData.About.route)
+        navController.navigateSafe(AppNavData.About.route)
     }
 
     fun navigateToChara(userProfile: UserProfile) {
@@ -75,13 +76,13 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             dbState.userState.charaListState.profiles,
             dbState.userState.maxUserData!!.maxCharaLevel
         )
-        navController.navigate(AppNavData.Chara.route)
+        navController.navigateSafe(AppNavData.Chara.route)
     }
 
     fun navigateToEquipById(equipId: Int) {
         equipState.destroy()
         equipState.initEquip(dbState.userState.maxUserData!!.maxArea, equipId)
-        navController.navigate(AppNavData.Equip.route)
+        navController.navigateSafe(AppNavData.Equip.route)
     }
 
     fun navigateToEquip(equipData: EquipData, slot: Int?) {
@@ -101,7 +102,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 }
             )
         }
-        navController.navigate(AppNavData.Equip.route)
+        navController.navigateSafe(AppNavData.Equip.route)
     }
 
     fun navigateToUnique(uniqueData: UniqueData, slot: Int) {
@@ -120,7 +121,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 charaState::changeUniqueLevel
             )
         }
-        navController.navigate(AppNavData.Equip.route)
+        navController.navigateSafe(AppNavData.Equip.route)
     }
 
     fun navigateToExEquip(exEquipSlot: ExEquipSlot) {
@@ -172,12 +173,12 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             charaState::changeExEquipLevel,
             charaState::changeSubPercentList
         )
-        navController.navigate(AppNavData.ExEquip.route)
+        navController.navigateSafe(AppNavData.ExEquip.route)
     }
 
     fun navigateToSummons(summons: List<Int>, skillLevel: Int) {
         summonsState.initSummons(summons, skillLevel, charaState.userData!!)
-        navController.navigate(AppNavData.Summons.route)
+        navController.navigateSafe(AppNavData.Summons.route)
     }
 
     fun navigateToMinions(minions: List<Int>, skillLevel: Int, enemyData: EnemyData, epTableName: String) {
@@ -206,70 +207,70 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         } else {
             summonsState.initMinionDataList(minions, epTableName, null)
         }
-        navController.navigate(AppNavData.Summons.route)
+        navController.navigateSafe(AppNavData.Summons.route)
     }
 
     fun navigateToExtraEffect(extraEffectData: ExtraEffectData, epTableName: String) {
         summonsState.initMinionDataList(extraEffectData.enemyIdList, epTableName, extraEffectData)
-        navController.navigate(AppNavData.Summons.route)
+        navController.navigateSafe(AppNavData.Summons.route)
     }
 
     fun navigateToMapList(label: String, period: ClanBattlePeriod) {
         clanBattleState.initPeriod(label, period)
-        navController.navigate(AppNavData.ClanBattleMapList.route)
+        navController.navigateSafe(AppNavData.ClanBattleMapList.route)
     }
 
     fun navigateToClanBattleEnemy(enemyData: EnemyData, talentWeaknessList: List<Int>) {
         enemyState.initEnemy(enemyData, talentWeaknessList, "enemy_parameter", null)
-        navController.navigate(AppNavData.Enemy.route)
+        navController.navigateSafe(AppNavData.Enemy.route)
     }
 
     fun navigateToDungeonEnemy(enemyId: Int, talentWeaknessList: List<Int>, waveGroupId: Int?) {
         val isSucceed = enemyState.initEnemy(enemyId, talentWeaknessList, "enemy_parameter", waveGroupId)
         if (isSucceed) {
-            navController.navigate(AppNavData.Enemy.route)
+            navController.navigateSafe(AppNavData.Enemy.route)
         }
     }
 
     fun navigateToTalentQuestEnemy(enemyId: Int, waveGroupId: Int?) {
         val isSucceed = enemyState.initEnemy(enemyId, emptyList(), "talent_quest_enemy_parameter", waveGroupId)
         if (isSucceed) {
-            navController.navigate(AppNavData.Enemy.route)
+            navController.navigateSafe(AppNavData.Enemy.route)
         }
     }
 
     fun navigateToAbyssQuestEnemy(enemyId: Int, waveGroupId: Int?) {
         val isSucceed = enemyState.initEnemy(enemyId, emptyList(), "abyss_enemy_parameter", waveGroupId)
         if (isSucceed) {
-            navController.navigate(AppNavData.Enemy.route)
+            navController.navigateSafe(AppNavData.Enemy.route)
         }
     }
 
     fun navigateToMirageQuestEnemy(enemyId: Int, waveGroupId: Int?) {
         val isSucceed = enemyState.initEnemy(enemyId, emptyList(), "mirage_enemy_parameter", waveGroupId)
         if (isSucceed) {
-            navController.navigate(AppNavData.Enemy.route)
+            navController.navigateSafe(AppNavData.Enemy.route)
         }
     }
 
     fun navigateToDungeon() {
         dungeonState.initAreaDataList()
-        navController.navigate(AppNavData.Dungeon.route)
+        navController.navigateSafe(AppNavData.Dungeon.route)
     }
 
     fun navigateToTalentQuest() {
         talentQuestState.initTalentQuestDataList()
-        navController.navigate(AppNavData.TalentQuest.route)
+        navController.navigateSafe(AppNavData.TalentQuest.route)
     }
 
     fun navigateToAbyssQuest() {
         abyssQuestState.initAbyssScheduleList()
-        navController.navigate(AppNavData.AbyssQuest.route)
+        navController.navigateSafe(AppNavData.AbyssQuest.route)
     }
 
     fun navigateToMirageQuest() {
         mirageQuestState.initMirageQuest()
-        navController.navigate(AppNavData.MirageQuest.route)
+        navController.navigateSafe(AppNavData.MirageQuest.route)
     }
 
     fun navigateToImagesForChangeUserImage() {
@@ -277,7 +278,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             dbState.userState.charaListState.initImages(
                 dbState.userState.getAllProfiles(dbState.userState.charaListState.profiles)
             )
-            navController.navigate(AppNavData.Images.route)
+            navController.navigateSafe(AppNavData.Images.route)
         }
     }
 
@@ -285,7 +286,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         dbState.userState.charaListState.initImages(
             dbState.userState.allProfiles!!
         )
-        navController.navigate(AppNavData.Images.route)
+        navController.navigateSafe(AppNavData.Images.route)
 
     }
 
@@ -296,7 +297,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 dbState.userState.getAllProfiles(unlockedProfiles),
                 unlockedProfiles
             )
-            navController.navigate(AppNavData.Editor.route)
+            navController.navigateSafe(AppNavData.Editor.route)
         }
 
     }
@@ -307,21 +308,21 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             dbState.userState.allProfiles!!,
             unlockedProfiles
         )
-        navController.navigate(AppNavData.Editor.route)
+        navController.navigateSafe(AppNavData.Editor.route)
     }
 
     fun userEditorBack() {
-        navController.popBackStack()
+        navController.popBackStackSafe()
         dbState.userState.charaListState.destroy()
     }
 
     fun confirmNewImage(userId: Int, userName: String) {
         if (dbState.userState.allProfiles == null) {
             dbState.userState.changeImage(userId, userName)
-            navController.popBackStack()
+            navController.popBackStackSafe()
         } else {
             dbState.userState.changeNewUserIdName(userId, userName)
-            navController.popBackStack()
+            navController.popBackStackSafe()
             dbState.userState.charaListState.destroy()
         }
     }
@@ -329,10 +330,10 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     fun confirmNewUserProfiles() {
         if (dbState.userState.allProfiles == null) {
             dbState.userState.confirmEditedProfiles()
-            navController.popBackStack()
+            navController.popBackStackSafe()
         } else {
             dbState.userState.changeNewProfiles()
-            navController.popBackStack()
+            navController.popBackStackSafe()
             dbState.userState.charaListState.destroy()
         }
     }
@@ -340,5 +341,37 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     fun linkTo(uriString: String) {
         val intent = Intent(Intent.ACTION_VIEW, uriString.toUri())
         MainActivity.instance.startActivity(intent)
+    }
+}
+
+private object NavigationManager {
+    private var lastNavigationTime = 0L
+    private const val NAVIGATION_THROTTLE_TIME = 500L
+
+    fun canNavigate(): Boolean {
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastNavigationTime > NAVIGATION_THROTTLE_TIME) {
+            lastNavigationTime = currentTime
+            return true
+        }
+        return false
+    }
+}
+
+private fun NavHostController.navigateSafe(route: String) {
+    if (NavigationManager.canNavigate()) {
+        this.navigate(route)
+    }
+}
+
+private fun NavHostController.navigateSafe(route: String, builder: NavOptionsBuilder.() -> Unit) {
+    if (NavigationManager.canNavigate()) {
+        this.navigate(route, builder)
+    }
+}
+
+private fun NavHostController.popBackStackSafe() {
+    if (NavigationManager.canNavigate()) {
+        this.popBackStack()
     }
 }
