@@ -20,10 +20,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.kasuminotes.R
 import com.kasuminotes.data.DungeonAreaData
 import com.kasuminotes.state.DungeonState
+import com.kasuminotes.ui.components.CenterText
 import com.kasuminotes.ui.components.FixedWidthLabel
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.PlaceImage
@@ -36,35 +39,39 @@ fun DungeonAreaList(
     dungeonState: DungeonState,
     onNavigateToEnemy: (enemyId: Int, talentWeaknessList: List<Int>, waveGroupId: Int?) -> Unit
 ) {
-    Column(Modifier.verticalScroll(rememberScrollState())) {
-        dungeonState.dungeonAreaDataGrouped.forEach { group ->
-            LabelContainer(
-                label = "${group.key - 31000} ${group.value[0].dungeonName}",
-                color = MaterialTheme.colorScheme.primary
-            ) {
-                var floorNum = -1
-                group.value.forEach { dungeonAreaData ->
-                    Row(Modifier.padding(vertical = 4.dp)) {
-                        if (dungeonAreaData.floorNum == floorNum) {
-                            Spacer(Modifier.width(40.dp))
-                        } else {
-                            floorNum = dungeonAreaData.floorNum
-                            FixedWidthLabel(
-                                text = "${floorNum}F",
-                                width = 32.dp,
-                                color = MaterialTheme.colorScheme.secondary
+    if (dungeonState.hasDungeon) {
+        Column(Modifier.verticalScroll(rememberScrollState())) {
+            dungeonState.dungeonAreaDataGrouped.forEach { group ->
+                LabelContainer(
+                    label = "${group.key - 31000} ${group.value[0].dungeonName}",
+                    color = MaterialTheme.colorScheme.primary
+                ) {
+                    var floorNum = -1
+                    group.value.forEach { dungeonAreaData ->
+                        Row(Modifier.padding(vertical = 4.dp)) {
+                            if (dungeonAreaData.floorNum == floorNum) {
+                                Spacer(Modifier.width(40.dp))
+                            } else {
+                                floorNum = dungeonAreaData.floorNum
+                                FixedWidthLabel(
+                                    text = "${floorNum}F",
+                                    width = 32.dp,
+                                    color = MaterialTheme.colorScheme.secondary
+                                )
+                            }
+
+                            DungeonAreaListItem(
+                                dungeonAreaData,
+                                dungeonState.enemyTalentWeaknessMap[dungeonAreaData.enemyId],
+                                onNavigateToEnemy
                             )
                         }
-
-                        DungeonAreaListItem(
-                            dungeonAreaData,
-                            dungeonState.enemyTalentWeaknessMap[dungeonAreaData.enemyId],
-                            onNavigateToEnemy
-                        )
                     }
                 }
             }
         }
+    } else {
+        CenterText(stringResource(R.string.no_data))
     }
 }
 

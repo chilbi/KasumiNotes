@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.kasuminotes.R
-import com.kasuminotes.data.DungeonAreaData
 import com.kasuminotes.state.DungeonState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar

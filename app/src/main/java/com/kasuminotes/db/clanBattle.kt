@@ -10,7 +10,12 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 
 suspend fun AppDatabase.getClanBattlePeriodList(limit: Boolean): List<ClanBattlePeriod> {
-    var sql = "SELECT clan_battle_id,start_time FROM clan_battle_period ORDER BY clan_battle_id DESC"
+    val tableName = if (existsTable("clan_battle_period")) {
+        "clan_battle_period"
+    } else {
+        "clan_battle_schedule"
+    }
+    var sql = "SELECT clan_battle_id,start_time FROM $tableName ORDER BY clan_battle_id DESC"
     if (limit) {
         sql += " LIMIT 13"
     }
@@ -184,7 +189,7 @@ WHERE wave_group_id IN (wave_group_id_1,wave_group_id_2,wave_group_id_3,wave_gro
 
 private fun AppDatabase.getBossTalentWeaknessList(bossIdList: List<Pair<Int, Int>>): List<List<Int>> {
     return useDatabase {
-        if (existsTable("enemy_talent_weakness")) {
+        if (existsTables(listOf("talent_weakness", "enemy_talent_weakness"))) {
             bossIdList.map { bossId ->
                 rawQuery(
                     """SELECT talent_1,talent_2,talent_3,talent_4,talent_5

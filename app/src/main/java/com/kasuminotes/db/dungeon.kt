@@ -1,10 +1,12 @@
 package com.kasuminotes.db
 
+import android.database.sqlite.SQLiteException
 import com.kasuminotes.data.DungeonAreaData
 
 fun AppDatabase.getDungeonAreaDataList(): List<DungeonAreaData> {
-    val sql = if (existsTable("dungeon_area")) {
-        """SELECT t.dungeon_area_id,t.dungeon_name,t.floor_num,t.mode,t.pattern,ep.enemy_id,ep.unit_id,ep.name,wgd.wave_group_id
+    try {
+        val sql = if (existsTable("dungeon_area")) {
+            """SELECT t.dungeon_area_id,t.dungeon_name,t.floor_num,t.mode,t.pattern,ep.enemy_id,ep.unit_id,ep.name,wgd.wave_group_id
 FROM (
 SELECT da.dungeon_area_id,da.dungeon_name,dqd.floor_num,0 AS mode,0 AS pattern,dqd.wave_group_id
 FROM dungeon_area AS da
@@ -30,33 +32,42 @@ ON t.wave_group_id=wgd.wave_group_id
 JOIN enemy_parameter AS ep
 ON ep.enemy_id IN (wgd.enemy_id_1,wgd.enemy_id_2,wgd.enemy_id_3,wgd.enemy_id_4,wgd.enemy_id_5)
 ORDER BY t.dungeon_area_id DESC,t.floor_num DESC,t.mode ASC,t.pattern ASC"""
-    } else {
-        """SELECT dad.dungeon_area_id,dad.dungeon_name,0 AS floor_num,0 AS mode,0 AS pattern,ep.enemy_id,ep.unit_id,ep.name,wgd.wave_group_id
+        } else {
+            """SELECT dad.dungeon_area_id,dad.dungeon_name,0 AS floor_num,0 AS mode,0 AS pattern,ep.enemy_id,ep.unit_id,ep.name,wgd.wave_group_id
 FROM dungeon_area_data AS dad
 JOIN wave_group_data AS wgd
 ON dad.wave_group_id=wgd.wave_group_id
 JOIN enemy_parameter AS ep
 ON ep.enemy_id IN (wgd.enemy_id_1,wgd.enemy_id_2,wgd.enemy_id_3,wgd.enemy_id_4,wgd.enemy_id_5)
 ORDER BY dad.dungeon_area_id DESC"""
-    }
-    return useDatabase {
-        rawQuery(sql, null).use {
-            val list = mutableListOf<DungeonAreaData>()
-            while (it.moveToNext()) {
-                var i = 0
-                list.add(DungeonAreaData(
-                    it.getInt(i++),
-                    it.getString(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getString(i++),
-                    it.getInt(i)
-                ))
+        }
+        return useDatabase {
+            rawQuery(sql, null).use {
+                val list = mutableListOf<DungeonAreaData>()
+                while (it.moveToNext()) {
+                    var i = 0
+                    list.add(
+                        DungeonAreaData(
+                            it.getInt(i++),
+                            it.getString(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getString(i++),
+                            it.getInt(i)
+                        )
+                    )
+                }
+                list
             }
-            list
+        }
+    } catch (e: SQLiteException) {
+        if (e.message?.contains("no such table") == true) {
+            return emptyList()
+        } else {
+            throw e
         }
     }
 }
