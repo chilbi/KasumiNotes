@@ -294,6 +294,7 @@
     <string name="action_shield_counter_formula1">、同時に攻撃してきた敵に%sダメージを与える。</string>
     <string name="action_shield_counter_damage1">、同時に%s</string>
     <string name="action_hit_count_target1_time2_count3">%1$sが%2$s秒の内、%3$s回ダメージを与える度に、</string>
+    <string name="action_hit_count_max1">最大%s回まで</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$sに【%2$s】が%3$sつ追加されるようになる、最大%4$sまで追加される、効果時間%5$s秒。</string>
     <string name="action_mark_content1_state2_consume3">%1$sに【%2$s】が%3$sつ解除されるようになる。</string>
     <string name="action_speed_overlay_target1_content2_formula3_time4">%1$sの行動速度を%3$s%2$sさせる、効果時間%4$s秒。（このスキルの効果は他の行動速度変化スキルと重複する）</string>

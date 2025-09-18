@@ -294,6 +294,7 @@
     <string name="action_shield_counter_formula1">，同时对进攻的敌人造成%s伤害。</string>
     <string name="action_shield_counter_damage1">，同时%s</string>
     <string name="action_hit_count_target1_time2_count3">%1$s在%2$s秒内，每当造成%3$s次伤害时，</string>
+    <string name="action_hit_count_max1">最多%s次</string>
     <string name="action_mark_content1_state2_add3_max4_time5">%1$s追加%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。</string>
     <string name="action_mark_content1_state2_consume3">%1$s解除%3$s个【%2$s】。</string>
     <string name="action_speed_overlay_target1_content2_formula3_time4">%1$s的行动速度%2$s%3$s，效果时间%4$s秒。（此技能的效果可以和其它行动速度变化技能叠加）</string>
