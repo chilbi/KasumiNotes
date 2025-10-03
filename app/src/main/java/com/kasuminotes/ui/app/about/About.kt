@@ -96,7 +96,13 @@ fun About(
                     text = "https://wthee.xyz/redive/",
                     onClick = { onLinkTo("https://wthee.xyz/redive/") }
                 )
+                Spacer(Modifier.height(8.dp))
+                TextLink(
+                    text = "https://roboninon.win",
+                    onClick = { onLinkTo("https://roboninon.win/db/version") }
+                )
 
+                Spacer(Modifier.height(24.dp))
                 Spacer(Modifier.weight(1f))
 
                 Text(
