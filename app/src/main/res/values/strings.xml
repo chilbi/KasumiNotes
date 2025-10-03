@@ -429,6 +429,7 @@
 <!--    <string name="summon_427101">召唤骷髅老爹(427101)</string>-->
     <string name="summon_431901">制造出一个一定时间后就会消失的冰之壁</string>
 <!--    <string name="summon_430101">召唤一个尖刺兄弟</string>-->
+    <string name="summon_435601">制造出一个不会使用UB的自身的分身</string>
 
     <string name="mode_id1">自身变化为姿态(%s)，</string>
     <string name="mode_return">自身恢复为原来的姿态，</string>
