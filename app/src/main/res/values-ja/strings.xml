@@ -53,6 +53,7 @@
     <string name="db_server">データベース</string>
     <string name="server_cn">中国サーバー</string>
     <string name="server_jp">日本サーバー</string>
+    <string name="server_en">外国サーバー</string>
     <string name="display">ディスプレイ</string>
     <string name="language">言語</string>
     <string name="lang_cn">中文</string>

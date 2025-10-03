@@ -53,12 +53,14 @@ class AppRepository(
         when (server) {
             DbServer.CN -> context.dbVersionCNSP
             DbServer.JP -> context.dbVersionJPSP
+            DbServer.EN -> context.dbVersionENSP
         }
 
     fun setDbVersion(server: DbServer, version: String) {
         when (server) {
             DbServer.CN -> context.dbVersionCNSP = version
             DbServer.JP -> context.dbVersionJPSP = version
+            DbServer.EN -> context.dbVersionENSP = version
         }
     }
 
@@ -145,8 +147,10 @@ class AppRepository(
 
     fun getDatabase() = AppDatabase.getInstance(context.applicationContext)
 
-    fun fetchLastDbVersion(server: DbServer): String = if (UrlUtil.useWtheeDb) {
-        HttpUtil.fetchWtheeLastDbVersion(UrlUtil.lastVersionApiUrl, server)
+    fun fetchLastDbVersion(server: DbServer): String = if (server == DbServer.EN) {
+        HttpUtil.fetchRoboninonLastDbVersion(UrlUtil.roboninonLastVersionApiUrl)
+    } else if (UrlUtil.useWtheeDb) {
+        HttpUtil.fetchWtheeLastDbVersion(UrlUtil.wtheeLastVersionApiUrl, server)
     } else {
         HttpUtil.fetchLastDbVersion(UrlUtil.lastVersionUrl[server]!!)
     }

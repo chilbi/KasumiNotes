@@ -9,6 +9,7 @@ object UrlUtil {
     // API URL
     private const val ESTERTION_API_URL = "https://redive.estertion.win"
     private const val WTHEE_API_URL = "https://wthee.xyz"
+    private const val ROBONINON_API_URL = "https://roboninon.win"
     private const val WTHEE_API_RESOURCE_URL = "$WTHEE_API_URL/redive/jp/resource"
     private val RES_URL = if (useWtheeRes) WTHEE_API_RESOURCE_URL else ESTERTION_API_URL
 
@@ -21,6 +22,10 @@ object UrlUtil {
     private const val DB_FILE_NAME_JP = "redive_jp.db"
     private val DB_FILE_URL_JP = "${if (useWtheeDb) WTHEE_API_URL else ESTERTION_API_URL}/db/$DB_FILE_NAME_JP.br"
     private const val LAST_VERSION_URL_JP = "$ESTERTION_API_URL/last_version_jp.json"
+
+    // cn database
+    private const val DB_FILE_NAME_EN = "redive_en.db"
+    private val DB_FILE_URL_EN = "$ROBONINON_API_URL/db/download?compressed=true"
 
     //  Resource URL
     private val STILL_UNIT_URL = "$RES_URL/card/full/%d.webp"
@@ -41,10 +46,11 @@ object UrlUtil {
     // hashed TableNames ColumnNames
     const val RainbowJsonUrl = "https://api.github.com/repos/MalitsPlus/ShizuruNotes/contents/app/src/main/res/raw/rainbow.json"
 
-    const val lastVersionApiUrl = "$WTHEE_API_URL/pcr/api/v1/db/info/v2"
+    const val wtheeLastVersionApiUrl = "$WTHEE_API_URL/pcr/api/v1/db/info/v2"
+    const val roboninonLastVersionApiUrl = "$ROBONINON_API_URL/db/version"
 
-    val dbFileNameMap = mapOf(DbServer.CN to DB_FILE_NAME_CN, DbServer.JP to DB_FILE_NAME_JP)
-    val dbFileUrlMap = mapOf(DbServer.CN to DB_FILE_URL_CN, DbServer.JP to DB_FILE_URL_JP)
+    val dbFileNameMap = mapOf(DbServer.CN to DB_FILE_NAME_CN, DbServer.JP to DB_FILE_NAME_JP, DbServer.EN to DB_FILE_NAME_EN)
+    val dbFileUrlMap = mapOf(DbServer.CN to DB_FILE_URL_CN, DbServer.JP to DB_FILE_URL_JP, DbServer.EN to DB_FILE_URL_EN)
     val lastVersionUrl = mapOf(DbServer.CN to LAST_VERSION_URL_CN, DbServer.JP to LAST_VERSION_URL_JP)
 
 //    const val summonIconUrl = "$API_URL/icon/unit/000001.webp"

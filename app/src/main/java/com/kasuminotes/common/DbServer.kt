@@ -11,5 +11,9 @@ enum class DbServer : ResId {
     JP {
         @StringRes
         override val resId = R.string.server_jp
+    },
+    EN {
+        @StringRes
+        override val resId = R.string.server_en
     }
 }

@@ -53,6 +53,7 @@
     <string name="db_server">数据库</string>
     <string name="server_cn">国服</string>
     <string name="server_jp">日服</string>
+    <string name="server_en">外服</string>
     <string name="display">显示</string>
     <string name="language">语言</string>
     <string name="lang_cn">中文</string>

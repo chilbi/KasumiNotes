@@ -90,6 +90,27 @@ object HttpUtil {
     }
 
     @Throws(Throwable::class)
+    fun fetchRoboninonLastDbVersion(url: String): String {
+        var call: Call? = null
+        var response: Response? = null
+        try {
+            val client = OkHttpClient.Builder().build()
+            val request = Request.Builder()
+                .url(url)
+                .build()
+            call = client.newCall(request)
+            response = call.execute()
+            val responseJson = JSONObject(response.body.string())
+            return responseJson.getString("TruthVersion")
+        } catch (e: Throwable) {
+            call?.cancel()
+            throw e
+        } finally {
+            response?.close()
+        }
+    }
+
+    @Throws(Throwable::class)
     fun fetchWtheeLastDbVersion(url: String, server: DbServer): String {
         var call: Call? = null
         var response: Response? = null

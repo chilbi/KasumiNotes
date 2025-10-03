@@ -33,10 +33,10 @@ fun DatabaseMenuList(
         iconVector = Icons.Filled.Cloud,
         text = stringResource(dbServer.resId)
     ) { onCollapse ->
-        listOf(
-            dbServer,
-            if (dbServer == DbServer.CN) DbServer.JP else DbServer.CN
-        ).forEach { server ->
+        val allServer = enumValues<DbServer>().toMutableList()
+        allServer.remove(dbServer)
+        allServer.add(0, dbServer)
+        allServer.forEach { server ->
             DropdownMenuItem(
                 text = { MenuItemText(stringResource(server.resId)) },
                 onClick = {
