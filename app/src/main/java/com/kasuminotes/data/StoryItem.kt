@@ -15,7 +15,11 @@ data class StoryItem(
     }
 
     val label: String by lazy {
-        Regex("（([\\s\\S]+)）").find(unitName)?.let { matchResult ->
+        var matchResult = Regex("（([\\s\\S]+)）").find(unitName)
+        if (matchResult == null) {
+            matchResult = Regex("\\(([\\s\\S]+)\\)").find(unitName)
+        }
+        matchResult?.let { matchResult ->
             matchResult.groupValues[1]
         } ?: unitName
     }
