@@ -217,6 +217,15 @@ class ActionBuilder(
             }
         }
 
+        actions.forEachIndexed { index, action ->
+            if (!willRemoveIndexList.contains(index)) {
+                val targetModifier = action.getTargetModifier()
+                if (targetModifier != null) {
+                    originList[index] = originList[index].insert(targetModifier)
+                }
+            }
+        }
+
         return if (willRemoveIndexList.isEmpty()) originList
         else originList.filterIndexed { index, _ -> !willRemoveIndexList.contains(index) }
     }

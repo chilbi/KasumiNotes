@@ -412,6 +412,16 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
     }
 }
 
+fun SkillAction.getTargetModifier(): D? {
+    return if (arrayOf(4, 5, 6).contains(targetArea)) {
+        D.Format(R.string.target_include_flight)
+    } else if (arrayOf(7, 8, 9).contains(targetArea)) {
+        D.Format(R.string.target_without_summon)
+    } else {
+        null
+    }
+}
+
 fun SkillAction.isSelf() = targetType in arrayOf(0, 7)
 
 /** if (actionType == 23 || actionType == 28) any_target else target */

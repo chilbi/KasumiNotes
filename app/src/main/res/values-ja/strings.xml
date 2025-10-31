@@ -542,6 +542,8 @@
     <string name="target_attacking_enemy">攻撃してきた敵</string>
     <string name="target_state1">【%s】を持っている対象</string>
     <string name="target_element1">%s属性の</string>
+    <string name="target_include_flight">（飛行効果無視）</string>
+    <string name="target_without_summon">（召喚体無視）</string>
 
     <string name="skill_level">スキルLv</string>
     <string name="formula_base1_lv2_atk3_plus4_type5_result6">{ %1$s + %2$s × スキルLv + (%3$s + %4$s × スキルLv) × %5$s } = %6$s</string>
