@@ -336,6 +336,9 @@
     <string name="action_abnormal_damage_extension_target1_formula2_time3">%1$sが継続ダメージを与える状態異常のダメージの発生間隔と効果時間を%2$sアップさせる、効果時間%3$s秒。</string>
     <string name="action_convert_to_dot_target1_formula2_duration3_time4">%1$sが敵から受ける特定のダメージの%2$sを%3$s秒の継続ダメージに変換させる、効果時間%4$s秒。（変換される継続ダメージではＴＰは回復しない）</string>
     <string name="action_reconcile_target1_time2">%1$sに調和状態を付与する、調和状態の間は物理防御力と魔法防御力のうち高い方によって計算されたダメージを受ける、効果時間%2$s秒。</string>
+    <string name="action_triggered_when_use_ub_target1_state2_count3_max4_time5">%1$sに【%2$s】を%3$sつ付与する、最大%4$sつまで追加される、効果時間%5$s秒。【%2$s】が付与されているキャラがUBを使用した場合、【%2$s】を1つ消費し、同時に以下の効果を発動する：</string>
+    <string name="action_deactivate1">%s状態の間はＴＰが増加しない。</string>
+
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>
@@ -525,6 +528,8 @@
     <string name="target_last_assignment_count1">最も後ろの%s</string>
     <string name="target_most_content1_extent2_assignment_count3">%1$sが最も%2$s%3$s</string>
     <string name="target_without_self">自分以外の</string>
+    <string name="target_atk_content1">物理攻撃をする%sのうち</string>
+    <string name="target_magic_content1">魔法攻撃をする%sのうち</string>
     <string name="target_all_atk_content1">物理攻撃を行うすべての%sキャラ</string>
     <string name="target_all_magic_str_content1">魔法攻撃を行うすべての%sキャラ</string>
     <string name="target_distance1">自分の前%s距離</string>
@@ -597,6 +602,7 @@
     <string name="break_immunity">Break免疫</string>
     <string name="provoke">挑発</string>
     <string name="fear">恐慌</string>
+    <string name="deactivate">遮絶の操糸</string>
     <string name="persistence">執着</string>
     <string name="harmed_remove_content1">%s攻撃を受けたときのみ解除される。</string>
 

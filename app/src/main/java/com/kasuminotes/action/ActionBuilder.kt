@@ -102,6 +102,20 @@ class ActionBuilder(
                     }
                 }
             }
+            /** [getTriggeredWhenUseUB] */
+            if (action.actionType == 133) {
+                var num = 1
+                arrayOf(action.actionDetail1, action.actionDetail2, action.actionDetail3).forEach { triggerActionId ->
+                    if (triggerActionId != 0) {
+                        val triggerActionIndex = actions.indexOfFirst { action -> action.actionId == triggerActionId }
+                        if (triggerActionIndex > -1) {
+                            willRemoveIndexList.add(triggerActionIndex)
+                            val numDesc = D.Text("\n(${num++}) ")
+                            originList[index] = D.Join(arrayOf(originList[index], numDesc, originList[triggerActionIndex]))
+                        }
+                    }
+                }
+            }
             /** [getInjuredEnergy] */
             if (action.actionType == 92) {
                 willRemoveIndexList.add(index)
@@ -290,6 +304,7 @@ class ActionBuilder(
             128 -> getAbnormalDamageExtension()
             129 -> getConvertToDot()
             130 -> getReconcile()
+            133 -> getTriggeredWhenUseUB()
             else -> getUnknown()
         }
     }

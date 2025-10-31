@@ -336,6 +336,8 @@
     <string name="action_abnormal_damage_extension_target1_formula2_time3">使%1$s造成持续伤害状态异常的伤害的发生间隔和效果时间提高%2$s，效果时间%3$s秒。</string>
     <string name="action_convert_to_dot_target1_formula2_duration3_time4">使%1$s受到敌人的特定伤害的%2$s转换为%3$s秒的持续伤害，效果时间%4$s秒。（转换的持续伤害不回复TP）</string>
     <string name="action_reconcile_target1_time2">赋予%1$s调和状态，调和状态期间根据物理防御力和魔法防御力中较高一方的防御力计算受到的伤害，效果时间%2$s秒。</string>
+    <string name="action_triggered_when_use_ub_target1_state2_count3_max4_time5">赋予%1$s%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。被赋予【%2$s】的角色在使用UB时，消耗1个【%2$s】，同时发动以下效果：</string>
+    <string name="action_deactivate1">%s状态期间TP不增加。</string>
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>
@@ -525,6 +527,8 @@
     <string name="target_last_assignment_count1">最后方的%s</string>
     <string name="target_most_content1_extent2_assignment_count3">%1$s最%2$s的%3$s</string>
     <string name="target_without_self">自身以外的</string>
+    <string name="target_atk_content1">使用物理攻击的%s角色中</string>
+    <string name="target_magic_content1">使用魔法攻击的%s角色中</string>
     <string name="target_all_atk_content1">使用物理攻击的所有%s角色</string>
     <string name="target_all_magic_str_content1">使用魔法攻击的所有%s角色</string>
     <string name="target_distance1">自身前方%s距离</string>
@@ -597,6 +601,7 @@
     <string name="break_immunity">Break免疫</string>
     <string name="provoke">挑衅</string>
     <string name="fear">恐慌</string>
+    <string name="deactivate">隔绝的操线</string>
     <string name="persistence">执着</string>
     <string name="harmed_remove_content1">%s只当受到攻击时才能解除。</string>
 

@@ -13,7 +13,7 @@ private val energyHighTypes = arrayOf(12, 27, 37)
 /** 加上TP最低的 */
 private val energyTypes = energyHighTypes.plus(arrayOf(13, 28, 41))
 /** 物理攻击力最高的 */
-private val atkHighTypes = arrayOf(14, 29, 43)
+private val atkHighTypes = arrayOf(14, 29, 43, 51)
 /** 加上物理攻击力最低的 */
 private val atkTypes = atkHighTypes.plus(arrayOf(15, 30))
 /** 魔法攻击力最高的 */
@@ -33,7 +33,11 @@ private val magicDefHighTypes = arrayOf(48)
 /** 加上魔法防御力最低的 */
 private val magicDefTypes = magicDefHighTypes.plus(46)
 /** 自身以外的（还有34在其它地方处理了） */
-private val withoutSelfTypes = arrayOf(41, 43, 44, 50)
+private val withoutSelfTypes = arrayOf(41, 43, 44, 50, 51)
+/** 使用物理攻击的角色中 */
+private val atkChara = arrayOf(51)
+/** 使用魔法攻击的角色中 */
+private val magicChara = arrayOf<Int>()
 /** 不在自身后面的 */
 private val notInBackTypes = arrayOf(35, 36)
 /** 所有 "{0}最{1高|低}的{2}" 的类型 */
@@ -385,7 +389,19 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                 )
             }
             if (withoutSelfTypes.contains(targetType)) {
-                D.Join(arrayOf(D.Format(R.string.target_without_self), manyTarget))
+                var modifier: D = D.Format(R.string.target_without_self)
+                if (atkChara.contains(targetType)) {
+                    modifier = modifier.append(D.Format(
+                        R.string.target_atk_content1,
+                        arrayOf(getAssignmentSide())
+                    ))
+                } else if (magicChara.contains(targetType)) {
+                    modifier = modifier.append(D.Format(
+                        R.string.target_magic_content1,
+                        arrayOf(getAssignmentSide())
+                    ))
+                }
+                D.Join(arrayOf(modifier, manyTarget))
             } else if (notInBackTypes.contains(targetType)) {
                 D.Format(R.string.target_not_in_back_content1, arrayOf(manyTarget))
             } else {
