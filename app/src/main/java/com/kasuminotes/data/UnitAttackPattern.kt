@@ -42,12 +42,12 @@ data class UnitAttackPattern(
             var isEvolution = (hasUnique1 && n == 1) || (hasUnique2 && n == 2)
             val skillList = if (isEvolution) {
                 if (isSP) {
-                    unitSkillData.spSkillEvolutionList.ifEmpty {
+                    unitSkillData.spSkillEvolutionList.filter { it != null }.ifEmpty {
                         isEvolution = false
                         unitSkillData.spSkillList
                     }
                 } else {
-                    unitSkillData.mainSkillEvolutionList.ifEmpty {
+                    unitSkillData.mainSkillEvolutionList.filter { it != null }.ifEmpty {
                         isEvolution = false
                         unitSkillData.mainSkillList
                     }
