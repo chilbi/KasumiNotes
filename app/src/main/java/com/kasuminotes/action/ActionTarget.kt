@@ -511,9 +511,9 @@ fun SkillAction.getAssignmentSide(): D {
  *    else -> 敌人和己方角色
  *
  * }
- * {n}名{敌人|己方角色|敌人和己方角色}
+ * {n名}{敌人|己方角色|敌人和己方角色}
  *
- * {敵|味方|敵と味方}{n}キャラ
+ * {敵|味方|敵と味方}{nキャラ}
  */
 private fun SkillAction.getAssignmentCount(): D {
     return D.Format(
@@ -529,8 +529,10 @@ private fun SkillAction.getAssignmentCount(): D {
                     2 -> R.string.target_count2
                     3 -> R.string.target_count3
                     4 -> R.string.target_count4
-                    else -> R.string.target_count5
-                }
+                    5 -> R.string.target_count5
+                    else -> R.string.target_range_all_content1
+                },
+                arrayOf(D.Text(""))
             )
         )
     )
