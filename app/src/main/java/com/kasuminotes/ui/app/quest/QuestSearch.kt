@@ -79,7 +79,8 @@ fun QuestSearch(
     onToggleMin37: () -> Unit,
     onToggleVisitIndex: () -> Unit,
     sortButton: @Composable () -> Unit,
-    bottomBar: @Composable () -> Unit,
+//    bottomBar: @Composable () -> Unit,
+    backButton: @Composable () -> Unit,
     floatingActionButton: @Composable () -> Unit
 ) {
     Scaffold(
@@ -89,9 +90,10 @@ fun QuestSearch(
                     Text(stringResource(R.string.search_list))
                 },
                 navigationIcon = {
-                    IconButton(onClick = onSearch) {
-                        Icon(Icons.Filled.Search, null)
-                    }
+                    backButton()
+//                    IconButton(onClick = onSearch) {
+//                        Icon(Icons.Filled.Search, null)
+//                    }
                 },
                 actions = {
                     QuestType.entries.forEach { type ->
@@ -142,7 +144,7 @@ fun QuestSearch(
                 }
             )
         },
-        bottomBar = bottomBar,
+//        bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->

@@ -5,12 +5,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -24,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -46,7 +43,8 @@ fun QuestEquip(
     onEquipTypesChange: (checked: Boolean, type: Int) -> Unit,
     onAllEquipTypesChange: (allSelected: Boolean) -> Unit,
     onEquipClick: (Int) -> Unit,
-    bottomBar: @Composable () -> Unit,
+//    bottomBar: @Composable () -> Unit,
+    backButton: @Composable () -> Unit,
     floatingActionButton: @Composable () -> Unit
 ) {
     Scaffold(
@@ -56,12 +54,13 @@ fun QuestEquip(
                     Text(stringResource(R.string.equip_list))
                 },
                 navigationIcon = {
-                    Box(
-                        modifier = Modifier.size(48.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(Icons.Filled.Gavel, null)
-                    }
+                    backButton()
+//                    Box(
+//                        modifier = Modifier.size(48.dp),
+//                        contentAlignment = Alignment.Center
+//                    ) {
+//                        Icon(Icons.Filled.Gavel, null)
+//                    }
                 },
                 actions = {
                     FilterButton(
@@ -73,7 +72,7 @@ fun QuestEquip(
                 }
             )
         },
-        bottomBar = bottomBar,
+//        bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->

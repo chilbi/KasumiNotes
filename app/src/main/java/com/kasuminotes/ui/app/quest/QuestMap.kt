@@ -38,7 +38,8 @@ fun QuestMap(
     onHighlightListChange: (Int) -> Unit,
     onAreaChange: (Int) -> Unit,
     sortButton: @Composable () -> Unit,
-    bottomBar: @Composable () -> Unit,
+//    bottomBar: @Composable () -> Unit,
+    backButton: @Composable () -> Unit,
     floatingActionButton: @Composable () -> Unit
 ) {
     Scaffold(
@@ -48,6 +49,9 @@ fun QuestMap(
                     Text(stringResource(R.string.map_list))
                 },
                 navigationIcon = {
+                    backButton()
+                },
+                actions = {
                     var expanded by remember { mutableStateOf(false) }
                     IconButton(onClick = { expanded = true }) {
                         QuestLabel(
@@ -71,8 +75,6 @@ fun QuestMap(
                             )
                         }
                     }
-                },
-                actions = {
                     sortButton()
                 },
                 content = if (questType == QuestType.N || questType == QuestType.H) {
@@ -88,7 +90,7 @@ fun QuestMap(
                 }
             )
         },
-        bottomBar = bottomBar,
+//        bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->

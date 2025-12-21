@@ -21,6 +21,7 @@ import com.kasuminotes.ui.app.dungeon.Dungeon
 import com.kasuminotes.ui.app.equip.Equip
 import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
+import com.kasuminotes.ui.app.dashboard.Dashboard
 import com.kasuminotes.ui.app.mirageQuest.MirageQuest
 import com.kasuminotes.ui.app.quest.Quest
 import com.kasuminotes.ui.app.summons.Summons
@@ -88,6 +89,23 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 )
             }
             composable(
+                route = AppNavData.Dashboard.route,
+                enterTransition = AppNavData.Dashboard.enterTransition,
+                exitTransition = AppNavData.Dashboard.exitTransition
+            ) {
+                Dashboard(
+                    appViewModel.abyssQuestState.abyssLatestTalentId,
+                    appViewModel::navigateToQuest,
+                    appViewModel::navigateToClanBattle,
+                    appViewModel::navigateToDungeon,
+                    appViewModel::navigateToTalentQuest,
+                    appViewModel::navigateToAbyssQuest,
+                    appViewModel::navigateToMirageQuest,
+                    appViewModel::navigateTo,
+                    navigateToHomeAndOpenDrawer
+                )
+            }
+            composable(
                 route = AppNavData.Chara.route,
                 enterTransition = AppNavData.Chara.enterTransition,
                 exitTransition = AppNavData.Chara.exitTransition
@@ -142,8 +160,9 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 Quest(
                     appViewModel.questState,
                     appViewModel::navigateToEquipById,
-                    appViewModel::navigateTo,
-                    navigateToHomeAndOpenDrawer
+                    appViewModel::popBackStack
+//                    appViewModel::navigateTo,
+//                    navigateToHomeAndOpenDrawer
                 )
             }
             composable(
@@ -154,12 +173,13 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 ClanBattle(
                     appViewModel.clanBattleState,
                     appViewModel::navigateToMapList,
-                    appViewModel::navigateToDungeon,
-                    appViewModel::navigateToTalentQuest,
-                    appViewModel::navigateToAbyssQuest,
-                    appViewModel::navigateToMirageQuest,
-                    appViewModel::navigateTo,
-                    navigateToHomeAndOpenDrawer
+                    appViewModel::popBackStack
+//                    appViewModel::navigateToDungeon,
+//                    appViewModel::navigateToTalentQuest,
+//                    appViewModel::navigateToAbyssQuest,
+//                    appViewModel::navigateToMirageQuest,
+//                    appViewModel::navigateTo,
+//                    navigateToHomeAndOpenDrawer
                 )
             }
             composable(

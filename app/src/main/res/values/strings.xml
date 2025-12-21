@@ -72,6 +72,7 @@
     <string name="mirage_quest">追忆的战域</string>
     <string name="mirage_floor_quest">追忆战</string>
     <string name="mirage_nemesis_quest">追忆战・霸</string>
+    <string name="dashboard">菜单</string>
     <string name="user">用户</string>
     <string name="all">全部</string>
     <string name="all_type">类型</string>

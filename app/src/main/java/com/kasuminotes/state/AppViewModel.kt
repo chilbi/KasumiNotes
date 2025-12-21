@@ -62,23 +62,43 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                         navController.popBackStack()
                     }
                 }
-
                 1 -> {
-                    if (!dbState.questInitializing) {
-                        questState.initQuest(dbState.userState.maxUserData!!.maxArea)
-                        navController.navigate(AppNavData.Quest.route) {
-                            popUpTo(AppNavData.Home.route)
-                        }
-                    }
-                }
-
-                2 -> {
-                    clanBattleState.initPeriodList()
-                    navController.navigate(AppNavData.ClanBattle.route) {
+                    abyssQuestState.initAbyssLatestTalentId()
+                    navController.navigate(AppNavData.Dashboard.route) {
                         popUpTo(AppNavData.Home.route)
                     }
                 }
+//                1 -> {
+//                    if (!dbState.questInitializing) {
+//                        questState.initQuest(dbState.userState.maxUserData!!.maxArea)
+//                        navController.navigate(AppNavData.Quest.route) {
+//                            popUpTo(AppNavData.Home.route)
+//                        }
+//                    }
+//                }
+//                2 -> {
+//                    clanBattleState.initPeriodList()
+//                    navController.navigate(AppNavData.ClanBattle.route) {
+//                        popUpTo(AppNavData.Home.route)
+//                    }
+//                }
             }
+        }
+    }
+
+    fun navigateToQuest() {
+        canNavigate {
+            if (!dbState.questInitializing) {
+                questState.initQuest(dbState.userState.maxUserData!!.maxArea)
+                navController.navigate(AppNavData.Quest.route)
+            }
+        }
+    }
+
+    fun navigateToClanBattle() {
+        canNavigate {
+            clanBattleState.initPeriodList()
+            navController.navigate(AppNavData.ClanBattle.route)
         }
     }
 

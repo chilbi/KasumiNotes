@@ -21,7 +21,8 @@ fun QuestScaffold(
     questState: QuestState,
     onEquipClick: (Int) -> Unit,
     sortButton: @Composable () -> Unit,
-    bottomBar: @Composable () -> Unit
+    backButton: @Composable () -> Unit
+//    bottomBar: @Composable () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     var openSheet by rememberSaveable { mutableStateOf(false) }
@@ -42,7 +43,8 @@ fun QuestScaffold(
                 questState::changeEquipTypes,
                 questState::changeAllEquipTypes,
                 onEquipClick,
-                bottomBar,
+//                bottomBar,
+                backButton,
                 floatingActionButton
             )
         }
@@ -68,7 +70,8 @@ fun QuestScaffold(
                 questState::toggleMin37,
                 questState::toggleVisitIndex,
                 sortButton,
-                bottomBar,
+//                bottomBar,
+                backButton,
                 floatingActionButton
             )
         }
@@ -83,7 +86,8 @@ fun QuestScaffold(
                 questState::changeHighlightList,
                 questState::changeArea,
                 sortButton,
-                bottomBar,
+//                bottomBar,
+                backButton,
                 floatingActionButton
             )
         }

@@ -26,31 +26,40 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.ClanBattlePeriod
-import com.kasuminotes.ui.components.BottomBar
 import com.kasuminotes.state.ClanBattleState
+import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
 
 @Composable
 fun ClanBattle(
     clanBattleState: ClanBattleState,
     onNavigateToMapList: (label: String, period: ClanBattlePeriod) -> Unit,
-    onNavigateToDungeon: () -> Unit,
-    onNavigateToTalentQuest: () -> Unit,
-    onNavigateToAbyssQuest: () -> Unit,
-    onNavigateToMirageQuest: () -> Unit,
-    onNavigateTo: (Int) -> Unit,
-    onDrawerOpen: () -> Unit
+    onBack: () -> Unit
+//    onNavigateToDungeon: () -> Unit,
+//    onNavigateToTalentQuest: () -> Unit,
+//    onNavigateToAbyssQuest: () -> Unit,
+//    onNavigateToMirageQuest: () -> Unit,
+//    onNavigateTo: (Int) -> Unit,
+//    onDrawerOpen: () -> Unit
 ) {
     Scaffold(
         topBar = {
-            ClanBattleTopBar(
-                onNavigateToDungeon,
-                onNavigateToTalentQuest,
-                onNavigateToAbyssQuest,
-                onNavigateToMirageQuest
+            TopBar(
+                title = {
+                    Text(stringResource(R.string.clan_battle))
+                },
+                navigationIcon = {
+                    BackButton(onBack)
+                }
             )
+//            ClanBattleTopBar(
+//                onNavigateToDungeon,
+//                onNavigateToTalentQuest,
+//                onNavigateToAbyssQuest,
+//                onNavigateToMirageQuest
+//            )
         },
-        bottomBar = { BottomBar(2, onNavigateTo, onDrawerOpen) },
+//        bottomBar = { BottomBar(2, onNavigateTo, onDrawerOpen) },
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {

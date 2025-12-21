@@ -13,6 +13,16 @@ fun AppDatabase.hasAbyssQuest(): Boolean {
     ))
 }
 
+fun AppDatabase.getAbyssLatestTalentId(): Int {
+    val sql = "SELECT talent_id FROM abyss_schedule ORDER BY abyss_id DESC LIMIT 1"
+    return useDatabase {
+        rawQuery(sql, null).use {
+            it.moveToFirst()
+            it.getInt(0)
+        }
+    }
+}
+
 fun AppDatabase.getAbyssScheduleList(): List<AbyssSchedule> {
     val sql = """SELECT abyss_id,talent_id,title,start_time,end_time
 FROM abyss_schedule ORDER BY abyss_id DESC

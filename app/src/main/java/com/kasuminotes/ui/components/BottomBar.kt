@@ -1,10 +1,9 @@
 package com.kasuminotes.ui.components
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.ManageAccounts
 import androidx.compose.material.icons.filled.People
-import androidx.compose.material.icons.filled.Security
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -31,16 +30,22 @@ fun BottomBar(
         NavigationBarItem(
             selected = selectedIndex == 1,
             onClick = { if (selectedIndex != 1) onNavigateTo(1) },
-            icon = { Icon(Icons.Filled.Gavel, null) },
-            label = { Text(stringResource(R.string.equip)) }
+            icon = { Icon(Icons.Filled.Dashboard, null) },
+            label = { Text(stringResource(R.string.dashboard)) }
         )
+//        NavigationBarItem(
+//            selected = selectedIndex == 1,
+//            onClick = { if (selectedIndex != 1) onNavigateTo(1) },
+//            icon = { Icon(Icons.Filled.Gavel, null) },
+//            label = { Text(stringResource(R.string.equip)) }
+//        )
 //        Spacer(Modifier.weight(1f))
-        NavigationBarItem(
-            selected = selectedIndex == 2,
-            onClick = { if (selectedIndex != 2) onNavigateTo(2) },
-            icon = { Icon(Icons.Filled.Security, null) },
-            label = { Text(stringResource(R.string.clan_battle)) }
-        )
+//        NavigationBarItem(
+//            selected = selectedIndex == 2,
+//            onClick = { if (selectedIndex != 2) onNavigateTo(2) },
+//            icon = { Icon(Icons.Filled.Security, null) },
+//            label = { Text(stringResource(R.string.clan_battle)) }
+//        )
         NavigationBarItem(
             selected = false,
             onClick = onDrawerOpen,

@@ -1,10 +1,12 @@
 package com.kasuminotes.state
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.AbyssSchedule
 import com.kasuminotes.data.QuestWaveGroupEnemy
+import com.kasuminotes.db.getAbyssLatestTalentId
 import com.kasuminotes.db.getAbyssQuestDataList
 import com.kasuminotes.db.getAbyssScheduleList
 import com.kasuminotes.db.hasAbyssQuest
@@ -17,6 +19,9 @@ class AbyssQuestState(
     private val appRepository: AppRepository,
     private val scope: CoroutineScope
 ) {
+    var abyssLatestTalentId by mutableIntStateOf(1)
+        private set
+
     var hasAbyssQuest by mutableStateOf(false)
         private set
 
@@ -28,6 +33,17 @@ class AbyssQuestState(
 
     var abyssQuestDataGrouped by mutableStateOf<Map<Int, List<QuestWaveGroupEnemy>>>(emptyMap())
         private set
+
+    fun initAbyssLatestTalentId() {
+        scope.launch(Dispatchers.IO) {
+            val db = appRepository.getDatabase()
+            abyssLatestTalentId = if (db.hasAbyssQuest()) {
+                db.getAbyssLatestTalentId()
+            } else {
+                1
+            }
+        }
+    }
 
     fun initAbyssScheduleList() {
         hasAbyssQuest = false
