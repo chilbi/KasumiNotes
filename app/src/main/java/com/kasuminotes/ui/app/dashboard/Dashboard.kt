@@ -2,13 +2,11 @@ package com.kasuminotes.ui.app.dashboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -58,10 +56,11 @@ fun Dashboard(
         content = { contentPadding ->
             VerticalGrid(
                 size = items.size,
-                cells = VerticalGridCells.Fixed(2),
+                cells = VerticalGridCells.Adaptive(160.dp),
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
                     .padding(contentPadding)
+                    .padding(8.dp)
             ) { index ->
                 val item = items[index]
                 FilledTonalButton(

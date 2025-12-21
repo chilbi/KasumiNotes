@@ -8,6 +8,8 @@ import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.SecondaryScrollableTabRow
+import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
@@ -36,29 +38,29 @@ fun TabsPager(
 ) {
     Column {
         if (scrollable) {
-            ScrollableTabRow(
+            SecondaryScrollableTabRow(
                 selectedTabIndex = pagerState.currentPage,
                 modifier = modifier,
                 containerColor = containerColor,
                 contentColor = contentColor,
                 edgePadding = edgePadding,
-                indicator = { tabPositions ->
+                indicator = {
                     SecondaryIndicator(
-                        Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                        Modifier.tabIndicatorOffset(pagerState.currentPage, false),
                         color = contentColor
                     )
                 },
                 tabs = { Tabs(pagerState, onTabClick, tabContent) }
             )
         } else {
-            TabRow(
+            SecondaryTabRow(
                 selectedTabIndex = pagerState.currentPage,
                 modifier = modifier,
                 containerColor = containerColor,
                 contentColor = contentColor,
-                indicator = { tabPositions ->
+                indicator = {
                     SecondaryIndicator(
-                        Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                        Modifier.tabIndicatorOffset(pagerState.currentPage, false),
                         color = contentColor
                     )
                 },

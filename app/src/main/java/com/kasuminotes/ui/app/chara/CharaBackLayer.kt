@@ -44,9 +44,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.transform.BlurTransformation
+import coil3.compose.rememberAsyncImagePainter
+import coil3.request.ImageRequest
+import coil3.request.transformations
+import coil3.transform.BlurTransformation
 import com.kasuminotes.R
 import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.MaxUserData

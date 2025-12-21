@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -14,8 +15,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
+import coil3.compose.AsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
 
 @Composable
 fun BoxScope.PlaceImage(
@@ -55,7 +56,8 @@ fun BoxScope.PlaceImage(
     colorFilter: ColorFilter? = null
 ) {
     val painter = rememberAsyncImagePainter(url)
-    val loading = painter.state !is AsyncImagePainter.State.Success
+    val state = painter.state.collectAsState()
+    val loading = state.value !is AsyncImagePainter.State.Success
 
     PlaceImage(
         painter,

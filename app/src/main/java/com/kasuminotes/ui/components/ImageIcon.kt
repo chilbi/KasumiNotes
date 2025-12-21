@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,8 +24,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
+import coil3.compose.AsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
 import kotlin.math.absoluteValue
 
 @Composable
@@ -72,7 +73,8 @@ fun ImageIcon(
     content: @Composable BoxScope.() -> Unit = {}
 ) {
     val painter = rememberAsyncImagePainter(url)
-    val loading = painter.state !is AsyncImagePainter.State.Success
+    val state = painter.state.collectAsState()
+    val loading = state.value !is AsyncImagePainter.State.Success
 
     ImageIcon(
         painter = painter,

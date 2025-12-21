@@ -24,7 +24,7 @@ sealed class D {
     class Text(val value: String) : D()
 
     class Format(
-        @StringRes val id: Int,
+        @param:StringRes val id: Int,
         val args: Array<D>? = null
     ) : D()
 
