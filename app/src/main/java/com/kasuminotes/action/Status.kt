@@ -86,26 +86,33 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
         isPercent = true
     }
 
+    var value2 = actionValue2
+    var value3 = actionValue3
+    if (detail1 in 200..<219) {
+        value2 /= 100
+        value3 /= 100
+    }
+
     val formula = if (isPercent) {
-        val percent = if (actionValue3 == 0.0) {
-            var str = "${actionValue2.roundToInt()}%"// TODO 不确定的取整方式
+        val percent = if (value3 == 0.0) {
+            var str = "${value2.roundToInt()}%"// TODO 不确定的取整方式
             // 计算EX装备被动技能加的百分比数值
             if (isSelf()) {
                 val index = getStatusIndex(detail1 / 10)
                 if (property != null && index != null) {
                     str += if (isUp) "(+" else "(-"
-                    str += "${(property[index] * actionValue2 / 100).roundToInt()})"// TODO 不确定的取整方式
+                    str += "${(property[index] * value2 / 100).roundToInt()})"// TODO 不确定的取整方式
                 }
             }
             D.Text(str).style(primary = true, bold = true)
         } else {
-            getBaseLvFormula(actionValue2, actionValue3, skillLevel).append(D.Text("%").style(primary = true, bold = true))
+            getBaseLvFormula(value2, value3, skillLevel).append(D.Text("%").style(primary = true, bold = true))
         }
         // 10-40为物魔攻防，估计只有这4项值加的百分比值是以初始值为基础的
         if (detail1 < 50) D.Format(R.string.content_initial_value1, arrayOf(percent))
         else percent
     } else {
-        getBaseLvFormula(actionValue2, actionValue3, skillLevel)
+        getBaseLvFormula(value2, value3, skillLevel)
     }
 
     val content = getStatusContent(detail1 / 10).style(underline = true)
@@ -170,8 +177,16 @@ fun SkillAction.getStatusEffect(skillLevel: Int): SkillEffect {
     if ((detail1 in 110..129) || (detail1 >= 140)) {
         isPercent = true
     }
+
+    var value2 = actionValue2
+    var value3 = actionValue3
+    if (detail1 in 200..<219) {
+        value2 /= 100
+        value3 /= 100
+    }
+
     val content = getStatusContent(detail1 / 10)
-    val formula = actionValue2 + actionValue3 * skillLevel
+    val formula = value2 + value3 * skillLevel
     var label = if (isConst) content.insert(D.Format(R.string.effect_const)) else content
     if (!isUp) {
         label = label.append(D.Format(R.string.effect_down))

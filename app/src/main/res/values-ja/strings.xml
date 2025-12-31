@@ -339,7 +339,7 @@
     <string name="action_reconcile_target1_time2">%1$sに調和状態を付与する、調和状態の間は物理防御力と魔法防御力のうち高い方によって計算されたダメージを受ける、効果時間%2$s秒。</string>
     <string name="action_triggered_when_use_ub_target1_state2_count3_max4_time5">%1$sに【%2$s】を%3$sつ付与する、最大%4$sつまで追加される、効果時間%5$s秒。【%2$s】が付与されているキャラがUBを使用した場合、【%2$s】を1つ消費し、同時に以下の効果を発動する：</string>
     <string name="action_deactivate1">%s状態の間はＴＰが増加しない。</string>
-
+    <string name="action_damage_boost_content1_max2_time3">%1$s（上限%2$s）、効果時間%3$s秒。</string>
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>
@@ -560,6 +560,9 @@
     <string name="sub_formula_base1_lv2">(%1$s + %2$s × スキルLv)</string>
     <string name="sub_formula_lv1">%s × スキルLv</string>
 
+    <string name="buff_enhance">バフ強化</string>
+    <string name="debuff_enhance">デバフ強化</string>
+    <string name="damage_boost">ダメージブースト</string>
     <string name="move_speed">移動速度</string>
     <string name="damage">ダメージ</string>
     <string name="physical_damage">物理ダメージ</string>

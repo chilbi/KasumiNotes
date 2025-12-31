@@ -313,6 +313,7 @@ class ActionBuilder(
             128 -> getAbnormalDamageExtension()
             129 -> getConvertToDot()
             130 -> getReconcile()
+            132 -> getDamageBoost(skillLevel)
             133 -> getTriggeredWhenUseUB()
             else -> getUnknown()
         }

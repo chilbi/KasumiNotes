@@ -207,6 +207,8 @@ fun getStatusContent(detail: Int): D {
         17 -> D.Format(R.string.received_magic_damage)
         18 -> D.Format(R.string.physical_damage)
         19 -> D.Format(R.string.magic_damage)
+        20 -> D.Format(R.string.buff_enhance)
+        21 -> D.Format(R.string.debuff_enhance)
         else -> D.Unknown
     }
 }

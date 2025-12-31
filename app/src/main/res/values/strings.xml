@@ -339,6 +339,7 @@
     <string name="action_reconcile_target1_time2">赋予%1$s调和状态，调和状态期间根据物理防御力和魔法防御力中较高一方的防御力计算受到的伤害，效果时间%2$s秒。</string>
     <string name="action_triggered_when_use_ub_target1_state2_count3_max4_time5">赋予%1$s%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。被赋予【%2$s】的角色在使用UB时，消耗1个【%2$s】，同时发动以下效果：</string>
     <string name="action_deactivate1">%s状态期间TP不增加。</string>
+    <string name="action_damage_boost_content1_max2_time3">%1$s（上限%2$s），效果时间%3$s秒。</string>
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>
@@ -559,6 +560,9 @@
     <string name="sub_formula_base1_lv2">(%1$s + %2$s × 技能等级)</string>
     <string name="sub_formula_lv1">%s × 技能等级</string>
 
+    <string name="buff_enhance">增益强化</string>
+    <string name="debuff_enhance">减益强化</string>
+    <string name="damage_boost">伤害强化</string>
     <string name="move_speed">移动速度</string>
     <string name="damage">伤害</string>
     <string name="physical_damage">物理伤害</string>
