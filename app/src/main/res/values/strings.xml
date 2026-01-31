@@ -464,7 +464,7 @@
     <string name="content_up">提升</string>
     <string name="content_down">降低</string>
     <string name="content_barrier">屏障</string>
-    <string name="content_magic_def_down_effect">魔法防御力降低效果</string>
+    <string name="content_effect1">%s效果</string>
     <string name="content_strength_seal">【力之魔字】刻印期间，</string>
     <string name="content_kizuna_certificate">【情谊的证明】解放期间，</string>
     <string name="content_full_charge">赋予自身【完全充能】状态，</string>

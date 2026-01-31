@@ -464,7 +464,7 @@
     <string name="content_up">アップ</string>
     <string name="content_down">ダウン</string>
     <string name="content_barrier">バリア</string>
-    <string name="content_magic_def_down_effect">魔法防御力ダウン効果</string>
+    <string name="content_effect1">%s効果</string>
     <string name="content_strength_seal">【力の魔字】が刻まれている間、</string>
     <string name="content_kizuna_certificate">【絆の証】解放中、</string>
     <string name="content_full_charge">自分が【フルチャージ】状態になり、</string>
