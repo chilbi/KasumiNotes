@@ -385,6 +385,7 @@ val phaseColors = listOf(
 
 val Int.rankRarity: Int
     get() = when {
+        this > 39 -> 11
         this > 31 -> 10
         this > 27 -> 9
         this > 23 -> 8
@@ -407,6 +408,15 @@ class RarityColors(
 )
 
 object RaritiesColors {
+    private val r11: RarityColors by lazy {
+        RarityColors(
+            highLight = Color(0xFFEBFF8E),
+            light = Color(0xFFE5FF6A),
+            middle = Color(0xFFFFF761),
+            dark = Color(0xFFADBD4A),
+            deepDark = Color(0xFF818125)
+        )
+    }
     private val r10: RarityColors by lazy {
         RarityColors(
             highLight = Color(0xFFFFEED9),
@@ -506,6 +516,7 @@ object RaritiesColors {
     }
 
     fun getRarityColors(rankRarity: Int): RarityColors = when (rankRarity) {
+        11 -> r11
         10 -> r10
         9 -> r9
         8 -> r8
