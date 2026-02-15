@@ -1,6 +1,5 @@
 package com.kasuminotes.db
 
-import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import com.kasuminotes.common.QuestRange
 import kotlinx.coroutines.Dispatchers
@@ -9,28 +8,65 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
-// 修复S2+和SP2+的错乱
-private fun SQLiteDatabase.fixSkillEvolution2() {
-    val hasError = rawQuery("SELECT sp_skill_evolution_2,main_skill_evolution_2 FROM unit_skill_data WHERE unit_id=107901", null).use {
-        if (it.moveToFirst()) {
-            val sp2 = it.getInt(0)
-            val main2 = it.getInt(1)
-            sp2 != 0 && main2 == 0
-        } else {
-            false
+private fun AppDatabase.fixSkillEvolutionPlus() {
+    useDatabase {
+        listOf(
+            "unknown_30" to "main_skill_evolution_plus_1",
+            "unknown_32" to "main_skill_evolution_plus_2",
+            "unknown_34" to "sp_skill_evolution_plus_1",
+            "unknown_36" to "sp_skill_evolution_plus_2"
+        ).forEach {
+            if (existsColumn("unit_skill_data", it.first) && !existsColumn("unit_skill_data", it.second)) {
+                renameColumn("unit_skill_data", it.first, it.second)
+            }
         }
-    }
-    if (hasError) {
-        val tempName = "temp_name_sp2"
-        renameColumn("unit_skill_data", "sp_skill_evolution_2", tempName)
-        renameColumn("unit_skill_data", "main_skill_evolution_2", "sp_skill_evolution_2")
-        renameColumn("unit_skill_data", tempName, "main_skill_evolution_2")
     }
 }
 
+private fun AppDatabase.fixSkillDataActions() {
+    useDatabase {
+        val list = mutableListOf<Pair<String, String>>()
+        val range = 11..20
+        val unknownActions = (16..25).toList()
+        val unknownDependActions = (36..45).toList()
+        range.forEachIndexed { index, value->
+            list.add("unknown_${unknownActions[index]}" to "action_$value")
+        }
+        range.forEachIndexed { index, value->
+            list.add("unknown_${unknownDependActions[index]}" to "depend_action_$value")
+        }
+        list.forEach {
+            if (existsColumn("skill_data", it.first) && !existsColumn("skill_data", it.second)) {
+                renameColumn("skill_data", it.first, it.second)
+            }
+        }
+    }
+}
+
+// 修复S2+和SP2+的错乱
+//private fun SQLiteDatabase.fixSkillEvolution2() {
+//    val hasError = rawQuery("SELECT sp_skill_evolution_2,main_skill_evolution_2 FROM unit_skill_data WHERE unit_id=107901", null).use {
+//        if (it.moveToFirst()) {
+//            val sp2 = it.getInt(0)
+//            val main2 = it.getInt(1)
+//            sp2 != 0 && main2 == 0
+//        } else {
+//            false
+//        }
+//    }
+//    if (hasError) {
+//        val tempName = "temp_name_sp2"
+//        renameColumn("unit_skill_data", "sp_skill_evolution_2", tempName)
+//        renameColumn("unit_skill_data", "main_skill_evolution_2", "sp_skill_evolution_2")
+//        renameColumn("unit_skill_data", tempName, "main_skill_evolution_2")
+//    }
+//}
+
 fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
 //    throw Exception("init error")
-    fixSkillEvolution2()
+//    fixSkillEvolution2()
+    fixSkillEvolutionPlus()
+    fixSkillDataActions()
 //    // TODO 国服实装水怜专武后就删除该代码片段
 //    // 修改unit_unique_equipment表为unit_unique_equip
 //    if (existsTable("unit_unique_equipment")) {
@@ -86,15 +122,36 @@ fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
             } catch (_: Throwable) {}
         }
     }
+    val range = 11..20
+    range.forEach {
+        val columnName = "action_$it"
+        if (!existsColumn("skill_data", columnName)) {
+            try {
+                execSQL("ALTER TABLE skill_data ADD COLUMN $columnName INTEGER NOT NULL DEFAULT 0")
+            } catch (_: Throwable) {}
+        }
+    }
+    range.forEach {
+        val columnName = "depend_action_$it"
+        if (!existsColumn("skill_data", columnName)) {
+            try {
+                execSQL("ALTER TABLE skill_data ADD COLUMN $columnName INTEGER NOT NULL DEFAULT 0")
+            } catch (_: Throwable) {}
+        }
+    }
     // TODO 国服实装限制tp上升最高上限后就删除该代码片段
     listOf(
         "sp_union_burst",
         "sp_skill_evolution_1",
-        "sp_skill_evolution_2"
+        "sp_skill_evolution_2",
+        "main_skill_evolution_plus_1",
+        "main_skill_evolution_plus_2",
+        "sp_skill_evolution_plus_1",
+        "sp_skill_evolution_plus_2"
     ).forEach { columnName ->
         if (!existsColumn("unit_skill_data", columnName)) {
             try {
-                // 添加列 sp...
+
                 execSQL("ALTER TABLE unit_skill_data ADD COLUMN $columnName INTEGER NOT NULL DEFAULT 0")
             } catch (_: Throwable) {}
         }

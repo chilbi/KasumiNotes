@@ -120,7 +120,7 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
                 val rawActions = mutableListOf<Int>()
                 val rawDepends = mutableListOf<Int>()
 
-                while (i < 20) {
+                while (i < 40) {
                     val actionId = it.getInt(i++)
                     if (actionId == 0) break
 
@@ -128,7 +128,7 @@ suspend fun AppDatabase.getSkillData(skillId: Int): SkillData? {
                     rawDepends.add(it.getInt(i++))
                 }
 
-                i = 20
+                i = 40
 
                 SkillData(
                     it.getInt(i++),
@@ -193,6 +193,43 @@ FROM unit_skill_data_rf WHERE skill_id=$skillId"""
 }
 
 suspend fun AppDatabase.getUnitSkillData(unitId: Int): UnitSkillData {
+    if (!existsColumn("unit_skill_data", "main_skill_evolution_plus_1")) {
+        useDatabase {
+            listOf(
+                "main_skill_evolution_plus_1",
+                "main_skill_evolution_plus_2",
+                "sp_skill_evolution_plus_1",
+                "sp_skill_evolution_plus_2"
+            ).forEach { columnName ->
+                if (!existsColumn("unit_skill_data", columnName)) {
+                    try {
+                        execSQL("ALTER TABLE unit_skill_data ADD COLUMN $columnName INTEGER NOT NULL DEFAULT 0")
+                    } catch (_: Throwable) {}
+                }
+            }
+        }
+    }
+    if (!existsColumn("skill_data", "action_11")) {
+        useDatabase {
+            val range = 11..20
+            range.forEach {
+                val columnName = "action_$it"
+                if (!existsColumn("skill_data", columnName)) {
+                    try {
+                        execSQL("ALTER TABLE skill_data ADD COLUMN $columnName INTEGER NOT NULL DEFAULT 0")
+                    } catch (_: Throwable) {}
+                }
+            }
+            range.forEach {
+                val columnName = "depend_action_$it"
+                if (!existsColumn("skill_data", columnName)) {
+                    try {
+                        execSQL("ALTER TABLE skill_data ADD COLUMN $columnName INTEGER NOT NULL DEFAULT 0")
+                    } catch (_: Throwable) {}
+                }
+            }
+        }
+    }
     val sql = """SELECT ${UnitSkillData.getFields()}
 FROM unit_skill_data WHERE unit_id=$unitId"""
 
@@ -213,12 +250,14 @@ FROM unit_skill_data WHERE unit_id=$unitId"""
 
             val mainSkillList = getSkillList(0, 10)
             val mainSkillEvolutionList = getSkillList(10, 12)
-            val spSkillList = getSkillList(12, 17)
-            val spSkillEvolutionList = getSkillList(17, 19)
-            val exSkillList = getSkillList(19, 24)
-            val exSkillEvolutionList = getSkillList(24, 29)
+            val mainSkillEvolutionPlusList = getSkillList(12, 14)
+            val spSkillList = getSkillList(14, 19)
+            val spSkillEvolutionList = getSkillList(19, 21)
+            val spSkillEvolutionPlusList = getSkillList(21, 23)
+            val exSkillList = getSkillList(23, 28)
+            val exSkillEvolutionList = getSkillList(28, 33)
 
-            var i = 29
+            var i = 33
 
             RawUnitSkillData(
                 it.getInt(i++),
@@ -226,8 +265,10 @@ FROM unit_skill_data WHERE unit_id=$unitId"""
                 it.getInt(i),
                 mainSkillList,
                 mainSkillEvolutionList,
+                mainSkillEvolutionPlusList,
                 spSkillList,
                 spSkillEvolutionList,
+                spSkillEvolutionPlusList,
                 exSkillList,
                 exSkillEvolutionList
             )
@@ -259,10 +300,12 @@ FROM unit_skill_data WHERE unit_id=$unitId"""
                 )
             ),
             getDeferredSkillDataList(raw.mainSkillList),
-            getDeferredSkillDataList(raw.spSkillList),
-            getDeferredSkillDataList(raw.exSkillList),
             getDeferredSkillDataList(raw.mainSkillEvolutionList),
+            getDeferredSkillDataList(raw.mainSkillEvolutionPlusList),
+            getDeferredSkillDataList(raw.spSkillList),
             getDeferredSkillDataList(raw.spSkillEvolutionList),
+            getDeferredSkillDataList(raw.spSkillEvolutionPlusList),
+            getDeferredSkillDataList(raw.exSkillList),
             getDeferredSkillDataList(raw.exSkillEvolutionList)
         ).awaitAll()
 
@@ -275,7 +318,9 @@ FROM unit_skill_data WHERE unit_id=$unitId"""
             list[3],
             list[4],
             list[5],
-            list[6]
+            list[6],
+            list[7],
+            list[8]
         )
     }
 }
@@ -291,9 +336,11 @@ private data class RawUnitSkillData(
     val spUnionBurst: Int,
     val unionBurstEvolution: Int,
     val mainSkillList: List<Int>,//1-10
-    val spSkillList: List<Int>,//1-5
-    val exSkillList: List<Int>,//1-5
     val mainSkillEvolutionList: List<Int>,//1-2
+    val mainSkillEvolutionPlusList: List<Int>,//1-2
+    val spSkillList: List<Int>,//1-5
     val spSkillEvolutionList: List<Int>,//1-2
+    val spSkillEvolutionPlusList: List<Int>,//1-2
+    val exSkillList: List<Int>,//1-5
     val exSkillEvolutionList: List<Int>//1-5
 )

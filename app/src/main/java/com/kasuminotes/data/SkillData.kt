@@ -9,8 +9,8 @@ data class SkillData(
     val skillAreaWidth: Int,
     val skillCastTime: Float,
     val bossUbCoolTime: Float,
-    val rawActions: List<Int>,//1-10
-    val rawDepends: List<Int>,//1-10
+    val rawActions: List<Int>,//1-20
+    val rawDepends: List<Int>,//1-20
     val actions: List<SkillAction>,
     val rfSkillDataList: List<RfSkillData?>,
     val isRfSkill: Boolean
@@ -38,7 +38,7 @@ data class SkillData(
 
         fun getFields(): String {
             if (fields == null) {
-                val actionFields = (1..10).joinToString(",") { i ->
+                val actionFields = (1..20).joinToString(",") { i ->
                     "action_$i,depend_action_$i"
                 }
                 fields = "$actionFields," +
