@@ -31,12 +31,18 @@ private fun SQLiteDatabase.fixSkillEvolution2() {
 fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
 //    throw Exception("init error")
     fixSkillEvolution2()
-    // TODO 国服实装水怜专武后就删除该代码片段
-    // 修改unit_unique_equipment表为unit_unique_equip
-    if (existsTable("unit_unique_equipment")) {
+//    // TODO 国服实装水怜专武后就删除该代码片段
+//    // 修改unit_unique_equipment表为unit_unique_equip
+//    if (existsTable("unit_unique_equipment")) {
+//        try {
+//            execSQL("DROP TABLE unit_unique_equip")
+//            execSQL("ALTER TABLE unit_unique_equipment RENAME TO unit_unique_equip")
+//        } catch (_: Throwable) {}
+//    }
+    // 修改unit_unique_equip表为unit_unique_equipment
+    if (!existsTable("unit_unique_equipment") && existsTable("unit_unique_equip")) {
         try {
-            execSQL("DROP TABLE unit_unique_equip")
-            execSQL("ALTER TABLE unit_unique_equipment RENAME TO unit_unique_equip")
+            execSQL("ALTER TABLE unit_unique_equip RENAME TO unit_unique_equipment")
         } catch (_: Throwable) {}
     }
     // TODO 国服实装270专武上限后就删除该代码片段
@@ -134,8 +140,8 @@ FROM unit_data AS ud
 JOIN unit_profile AS up ON ud.unit_id=up.unit_id
 JOIN (SELECT unit_id,COUNT(unit_id) AS max_rarity FROM unit_rarity GROUP BY unit_id) AS ur ON ud.unit_id=ur.unit_id
 LEFT JOIN actual_unit_background AS aub ON SUBSTR(ud.unit_id,1,4)=SUBSTR(aub.unit_id,1,4)
-LEFT JOIN unit_unique_equip AS uue1 ON ud.unit_id=uue1.unit_id AND uue1.equip_slot=1
-LEFT JOIN unit_unique_equip AS uue2 ON ud.unit_id=uue2.unit_id AND uue2.equip_slot=2
+LEFT JOIN unit_unique_equipment AS uue1 ON ud.unit_id=uue1.unit_id AND uue1.equip_slot=1
+LEFT JOIN unit_unique_equipment AS uue2 ON ud.unit_id=uue2.unit_id AND uue2.equip_slot=2
 WHERE comment!='' AND ud.unit_id<400000"""
     )
 
