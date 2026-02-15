@@ -218,14 +218,21 @@ class EquipState(
         list.add(UniqueCraft(110, 140001, 10, memoryIdList, 10))
         list.add(UniqueCraft(130, 140001, 10, memoryIdList, 10))
         var unlockLevel = 140
-        val craft15Level = min(maxUnlockLevel, 230)
-        while (unlockLevel <= craft15Level) {
+        val memorySum15Level = min(maxUnlockLevel, 230)
+        while (unlockLevel <= memorySum15Level) {
             list.add(UniqueCraft(unlockLevel, 140001, 10, memoryIdList, 15))
             unlockLevel += 10
         }
+        val heartSum10Level = min(maxUnlockLevel, 360)
         if (maxUnlockLevel > 230) {
-            while (unlockLevel <= maxUnlockLevel) {
+            while (unlockLevel <= heartSum10Level) {
                 list.add(UniqueCraft(unlockLevel, 140001, 10, memoryIdList, 5))
+                unlockLevel += 10
+            }
+        }
+        if (maxUnlockLevel > 360) {
+            while (unlockLevel <= maxUnlockLevel) {
+                list.add(UniqueCraft(unlockLevel, 140001, 20, memoryIdList, 5))
                 unlockLevel += 10
             }
         }
