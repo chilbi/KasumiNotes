@@ -255,10 +255,13 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                                 R.string.target_range1_content2,
                                 arrayOf(
                                     D.Text(targetRange.toString()),
-                                    D.Format(
-                                        R.string.target_range_max_assignment_count1,
-                                        arrayOf(getAssignmentCount())
-                                    )
+                                    D.Join(arrayOf(
+                                        D.Format(R.string.target_nearest),
+                                        D.Format(
+                                            R.string.target_range_max_assignment_count1,
+                                            arrayOf(getAssignmentCount())
+                                        )
+                                    ))
                                 )
                             )
                         }

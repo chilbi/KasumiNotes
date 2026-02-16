@@ -45,7 +45,7 @@ fun SkillAction.getDamage(skillLevel: Int, property: Property, target: D = getTa
         damage = damage.append(
             D.Format(
                 R.string.action_damage_critical_rate1,
-                arrayOf(D.Text((actionValue6 * 2).toNumStr()))
+                arrayOf(D.Text((actionValue6 * 2).toNumStr()).style(primary = true, bold = true))
             )
         )
     }

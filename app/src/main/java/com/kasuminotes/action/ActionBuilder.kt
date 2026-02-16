@@ -38,11 +38,11 @@ class ActionBuilder(
                 willRemoveIndexList.add(index)
             }
             /** [getTargetFocus],82,94 [getUnknown] */
-            if (action.actionType in arrayOf(7, 82, 94)) {
+            else if (action.actionType in arrayOf(7, 82, 94)) {
                 willRemoveIndexList.add(index)
             }
             /** [getSustainDamage] */
-            if (action.actionType == 18 && action.actionValue1 == 0.0) {
+            else if (action.actionType == 18 && action.actionValue1 == 0.0) {
                 willRemoveIndexList.add(rawDepends.indexOfFirst { it == action.actionId })
             }
             /** [getShieldCounter] */
@@ -51,38 +51,39 @@ class ActionBuilder(
                 willRemoveIndexList.add(modifyIndex)
             }
             /** [getAbnormalField] */
-            if (action.actionType == 39) {
+            else if (action.actionType == 39) {
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
                 willRemoveIndexList.add(modifyIndex)
             }
             /** [getGiveValue] */
-            if (action.actionType in arrayOf(26, 27, 74)) {
+            else if (action.actionType in arrayOf(26, 27, 74)) {
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
                 giveValueModifyList.add(modifyIndex to index)
             }
             /** [getDamageBaseAtk] */
-            if (action.actionType == 103) {
+            else if (action.actionType == 103) {
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
                 originList[modifyIndex] = originList[modifyIndex].append(originList[index])
             }
             /** [getTotalCritical] */
-            if (action.actionType == 107) {
+            else if (action.actionType == 107) {
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
                 totalCriticalModifyList.add(modifyIndex to index)
             }
             /** [getHitCount] */
-            if (action.actionType == 75) {
+            else if (action.actionType == 75) {
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
                 hitCountModifyList.add(modifyIndex to index)
 //                originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
             }
             /** [getTriggeredWhenAttacked] */
-            if (action.actionType == 114) {
+            else if (action.actionType == 114) {
                 var num = 1
+                var content: D = D.Text("")
                 arrayOf(action.actionDetail1, action.actionDetail2, action.actionDetail3).forEach { triggerActionId ->
                     if (triggerActionId != 0) {
                         val triggerActionIndex = actions.indexOfFirst { action -> action.actionId == triggerActionId }
@@ -97,27 +98,57 @@ class ActionBuilder(
                             } else {
                                 originList[triggerActionIndex]
                             }
-                            originList[index] = D.Join(arrayOf(originList[index], numDesc, triggerActionDesc))
+                            content = D.Join(arrayOf(content, numDesc, triggerActionDesc))
                         }
                     }
                 }
+                originList[index] = originList[index].append(content)
             }
             /** [getTriggeredWhenUseUB] */
-            if (action.actionType == 133) {
+            else if (action.actionType == 133) {
                 var num = 1
+                var content: D = D.Text("")
                 arrayOf(action.actionDetail1, action.actionDetail2, action.actionDetail3).forEach { triggerActionId ->
                     if (triggerActionId != 0) {
                         val triggerActionIndex = actions.indexOfFirst { action -> action.actionId == triggerActionId }
                         if (triggerActionIndex > -1) {
                             willRemoveIndexList.add(triggerActionIndex)
                             val numDesc = D.Text("\n(${num++}) ")
-                            originList[index] = D.Join(arrayOf(originList[index], numDesc, originList[triggerActionIndex]))
+                            content = D.Join(arrayOf(content, numDesc, originList[triggerActionIndex]))
                         }
+                    }
+                }
+                originList[index] = originList[index].append(content)
+            }
+            /** [getCountDown] */
+            else if (action.actionType == 57) {
+                var num = 1
+                var content: D = D.Text("")
+                arrayOf(action.actionDetail1, action.actionDetail2, action.actionDetail3).forEach { triggerActionId ->
+                    if (triggerActionId != 0) {
+                        val triggerActionIndex = actions.indexOfFirst { action -> action.actionId == triggerActionId }
+                        if (triggerActionIndex > -1) {
+                            willRemoveIndexList.add(triggerActionIndex)
+                            val numDesc = D.Text("\n(${num++}) ")
+                            content = D.Join(arrayOf(content, numDesc, originList[triggerActionIndex]))
+                        }
+                    }
+                }
+                originList[index] = originList[index].append(content)
+            }
+            /** [getConditionTrigger] */
+            else if (action.actionType == 111) {
+                val triggerActionId = action.actionDetail2
+                if (triggerActionId != 0) {
+                    val triggerActionIndex = actions.indexOfFirst { action -> action.actionId == triggerActionId }
+                    if (triggerActionIndex > -1) {
+                        willRemoveIndexList.add(triggerActionIndex)
+                        originList[index] = originList[index].append(originList[triggerActionIndex])
                     }
                 }
             }
             /** [getInjuredEnergy] */
-            if (action.actionType == 92) {
+            else if (action.actionType == 92) {
                 willRemoveIndexList.add(index)
                 val injuredEnergyContent = action.getInjuredEnergy()
                 val modifyTypes = arrayOf(1, 9, 36, 46, 79)
@@ -146,7 +177,7 @@ class ActionBuilder(
                 }
             }
             /** [getExEquipPassive] */
-            if (action.actionType in arrayOf(901, 902)) {
+            else if (action.actionType in arrayOf(901, 902)) {
                 willRemoveIndexList.add(index)
                 exEquipPassive = originList[index]
 //                var modifyIndex = index + 1
@@ -156,7 +187,7 @@ class ActionBuilder(
 //                originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
             }
             /** [getBranch] */
-            if (action.actionType in arrayOf(23, 28, 42, 53, 63, 111)) {
+            else if (action.actionType in arrayOf(23, 28, 42, 53, 63)) {
                 val branch = action.getBranch()
                 if (branch.isEmpty()) {
                     if (action.actionDetail2 == 0 && action.actionDetail3 == 0) {
@@ -172,7 +203,7 @@ class ActionBuilder(
                 }
             }
             /** [getIgnoreProvocation] */
-            if (action.actionType == 93) {
+            else if (action.actionType == 93) {
                 willRemoveIndexList.add(index)
                 val ignoreProvocation = action.getIgnoreProvocation()
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
@@ -254,7 +285,7 @@ class ActionBuilder(
             20 -> getProvoke(skillLevel)
             21 -> getNoDamage(skillLevel)
             22 -> getChangePattern()
-            23, 28, 42, 53, 63, 111 -> D.Unknown/** [getBranch] */
+            23, 28, 42, 53, 63 -> D.Unknown/** [getBranch] */
             24 -> getRevival()
             26, 27, 74 -> getGiveValue(skillLevel, actions)
             30 -> getDestroy()
@@ -303,9 +334,11 @@ class ActionBuilder(
             107 -> getTotalCritical()
             109 -> getEnergyRestriction(skillLevel)
             110 -> getDotDamageUp()
+            111 -> getConditionTrigger()
             112 -> getDurationExtension()
             114 -> getTriggeredWhenAttacked()
             116 -> getPersistence(skillLevel)
+            118 -> getEndure()
             121 -> getTriggeredWhenHpZero()
             123 -> getDamageCutState()
             124 -> getFriendlyBarrier()

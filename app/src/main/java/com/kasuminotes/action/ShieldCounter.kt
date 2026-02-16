@@ -6,16 +6,18 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getShieldCounter(skillLevel: Int, property: Property, actions: List<SkillAction>): D {
     val target = getTarget(depend)
-    val content = getMarkContent(actionDetail2)
+    val content = getMarkContent(if (actionId / 1000 == 104401) 119 else actionDetail2)// 104401 イリヤ
+    val type = if (actionDetail1 == 5) D.Text("") else getDamageType(actionDetail1)
     val desc = if (actionValue3 > 1.0) {
+        val add = D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
         D.Format(
-            R.string.action_shield_counter_target1_content2_add3,
-            arrayOf(target, content, D.Text(actionValue3.toNumStr()).style(primary = true, bold = true))
+            R.string.action_shield_counter_target1_content2_type3_add4,
+            arrayOf(target, content, type, add)
         )
     } else {
         D.Format(
-            R.string.action_shield_counter_target1_content2,
-            arrayOf(target, content)
+            R.string.action_shield_counter_target1_content2_type3,
+            arrayOf(target, content, type)
         )
     }
     val damage = if (actionDetail3 != 0) {

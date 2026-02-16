@@ -86,32 +86,12 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 
     val formula = getGiveValueFormula(targetAction, constantVariable, independentVariable, null)
 
-//    val content = getGiveValueContent(nestTargetAction ?: targetAction)
-//
-//    val formula = if (nestTargetAction == null) {
-//        getGiveValueFormula(targetAction, constantVariable, independentVariable, null)
-//    } else {
-//        targetAction.getGiveValueFormula(
-//            nestTargetAction,
-//            constantVariable,
-//            independentVariable,
-//            targetAction.getGiveValueIndependentVariable()
-//        )
-//    }
-
-
     val maxValue = getMaxValue(skillLevel, targetAction)
     val maxIndependentVariable = getMaxIndependentVariable(skillLevel, targetAction)
     @StringRes
     val actionRes: Int
     @StringRes
     val maxRes: Int
-
-    /** 26：加减，27：倍，74：{0}分之一 */
-//    var type = actionType
-//    if (type == 27 && targetAction.actionType == 1 && actionDetail2 == 3) {
-//        type = 26
-//    }
 
     when (actionType) {
         26 -> {
@@ -191,12 +171,16 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
     return when (targetAction.actionType) {
         1 -> when (actionDetail2) {
             3 -> D.Format(R.string.give_damage_rate1, arrayOf(getAtkType(targetAction.actionDetail1)))
+            5 -> D.Format(R.string.give_critical1, arrayOf(D.Text(targetAction.actionValue5.toNumStr())))
             6 -> D.Format(R.string.give_critical_damage)
             7 -> D.Format(R.string.give_disregard_def_type1, arrayOf(getDamageType(targetAction.actionDetail1)))
             else -> D.Format(R.string.give_damage)
         }
         3 -> D.Format(R.string.give_distance)
-        4 -> D.Format(R.string.give_hp_recovery)
+        4 -> when (actionDetail2) {
+            4 -> D.Format(R.string.give_hp_recovery_rate1, arrayOf(getAtkType(targetAction.actionDetail1)))
+            else ->D.Format(R.string.give_hp_recovery)
+        }
         6 -> if (actionDetail2 == 3) D.Format(R.string.give_time)
         else D.Format(
             when (targetAction.actionDetail1) {
@@ -224,6 +208,10 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
             if (targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 4) R.string.give_energy_recovery
             else R.string.give_energy_decrement
         )
+        21 -> when (actionDetail2) {
+            1, 2 -> D.Format(R.string.give_time)
+            else -> D.Unknown
+        }
         26, 27, 74 -> when (actionDetail2) {
             2 -> D.Format(R.string.give_base_value1, arrayOf(D.Text(targetAction.actionValue2.toNumStr())))
             else -> D.Unknown
@@ -279,15 +267,15 @@ private fun SkillAction.getGiveValueFormula(
 ): D {
     val otherConstantVariable = when (targetAction.actionType) {
         1 -> when (actionDetail2) {
-            1, 3, 6, 7 -> null
+            1, 3, 5, 6, 7 -> null
             2, 4 -> D.Format(R.string.skill_level)
             else -> D.Unknown
         }
         3 -> null
         4 -> when (actionDetail2) {
-            2 -> null
+            2, 4 -> null
             3 -> D.Format(R.string.skill_level)
-            4 -> getAtkType(targetAction.actionDetail1)
+//            4 -> getAtkType(targetAction.actionDetail1)
             else -> D.Unknown
         }
         6, 9, 38 -> when (actionDetail2) {
@@ -299,6 +287,11 @@ private fun SkillAction.getGiveValueFormula(
         10 -> when (actionDetail2) {
             2, 4 -> null
             3 -> D.Format(R.string.skill_level)
+            else -> D.Unknown
+        }
+        21 -> when (actionDetail2) {
+            1 -> null
+            2 -> D.Format(R.string.skill_level)
             else -> D.Unknown
         }
         26, 27, 74 -> null
@@ -344,119 +337,83 @@ private fun SkillAction.getGiveValueFormula(
     }
 }
 
+private fun SkillAction.getDependSkillLevel(skillLevel: Int, targetAction: SkillAction): Int {
+    return when (targetAction.actionType) {
+        1 -> when (actionDetail2) {
+            2, 4 -> skillLevel
+            else -> 1
+        }
+        3 -> 1
+        4 -> when (actionDetail2) {
+            3 -> skillLevel
+            else -> 1
+        }
+        6, 9, 38 -> when (actionDetail2) {
+            2 -> skillLevel
+            else -> 1
+        }
+        8, 16, 35 -> 1
+        10 -> when (actionDetail2) {
+            3 -> skillLevel
+            else -> 1
+        }
+        21 -> when (actionDetail2) {
+            2 -> skillLevel
+            else -> 1
+        }
+        26, 27, 74 -> 1
+        36, 37 -> when (actionDetail2) {
+            2, 4, 6 -> skillLevel
+            else -> 1
+        }
+        46 -> when (actionDetail2) {
+            2 -> skillLevel
+            else -> 1
+        }
+        48 -> when (actionDetail2) {
+            2 -> skillLevel
+            else -> 1
+        }
+        59 -> 1
+        98 -> 1
+        else -> 1
+    }
+}
+
 /** actionValue4, actionValue5：上限值 */
 private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction): D? {
+    val level = getDependSkillLevel(skillLevel, targetAction)
     return if (actionValue4 == 0.0 && actionValue5 == 0.0) {
         null
     } else {
         if (actionValue5 == 0.0) {
             if (targetAction.actionType == 1 && actionDetail2 == 6) {
-                D.Text("${(actionValue4 * 100).toNumStr()}%")
+                D.Text("${(actionValue4 * 100 * level).toNumStr()}%")
             } else if (
                 (targetAction.actionType == 10 && targetAction.isStatusPercent()) ||
                 targetAction.actionType == 46
             ) {
-                D.Text("${actionValue4.toNumStr()}%")
+                D.Text("${(actionValue4 * level).toNumStr()}%")
             } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
-                D.Text((-actionValue4).toNumStr())
+                D.Text((-actionValue4 * level).toNumStr())
             } else {
-                D.Text(actionValue4.toNumStr())
+                D.Text((actionValue4 * level).toNumStr())
             }
         } else {
             if (actionValue4 > 0.0 && actionValue5 > 0.0) {
-                D.Text(ceil(actionValue4 + actionValue5 * skillLevel).toNumStr())// TODO 不确定的取整方式
+                D.Text(ceil((actionValue4 + actionValue5 * skillLevel) * level).toNumStr())// TODO 不确定的取整方式
             } else {
-                D.Text(ceil((-actionValue4) + (-actionValue5) * skillLevel).toNumStr())// TODO 不确定的取整方式
+                D.Text(ceil(((-actionValue4) + (-actionValue5) * skillLevel) * level).toNumStr())// TODO 不确定的取整方式
             }
         }
     }
 }
 
 private fun SkillAction.getMaxIndependentVariable(skillLevel: Int, targetAction: SkillAction): D {
-    var otherVariable: D? = null
-    val max = actionValue4 + actionValue5 * skillLevel
+//    var otherVariable: D? = null
+    val max = actionValue4 + actionValue5 * skillLevel * getDependSkillLevel(skillLevel, targetAction)
     val constantVariable = actionValue2 + actionValue3 * skillLevel
-    val otherConstantVariable: Double = when (targetAction.actionType) {
-        1 -> when (actionDetail2) {
-            1, 3, 6, 7 -> 1.0
-            2, 4 -> skillLevel.toDouble()
-            else -> {
-                otherVariable = D.Unknown
-                1.0
-            }
-        }
-        3 -> 1.0
-        4 -> when (actionDetail2) {
-            2 -> 1.0
-            3 -> skillLevel.toDouble()
-            4 -> {
-                otherVariable = getAtkType(targetAction.actionDetail1)
-                1.0
-            }
-
-            else -> {
-                otherVariable = D.Unknown
-                1.0
-            }
-        }
-        6, 9, 38 -> when (actionDetail2) {
-            1, 3 -> 1.0
-            2 -> skillLevel.toDouble()
-            else -> {
-                otherVariable = D.Unknown
-                1.0
-            }
-        }
-        8, 16, 35 -> 1.0
-        10 -> when (actionDetail2) {
-            2, 4 -> 1.0
-            3 -> skillLevel.toDouble()
-            else -> {
-                otherVariable = D.Unknown
-                1.0
-            }
-        }
-        36, 37 -> when (actionDetail2) {
-            1, 3, 7 -> 1.0
-            2, 4, 6 -> skillLevel.toDouble()
-            else -> {
-                otherVariable = D.Unknown
-                1.0
-            }
-        }
-        46 -> when (actionDetail2) {
-            1 -> 1.0
-            2 -> skillLevel.toDouble()
-            else -> {
-                otherVariable = D.Unknown
-                1.0
-            }
-        }
-        48 -> when (actionDetail2) {
-            1, 5 -> 1.0
-            2 -> skillLevel.toDouble()
-            3 -> {
-                otherVariable = getAtkType(targetAction.actionDetail1)
-                1.0
-            }
-            else -> {
-                otherVariable = D.Unknown
-                1.0
-            }
-        }
-        59 -> 1.0
-        98 -> 1.0
-        else -> {
-            otherVariable = D.Unknown
-            1.0
-        }
-    }
-    val maxIndependentVariable = ceil(max / constantVariable / otherConstantVariable)
-    return if (otherVariable == null) {
-        D.Text(maxIndependentVariable.toNumStr())
-    } else {
-        D.Text("${maxIndependentVariable.toNumStr()} / ").append(otherVariable)
-    }
+    return D.Text((ceil(max / constantVariable * 10000.0) / 10000.0).toNumStr())
 }
 
 fun SkillAction.getGiveValueEffect(skillLevel: Int, actions: List<SkillAction>): SkillEffect {

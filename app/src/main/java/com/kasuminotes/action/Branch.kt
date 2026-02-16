@@ -10,7 +10,6 @@ fun SkillAction.getBranch(): Array<Pair<Int, D>> {
         42 -> getCounterBranch()
         53 -> getExistsFieldBranch()
         63 -> getDamageReceivedBranch()
-        111 -> getSingleBranch()
         else -> emptyArray()
     }
 }
@@ -443,20 +442,6 @@ private fun SkillAction.getDamageReceivedBranch(): Array<Pair<Int, D>> {
         D.Format(id, arrayOf(time, value, D.Format(R.string.action_branch_damage_received_no).tag(false)))
     )
     return branch.toTypedArray()
-}
-
-private fun SkillAction.getSingleBranch(): Array<Pair<Int, D>> {
-    val desc = when (actionDetail1) {
-        //クルル
-        1 -> D.Format(
-            R.string.action_branch_status_up_target1_max2,
-            arrayOf(getTarget(depend), D.Text(actionValue3.toNumStr()))
-        )
-        //ヤマト
-        2 -> D.Format(R.string.action_branch_attack_critical_target1, arrayOf(getTarget(depend)))
-        else -> D.Format(R.string.action_branch_unknown)
-    }
-    return arrayOf(actionDetail2 to desc)
 }
 
 private fun SkillAction.setBranch(branch: MutableList<Pair<Int, D>>, yes: D, not: D) {

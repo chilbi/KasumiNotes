@@ -42,7 +42,7 @@ fun SkillAction.isStatusPercent(): Boolean {
     if (detail1 > 1000) {
         detail1 -= 1000
     }
-    var isPercent = actionValue1 == 2.0
+    var isPercent = actionValue1 != 1.0
     if ((detail1 in 110..129) || (detail1 >= 140)) {
         isPercent = true
     }
@@ -76,7 +76,7 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
     // 是否受身
     var isReceived = false
     // 是否百分比
-    var isPercent = actionValue1 == 2.0
+    var isPercent = actionValue1 != 1.0
     if (detail1 in 140..179) {
         isUp = !isUp
         isReceived = true
@@ -109,8 +109,13 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
             getBaseLvFormula(value2, value3, skillLevel).append(D.Text("%").style(primary = true, bold = true))
         }
         // 10-40为物魔攻防，估计只有这4项值加的百分比值是以初始值为基础的
-        if (detail1 < 50) D.Format(R.string.content_initial_value1, arrayOf(percent))
-        else percent
+        if (actionValue1 == 3.0) {
+            D.Format(R.string.content_current_value1, arrayOf(percent))
+        } else if (detail1 < 50) {
+            D.Format(R.string.content_initial_value1, arrayOf(percent))
+        } else {
+            percent
+        }
     } else {
         getBaseLvFormula(value2, value3, skillLevel)
     }
@@ -168,7 +173,7 @@ fun SkillAction.getStatusEffect(skillLevel: Int): SkillEffect {
     // 是否受身
     var isReceived = false
     // 是否百分比
-    var isPercent = actionValue1 == 2.0
+    var isPercent = actionValue1 != 1.0
     if (detail1 in 140..179) {
         isUp = !isUp
         isReceived = true
