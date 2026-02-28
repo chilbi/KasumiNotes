@@ -3,13 +3,13 @@ package com.kasuminotes.action
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
-fun SkillAction.getBranch(): Array<Pair<Int, D>> {
+fun SkillAction.getBranch(skillLevel: Int, actions: List<SkillAction>): Array<Pair<Int, D>> {
     return when (actionType) {
         23 -> getDependBranch()
         28 -> getNoDependBranch()
         42 -> getCounterBranch()
         53 -> getExistsFieldBranch()
-        63 -> getDamageReceivedBranch()
+        63 -> getDamageReceivedBranch(skillLevel, actions)
         else -> emptyArray()
     }
 }
@@ -431,16 +431,37 @@ private fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
 }
 
 //未知
-private fun SkillAction.getDamageReceivedBranch(): Array<Pair<Int, D>> {
+private fun SkillAction.getDamageReceivedBranch(skillLevel: Int, actions: List<SkillAction>): Array<Pair<Int, D>> {
     val branch = mutableListOf<Pair<Int, D>>()
-    val time = D.Text(actionValue2.toNumStr())
-    val value = D.Text(actionValue3.toNumStr())
-    val id = R.string.action_branch_damage_received_time1_value2_p3
-    setBranch(
-        branch,
-        D.Format(id, arrayOf(time, value, D.Format(R.string.action_branch_damage_received_yes).tag(true))),
-        D.Format(id, arrayOf(time, value, D.Format(R.string.action_branch_damage_received_no).tag(false)))
-    )
+    val giveValueAction =  actions.find { it.actionType == 26 && it.actionDetail1 == actionId && it.actionDetail2 == 3 }
+    val value = if (giveValueAction == null) {
+        D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
+    } else {
+        D.Format(
+            R.string.formula_base1_m2_m3,
+            arrayOf(
+                D.Text(actionValue3.toNumStr()),
+                D.Text((giveValueAction.actionValue2 + giveValueAction.actionValue3 * skillLevel).toNumStr()),
+                giveValueAction.getGiveValueIndependentVariable()
+            )
+        ).style(primary = true)
+    }
+    if (actionValue2 > 0.0) {
+        val time = D.Text(actionValue2.toNumStr())
+        val id = R.string.action_branch_damage_received_time1_value2_p3
+        setBranch(
+            branch,
+            D.Format(id, arrayOf(time, value, D.Format(R.string.action_branch_damage_received_yes).tag(true))),
+            D.Format(id, arrayOf(time, value, D.Format(R.string.action_branch_damage_received_no).tag(false)))
+        )
+    } else {
+        val id = R.string.action_branch_damage_received_during_the_skill_value1_p2
+        setBranch(
+            branch,
+            D.Format(id, arrayOf(value, D.Format(R.string.action_branch_damage_received_yes).tag(true))),
+            D.Format(id, arrayOf(value, D.Format(R.string.action_branch_damage_received_no).tag(false)))
+        )
+    }
     return branch.toTypedArray()
 }
 

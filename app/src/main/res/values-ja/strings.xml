@@ -107,8 +107,10 @@
     <string name="rarity">★の数</string>
     <string name="search_area_width">攻撃距離</string>
     <string name="summons_info">召喚物情報</string>
-    <string name="extra_effect">EX効果</string>
     <string name="load_more">すべてをロードする</string>
+    <string name="extra_effect">EX効果</string>
+    <string name="unit_ten_thousand">万</string>
+    <string name="unit_hundred_million">億</string>
 
     <string name="actual_name">本名</string>
     <string name="kana">平仮名</string>
@@ -261,12 +263,13 @@
     <string name="action_regeneration_target1_content2_formula3_time4">%1$sに毎秒%2$sを%3$s回復する継続%2$s回復状態を付与する、効果時間%4$s秒。</string>
     <string name="action_trigger_hp_target1_formula2">%1$sのＨＰが最大のＨＰの%2$s以下になった時に発動する。</string>
     <string name="action_trigger_dead">死亡時に発動する。</string>
+    <string name="action_trigger_received_critical_damage_target1">%sがクリティカルを受ける時に発動する。</string>
     <string name="action_trigger_battle_beginning">バトル開始時に発動する。</string>
     <string name="action_trigger_battle_began_passed_time1">バトル開始後%s秒経過時に発動する。</string>
     <string name="action_trigger_battle_remaining_time1">バトルの残り時間が%s秒を切る時に発動する。</string>
     <string name="action_trigger_stealth">潜伏状態時に発動する。</string>
     <string name="action_trigger_break">Break状態時に発動する。</string>
-    <string name="action_trigger_be_harmed_target1">%sが敵からダメージを受けた時に発動する。</string>
+    <string name="action_trigger_attacked_target1">%sが敵から攻撃を受けた時に発動する。</string>
     <string name="action_trigger_all_break">全ターゲットがBreakの時に発動する。</string>
     <string name="action_destroy_target1">%sを戦闘不能状態にする。</string>
     <string name="action_accumulative_damage_formula1_tier2">敵を攻撃する度に、その敵に与えるダメージを%1$s増加させる。この効果は最大%2$s回まで累積する。</string>
@@ -341,6 +344,8 @@
     <string name="action_triggered_when_use_ub_target1_state2_count3_max4_time5">%1$sに【%2$s】を%3$sつ付与する、最大%4$sつまで追加される、効果時間%5$s秒。【%2$s】が付与されているキャラがUBを使用した場合、【%2$s】を1つ消費し、同時に以下の効果を発動する：</string>
     <string name="action_deactivate1">%s状態の間はＴＰが増加しない。</string>
     <string name="action_damage_boost_content1_max2_time3">%1$s（上限%2$s）、効果時間%3$s秒。</string>
+    <string name="action_marionette_target1_time2">%1$sを【操糸】状態にさせる、効果時間%2$s秒。傀儡の糸により操られた者は躊躇なく仲間たちと命を奪い合い、悲劇の舞踏を踊る人形と化す。</string>
+    <string name="action_marionette_suspend_target1">%sの【操糸】状態を中断する。</string>
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>
@@ -351,6 +356,7 @@
     <string name="action_branch_field_content1_p2">%1$sのフィールド%2$s場合、</string>
     <string name="action_branch_field_yes">展開中</string>
     <string name="action_branch_field_no">展開中ではない</string>
+    <string name="action_branch_damage_received_during_the_skill_value1_p2">スキル中累計受けたダメージが%1$sを%2$s場合、</string>
     <string name="action_branch_damage_received_time1_value2_p3">%1$s秒の間に累計受けたダメージが%2$sを%3$s場合、</string>
     <string name="action_branch_damage_received_yes">超えた</string>
     <string name="action_branch_damage_received_no">超えなかった</string>
@@ -455,6 +461,7 @@
     <string name="content_attack_critical_target1">%sの攻撃がクリティカルでダメージを与える度に、自分</string>
     <string name="content_status_up_target1">%sがステータスアップ効果を受ける度に、自分</string>
     <string name="content_status_down_target1">%sがステータスダウン効果を受ける度に、その対象</string>
+    <string name="content_status_down_self_target1">%sがステータスダウン効果を受ける度に、自分</string>
     <string name="content_damage_received_target1">%sがダメージを受ける度に、自分</string>
     <string name="content_ub_counter_target1">味方がUBを使用する度に、%s</string>
     <string name="content_initial_value1">初期値の%s</string>
@@ -559,6 +566,7 @@
     <string name="formula_m1_m2">{ %1$s × %2$s }</string>
     <string name="formula_m1_m2_m3">{ %1$s × %2$s × %3$s }</string>
     <string name="formula_m1_m2_m3_m4">{ %1$s × %2$s × %3$s × %4$s }</string>
+    <string name="formula_base1_m2_m3">{ %1$s + %2$s × %3$s }</string>
     <string name="sub_formula_base1_lv2">(%1$s + %2$s × スキルLv)</string>
     <string name="sub_formula_lv1">%s × スキルLv</string>
 
@@ -612,6 +620,7 @@
     <string name="fear">恐慌</string>
     <string name="deactivate">遮絶の操糸</string>
     <string name="persistence">執着</string>
+    <string name="cannot_invalidated_fetter">無効化不可の束縛</string>
     <string name="harmed_remove_content1">%s攻撃を受けたときのみ解除される。</string>
 
     <string name="max_hp">最大ＨＰ</string>
@@ -659,6 +668,7 @@
     <string name="give_distance">距離</string>
     <string name="give_speed">行動速度</string>
     <string name="give_base_value1">基礎値{ %s }</string>
+    <string name="give_damage_cut1">受ける%s下降量</string>
 
     <string name="effect_damage_attenuation">受けるダメージ減衰</string>
     <string name="effect_damage_attenuation_limit1_convergence2">%1$s万以上%2$s万に収束</string>

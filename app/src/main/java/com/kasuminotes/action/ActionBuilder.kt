@@ -27,8 +27,8 @@ class ActionBuilder(
         actions.forEach { action -> originList.add(action.getDescription(skillLevel, property)) }
 
         var exEquipPassive: D? = null
-        val branchModify = ModifyDescription(rawDepends, actions)
-        val ignoreProvocationModify = ModifyDescription(rawDepends, actions)
+        val branchModify = ModifyDescription(skillLevel, rawDepends, actions)
+        val ignoreProvocationModify = ModifyDescription(skillLevel, rawDepends, actions)
         val giveValueModifyList = mutableListOf<Pair<Int, Int>>()
         val totalCriticalModifyList = mutableListOf<Pair<Int, Int>>()
         val hitCountModifyList = mutableListOf<Pair<Int, Int>>()
@@ -159,7 +159,7 @@ class ActionBuilder(
                         if (dependAction.actionType in modifyTypes) {
                             originList[dependIndex] = originList[dependIndex].append(injuredEnergyContent)
                         } else if (dependAction.actionType in willRemoveTypes) {
-                            val willRemoveModify = ModifyDescription(rawDepends, actions)
+                            val willRemoveModify = ModifyDescription(skillLevel, rawDepends, actions)
                             val targetIndex = when (dependAction.actionType) {
                                 7 -> dependIndex
                                 93 -> actions.indexOfFirst { it.actionId == dependAction.actionDetail1 }
@@ -188,7 +188,7 @@ class ActionBuilder(
             }
             /** [getBranch] */
             else if (action.actionType in arrayOf(23, 28, 42, 53, 63)) {
-                val branch = action.getBranch()
+                val branch = action.getBranch(skillLevel, actions)
                 if (branch.isEmpty()) {
                     if (action.actionDetail2 == 0 && action.actionDetail3 == 0) {
                         willRemoveIndexList.add(index)
@@ -338,6 +338,7 @@ class ActionBuilder(
             112 -> getDurationExtension()
             114 -> getTriggeredWhenAttacked()
             116 -> getPersistence(skillLevel)
+            117 -> getMarionette()
             118 -> getEndure()
             121 -> getTriggeredWhenHpZero()
             123 -> getDamageCutState()
@@ -392,6 +393,7 @@ private fun getSkillEffect(skillLevel: Int, actions: List<SkillAction>): SkillEf
 }
 
 private class ModifyDescription(
+    private val skillLevel: Int,
     private val rawDepends: List<Int>,
     private val actions: List<SkillAction>,
 ) {
@@ -448,7 +450,7 @@ private class ModifyDescription(
         if (modifyIndex > -1 && !processedModifyIndexList.contains(modifyIndex)) {
             val modifyAction = actions[modifyIndex]
             if (modifyAction.isBranch()) {
-                val andBranch = modifyAction.getBranch()
+                val andBranch = modifyAction.getBranch(skillLevel, actions)
                 andBranch.forEach { andPair ->
                     collectBranch(andPair.first, andPair.second, content)
                 }

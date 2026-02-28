@@ -39,6 +39,11 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
             isPercent = true
         } else if (targetAction.actionType == 10 && actionType != 27 && actionType != 74 && targetAction.isStatusPercent()) {
             isPercent = true
+        } else if (targetAction.actionType == 72) {
+            isPercent = true
+            if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
+                value2 /= 100
+            }
         } else if (targetAction.actionType == 98  && actionDetail2 == 1) {
             value2 *= 100
             isPercent = true
@@ -57,6 +62,14 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         }
         D.Text(value2.toNumStr() + if (isPercent) "%" else "")
     } else {
+//        if (targetAction.actionType == 72) {
+//            val value = if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
+//                (value2 + value3 * skillLevel) / 100
+//            } else {
+//                value2 + value3 * skillLevel
+//            }
+//            D.Text("${value.toNumStr()}%")
+//        } else
         if (targetAction.actionType == 98  && actionDetail2 == 1) {
             val value = (value2 + value3 * skillLevel) * 100
             D.Text("${value.toNumStr()}%")
@@ -130,7 +143,7 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 /**
  * actionValue1：自变量（如：敌人全体的数量）
  */
-private fun SkillAction.getGiveValueIndependentVariable(): D {
+fun SkillAction.getGiveValueIndependentVariable(): D {
     return when {
         actionValue1 > 2000.0 -> {
             D.Format(R.string.count_state1, arrayOf(getMarkContent((actionValue1 % 1000).toInt())))
@@ -250,6 +263,11 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
         )
         59 -> if (actionDetail2 == 1) D.Format(R.string.give_hp_recovery_down)
         else D.Format(R.string.give_time)
+        72 -> when (actionDetail2) {
+            1, 2 -> D.Format(R.string.give_damage_cut1, arrayOf(targetAction.getDamageCutContent()))
+            3 -> D.Format(R.string.give_time)
+            else -> D.Unknown
+        }
         98 -> if (actionDetail2 == 1) D.Format(R.string.give_energy_cut_effect)
         else D.Format(R.string.give_time)
         else -> D.Unknown
@@ -311,8 +329,7 @@ private fun SkillAction.getGiveValueFormula(
             3 -> getAtkType(targetAction.actionDetail1)
             else -> D.Unknown
         }
-        59 -> null
-        98 -> null
+        59, 72, 98 -> null
         else -> D.Unknown
     }
     val nonNullElements = listOfNotNull(
@@ -375,6 +392,10 @@ private fun SkillAction.getDependSkillLevel(skillLevel: Int, targetAction: Skill
             else -> 1
         }
         59 -> 1
+        72 -> when (actionDetail2) {
+            2 -> skillLevel
+            else -> 1
+        }
         98 -> 1
         else -> 1
     }
@@ -396,6 +417,12 @@ private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction):
                 D.Text("${(actionValue4 * level).toNumStr()}%")
             } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
                 D.Text((-actionValue4 * level).toNumStr())
+            } else if (targetAction.actionType == 72) {
+                var value = actionValue4 * level
+                if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
+                    value /= 100
+                }
+                D.Text("${value.toNumStr()}%")
             } else {
                 D.Text((actionValue4 * level).toNumStr())
             }

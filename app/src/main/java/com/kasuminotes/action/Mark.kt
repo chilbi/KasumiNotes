@@ -19,7 +19,11 @@ fun SkillAction.getMark(): D {
             when (actionDetail1) {
                 1 -> R.string.content_status_up_target1//アキノ（クリスマス）、ユキ（儀装束）、アン＆グレア、ヴルム
                 2 -> R.string.content_damage_received_target1//ゴブリンメイスター
-                3 -> R.string.content_status_down_target1//ホマレ（サマー）
+                3 -> if (actionDetail3 == 0) {
+                    R.string.content_status_down_self_target1//ヴァイオレット（イサナミ）
+                } else {
+                    R.string.content_status_down_target1//ホマレ（サマー）
+                }
                 4 -> R.string.content_ub_counter_target1//サレン（ニューイヤー）
                 else -> R.string.action_branch_unknown
             }
