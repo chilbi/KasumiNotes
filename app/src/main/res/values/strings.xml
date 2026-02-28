@@ -139,8 +139,8 @@
     <string name="life_steal">HP吸收</string>
     <string name="wave_hp_recovery">HP自回</string>
     <string name="wave_energy_recovery">TP自回</string>
-    <string name="physical_penetrate">物理穿透</string>
-    <string name="magic_penetrate">魔法穿透</string>
+    <string name="physical_penetrate">物理贯穿</string>
+    <string name="magic_penetrate">魔法贯穿</string>
     <string name="energy_recovery_rate">TP上升</string>
     <string name="hp_recovery_rate">回复量上升</string>
     <string name="energy_reduce_rate">TP轻减</string>
