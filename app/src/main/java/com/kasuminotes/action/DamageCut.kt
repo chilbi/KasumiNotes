@@ -5,23 +5,22 @@ import com.kasuminotes.data.SkillAction
 import com.kasuminotes.data.SkillEffect
 
 fun SkillAction.getDamageCut(skillLevel: Int): D {
-    var value1 = actionValue1
-    var value2 = actionValue2
-    val content = getDamageCutContent()
+    var isPercent = true
     if (actionDetail1 == 4 || actionDetail1 == 5) {
-        value1 /= 100
-        value2 /= 100
+        isPercent = false
     }
-
-    val formula = getBaseLvFormula(value1, value2, skillLevel)
-        .append(D.Text("%").style(primary = true, bold = true))
+    val content = getDamageCutContent()
+    var formula = getBaseLvFormula(actionValue1, actionValue2, skillLevel)
+    if (isPercent) {
+        formula = formula.append(D.Text("%"))
+    }
 
     return D.Format(
         R.string.action_received_down_target1_content2_formula3_time4,
         arrayOf(
             getTarget(depend),
             content.style(underline = true),
-            formula,
+            formula.style(primary = true, bold = true),
             D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
         )
     )
@@ -39,17 +38,19 @@ fun SkillAction.getDamageCutContent(): D {
 }
 
 fun SkillAction.getDamageCutEffect(skillLevel: Int): SkillEffect {
-    var value1 = actionValue1
-    var value2 = actionValue2
-    val content = getDamageCutContent()
+    var isPercent = true
     if (actionDetail1 == 4 || actionDetail1 == 5) {
-        value1 /= 100
-        value2 /= 100
+        isPercent = false
+    }
+    val content = getDamageCutContent()
+    var formula = (actionValue1 + actionValue2 * skillLevel).toNumStr()
+    if (isPercent) {
+        formula += "%"
     }
     return SkillEffect(
         getTarget(null),
         D.Format(R.string.effect_damage_cut_content1, arrayOf(content)),
-        D.Text("${(value1 + value2 * skillLevel).toNumStr()}%"),
+        D.Text(formula),
         actionValue3,
         0.5f,
         SkillEffect.damageCut

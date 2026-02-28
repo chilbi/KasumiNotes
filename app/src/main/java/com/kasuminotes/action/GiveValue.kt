@@ -42,7 +42,7 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         } else if (targetAction.actionType == 72) {
             isPercent = true
             if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
-                value2 /= 100
+                isPercent = false
             }
         } else if (targetAction.actionType == 98  && actionDetail2 == 1) {
             value2 *= 100
@@ -62,15 +62,17 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         }
         D.Text(value2.toNumStr() + if (isPercent) "%" else "")
     } else {
-//        if (targetAction.actionType == 72) {
-//            val value = if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
-//                (value2 + value3 * skillLevel) / 100
-//            } else {
-//                value2 + value3 * skillLevel
-//            }
-//            D.Text("${value.toNumStr()}%")
-//        } else
-        if (targetAction.actionType == 98  && actionDetail2 == 1) {
+        if (targetAction.actionType == 72) {
+            var isPercent = true
+            var value = (value2 + value3 * skillLevel).toNumStr()
+            if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
+                isPercent = false
+            }
+            if (isPercent) {
+                value += "%"
+            }
+            D.Text(value)
+        } else if (targetAction.actionType == 98  && actionDetail2 == 1) {
             val value = (value2 + value3 * skillLevel) * 100
             D.Text("${value.toNumStr()}%")
         } else if (value2 > 0.0 || value3 > 0.0) {
@@ -418,11 +420,15 @@ private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction):
             } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
                 D.Text((-actionValue4 * level).toNumStr())
             } else if (targetAction.actionType == 72) {
-                var value = actionValue4 * level
+                var value = (actionValue4 * level).toNumStr()
+                var isPercent = true
                 if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
-                    value /= 100
+                    isPercent = false
                 }
-                D.Text("${value.toNumStr()}%")
+                if (isPercent) {
+                    value += "%"
+                }
+                D.Text(value)
             } else {
                 D.Text((actionValue4 * level).toNumStr())
             }
