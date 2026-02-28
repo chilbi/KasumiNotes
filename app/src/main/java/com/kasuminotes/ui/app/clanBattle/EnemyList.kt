@@ -1,5 +1,6 @@
 package com.kasuminotes.ui.app.clanBattle
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,6 +37,7 @@ import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.components.UnitElement
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
+import com.kasuminotes.ui.components.formatHP
 import com.kasuminotes.ui.theme.phaseColors
 import com.kasuminotes.utils.UrlUtil
 
@@ -44,6 +47,7 @@ fun EnemyList(
     bossTalentWeaknessList: List<List<Int>>,
     onEnemyClick: (enemyData: EnemyData, talentWeaknessList: List<Int>) -> Unit
 ) {
+    val context = LocalContext.current
     Column(Modifier.fillMaxSize().padding(4.dp)) {
         ListLabel(
             from = mapData.from,
@@ -58,6 +62,7 @@ fun EnemyList(
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) { index ->
             EnemyListItem(
+                context,
                 enemyData = list[index],
                 talentWeaknessList = bossTalentWeaknessList[index],
                 scoreCoefficient = mapData.scoreCoefficientList[index],
@@ -109,6 +114,7 @@ private fun RowScope.LabelDivider() {
 
 @Composable
 private fun EnemyListItem(
+    context: Context,
     enemyData: EnemyData,
     talentWeaknessList: List<Int>,
     scoreCoefficient: Float,
@@ -162,9 +168,10 @@ private fun EnemyListItem(
 
         Row {
             Box(Modifier.weight(1f)) {
+                val hpDisplay = enemyData.property.hp.toInt().formatHP(context)
                 Infobar(
                     label = stringResource(Property.getStrRes(0)),
-                    value = enemyData.property.hp.toNumStr()
+                    value = hpDisplay
                 )
             }
             Box(Modifier.weight(1f)) {
