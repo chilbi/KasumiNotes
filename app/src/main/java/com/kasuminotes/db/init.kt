@@ -1,12 +1,10 @@
 package com.kasuminotes.db
 
-import android.util.Log
 import com.kasuminotes.common.QuestRange
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 
 private fun AppDatabase.fixSkillEvolutionPlus() {
     useDatabase {
@@ -14,7 +12,9 @@ private fun AppDatabase.fixSkillEvolutionPlus() {
             "unknown_30" to "main_skill_evolution_plus_1",
             "unknown_32" to "main_skill_evolution_plus_2",
             "unknown_34" to "sp_skill_evolution_plus_1",
-            "unknown_36" to "sp_skill_evolution_plus_2"
+            "unknown_36" to "sp_skill_evolution_plus_2",
+            "main_skill_evolution_1_pro" to "main_skill_evolution_plus_1",
+            "sp_skill_evolution_1_pro" to "sp_skill_evolution_plus_1",
         ).forEach {
             if (existsColumn("unit_skill_data", it.first) && !existsColumn("unit_skill_data", it.second)) {
                 renameColumn("unit_skill_data", it.first, it.second)
@@ -43,38 +43,10 @@ private fun AppDatabase.fixSkillDataActions() {
     }
 }
 
-// 修复S2+和SP2+的错乱
-//private fun SQLiteDatabase.fixSkillEvolution2() {
-//    val hasError = rawQuery("SELECT sp_skill_evolution_2,main_skill_evolution_2 FROM unit_skill_data WHERE unit_id=107901", null).use {
-//        if (it.moveToFirst()) {
-//            val sp2 = it.getInt(0)
-//            val main2 = it.getInt(1)
-//            sp2 != 0 && main2 == 0
-//        } else {
-//            false
-//        }
-//    }
-//    if (hasError) {
-//        val tempName = "temp_name_sp2"
-//        renameColumn("unit_skill_data", "sp_skill_evolution_2", tempName)
-//        renameColumn("unit_skill_data", "main_skill_evolution_2", "sp_skill_evolution_2")
-//        renameColumn("unit_skill_data", tempName, "main_skill_evolution_2")
-//    }
-//}
-
 fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
 //    throw Exception("init error")
-//    fixSkillEvolution2()
     fixSkillEvolutionPlus()
     fixSkillDataActions()
-//    // TODO 国服实装水怜专武后就删除该代码片段
-//    // 修改unit_unique_equipment表为unit_unique_equip
-//    if (existsTable("unit_unique_equipment")) {
-//        try {
-//            execSQL("DROP TABLE unit_unique_equip")
-//            execSQL("ALTER TABLE unit_unique_equipment RENAME TO unit_unique_equip")
-//        } catch (_: Throwable) {}
-//    }
     // 修改unit_unique_equip表为unit_unique_equipment
     if (!existsTable("unit_unique_equipment") && existsTable("unit_unique_equip")) {
         try {
@@ -307,71 +279,6 @@ suspend fun AppDatabase.initQuestDropData() {
         useDatabase {
             execSQL("CREATE TABLE `memory_piece`('id' INTEGER NOT NULL,PRIMARY KEY('id'))")
             execSQL(memoryPieceSql)
-        }
-    }
-}
-
-fun AppDatabase.unHashDb(rainbowJson: JSONObject) = useDatabase {
-    if (!rainbowJson.has("v1_f73230cf28c756fcc261293147bbe37216297c02426fb8ba1fe47fb2f8ed12e9")) {
-        val obj = JSONObject()
-        obj.put("--table_name", "unit_talent")
-        obj.put("7ee5269879bd67600742a5497484ce47f48ed854ffa69b838d873dd243d526a6", "setting_id")
-        obj.put("170e8e3303281a792f44cb38fb5d20faa409b34adc17f7f812475debaf18b0b2", "unit_id")
-        obj.put("2f497ceedce7813dd4888c21ed6008e0aaed34fd5f7346bc7cb08bd16172c7da", "talent_id")
-        rainbowJson.put("v1_f73230cf28c756fcc261293147bbe37216297c02426fb8ba1fe47fb2f8ed12e9", obj)
-    }
-    if (!rainbowJson.has("v1_d0c0c96bd6a79e726d4c4098ea5af397609405cd6135a7eb9e00364339a944df")) {
-        val obj = JSONObject()
-        obj.put("--table_name", "enemy_talent_weakness")
-        obj.put("28b104a2dc00222a054edda5e4217df60db1516e409c66ac4c3e4b09c66b0fbc", "enemy_id")
-        obj.put("15ca81fecbcc7cff5ed4430c3f42b535e07f0b656f84603e24f0b21b0c5c71b3", "resist_id")
-        rainbowJson.put("v1_d0c0c96bd6a79e726d4c4098ea5af397609405cd6135a7eb9e00364339a944df", obj)
-    }
-    if (!rainbowJson.has("v1_b45e2c5970f1f589cc35d75f1536c1b45093c60e9a616b5aa6f1e4ebcc95dc53")) {
-        val obj = JSONObject()
-        obj.put("--table_name", "talent_weakness")
-        obj.put("78796e9c53aee35c9ac3a77bb5d3855d3ab5d847a48de9349a0c337810fe2eeb", "resist_id")
-        obj.put("d4b49d265667437859b18df9dfc8fd2db6154bcca820d4f9b43fde89da759067", "talent_1")
-        obj.put("1ef4b489f72b1b7f0516b48473884601c8fd4f3577b84d2789b5c1b56bf43354", "talent_2")
-        obj.put("92fb3e03d91b1e92cf0e2afe691865fae7815bbed953214e664e86e5d97d7c67", "talent_3")
-        obj.put("5af271f8e1c204b66a6344d2e1b97720271826b03b4f1b745c17c20d4b3f2d0a", "talent_4")
-        obj.put("0ea5174fb98ee9f63851bbd3d8fc21b8857c07db5625fe9985bb49493d471df4", "talent_5")
-        rainbowJson.put("v1_b45e2c5970f1f589cc35d75f1536c1b45093c60e9a616b5aa6f1e4ebcc95dc53", obj)
-    }
-    val keysIterator = rainbowJson.keys()
-    while (keysIterator.hasNext()) {
-        val hashedTableName = keysIterator.next()
-        val colsObject = JSONObject(rainbowJson.get(hashedTableName).toString())
-        val colsIterator = colsObject.keys()
-
-        val intactTableName = colsObject.getString("--table_name")
-        var createTableStatement = getCreateTable(hashedTableName)
-        if (createTableStatement == null) {
-            Log.w("unHashDb", "CreateTableStatement for '$intactTableName' not found.")
-            continue
-        }
-        val hashedCols = mutableListOf<String>()
-        val intactCols = mutableListOf<String>()
-        while (colsIterator.hasNext()) {
-            val hashedColName = colsIterator.next()
-            val intactColName = colsObject.getString(hashedColName)
-            if (hashedColName != "--table_name") {
-                hashedCols.add(hashedColName)
-                intactCols.add(intactColName)
-            }
-            createTableStatement = createTableStatement?.replace(
-                if (hashedColName == "--table_name") hashedTableName else hashedColName,
-                if (hashedColName == "--table_name") intactTableName else intactColName
-            )
-        }
-        val insertStatement = "INSERT INTO $intactTableName(${intactCols.joinToString("`,`", "`", "`")}) SELECT ${hashedCols.joinToString("`,`", "`", "`")} FROM $hashedTableName"
-        val dropTableStatement = "DROP TABLE $hashedTableName"
-
-        val transactionCmd = listOf(createTableStatement!!, insertStatement, dropTableStatement)
-
-        if (execTransaction(transactionCmd)) {
-            Log.e("unHashDb", "Failed when executing a transaction for '$intactTableName' ($hashedTableName). Transaction: $transactionCmd")
-            continue
         }
     }
 }

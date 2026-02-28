@@ -11,10 +11,8 @@ import com.kasuminotes.db.getBackupUserDataList
 import com.kasuminotes.db.initDatabase
 import com.kasuminotes.db.initQuestDropData
 import com.kasuminotes.db.putUserDataList
-import com.kasuminotes.db.unHashDb
 import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.ui.app.DefaultUserId
-import com.kasuminotes.utils.UrlUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -163,7 +161,7 @@ class DbState(
                     } else if (mutableIsLatestApp) {
                         isLatestApp = true
                     }
-                } catch (e: Throwable) {
+                } catch (_: Throwable) {
                     latestAppReleaseInfoFetching = false
                 }
             }
@@ -207,10 +205,6 @@ class DbState(
                 lastDbVersion = appRepository.fetchLastDbVersion(server)
                 tempDbFile.renameTo(dbFile)
                 db = appRepository.getDatabase(dbFile.name)
-                if (!UrlUtil.useWtheeDb && server == DbServer.JP) {
-                    val rainbowJson = appRepository.fetchRainbowJson()
-                    db.unHashDb(rainbowJson)
-                }
                 db.initDatabase(DefaultUserId)
             } catch (e: Throwable) {
                 downloadState = DownloadState.Error(e)
@@ -227,10 +221,6 @@ class DbState(
                 db = appRepository.getDatabase(dbFile.name)
                 val backupUserDataList = db.getBackupUserDataList(DefaultUserId)
                 tempDbFile.renameTo(dbFile)
-                if (!UrlUtil.useWtheeDb && server == DbServer.JP) {
-                    val rainbowJson = appRepository.fetchRainbowJson()
-                    db.unHashDb(rainbowJson)
-                }
                 db.initDatabase(DefaultUserId)
                 db.putUserDataList(backupUserDataList)
             } catch (e: Throwable) {
