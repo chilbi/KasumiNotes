@@ -193,13 +193,13 @@ FROM unit_skill_data_rf WHERE skill_id=$skillId"""
 }
 
 suspend fun AppDatabase.getUnitSkillData(unitId: Int): UnitSkillData {
-    if (!existsColumn("unit_skill_data", "main_skill_evolution_plus_1")) {
+    if (!existsColumn("unit_skill_data", "main_skill_revolution_1")) {
         useDatabase {
             listOf(
-                "main_skill_evolution_plus_1",
-                "main_skill_evolution_plus_2",
-                "sp_skill_evolution_plus_1",
-                "sp_skill_evolution_plus_2"
+                "main_skill_revolution_1",
+                "main_skill_revolution_2",
+                "sp_skill_revolution_1",
+                "sp_skill_revolution_2"
             ).forEach { columnName ->
                 if (!existsColumn("unit_skill_data", columnName)) {
                     try {

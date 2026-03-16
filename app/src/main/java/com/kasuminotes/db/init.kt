@@ -6,15 +6,15 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 
-private fun AppDatabase.fixSkillEvolutionPlus() {
+private fun AppDatabase.fixSkillRevolution() {
     useDatabase {
         listOf(
-            "unknown_30" to "main_skill_evolution_plus_1",
-            "unknown_32" to "main_skill_evolution_plus_2",
-            "unknown_34" to "sp_skill_evolution_plus_1",
-            "unknown_36" to "sp_skill_evolution_plus_2",
-            "main_skill_evolution_1_pro" to "main_skill_evolution_plus_1",
-            "sp_skill_evolution_1_pro" to "sp_skill_evolution_plus_1",
+            "unknown_30" to "main_skill_revolution_1",
+            "unknown_32" to "main_skill_revolution_2",
+            "unknown_34" to "sp_skill_revolution_1",
+            "unknown_36" to "sp_skill_revolution_2",
+            "main_skill_evolution_1_pro" to "main_skill_revolution_1",
+            "sp_skill_evolution_1_pro" to "sp_skill_revolution_1",
         ).forEach {
             if (existsColumn("unit_skill_data", it.first) && !existsColumn("unit_skill_data", it.second)) {
                 renameColumn("unit_skill_data", it.first, it.second)
@@ -45,7 +45,7 @@ private fun AppDatabase.fixSkillDataActions() {
 
 fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
 //    throw Exception("init error")
-    fixSkillEvolutionPlus()
+    fixSkillRevolution()
     fixSkillDataActions()
     // 修改unit_unique_equip表为unit_unique_equipment
     if (!existsTable("unit_unique_equipment") && existsTable("unit_unique_equip")) {
@@ -116,10 +116,10 @@ fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
         "sp_union_burst",
         "sp_skill_evolution_1",
         "sp_skill_evolution_2",
-        "main_skill_evolution_plus_1",
-        "main_skill_evolution_plus_2",
-        "sp_skill_evolution_plus_1",
-        "sp_skill_evolution_plus_2"
+        "main_skill_revolution_1",
+        "main_skill_revolution_2",
+        "sp_skill_revolution_1",
+        "sp_skill_revolution_2"
     ).forEach { columnName ->
         if (!existsColumn("unit_skill_data", columnName)) {
             try {

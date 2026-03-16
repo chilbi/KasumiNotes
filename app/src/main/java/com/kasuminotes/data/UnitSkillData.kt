@@ -9,10 +9,10 @@ data class UnitSkillData(
     val unionBurstEvolution: SkillData?,
     val mainSkillList: List<SkillData?>,// 1-10
     val mainSkillEvolutionList: List<SkillData?>,// 1-2
-    val mainSkillEvolutionPlusList: List<SkillData?>,// 1-2
+    val mainSkillRevolutionList: List<SkillData?>,// 1-2
     val spSkillList: List<SkillData?>,// 1-5
     val spSkillEvolutionList: List<SkillData?>,// 1-2
-    val spSkillEvolutionPlusList: List<SkillData?>,// 1-2
+    val spSkillRevolutionList: List<SkillData?>,// 1-2
     val exSkillList: List<SkillData?>,// 1-5
     val exSkillEvolutionList: List<SkillData?>// 1-5
 ) {
@@ -67,7 +67,7 @@ data class UnitSkillData(
                 mainSkillEvolutionList.getOrNull(i)?.let {
                     list.add(SkillItem(Label.skill + "${i + 1}+", level, it.getSkillOrRfSkill(level)))
                 }
-                mainSkillEvolutionPlusList.getOrNull(i)?.let {
+                mainSkillRevolutionList.getOrNull(i)?.let {
                     list.add(SkillItem(Label.skill + "${i + 1}++", level, it.getSkillOrRfSkill(level)))
                 }
             }
@@ -87,7 +87,7 @@ data class UnitSkillData(
                 spSkillEvolutionList.getOrNull(i)?.let {
                     list.add(SkillItem(Label.sp + "${i + 1}+", unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
                 }
-                spSkillEvolutionPlusList.getOrNull(i)?.let {
+                spSkillRevolutionList.getOrNull(i)?.let {
                     list.add(SkillItem(Label.sp + "${i + 1}++", unionBurstLevel, it.getSkillOrRfSkill(unionBurstLevel)))
                 }
             }
@@ -121,8 +121,8 @@ data class UnitSkillData(
                 val mainSkillEvolutionFields = (1..2).joinToString(",") { i ->
                     "main_skill_evolution_$i"
                 }
-                val mainSkillEvolutionPlusFields = (1..2).joinToString(",") { i ->
-                    "main_skill_evolution_plus_$i"
+                val mainSkillRevolutionFields = (1..2).joinToString(",") { i ->
+                    "main_skill_revolution_$i"
                 }
 
                 val spSkillFields = (1..5).joinToString(",") { i ->
@@ -131,8 +131,8 @@ data class UnitSkillData(
                 val spSkillEvolutionFields = (1..2).joinToString(",") { i ->
                     "sp_skill_evolution_$i"
                 }
-                val spSkillEvolutionPlusFields = (1..2).joinToString(",") { i ->
-                    "sp_skill_evolution_plus_$i"
+                val spSkillRevolutionFields = (1..2).joinToString(",") { i ->
+                    "sp_skill_revolution_$i"
                 }
 
                 val exSkillFields = (1..5).joinToString(",") { i ->
@@ -144,10 +144,10 @@ data class UnitSkillData(
 
                 fields = "$mainSkillFields," +
                         "$mainSkillEvolutionFields," +
-                        "$mainSkillEvolutionPlusFields," +
+                        "$mainSkillRevolutionFields," +
                         "$spSkillFields," +
                         "$spSkillEvolutionFields," +
-                        "$spSkillEvolutionPlusFields," +
+                        "$spSkillRevolutionFields," +
                         "$exSkillFields," +
                         "$exSkillEvolutionFields," +
                         "union_burst," +
