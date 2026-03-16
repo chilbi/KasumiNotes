@@ -11,7 +11,8 @@
 - [技能描述文本](https://gitee.com/chilbi/strings)
 - [干炸里脊资源](https://redive.estertion.win)
 - [wthee.xyz/redive/](https://wthee.xyz/redive/)
-- [roboninon.win](https://roboninon.win/db/version)
+- [roboninon.win数据库版本](https://roboninon.win/db/version)
+- [roboninon.win数据库下载](https://roboninon.win/db/download?compressed=true)
 
 ## 许可证
 Apache License 2.0
