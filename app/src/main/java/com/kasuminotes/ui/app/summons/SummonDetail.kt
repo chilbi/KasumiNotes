@@ -50,6 +50,7 @@ fun SummonDetail(
                 AttackPattern(
                     hasUnique1 = false,
                     hasUnique2 = false,
+                    hasExUnique1 = false,
                     atkType = atkType,
                     unitAttackPatternList = unitAttackPatternList,
                     unitSkillData = unitSkillData

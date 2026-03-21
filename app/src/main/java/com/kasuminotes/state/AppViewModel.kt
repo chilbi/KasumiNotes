@@ -113,7 +113,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             charaState.initUserProfile(
                 userProfile,
                 dbState.userState.charaListState.profiles,
-                dbState.userState.maxUserData!!.maxCharaLevel
+                dbState.userState.maxUserData!!
             )
             navController.navigate(AppNavData.Chara.route)
         }
@@ -153,8 +153,13 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         canNavigate {
             equipState.destroy()
             if (slot == 1) {
+                val exUnique1Equipable = dbState.userState.maxUserData!!.connectRankData?.getExUnique1Equipable(
+                    charaState.userData!!.connectRank
+                ) ?: false
                 equipState.initUnique1Data(
                     uniqueData,
+                    charaState.userProfile!!.exUnique1Data,
+                    exUnique1Equipable,
                     charaState.userData!!.unique1Level,
                     dbState.userState.maxUserData!!.maxUniqueLevel,
                     charaState::changeUniqueLevel
@@ -238,6 +243,8 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                     0,
                     enemyData.unitId,
                     enemyData.rarity,
+                    0,
+                    0,
                     enemyData.level,
                     0,
                     0,

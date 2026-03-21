@@ -1,13 +1,10 @@
 package com.kasuminotes.ui.app.equip
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,19 +21,13 @@ import com.kasuminotes.utils.UrlUtil
 @Composable
 fun UniqueCraftList(
     craftList: List<UniqueCraft>,
-    onEnhanceLevelChange: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    onEnhanceLevelChange: (Int) -> Unit
 ) {
-    Container(modifier = modifier, padding = 0.dp) {
+    Container {
         FixedWidthLabel(
-            text = stringResource(R.string.enhance_material),
-            margin = PaddingValues(8.dp)
+            text = stringResource(R.string.enhance_material)
         )
-        Column(
-            Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(4.dp, 0.dp, 8.dp, 4.dp)
-        ) {
+        Column(Modifier.padding(4.dp)) {
             craftList.forEach { craftItem ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     if (craftItem.heartId != -1) {

@@ -12,6 +12,15 @@ import kotlinx.coroutines.withContext
 suspend fun AppDatabase.getUserProfileList(userId: Int): List<UserProfile> {
     val list = mutableListOf<UserProfile>()
     useDatabase {
+        if (!existsColumn("chara_data", "ex_equip1_id")) {
+            execSQL("ALTER TABLE chara_data ADD COLUMN ex_equip1_id INTEGER NOT NULL DEFAULT 0")
+        }
+        if (!existsColumn("user_data", "connect_rank")) {
+            execSQL("ALTER TABLE user_data ADD COLUMN connect_rank INTEGER NOT NULL DEFAULT 0")
+        }
+        if (!existsColumn("user_data", "lv_limit_break")) {
+            execSQL("ALTER TABLE user_data ADD COLUMN lv_limit_break INTEGER NOT NULL DEFAULT 0")
+        }
         if (!existsColumn("user_data", "sub_percent_json")) {
             execSQL("ALTER TABLE user_data ADD COLUMN sub_percent_json TEXT NOT NULL DEFAULT ''")
         }
@@ -77,6 +86,8 @@ WHERE user_id=$userId"""
                     it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
                     it.getString(i++)
                 )
 
@@ -85,6 +96,7 @@ WHERE user_id=$userId"""
                     it.getString(i++),
                     it.getString(i++),
                     it.getString(i++),
+                    it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
@@ -143,6 +155,8 @@ FROM user_data WHERE user_id!=$defaultUserId"""
                 var i = 0
 
                 val userProfile = UserData(
+                    it.getInt(i++),
+                    it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),

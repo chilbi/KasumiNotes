@@ -4,8 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.common.Label
+import com.kasuminotes.data.ConnectRankData
 import com.kasuminotes.data.ExEquipData
 import com.kasuminotes.data.ExEquipSlot
+import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UnitPromotionStatus
@@ -26,6 +28,7 @@ class CharaState(
     private val scope: CoroutineScope,
     private var onMaxUserDataChange: (userUniqueDiff: Int, userRarity6Diff: Int) -> Unit
 ) {
+    private var connectRankData: ConnectRankData? = null
     private var backupUnitRarity: UnitRarity? = null
     private var backupUnitPromotionStatus: UnitPromotionStatus? = null
     private var backupUnitPromotion: UnitPromotion? = null
@@ -48,9 +51,11 @@ class CharaState(
     var saveVisible by mutableStateOf(false)
         private set
 
-    fun initUserProfile(profile: UserProfile, profiles: List<UserProfile>, maxCharaLevel: Int) {
+    fun initUserProfile(profile: UserProfile, profiles: List<UserProfile>, maxUserData: MaxUserData) {
         restore()
-        if (profile.userData.charaLevel > maxCharaLevel) {
+        connectRankData = maxUserData.connectRankData
+        if (profile.userData.lvLimitBreak == 0 &&
+            profile.userData.charaLevel > maxUserData.maxCharaLevel + (maxUserData.connectRankData?.sumBonusCharaLevel ?: 0)) {
             profile.userData = profile.userData.copy(lvLimitBreak = 10)
         }
         userProfile = profile
@@ -112,9 +117,9 @@ class CharaState(
         changeState()
     }
 
-    fun changeLvLimitBreak(maxCharaLevel: Int) {
+    fun changeLvLimitBreak(maxUserData: MaxUserData) {
         val lvLimitBreak = if (userData!!.lvLimitBreak > 0) 0 else 10
-        val value = maxCharaLevel + lvLimitBreak
+        val value = maxUserData.getLevelLimit(lvLimitBreak, userData!!.connectRank)
         userData = userData!!.copy(
             charaLevel = value,
             ubLevel = value,
@@ -152,6 +157,23 @@ class CharaState(
     fun changeUniqueLevel(value: Int, slot: Int) {
         userData = if (slot == 1) userData!!.copy(unique1Level = value)
         else userData!!.copy(unique2Level = value)
+        changeState()
+    }
+
+    fun changeConnectRank(value: Int, maxUserData: MaxUserData) {
+        val levelLimit = maxUserData.getLevelLimit(userData!!.lvLimitBreak,value)
+        userData = if (userData!!.charaLevel > levelLimit) {
+            userData!!.copy(
+                connectRank = value,
+                charaLevel = levelLimit,
+                ubLevel = levelLimit,
+                skill1Level = levelLimit,
+                skill2Level = levelLimit,
+                exLevel = levelLimit
+            )
+        } else {
+            userData!!.copy(connectRank = value)
+        }
         changeState()
     }
 
@@ -298,7 +320,7 @@ class CharaState(
 
     //base+exSkill+exEquip+exEquipSkill
     private fun calcProperty() {
-        val base = userProfile!!.getBaseProperty(userData!!)
+        val base = userProfile!!.getBaseProperty(userData!!, connectRankData)
         val exSkill = userProfile!!.getExSkillProperty(userData!!)
         val exEquip = userProfile!!.getExEquipProperty(base, userData!!)
         val exEquipSkill = userProfile!!.getExEquipSkillProperty(base, exSkill, exEquip, userProfile!!.unitData.talentId)

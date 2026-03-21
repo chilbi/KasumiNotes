@@ -21,6 +21,7 @@ data class UnitAttackPattern(
         atkType: Int,
         hasUnique1: Boolean,
         hasUnique2: Boolean,
+        hasExUnique1: Boolean,
         unitSkillData: UnitSkillData
     ): AtkPattern {
         val atkPattern = atkPatternList[index]
@@ -40,14 +41,41 @@ data class UnitAttackPattern(
             val isSP = atkPattern > 2000
             val n = if (isSP) atkPattern - 2000 else atkPattern - 1000
             var isEvolution = (hasUnique1 && n == 1) || (hasUnique2 && n == 2)
-            val skillList = if (isEvolution) {
+            var isRevolution = hasExUnique1 && n == 1
+            val skillList = if (isRevolution) {
                 if (isSP) {
-                    unitSkillData.spSkillEvolutionList.filter { it != null }.ifEmpty {
+                    unitSkillData.spSkillRevolutionList.filterNotNull().ifEmpty {
+                        isRevolution = false
+                        if (isEvolution) {
+                            unitSkillData.spSkillEvolutionList.filterNotNull().ifEmpty {
+                                isEvolution = false
+                                unitSkillData.spSkillList
+                            }
+                        } else {
+                            unitSkillData.spSkillList
+                        }
+                    }
+                } else {
+                    unitSkillData.mainSkillRevolutionList.filterNotNull().ifEmpty {
+                        isRevolution = false
+                        if (isEvolution) {
+                            unitSkillData.mainSkillEvolutionList.filterNotNull().ifEmpty {
+                                isEvolution = false
+                                unitSkillData.mainSkillList
+                            }
+                        } else {
+                            unitSkillData.mainSkillList
+                        }
+                    }
+                }
+            } else if (isEvolution) {
+                if (isSP) {
+                    unitSkillData.spSkillEvolutionList.filterNotNull().ifEmpty {
                         isEvolution = false
                         unitSkillData.spSkillList
                     }
                 } else {
-                    unitSkillData.mainSkillEvolutionList.filter { it != null }.ifEmpty {
+                    unitSkillData.mainSkillEvolutionList.filterNotNull().ifEmpty {
                         isEvolution = false
                         unitSkillData.mainSkillList
                     }
@@ -64,7 +92,11 @@ data class UnitAttackPattern(
             }
             var label = if (isSP) Label.sp else Label.skill
             label += n.toString()
-            if (isEvolution) label += "+"
+            if (isRevolution) {
+                label += "++"
+            } else if (isEvolution){
+                label += "+"
+            }
             atkLabel = label
         }
 

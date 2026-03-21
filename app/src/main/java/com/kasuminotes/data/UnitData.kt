@@ -8,6 +8,7 @@ data class UnitData(
     val maxRarity: Int,
     val equip1Id: Int,
     val equip2Id: Int,
+    val exEquip1Id: Int,
     val searchAreaWidth: Int,
     val atkType: Int,
     val normalAtkCastTime: Float,
@@ -35,8 +36,8 @@ data class UnitData(
     }
 
     val hasUnique1: Boolean get() = equip1Id != 0
-
     val hasUnique2: Boolean get() = equip2Id != 0
+    val hasExUnique1: Boolean get() = exEquip1Id != 0
 
     val startTimeStr: String = startTime
         .split(" ")[0]
@@ -61,6 +62,7 @@ data class UnitData(
                         "max_rarity," +
                         "equip1_id," +
                         "equip2_id," +
+                        "ex_equip1_id," +
                         "search_area_width," +
                         "atk_type," +
                         "normal_atk_cast_time," +

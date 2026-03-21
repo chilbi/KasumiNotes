@@ -192,9 +192,7 @@ fun CharaEditor(
 
     if (visibleEditor) {
         CharaEditorDialog(
-            userState.maxUserData!!.maxCharaLevel,
-            userState.maxUserData!!.maxUniqueLevel,
-            userState.maxUserData!!.maxPromotionLevel,
+            userState.maxUserData!!,
             selectedChara,
             toggleVisibleEditor,
             listState::deleteProfiles,
@@ -277,14 +275,14 @@ private fun SelectMenu(
 
         ToggleButton(
             alignment = Alignment.CenterStart,
-            text = stringResource(R.string.unlock_chara) + unlockCount,
+            text = stringResource(R.string.unlock) + unlockCount,
             checked = visibleUnlock,
             onToggle = onUnlockToggle
         )
 
         ToggleButton(
             alignment = Alignment.Center,
-            text = stringResource(R.string.lock_chara) + lockCount,
+            text = stringResource(R.string.lock) + lockCount,
             checked = visibleLock,
             onToggle = onLockToggle
         )

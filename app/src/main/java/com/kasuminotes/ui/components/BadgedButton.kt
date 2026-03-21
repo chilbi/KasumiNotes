@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
@@ -89,13 +90,14 @@ fun LabelImage(@DrawableRes id: Int) {
 @Composable
 fun LabelText(
     text: String,
+    width: Dp = 40.dp,
     color: Color = MaterialTheme.colorScheme.primaryContainer,
     contentColor: Color = contentColorFor(color),
 ) {
     Text(
         text =text,
         modifier = Modifier
-            .width(40.dp)
+            .width(width)
             .background(
                 color = color,
                 shape = MaterialTheme.shapes.extraSmall

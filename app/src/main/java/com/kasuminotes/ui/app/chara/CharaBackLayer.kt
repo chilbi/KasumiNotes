@@ -98,11 +98,12 @@ fun CharaBackLayer(
     onUniqueChange: (equip: Boolean, slot: Int) -> Unit,
     onCharaLevelChange: (Int) -> Unit,
     onRarityChange: (Int) -> Unit,
-    onUniqueLevelChange: (value: Int, slot: Int) -> Unit,
+//    onUniqueLevelChange: (value: Int, slot: Int) -> Unit,
+    onConnectRankChange: (value: Int, maxUserData: MaxUserData) -> Unit,
     onLoveLevelChange: (Int) -> Unit,
     onPromotionLevelChange: (Int) -> Unit,
     onSkillLevelChange: (value: Int, labelText: String) -> Unit,
-    onLvLimitBreakChange: (maxCharaLevel: Int) -> Unit,
+    onLvLimitBreakChange: (maxUserData: MaxUserData) -> Unit,
     onCancel: () -> Unit,
     onSave: () -> Unit
 ) {
@@ -123,10 +124,10 @@ fun CharaBackLayer(
                 0 -> {
                     CharaUserData(
                         userData,
+                        unitData,
                         originUserData,
                         maxUserData,
-                        unitData.maxRarity,
-                        unitData.hasUnique1,
+//                        unitData.hasUnique1,
                         unitPromotion,
                         unique1Data,
                         unique2Data,
@@ -138,7 +139,8 @@ fun CharaBackLayer(
                         onUniqueChange,
                         onCharaLevelChange,
                         onRarityChange,
-                        onUniqueLevelChange,
+//                        onUniqueLevelChange,
+                        onConnectRankChange,
                         onLoveLevelChange,
                         onPromotionLevelChange,
                         onSkillLevelChange,

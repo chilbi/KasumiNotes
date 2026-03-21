@@ -39,6 +39,8 @@ class CharaListState {
         private set
     var unique2 by mutableStateOf(false)
         private set
+    var exUnique1 by mutableStateOf(false)
+        private set
     var lockedChara by mutableStateOf<List<Int>>(emptyList())
         private set
     var derivedLockedChara by mutableStateOf<List<Int>>(emptyList())
@@ -160,6 +162,7 @@ class CharaListState {
 
     fun modifyProfiles(
         rarity: Int?,
+        connectRank: Int?,
         charaLevel: Int?,
         loveLevel: Int?,
         uniqueLevel: Int?,
@@ -209,6 +212,7 @@ class CharaListState {
             } else {
                 if (rarity > unitData.maxRarity) unitData.maxRarity else rarity
             }
+            val newConnectRank = connectRank ?: userData.connectRank
             val newCharaLevel = charaLevel ?: userData.charaLevel
             val newLoveLevel = if (loveLevel == null) {
                 userData.loveLevel
@@ -234,6 +238,8 @@ class CharaListState {
                 userData.userId,
                 userData.unitId,
                 newRarity,
+                newConnectRank,
+                userData.lvLimitBreak,
                 newCharaLevel,
                 newLoveLevel,
                 newUnique1Level,
@@ -255,8 +261,7 @@ class CharaListState {
                 userData.exEquip1Level,
                 userData.exEquip2Level,
                 userData.exEquip3Level,
-                userData.subPercentJson,
-                userData.lvLimitBreak
+                userData.subPercentJson
             )
         }
         profiles = newProfiles
@@ -313,6 +318,7 @@ class CharaListState {
             rarity6 = true
             unique1 = false
             unique2 = false
+            exUnique1 = false
         }
         derived()
     }
@@ -324,6 +330,7 @@ class CharaListState {
             rarity6 = false
             unique1 = true
             unique2 = false
+            exUnique1 = false
         }
         derived()
     }
@@ -335,6 +342,19 @@ class CharaListState {
             rarity6 = false
             unique1 = false
             unique2 = true
+            exUnique1 = false
+        }
+        derived()
+    }
+
+    fun toggleExUnique1() {
+        if (exUnique1) {
+            exUnique1 = false
+        } else {
+            rarity6 = false
+            unique1 = false
+            unique2 = false
+            exUnique1 = true
         }
         derived()
     }
@@ -349,7 +369,8 @@ class CharaListState {
             position == Position.All &&
             !rarity6 &&
             !unique1 &&
-            !unique2
+            !unique2 &&
+            !exUnique1
         ) {
             originProfiles
         } else {
@@ -358,6 +379,7 @@ class CharaListState {
                     val rarity6Match = !rarity6 || it.maxRarity == 6
                     val unique1Match = !unique1 || it.hasUnique1
                     val unique2Match = !unique2 || it.hasUnique2
+                    val exUnique1Match = !exUnique1 || it.hasExUnique1
                     val elementMatch = element == Element.All || element.ordinal == it.talentId
                     val roleMatch = role == Role.All || role.ordinal == it.unitRoleId
                     val atkTypeMatch = atkType == AtkType.All || atkType.ordinal == it.atkType
@@ -366,7 +388,7 @@ class CharaListState {
                             (it.unitId.toString() + it.unitName + it.kana + it.actualName)
                                 .contains(searchText)
 
-                    rarity6Match && unique1Match && unique2Match && elementMatch && roleMatch &&
+                    rarity6Match && unique1Match && unique2Match && exUnique1Match && elementMatch && roleMatch &&
                             atkTypeMatch && positionMatch && searchTextMatch
                 }
             }

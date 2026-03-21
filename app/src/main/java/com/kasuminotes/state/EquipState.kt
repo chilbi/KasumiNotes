@@ -8,6 +8,7 @@ import com.kasuminotes.common.QuestRange
 import com.kasuminotes.common.QuestType
 import com.kasuminotes.data.EquipCraft
 import com.kasuminotes.data.EquipData
+import com.kasuminotes.data.ExUniqueData
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.QuestData
 import com.kasuminotes.data.UniqueCraft
@@ -35,6 +36,10 @@ class EquipState(
     var unique1Data by mutableStateOf<UniqueData?>(null)
         private set
     var unique2Data by mutableStateOf<UniqueData?>(null)
+        private set
+    var exUnique1Data by mutableStateOf<ExUniqueData?>(null)
+        private set
+    var exUnique1Equipable by mutableStateOf(false)
         private set
     var property by mutableStateOf(Property.zero)
         private set
@@ -77,6 +82,8 @@ class EquipState(
         equipData = equipDataValue
         unique1Data = null
         unique2Data = null
+        exUnique1Data = null
+        exUnique1Equipable = false
         enhanceLevel = originEnhanceLevel
         maxEnhanceLevel = equipDataValue.maxEnhanceLevel
         onEnhanceLevelChange = onLevelChange
@@ -94,6 +101,8 @@ class EquipState(
 
     fun initUnique1Data(
         uniqueDataValue: UniqueData,
+        exUniqueDataValue: ExUniqueData?,
+        exUniqueEquipableValue: Boolean,
         originEnhanceLevel: Int,
         maxUniqueLevel: Int,
         onLevelChange: (value: Int, slot: Int) -> Unit
@@ -101,6 +110,8 @@ class EquipState(
         equipData = null
         unique1Data = uniqueDataValue
         unique2Data = null
+        exUnique1Data = exUniqueDataValue
+        exUnique1Equipable = exUniqueEquipableValue
         enhanceLevel = originEnhanceLevel
         maxEnhanceLevel = maxUniqueLevel
         onEnhanceLevelChange = onLevelChange
@@ -116,6 +127,8 @@ class EquipState(
         equipData = null
         unique1Data = null
         unique2Data = uniqueDataValue
+        exUnique1Data = null
+        exUnique1Equipable = false
         enhanceLevel = originEnhanceLevel
         maxEnhanceLevel = 5
         onEnhanceLevelChange = onLevelChange

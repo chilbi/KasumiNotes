@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.common.Label
 import com.kasuminotes.data.MaxUserData
+import com.kasuminotes.data.UnitData
 import com.kasuminotes.data.UserData
 import com.kasuminotes.ui.components.BadgedButtonDialog
 import com.kasuminotes.ui.components.LabelImage
@@ -41,14 +42,15 @@ import com.kasuminotes.ui.theme.rankRarity
 @Composable
 fun CharaStatus(
     userData: UserData,
+    unitData: UnitData,
     originUserData: UserData,
     maxUserData: MaxUserData,
-    maxRarity: Int,
-    hasUnique1: Boolean,
+//    hasUnique1: Boolean,
     modifier: Modifier = Modifier,
     onCharaLevelChange: (Int) -> Unit,
     onRarityChange: (Int) -> Unit,
-    onUniqueLevelChange: (value: Int, slot: Int) -> Unit,
+//    onUniqueLevelChange: (value: Int, slot: Int) -> Unit,
+    onConnectRankChange: (value: Int, maxUserData: MaxUserData) -> Unit,
     onLoveLevelChange: (Int) -> Unit,
     onPromotionLevelChange: (Int) -> Unit,
     onSkillLevelChange: (value: Int, labelText: String) -> Unit
@@ -70,7 +72,7 @@ fun CharaStatus(
                     SliderPlus(
                         value = userData.charaLevel,
                         minValue = 1,
-                        maxValue = maxUserData.maxCharaLevel + userData.lvLimitBreak,
+                        maxValue = maxUserData.getLevelLimit(userData.lvLimitBreak, userData.connectRank),
                         onValueChange = onCharaLevelChange,
                         label = { LabelText(stringResource(R.string.level)) }
                     )
@@ -121,8 +123,8 @@ fun CharaStatus(
                 tonalElevation = AlertDialogDefaults.TonalElevation
             ) {
                 Rarities(
-                    highlightCount = if (maxRarity > 5) 1 else 0,
-                    maxRarity = maxRarity,
+                    highlightCount = if (unitData.maxRarity > 5) 1 else 0,
+                    maxRarity = unitData.maxRarity,
                     rarity = userData.rarity,
                     onRarityChange = {
                         onClose()
@@ -135,23 +137,50 @@ fun CharaStatus(
             }
         }
 
-        if (hasUnique1) {
+//        if (hasUnique1) {
+//            BadgedButtonDialog(
+//                userData.unique1Level,
+//                originUserData.unique1Level,
+//                label = { LabelImage(R.drawable.unique_large) }
+//            ) {
+//                Surface(
+//                    shape = CircleShape,
+//                    tonalElevation = AlertDialogDefaults.TonalElevation
+//                ) {
+//                    Box(Modifier.padding(horizontal = 16.dp, vertical = 24.dp)) {
+//                        SliderPlus(
+//                            value = userData.unique1Level,
+//                            minValue = 0,
+//                            maxValue = maxUserData.maxUniqueLevel,
+//                            onValueChange = { onUniqueLevelChange(it, 1) },
+//                            label = { LabelImage(R.drawable.unique_large) }
+//                        )
+//                    }
+//                }
+//            }
+//        }
+        if (maxUserData.connectRankData != null) {
             BadgedButtonDialog(
-                userData.unique1Level,
-                originUserData.unique1Level,
-                label = { LabelImage(R.drawable.unique_large) }
+                userData.connectRank,
+                originUserData.connectRank,
+                label = { LabelText(text = stringResource(R.string.connect), width = 48.dp) }
             ) {
                 Surface(
-                    shape = CircleShape,
+                    shape = MaterialTheme.shapes.medium,
                     tonalElevation = AlertDialogDefaults.TonalElevation
                 ) {
-                    Box(Modifier.padding(horizontal = 16.dp, vertical = 24.dp)) {
+                    Column(Modifier.padding(4.dp)) {
                         SliderPlus(
-                            value = userData.unique1Level,
+                            value = userData.connectRank,
                             minValue = 0,
-                            maxValue = maxUserData.maxUniqueLevel,
-                            onValueChange = { onUniqueLevelChange(it, 1) },
-                            label = { LabelImage(R.drawable.unique_large) }
+                            maxValue = maxUserData.connectRankData.maxConnectRank,
+                            onValueChange = { value -> onConnectRankChange(value, maxUserData) },
+                            label = { LabelText(text = stringResource(R.string.connect), width = 48.dp) }
+                        )
+                        CharaConnectRank(
+                            userData,
+                            unitData,
+                            maxUserData.connectRankData
                         )
                     }
                 }
@@ -171,7 +200,7 @@ fun CharaStatus(
                     SliderPlus(
                         value = userData.loveLevel,
                         minValue = 0,
-                        maxValue = if (maxRarity > 5) 12 else 8,
+                        maxValue = if (unitData.maxRarity > 5) 12 else 8,
                         onValueChange = onLoveLevelChange,
                         label = { LabelImage(R.drawable.love_level) }
                     )
@@ -186,7 +215,7 @@ fun CharaStatus(
                 LabelText(
                     text = stringResource(R.string.rank),
                     color = RaritiesColors.getRarityColors(userData.rankRarity).middle,
-                    contentColor = Color.White
+                    contentColor = Color.Black
                 )
             }
         ) { onClose ->
@@ -242,7 +271,7 @@ private fun RankCapsule(
             modifier = Modifier
                 .background(RaritiesColors.getRarityColors(promotionLevel.rankRarity).middle)
                 .padding(horizontal = 8.dp, vertical = 4.dp),
-            color = Color.White,
+            color = Color.Black,
             style = style
         )
 

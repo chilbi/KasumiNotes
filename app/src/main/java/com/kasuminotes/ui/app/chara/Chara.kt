@@ -81,7 +81,7 @@ fun Chara(
         charaState.initUserProfile(
             otherChara,
             dbState.userState.charaListState.profiles,
-            maxUserData.maxCharaLevel
+            maxUserData
         )
     }}
 
@@ -137,7 +137,8 @@ fun Chara(
                 onUniqueChange,
                 charaState::changeCharaLevel,
                 charaState::changeRarity,
-                charaState::changeUniqueLevel,
+//                charaState::changeUniqueLevel,
+                charaState::changeConnectRank,
                 charaState::changeLoveLevel,
                 charaState::changePromotionLevel,
                 charaState::changeSkillLevel,
@@ -150,6 +151,7 @@ fun Chara(
             CharaFrontLayer(
                 userData,
                 unitData,
+                maxUserData,
                 userProfile.charaStoryStatus,
                 userProfile.sharedProfiles,
 //                userProfile.unique1Data,

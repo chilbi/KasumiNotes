@@ -30,8 +30,8 @@
     <string name="demount_equip">卸す</string>
     <string name="edit_chara">キャラ編集</string>
     <string name="registered">登録済み</string>
-    <string name="unlock_chara">解放済み</string>
-    <string name="lock_chara">未解放</string>
+    <string name="unlock">解放済み</string>
+    <string name="lock">未解放</string>
     <string name="all_select">すべて選択</string>
     <string name="edit_selected_d">選択中の%dキャラを編集する</string>
     <string name="save_to_database">データベースに保存する</string>
@@ -39,6 +39,7 @@
     <string name="default_user_warning">デフォルトユーザーのプロフィールがデータベース更新の時に自動的にMAX強化される！</string>
     <string name="functionality_not_implemented">機能はまだ実装されていません</string>
 
+    <string name="connect">コネクト</string>
     <string name="level">LEVEL</string>
     <string name="rank">RANK</string>
     <string name="bonus">ボーナス</string>
@@ -46,8 +47,8 @@
     <string name="map">マップ</string>
     <string name="chara">キャラ</string>
     <string name="chara_count">キャラ数</string>
-    <string name="unique">専用武器</string>
-    <string name="unique_equip">専用武器</string>
+    <string name="unique">専用装備</string>
+    <string name="unique_equip">専用装備</string>
     <string name="no_unique">未実装</string>
     <string name="rarity_6">★6</string>
     <string name="db_server">データベース</string>
@@ -145,6 +146,18 @@
     <string name="hp_recovery_rate">回復量上昇</string>
     <string name="energy_reduce_rate">ＴＰ軽減</string>
     <string name="accuracy">命中</string>
+
+    <string name="connect_rank_status">コネクトRANKステータス</string>
+    <string name="connect_rank_bonus">コネクトRANKボーナス</string>
+    <string name="unknown_connect_rank_status">未知ステータス</string>
+    <string name="unknown_connect_rank_bonus">未知ボーナス</string>
+    <string name="damage_increase">与ダメアップ</string>
+    <string name="damage_reduction">受ダメダウン</string>
+    <string name="talent_bonus_up">属性ボーナスアップ</string>
+    <string name="party_damage_boost">パーティダメージブースト</string>
+    <string name="unique1sp_condition">専用装備1SP条件</string>
+    <string name="unique1sp_enhanceable">専用1SP強化可能</string>
+    <string name="chara_lv_limit_break">キャラLv上限突破</string>
 
     <string name="aries">牡羊座</string>
     <string name="taurus">牡牛座</string>

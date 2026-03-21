@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.kasuminotes.R
+import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.ui.components.LabelImage
 import com.kasuminotes.ui.components.LabelText
 import com.kasuminotes.ui.components.PlaceImage
@@ -46,14 +48,13 @@ import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun CharaEditorDialog(
-    maxCharaLevel: Int,
-    maxUniqueLevel: Int,
-    maxPromotionLevel: Int,
+    maxUserData: MaxUserData,
     selectedChara: List<Int>,
     onClose: () -> Unit,
     onDelete: () -> Unit,
     onConfirm: (
         rarity: Int?,
+        connectRank: Int?,
         charaLevel: Int?,
         loveLevel: Int?,
         uniqueLevel: Int?,
@@ -83,9 +84,7 @@ fun CharaEditorDialog(
                 SelectedCharaList(selectedChara)
 
                 EditorDialogContent(
-                    maxCharaLevel,
-                    maxUniqueLevel,
-                    maxPromotionLevel,
+                    maxUserData,
                     onClose,
                     onConfirm
                 )
@@ -135,12 +134,11 @@ private fun SelectedCharaList(selectedChara: List<Int>) {
 
 @Composable
 private fun EditorDialogContent(
-    maxCharaLevel: Int,
-    maxUniqueLevel: Int,
-    maxPromotionLevel: Int,
+    maxUserData: MaxUserData,
     onClose: () -> Unit,
     onConfirm: (
         rarity: Int?,
+        connectRank: Int?,
         charaLevel: Int?,
         loveLevel: Int?,
         uniqueLevel: Int?,
@@ -148,12 +146,15 @@ private fun EditorDialogContent(
         unlockSlot: Int?
     ) -> Unit
 ) {
-    var rarity by remember { mutableStateOf(6) }
-    var charaLevel by remember { mutableStateOf(maxCharaLevel) }
-    var loveLevel by remember { mutableStateOf(12) }
-    var uniqueLevel by remember { mutableStateOf(maxUniqueLevel) }
-    var promotionLevel by remember { mutableStateOf(maxPromotionLevel) }
-    var unlockSlot by remember { mutableStateOf(6) }
+    val maxConnectRank = maxUserData.connectRankData?.maxConnectRank ?: 0
+
+    var rarity by remember { mutableIntStateOf(6) }
+    var connectRank by remember { mutableIntStateOf(maxConnectRank) }
+    var charaLevel by remember { mutableIntStateOf(maxUserData.getLevelLimit(10, maxConnectRank)) }
+    var loveLevel by remember { mutableIntStateOf(12) }
+    var uniqueLevel by remember { mutableIntStateOf(maxUserData.maxUniqueLevel) }
+    var promotionLevel by remember { mutableIntStateOf(maxUserData.maxPromotionLevel) }
+    var unlockSlot by remember { mutableIntStateOf(6) }
 
     var rarityChecked by remember { mutableStateOf(true) }
     var charaLevelChecked by remember { mutableStateOf(true) }
@@ -193,7 +194,7 @@ private fun EditorDialogContent(
         SliderPlus(
             value = uniqueLevel,
             minValue = 0,
-            maxValue = maxUniqueLevel,
+            maxValue = maxUserData.maxUniqueLevel,
             onValueChange = { uniqueLevel = it },
             checked = uniqueLevelChecked,
             onCheckedChange = { uniqueLevelChecked = it },
@@ -202,10 +203,29 @@ private fun EditorDialogContent(
             }
         )
 
+        if (maxUserData.connectRankData != null) {
+            SliderPlus(
+                value = connectRank,
+                minValue = 0,
+                maxValue = maxConnectRank,
+                onValueChange = { connectRank = it },
+                checked = charaLevelChecked,
+                onCheckedChange = { charaLevelChecked = it },
+                label = {
+                    LabelText(stringResource(R.string.connect), 48.dp)
+                }
+            )
+        }
+
+        val levelLimit = maxUserData.getLevelLimit(10, connectRank)
+        if (charaLevel > levelLimit) {
+            charaLevel = levelLimit
+        }
+
         SliderPlus(
             value = charaLevel,
             minValue = 1,
-            maxValue = maxCharaLevel + 10,
+            maxValue = levelLimit,
             onValueChange = { charaLevel = it },
             checked = charaLevelChecked,
             onCheckedChange = { charaLevelChecked = it },
@@ -219,7 +239,7 @@ private fun EditorDialogContent(
         SliderPlus(
             value = promotionLevel,
             minValue = 1,
-            maxValue = maxPromotionLevel,
+            maxValue = maxUserData.maxPromotionLevel,
             onValueChange = { promotionLevel = it },
             checked = promotionLevelChecked,
             onCheckedChange = { promotionLevelChecked = it },
@@ -261,6 +281,7 @@ private fun EditorDialogContent(
                 onClose()
                 onConfirm(
                     if (rarityChecked) rarity else null,
+                    if (charaLevelChecked && maxUserData.connectRankData != null) connectRank else null,
                     if (charaLevelChecked) charaLevel else null,
                     if (loveLevelChecked) loveLevel else null,
                     if (uniqueLevelChecked) uniqueLevel else null,

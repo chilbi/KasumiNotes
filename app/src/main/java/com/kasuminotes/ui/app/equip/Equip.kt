@@ -3,6 +3,7 @@ package com.kasuminotes.ui.app.equip
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.kasuminotes.R
+import com.kasuminotes.data.ExUniqueData
 import com.kasuminotes.data.Property
 import com.kasuminotes.state.DbState
 import com.kasuminotes.state.EquipState
@@ -18,6 +19,8 @@ fun Equip(
     var equipmentType = ""
     var description = ""
     var baseProperty = Property.zero
+    var exUniqueData: ExUniqueData? = null
+    var exUniqueEquipable = false
 
     when {
         equipState.equipData != null -> {
@@ -35,6 +38,8 @@ fun Equip(
             equipmentType = stringResource(R.string.unique_equip) + "1"
             description = unique1.description
             baseProperty = unique1.baseProperty
+            exUniqueData = equipState.exUnique1Data
+            exUniqueEquipable = equipState.exUnique1Equipable
         }
         equipState.unique2Data != null -> {
             val unique2 = equipState.unique2Data!!
@@ -54,6 +59,8 @@ fun Equip(
         equipmentType,
         description,
         baseProperty,
+        exUniqueData,
+        exUniqueEquipable,
         onBack
     )
 }

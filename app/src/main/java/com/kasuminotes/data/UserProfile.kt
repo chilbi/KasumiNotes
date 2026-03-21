@@ -5,6 +5,7 @@ import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.db.getCharaStoryStatus
 import com.kasuminotes.db.getExEquipData
 import com.kasuminotes.db.getExSkillData
+import com.kasuminotes.db.getExUniqueData
 import com.kasuminotes.db.getPromotionBonusList
 //import com.kasuminotes.db.getPromotions
 import com.kasuminotes.db.getUniqueData
@@ -36,7 +37,8 @@ data class UserProfile(
     var exSkillData: ExSkillData? = null,
     var promotionBonusList: List<PromotionBonus> = emptyList(),
     var unitConversionData: UnitConversionData? = null,
-    var exEquipSlots: List<ExEquipSlot> = emptyList()
+    var exEquipSlots: List<ExEquipSlot> = emptyList(),
+    var exUnique1Data: ExUniqueData? = null
 ) {
     //rarity+promotionStatus+promotion+unique1&2+story+bonus
     var baseProperty: Property? = null
@@ -102,21 +104,20 @@ data class UserProfile(
         }
     }
 
-    //rarity+promotionStatus+promotion+unique1&2+story+bonus
-    fun getBaseProperty(user: UserData): Property {
+    //rarity+promotionStatus+promotion+unique1&2+story+bonus+exUnique1
+    fun getBaseProperty(user: UserData, connectRankData: ConnectRankData?): Property {
         return if (
             unitRarity != null &&
             unitPromotionStatus != null &&
             unitPromotion != null &&
             charaStoryStatus != null
-//            exSkillData != null
         ) {
             val rarityLevel = user.charaLevel + user.promotionLevel
             val equipsLevel = user.equipsLevel
             val unique1Property = unique1Data?.getUnique1Property(user.unique1Level)
             val unique2Property = unique2Data?.getUnique2Property(user.unique2Level)
-//            val exSkillProperty = getExSkillProperty(data)
             val rankBonusProperty = getRankBonusProperty(user.promotionLevel) ?: Property.zero
+            val exUnique1Property = exUnique1Data?.getProperty(user, connectRankData) ?: Property.zero
 
             Property { index ->
                 // unitRarity
@@ -149,10 +150,10 @@ data class UserProfile(
                         )
                     }
                 }
-                // exSkillData
-//                value += exSkillProperty[index]
                 // promotionBonus
                 value += rankBonusProperty[index]
+                // exUnique1
+                value += exUnique1Property[index]
                 value
             }
         } else {
@@ -227,24 +228,25 @@ data class UserProfile(
 
     suspend fun load(db: AppDatabase, profiles: List<UserProfile>) = withContext(Dispatchers.IO) {
         val list = awaitAll(
-            async { db.getUnitRarity(unitData.unitId, userData.rarity) },
-            async { db.getUnitPromotionStatus(unitData.unitId, userData.promotionLevel) },
-            async { db.getUnitPromotion(unitData.unitId, userData.promotionLevel) },
-            async { db.getUniqueData(unitData.equip1Id) },
-            async { db.getUniqueData(unitData.equip2Id) },
-            async { charaStoryStatus ?: db.getCharaStoryStatus(unitData.unitId) },
-            async { /*db.getPromotions(unitData.unitId)*/null },
-            async { db.getUnitAttackPatternList(unitData.unitId) },
-            async { db.getUnitSkillData(unitData.unitId) },
-            async { db.getExSkillData(unitData.unitId) },
-            async { db.getPromotionBonusList(unitData.unitId) },
-            async { unitConversionData?.let { db.getUnitAttackPatternList(it.convertedUnitId) } },
-            async { unitConversionData?.let { db.getUnitSkillData(it.convertedUnitId) } },
-            async { unitConversionData?.let { db.getExSkillData(it.convertedUnitId) } },
-            async { db.getUnitExEquipSlots(unitData.unitId) },
-            async { if (userData.exEquip1 == 0) null else db.getExEquipData(userData.exEquip1) },
-            async { if (userData.exEquip2 == 0) null else db.getExEquipData(userData.exEquip2) },
-            async { if (userData.exEquip3 == 0) null else db.getExEquipData(userData.exEquip3) }
+            async { db.getUnitRarity(unitData.unitId, userData.rarity) },//0
+            async { db.getUnitPromotionStatus(unitData.unitId, userData.promotionLevel) },//1
+            async { db.getUnitPromotion(unitData.unitId, userData.promotionLevel) },//2
+            async { db.getUniqueData(unitData.equip1Id) },//3
+            async { db.getUniqueData(unitData.equip2Id) },//4
+            async { charaStoryStatus ?: db.getCharaStoryStatus(unitData.unitId) },//5
+            async { /*db.getPromotions(unitData.unitId)*/null },//6
+            async { db.getUnitAttackPatternList(unitData.unitId) },//7
+            async { db.getUnitSkillData(unitData.unitId) },//8
+            async { db.getExSkillData(unitData.unitId) },//9
+            async { db.getPromotionBonusList(unitData.unitId) },//10
+            async { unitConversionData?.let { db.getUnitAttackPatternList(it.convertedUnitId) } },//11
+            async { unitConversionData?.let { db.getUnitSkillData(it.convertedUnitId) } },//12
+            async { unitConversionData?.let { db.getExSkillData(it.convertedUnitId) } },//13
+            async { db.getUnitExEquipSlots(unitData.unitId) },//14
+            async { if (userData.exEquip1 == 0) null else db.getExEquipData(userData.exEquip1) },//15
+            async { if (userData.exEquip2 == 0) null else db.getExEquipData(userData.exEquip2) },//16
+            async { if (userData.exEquip3 == 0) null else db.getExEquipData(userData.exEquip3) },//17
+            async { db.getExUniqueData(unitData.exEquip1Id) }//18
         )
         unitRarity = list[0] as UnitRarity
         unitPromotionStatus = list[1] as UnitPromotionStatus
@@ -271,6 +273,8 @@ data class UserProfile(
         exEquipSlots = (list[14] as List<ExEquipSlot>).map {
             it.copy(exEquipData = list[listIndex++] as ExEquipData?)
         }
+        exUnique1Data = list[18] as ExUniqueData?
+
         val sharedChara = charaStoryStatus!!.sharedChara
         if (sharedChara.isEmpty()) {
             sharedProfiles = emptyList()

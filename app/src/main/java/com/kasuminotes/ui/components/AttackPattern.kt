@@ -23,6 +23,7 @@ import com.kasuminotes.data.UnitSkillData
 fun AttackPattern(
     hasUnique1: Boolean,
     hasUnique2: Boolean,
+    hasExUnique1: Boolean,
     atkType: Int,
     unitAttackPatternList: List<UnitAttackPattern>,
     unitSkillData: UnitSkillData,
@@ -42,6 +43,7 @@ fun AttackPattern(
                     hasMultiPattern,
                     hasUnique1,
                     hasUnique2,
+                    hasExUnique1,
                     atkType,
                     unitAttackPattern,
                     unitSkillData,
@@ -57,6 +59,7 @@ fun AttackPattern(
             hasMultiPattern,
             hasUnique1,
             hasUnique2,
+            hasExUnique1,
             atkType,
             unitAttackPatternList[0],
             unitSkillData,
@@ -73,6 +76,7 @@ private fun AttackPatternItem(
     hasMultiPattern: Boolean,
     hasUnique1: Boolean,
     hasUnique2: Boolean,
+    hasExUnique1: Boolean,
     atkType: Int,
     unitAttackPattern: UnitAttackPattern,
     unitSkillData: UnitSkillData,
@@ -96,6 +100,7 @@ private fun AttackPatternItem(
                 atkType,
                 hasUnique1,
                 hasUnique2,
+                hasExUnique1,
                 unitSkillData
             )
 

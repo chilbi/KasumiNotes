@@ -49,7 +49,7 @@ fun CraftItem(
         }
         Text(
             text = stringResource(R.string.times_d, consumeSum),
-            modifier = Modifier.width(32.dp),
+            modifier = Modifier.width((if (consumeSum < 100) 32 else 42).dp),
             style = MaterialTheme.typography.bodyMedium
         )
     }

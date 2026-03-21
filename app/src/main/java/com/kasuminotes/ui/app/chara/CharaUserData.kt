@@ -8,9 +8,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
@@ -18,6 +23,7 @@ import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.UniqueData
 import com.kasuminotes.data.ExEquipSlot
+import com.kasuminotes.data.UnitData
 import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UserData
 import com.kasuminotes.ui.components.BadgedDiffBox
@@ -29,10 +35,10 @@ import com.kasuminotes.utils.UrlUtil
 @Composable
 fun CharaUserData(
     userData: UserData,
+    unitData: UnitData,
     originUserData: UserData,
     maxUserData: MaxUserData,
-    maxRarity: Int,
-    hasUnique1: Boolean,
+//    hasUnique1: Boolean,
     unitPromotion: UnitPromotion?,
     unique1Data: UniqueData?,
     unique2Data: UniqueData?,
@@ -44,25 +50,27 @@ fun CharaUserData(
     onUniqueChange: (equip: Boolean, slot: Int) -> Unit,
     onCharaLevelChange: (Int) -> Unit,
     onRarityChange: (Int) -> Unit,
-    onUniqueLevelChange: (value: Int, slot: Int) -> Unit,
+//    onUniqueLevelChange: (value: Int, slot: Int) -> Unit,
+    onConnectRankChange: (value: Int, maxUserData: MaxUserData) -> Unit,
     onLoveLevelChange: (Int) -> Unit,
     onPromotionLevelChange: (Int) -> Unit,
     onSkillLevelChange: (value: Int, labelText: String) -> Unit,
-    onLvLimitBreakChange: (maxCharaLevel: Int) -> Unit
+    onLvLimitBreakChange: (maxUserData: MaxUserData) -> Unit
 ) {
     Column(Modifier.padding(8.dp)) {
         CharaStatus(
             userData,
+            unitData,
             originUserData,
             maxUserData,
-            maxRarity,
-            hasUnique1,
+//            hasUnique1,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp),
             onCharaLevelChange,
             onRarityChange,
-            onUniqueLevelChange,
+//            onUniqueLevelChange,
+            onConnectRankChange,
             onLoveLevelChange,
             onPromotionLevelChange,
             onSkillLevelChange
@@ -78,6 +86,7 @@ fun CharaUserData(
                 Box(Modifier.padding(start = 24.dp)) {
                     Unique1Icon(
                         userData.unique1Level,
+                        originUserData.unique1Level,
                         unique1Data,
                         onUniqueClick,
                         onUniqueChange
@@ -95,7 +104,7 @@ fun CharaUserData(
                 Box(Modifier.padding(start = 24.dp)) {
                     ImageIcon(
                         url = UrlUtil.getItemIconUrl(41000),
-                        onClick = { onLvLimitBreakChange(maxUserData.maxCharaLevel) },
+                        onClick = { onLvLimitBreakChange(maxUserData) },
                         colorFilter = if (userData.lvLimitBreak > 0) null else GrayFilter
                     )
                 }
@@ -122,6 +131,7 @@ fun CharaUserData(
 @Composable
 private fun Unique1Icon(
     unique1Level: Int,
+    originUnique1Level: Int,
     unique1Data: UniqueData?,
     onClick: (UniqueData, Int) -> Unit,
     onChange: (Boolean, Int) -> Unit
@@ -134,12 +144,29 @@ private fun Unique1Icon(
         )
     } else {
         val isEquipped = unique1Level > 0
-        DraggableImageIcon(
-            url = UrlUtil.getEquipIconUrl(unique1Data.equipmentId),
-            onClick = { if (isEquipped) onClick(unique1Data, 1) else onChange(true, 1) },
-            onDragged = { onChange(!isEquipped, 1) },
-            colorFilter = if (isEquipped) null else GrayFilter
-        )
+        BadgedDiffBox(unique1Level, originUnique1Level) {
+            DraggableImageIcon(
+                url = UrlUtil.getEquipIconUrl(unique1Data.equipmentId),
+                onClick = { if (isEquipped) onClick(unique1Data, 1) else onChange(true, 1) },
+                onDragged = { onChange(!isEquipped, 1) },
+                colorFilter = if (isEquipped) null else GrayFilter
+            ) {
+                if (isEquipped) {
+                    Text(
+                        text = "Lv$unique1Level",
+                        modifier = Modifier.align(Alignment.BottomEnd).padding(horizontal = 2.dp),
+                        color = Color.White,
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            shadow = Shadow(
+                                color = Color.Black,
+                                offset = Offset.Zero,
+                                blurRadius = 4f
+                            )
+                        )
+                    )
+                }
+            }
+        }
     }
 }
 

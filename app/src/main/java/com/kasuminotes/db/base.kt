@@ -2,30 +2,32 @@ package com.kasuminotes.db
 
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
+import com.kasuminotes.data.ConnectRankData
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.SummonData
 import com.kasuminotes.data.User
 import com.kasuminotes.data.UserData
 import com.kasuminotes.ui.app.DefaultUserId
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 
 fun AppDatabase.putUserData(userData: UserData) {
     useDatabase {
-        execSQL("REPLACE INTO `user_data` VALUES (${userData.stringValues})")
+        execSQL("REPLACE INTO `user_data` (${UserData.getFields(pk = true, fk = true)}) VALUES (${userData.stringValues})")
     }
 }
 
 fun AppDatabase.putUserDataList(userDataList: List<UserData>) {
     if (userDataList.isEmpty()) return
-
-    var sql = "REPLACE INTO `user_data`\nSELECT ${userDataList[0].stringValues}"
+    var sql = "REPLACE INTO `user_data` (${UserData.getFields(pk = true, fk = true)})\nSELECT ${userDataList[0].stringValues}"
     val len = userDataList.size
     var i = 1
-
     while (i < len) {
         sql += "\nUNION SELECT ${userDataList[i].stringValues}"
         i++
     }
-
     useDatabase {
         execSQL(sql)
     }
@@ -48,32 +50,41 @@ WHERE user_id=$userId AND unit_id IN (${deleteChara.joinToString(",")})"""
     }
 }
 
-fun AppDatabase.getMaxUserData(userId: Int): MaxUserData {
-    val sql = """SELECT max_chara_level,max_promotion_level,max_unique_level,
+suspend fun AppDatabase.getMaxUserData(userId: Int): MaxUserData {
+    return withContext(Dispatchers.IO) {
+        val list = awaitAll(
+            async { getConnectRankData() },
+            async {
+                val sql = """SELECT max_chara_level,max_promotion_level,max_unique_level,
 max_area,max_chara,max_unique,max_rarity_6,user_chara,user_unique,user_rarity_6
 FROM max_data
 LEFT JOIN (SELECT COUNT(user_id) AS user_chara FROM user_data WHERE user_id=$userId)
 LEFT JOIN (SELECT COUNT(user_id) AS user_unique FROM user_data WHERE user_id=$userId AND unique1_level>0)
 LEFT JOIN (SELECT COUNT(user_id) AS user_rarity_6 FROM user_data WHERE user_id=$userId AND rarity=6)"""
-
-    return useDatabase {
-        rawQuery(sql, null).use {
-            it.moveToFirst()
-            var i = 0
-
-            MaxUserData(
-                it.getInt(i++),
-                it.getInt(i++),
-                it.getInt(i++),
-                it.getInt(i++),
-                it.getInt(i++),
-                it.getInt(i++),
-                it.getInt(i++),
-                it.getInt(i++),
-                it.getInt(i++),
-                it.getInt(i),
-            )
-        }
+                useDatabase {
+                    rawQuery(sql, null).use {
+                        it.moveToFirst()
+                        var i = 0
+                        MaxUserData(
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i),
+                            null
+                            )
+                    }
+                }
+            }
+        )
+        val connectRankData = list[0] as ConnectRankData?
+        val maxUserData = list[1] as MaxUserData
+        maxUserData.copy(connectRankData = connectRankData)
     }
 }
 

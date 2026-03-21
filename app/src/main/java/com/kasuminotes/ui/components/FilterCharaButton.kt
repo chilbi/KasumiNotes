@@ -68,5 +68,13 @@ fun FilterCharaButton(charaListState: CharaListState) {
                 expanded = false
             }
         )
+        DropdownMenuItem(
+            text = { Text(stringResource(R.string.unique_equip) + "1SP") },
+            leadingIcon = { RadioButton(charaListState.exUnique1, null) },
+            onClick = {
+                charaListState.toggleExUnique1()
+                expanded = false
+            }
+        )
     }
 }

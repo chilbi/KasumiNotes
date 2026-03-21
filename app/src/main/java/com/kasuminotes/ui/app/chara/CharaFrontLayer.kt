@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.CharaStoryStatus
+import com.kasuminotes.data.MaxUserData
 //import com.kasuminotes.data.EquipData
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.StoryItem
@@ -45,6 +46,7 @@ import kotlinx.coroutines.launch
 fun CharaFrontLayer(
     userData: UserData,
     unitData: UnitData,
+    maxUserData: MaxUserData,
     charaStoryStatus: CharaStoryStatus?,
     sharedProfiles: List<UserProfile>?,
 //    unique1Data: UniqueData?,
@@ -121,6 +123,7 @@ fun CharaFrontLayer(
                         CharaSkill(
                             userData,
                             unitData,
+                            maxUserData,
                             unitAttackPatternList,
                             unitSkillData,
                             property,

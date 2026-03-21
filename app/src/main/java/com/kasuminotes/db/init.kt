@@ -43,17 +43,62 @@ private fun AppDatabase.fixSkillDataActions() {
     }
 }
 
+
+
+fun AppDatabase.fixExUniqueEquipment1() {
+    if (existsTable("ex_unique_equipment_1")) {
+        useDatabase {
+            listOf(
+                "unknown_1" to "required_item_id",
+                "unknown_2" to "required_item_count",
+            ).forEach {
+                if (existsColumn("ex_unique_equipment_1", it.first) && !existsColumn("ex_unique_equipment_1", it.second)) {
+                    renameColumn("ex_unique_equipment_1", it.first, it.second)
+                }
+            }
+        }
+    } else {
+        useDatabase {
+            execSQL(
+                """CREATE TABLE `ex_unique_equipment_1`(
+'equipment_id' INTEGER NOT NULL,
+'required_item_id' INTEGER NOT NULL,
+'required_item_count' INTEGER NOT NULL,
+'hp' INTEGER NOT NULL,
+'attack' INTEGER NOT NULL,
+'defense' INTEGER NOT NULL,
+'magic_attack' INTEGER NOT NULL,
+'magic_defense' INTEGER NOT NULL,
+'critical' INTEGER NOT NULL,
+'magic_critical' INTEGER NOT NULL,
+'dodge' INTEGER NOT NULL,
+'life_steal' INTEGER NOT NULL,
+'wave_hp_recovery' INTEGER NOT NULL,
+'wave_energy_recovery' INTEGER NOT NULL,
+'penetration' INTEGER NOT NULL,
+'magic_penetration' INTEGER NOT NULL,
+'energy_recovery_rate' INTEGER NOT NULL,
+'hp_recovery_rate' INTEGER NOT NULL,
+'energy_reduce_rate' INTEGER NOT NULL,
+'accuracy' INTEGER NOT NULL,
+PRIMARY KEY ('equipment_id')
+)"""
+            )
+        }
+    }
+}
+
 fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
 //    throw Exception("init error")
     fixSkillRevolution()
     fixSkillDataActions()
+    fixExUniqueEquipment1()
     // 修改unit_unique_equip表为unit_unique_equipment
     if (!existsTable("unit_unique_equipment") && existsTable("unit_unique_equip")) {
         try {
             execSQL("ALTER TABLE unit_unique_equip RENAME TO unit_unique_equipment")
         } catch (_: Throwable) {}
     }
-    // TODO 国服实装270专武上限后就删除该代码片段
     // 修改unique_equip_enhance_rate表为unique_equipment_enhance_rate
     if (existsTable("unique_equip_enhance_rate")) {
         try {
@@ -61,24 +106,26 @@ fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
             execSQL("ALTER TABLE unique_equip_enhance_rate RENAME TO unique_equipment_enhance_rate")
         } catch (_: Throwable) {}
     }
+    // 添加列 min_lv
     if (!existsColumn("unique_equipment_enhance_rate", "min_lv")) {
         try {
-            // 添加列 min_lv
+
             execSQL("ALTER TABLE unique_equipment_enhance_rate ADD COLUMN min_lv INTEGER NOT NULL DEFAULT 2")
         } catch (_: Throwable) {}
     }
+    // 添加列 max_lv
     if (!existsColumn("unique_equipment_enhance_rate", "max_lv")) {
         try {
-            // 添加列 max_lv
             execSQL("ALTER TABLE unique_equipment_enhance_rate ADD COLUMN max_lv INTEGER NOT NULL DEFAULT -1")
         } catch (_: Throwable) {}
     }
+    // 添加列 boss_ub_cool_time
     if (!existsColumn("skill_data", "boss_ub_cool_time")) {
         try {
-            // 添加列 boss_ub_cool_time
             execSQL("ALTER TABLE skill_data ADD COLUMN boss_ub_cool_time REAL NOT NULL DEFAULT 0.0")
         } catch (_: Throwable) {}
     }
+    // 添加列 action_8-10,depend_action_8-10
     listOf(
         "action_8",
         "action_9",
@@ -89,11 +136,11 @@ fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
     ).forEach { columnName ->
         if (!existsColumn("skill_data", columnName)) {
             try {
-                // 添加列 action_8-10,depend_action_8-10
                 execSQL("ALTER TABLE skill_data ADD COLUMN $columnName INTEGER NOT NULL DEFAULT 0")
             } catch (_: Throwable) {}
         }
     }
+    // 添加列 action_11-20,depend_action_11-20
     val range = 11..20
     range.forEach {
         val columnName = "action_$it"
@@ -111,7 +158,7 @@ fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
             } catch (_: Throwable) {}
         }
     }
-    // TODO 国服实装限制tp上升最高上限后就删除该代码片段
+    // 添加列 技能
     listOf(
         "sp_union_burst",
         "sp_skill_evolution_1",
@@ -123,7 +170,6 @@ fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
     ).forEach { columnName ->
         if (!existsColumn("unit_skill_data", columnName)) {
             try {
-
                 execSQL("ALTER TABLE unit_skill_data ADD COLUMN $columnName INTEGER NOT NULL DEFAULT 0")
             } catch (_: Throwable) {}
         }
@@ -138,6 +184,7 @@ fun AppDatabase.initDatabase(defaultUserId: Int) = useDatabase {
 'max_rarity' INTEGER NOT NULL,
 'equip1_id' INTEGER NOT NULL,
 'equip2_id' INTEGER NOT NULL,
+'ex_equip1_id' INTEGER NOT NULL,
 'search_area_width' INTEGER NOT NULL,
 'atk_type' INTEGER NOT NULL,
 'normal_atk_cast_time' REAL NOT NULL,
@@ -163,6 +210,7 @@ PRIMARY KEY('unit_id')
 """INSERT INTO `chara_data`
 SELECT ud.unit_id,ud.unit_name,kana,IFNULL(aub.unit_name,ud.kana) AS actual_name,
 max_rarity,IFNULL(uue1.equip_id, 0) AS equip1_id,IFNULL(uue2.equip_id, 0) AS equip2_id,
+IFNULL(eue1.equipment_id, 0) AS ex_equip1_id,
 search_area_width,atk_type,normal_atk_cast_time,comment,start_time,
 age,guild,race,height,weight,birth_month,birth_day,blood_type,favorite,voice,catch_copy,self_text
 FROM unit_data AS ud
@@ -171,6 +219,7 @@ JOIN (SELECT unit_id,COUNT(unit_id) AS max_rarity FROM unit_rarity GROUP BY unit
 LEFT JOIN actual_unit_background AS aub ON SUBSTR(ud.unit_id,1,4)=SUBSTR(aub.unit_id,1,4)
 LEFT JOIN unit_unique_equipment AS uue1 ON ud.unit_id=uue1.unit_id AND uue1.equip_slot=1
 LEFT JOIN unit_unique_equipment AS uue2 ON ud.unit_id=uue2.unit_id AND uue2.equip_slot=2
+LEFT JOIN ex_unique_equipment_1 AS eue1 ON eue1.equipment_id=uue1.equip_id AND uue1.equip_slot=1
 WHERE comment!='' AND ud.unit_id<400000"""
     )
 
@@ -201,10 +250,12 @@ LEFT JOIN (SELECT COUNT(*) AS max_rarity_6 FROM chara_data WHERE max_rarity=6)""
     )
 
     execSQL(
-"""CREATE TABLE `user_data`(
+        """CREATE TABLE `user_data`(
 'user_id' INTEGER NOT NULL,
 'unit_id' INTEGER NOT NULL,
 'rarity' INTEGER NOT NULL,
+'connect_rank' INTEGER NOT NULL,
+'lv_limit_break' INTEGER NOT NULL,
 'chara_level' INTEGER NOT NULL,
 'love_level' INTEGER NOT NULL,
 'unique1_level' INTEGER NOT NULL,
@@ -231,14 +282,22 @@ PRIMARY KEY('user_id','unit_id')
 )"""
     )
 
+    val maxConnectRank = getMaxConnectRank()
+    //连结Rank角色等级突破
+    val sumConnectRankBonusCharaLevel = if (maxConnectRank > 0) getSumConnectRankBonusCharaLevel() else 0
+    //等级突破+10
+    val lvLimitBreak = 10
+    val lv = sumConnectRankBonusCharaLevel + lvLimitBreak
+
     execSQL(
-"""INSERT INTO `user_data`
-SELECT $defaultUserId AS user_id,unit_id,max_rarity AS rarity,max_chara_level AS chara_level,
+        """INSERT INTO `user_data`
+SELECT $defaultUserId AS user_id,unit_id,max_rarity AS rarity,
+$maxConnectRank AS connect_rank,$lvLimitBreak AS lv_limit_break,max_chara_level + $lv AS chara_level,
 CASE(max_rarity) WHEN 6 THEN 12 ELSE 8 END AS love_level,
 CASE(equip1_id) WHEN 0 THEN 0 ELSE max_unique_level END AS unique1_level,
 CASE(equip2_id) WHEN 0 THEN -1 ELSE 5 END AS unique2_level,
 max_promotion_level AS promotion_level,
-max_chara_level AS ub_level,max_chara_level AS skill1_level,max_chara_level AS skill2_level,max_chara_level AS ex_level,
+max_chara_level + $lv AS ub_level,max_chara_level + $lv AS skill1_level,max_chara_level + $lv AS skill2_level,max_chara_level + $lv AS ex_level,
 5 AS equip1_level,5 AS equip2_level,5 AS equip3_level,5 AS equip4_level,5 AS equip5_level,5 AS equip6_level,
 0 AS ex_equip1,0 AS ex_equip2,0 AS ex_equip3,-1 AS ex_equip1_level,-1 AS ex_equip2_level,-1 AS ex_equip3_level,
 '' AS sub_percent_json

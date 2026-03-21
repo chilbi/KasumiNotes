@@ -2,6 +2,7 @@ package com.kasuminotes.db
 
 import com.kasuminotes.data.CharaStoryStatus
 import com.kasuminotes.data.ExSkillData
+import com.kasuminotes.data.ExUniqueData
 import com.kasuminotes.data.LvRange
 import com.kasuminotes.data.PromotionBonus
 import com.kasuminotes.data.Property
@@ -152,6 +153,33 @@ suspend fun AppDatabase.getUniqueData(equipId: Int): UniqueData? {
             growthProperties = (list[1] as Pair<List<Property>, List<LvRange>>).first,
             growthLvRanges = (list[1] as Pair<List<Property>, List<LvRange>>).second
         )
+    }
+}
+
+fun AppDatabase.getExUniqueData(equipmentId: Int): ExUniqueData? {
+    try {
+        if (equipmentId == 0 || !existsTable("ex_unique_equipment_1")) return null
+        return useDatabase {
+            val sql = "SELECT ${ExUniqueData.getFields()} FROM ex_unique_equipment_1 WHERE equipment_id=$equipmentId"
+            rawQuery(sql, null).use {
+                if (it.moveToFirst()) {
+                    var i = 0
+                    val property = Property { _ ->
+                        it.getDouble(i++)
+                    }
+                    ExUniqueData(
+                        it.getInt(i++),
+                        it.getInt(i++),
+                        it.getInt(i),
+                        property
+                    )
+                } else {
+                    null
+                }
+            }
+        }
+    } catch (_: Throwable) {
+        return null
     }
 }
 

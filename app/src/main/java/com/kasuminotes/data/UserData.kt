@@ -7,6 +7,8 @@ data class UserData(
     val userId: Int,
     val unitId: Int,
     val rarity: Int,
+    val connectRank: Int,
+    val lvLimitBreak: Int,
     val charaLevel: Int,
     val loveLevel: Int,
     val unique1Level: Int,
@@ -28,8 +30,7 @@ data class UserData(
     val exEquip1Level: Int = -1,
     val exEquip2Level: Int = -1,
     val exEquip3Level: Int = -1,
-    val subPercentJson: String = "",
-    val lvLimitBreak: Int = 0
+    val subPercentJson: String = ""
 ) {
     val subPercentMap: Map<Int, List<Pair<Int, Double>>> = toSubPercentMap(subPercentJson)
 
@@ -44,6 +45,8 @@ data class UserData(
             userId,
             unitId,
             rarity,
+            connectRank,
+            lvLimitBreak,
             charaLevel,
             loveLevel,
             unique1Level,
@@ -83,6 +86,8 @@ data class UserData(
         fun getFields(pk: Boolean, fk: Boolean): String {
             if (fields == null) {
                 fields = "rarity," +
+                        "connect_rank," +
+                        "lv_limit_break," +
                         "chara_level," +
                         "love_level," +
                         "unique1_level," +

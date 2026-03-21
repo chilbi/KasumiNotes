@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.common.Element
 import com.kasuminotes.common.Role
+import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.UnitAttackPattern
 import com.kasuminotes.data.UnitData
@@ -42,6 +43,7 @@ import com.kasuminotes.utils.UrlUtil
 fun CharaSkill(
     userData: UserData,
     unitData: UnitData,
+    maxUserData: MaxUserData,
     unitAttackPatternList: List<UnitAttackPattern>,
     unitSkillData: UnitSkillData?,
     property: Property,
@@ -68,6 +70,7 @@ fun CharaSkill(
                 AttackPattern(
                     hasUnique1 = unitData.hasUnique1 && userData.unique1Level > 0,
                     hasUnique2 = unitData.hasUnique2 && userData.unique2Level > -1,
+                    hasExUnique1 = maxUserData.isEquippedExUnique1(userData, unitData),
                     atkType = unitData.atkType,
                     unitAttackPatternList = unitAttackPatternList,
                     unitSkillData = unitSkillData!!
