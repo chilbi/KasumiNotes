@@ -42,10 +42,10 @@ class CharaState(
         private set
     var exSkillProperty by mutableStateOf(Property.zero)
         private set
-    //rarity+promotionStatus+promotion+unique1&2+story+bonus
+    //rarity+promotionStatus+promotion+unique1&2+story+bonus++exUnique1
     var baseProperty by mutableStateOf(Property.zero)
         private set
-    //base+exSkill+exEquip+exEquipSkill
+    //base+exSkill+exEquip+exEquipSkill+connectRankStatus
     var totalProperty by mutableStateOf(Property.zero)
         private set
     var saveVisible by mutableStateOf(false)
@@ -285,6 +285,7 @@ class CharaState(
 
     fun destroy() {
         restore()
+        connectRankData = null
 //        userProfile = null
 //        userData = null
     }
@@ -318,15 +319,26 @@ class CharaState(
         profile.setProperty(baseProperty, totalProperty)
     }
 
-    //base+exSkill+exEquip+exEquipSkill
+    //base+exSkill+exEquip+exEquipSkill+connectRankStatus
     private fun calcProperty() {
         val base = userProfile!!.getBaseProperty(userData!!, connectRankData)
         val exSkill = userProfile!!.getExSkillProperty(userData!!)
         val exEquip = userProfile!!.getExEquipProperty(base, userData!!)
-        val exEquipSkill = userProfile!!.getExEquipSkillProperty(base, exSkill, exEquip, userProfile!!.unitData.talentId)
+        val exEquipSkill = userProfile!!.getExEquipSkillProperty(
+            base,
+            exSkill,
+            exEquip,
+            userProfile!!.unitData.talentId
+        )
+        val connectRankStatus = connectRankData?.getStatusProperty(
+            base,
+            userData!!.connectRank,
+            userProfile!!.unitData.unitRoleId,
+            userProfile!!.unitData.atkType
+        ) ?: Property.zero
         exSkillProperty = exSkill
         baseProperty = base
-        totalProperty = Property { i -> base[i] + exSkill[i] + exEquip[i] + exEquipSkill[i] }
+        totalProperty = Property { i -> base[i] + exSkill[i] + exEquip[i] + exEquipSkill[i] + connectRankStatus[i] }
     }
 
     private fun changeState() {

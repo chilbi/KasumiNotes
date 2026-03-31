@@ -47,6 +47,27 @@ data class ConnectRankData(
         }
     }
 
+    fun getStatusProperty(base: Property, connectRank: Int, roleId: Int, atkType: Int): Property {
+        val statusList = getStatusList(connectRank, roleId)
+        val pairs = mutableListOf<Pair<Int, Double>>()
+        statusList.forEach { pair ->
+            when (pair.first) {
+                1 -> pairs.add(1 to base.hp * pair.second / 10000)
+                2 -> if (atkType == 1) {
+                    pairs.add(2 to base.atk * pair.second / 10000)
+                } else {
+                    pairs.add(4 to base.magicStr * pair.second / 10000)
+                }
+                3 -> pairs.add(3 to base.def * pair.second / 10000)
+                4 -> pairs.add(5 to base.magicDef * pair.second / 10000)
+                //5 -> 造成伤害提升
+                //6 -> 受到伤害降低
+                //else -> 未知
+            }
+        }
+        return Property(pairs)
+    }
+
     fun getBonusList(connectRank: Int, context: Context): List<ConnectRankBonusItem> {
         val bonusLevel = connectRankChartMap[connectRank] ?: 0
         return connectRankBonusList
