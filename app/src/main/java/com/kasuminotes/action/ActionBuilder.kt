@@ -329,6 +329,7 @@ class ActionBuilder(
             99 -> getSpeedField()
             100 -> getAkinesiaInvalid()
             103 -> getDamageBaseAtk()
+            104 -> getGrantState()
             105 -> getEnvironment()
             106 -> getVicariousInjuryGuard()
             107 -> getTotalCritical()

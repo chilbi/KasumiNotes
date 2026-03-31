@@ -309,7 +309,7 @@
     <string name="action_friendly_barrier_target1_state2_time3">赋予%1$s【%2$s】，效果时间%3$s秒。【%2$s】赋予期间，对自身的攻击将由被赋予【%2$s】状态的一名己方角色代替承受伤害。</string>
     <string name="action_resurrection_target1_state2_formula3_time4">赋予%1$s【%2$s】，效果时间%4$s秒。【%2$s】期间，HP降为0时，不会倒下并消耗【%2$s】回复HP%3$s。</string>
     <string name="action_endure_target1_state2_formula3_time4">赋予%1$s【%2$s】，效果时间%4$s秒。【%2$s】的期间，HP降为0时，维持%3$sHP。</string>
-    <string name="action_vicarious_injury_guard_target1_state2_time3">赋予%1$s【%2$s】，【%2$s】期间，代替该对象承受敌人的攻击，效果时间%3$s秒。</string>
+    <string name="action_vicarious_injury_guard_target1_state2_time3">赋予%1$s【%2$s】，效果时间%3$s秒。【%2$s】期间，代替该对象承受敌人的攻击。</string>
     <string name="action_shield_counter_target1_content2_type3_add4">为%1$s追加%4$s个【%2$s】。【%2$s】每无效1次%3$s伤害就会消耗1个</string>
     <string name="action_shield_counter_target1_content2_type3">赋予%1$s【%2$s】。【%2$s】无效1次%3$s伤害就会被消耗掉</string>
     <string name="action_shield_counter_formula1">，同时对进攻的敌人造成%s伤害。</string>
@@ -359,6 +359,7 @@
     <string name="action_damage_boost_content1_max2_time3">%1$s（上限%2$s），效果时间%3$s秒。</string>
     <string name="action_marionette_target1_time2">使%1$s陷入【操线】状态，效果时间%2$s秒。被傀儡之线操纵之人，会毫不犹豫地与同伴互相残杀，化作演绎悲剧舞蹈的人偶。</string>
     <string name="action_marionette_suspend_target1">使%s的【操线】状态中断。</string>
+    <string name="action_grant_must_critical_target1_state2_time3">赋予%1$s【%2$s】，效果时间%3$s秒。【%2$s】期间，%1$s的攻击必定暴击。</string>
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>

@@ -359,6 +359,7 @@
     <string name="action_damage_boost_content1_max2_time3">%1$s（上限%2$s）、効果時間%3$s秒。</string>
     <string name="action_marionette_target1_time2">%1$sを【操糸】状態にさせる、効果時間%2$s秒。傀儡の糸により操られた者は躊躇なく仲間たちと命を奪い合い、悲劇の舞踏を踊る人形と化す。</string>
     <string name="action_marionette_suspend_target1">%sの【操糸】状態を中断する。</string>
+    <string name="action_grant_must_critical_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。【%2$s】が付与されている間、%1$sの攻撃は必ずクリティカルする。</string>
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>
