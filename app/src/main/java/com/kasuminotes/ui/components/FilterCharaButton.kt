@@ -28,7 +28,7 @@ fun FilterCharaButton(charaListState: CharaListState) {
     var expanded by remember { mutableStateOf(false) }
     BadgedBox(
         badge = {
-            if (charaListState.rarity6 || charaListState.unique1 || charaListState.unique2) {
+            if (charaListState.rarity6 || charaListState.unique1 || charaListState.unique2 || charaListState.exUnique1) {
                 Badge(Modifier.offset((-4).dp, 4.dp)) {
                     Text("A")
                 }
