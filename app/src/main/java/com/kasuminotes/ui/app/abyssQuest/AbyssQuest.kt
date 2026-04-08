@@ -36,7 +36,7 @@ import com.kasuminotes.data.AbyssSchedule
 import com.kasuminotes.state.AbyssQuestState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
-import com.kasuminotes.ui.components.UnitElement
+import com.kasuminotes.ui.components.UnitTalent
 
 @Composable
 fun AbyssQuest(
@@ -67,7 +67,7 @@ fun AbyssQuest(
 private fun SelectItem(schedule: AbyssSchedule) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            UnitElement(0.dp, schedule.talentId, 16.dp)
+            UnitTalent(0.dp, schedule.talentId, 16.dp)
             Text(
                 text = schedule.title,
                 modifier = Modifier.padding(start = 2.dp),

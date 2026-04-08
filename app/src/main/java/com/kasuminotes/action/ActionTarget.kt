@@ -116,13 +116,13 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
         )
     } else if (targetType in 14001..14999) {
         return D.Join(arrayOf(
-            D.Format(R.string.target_element1, arrayOf(getElementType(targetType - 14000))),
+            D.Format(R.string.target_talent1, arrayOf(getTalentType(targetType - 14000))),
             this.copy(targetType = 1).getTarget(null)
         ))
     } else if (targetType in 15001..15999) {
         return D.Join(arrayOf(
             D.Format(R.string.target_without_self),
-            D.Format(R.string.target_element1, arrayOf(getElementType(targetType - 15000))),
+            D.Format(R.string.target_talent1, arrayOf(getTalentType(targetType - 15000))),
             this.copy(targetType = 1).getTarget(null)
         ))
     }

@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.data.ClanBattlePeriod
 import com.kasuminotes.state.ClanBattleState
-import com.kasuminotes.ui.components.UnitElement
+import com.kasuminotes.ui.components.UnitTalent
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.SyncIcon
@@ -94,10 +94,10 @@ private fun ClanBattlePeriodItem(
                     Row(Modifier.align(Alignment.BottomStart)) {
                         clanBattlePeriod.bossTalentWeaknessList[i].forEachIndexed { index, weakness ->
                             if (weakness > 100) {
-                                UnitElement(
+                                UnitTalent(
                                     padding = 0.dp,
                                     talentId = index + 1,
-                                    elementSize = 14.dp
+                                    talentSize = 14.dp
                                 )
                             }
                         }

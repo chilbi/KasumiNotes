@@ -32,7 +32,7 @@ import com.kasuminotes.R
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.state.CharaImageState
-import com.kasuminotes.ui.components.UnitElement
+import com.kasuminotes.ui.components.UnitTalent
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
 import com.kasuminotes.ui.components.UnitRole
@@ -99,7 +99,7 @@ fun CharaItem(
         }
 
         Column(Modifier.align(Alignment.TopStart).padding(start = padding, top = padding)) {
-            UnitElement(
+            UnitTalent(
                 0.dp,
                 userProfile.unitData.talentId,
                 charaImageState.positionSize

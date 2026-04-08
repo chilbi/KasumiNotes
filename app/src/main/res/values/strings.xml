@@ -84,8 +84,8 @@
     <string name="center">中卫</string>
     <string name="back">后卫</string>
     <string name="weakness">弱点</string>
-    <string name="element">属性</string>
-    <string name="all_element">属性</string>
+    <string name="talent">属性</string>
+    <string name="all_talent">属性</string>
     <string name="fire">火</string>
     <string name="water">水</string>
     <string name="wind">风</string>
@@ -433,9 +433,9 @@
     <string name="action_branch_target1_environment2_p3">%1$s%3$s【%2$s】环境时，</string>
     <string name="action_branch_environment_yes">处于</string>
     <string name="action_branch_environment_no">不处于</string>
-    <string name="action_branch_target1_element2_p3">%1$s%3$s%2$s属性时，</string>
-    <string name="action_branch_element_yes">是</string>
-    <string name="action_branch_element_no">不是</string>
+    <string name="action_branch_target1_talent2_p3">%1$s%3$s%2$s属性时，</string>
+    <string name="action_branch_talent_yes">是</string>
+    <string name="action_branch_talent_no">不是</string>
 
     <string name="summon_id1">召唤%s</string>
     <string name="summon_403101">召唤一个能够攻击前方一名敌人的骷髅老爹</string>
@@ -461,7 +461,7 @@
     <string name="mode_1158100">自身变化为人类的姿态，</string>
     <string name="mode_fly">赋予自身【飞行】状态，</string>
 
-    <string name="content_element1">%s属性的</string>
+    <string name="content_talent1">%s属性的</string>
     <string name="content_max_hp_ratio1">最大HP的%s</string>
     <string name="content_hp_ratio1">残余HP的%s</string>
     <string name="content_regeneration_content1_formula2">所有己方角色的%1$s每秒回复%2$s</string>
@@ -565,7 +565,7 @@
     <string name="target_multi_target1">%s的所有多目标部位</string>
     <string name="target_attacking_enemy">进攻的敌人</string>
     <string name="target_state1">持有【%s】的对象</string>
-    <string name="target_element1">%s属性的</string>
+    <string name="target_talent1">%s属性的</string>
     <string name="target_include_flight">（无视飞行效果）</string>
     <string name="target_without_summon">（无视召唤物）</string>
 

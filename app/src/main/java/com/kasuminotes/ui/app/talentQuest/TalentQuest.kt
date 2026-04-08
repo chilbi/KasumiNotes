@@ -35,7 +35,7 @@ import com.kasuminotes.R
 import com.kasuminotes.state.TalentQuestState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
-import com.kasuminotes.ui.components.UnitElement
+import com.kasuminotes.ui.components.UnitTalent
 
 @Composable
 fun TalentQuest(
@@ -78,7 +78,7 @@ private fun SelectAreaMenu(taLentQuestState: TalentQuestState) {
                 onClick = { expanded = true },
                 colors = ButtonDefaults.textButtonColors(contentColor = LocalContentColor.current)
             ) {
-                UnitElement(0.dp, taLentQuestState.selectedArea!!.talentId, 16.dp)
+                UnitTalent(0.dp, taLentQuestState.selectedArea!!.talentId, 16.dp)
                 Text(
                     taLentQuestState.selectedArea!!.areaName,
                     Modifier.padding(start = 2.dp)
@@ -96,7 +96,7 @@ private fun SelectAreaMenu(taLentQuestState: TalentQuestState) {
                     DropdownMenuItem(
                         text= {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                UnitElement(0.dp, areaData.talentId, 16.dp)
+                                UnitTalent(0.dp, areaData.talentId, 16.dp)
                                 Text(
                                     areaData.areaName,
                                     Modifier.padding(start = 2.dp)

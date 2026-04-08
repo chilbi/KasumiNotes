@@ -12,7 +12,7 @@ fun SkillAction.getStatusField(skillLevel: Int): D {
     var target = getAssignment()
     if (actionValue7 > 0) {
         target = target.insert(
-            D.Format(R.string.content_element1, arrayOf(getElementType(actionValue7.toInt())))
+            D.Format(R.string.content_talent1, arrayOf(getTalentType(actionValue7.toInt())))
         )
     }
 

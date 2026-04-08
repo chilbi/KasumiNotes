@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.common.AtkType
-import com.kasuminotes.common.Element
+import com.kasuminotes.common.Talent
 import com.kasuminotes.common.Position
 import com.kasuminotes.common.Role
 import com.kasuminotes.state.CharaListState
@@ -38,7 +38,7 @@ fun FilterCharaMenu(charaListState: CharaListState) {
         Modifier.fillMaxWidth(),
         Arrangement.SpaceBetween
     ) {
-        ElementMenu(charaListState.element, charaListState::changeElement)
+        TalentMenu(charaListState.talent, charaListState::changeTalent)
         RoleMenu(charaListState.role, charaListState::changeRole)
         AtkTypeMenu(charaListState.atkType, charaListState::changeAtkType)
         PositionMenu(charaListState.position, charaListState::changePosition)
@@ -47,18 +47,18 @@ fun FilterCharaMenu(charaListState: CharaListState) {
 }
 
 @Composable
-private fun ElementMenu(
-    element: Element,
-    onElementChange: (Element) -> Unit
+private fun TalentMenu(
+    talent: Talent,
+    onTalentChange: (Talent) -> Unit
 ) {
     FilterMenuItem(
         alignment = Alignment.CenterStart,
-        label = stringResource(element.resId)
+        label = stringResource(talent.resId)
     ) { onCollapse ->
-        Element.entries.forEach { ele ->
+        Talent.entries.forEach { ele ->
             DropdownMenuItem(
                 text = { Text(stringResource(ele.resId)) },
-                onClick = { onElementChange(ele).also { onCollapse() } }
+                onClick = { onTalentChange(ele).also { onCollapse() } }
             )
         }
     }

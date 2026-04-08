@@ -13,10 +13,10 @@ import androidx.compose.ui.unit.Dp
 import com.kasuminotes.R
 
 @Composable
-fun UnitElement(
+fun UnitTalent(
     padding: Dp,
     talentId: Int,
-    elementSize: Dp,
+    talentSize: Dp,
     modifier: Modifier = Modifier
 ) {
     if (talentId == 0 ) return
@@ -37,7 +37,7 @@ fun UnitElement(
         Image(
             painter = painterResource(resId),
             contentDescription = null,
-            modifier = Modifier.size(elementSize)
+            modifier = Modifier.size(talentSize)
         )
     }
 }

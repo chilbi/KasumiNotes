@@ -27,12 +27,12 @@ private fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
             setStateBranch(branch,actionDetail1 - 6000, actionValue3)
         }
         in 4001..4999 -> {
-            val id = R.string.action_branch_target1_element2_p3
-            val element = getElementType(actionDetail1 - 4000)
+            val id = R.string.action_branch_target1_talent2_p3
+            val talent = getTalentType(actionDetail1 - 4000)
             setBranch(
                 branch,
-                D.Format(id, arrayOf(target, element, D.Format(R.string.action_branch_element_yes).tag(true))),
-                D.Format(id, arrayOf(target, element, D.Format(R.string.action_branch_element_no).tag(false)))
+                D.Format(id, arrayOf(target, talent, D.Format(R.string.action_branch_talent_yes).tag(true))),
+                D.Format(id, arrayOf(target, talent, D.Format(R.string.action_branch_talent_no).tag(false)))
             )
         }
         // アメス
@@ -158,12 +158,12 @@ private fun SkillAction.getNoDependBranch(): Array<Pair<Int, D>> {
         }
         in 4001..4999 -> {
             val target = getTarget(depend)
-            val id = R.string.action_branch_target1_element2_p3
-            val element = getElementType(actionDetail1 - 4000)
+            val id = R.string.action_branch_target1_talent2_p3
+            val talent = getTalentType(actionDetail1 - 4000)
             setBranch(
                 branch,
-                D.Format(id, arrayOf(target, element, D.Format(R.string.action_branch_element_yes).tag(true))),
-                D.Format(id, arrayOf(target, element, D.Format(R.string.action_branch_element_no).tag(false)))
+                D.Format(id, arrayOf(target, talent, D.Format(R.string.action_branch_talent_yes).tag(true))),
+                D.Format(id, arrayOf(target, talent, D.Format(R.string.action_branch_talent_no).tag(false)))
             )
         }
         // ライラエル

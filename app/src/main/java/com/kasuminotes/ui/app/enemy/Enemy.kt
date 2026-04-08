@@ -26,7 +26,7 @@ import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.Infobar
 import com.kasuminotes.ui.components.TopBar
-import com.kasuminotes.ui.components.UnitElement
+import com.kasuminotes.ui.components.UnitTalent
 import com.kasuminotes.utils.Helper
 import com.kasuminotes.utils.UrlUtil
 
@@ -97,10 +97,10 @@ private fun EnemyTopBar(
                             Row {
                                 talentWeaknessList.forEachIndexed { index, weakness ->
                                     if (weakness > 100) {
-                                        UnitElement(
+                                        UnitTalent(
                                             padding = 1.dp,
                                             talentId = index + 1,
-                                            elementSize = 14.dp
+                                            talentSize = 14.dp
                                         )
                                     }
                                 }

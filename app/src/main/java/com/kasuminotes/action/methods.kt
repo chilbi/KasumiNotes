@@ -3,7 +3,7 @@ package com.kasuminotes.action
 import androidx.annotation.StringRes
 import com.kasuminotes.MainApplication
 import com.kasuminotes.R
-import com.kasuminotes.common.Element
+import com.kasuminotes.common.Talent
 import com.kasuminotes.common.Label
 import com.kasuminotes.common.Language
 import com.kasuminotes.data.Property
@@ -72,12 +72,12 @@ fun getDefType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.def else 
 
 fun getDamageType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.physical else R.string.magic)
 
-fun getElementType(detail: Int) = D.Format(when (detail) {
-    1 -> Element.Fire.resId
-    2 -> Element.Water.resId
-    3 -> Element.Wind.resId
-    4 -> Element.Light.resId
-    else -> Element.Dark.resId
+fun getTalentType(detail: Int) = D.Format(when (detail) {
+    1 -> Talent.Fire.resId
+    2 -> Talent.Water.resId
+    3 -> Talent.Wind.resId
+    4 -> Talent.Light.resId
+    else -> Talent.Dark.resId
 })
 
 fun getBaseLvAtkFormula(

@@ -30,7 +30,7 @@ import com.kasuminotes.ui.components.CenterText
 import com.kasuminotes.ui.components.FixedWidthLabel
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.PlaceImage
-import com.kasuminotes.ui.components.UnitElement
+import com.kasuminotes.ui.components.UnitTalent
 import com.kasuminotes.ui.theme.UnitImageShape
 import com.kasuminotes.utils.UrlUtil
 
@@ -135,10 +135,10 @@ private fun DungeonAreaListItem(
                 }
                 weaknessList?.forEachIndexed { index, weakness ->
                     if (weakness > 100) {
-                        UnitElement(
+                        UnitTalent(
                             padding = 2.dp,
                             talentId = index + 1,
-                            elementSize = 14.dp
+                            talentSize = 14.dp
                         )
                     }
                 }

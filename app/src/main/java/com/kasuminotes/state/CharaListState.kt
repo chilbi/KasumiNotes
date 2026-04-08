@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.common.AtkType
-import com.kasuminotes.common.Element
+import com.kasuminotes.common.Talent
 import com.kasuminotes.common.OrderBy
 import com.kasuminotes.common.Position
 import com.kasuminotes.common.Role
@@ -21,7 +21,7 @@ class CharaListState {
         private set
     var searchText by mutableStateOf("")
         private set
-    var element by mutableStateOf(Element.All)
+    var talent by mutableStateOf(Talent.All)
         private set
     var role by mutableStateOf(Role.All)
         private set
@@ -290,8 +290,8 @@ class CharaListState {
         derived()
     }
 
-    fun changeElement(value: Element) {
-        element = value
+    fun changeTalent(value: Talent) {
+        talent = value
         derived()
     }
 
@@ -363,7 +363,7 @@ class CharaListState {
         val originProfiles = profiles
         val list = if (
             searchText.isEmpty() &&
-            element == Element.All &&
+            talent == Talent.All &&
             role == Role.All &&
             atkType == AtkType.All &&
             position == Position.All &&
@@ -380,7 +380,7 @@ class CharaListState {
                     val unique1Match = !unique1 || it.hasUnique1
                     val unique2Match = !unique2 || it.hasUnique2
                     val exUnique1Match = !exUnique1 || it.hasExUnique1
-                    val elementMatch = element == Element.All || element.ordinal == it.talentId
+                    val talentMatch = talent == Talent.All || talent.ordinal == it.talentId
                     val roleMatch = role == Role.All || role.ordinal == it.unitRoleId
                     val atkTypeMatch = atkType == AtkType.All || atkType.ordinal == it.atkType
                     val positionMatch = position == Position.All || position.ordinal == it.position
@@ -388,7 +388,7 @@ class CharaListState {
                             (it.unitId.toString() + it.unitName + it.kana + it.actualName)
                                 .contains(searchText)
 
-                    rarity6Match && unique1Match && unique2Match && exUnique1Match && elementMatch && roleMatch &&
+                    rarity6Match && unique1Match && unique2Match && exUnique1Match && talentMatch && roleMatch &&
                             atkTypeMatch && positionMatch && searchTextMatch
                 }
             }

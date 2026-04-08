@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
-import com.kasuminotes.common.Element
+import com.kasuminotes.common.Talent
 import com.kasuminotes.common.Role
 import com.kasuminotes.data.MaxUserData
 import com.kasuminotes.data.Property
@@ -116,23 +116,23 @@ private fun BoxScope.TalentAndRole(talentId: Int, unitRoleId: Int) {
         when (talentId) {
             1 -> {
                 talentImgId = R.drawable.fire
-                talentStrId = Element.Fire.resId
+                talentStrId = Talent.Fire.resId
             }
             2 -> {
                 talentImgId = R.drawable.water
-                talentStrId = Element.Water.resId
+                talentStrId = Talent.Water.resId
             }
             3 -> {
                 talentImgId = R.drawable.wind
-                talentStrId = Element.Wind.resId
+                talentStrId = Talent.Wind.resId
             }
             4 -> {
                 talentImgId = R.drawable.light
-                talentStrId = Element.Light.resId
+                talentStrId = Talent.Light.resId
             }
             else -> {
                 talentImgId = R.drawable.dark
-                talentStrId = Element.Dark.resId
+                talentStrId = Talent.Dark.resId
             }
         }
         Row(

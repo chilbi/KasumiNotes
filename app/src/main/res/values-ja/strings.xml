@@ -84,8 +84,8 @@
     <string name="center">中衛</string>
     <string name="back">後衛</string>
     <string name="weakness">弱点</string>
-    <string name="element">属性</string>
-    <string name="all_element">属性</string>
+    <string name="talent">属性</string>
+    <string name="all_talent">属性</string>
     <string name="fire">火</string>
     <string name="water">水</string>
     <string name="wind">風</string>
@@ -433,9 +433,9 @@
     <string name="action_branch_target1_environment2_p3">%1$sが【%2$s】環境に%3$s場合、</string>
     <string name="action_branch_environment_yes">いる</string>
     <string name="action_branch_environment_no">いない</string>
-    <string name="action_branch_target1_element2_p3">%1$sが%2$s属性%3$s場合、</string>
-    <string name="action_branch_element_yes">の</string>
-    <string name="action_branch_element_no">でない</string>
+    <string name="action_branch_target1_talent2_p3">%1$sが%2$s属性%3$s場合、</string>
+    <string name="action_branch_talent_yes">の</string>
+    <string name="action_branch_talent_no">でない</string>
 
     <string name="summon_id1">%sを召喚する</string>
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
@@ -461,7 +461,7 @@
     <string name="mode_1158100">自分を人の姿に変化させる、</string>
     <string name="mode_fly">自分を【飛行】状態にする、</string>
 
-    <string name="content_element1">%s属性の</string>
+    <string name="content_talent1">%s属性の</string>
     <string name="content_max_hp_ratio1">最大ＨＰの%s</string>
     <string name="content_hp_ratio1">残りＨＰの%s</string>
     <string name="content_regeneration_content1_formula2">の味方すべての%1$sを毎秒%2$s回復する</string>
@@ -565,7 +565,7 @@
     <string name="target_multi_target1">%sのマルチターゲット部位すべて</string>
     <string name="target_attacking_enemy">攻撃してきた敵</string>
     <string name="target_state1">【%s】を持っている対象</string>
-    <string name="target_element1">%s属性の</string>
+    <string name="target_talent1">%s属性の</string>
     <string name="target_include_flight">（飛行効果無視）</string>
     <string name="target_without_summon">（召喚体無視）</string>
 

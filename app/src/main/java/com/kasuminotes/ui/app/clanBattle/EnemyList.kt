@@ -34,7 +34,7 @@ import com.kasuminotes.data.Property
 import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.ImageCard
 import com.kasuminotes.ui.components.Infobar
-import com.kasuminotes.ui.components.UnitElement
+import com.kasuminotes.ui.components.UnitTalent
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
 import com.kasuminotes.ui.components.formatHP
@@ -155,10 +155,10 @@ private fun EnemyListItem(
                 Row(Modifier.padding(top = 8.dp, end = 8.dp).align(Alignment.TopEnd)) {
                     talentWeaknessList.forEachIndexed { index, weakness ->
                         if (weakness > 100) {
-                            UnitElement(
+                            UnitTalent(
                                 padding = 2.dp,
                                 talentId = index + 1,
-                                elementSize = 16.dp
+                                talentSize = 16.dp
                             )
                         }
                     }
