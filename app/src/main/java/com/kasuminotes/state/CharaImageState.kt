@@ -49,7 +49,7 @@ class CharaImageState(
                 isIcon = true
                 isPlate = false
                 positionSize = 16.dp
-                starSize = 12.dp
+                starSize = 11.5.dp
                 uniqueSize = 12.dp
                 star0Id = R.drawable.star_small_0
                 star1Id = R.drawable.star_small_1

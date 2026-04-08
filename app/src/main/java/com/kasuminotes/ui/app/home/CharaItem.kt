@@ -214,7 +214,7 @@ private fun BoxScope.Rarities(
                 contentDescription = null,
                 modifier = Modifier
                     .size(starSize)
-                    .offsetX((-2.5 * r).dp, isIcon)
+                    .offsetX((-2 * r).dp, isIcon)
             )
         }
     }
