@@ -3,8 +3,8 @@ buildscript {
     ext {
         kasuminotes_version = '2.9.0'
         kasuminotes_version_code = 290
-        kotlin_version = '2.2.0'
-        gradle_version = '8.13.1'
+        kotlin_version = '2.2.10'
+        gradle_version = '9.1.0'
 
         compose_version = '1.10.0'
         material3_version = '1.4.0'
