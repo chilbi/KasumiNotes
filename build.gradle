@@ -6,7 +6,7 @@ buildscript {
         kotlin_version = '2.2.10'
         gradle_version = '9.1.0'
 
-        compose_version = '1.10.0'
+        compose_version = '1.10.6'
         material3_version = '1.4.0'
         kotlin_compiler_version = '1.5.15'
         lifecycle_viewmodel_version = '2.10.0'
