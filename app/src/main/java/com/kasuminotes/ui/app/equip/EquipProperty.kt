@@ -23,7 +23,7 @@ import com.kasuminotes.ui.components.SliderPlus
 fun EquipProperty(
     enhanceLevel: Int,
     maxEnhanceLevel: Int,
-    baseProperty: Property,
+//    baseProperty: Property,
     property: Property,
     onEnhanceLevelChange: (Int) -> Unit
 ) {
@@ -31,7 +31,7 @@ fun EquipProperty(
         PropertyTable(
             property = property,
             indices = property.nonzeroIndices,
-            originProperty = if (maxEnhanceLevel > 0) baseProperty else null
+//            originProperty = if (maxEnhanceLevel > 0) baseProperty else null
         )
 
         if (maxEnhanceLevel > 5) {

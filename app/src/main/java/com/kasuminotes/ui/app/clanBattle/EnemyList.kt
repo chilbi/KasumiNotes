@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kasuminotes.R
 import com.kasuminotes.action.toNumStr
+import com.kasuminotes.common.AtkType
 import com.kasuminotes.data.ClanBattleMapData
 import com.kasuminotes.data.EnemyData
 import com.kasuminotes.data.Property
@@ -122,7 +123,7 @@ private fun EnemyListItem(
 ) {
     Container(onClick = { onEnemyClick(enemyData, talentWeaknessList) }) {
         val atkTypeStr = stringResource(
-            if (enemyData.atkType == 1) R.string.physical
+            if (AtkType.isPhysical(enemyData.atkType)) R.string.physical
             else R.string.magic
         )
         Box(Modifier.wrapContentSize()) {

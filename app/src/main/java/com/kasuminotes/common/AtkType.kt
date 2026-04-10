@@ -1,19 +1,15 @@
 package com.kasuminotes.common
 
-import androidx.annotation.StringRes
 import com.kasuminotes.R
 
-enum class AtkType : ResId {
-    All {
-        @StringRes
-        override val resId = R.string.all_type
-    },
-    Physical {
-        @StringRes
-        override val resId = R.string.physical
-    },
-    Magic {
-        @StringRes
-        override val resId = R.string.magic
+enum class AtkType(val strId: Int, val imgId: Int) {
+    All(R.string.all_type, 0),
+    Physical(R.string.physical, R.drawable.icon_unit_sort_physics),
+    Magic(R.string.magic, R.drawable.icon_unit_sort_magic);
+
+    companion object {
+        fun isPhysical(atkType: Int): Boolean = atkType == 1
+
+        fun fromId(atkType: Int): AtkType = if (isPhysical(atkType)) Physical else Magic
     }
 }

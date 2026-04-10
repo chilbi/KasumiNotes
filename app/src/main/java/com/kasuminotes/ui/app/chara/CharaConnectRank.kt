@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import com.kasuminotes.R
 import com.kasuminotes.action.toNumStr
+import com.kasuminotes.common.AtkType
 import com.kasuminotes.data.ConnectRankBonusItem
 import com.kasuminotes.data.ConnectRankData
 import com.kasuminotes.data.MaxUserData
@@ -56,7 +57,7 @@ fun CharaConnectRank(
                 val label = stringResource(
                     when (pair.first) {
                         1 -> R.string.hp
-                        2 -> if (unitData.atkType == 1) R.string.atk else R.string.magic_str
+                        2 -> if (AtkType.isPhysical(unitData.atkType)) R.string.atk else R.string.magic_str
                         3 -> R.string.def
                         4 -> R.string.magic_def
                         5 -> R.string.damage_increase

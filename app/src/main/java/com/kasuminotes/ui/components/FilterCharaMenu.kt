@@ -53,11 +53,11 @@ private fun TalentMenu(
 ) {
     FilterMenuItem(
         alignment = Alignment.CenterStart,
-        label = stringResource(talent.resId)
+        label = stringResource(talent.strId)
     ) { onCollapse ->
         Talent.entries.forEach { ele ->
             DropdownMenuItem(
-                text = { Text(stringResource(ele.resId)) },
+                text = { Text(stringResource(ele.strId)) },
                 onClick = { onTalentChange(ele).also { onCollapse() } }
             )
         }
@@ -71,11 +71,11 @@ private fun RoleMenu(
 ) {
     FilterMenuItem(
         alignment = Alignment.Center,
-        label = stringResource(role.resId)
+        label = stringResource(role.strId)
     ) { onCollapse ->
         Role.entries.forEach { r ->
             DropdownMenuItem(
-                text = { Text(stringResource(r.resId)) },
+                text = { Text(stringResource(r.strId)) },
                 onClick = { onRoleChange(r).also { onCollapse() } }
             )
         }
@@ -89,11 +89,11 @@ private fun AtkTypeMenu(
 ) {
     FilterMenuItem(
         alignment = Alignment.Center,
-        label = stringResource(atkType.resId)
+        label = stringResource(atkType.strId)
     ) { onCollapse ->
         AtkType.entries.forEach { type ->
             DropdownMenuItem(
-                text = { Text(stringResource(type.resId)) },
+                text = { Text(stringResource(type.strId)) },
                 onClick = { onAtkTypeChange(type).also { onCollapse() } }
             )
         }
@@ -107,11 +107,11 @@ private fun PositionMenu(
 ) {
     FilterMenuItem(
         alignment = Alignment.CenterEnd,
-        label = stringResource(position.resId)
+        label = stringResource(position.strId)
     ) { onCollapse ->
         Position.entries.forEach { pos ->
             DropdownMenuItem(
-                text = { Text(stringResource(pos.resId)) },
+                text = { Text(stringResource(pos.strId)) },
                 onClick = { onPositionChange(pos).also { onCollapse() } }
             )
         }

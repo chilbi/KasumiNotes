@@ -81,7 +81,7 @@
     <string name="magic">魔法</string>
     <string name="all_position">位置</string>
     <string name="front">前卫</string>
-    <string name="center">中卫</string>
+    <string name="middle">中卫</string>
     <string name="back">后卫</string>
     <string name="weakness">弱点</string>
     <string name="talent">属性</string>
@@ -94,7 +94,7 @@
     <string name="role">职能</string>
     <string name="all_role">职能</string>
     <string name="attacker">攻击型</string>
-    <string name="breaker">破坏型</string>
+    <string name="breaker">破防型</string>
     <string name="buffer">增益型</string>
     <string name="debuffer">减益型</string>
     <string name="booster">强化型</string>

@@ -73,11 +73,11 @@ fun getDefType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.def else 
 fun getDamageType(detail: Int) = D.Format(if (isAtkType(detail)) R.string.physical else R.string.magic)
 
 fun getTalentType(detail: Int) = D.Format(when (detail) {
-    1 -> Talent.Fire.resId
-    2 -> Talent.Water.resId
-    3 -> Talent.Wind.resId
-    4 -> Talent.Light.resId
-    else -> Talent.Dark.resId
+    1 -> Talent.Fire.strId
+    2 -> Talent.Water.strId
+    3 -> Talent.Wind.strId
+    4 -> Talent.Light.strId
+    else -> Talent.Dark.strId
 })
 
 fun getBaseLvAtkFormula(
@@ -233,8 +233,8 @@ fun getStatusIndex(detail: Int): Int? {
 fun getSkillLabel(detail: Int): D {
     return D.Text(
         when (val value = detail / 100 % 10) {
-            1 -> Label.ub
-            else -> Label.skill + (value - 1).toString()
+            1 -> Label.UB
+            else -> Label.SKILL + (value - 1).toString()
         }
     )
 }

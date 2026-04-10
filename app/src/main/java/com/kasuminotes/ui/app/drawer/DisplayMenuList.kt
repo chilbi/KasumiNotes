@@ -40,14 +40,14 @@ fun DisplayMenuList(
 
     ListItemWithDropdownMenu(
         iconVector = Icons.Filled.Language,
-        text = stringResource(language.resId)
+        text = stringResource(language.strId)
     ) { onCollapse ->
         listOf(
             language,
             if (language == Language.CN) Language.JP else Language.CN
         ).forEach { lang ->
             DropdownMenuItem(
-                text = { MenuItemText(stringResource(lang.resId)) },
+                text = { MenuItemText(stringResource(lang.strId)) },
                 onClick = {
                     onLanguageChange(lang)
                     onCollapse()

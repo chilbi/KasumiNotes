@@ -39,7 +39,7 @@ fun SortCharaButton(charaListState: CharaListState) {
             DropdownMenuItem(
                 text = {
                     Text(
-                        text = stringResource(order.resId) + if (isActive) sortDescStr else "",
+                        text = stringResource(order.strId) + if (isActive) sortDescStr else "",
                         color = if (isActive) MaterialTheme.colorScheme.primary else Color.Unspecified
                     )
                 },

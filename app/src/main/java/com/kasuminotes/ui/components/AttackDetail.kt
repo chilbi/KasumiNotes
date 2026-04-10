@@ -3,6 +3,7 @@ package com.kasuminotes.ui.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.kasuminotes.R
+import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.Label
 import com.kasuminotes.data.Property
 import com.kasuminotes.utils.UrlUtil
@@ -19,7 +20,7 @@ fun AttackDetail(
     val damage: Double
     val atkTypeText: String
 
-    if (atkType == 1) {
+    if (AtkType.isPhysical(atkType)) {
         name = stringResource(R.string.physical_atk)
         damage = property.atk
         atkTypeText = stringResource(R.string.physical)
@@ -40,13 +41,14 @@ fun AttackDetail(
     )
 
     SkillDetail(
-        label = Label.a,
+        label = Label.A,
         isRfSkill = false,
         iconUrl = UrlUtil.getAtkIconUrl(atkType),
         name = name,
         coolTime = 0f,
         castTime = normalAtkCastTime,
         description = description,
+        atkType = atkType,
         searchAreaWidth = searchAreaWidth
     )
 }

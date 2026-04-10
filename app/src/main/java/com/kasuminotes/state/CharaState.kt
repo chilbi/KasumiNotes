@@ -209,9 +209,9 @@ class CharaState(
 
     fun changeSkillLevel(value: Int, labelText: String) {
         userData = when (labelText) {
-            Label.ub -> userData!!.copy(ubLevel = value)
-            Label.ex -> userData!!.copy(exLevel = value)
-            Label.skill + "1" -> userData!!.copy(skill1Level = value)
+            Label.UB -> userData!!.copy(ubLevel = value)
+            Label.EX -> userData!!.copy(exLevel = value)
+            Label.SKILL + "1" -> userData!!.copy(skill1Level = value)
             else -> userData!!.copy(skill2Level = value)
         }
         changeState()

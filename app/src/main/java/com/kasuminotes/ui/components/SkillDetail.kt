@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
 import com.kasuminotes.action.ActionBuilder
@@ -38,6 +39,8 @@ import com.kasuminotes.action.D
 import com.kasuminotes.action.annotatedStringDescription
 import com.kasuminotes.action.getUnknown
 import com.kasuminotes.action.stringDescription
+import com.kasuminotes.common.AtkType
+import com.kasuminotes.common.Position
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
 
@@ -51,6 +54,7 @@ fun SkillDetail(
     castTime: Float,
     description: String,
     isExtraEffect: Boolean = false,
+    atkType: Int = 0,
     searchAreaWidth: Int = 0,
     skillLevel: Int = 0,
     property: Property? = null,
@@ -104,27 +108,25 @@ fun SkillDetail(
                     textAlign = TextAlign.Center
                 )
             } else {
-                Infobar(
-                    label = stringResource( R.string.search_area_width),
-                    value =  searchAreaWidth.toString(),
-                    modifier = Modifier.width(130.dp),
-                    endDecoration = {
-                        Image(
-                            painter = painterResource(
-                                when {
-                                    searchAreaWidth < 300 -> R.drawable.position_1
-                                    searchAreaWidth < 600 -> R.drawable.position_2
-                                    else -> R.drawable.position_3
-                                }
-                            ),
-                            contentDescription = null,
-                            modifier = Modifier.padding(start = 4.dp).size(18.dp)
-                        )
-                    },
-                    width = 64.dp,
-                    color = MaterialTheme.colorScheme.secondary,
-                    textAlign = TextAlign.Center
+                AtkTypeAndPosition(
+                    atkType,
+                    searchAreaWidth
                 )
+//                Infobar(
+//                    label = stringResource( R.string.search_area_width),
+//                    value =  searchAreaWidth.toString(),
+//                    modifier = Modifier.width(130.dp),
+//                    endDecoration = {
+//                        Image(
+//                            painter = painterResource(Position.fromId(Position.getPositionId(searchAreaWidth)).imgId),
+//                            contentDescription = null,
+//                            modifier = Modifier.padding(start = 4.dp).size(18.dp)
+//                        )
+//                    },
+//                    width = 64.dp,
+//                    color = MaterialTheme.colorScheme.secondary,
+//                    textAlign = TextAlign.Center
+//                )
             }
         }
 
@@ -218,5 +220,46 @@ fun SkillDetail(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun AtkTypeAndPosition(
+    atkType: Int,
+    searchAreaWidth: Int
+) {
+    Row(
+        modifier = Modifier.padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        val type = AtkType.fromId(atkType)
+        Image(
+            painter = painterResource(type.imgId),
+            contentDescription = null,
+            modifier = Modifier.padding(end = 4.dp).size(18.dp)
+        )
+        Text(
+            text = stringResource(type.strId),
+            textAlign = TextAlign.End,
+            overflow = TextOverflow.Ellipsis,
+            softWrap = false,
+            maxLines = 1,
+            style = MaterialTheme.typography.bodySmall
+        )
+        Spacer(Modifier.size(8.dp))
+        val position = Position.fromId(Position.getPositionId(searchAreaWidth))
+        Image(
+            painter = painterResource(position.imgId),
+            contentDescription = null,
+            modifier = Modifier.padding(end = 4.dp).size(18.dp)
+        )
+        Text(
+            text = stringResource(position.strId) + " $searchAreaWidth",
+            textAlign = TextAlign.End,
+            overflow = TextOverflow.Ellipsis,
+            softWrap = false,
+            maxLines = 1,
+            style = MaterialTheme.typography.bodySmall
+        )
     }
 }

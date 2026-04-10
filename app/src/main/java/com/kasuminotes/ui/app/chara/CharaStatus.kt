@@ -80,29 +80,29 @@ fun CharaStatus(
                         value = userData.ubLevel,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, Label.ub) },
-                        label = { LabelText(Label.ub)}
+                        onValueChange = { onSkillLevelChange(it, Label.UB) },
+                        label = { LabelText(Label.UB)}
                     )
                     SliderPlus(
                         value = userData.skill1Level,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, Label.skill + "1") },
-                        label = { LabelText(Label.skill + "1") }
+                        onValueChange = { onSkillLevelChange(it, Label.SKILL + "1") },
+                        label = { LabelText(Label.SKILL + "1") }
                     )
                     SliderPlus(
                         value = userData.skill2Level,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, Label.skill + "2") },
-                        label = { LabelText(Label.skill + "2") }
+                        onValueChange = { onSkillLevelChange(it, Label.SKILL + "2") },
+                        label = { LabelText(Label.SKILL + "2") }
                     )
                     SliderPlus(
                         value = userData.exLevel,
                         minValue = 1,
                         maxValue = userData.charaLevel,
-                        onValueChange = { onSkillLevelChange(it, Label.ex) },
-                        label = { LabelText(Label.ex) }
+                        onValueChange = { onSkillLevelChange(it, Label.EX) },
+                        label = { LabelText(Label.EX) }
                     )
                 }
             }
@@ -141,7 +141,7 @@ fun CharaStatus(
 //            BadgedButtonDialog(
 //                userData.unique1Level,
 //                originUserData.unique1Level,
-//                label = { LabelImage(R.drawable.unique_large) }
+//                label = { LabelImage(R.drawable.unique1_large) }
 //            ) {
 //                Surface(
 //                    shape = CircleShape,
@@ -153,7 +153,7 @@ fun CharaStatus(
 //                            minValue = 0,
 //                            maxValue = maxUserData.maxUniqueLevel,
 //                            onValueChange = { onUniqueLevelChange(it, 1) },
-//                            label = { LabelImage(R.drawable.unique_large) }
+//                            label = { LabelImage(R.drawable.unique1_large) }
 //                        )
 //                    }
 //                }

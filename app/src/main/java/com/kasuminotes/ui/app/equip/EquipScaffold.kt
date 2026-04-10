@@ -31,7 +31,7 @@ fun EquipScaffold(
     equipmentName: String,
     equipmentType: String,
     description: String,
-    baseProperty: Property,
+//    baseProperty: Property,
     exUniqueData: ExUniqueData?,
     exUniqueEquipable: Boolean,
     onBack: () -> Unit
@@ -71,7 +71,7 @@ fun EquipScaffold(
                             EquipProperty(
                                 equipState.enhanceLevel,
                                 equipState.maxEnhanceLevel,
-                                baseProperty,
+//                                baseProperty,
                                 equipState.property,
                                 equipState::changeEnhanceLevel
                             )

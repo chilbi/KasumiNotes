@@ -30,7 +30,8 @@ class CharaImageState(
     @DrawableRes var star0Id: Int
     @DrawableRes var star1Id: Int
     @DrawableRes var star6Id: Int
-    @DrawableRes var uniqueId: Int
+    @DrawableRes var unique1Id: Int
+    @DrawableRes var unique2Id: Int
 
     val nextVariant: ImageVariant
         get() = when (imageVariant) {
@@ -54,7 +55,8 @@ class CharaImageState(
                 star0Id = R.drawable.star_small_0
                 star1Id = R.drawable.star_small_1
                 star6Id = R.drawable.star_small_6
-                uniqueId = R.drawable.unique_small
+                unique1Id = R.drawable.unique1_small
+                unique2Id = R.drawable.unique2_small
             }
             ImageVariant.Plate -> {
                 getImageUrl = UrlUtil::getUnitPlateUrl
@@ -69,7 +71,8 @@ class CharaImageState(
                 star0Id = R.drawable.star_large_0
                 star1Id = R.drawable.star_large_1
                 star6Id = R.drawable.star_large_6
-                uniqueId = R.drawable.unique_large
+                unique1Id = R.drawable.unique1_large
+                unique2Id = R.drawable.unique2_large
             }
             ImageVariant.Still -> {
                 getImageUrl = UrlUtil::getUnitStillUrl
@@ -84,7 +87,8 @@ class CharaImageState(
                 star0Id = R.drawable.star_large_0
                 star1Id = R.drawable.star_large_1
                 star6Id = R.drawable.star_large_6
-                uniqueId = R.drawable.unique_large
+                unique1Id = R.drawable.unique1_large
+                unique2Id = R.drawable.unique2_large
             }
         }
     }

@@ -31,14 +31,14 @@ fun DatabaseMenuList(
 
     ListItemWithDropdownMenu(
         iconVector = Icons.Filled.Cloud,
-        text = stringResource(dbServer.resId)
+        text = stringResource(dbServer.strId)
     ) { onCollapse ->
         val allServer = enumValues<DbServer>().toMutableList()
         allServer.remove(dbServer)
         allServer.add(0, dbServer)
         allServer.forEach { server ->
             DropdownMenuItem(
-                text = { MenuItemText(stringResource(server.resId)) },
+                text = { MenuItemText(stringResource(server.strId)) },
                 onClick = {
                     onDbServerChange(server)
                     onCollapse()

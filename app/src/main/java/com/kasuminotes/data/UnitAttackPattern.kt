@@ -10,7 +10,7 @@ data class UnitAttackPattern(
     val loopEnd: Int,
     val atkPatternList: List<Int>//1-20
 ) {
-     inner class AtkPattern(
+     class AtkPattern(
         val loopLabel: String?,
         val iconUrl: String,
         val atkLabel: String,
@@ -36,7 +36,7 @@ data class UnitAttackPattern(
         // 1->"A", 1001->"S1", 1002->"S2", 2001->"SP1", 2002->"SP2"
         if (atkPattern == 1) {
             iconUrl = UrlUtil.getAtkIconUrl(atkType)
-            atkLabel = Label.a
+            atkLabel = Label.A
         } else {
             val isSP = atkPattern > 2000
             val n = if (isSP) atkPattern - 2000 else atkPattern - 1000
@@ -90,7 +90,7 @@ data class UnitAttackPattern(
             } else {
                 UrlUtil.getEquipIconUrl(Helper.NullId)
             }
-            var label = if (isSP) Label.sp else Label.skill
+            var label = if (isSP) Label.SP else Label.SKILL
             label += n.toString()
             if (isRevolution) {
                 label += "++"

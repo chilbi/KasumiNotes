@@ -3,6 +3,7 @@ package com.kasuminotes.data
 import android.content.Context
 import com.kasuminotes.R
 import com.kasuminotes.action.toNumStr
+import com.kasuminotes.common.AtkType
 
 data class ConnectRankData(
     val connectRankChartMap: Map<Int/*rank*/, Int/*bonus_level*/>,
@@ -53,7 +54,7 @@ data class ConnectRankData(
         statusList.forEach { pair ->
             when (pair.first) {
                 1 -> pairs.add(1 to base.hp * pair.second / 10000)
-                2 -> if (atkType == 1) {
+                2 -> if (AtkType.isPhysical(atkType)) {
                     pairs.add(2 to base.atk * pair.second / 10000)
                 } else {
                     pairs.add(4 to base.magicStr * pair.second / 10000)

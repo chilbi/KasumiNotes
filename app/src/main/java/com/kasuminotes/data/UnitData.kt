@@ -1,5 +1,7 @@
 package com.kasuminotes.data
 
+import com.kasuminotes.common.Position
+
 data class UnitData(
     val unitId: Int,
     val unitName: String,
@@ -29,11 +31,7 @@ data class UnitData(
     val talentId: Int,
     val unitRoleId: Int
 ) {
-    val position: Int = when {
-        searchAreaWidth < 300 -> 1
-        searchAreaWidth < 600 -> 2
-        else -> 3
-    }
+    val positionId: Int = Position.getPositionId(searchAreaWidth)
 
     val hasUnique1: Boolean get() = equip1Id != 0
     val hasUnique2: Boolean get() = equip2Id != 0

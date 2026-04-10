@@ -81,7 +81,7 @@
     <string name="magic">魔法</string>
     <string name="all_position">位置</string>
     <string name="front">前衛</string>
-    <string name="center">中衛</string>
+    <string name="middle">中衛</string>
     <string name="back">後衛</string>
     <string name="weakness">弱点</string>
     <string name="talent">属性</string>

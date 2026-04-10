@@ -1,6 +1,5 @@
 package com.kasuminotes.ui.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -10,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
-import com.kasuminotes.R
+import com.kasuminotes.common.Talent
 
 @Composable
 fun UnitTalent(
@@ -26,16 +25,9 @@ fun UnitTalent(
             .wrapContentSize()
             .then(modifier)
     ) {
-        @DrawableRes
-        val resId = when (talentId) {
-            1 -> R.drawable.fire
-            2 -> R.drawable.water
-            3 -> R.drawable.wind
-            4 -> R.drawable.light
-            else -> R.drawable.dark
-        }
+        val talent = Talent.fromId(talentId)
         Image(
-            painter = painterResource(resId),
+            painter = painterResource(talent.imgId),
             contentDescription = null,
             modifier = Modifier.size(talentSize)
         )

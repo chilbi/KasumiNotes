@@ -1,7 +1,5 @@
 package com.kasuminotes.ui.app.chara
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
@@ -25,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.kasuminotes.R
 import com.kasuminotes.common.Talent
 import com.kasuminotes.common.Role
 import com.kasuminotes.data.MaxUserData
@@ -109,43 +106,18 @@ fun CharaSkill(
 @Composable
 private fun BoxScope.TalentAndRole(talentId: Int, unitRoleId: Int) {
     if (talentId != 0) {
-        @DrawableRes
-        val talentImgId: Int
-        @StringRes
-        val talentStrId: Int
-        when (talentId) {
-            1 -> {
-                talentImgId = R.drawable.fire
-                talentStrId = Talent.Fire.resId
-            }
-            2 -> {
-                talentImgId = R.drawable.water
-                talentStrId = Talent.Water.resId
-            }
-            3 -> {
-                talentImgId = R.drawable.wind
-                talentStrId = Talent.Wind.resId
-            }
-            4 -> {
-                talentImgId = R.drawable.light
-                talentStrId = Talent.Light.resId
-            }
-            else -> {
-                talentImgId = R.drawable.dark
-                talentStrId = Talent.Dark.resId
-            }
-        }
         Row(
             modifier = Modifier.padding(8.dp).align(Alignment.TopEnd),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            val talent = Talent.fromId(talentId)
             Image(
-                painter = painterResource(talentImgId),
+                painter = painterResource(talent.imgId),
                 contentDescription = null,
                 modifier = Modifier.padding(end = 4.dp).size(18.dp)
             )
             Text(
-                text = stringResource(talentStrId),
+                text = stringResource(talent.strId),
                 textAlign = TextAlign.End,
                 overflow = TextOverflow.Ellipsis,
                 softWrap = false,
@@ -154,52 +126,15 @@ private fun BoxScope.TalentAndRole(talentId: Int, unitRoleId: Int) {
             )
 
             if (unitRoleId != 0) {
-                @DrawableRes
-                val roleImgId: Int
-                @StringRes
-                val roleStrId: Int
-                when (unitRoleId) {
-                    1 -> {
-                        roleImgId = R.drawable.attacker
-                        roleStrId = Role.Attacker.resId
-                    }
-                    2 -> {
-                        roleImgId = R.drawable.breaker
-                        roleStrId = Role.Breaker.resId
-                    }
-                    3 -> {
-                        roleImgId = R.drawable.buffer
-                        roleStrId = Role.Buffer.resId
-                    }
-                    4 -> {
-                        roleImgId = R.drawable.debuffer
-                        roleStrId = Role.Debuffer.resId
-                    }
-                    5 -> {
-                        roleImgId = R.drawable.booster
-                        roleStrId = Role.Booster.resId
-                    }
-                    6 -> {
-                        roleImgId = R.drawable.healer
-                        roleStrId = Role.Healer.resId
-                    }
-                    7 -> {
-                        roleImgId = R.drawable.tank
-                        roleStrId = Role.Tank.resId
-                    }
-                    else -> {
-                        roleImgId = R.drawable.jammer
-                        roleStrId = Role.Jammer.resId
-                    }
-                }
+                val role = Role.fromId(unitRoleId)
                 Spacer(Modifier.size(8.dp))
                 Image(
-                    painter = painterResource(roleImgId),
+                    painter = painterResource(role.imgId),
                     contentDescription = null,
                     modifier = Modifier.padding(end = 4.dp).size(18.dp)
                 )
                 Text(
-                    text = stringResource(roleStrId),
+                    text = stringResource(role.strId),
                     textAlign = TextAlign.End,
                     overflow = TextOverflow.Ellipsis,
                     softWrap = false,

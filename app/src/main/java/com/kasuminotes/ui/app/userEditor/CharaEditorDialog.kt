@@ -57,7 +57,8 @@ fun CharaEditorDialog(
         connectRank: Int?,
         charaLevel: Int?,
         loveLevel: Int?,
-        uniqueLevel: Int?,
+        unique1Level: Int?,
+        unique2Level: Int?,
         promotionLevel: Int?,
         unlockSlot: Int?
     ) -> Unit
@@ -141,7 +142,8 @@ private fun EditorDialogContent(
         connectRank: Int?,
         charaLevel: Int?,
         loveLevel: Int?,
-        uniqueLevel: Int?,
+        unique1Level: Int?,
+        unique2Level: Int?,
         promotionLevel: Int?,
         unlockSlot: Int?
     ) -> Unit
@@ -152,14 +154,16 @@ private fun EditorDialogContent(
     var connectRank by remember { mutableIntStateOf(maxConnectRank) }
     var charaLevel by remember { mutableIntStateOf(maxUserData.getLevelLimit(10, maxConnectRank)) }
     var loveLevel by remember { mutableIntStateOf(12) }
-    var uniqueLevel by remember { mutableIntStateOf(maxUserData.maxUniqueLevel) }
+    var unique1Level by remember { mutableIntStateOf(maxUserData.maxUniqueLevel) }
+    var unique2Level by remember { mutableIntStateOf(5) }
     var promotionLevel by remember { mutableIntStateOf(maxUserData.maxPromotionLevel) }
     var unlockSlot by remember { mutableIntStateOf(6) }
 
     var rarityChecked by remember { mutableStateOf(true) }
     var charaLevelChecked by remember { mutableStateOf(true) }
     var loveLevelChecked by remember { mutableStateOf(true) }
-    var uniqueLevelChecked by remember { mutableStateOf(true) }
+    var unique1LevelChecked by remember { mutableStateOf(true) }
+    var unique2LevelChecked by remember { mutableStateOf(true) }
     var promotionLevelChecked by remember { mutableStateOf(true) }
     var unlockSlotChecked by remember { mutableStateOf(true) }
 
@@ -192,14 +196,26 @@ private fun EditorDialogContent(
         )
 
         SliderPlus(
-            value = uniqueLevel,
+            value = unique1Level,
             minValue = 0,
             maxValue = maxUserData.maxUniqueLevel,
-            onValueChange = { uniqueLevel = it },
-            checked = uniqueLevelChecked,
-            onCheckedChange = { uniqueLevelChecked = it },
+            onValueChange = { unique1Level = it },
+            checked = unique1LevelChecked,
+            onCheckedChange = { unique1LevelChecked = it },
             label = {
-                LabelImage(R.drawable.unique_large)
+                LabelImage(R.drawable.unique1_large)
+            }
+        )
+
+        SliderPlus(
+            value = unique2Level,
+            minValue = -1,
+            maxValue = 5,
+            onValueChange = { unique2Level = it },
+            checked = unique2LevelChecked,
+            onCheckedChange = { unique2LevelChecked = it },
+            label = {
+                LabelImage(R.drawable.unique2_large)
             }
         )
 
@@ -284,7 +300,8 @@ private fun EditorDialogContent(
                     if (charaLevelChecked && maxUserData.connectRankData != null) connectRank else null,
                     if (charaLevelChecked) charaLevel else null,
                     if (loveLevelChecked) loveLevel else null,
-                    if (uniqueLevelChecked) uniqueLevel else null,
+                    if (unique1LevelChecked) unique1Level else null,
+                    if (unique2LevelChecked) unique2Level else null,
                     if (promotionLevelChecked) promotionLevel else null,
                     if (unlockSlotChecked) unlockSlot else null
                 )

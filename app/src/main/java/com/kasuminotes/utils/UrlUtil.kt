@@ -1,5 +1,6 @@
 package com.kasuminotes.utils
 
+import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.DbServer
 import java.util.Locale
 
@@ -86,7 +87,7 @@ object UrlUtil {
 
     fun getSkillIconUrl(iconType: Int) = String.format(Locale.US, ICON_SKILL_URL, iconType)
 
-    fun getAtkIconUrl(atkType: Int) = getEquipIconUrl(if (atkType == 1) 101011 else 101251)
+    fun getAtkIconUrl(atkType: Int) = getEquipIconUrl(if (AtkType.isPhysical(atkType)) 101011 else 101251)
 
     fun getKanNaPlateUrl(unitId: Int, rarity: Int) =
         "$WTHEE_API_RESOURCE_URL/icon/plate/${getImageId(unitId, rarity)}.webp"

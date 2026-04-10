@@ -8,12 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,17 +24,20 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
+import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.OrderBy
+import com.kasuminotes.common.Position
+import com.kasuminotes.common.Role
+import com.kasuminotes.common.Talent
 import com.kasuminotes.data.UserProfile
 import com.kasuminotes.state.CharaImageState
-import com.kasuminotes.ui.components.UnitTalent
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.ui.components.SizedBox
-import com.kasuminotes.ui.components.UnitRole
 import com.kasuminotes.ui.theme.UnitImageShape
 import com.kasuminotes.ui.theme.ShadowColor
 import com.kasuminotes.utils.UrlUtil
@@ -50,11 +52,11 @@ fun CharaItem(
 ) {
     SizedBox(charaImageState.ratio) {
         val padding = 2.dp
-        val maxRarity = userProfile.unitData.maxRarity
+//        val maxRarity = userProfile.unitData.maxRarity
         val rarity = userProfile.userData.rarity
-        val hasUnique1 =
-            userProfile.unitData.hasUnique1 && userProfile.userData.unique1Level > 0
-        val enablePositionAlpha = charaImageState.isIcon && maxRarity > 5
+        val hasUnique1 = userProfile.unitData.hasUnique1 && userProfile.userData.unique1Level > 0
+        val hasUnique2 = userProfile.unitData.hasUnique2 && userProfile.userData.unique2Level > -1
+//        val enablePositionAlpha = charaImageState.isIcon && maxRarity > 5
 
         RarityBorderShadow()
 
@@ -66,49 +68,69 @@ fun CharaItem(
             onClick = { onCharaClick(userProfile) }
         )
 
-        RarityBorder(userProfile.userData.rankRarity)
+        PromotionFrame(userProfile.userData.rankRarity)
 
-        Rarities(
+//        Position(
+//            padding,
+//            layerAlpha,
+//            enablePositionAlpha,
+//            userProfile.unitData.position,
+//            charaImageState.positionSize
+//        )
+        AtkTypeAndPosition(
             padding,
-            layerAlpha,
-            hasUnique1,
-            maxRarity,
-            rarity,
-            charaImageState.starSize,
-            charaImageState.isIcon,
-            charaImageState.star0Id,
-            charaImageState.star1Id,
-            charaImageState.star6Id
-        )
-
-        Position(
-            padding,
-            layerAlpha,
-            enablePositionAlpha,
-            userProfile.unitData.position,
+            userProfile.unitData.positionId,
+            userProfile.unitData.atkType,
             charaImageState.positionSize
         )
 
-        if (hasUnique1) {
+//        Column(Modifier.align(Alignment.TopStart).padding(start = padding, top = padding)) {
+//            UnitTalent(
+//                0.dp,
+//                userProfile.unitData.talentId,
+//                charaImageState.positionSize
+//            )
+//            Spacer(Modifier.size(padding))
+//            UnitRole(
+//                0.dp,
+//                userProfile.unitData.unitRoleId,
+//                charaImageState.positionSize
+//            )
+//        }
+        RoleAndTalent(
+//            padding,
+            userProfile.unitData.unitRoleId,
+            userProfile.unitData.talentId,
+            charaImageState.isIcon
+        )
+
+        Rarity(
+            padding,
+            layerAlpha,
+            hasUnique1 || hasUnique2,
+            rarity,
+            charaImageState.isIcon
+        )
+//        Rarities(
+//            padding,
+//            layerAlpha,
+//            hasUnique1 || hasUnique2,
+//            maxRarity,
+//            rarity,
+//            charaImageState.starSize,
+//            charaImageState.isIcon,
+//            charaImageState.star0Id,
+//            charaImageState.star1Id,
+//            charaImageState.star6Id
+//        )
+
+        if (hasUnique1 || hasUnique2) {
+            val uniqueId = if (hasUnique2) charaImageState.unique2Id else charaImageState.unique1Id
             Unique(
                 padding,
                 layerAlpha,
                 charaImageState.uniqueSize,
-                charaImageState.uniqueId
-            )
-        }
-
-        Column(Modifier.align(Alignment.TopStart).padding(start = padding, top = padding)) {
-            UnitTalent(
-                0.dp,
-                userProfile.unitData.talentId,
-                charaImageState.positionSize
-            )
-            Spacer(Modifier.size(padding))
-            UnitRole(
-                0.dp,
-                userProfile.unitData.unitRoleId,
-                charaImageState.positionSize
+                uniqueId
             )
         }
 
@@ -174,79 +196,162 @@ private fun BoxScope.CharaImage(
     )
 }
 
-@Composable
-private fun RarityBorder(rankRarity: Int) {
-    Box(Modifier.rarityBorder(rankRarity))
-}
+val rarityBorderMap = mutableMapOf<Int, Modifier>()
 
 @Composable
-private fun BoxScope.Rarities(
-    padding: Dp,
-    layerAlpha: State<Float>,
-    hasUnique1: Boolean,
-    maxRarity: Int,
-    rarity: Int,
-    starSize: Dp,
-    isIcon: Boolean,
-    @DrawableRes star0Id: Int,
-    @DrawableRes star1Id: Int,
-    @DrawableRes star6Id: Int,
-) {
-    Row(
-        Modifier
-            .padding(start = padding, bottom = padding)
-            .wrapContentSize()
-            .align(Alignment.BottomStart)
-            .layerAlpha(1 - layerAlpha.value, hasUnique1)
-    ) {
-        repeat(maxRarity) { r ->
-            val id = if (r < rarity) {
-                if (r > 4) {
-                    star6Id
-                } else {
-                    star1Id
-                }
-            } else {
-                star0Id
-            }
-            Image(
-                painter = painterResource(id),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(starSize)
-                    .offsetX((-2 * r).dp, isIcon)
-            )
-        }
+private fun PromotionFrame(rankRarity: Int) {
+    val rarityBorder = rarityBorderMap.getOrPut(rankRarity) {
+        Modifier.rarityBorder(rankRarity)
     }
+    Box(modifier = rarityBorder)
 }
 
 @Composable
-private fun BoxScope.Position(
+private fun BoxScope.AtkTypeAndPosition(
     padding: Dp,
-    layerAlpha: State<Float>,
-    enablePositionAlpha: Boolean,
-    position: Int,
-    positionSize: Dp
+    positionId: Int,
+    atkType: Int,
+    size: Dp
 ) {
-    Box(
+    Column(
         Modifier
-            .padding(end = padding, bottom = padding)
-            .wrapContentSize()
-            .align(Alignment.BottomEnd)
-            .layerAlpha(layerAlpha.value, enablePositionAlpha)
+            .align(Alignment.TopStart)
+            .padding(start = padding, top = padding)
     ) {
-        val id = when (position) {
-            1 -> R.drawable.position_1
-            2 -> R.drawable.position_2
-            else -> R.drawable.position_3
-        }
         Image(
-            painter = painterResource(id),
+            painter = painterResource(AtkType.fromId(atkType).imgId),
             contentDescription = null,
-            modifier = Modifier.size(positionSize)
+            modifier = Modifier.size(size)
+        )
+        Image(
+            painter = painterResource(Position.fromId(positionId).imgId),
+            contentDescription = null,
+            modifier = Modifier.size(size)
         )
     }
 }
+
+@Composable
+private fun BoxScope.RoleAndTalent(
+//    padding: Dp,
+    roleId: Int,
+    talentId: Int,
+    isIcon: Boolean
+) {
+    Row(
+        Modifier
+            .align(Alignment.BottomEnd)
+//            .padding(end = padding, bottom = padding)
+    ) {
+        val size = if (isIcon) 16.dp else 20.dp
+        Image(
+            painter = painterResource(Role.fromId(roleId).halfImgId),
+            contentDescription = null,
+            contentScale = ContentScale.FillHeight,
+            modifier = Modifier.height(size)
+        )
+        Image(
+            painter = painterResource(Talent.fromId(talentId).halfImgId),
+            contentDescription = null,
+            contentScale = ContentScale.FillHeight,
+            modifier = Modifier.height(size)
+        )
+    }
+}
+
+@Composable
+private fun BoxScope.Rarity(
+    padding: Dp,
+    layerAlpha: State<Float>,
+    hasUnique: Boolean,
+    rarity: Int,
+    isIcon: Boolean
+) {
+    Box(
+        Modifier
+            .align(Alignment.BottomStart)
+            .padding(start = padding, bottom = padding)
+            .layerAlpha(1 - layerAlpha.value, hasUnique)
+    ) {
+        val id = when (rarity) {
+            1 -> R.drawable.common_unit_icon_star_1
+            2 -> R.drawable.common_unit_icon_star_2
+            3 -> R.drawable.common_unit_icon_star_down_3
+            4 -> R.drawable.common_unit_icon_star_down_4
+            6 -> R.drawable.common_unit_icon_star_6
+            else -> R.drawable.common_unit_icon_star_5
+        }
+        val size = if (isIcon) 18.dp else 22.dp
+        Image(
+            painter = painterResource(id),
+            contentDescription = null,
+            contentScale = ContentScale.FillHeight,
+            modifier = Modifier.height(size)
+        )
+    }
+}
+
+//@Composable
+//private fun BoxScope.Rarities(
+//    padding: Dp,
+//    layerAlpha: State<Float>,
+//    hasUnique: Boolean,
+//    maxRarity: Int,
+//    rarity: Int,
+//    starSize: Dp,
+//    isIcon: Boolean,
+//    @DrawableRes star0Id: Int,
+//    @DrawableRes star1Id: Int,
+//    @DrawableRes star6Id: Int
+//) {
+//    Row(
+//        Modifier
+//            .align(Alignment.BottomStart)
+//            .padding(start = padding, bottom = padding)
+//            .layerAlpha(1 - layerAlpha.value, hasUnique)
+//    ) {
+//        repeat(maxRarity) { r ->
+//            val id = if (r < rarity) {
+//                if (r > 4) {
+//                    star6Id
+//                } else {
+//                    star1Id
+//                }
+//            } else {
+//                star0Id
+//            }
+//            Image(
+//                painter = painterResource(id),
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .size(starSize)
+//                    .offsetX((-2 * r).dp, isIcon)
+//            )
+//        }
+//    }
+//}
+
+//@Composable
+//private fun BoxScope.Position(
+//    padding: Dp,
+//    layerAlpha: State<Float>,
+//    enablePositionAlpha: Boolean,
+//    positionId: Int,
+//    positionSize: Dp
+//) {
+//    Box(
+//        Modifier
+//            .align(Alignment.TopStart)
+//            .padding(end = padding, bottom = padding)
+//            .layerAlpha(layerAlpha.value, enablePositionAlpha)
+//    ) {
+//        Image(
+//            painter = painterResource(Position.fromId(positionId).imgId),
+//            contentDescription = null,
+//            modifier = Modifier.size(positionSize)
+//        )
+//    }
+//}
 
 @Composable
 private fun BoxScope.Unique(
@@ -257,9 +362,8 @@ private fun BoxScope.Unique(
 ) {
     Box(
         Modifier
-            .padding(start = padding, bottom = padding)
-            .wrapContentSize()
             .align(Alignment.BottomStart)
+            .padding(start = padding, bottom = padding)
             .layerAlpha(layerAlpha.value, true)
     ) {
         Image(
@@ -271,13 +375,13 @@ private fun BoxScope.Unique(
 }
 
 
-private fun Modifier.offsetX(value: Dp, enable: Boolean): Modifier {
-    return if (enable) {
-        this.offset(value, 0.dp)
-    } else {
-        this
-    }
-}
+//private fun Modifier.offsetX(value: Dp, enable: Boolean): Modifier {
+//    return if (enable) {
+//        this.offset(value, 0.dp)
+//    } else {
+//        this
+//    }
+//}
 
 private fun Modifier.layerAlpha(value: Float, enable: Boolean): Modifier {
     return if (enable) {

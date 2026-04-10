@@ -165,7 +165,8 @@ class CharaListState {
         connectRank: Int?,
         charaLevel: Int?,
         loveLevel: Int?,
-        uniqueLevel: Int?,
+        unique1Level: Int?,
+        unique2Level: Int?,
         promotionLevel: Int?,
         unlockSlot: Int?
     ) {
@@ -219,10 +220,15 @@ class CharaListState {
             } else {
                 if (unitData.maxRarity < 6 && loveLevel > 8) 8 else loveLevel
             }
-            val newUnique1Level = if (uniqueLevel == null) {
+            val newUnique1Level = if (unique1Level == null) {
                 userData.unique1Level
             } else {
-                if (unitData.hasUnique1) uniqueLevel else 0
+                if (unitData.hasUnique1) unique1Level else 0
+            }
+            val newUnique2Level = if (unique2Level == null) {
+                userData.unique2Level
+            } else {
+                if (unitData.hasUnique2) unique2Level else -1
             }
             val newPromotionLevel = promotionLevel ?: userData.promotionLevel
             if (unlockSlot == null) {
@@ -243,7 +249,7 @@ class CharaListState {
                 newCharaLevel,
                 newLoveLevel,
                 newUnique1Level,
-                userData.unique2Level,
+                newUnique2Level,
                 newPromotionLevel,
                 newCharaLevel,
                 newCharaLevel,
@@ -383,7 +389,7 @@ class CharaListState {
                     val talentMatch = talent == Talent.All || talent.ordinal == it.talentId
                     val roleMatch = role == Role.All || role.ordinal == it.unitRoleId
                     val atkTypeMatch = atkType == AtkType.All || atkType.ordinal == it.atkType
-                    val positionMatch = position == Position.All || position.ordinal == it.position
+                    val positionMatch = position == Position.All || position.ordinal == it.positionId
                     val searchTextMatch = searchText.isEmpty() ||
                             (it.unitId.toString() + it.unitName + it.kana + it.actualName)
                                 .contains(searchText)
