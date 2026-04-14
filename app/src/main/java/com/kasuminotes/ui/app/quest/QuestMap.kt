@@ -38,7 +38,6 @@ fun QuestMap(
     onHighlightListChange: (Int) -> Unit,
     onAreaChange: (Int) -> Unit,
     sortButton: @Composable () -> Unit,
-//    bottomBar: @Composable () -> Unit,
     backButton: @Composable () -> Unit,
     floatingActionButton: @Composable () -> Unit
 ) {
@@ -90,7 +89,6 @@ fun QuestMap(
                 }
             )
         },
-//        bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->

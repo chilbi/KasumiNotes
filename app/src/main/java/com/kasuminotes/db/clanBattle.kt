@@ -66,7 +66,7 @@ suspend fun AppDatabase.getClanBattlePeriodList(limit: Boolean): List<ClanBattle
 
 suspend fun AppDatabase.getClanBattleMapDataList(clanBattleId: Int): List<ClanBattleMapData> {
     val sql = """SELECT ${ClanBattleMapData.getFields()} FROM clan_battle_2_map_data
-WHERE clan_battle_id=$clanBattleId GROUP BY lap_num_from ORDER BY lap_num_from DESC"""
+WHERE clan_battle_id=$clanBattleId ORDER BY lap_num_from DESC"""
 
     val result = useDatabase {
         rawQuery(sql, null).use {

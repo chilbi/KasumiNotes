@@ -161,8 +161,6 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     appViewModel.questState,
                     appViewModel::navigateToEquipById,
                     appViewModel::popBackStack
-//                    appViewModel::navigateTo,
-//                    navigateToHomeAndOpenDrawer
                 )
             }
             composable(
@@ -174,12 +172,6 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     appViewModel.clanBattleState,
                     appViewModel::navigateToMapList,
                     appViewModel::popBackStack
-//                    appViewModel::navigateToDungeon,
-//                    appViewModel::navigateToTalentQuest,
-//                    appViewModel::navigateToAbyssQuest,
-//                    appViewModel::navigateToMirageQuest,
-//                    appViewModel::navigateTo,
-//                    navigateToHomeAndOpenDrawer
                 )
             }
             composable(

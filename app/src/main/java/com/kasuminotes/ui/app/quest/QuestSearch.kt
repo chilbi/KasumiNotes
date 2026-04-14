@@ -79,7 +79,6 @@ fun QuestSearch(
     onToggleMin37: () -> Unit,
     onToggleVisitIndex: () -> Unit,
     sortButton: @Composable () -> Unit,
-//    bottomBar: @Composable () -> Unit,
     backButton: @Composable () -> Unit,
     floatingActionButton: @Composable () -> Unit
 ) {
@@ -91,9 +90,6 @@ fun QuestSearch(
                 },
                 navigationIcon = {
                     backButton()
-//                    IconButton(onClick = onSearch) {
-//                        Icon(Icons.Filled.Search, null)
-//                    }
                 },
                 actions = {
                     QuestType.entries.forEach { type ->
@@ -144,7 +140,6 @@ fun QuestSearch(
                 }
             )
         },
-//        bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->

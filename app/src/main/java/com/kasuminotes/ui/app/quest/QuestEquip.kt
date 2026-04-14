@@ -43,7 +43,6 @@ fun QuestEquip(
     onEquipTypesChange: (checked: Boolean, type: Int) -> Unit,
     onAllEquipTypesChange: (allSelected: Boolean) -> Unit,
     onEquipClick: (Int) -> Unit,
-//    bottomBar: @Composable () -> Unit,
     backButton: @Composable () -> Unit,
     floatingActionButton: @Composable () -> Unit
 ) {
@@ -55,12 +54,6 @@ fun QuestEquip(
                 },
                 navigationIcon = {
                     backButton()
-//                    Box(
-//                        modifier = Modifier.size(48.dp),
-//                        contentAlignment = Alignment.Center
-//                    ) {
-//                        Icon(Icons.Filled.Gavel, null)
-//                    }
                 },
                 actions = {
                     FilterButton(
@@ -72,7 +65,6 @@ fun QuestEquip(
                 }
             )
         },
-//        bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
         containerColor = MaterialTheme.colorScheme.surface,
         content = { contentPadding ->
