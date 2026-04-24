@@ -336,7 +336,7 @@ class ActionBuilder(
             109 -> getEnergyRestriction(skillLevel)
             110 -> getDotDamageUp()
             111 -> getConditionTrigger()
-            112 -> getDurationExtension()
+            112 -> getDurationExtension(skillLevel)
             114 -> getTriggeredWhenAttacked()
             116 -> getPersistence(skillLevel)
             117 -> getMarionette()

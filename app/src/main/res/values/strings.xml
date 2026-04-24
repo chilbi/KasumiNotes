@@ -314,7 +314,8 @@
     <string name="action_reduce_max1_content2_value3">，最多减少%s（%2$s≧%3$s时）。</string>
     <string name="action_multiply_max1_content2_value3">，最多变为%s倍（%2$s≧%3$s时）。</string>
     <string name="action_divide_max1_content2_value3">，最多变为%s分之一（%2$s≧%3$s时）。</string>
-    <string name="action_darkness_formula1">使物理攻击命中率降低到%s。</string>
+    <string name="action_physical_darkness_formula1">使物理攻击命中率降低到%s。</string>
+    <string name="action_magic_darkness_formula1">使魔法攻击命中率降低到%s。</string>
     <string name="action_life_steal_target1_formula2">赋予%1$s下次攻击提升%2$sHP吸收效果。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">赋予%1$s每秒回复%2$s%3$s的持续%2$s回复状态，效果时间%4$s秒。</string>
     <string name="action_trigger_hp_target1_formula2">当%1$s的HP低于最大HP的%2$s时发动。</string>
@@ -393,7 +394,9 @@
     <string name="action_triggered_when_hp_zero_target1">当%s的HP变为0时发动。</string>
     <string name="action_trigger_count1">（此技能战斗中只能发动%s次）</string>
     <string name="action_cannot_be_target1_state2">赋予【%2$s】期间%1$s不会成为敌人的攻击对象。</string>
-    <string name="action_duration_extension_target1_content2_value3">使%1$s受到%2$s的效果时间变为原来的%3$s。</string>
+    <string name="action_duration_extension_target1_content2_percent3">使%1$s受到%2$s的效果时间变为原来的%3$s。</string>
+    <string name="action_duration_extension_target1_content2_increase3">使%1$s受到%2$s的效果时间增加%3$s秒。</string>
+    <string name="action_duration_extension_target1_content2_decrease3">使%1$s受到%2$s的效果时间减少%3$s秒。</string>
     <string name="action_abnormal_damage_extension_target1_formula2_time3">使%1$s造成持续伤害状态异常的伤害的发生间隔和效果时间提高%2$s，效果时间%3$s秒。</string>
     <string name="action_convert_to_dot_target1_formula2_duration3_time4">使%1$s受到敌人的特定伤害的%2$s转换为%3$s秒的持续伤害，效果时间%4$s秒。（转换的持续伤害不回复TP）</string>
     <string name="action_reconcile_target1_time2">赋予%1$s调和状态，调和状态期间根据物理防御力和魔法防御力中较高一方的防御力计算受到的伤害，效果时间%2$s秒。</string>
