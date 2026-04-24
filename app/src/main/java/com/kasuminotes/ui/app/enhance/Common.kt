@@ -75,7 +75,7 @@ fun DrawScope.drawConnection(start: Offset, end: Offset, highlight: Boolean) {
             20f
         )
         drawLine(
-            Color.Companion.White,
+            Color.White,
             start,
             end,
             10f
