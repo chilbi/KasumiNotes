@@ -12,8 +12,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import com.kasuminotes.ui.app.App
 import com.kasuminotes.utils.LocaleUtil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -28,6 +32,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             App()
+        }
+        var keepSplash = true
+        splashScreen.setKeepOnScreenCondition { keepSplash }
+        lifecycleScope.launch(Dispatchers.IO) {
+            delay(250)
+            keepSplash = false
         }
     }
 
