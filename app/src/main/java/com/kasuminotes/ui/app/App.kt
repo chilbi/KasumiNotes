@@ -22,6 +22,7 @@ import com.kasuminotes.ui.app.equip.Equip
 import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
 import com.kasuminotes.ui.app.dashboard.Dashboard
+import com.kasuminotes.ui.app.enhance.Enhance
 import com.kasuminotes.ui.app.mirageQuest.MirageQuest
 import com.kasuminotes.ui.app.quest.Quest
 import com.kasuminotes.ui.app.summons.Summons
@@ -96,11 +97,12 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 Dashboard(
                     appViewModel.abyssQuestState.abyssLatestTalentId,
                     appViewModel::navigateToQuest,
-                    appViewModel::navigateToClanBattle,
                     appViewModel::navigateToDungeon,
-                    appViewModel::navigateToTalentQuest,
-                    appViewModel::navigateToAbyssQuest,
                     appViewModel::navigateToMirageQuest,
+                    appViewModel::navigateToAbyssQuest,
+                    appViewModel::navigateToTalentQuest,
+                    appViewModel::navigateToClanBattle,
+                    appViewModel::navigateToEnhance,
                     appViewModel::navigateTo,
                     navigateToHomeAndOpenDrawer
                 )
@@ -160,6 +162,16 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 Quest(
                     appViewModel.questState,
                     appViewModel::navigateToEquipById,
+                    appViewModel::popBackStack
+                )
+            }
+            composable(
+                route = AppNavData.Enhance.route,
+                enterTransition = AppNavData.Enhance.enterTransition,
+                exitTransition = AppNavData.Enhance.exitTransition
+            ) {
+                Enhance(
+                    appViewModel.enhanceState,
                     appViewModel::popBackStack
                 )
             }

@@ -34,6 +34,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     val talentQuestState = TalentQuestState(appRepository, viewModelScope)
     val abyssQuestState = AbyssQuestState(appRepository, viewModelScope)
     val mirageQuestState = MirageQuestState(appRepository, viewModelScope)
+    val enhanceState = EnhanceState(appRepository, viewModelScope)
 
     private var lastNavigationTime = 0L
     private val navigationThrottleTime = 500L
@@ -99,6 +100,13 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
         canNavigate {
             clanBattleState.initPeriodList()
             navController.navigate(AppNavData.ClanBattle.route)
+        }
+    }
+
+    fun navigateToEnhance() {
+        canNavigate {
+            enhanceState.initState()
+            navController.navigate(AppNavData.Enhance.route)
         }
     }
 

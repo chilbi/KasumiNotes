@@ -38,6 +38,8 @@
     <string name="swipe_equip_info">装備スロットを横スライドさせて装備が着脱できる</string>
     <string name="default_user_warning">デフォルトユーザーのプロフィールがデータベース更新の時に自動的にMAX強化される！</string>
     <string name="functionality_not_implemented">機能はまだ実装されていません</string>
+    <string name="prev_page">前のページ</string>
+    <string name="next_page">次のページ</string>
 
     <string name="connect">コネクト</string>
     <string name="level">LEVEL</string>
@@ -66,6 +68,7 @@
     <string name="app">アプリ</string>
     <string name="about">について</string>
     <string name="equip">装備</string>
+    <string name="knight_enhance">騎士強化</string>
     <string name="clan_battle">クランバトル</string>
     <string name="dungeon">ダンジョン</string>
     <string name="talent_quest">深域</string>
@@ -112,6 +115,19 @@
     <string name="extra_effect">EX効果</string>
     <string name="unit_ten_thousand">万</string>
     <string name="unit_hundred_million">億</string>
+    <string name="talent_level">属性レベル</string>
+    <string name="talent_skill">属性スキル</string>
+    <string name="team_skill">マスタースキル</string>
+    <string name="role_mastery">ロールマスタリー</string>
+    <string name="all_chara">全キャラ</string>
+    <string name="chara_talent1">%s属性キャラ</string>
+    <string name="enhance">強化</string>
+    <string name="cancel_enhance">強化キャンセル</string>
+    <string name="total_number">合計数</string>
+    <string name="required_number">必要数</string>
+    <string name="enhance_detail">強化詳細</string>
+    <string name="role_property">装備ステータス</string>
+    <string name="consume_item">消費アイテム</string>
 
     <string name="actual_name">本名</string>
     <string name="kana">平仮名</string>
@@ -146,6 +162,33 @@
     <string name="hp_recovery_rate">回復量上昇</string>
     <string name="energy_reduce_rate">ＴＰ軽減</string>
     <string name="accuracy">命中</string>
+
+    <string name="talent_atk">属性攻撃力</string>
+    <string name="skill_node_atk_and_magic_str">物理・魔法攻撃力</string>
+    <string name="skill_node_def_and_magic_def">物理・魔法防御力</string>
+    <string name="skill_node_physical_and_magic_critical">物理・魔法クリティカル</string>
+    <string name="skill_node_physical_critical_damage">物理クリダメ</string>
+    <string name="skill_node_magic_critical_damage">魔法クリダメ</string>
+    <string name="skill_node_physical_damage">物理与ダメージ</string>
+    <string name="skill_node_magic_damage">魔法与ダメージ</string>
+    <string name="skill_node_talent_bonus">属性ボーナス</string>
+
+    <string name="hp_up">ＨＰアップ</string>
+    <string name="attack">攻撃力</string>
+    <string name="attack_up">攻撃力アップ</string>
+    <string name="def_up">物理防御力アップ</string>
+    <string name="magic_def_up">魔法防御力アップ</string>
+    <string name="critical">クリティカル</string>
+    <string name="critical_up">クリティカルアップ</string>
+    <string name="critical_damage_up">クリダメアップ</string>
+    <string name="deal_damage_up">与ダメージアップ</string>
+    <string name="abnormal_state_accuracy">状態異常命中</string>
+    <string name="abnormal_state_resist">状態異常抵抗</string>
+    <string name="normal_attack_enhance">通常攻撃強化</string>
+    <string name="buff_enhance">バフ強化</string>
+    <string name="debuff_enhance">デバフ強化</string>
+    <string name="hp_recovery_enhance">回復強化</string>
+    <string name="energy_charge">ＴＰチャージ</string>
 
     <string name="connect_rank_status">コネクトRANKステータス</string>
     <string name="connect_rank_bonus">コネクトRANKボーナス</string>
@@ -584,8 +627,6 @@
     <string name="sub_formula_base1_lv2">(%1$s + %2$s × スキルLv)</string>
     <string name="sub_formula_lv1">%s × スキルLv</string>
 
-    <string name="buff_enhance">バフ強化</string>
-    <string name="debuff_enhance">デバフ強化</string>
     <string name="damage_boost">ダメージブースト</string>
     <string name="move_speed">移動速度</string>
     <string name="damage">ダメージ</string>

@@ -38,6 +38,8 @@
     <string name="swipe_equip_info">横向滑动装备槽可以装卸装备</string>
     <string name="default_user_warning">默认用户的档案在数据库更新时会被自动MAX强化！</string>
     <string name="functionality_not_implemented">功能尚未实现</string>
+    <string name="prev_page">上一页</string>
+    <string name="next_page">下一页</string>
 
     <string name="connect">连结</string>
     <string name="level">LEVEL</string>
@@ -66,6 +68,7 @@
     <string name="app">应用</string>
     <string name="about">关于</string>
     <string name="equip">装备</string>
+    <string name="knight_enhance">骑士强化</string>
     <string name="clan_battle">公会战</string>
     <string name="dungeon">地下城</string>
     <string name="talent_quest">深域</string>
@@ -112,6 +115,19 @@
     <string name="extra_effect">额外效果</string>
     <string name="unit_ten_thousand">万</string>
     <string name="unit_hundred_million">亿</string>
+    <string name="talent_level">属性等级</string>
+    <string name="talent_skill">属性技能</string>
+    <string name="team_skill">大师技能</string>
+    <string name="role_mastery">职能精通</string>
+    <string name="all_chara">全角色</string>
+    <string name="chara_talent1">%s属性角色</string>
+    <string name="enhance">强化</string>
+    <string name="cancel_enhance">取消强化</string>
+    <string name="total_number">合计数</string>
+    <string name="required_number">所需数</string>
+    <string name="enhance_detail">强化详情</string>
+    <string name="role_property">装备属性值</string>
+    <string name="consume_item">消耗道具</string>
 
     <string name="actual_name">本名</string>
     <string name="kana">平假名</string>
@@ -146,6 +162,33 @@
     <string name="hp_recovery_rate">回复量上升</string>
     <string name="energy_reduce_rate">TP轻减</string>
     <string name="accuracy">命中</string>
+
+    <string name="talent_atk">属性攻击力</string>
+    <string name="skill_node_atk_and_magic_str">物理・魔法攻击力</string>
+    <string name="skill_node_def_and_magic_def">物理・魔法防御力</string>
+    <string name="skill_node_physical_and_magic_critical">物理・魔法暴击</string>
+    <string name="skill_node_physical_critical_damage">物理暴击伤害</string>
+    <string name="skill_node_magic_critical_damage">魔法暴击伤害</string>
+    <string name="skill_node_physical_damage">物理伤害</string>
+    <string name="skill_node_magic_damage">魔法伤害</string>
+    <string name="skill_node_talent_bonus">属性加成</string>
+
+    <string name="hp_up">HP提升</string>
+    <string name="attack">攻击力</string>
+    <string name="attack_up">攻击力提升</string>
+    <string name="def_up">物理防御力提升</string>
+    <string name="magic_def_up">魔法防御力提升</string>
+    <string name="critical">暴击</string>
+    <string name="critical_up">暴击提升</string>
+    <string name="critical_damage_up">暴击伤害提升</string>
+    <string name="deal_damage_up">造成伤害提升</string>
+    <string name="abnormal_state_accuracy">异常状态命中</string>
+    <string name="abnormal_state_resist">异常状态抵抗</string>
+    <string name="normal_attack_enhance">普通攻击强化</string>
+    <string name="buff_enhance">增益强化</string>
+    <string name="debuff_enhance">减益强化</string>
+    <string name="hp_recovery_enhance">回复强化</string>
+    <string name="energy_charge">TP充能</string>
 
     <string name="connect_rank_status">连结RANK属性</string>
     <string name="connect_rank_bonus">连结RANK奖励</string>
@@ -584,8 +627,6 @@
     <string name="sub_formula_base1_lv2">(%1$s + %2$s × 技能等级)</string>
     <string name="sub_formula_lv1">%s × 技能等级</string>
 
-    <string name="buff_enhance">增益强化</string>
-    <string name="debuff_enhance">减益强化</string>
     <string name="damage_boost">伤害强化</string>
     <string name="move_speed">移动速度</string>
     <string name="damage">伤害</string>

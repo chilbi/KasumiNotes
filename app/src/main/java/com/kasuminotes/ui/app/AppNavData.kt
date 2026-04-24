@@ -24,7 +24,7 @@ sealed class AppNavData(
 
     data object Dashboard : AppNavData(
         route = "dashboard",
-        child = listOf("quest", "clanBattle", "dungeon", "talentQuest", "abyssQuest", "mirageQuest")
+        child = listOf("quest", "clanBattle", "dungeon", "talentQuest", "abyssQuest", "mirageQuest", "enhance")
     )
 
     data object Chara : AppNavData(
@@ -52,6 +52,11 @@ sealed class AppNavData(
         route = "quest",
         parent = listOf("dashboard"),
         child = listOf("equip")
+    )
+
+    data object Enhance : AppNavData(
+        route = "enhance",
+        parent = listOf("dashboard")
     )
 
     data object ClanBattle : AppNavData(

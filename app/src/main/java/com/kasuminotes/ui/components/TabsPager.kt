@@ -32,6 +32,7 @@ fun TabsPager(
     containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
     contentColor: Color = contentColorFor(containerColor),
     edgePadding: Dp = 52.dp,// ScrollableTabRowPadding
+    userScrollEnabled: Boolean = true,
     onTabClick: ((page: Int) -> Unit)? = null,
     tabContent: @Composable ColumnScope.(page: Int) -> Unit,
     pageContent: @Composable PagerScope.(page: Int) -> Unit
@@ -72,6 +73,7 @@ fun TabsPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.Top,
+            userScrollEnabled = userScrollEnabled,
             key = { it },
             pageContent = pageContent
         )

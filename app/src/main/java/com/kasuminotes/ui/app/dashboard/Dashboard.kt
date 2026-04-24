@@ -26,11 +26,12 @@ import com.kasuminotes.ui.components.VerticalGridCells
 fun Dashboard(
     abyssLatestTalentId: Int,
     onNavigateToQuest: () -> Unit,
-    onNavigateToClanBattle: () -> Unit,
     onNavigateToDungeon: () -> Unit,
-    onNavigateToTalentQuest: () -> Unit,
-    onNavigateToAbyssQuest: () -> Unit,
     onNavigateToMirageQuest: () -> Unit,
+    onNavigateToAbyssQuest: () -> Unit,
+    onNavigateToTalentQuest: () -> Unit,
+    onNavigateToClanBattle: () -> Unit,
+    onNavigateToEnhance: () -> Unit,
     onNavigateTo: (Int) -> Unit,
     onDrawerOpen: () -> Unit
 ) {
@@ -43,11 +44,12 @@ fun Dashboard(
     }
     val items = listOf(
         DashboardItem(R.drawable.quest, R.string.equip, onNavigateToQuest),
-        DashboardItem(R.drawable.clan_battle, R.string.clan_battle, onNavigateToClanBattle),
         DashboardItem(R.drawable.dungeon, R.string.dungeon, onNavigateToDungeon),
-        DashboardItem(R.drawable.talent_quest, R.string.talent_quest, onNavigateToTalentQuest),
+        DashboardItem(R.drawable.mirage_quest, R.string.mirage_quest, onNavigateToMirageQuest),
         DashboardItem(abyssQuestImageResId, R.string.abyss_quest, onNavigateToAbyssQuest),
-        DashboardItem(R.drawable.mirage_quest, R.string.mirage_quest, onNavigateToMirageQuest)
+        DashboardItem(R.drawable.talent_quest, R.string.talent_quest, onNavigateToTalentQuest),
+        DashboardItem(R.drawable.clan_battle, R.string.clan_battle, onNavigateToClanBattle),
+        DashboardItem(R.drawable.enhance, R.string.knight_enhance, onNavigateToEnhance)
     )
 
     Scaffold(

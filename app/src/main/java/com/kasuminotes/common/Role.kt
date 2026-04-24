@@ -14,6 +14,8 @@ enum class Role(val strId: Int, val imgId: Int, val halfImgId: Int) {
     Jammer(R.string.jammer, R.drawable.icon_unit_role_008, R.drawable.icon_unit_role_half_008);
 
     companion object {
+        val roleIdList = (1..8).toList()
+
         fun fromId(roleId: Int): Role = when (roleId) {
             1 -> Attacker
             2 -> Breaker
