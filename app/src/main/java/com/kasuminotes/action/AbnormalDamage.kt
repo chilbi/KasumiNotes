@@ -8,7 +8,7 @@ fun SkillAction.getAbnormalDamage(skillLevel: Int): D {
     val target = getTarget(depend)
     val content = getAbnormalDamageContent(actionDetail1).style(underline = true)
     val formula = getBaseLvFormula(actionValue1, actionValue2, skillLevel)
-    val time = D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
+    val time = getBaseLvFormula(actionValue3, actionValue4, skillLevel)
 
     val damage = when (actionDetail1) {
         5 -> {

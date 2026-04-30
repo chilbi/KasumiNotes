@@ -26,6 +26,34 @@ fun SkillAction.getAbnormalField(skillLevel: Int, actions: List<SkillAction>): D
                 )
             }
         }
+        9 -> {
+            val target = getAssignment()
+            val content = getAbnormalDamageContent(modifyAction.actionDetail1).style(underline = true)
+            val formula = getBaseLvFormula(modifyAction.actionValue1, modifyAction.actionValue2, skillLevel)
+            when (modifyAction.actionDetail1) {
+                5 -> {
+                    val percent = D.Text("${modifyAction.actionValue5.toNumStr()}%").style(primary = true, bold = true)
+                    D.Format(
+                        R.string.content_state_target1_abnormal_damage2_formula3_percent4,
+                        arrayOf(target, content, formula, percent)
+                    )
+                }
+                11 -> {
+                    val percent = formula.append(D.Text("%").style(primary = true, bold = true))
+                    val max = D.Text(modifyAction.actionValue5.toNumStr()).style(primary = true, bold = true)
+                    D.Format(
+                        R.string.content_state_target1_abnormal_damage2_formula3_max4,
+                        arrayOf(target, content, percent, max)
+                    )
+                }
+                else -> {
+                    D.Format(
+                        R.string.content_state_target1_abnormal_damage2_formula3,
+                        arrayOf(target, content, formula)
+                    )
+                }
+            }
+        }
         79 -> {
             D.Format(
                 R.string.content_poison_damage_formula1,
@@ -35,13 +63,25 @@ fun SkillAction.getAbnormalField(skillLevel: Int, actions: List<SkillAction>): D
         else -> D.Unknown
     }
 
-    return D.Format(
+    val desc = D.Format(
         R.string.action_field_target1_range2_content3_time4,
         arrayOf(
             getTarget(depend),
             D.Text(actionValue3.toNumStr()),
             content,
-            D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
+            getBaseLvFormula(actionValue1, actionValue2, skillLevel)
         )
     )
+
+    return if (modifyAction.actionType == 9) {
+        if (modifyAction.actionDetail3 > 0) {
+            desc.append(getInjuredEnergy(modifyAction.actionDetail3))
+        } else if (actionDetail3 > 0) {
+            desc.append(getInjuredEnergy(actionDetail3))
+        } else {
+            desc
+        }
+    } else {
+        desc
+    }
 }

@@ -516,6 +516,9 @@
     <string name="content_poison_damage_formula1">の敵すべてを行動する度に%sダメージを与える毒状態にする</string>
     <string name="content_speed_target1_formula2">の%1$sすべての行動速度を本来の%2$sにする</string>
     <string name="content_state_target1_abnormal2">の%1$sすべてを%2$s状態にする</string>
+    <string name="content_state_target1_abnormal_damage2_formula3">の%1$sすべてを%2$s状態にする、毎秒%3$s%2$sダメージを与える</string>
+    <string name="content_state_target1_abnormal_damage2_formula3_percent4">の%1$sすべてを%2$s状態にする、毎秒%3$s%2$sダメージを与える、毎秒%2$sダメージが初期値の%4$sずつアップする</string>
+    <string name="content_state_target1_abnormal_damage2_formula3_max4">の%1$sすべてを%2$s状態にする、毎秒最大ＨＰの%3$s%2$sダメージを与える（最大%4$sダメージ）</string>
     <string name="content_attack_hit_enemy_target1">%sの攻撃が敵に当たる度に、命中された対象</string>
     <string name="content_attack_hit_target1">%sの攻撃が敵に当たる度に、自分</string>
     <string name="content_attack_critical_target1">%sの攻撃がクリティカルでダメージを与える度に、自分</string>
