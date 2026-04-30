@@ -188,22 +188,28 @@ class AppRepository(
         if (localStrings == null) {
             fetchAndSetLatestStrings()
         } else {
-            val localJson = JSONObject(localStrings)
-            val localVersion = localJson.getString("version")
-            val newVersion = HttpUtil.fetchStringsVersion()
-            if (newVersion != null && newVersion != localVersion) {
-                fetchAndSetLatestStrings()
-            } else {
-                setStrings(localJson)
-            }
+            try {
+                val localJson = JSONObject(localStrings)
+                val localVersion = localJson.getString("version")
+                val newVersion = HttpUtil.fetchStringsVersion()
+                if (newVersion != null && newVersion != localVersion) {
+                    fetchAndSetLatestStrings()
+                } else {
+                    setStrings(localJson)
+                }
+            } catch (_: Throwable) {}
         }
     }
 
     private fun fetchAndSetLatestStrings() {
         val newStrings = HttpUtil.fetchStrings()
         if (newStrings != null) {
-            setStrings(JSONObject(newStrings))
-            FileUtil.writeStrings(context, newStrings)
+            try {
+                setStrings(JSONObject(newStrings))
+                FileUtil.writeStrings(context, newStrings)
+            } catch (_: Throwable) {
+//                Log.i("json", newStrings)
+            }
         }
     }
 
