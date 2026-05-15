@@ -4,7 +4,10 @@ import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getAbnormalField(skillLevel: Int, actions: List<SkillAction>): D {
-    val modifyAction = actions.find { it.actionId == actionDetail1 }!!
+    val modifyAction = actions.find { it.actionId == actionDetail1 }
+    if (modifyAction == null) {
+        return getUnknown()
+    }
 
     val content = when (modifyAction.actionType) {
         8 -> {

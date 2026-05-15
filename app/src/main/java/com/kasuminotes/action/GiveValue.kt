@@ -8,7 +8,10 @@ import kotlin.math.ceil
 
 fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
     /** actionDetail1：修饰的目标动作 */
-    val targetAction = actions.find { it.actionId == actionDetail1 }!!
+    val targetAction = actions.find { it.actionId == actionDetail1 }
+    if (targetAction == null) {
+        return D.Text("")
+    }
 
     /** 嵌套修饰的目标动作 */
 //    val nestTargetAction = if (targetAction.actionType == 26 || targetAction.actionType == 27) {

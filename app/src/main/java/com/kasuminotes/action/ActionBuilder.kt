@@ -43,42 +43,56 @@ class ActionBuilder(
             }
             /** [getSustainDamage] */
             else if (action.actionType == 18 && action.actionValue1 == 0.0) {
-                willRemoveIndexList.add(rawDepends.indexOfFirst { it == action.actionId })
+                val modifyIndex = rawDepends.indexOfFirst { it == action.actionId }
+                if (modifyIndex > -1) {
+                    willRemoveIndexList.add(modifyIndex)
+                }
             }
             /** [getShieldCounter] */
             if (action.actionType == 33 && action.actionDetail3 != 0) {
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail3 }
-                willRemoveIndexList.add(modifyIndex)
+                if (modifyIndex > -1) {
+                    willRemoveIndexList.add(modifyIndex)
+                }
             }
             /** [getAbnormalField] */
             else if (action.actionType == 39) {
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
-                willRemoveIndexList.add(modifyIndex)
+                if (modifyIndex > -1) {
+                    willRemoveIndexList.add(modifyIndex)
+                }
             }
             /** [getGiveValue] */
             else if (action.actionType in arrayOf(26, 27, 74)) {
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
-                giveValueModifyList.add(modifyIndex to index)
+                if (modifyIndex > -1) {
+                    giveValueModifyList.add(modifyIndex to index)
+                }
             }
             /** [getDamageBaseAtk] */
             else if (action.actionType == 103) {
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
-                originList[modifyIndex] = originList[modifyIndex].append(originList[index])
+                if (modifyIndex > -1) {
+                    originList[modifyIndex] = originList[modifyIndex].append(originList[index])
+                }
             }
             /** [getTotalCritical] */
             else if (action.actionType == 107) {
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail1 }
-                totalCriticalModifyList.add(modifyIndex to index)
+                if (modifyIndex > -1) {
+                    totalCriticalModifyList.add(modifyIndex to index)
+                }
             }
             /** [getHitCount] */
             else if (action.actionType == 75) {
                 willRemoveIndexList.add(index)
                 val modifyIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
-                hitCountModifyList.add(modifyIndex to index)
-//                originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
+                if (modifyIndex > -1) {
+                    hitCountModifyList.add(modifyIndex to index)
+                }
             }
             /** [getTriggeredWhenAttacked] */
             else if (action.actionType == 114) {
@@ -165,11 +179,14 @@ class ActionBuilder(
                                 93 -> actions.indexOfFirst { it.actionId == dependAction.actionDetail1 }
                                 else -> 0
                             }
-                            willRemoveModify.collectModify(targetIndex, injuredEnergyContent)
-                            willRemoveModify.collectDepend()
-                            willRemoveModify.forEachModify { modifyIndex, modifyContent ->
-                                if (actions[modifyIndex].actionType in modifyTypes) {
-                                    originList[modifyIndex] = originList[modifyIndex].append(modifyContent)
+                            if (targetIndex > -1) {
+                                willRemoveModify.collectModify(targetIndex, injuredEnergyContent)
+                                willRemoveModify.collectDepend()
+                                willRemoveModify.forEachModify { modifyIndex, modifyContent ->
+                                    if (actions[modifyIndex].actionType in modifyTypes) {
+                                        originList[modifyIndex] =
+                                            originList[modifyIndex].append(modifyContent)
+                                    }
                                 }
                             }
                         }
@@ -180,11 +197,6 @@ class ActionBuilder(
             else if (action.actionType in arrayOf(901, 902)) {
                 willRemoveIndexList.add(index)
                 exEquipPassive = originList[index]
-//                var modifyIndex = index + 1
-//                if (actions[modifyIndex].actionType in arrayOf(26, 27, 74)) {
-//                    modifyIndex = actions.indexOfFirst { it.actionId == actions[modifyIndex].actionDetail1 }
-//                }
-//                originList[modifyIndex] = originList[modifyIndex].insert(originList[index])
             }
             /** [getBranch] */
             else if (action.actionType in arrayOf(23, 28, 42, 53, 63)) {
