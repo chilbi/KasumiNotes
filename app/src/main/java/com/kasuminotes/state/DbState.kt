@@ -7,6 +7,7 @@ import com.kasuminotes.common.DbServer
 import com.kasuminotes.common.DownloadState
 import com.kasuminotes.data.AppReleaseInfo
 import com.kasuminotes.db.AppDatabase
+import com.kasuminotes.db.DatabaseTableCopier
 import com.kasuminotes.db.getBackupUserDataList
 import com.kasuminotes.db.initDatabase
 import com.kasuminotes.db.initQuestDropData
@@ -204,6 +205,7 @@ class DbState(
             try {
                 lastDbVersion = appRepository.fetchLastDbVersion(server)
                 tempDbFile.renameTo(dbFile)
+                DatabaseTableCopier.copyTablesFromEN(server, appRepository)
                 db = appRepository.getDatabase(dbFile.name)
                 db.initDatabase(DefaultUserId)
             } catch (e: Throwable) {
@@ -221,6 +223,7 @@ class DbState(
                 db = appRepository.getDatabase(dbFile.name)
                 val backupUserDataList = db.getBackupUserDataList(DefaultUserId)
                 tempDbFile.renameTo(dbFile)
+                DatabaseTableCopier.copyTablesFromEN(server, appRepository)
                 db.initDatabase(DefaultUserId)
                 db.putUserDataList(backupUserDataList)
             } catch (e: Throwable) {

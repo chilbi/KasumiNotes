@@ -8,25 +8,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 
-//fun AppDatabase.createConnectRankBonus() {
-//    if (!existsTable("connect_rank_bonus")) {
-//        useDatabase {
-//            execSQL(
-//"""CREATE TABLE `connect_rank_bonus`(
-//'bonus_level' INTEGER NOT NULL,
-//'bonus_number' INTEGER NOT NULL,
-//'bonus_type' INTEGER NOT NULL,
-//'description_type' INTEGER NOT NULL,
-//'value_1' INTEGER NOT NULL,
-//'value_2' INTEGER NOT NULL,
-//'description' TEXT NOT NULL,
-//PRIMARY KEY ('bonus_number', 'bonus_level')
-//)"""
-//            )
-//        }
-//    }
-//}
-
 fun AppDatabase.getMaxConnectRank(): Int {
     return if (existsTable("connect_rank_chart")) {
         useDatabase {
