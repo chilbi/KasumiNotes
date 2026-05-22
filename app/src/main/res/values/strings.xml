@@ -406,6 +406,7 @@
     <string name="action_marionette_target1_time2">使%1$s陷入【操线】状态，效果时间%2$s秒。被傀儡之线操纵之人，会毫不犹豫地与同伴互相残杀，化作演绎悲剧舞蹈的人偶。</string>
     <string name="action_marionette_suspend_target1">使%s的【操线】状态中断。</string>
     <string name="action_grant_must_critical_target1_state2_time3">赋予%1$s【%2$s】，效果时间%3$s秒。【%2$s】期间，%1$s的攻击必定暴击。</string>
+    <string name="action_undispellable">（此技能效果不可驱散）</string>
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>

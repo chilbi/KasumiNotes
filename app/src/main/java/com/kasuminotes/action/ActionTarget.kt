@@ -57,7 +57,7 @@ private val allMostHighTypes = hpRatioHighTypes
     .plus(defHighTypes)
     .plus(magicDefHighTypes)
 
-fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
+fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false, talent: D? = null): D {
     if (depend != null) {
         return if (targetAssignment == 1 && depend.actionType == 17 && depend.actionDetail1 == 14) {
             getDependMultiTarget(D.Format(R.string.target_attacking_enemy))
@@ -67,12 +67,12 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             getDependMultiTarget(D.Format(R.string.target_randomized))
         } else if (depend.actionType == 7) {
             if (actionType in arrayOf(37, 38, 39) || focused) {
-                depend.getTarget(null, true)
+                depend.getTarget(null, true, talent)
             } else {
                 if (targetCount == 1) {
-                    depend.getTarget(null, true)
+                    depend.getTarget(null, true, talent)
                 } else {
-                    depend.getTargetFocus(this).append(getTarget(null, true))
+                    depend.getTargetFocus(this).append(getTarget(null, true, talent))
                 }
             }
         } else if (depend.isBranch()) {
@@ -80,23 +80,23 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                 getDependMultiTarget(D.Format(R.string.target_eligible))
             } else if (depend.depend != null) {
                 if (depend.targetAssignment == 1 && depend.depend!!.actionType == 17 && depend.depend!!.actionDetail1 == 14) {
-                    depend.getTarget(depend.depend, focused)
+                    depend.getTarget(depend.depend, focused, talent)
                 } else {
-                    getDependMultiTarget(depend.getTarget(depend.depend!!.copy(actionType = 23), focused))
+                    getDependMultiTarget(depend.getTarget(depend.depend!!.copy(actionType = 23), focused, talent))
                 }
             } else {
-                getDependMultiTarget(depend.getTarget(null, focused))
+                getDependMultiTarget(depend.getTarget(null, focused, talent))
             }
         } else if (depend.actionType == 105) {
-            this.copy(targetAssignment = 3).getTarget(null, focused)
+            this.copy(targetAssignment = 3).getTarget(null, focused, talent)
         } else if (depend.depend != null) {
             if (depend.checkDependChain(depend.depend!!)) {
-                depend.getTarget(depend.depend, focused)
+                depend.getTarget(depend.depend, focused, talent)
             } else {
-                getTarget(null, focused)
+                getTarget(null, focused, talent)
             }
         } else {
-            getDependMultiTarget(depend.getTarget(null, focused))
+            getDependMultiTarget(depend.getTarget(null, focused, talent))
         }
     }
 
@@ -106,25 +106,18 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
             targetType = 3,
             targetCount = 99,
             targetAssignment = 3
-        ).getTarget(null, focused)
-    }
-
-    if (targetType in 13001..13999) {
+        ).getTarget(null, focused, talent)
+    } else if (targetType in 13001..13999) {
         return D.Format(
             R.string.target_state1,
             arrayOf(getMarkContent(targetType - 13000))
         )
     } else if (targetType in 14001..14999) {
-        return D.Join(arrayOf(
-            D.Format(R.string.target_talent1, arrayOf(getTalentType(targetType - 14000))),
-            this.copy(targetType = 1).getTarget(null)
-        ))
+        val talentDesc = D.Format(R.string.target_talent1, arrayOf(getTalentType(targetType - 14000)))
+        return this.copy(targetType = 1).getTarget(null, focused, talentDesc)
     } else if (targetType in 15001..15999) {
-        return D.Join(arrayOf(
-            D.Format(R.string.target_without_self),
-            D.Format(R.string.target_talent1, arrayOf(getTalentType(targetType - 15000))),
-            this.copy(targetType = 1).getTarget(null)
-        ))
+        val talentDesc = D.Format(R.string.target_talent1, arrayOf(getTalentType(targetType - 15000)))
+        return this.copy(targetType = 34).getTarget(null, focused, talentDesc)
     }
 
     return when (targetType) {
@@ -135,52 +128,62 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                     if (isFullRangeTarget()) {
                         if (targetNumber > 0) {
                             if (targetNumber == 99) {
-                                D.Format(R.string.target_first_assignment_count1, arrayOf(getAssignmentCount()))
+                                D.Format(R.string.target_first_assignment_count1, arrayOf(
+                                    getTalentModifier(getAssignmentCount(), talent)
+                                ))
                             } else {
                                 D.Format(
                                     R.string.target_front_number1_assignment2,
-                                    arrayOf(getNumber(), getAssignmentOne())
+                                    arrayOf(getNumber(), getTalentModifier(getAssignmentOne(), talent))
                                 )
                             }
                         } else {//targetNumber == 0
-                            D.Join(arrayOf(D.Format(R.string.target_forward), getAssignmentCount()))
+                            D.Join(arrayOf(
+                                D.Format(R.string.target_forward),
+                                getTalentModifier(getAssignmentCount(), talent)
+                            ))
                         }
                     } else {
                         D.Format(
                             R.string.target_range1_content2,
                             arrayOf(
                                 D.Join(arrayOf(D.Format(R.string.target_front), D.Text(targetRange.toString()))),
-                                D.Join(arrayOf(D.Format(R.string.target_nearest), getAssignmentCount()))
+                                D.Join(arrayOf(
+                                    D.Format(R.string.target_nearest),
+                                    getTalentModifier(getAssignmentCount(), talent)
+                                ))
                             )
                         )
                     }
                 } else {//多名目标
                     val manyTarget = if (targetCount == 99 || targetCount == 0) {
                         if (isFullRangeTarget()) {
-                            D.Format(R.string.target_front_all_assignment1, arrayOf(getAssignment()))
+                            D.Format(R.string.target_front_all_assignment1, arrayOf(
+                                getTalentModifier(getAssignment(), talent)
+                            ))
                         } else {
                             D.Format(
                                 R.string.target_range1_content2,
                                 arrayOf(
                                     D.Join(arrayOf(D.Format(R.string.target_front), D.Text(targetRange.toString()))),
-                                    D.Format(
-                                        R.string.target_range_all_content1,
-                                        arrayOf(getAssignment())
+                                    getTalentModifier(
+                                        D.Format(R.string.target_range_all_content1, arrayOf(getAssignment())),
+                                        talent
                                     )
                                 )
                             )
                         }
                     } else {//n名目标
                         if (isFullRangeTarget()) {
-                            D.Join(arrayOf(D.Format(R.string.target_forward), getAssignmentCount()))
+                            D.Join(arrayOf(D.Format(R.string.target_forward), getTalentModifier(getAssignmentCount(), talent)))
                         } else {
                             D.Format(
                                 R.string.target_range1_content2,
                                 arrayOf(
                                     D.Join(arrayOf(D.Format(R.string.target_front), D.Text(targetRange.toString()))),
-                                    D.Format(
-                                        R.string.target_range_max_assignment_count1,
-                                        arrayOf(getAssignmentCount())
+                                    getTalentModifier(
+                                        D.Format(R.string.target_range_max_assignment_count1, arrayOf(getAssignmentCount())),
+                                        talent
                                     )
                                 )
                             )
@@ -199,12 +202,12 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                                 if (targetNumber == 1 && targetAssignment == 2) {
                                     D.Format(
                                         R.string.target_nearest_assignment1,
-                                        arrayOf(getAssignmentCount())
+                                        arrayOf(getTalentModifier(getAssignmentCount(), talent))
                                     )
                                 } else {
                                     D.Format(
                                         R.string.target_near_number1_assignment2,
-                                        arrayOf(getNumber(), getAssignmentCount())
+                                        arrayOf(getNumber(), getTalentModifier(getAssignmentCount(), talent))
                                     )
                                 }
                             } else {//targetNumber == 0
@@ -212,7 +215,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                                     arrayOf(
                                         D.Format(if (targetArea == 3)
                                             R.string.target_forward else R.string.target_nearest),
-                                        getAssignmentCount()
+                                        getTalentModifier(getAssignmentCount(), talent)
                                     )
                                 )
                             }
@@ -225,7 +228,7 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                                 D.Join(
                                     arrayOf(
                                         D.Format(R.string.target_nearest),
-                                        getAssignmentCount()
+                                        getTalentModifier(getAssignmentCount(), talent)
                                     )
                                 )
                             )
@@ -234,22 +237,22 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                 } else {//多名目标
                     val manyTarget = if (targetCount == 99 || targetCount == 0) {
                         if (isFullRangeTarget()) {
-                            D.Format(R.string.target_all_content1, arrayOf(getAssignmentSide()))
+                            getTalentModifier(D.Format(R.string.target_all_content1, arrayOf(getAssignmentSide())), talent)
                         } else {
                             D.Format(
                                 R.string.target_range1_content2,
                                 arrayOf(
                                     D.Text(targetRange.toString()),
-                                    D.Format(
-                                        R.string.target_range_all_content1,
-                                        arrayOf(getAssignment())
+                                    getTalentModifier(
+                                        D.Format(R.string.target_range_all_content1, arrayOf(getAssignment())),
+                                        talent
                                     )
                                 )
                             )
                         }
                     } else {//n名目标
                         if (isFullRangeTarget()) {
-                            D.Join(arrayOf(D.Format(R.string.target_nearest), getAssignmentCount()))
+                            D.Join(arrayOf(D.Format(R.string.target_nearest), getTalentModifier(getAssignmentCount(), talent)))
                         } else {
                             D.Format(
                                 R.string.target_range1_content2,
@@ -257,9 +260,9 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false): D {
                                     D.Text(targetRange.toString()),
                                     D.Join(arrayOf(
                                         D.Format(R.string.target_nearest),
-                                        D.Format(
-                                            R.string.target_range_max_assignment_count1,
-                                            arrayOf(getAssignmentCount())
+                                        getTalentModifier(
+                                        D.Format(R.string.target_range_max_assignment_count1, arrayOf(getAssignmentCount())),
+                                            talent
                                         )
                                     ))
                                 )
@@ -429,6 +432,22 @@ fun SkillAction.isSelf() = targetType in arrayOf(0, 7)
 
 /** if (actionType == 23 || actionType == 28) any_target else target */
 fun SkillAction.isBranch() = actionType in arrayOf(23, 28)
+
+/** 检测依赖是否正常 */
+fun SkillAction.checkDependChain(depend: SkillAction): Boolean {
+    var temp = depend
+    val list = mutableListOf<Int>()
+    list.add(actionId)
+    while (!list.contains(temp.actionId)) {
+        list.add(temp.actionId)
+        if (temp.depend != null) {
+            temp = temp.depend!!
+        } else {
+            return true
+        }
+    }
+    return false
+}
 
 /**
  * when (targetAssignment) {
@@ -601,18 +620,6 @@ private fun SkillAction.isFullRangeTarget(): Boolean {
     return targetRange <= 0 || targetRange >= 2160
 }
 
-/** 检测依赖是否正常 */
-fun SkillAction.checkDependChain(depend: SkillAction): Boolean {
-    var temp = depend
-    val list = mutableListOf<Int>()
-    list.add(actionId)
-    while (!list.contains(temp.actionId)) {
-        list.add(temp.actionId)
-        if (temp.depend != null) {
-            temp = temp.depend!!
-        } else {
-            return true
-        }
-    }
-    return false
+private fun getTalentModifier(content: D, talent: D?): D {
+    return talent?.append(content) ?: content
 }

@@ -53,6 +53,24 @@ private fun SkillAction.getDependBranch(): Array<Pair<Int, D>> {
                 D.Format(id, arrayOf(target, D.Format(R.string.action_branch_multi_target_no).tag(false)))
             )
         }
+        // ルルィ
+        1700 -> {
+            var detail1 = actionValue3.toInt()
+            val isUp = isStatusUp(detail1)
+            if (detail1 > 1000) {
+                detail1 -= 1000
+            }
+            val content = D.Join(arrayOf(
+                getStatusContent(detail1 / 10),
+                D.Format(if (isUp) R.string.content_up else R.string.content_down)
+            ))
+            val id = R.string.action_branch_status_change_target1_content2_p3
+            setBranch(
+                branch,
+                D.Format(id, arrayOf(target, content, D.Format(R.string.action_branch_status_change_yes).tag(true))),
+                D.Format(id, arrayOf(target, content, D.Format(R.string.action_branch_status_change_no).tag(false)))
+            )
+        }
         // キャル（オーバーロード）
         1600 -> {
             val state = D.Format(R.string.fear)

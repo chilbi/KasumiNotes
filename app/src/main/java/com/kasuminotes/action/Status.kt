@@ -11,12 +11,12 @@ fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property:
     val contentDesc = arr[0]!!
     val timeDesc = D.Format(R.string.action_time1, arrayOf(arr[1]!!))
     val constDesc = arr[2]
-    val desc = if (constDesc == null) {
+    var desc: D = if (constDesc == null) {
         D.Join(arrayOf(contentDesc, timeDesc))
     } else {
         D.Join(arrayOf(contentDesc, timeDesc, constDesc))
     }
-    return if (actionType == 115) {
+    desc = if (actionType == 115) {
         val content = D.Format(
             if (isStatusUp()) R.string.give_up_amount_content1
             else R.string.give_down_amount_content1,
@@ -35,6 +35,10 @@ fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property:
         ))
     }
     else desc
+    if (actionValue7 == 2.0) {
+        desc = desc.append(D.Format(R.string.action_undispellable))
+    }
+    return desc
 }
 
 fun SkillAction.isStatusPercent(): Boolean {
