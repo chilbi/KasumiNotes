@@ -324,10 +324,11 @@
     <string name="action_trigger_battle_beginning">バトル開始時に発動する。</string>
     <string name="action_trigger_battle_began_passed_time1">バトル開始後%s秒経過時に発動する。</string>
     <string name="action_trigger_battle_remaining_time1">バトルの残り時間が%s秒を切る時に発動する。</string>
-    <string name="action_trigger_stealth">潜伏状態時に発動する。</string>
-    <string name="action_trigger_break">Break状態時に発動する。</string>
+    <string name="action_trigger_stealth">潜伏状態になる時に発動する。</string>
+    <string name="action_trigger_break">Break状態になる時に発動する。</string>
+    <string name="action_trigger_all_break">すべてのターゲットがBreak状態になる時に発動する。</string>
     <string name="action_trigger_attacked_target1">%sが敵から攻撃を受けた時に発動する。</string>
-    <string name="action_trigger_all_break">全ターゲットがBreakの時に発動する。</string>
+    <string name="action_trigger_dot_target1">%sが継続ダメージ状態になる時に発動する。</string>
     <string name="action_destroy_target1">%sを戦闘不能状態にする。</string>
     <string name="action_accumulative_damage_formula1_tier2">敵を攻撃する度に、その敵に与えるダメージを%1$s増加させる。この効果は最大%2$s回まで累積する。</string>
     <string name="action_barrier_guard_target1_formula2_content3_time4">%1$sに%2$sダメージ分の%3$s無効バリアを展開する、効果時間%4$s秒。</string>
@@ -657,7 +658,8 @@
     <string name="black_fire">黒炎</string>
     <string name="curse_or_beshrew">呪いか呪詛</string>
     <string name="poison_or_fierce_poison">毒か猛毒</string>
-    <string name="poison_or_fierce_poison_or_curse_or_beshre_or_burn">毒、猛毒、呪い、呪詛、火傷</string>
+<!--    <string name="poison_or_fierce_poison_or_curse_or_beshre_or_burn">毒、猛毒、呪い、呪詛、火傷</string>-->
+    <string name="dot">継続ダメージ</string>
     <string name="slow">スロウ</string>
     <string name="haste">ヘイスト</string>
     <string name="numbness">麻痺</string>

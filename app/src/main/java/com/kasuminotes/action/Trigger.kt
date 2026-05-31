@@ -30,6 +30,7 @@ fun SkillAction.getTrigger(): D {
         9 -> D.Format(R.string.action_trigger_break)
         11 -> D.Format(R.string.action_trigger_all_break)
         14 -> D.Format(R.string.action_trigger_attacked_target1, arrayOf(getTarget(depend)))
+        15 -> D.Format(R.string.action_trigger_dot_target1, arrayOf(getTarget(depend)))
         else -> getUnknown()
     }
 }

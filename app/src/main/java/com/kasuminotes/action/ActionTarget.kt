@@ -579,14 +579,14 @@ private fun SkillAction.getNumber(): D {
 }
 
 /**
- * if (actionType == 23 || actionType == 28) any_target else target
+ * if (actionType == 23 || actionType == 28 || actionType == 17) any_target else target
  *
  * 中的任意{0}
  *
  * の中の任意{0}
  */
 private fun SkillAction.getAnyManyTarget(manyTarget: D): D {
-    return if (isBranch()) {
+    return if (isBranch() || actionType == 17) {
         D.Join(
             arrayOf(
                 manyTarget,

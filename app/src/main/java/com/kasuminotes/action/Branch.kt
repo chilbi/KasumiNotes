@@ -531,7 +531,7 @@ private fun SkillAction.setAbnormalDamageBranch(branch: MutableList<Pair<Int, D>
         4 -> D.Format(R.string.beshrew)
         11 -> D.Format(R.string.curse_or_beshrew)
         12 -> D.Format(R.string.poison_or_fierce_poison)
-        99 -> D.Format(R.string.poison_or_fierce_poison_or_curse_or_beshre_or_burn)
+        99 -> D.Format(R.string.dot)
         else -> D.Unknown
     }
     val id = R.string.action_branch_abnormal_target1_state2_p3
