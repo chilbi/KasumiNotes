@@ -22,6 +22,9 @@ object DatabaseTableCopier {
         val sourceDbPath = enDbFile.path
         val targetDbPath = targetDbFile.path
         val commonTables = listOf(
+            //专2强化材料
+            "unique_equip_craft_enhance",
+            "unique_equip_consume_group",
             //额外效果
             "extra_effect_data",
             //EX装备副属性
