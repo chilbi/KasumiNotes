@@ -353,7 +353,9 @@
     <string name="action_damage_cut_target1_state2_time3_cut4">%1$sを【%2$s】状態にする、効果時間%3$s秒。【%2$s】状態の間は%1$sが受けるダメージを%4$s軽減する。%1$sより前に味方がいない場合、【%2$s】状態は解除される。</string>
     <string name="action_friendly_barrier_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。【%2$s】が付与されている間、自分への攻撃を【%2$s】が付与されている味方１キャラが代わりに受ける。</string>
     <string name="action_resurrection_target1_state2_formula3_time4">%1$sに【%2$s】を付与する、効果時間%4$s秒。ＨＰが0になると、倒れずに【%2$s】を消費してＨＰを%3$s回復する。</string>
-    <string name="action_endure_target1_state2_formula3_time4">%1$sに【%2$s】を付与する、効果時間%4$s秒。【%2$s】付与中にＨＰが0になった場合、ＨＰ%3$sで耐える。</string>
+    <string name="action_guts_target1_state2_formula3_time4">%1$sに【%2$s】を付与する、効果時間%4$s秒。【%2$s】付与中にＨＰが0になった場合、ＨＰ%3$sで耐える。</string>
+    <string name="action_guts_limited_target1_state2_formula3_time4">%1$sに【%2$s】を付与する、効果時間%4$s秒。ＨＰが0になると、倒れずに【%2$s】を1つ消費してＨＰを%3$s回復する。</string>
+    <string name="action_guts_limited_target1_state2_formula3_time4_count5">%1$sに【%2$s】を付与する、効果時間%4$s秒。ＨＰが0になると、倒れずに【%2$s】を1つ消費してＨＰを%3$s回復する、最大%5$s回まで回復できる。</string>
     <string name="action_vicarious_injury_guard_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。【%2$s】が付与されている間、その対象への敵の攻撃を代わりに受ける。</string>
     <string name="action_shield_counter_target1_content2_type3_add4">%1$sに【%2$s】を%4$sつ追加する。【%2$s】は１回%3$sダメージを無効化する毎に１つ消耗される</string>
     <string name="action_shield_counter_target1_content2_type3">%1$sに【%2$s】を付与する。【%2$s】は１回%3$sダメージを無効化すると消耗される</string>
@@ -404,10 +406,10 @@
     <string name="action_triggered_when_use_ub_target1_state2_count3_max4_time5">%1$sに【%2$s】を%3$sつ付与する、最大%4$sつまで追加される、効果時間%5$s秒。【%2$s】が付与されているキャラがUBを使用した場合、【%2$s】を1つ消費し、同時に以下の効果を発動する：</string>
     <string name="action_deactivate1">%s状態の間はＴＰが増加しない。</string>
     <string name="action_damage_boost_content1_max2_time3">%1$s（上限%2$s）、効果時間%3$s秒。</string>
-    <string name="action_marionette_target1_time2">%1$sを【操糸】状態にさせる、効果時間%2$s秒。傀儡の糸により操られた者は躊躇なく仲間たちと命を奪い合い、悲劇の舞踏を踊る人形と化す。</string>
-    <string name="action_marionette_suspend_target1">%sの【操糸】状態を中断する。</string>
+    <string name="action_force_change_speed">（無効化不可）</string>
     <string name="action_grant_must_critical_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。【%2$s】が付与されている間、%1$sの攻撃は必ずクリティカルする。</string>
     <string name="action_undispellable">（この効果は解除できない）</string>
+    <string name="action_loop_motion_repeat_duration1_repeat2_damage3">%1$s秒の間に%2$s秒毎にアクションを実行する。（期間内に累計受けたダメージが%3$sを超えると中断する）\n</string>
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>
@@ -418,10 +420,9 @@
     <string name="action_branch_field_content1_p2">%1$sのフィールド%2$s場合、</string>
     <string name="action_branch_field_yes">展開中</string>
     <string name="action_branch_field_no">展開中ではない</string>
-    <string name="action_branch_damage_received_during_the_skill_value1_p2">スキル中累計受けたダメージが%1$sを%2$s場合、</string>
-    <string name="action_branch_damage_received_time1_value2_p3">%1$s秒の間に累計受けたダメージが%2$sを%3$s場合、</string>
-    <string name="action_branch_damage_received_yes">超えた</string>
-    <string name="action_branch_damage_received_no">超えなかった</string>
+    <string name="action_branch_loop_motion_repeat_duration1_damage2_p3">%1$s秒の間に累計受けたダメージが%2$sを%3$s場合、</string>
+    <string name="action_branch_loop_motion_repeat_yes">超えた</string>
+    <string name="action_branch_loop_motion_repeat_no">超えなかった</string>
     <string name="action_branch_mark_target1_state2_p3">%1$sが【%2$s】を%3$s場合、</string>
     <string name="action_branch_mark_yes">持っている</string>
     <string name="action_branch_mark_no">持っていない</string>
@@ -658,22 +659,10 @@
     <string name="black_fire">黒炎</string>
     <string name="curse_or_beshrew">呪いか呪詛</string>
     <string name="poison_or_fierce_poison">毒か猛毒</string>
-<!--    <string name="poison_or_fierce_poison_or_curse_or_beshre_or_burn">毒、猛毒、呪い、呪詛、火傷</string>-->
     <string name="dot">継続ダメージ</string>
-    <string name="slow">スロウ</string>
-    <string name="haste">ヘイスト</string>
-    <string name="numbness">麻痺</string>
-    <string name="freeze">凍結</string>
-    <string name="fetter">束縛</string>
-    <string name="sleep">睡眠</string>
-    <string name="stand">スタン</string>
-    <string name="petrifaction">石化</string>
-    <string name="detention">拘留</string>
-    <string name="coma">気絶</string>
-    <string name="stop">時間停止</string>
-    <string name="crystallization">結晶化</string>
     <string name="charm">魅了</string>
-    <string name="chaos">混乱</string>
+    <string name="confusion">混乱</string>
+    <string name="puppet">操糸</string>
     <string name="darkness">暗闇</string>
     <string name="silence">沈黙</string>
     <string name="invincible">無敵</string>
@@ -684,7 +673,6 @@
     <string name="fear">恐慌</string>
     <string name="deactivate">遮絶の操糸</string>
     <string name="persistence">執着</string>
-    <string name="cannot_invalidated_fetter">無効化不可の束縛</string>
     <string name="harmed_remove_content1">%s攻撃を受けたときのみ解除される。</string>
 
     <string name="max_hp">最大ＨＰ</string>

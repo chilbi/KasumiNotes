@@ -17,8 +17,8 @@ fun SkillAction.getCharm(): D {
 
 fun getCharmContent(detail: Int): D {
     return D.Format(when (detail) {
-        1 -> R.string.chaos
-        3 -> R.string.cannot_invalidated_fetter
+        1 -> R.string.confusion
+        3 -> R.string.puppet
         else -> R.string.charm//0
     })
 }

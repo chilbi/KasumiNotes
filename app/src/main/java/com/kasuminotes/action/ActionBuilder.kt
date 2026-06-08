@@ -283,7 +283,7 @@ class ActionBuilder(
             4 -> getHeal(skillLevel, property)
             6 -> getBarrier(skillLevel)
             7 -> D.Unknown/** [getTargetFocus] */
-            8 -> getAbnormal(skillLevel)
+            8 -> getChangeSpeed(skillLevel)
             9 -> getAbnormalDamage(skillLevel)
             10, 115 -> getStatus(skillLevel, actions, if (isExEquipPassive) property else null)
             11 -> getCharm()
@@ -351,8 +351,8 @@ class ActionBuilder(
             112 -> getDurationExtension(skillLevel)
             114 -> getTriggeredWhenAttacked()
             116 -> getPersistence(skillLevel)
-            117 -> getMarionette()
-            118 -> getEndure()
+            117 -> getForceChangeSpeed(skillLevel)
+            118 -> getGuts(skillLevel, property)
             121 -> getTriggeredWhenHpZero()
             123 -> getDamageCutState()
             124 -> getFriendlyBarrier()
@@ -383,7 +383,7 @@ fun getSkillEffectList(effectSkills: List<SkillItem>): List<SkillEffect> {
 private fun getSkillEffect(skillLevel: Int, actions: List<SkillAction>): SkillEffect? {
     val action1 = actions[0]
     when (action1.actionType) {
-        8 -> return action1.getAbnormalEffect(skillLevel)
+        8 -> return action1.getChangeSpeedEffect(skillLevel)
         9 -> return action1.getAbnormalDamageEffect(skillLevel)
         10 -> return action1.getStatusEffect(skillLevel)
         16 -> return action1.getChangeEnergyEffect(skillLevel)

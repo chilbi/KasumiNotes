@@ -4,7 +4,7 @@ import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 import com.kasuminotes.data.SkillEffect
 
-fun SkillAction.getAbnormal(skillLevel: Int): D {
+fun SkillAction.getChangeSpeed(skillLevel: Int): D {
     val time = getBaseLvFormula(actionValue3, actionValue4, skillLevel)
 
     return if (actionDetail1 == 1 || actionDetail1 == 2) {
@@ -34,7 +34,7 @@ fun SkillAction.getAbnormal(skillLevel: Int): D {
     }
 }
 
-fun SkillAction.getAbnormalEffect(skillLevel: Int): SkillEffect {
+fun SkillAction.getChangeSpeedEffect(skillLevel: Int): SkillEffect {
     return if (actionDetail1 == 1 || actionDetail1 == 2) {
         SkillEffect(
             getTarget(null),

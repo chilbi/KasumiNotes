@@ -352,8 +352,10 @@
     <string name="action_change_mark_consume_target1_state2">消费掉%1$s的【%2$s】。</string>
     <string name="action_damage_cut_target1_state2_time3_cut4">赋予%1$s【%2$s】状态，效果时间%3$s秒。【%2$s】状态期间%1$s受到的伤害减少%4$s。%1$s的前方没有己方角色时，就会解除【%2$s】状态。</string>
     <string name="action_friendly_barrier_target1_state2_time3">赋予%1$s【%2$s】，效果时间%3$s秒。【%2$s】赋予期间，对自身的攻击将由被赋予【%2$s】状态的一名己方角色代替承受伤害。</string>
-    <string name="action_resurrection_target1_state2_formula3_time4">赋予%1$s【%2$s】，效果时间%4$s秒。【%2$s】期间，HP降为0时，不会倒下并消耗【%2$s】回复HP%3$s。</string>
-    <string name="action_endure_target1_state2_formula3_time4">赋予%1$s【%2$s】，效果时间%4$s秒。【%2$s】的期间，HP降为0时，维持%3$sHP。</string>
+    <string name="action_resurrection_target1_state2_formula3_time4">赋予%1$s【%2$s】，效果时间%4$s秒。【%2$s】期间，HP降为0时，不会倒下并消耗【%2$s】回复%3$sHP。</string>
+    <string name="action_guts_target1_state2_formula3_time4">赋予%1$s【%2$s】，效果时间%4$s秒。【%2$s】的期间，HP降为0时，维持%3$sHP。</string>
+    <string name="action_guts_limited_target1_state2_formula3_time4">赋予%1$s【%2$s】，效果时间%4$s秒。每当HP降为0时，不会倒下并消耗掉1个【%2$s】回复%3$sHP。</string>
+    <string name="action_guts_limited_target1_state2_formula3_time4_count5">赋予%1$s【%2$s】，效果时间%4$s秒。每当HP降为0时，不会倒下并消耗掉1个【%2$s】回复%3$sHP，最多回复%5$s次。</string>
     <string name="action_vicarious_injury_guard_target1_state2_time3">赋予%1$s【%2$s】，效果时间%3$s秒。【%2$s】期间，代替该对象承受敌人的攻击。</string>
     <string name="action_shield_counter_target1_content2_type3_add4">为%1$s追加%4$s个【%2$s】。【%2$s】每无效1次%3$s伤害就会消耗1个</string>
     <string name="action_shield_counter_target1_content2_type3">赋予%1$s【%2$s】。【%2$s】无效1次%3$s伤害就会被消耗掉</string>
@@ -404,10 +406,10 @@
     <string name="action_triggered_when_use_ub_target1_state2_count3_max4_time5">赋予%1$s%3$s个【%2$s】，最多可以追加%4$s个，效果时间%5$s秒。被赋予【%2$s】的角色在使用UB时，消耗1个【%2$s】，同时发动以下效果：</string>
     <string name="action_deactivate1">%s状态期间TP不增加。</string>
     <string name="action_damage_boost_content1_max2_time3">%1$s（上限%2$s），效果时间%3$s秒。</string>
-    <string name="action_marionette_target1_time2">使%1$s陷入【操线】状态，效果时间%2$s秒。被傀儡之线操纵之人，会毫不犹豫地与同伴互相残杀，化作演绎悲剧舞蹈的人偶。</string>
-    <string name="action_marionette_suspend_target1">使%s的【操线】状态中断。</string>
+    <string name="action_force_change_speed">（不可无效化）</string>
     <string name="action_grant_must_critical_target1_state2_time3">赋予%1$s【%2$s】，效果时间%3$s秒。【%2$s】期间，%1$s的攻击必定暴击。</string>
     <string name="action_undispellable">（此技能效果不可驱散）</string>
+    <string name="action_loop_motion_repeat_duration1_repeat2_damage3">%1$s秒期间内每%2$s秒执行动作。（期间内累积受到的伤害超过%3$s时就会中断）\n</string>
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>
@@ -418,10 +420,9 @@
     <string name="action_branch_field_content1_p2">%1$s的领域%2$s时，</string>
     <string name="action_branch_field_yes">展开</string>
     <string name="action_branch_field_no">没有展开</string>
-    <string name="action_branch_damage_received_during_the_skill_value1_p2">技能中累计受到伤害%2$s%1$s时，</string>
-    <string name="action_branch_damage_received_time1_value2_p3">%1$s秒期间累计受到伤害%3$s%2$s时，</string>
-    <string name="action_branch_damage_received_yes">超过</string>
-    <string name="action_branch_damage_received_no">不超过</string>
+    <string name="action_branch_loop_motion_repeat_duration1_damage2_p3">%1$s秒期间内累积受到的伤害%3$s%2$s时，</string>
+    <string name="action_branch_loop_motion_repeat_yes">超过</string>
+    <string name="action_branch_loop_motion_repeat_no">不超过</string>
     <string name="action_branch_mark_target1_state2_p3">%1$s%3$s【%2$s】时，</string>
     <string name="action_branch_mark_yes">持有</string>
     <string name="action_branch_mark_no">未持有</string>
@@ -658,22 +659,10 @@
     <string name="black_fire">黑炎</string>
     <string name="curse_or_beshrew">诅咒或恶咒</string>
     <string name="poison_or_fierce_poison">毒或猛毒</string>
-<!--    <string name="poison_or_fierce_poison_or_curse_or_beshre_or_burn">毒、猛毒、诅咒、恶咒、火伤</string>-->
     <string name="dot">持续伤害</string>
-    <string name="slow">减速</string>
-    <string name="haste">加速</string>
-    <string name="numbness">麻痹</string>
-    <string name="freeze">冻结</string>
-    <string name="fetter">束缚</string>
-    <string name="sleep">睡眠</string>
-    <string name="stand">眩晕</string>
-    <string name="petrifaction">石化</string>
-    <string name="detention">拘留</string>
-    <string name="coma">昏迷</string>
-    <string name="stop">时间停止</string>
-    <string name="crystallization">结晶化</string>
     <string name="charm">魅惑</string>
-    <string name="chaos">混乱</string>
+    <string name="confusion">混乱</string>
+    <string name="puppet">傀儡</string>
     <string name="darkness">黑暗</string>
     <string name="silence">沉默</string>
     <string name="invincible">无敌</string>
@@ -684,7 +673,6 @@
     <string name="fear">恐慌</string>
     <string name="deactivate">隔绝的操线</string>
     <string name="persistence">执着</string>
-    <string name="cannot_invalidated_fetter">不可无效化的束缚</string>
     <string name="harmed_remove_content1">%s只当受到攻击时才能解除。</string>
 
     <string name="max_hp">最大HP</string>

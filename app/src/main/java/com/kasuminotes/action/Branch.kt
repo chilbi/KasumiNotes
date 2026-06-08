@@ -9,7 +9,7 @@ fun SkillAction.getBranch(skillLevel: Int, actions: List<SkillAction>): Array<Pa
         28 -> getNoDependBranch()
         42 -> getCounterBranch()
         53 -> getExistsFieldBranch()
-        63 -> getDamageReceivedBranch(skillLevel, actions)
+        63 -> getLoopMotionRepeat(skillLevel, actions)
         else -> emptyArray()
     }
 }
@@ -448,11 +448,10 @@ private fun SkillAction.getExistsFieldBranch(): Array<Pair<Int, D>> {
     return branch.toTypedArray()
 }
 
-//未知
-private fun SkillAction.getDamageReceivedBranch(skillLevel: Int, actions: List<SkillAction>): Array<Pair<Int, D>> {
+private fun SkillAction.getLoopMotionRepeat(skillLevel: Int, actions: List<SkillAction>): Array<Pair<Int, D>> {
     val branch = mutableListOf<Pair<Int, D>>()
     val giveValueAction =  actions.find { it.actionType == 26 && it.actionDetail1 == actionId && it.actionDetail2 == 3 }
-    val value = if (giveValueAction == null) {
+    val triggerDamage = if (giveValueAction == null) {
         D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
     } else {
         D.Format(
@@ -464,21 +463,31 @@ private fun SkillAction.getDamageReceivedBranch(skillLevel: Int, actions: List<S
             )
         ).style(primary = true)
     }
-    if (actionValue2 > 0.0) {
-        val time = D.Text(actionValue2.toNumStr())
-        val id = R.string.action_branch_damage_received_time1_value2_p3
-        setBranch(
-            branch,
-            D.Format(id, arrayOf(time, value, D.Format(R.string.action_branch_damage_received_yes).tag(true))),
-            D.Format(id, arrayOf(time, value, D.Format(R.string.action_branch_damage_received_no).tag(false)))
+    val repeatAction = actionDetail1
+    val successAction = actionDetail2
+    val failAction = actionDetail3
+    val duration = D.Text(actionValue1.toNumStr()).style(primary = true, bold = true)
+    val repeatTime = D.Text(actionValue2.toNumStr()).style(primary = true, bold = true)
+    if (repeatAction != 0) {
+        val loopMotionRepeat = D.Format(
+            R.string.action_loop_motion_repeat_duration1_repeat2_damage3,
+            arrayOf(duration, repeatTime, triggerDamage)
         )
-    } else {
-        val id = R.string.action_branch_damage_received_during_the_skill_value1_p2
-        setBranch(
-            branch,
-            D.Format(id, arrayOf(value, D.Format(R.string.action_branch_damage_received_yes).tag(true))),
-            D.Format(id, arrayOf(value, D.Format(R.string.action_branch_damage_received_no).tag(false)))
+        branch.add(repeatAction to loopMotionRepeat)
+    }
+    if (successAction != 0) {
+        val success = D.Format(
+            R.string.action_branch_loop_motion_repeat_duration1_damage2_p3,
+            arrayOf(duration, triggerDamage, D.Format(R.string.action_branch_loop_motion_repeat_no).tag(true))
         )
+        branch.add(successAction to success)
+    }
+    if (failAction != 0) {
+        val fail = D.Format(
+            R.string.action_branch_loop_motion_repeat_duration1_damage2_p3,
+            arrayOf(duration, triggerDamage, D.Format(R.string.action_branch_loop_motion_repeat_yes).tag(false))
+        )
+        branch.add(successAction to fail)
     }
     return branch.toTypedArray()
 }
