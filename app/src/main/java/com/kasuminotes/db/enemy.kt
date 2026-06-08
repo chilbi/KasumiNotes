@@ -12,95 +12,34 @@ LEFT JOIN enemy_m_parts AS emp ON emp.enemy_id=ep.enemy_id
 LEFT JOIN unit_enemy_data AS ued ON ued.unit_id=ep.unit_id
 WHERE ep.enemy_id=$enemyId"""
 
-    return useDatabase {
-        rawQuery(sql, null).use {
-            if (it.moveToFirst()) {
-                var i = 0
+    try {
+        return useDatabase {
+            rawQuery(sql, null).use {
+                if (it.moveToFirst()) {
+                    var i = 0
 
-                val mainSkillLvList = mutableListOf<Int>()
-                while (i < 10) {
-                    mainSkillLvList.add(it.getInt(i++))
-                }
-
-                val exSkillLvList = mutableListOf<Int>()
-                while (i < 15) {
-                    exSkillLvList.add(it.getInt(i++))
-                }
-
-                val multiParts = mutableListOf<Int>()
-                while (i < 20) {
-                    val id = it.getInt(i++)
-                    if (id != 0) {
-                        multiParts.add(id)
+                    val mainSkillLvList = mutableListOf<Int>()
+                    while (i < 10) {
+                        mainSkillLvList.add(it.getInt(i++))
                     }
-                }
 
-                val property = Property { _ ->
-                    it.getDouble(i++)
-                }
+                    val exSkillLvList = mutableListOf<Int>()
+                    while (i < 15) {
+                        exSkillLvList.add(it.getInt(i++))
+                    }
 
-                EnemyData(
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getString(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getFloat(i++),
-                    it.getString(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i++),
-                    it.getInt(i),
-                    mainSkillLvList,
-                    exSkillLvList,
-                    multiParts,
-                    property
-                )
-            } else {
-                null
-            }
-        }
-    }
-}
+                    val multiParts = mutableListOf<Int>()
+                    while (i < 20) {
+                        val id = it.getInt(i++)
+                        if (id != 0) {
+                            multiParts.add(id)
+                        }
+                    }
 
-fun AppDatabase.getMultiEnemyParts(multiParts: List<Int>, epTableName: String): List<EnemyData> {
-    val sql = """SELECT ${EnemyData.getFields()}
-FROM $epTableName AS ep
-LEFT JOIN enemy_m_parts AS emp ON emp.enemy_id=ep.enemy_id
-LEFT JOIN unit_enemy_data AS ued ON ued.unit_id=ep.unit_id
-WHERE ep.enemy_id IN (${multiParts.joinToString(",")})"""
+                    val property = Property { _ ->
+                        it.getDouble(i++)
+                    }
 
-    return useDatabase {
-        rawQuery(sql, null).use {
-            val list = mutableListOf<EnemyData>()
-            while (it.moveToNext()) {
-                var i = 0
-
-                val mainSkillLvList = mutableListOf<Int>()
-                while (i < 10) {
-                    mainSkillLvList.add(it.getInt(i++))
-                }
-
-                val exSkillLvList = mutableListOf<Int>()
-                while (i < 15) {
-                    exSkillLvList.add(it.getInt(i++))
-                }
-
-                val parts = emptyList<Int>()
-                i = 20
-//                while (i < 20) {
-//                    val id = it.getInt(i++)
-//                    if (id != 0) {
-//                        parts.add(id)
-//                    }
-//                }
-
-                val property = Property { _ ->
-                    it.getDouble(i++)
-                }
-
-                list.add(
                     EnemyData(
                         it.getInt(i++),
                         it.getInt(i++),
@@ -116,13 +55,82 @@ WHERE ep.enemy_id IN (${multiParts.joinToString(",")})"""
                         it.getInt(i),
                         mainSkillLvList,
                         exSkillLvList,
-                        parts,
+                        multiParts,
                         property
                     )
-                )
+                } else {
+                    null
+                }
             }
-            list
         }
+    } catch (_: Throwable) {
+        return null
+    }
+}
+
+fun AppDatabase.getMultiEnemyParts(multiParts: List<Int>, epTableName: String): List<EnemyData> {
+    val sql = """SELECT ${EnemyData.getFields()}
+FROM $epTableName AS ep
+LEFT JOIN enemy_m_parts AS emp ON emp.enemy_id=ep.enemy_id
+LEFT JOIN unit_enemy_data AS ued ON ued.unit_id=ep.unit_id
+WHERE ep.enemy_id IN (${multiParts.joinToString(",")})"""
+
+    try {
+        return useDatabase {
+            rawQuery(sql, null).use {
+                val list = mutableListOf<EnemyData>()
+                while (it.moveToNext()) {
+                    var i = 0
+
+                    val mainSkillLvList = mutableListOf<Int>()
+                    while (i < 10) {
+                        mainSkillLvList.add(it.getInt(i++))
+                    }
+
+                    val exSkillLvList = mutableListOf<Int>()
+                    while (i < 15) {
+                        exSkillLvList.add(it.getInt(i++))
+                    }
+
+                    val parts = emptyList<Int>()
+                    i = 20
+//                while (i < 20) {
+//                    val id = it.getInt(i++)
+//                    if (id != 0) {
+//                        parts.add(id)
+//                    }
+//                }
+
+                    val property = Property { _ ->
+                        it.getDouble(i++)
+                    }
+
+                    list.add(
+                        EnemyData(
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getString(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getFloat(i++),
+                            it.getString(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i++),
+                            it.getInt(i),
+                            mainSkillLvList,
+                            exSkillLvList,
+                            parts,
+                            property
+                        )
+                    )
+                }
+                list
+            }
+        }
+    } catch (_: Throwable) {
+        return emptyList()
     }
 }
 

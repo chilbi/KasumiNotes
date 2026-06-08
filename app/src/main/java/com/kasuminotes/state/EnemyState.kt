@@ -69,8 +69,12 @@ class EnemyState(
         val db = appRepository.getDatabase()
         val enemy = db.getEnemyData(enemyId, epName)
         if (enemy != null) {
-            initEnemy(enemy, weaknessList, epName, waveGroupId)
-            return true
+            try {
+                initEnemy(enemy, weaknessList, epName, waveGroupId)
+                return true
+            } catch (_: Throwable) {
+                return false
+            }
         }
         return false
     }
