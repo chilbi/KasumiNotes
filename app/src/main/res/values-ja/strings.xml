@@ -300,6 +300,8 @@
     <string name="action_abnormal_target1_content2_formula3_time4">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、効果時間%4$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_percent4_time5">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、毎秒%2$sダメージが初期値の%4$sずつアップする、効果時間%5$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_max4_time5">%1$sを%2$s状態にする、毎秒最大ＨＰの%3$s%2$sダメージを与える（最大%4$sダメージ）、効果時間%5$s秒。</string>
+    <string name="action_stackable_slip_max1_rate">この持続ダメージは最大%1$sスタックまで重複可能で、スタックごとに基礎ダメージが%2$s倍上昇する。</string>
+    <string name="action_slip_cancel_percent1">対象のＨＰが%s以上の場合、この持続ダメージ効果は解除される。</string>
     <string name="action_state_target1_content2_time3">%1$sに%2$s状態を付与する、効果時間%3$s秒。</string>
     <string name="action_haulin_oneself_target1_formula2">%1$sを目の前%2$s距離まで引き寄せる。</string>
     <string name="action_haulin_first_target1">%1$sを一番前にいる敵の位置まで引き寄せる。</string>

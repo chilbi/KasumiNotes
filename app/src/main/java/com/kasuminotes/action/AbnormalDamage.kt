@@ -10,7 +10,7 @@ fun SkillAction.getAbnormalDamage(skillLevel: Int): D {
     val formula = getBaseLvFormula(actionValue1, actionValue2, skillLevel)
     val time = getBaseLvFormula(actionValue3, actionValue4, skillLevel)
 
-    val damage = when (actionDetail1) {
+    var damage: D = when (actionDetail1) {
         5 -> {
             val percent = D.Text("${actionValue5.toNumStr()}%").style(primary = true, bold = true)
             D.Format(
@@ -32,6 +32,23 @@ fun SkillAction.getAbnormalDamage(skillLevel: Int): D {
                 arrayOf(target, content, formula, time)
             )
         }
+    }
+
+    if (actionDetail1 == 12) {
+        damage = damage.append(D.Format(
+            R.string.action_stackable_slip_max1_rate,
+            arrayOf(
+                D.Text(actionValue7.toNumStr()).style(primary = true, bold = true),
+                D.Text(actionValue5.toNumStr()).style(primary = true, bold = true)
+            )
+        ))
+    }
+
+    if (actionDetail1 != 12 && actionDetail2 == 2) {
+        damage = damage.append(D.Format(
+            R.string.action_slip_cancel_percent1,
+            arrayOf(D.Text("${actionValue7.toNumStr()}%").style(primary = true, bold = true))
+        ))
     }
 
     return appendInjuredEnergy(damage)
