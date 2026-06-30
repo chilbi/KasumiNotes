@@ -412,6 +412,8 @@
     <string name="action_grant_must_critical_target1_state2_time3">赋予%1$s【%2$s】，效果时间%3$s秒。【%2$s】期间，%1$s的攻击必定暴击。</string>
     <string name="action_undispellable">（此技能效果不可驱散）</string>
     <string name="action_loop_motion_repeat_duration1_repeat2_damage3">%1$s秒期间内每%2$s秒执行动作。（期间内累积受到的伤害超过%3$s时就会中断）\n</string>
+    <string name="action_follow_up_damage_target1_percent2_type3_time4">赋予%1$s%2$s的%3$s追击状态，效果时间%4$s秒。追击状态中，对敌人造成普通攻击或技能伤害时，会产生追击伤害。
+    </string>
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>

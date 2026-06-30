@@ -362,6 +362,7 @@ class ActionBuilder(
             130 -> getReconcile()
             132 -> getDamageBoost(skillLevel)
             133 -> getTriggeredWhenUseUB()
+            134 -> getFollowUpDamage()
             else -> getUnknown()
         }
     }

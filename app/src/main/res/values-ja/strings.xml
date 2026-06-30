@@ -412,6 +412,7 @@
     <string name="action_grant_must_critical_target1_state2_time3">%1$sに【%2$s】を付与する、効果時間%3$s秒。【%2$s】が付与されている間、%1$sの攻撃は必ずクリティカルする。</string>
     <string name="action_undispellable">（この効果は解除できない）</string>
     <string name="action_loop_motion_repeat_duration1_repeat2_damage3">%1$s秒の間に%2$s秒毎にアクションを実行する。（期間内に累計受けたダメージが%3$sを超えると中断する）\n</string>
+    <string name="action_follow_up_damage_target1_percent2_type3_time4">%1$sを%2$sの%3$s追撃状態にする、効果時間%4$s秒。追撃状態中、敵に通常攻撃またはスキルでダメージを与えた時、追加のダメージが発生する。</string>
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>
