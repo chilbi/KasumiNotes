@@ -113,16 +113,27 @@ data class ExEquipData(
         val actions = passiveSkill.actions
         val action1 = actions.getOrNull(0)
         if (action1 != null && action1.actionType in arrayOf(901, 902) && action1.actionDetail1 == 0) {
-            var statusActionIndex = 1
-            val action2 = actions.getOrNull(statusActionIndex)
-            if (action2 != null) {
-                if (action2.actionType in arrayOf(26, 27, 74)) {
-                    statusActionIndex = actions.indexOfFirst { it.actionId == action2.actionDetail1 }
-                } else if (action2.isBranch() && action2.actionDetail1 in 4001..4999 && action2.actionDetail1 - 4000 == talentId) {
-                    statusActionIndex = actions.indexOfFirst { it.actionId == action2.actionDetail2 }
+            val statusActionList = mutableListOf<Int>()
+            val talentBranchActionList = mutableListOf<Int>()
+            for (i in 1 until actions.size) {
+                val action = actions[i]
+                if (action.actionType == 10) {
+                    statusActionList.add(i)
+                } else if (action.isBranch() && action.actionDetail1 in 4001..4999) {
+                    talentBranchActionList.add(i)
                 }
-                val statusAction = actions.getOrNull(statusActionIndex)
-                if (statusAction != null && statusAction.isSelf() && statusAction.actionType == 10) {
+            }
+            talentBranchActionList.forEach { i ->
+                val action = actions[i]
+                if (action.actionDetail1 - 4000 != talentId) {
+                    val statusActionIndex = actions.indexOfFirst { it.actionId == action.actionDetail2 }
+                    statusActionList.remove(statusActionIndex)
+                }
+            }
+
+            statusActionList.forEach { i ->
+                val statusAction = actions[i]
+                if (statusAction.isSelf() && statusAction.actionType == 10) {
                     val key = getStatusIndex(statusAction.actionDetail1 / 10)
                     if (key != null) {
                         var value = if (statusAction.actionValue1 == 2.0) {
