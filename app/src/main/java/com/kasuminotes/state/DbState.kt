@@ -23,9 +23,10 @@ class DbState(
     private val appRepository: AppRepository,
     private val scope: CoroutineScope
 ) {
-    private var downloadingDbServer: DbServer? = null
-    private var downloadingDbVersion: String? = null
-
+    var downloadingDbServer by mutableStateOf<DbServer?>(null)
+        private set
+    var downloadingDbVersion by mutableStateOf<String?>(null)
+        private set
     var appAutoUpdate by mutableStateOf(appRepository.getAppAutoUpdate())
         private set
     var dbAutoUpdate by mutableStateOf(appRepository.getDbAutoUpdate())
@@ -74,7 +75,9 @@ class DbState(
     }
 
     fun retryDownload() {
-        downloadDbFile(downloadingDbServer!!, downloadingDbVersion!!)
+        if (downloadingDbServer != null && downloadingDbVersion != null) {
+            downloadDbFile(downloadingDbServer!!, downloadingDbVersion!!)
+        }
     }
 
     fun cancelDownload() {

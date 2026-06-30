@@ -37,11 +37,7 @@ fun Home(
 
     when {
         dbState.downloadState != null -> {
-            DownloadDialog(
-                dbState.downloadState!!,
-                dbState::retryDownload,
-                dbState::cancelDownload
-            )
+            DownloadDialog(dbState)
         }
         dbState.newDbVersion != null -> {
             UpdateDbDialog(

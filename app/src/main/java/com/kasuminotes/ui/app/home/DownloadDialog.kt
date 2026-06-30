@@ -13,13 +13,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.DialogProperties
 import com.kasuminotes.R
 import com.kasuminotes.common.DownloadState
+import com.kasuminotes.state.DbState
 
 @Composable
-fun DownloadDialog(
-    state: DownloadState,
-    onRetry: () -> Unit,
-    onCancel: () -> Unit
-) {
+fun DownloadDialog(dbState: DbState) {
+    val state = dbState.downloadState!!
     AlertDialog(
         onDismissRequest = {},
         properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
@@ -31,15 +29,15 @@ fun DownloadDialog(
         },
         confirmButton = {
             TextButton(
-                onClick = onRetry,
-                enabled = state is DownloadState.Error
+                onClick = dbState::retryDownload,
+                enabled = state is DownloadState.Error && dbState.downloadingDbServer != null && dbState.downloadingDbVersion != null
             ) {
                 Text(stringResource(R.string.retry))
             }
         },
         dismissButton = {
             TextButton(
-                onClick = onCancel,
+                onClick = dbState::cancelDownload,
                 enabled = state is DownloadState.Error
             ) {
                 Text(stringResource(R.string.cancel))
