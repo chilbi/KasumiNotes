@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 import com.kasuminotes.data.SkillEffect
+import kotlin.math.absoluteValue
 import kotlin.math.ceil
 
 fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
@@ -50,7 +51,8 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         } else if (targetAction.actionType == 98  && actionDetail2 == 1) {
             value2 *= 100
             isPercent = true
-        }  else if (value2 < 0.0) {
+        }
+        if (value2 < 0.0) {
             if (!(targetAction.actionType == 35 && actionDetail2 == 4)) {
                 isAdditive = false
             }
@@ -412,35 +414,58 @@ private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction):
     return if (actionValue4 == 0.0 && actionValue5 == 0.0) {
         null
     } else {
-        if (actionValue5 == 0.0) {
-            if (targetAction.actionType == 1 && actionDetail2 == 6) {
-                D.Text("${(actionValue4 * 100 * level).toNumStr()}%")
-            } else if (
-                (targetAction.actionType == 10 && targetAction.isStatusPercent()) ||
-                targetAction.actionType == 46
-            ) {
-                D.Text("${(actionValue4 * level).toNumStr()}%")
-            } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
-                D.Text((-actionValue4 * level).toNumStr())
-            } else if (targetAction.actionType == 72) {
-                var value = (actionValue4 * level).toNumStr()
-                var isPercent = true
-                if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
-                    isPercent = false
-                }
-                if (isPercent) {
-                    value += "%"
-                }
-                D.Text(value)
-            } else {
-                D.Text((actionValue4 * level).toNumStr())
+//        if (actionValue5 == 0.0) {
+//            if (targetAction.actionType == 1 && actionDetail2 == 6) {
+//                D.Text("${(actionValue4 * 100 * level).toNumStr()}%")
+//            } else if (
+//                (targetAction.actionType == 10 && targetAction.isStatusPercent()) ||
+//                targetAction.actionType == 46
+//            ) {
+//                D.Text("${(actionValue4 * level).toNumStr()}%")
+//            } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
+//                D.Text((-actionValue4 * level).toNumStr())
+//            } else if (targetAction.actionType == 72) {
+//                var value = (actionValue4 * level).toNumStr()
+//                var isPercent = true
+//                if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
+//                    isPercent = false
+//                }
+//                if (isPercent) {
+//                    value += "%"
+//                }
+//                D.Text(value)
+//            } else {
+//                D.Text((actionValue4 * level).toNumStr())
+//            }
+//        } else {
+//            if (actionValue4 > 0.0 && actionValue5 > 0.0) {
+//                D.Text(ceil((actionValue4 + actionValue5 * skillLevel) * level).toNumStr())// TODO 不确定的取整方式
+//            } else {
+//                D.Text(ceil(((-actionValue4) + (-actionValue5) * skillLevel) * level).toNumStr())// TODO 不确定的取整方式
+//            }
+//        }
+        val maxValue = (actionValue4 + actionValue5 * skillLevel).absoluteValue
+        if (targetAction.actionType == 1 && actionDetail2 == 6) {
+            D.Text("${(maxValue * 100 * level).toNumStr()}%")
+        } else if (
+            (targetAction.actionType == 10 && targetAction.isStatusPercent()) ||
+            targetAction.actionType == 46
+        ) {
+            D.Text("${(maxValue * level).toNumStr()}%")
+        } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
+            D.Text((-maxValue * level).toNumStr())
+        } else if (targetAction.actionType == 72) {
+            var value = (maxValue * level).toNumStr()
+            var isPercent = true
+            if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
+                isPercent = false
             }
+            if (isPercent) {
+                value += "%"
+            }
+            D.Text(value)
         } else {
-            if (actionValue4 > 0.0 && actionValue5 > 0.0) {
-                D.Text(ceil((actionValue4 + actionValue5 * skillLevel) * level).toNumStr())// TODO 不确定的取整方式
-            } else {
-                D.Text(ceil(((-actionValue4) + (-actionValue5) * skillLevel) * level).toNumStr())// TODO 不确定的取整方式
-            }
+            D.Text((maxValue * level).toNumStr())
         }
     }
 }
