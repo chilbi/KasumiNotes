@@ -37,8 +37,8 @@ class ActionBuilder(
             if (action.depend != null && !action.checkDependChain(action.depend!!)) {
                 willRemoveIndexList.add(index)
             }
-            /** [getTargetFocus],82,94 [getUnknown] */
-            else if (action.actionType in arrayOf(7, 82, 94)) {
+            /** [getTargetFocus],94 [getUnknown] */
+            else if (action.actionType in arrayOf(7, 94)) {
                 willRemoveIndexList.add(index)
             }
             /** [getSustainDamage] */
@@ -330,7 +330,7 @@ class ActionBuilder(
             75 -> getHitCount()
             78 -> getPassiveDamageUp()
             79 -> getFixedDamage()
-            82 -> D.Unknown
+            82 -> getEffectResistance()
             83 -> getSpeedOverlay()
             92 -> D.Unknown/** [getInjuredEnergy] */
             93 -> D.Unknown/** [getIgnoreProvocation] */
