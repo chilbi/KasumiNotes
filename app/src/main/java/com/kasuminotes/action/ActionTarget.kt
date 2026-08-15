@@ -586,7 +586,7 @@ private fun SkillAction.getNumber(): D {
  * の中の任意{0}
  */
 private fun SkillAction.getAnyManyTarget(manyTarget: D): D {
-    return if (isBranch() || actionType == 17) {
+    return if ((isBranch() && actionDetail1 !in 701..709) || actionType == 17) {
         D.Join(
             arrayOf(
                 manyTarget,

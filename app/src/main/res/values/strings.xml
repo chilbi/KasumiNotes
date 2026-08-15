@@ -477,7 +477,7 @@
     <string name="action_branch_break_target1_p2">%1$s的目标%2$sBreak状态时，</string>
     <string name="action_branch_break_yes">已陷入</string>
     <string name="action_branch_break_no">未陷入</string>
-    <string name="action_branch_unit_target1_count2_p3">%1$s全体的数量%3$s%2$s时，</string>
+    <string name="action_branch_unit_target1_count2_p3">%1$s的数量%3$s%2$s时，</string>
     <string name="action_branch_unit_yes">=</string>
     <string name="action_branch_unit_no">≠</string>
     <string name="action_branch_exists_target1_type2_p3">%1$s%3$s使用%2$s攻击的敌人时，</string>
@@ -697,6 +697,7 @@
     <string name="atk_or_magic_str">物理攻击力或者魔法攻击力</string>
     <string name="count_of_abnormal_state_and_status_down_effect_target1">%s的状态异常效果和状态降低效果的数量</string>
     <string name="energy_consumption_target1">%s消耗的TP量</string>
+    <string name="debuff_types_count_target1">%s的弱体效果的种类的数量</string>
 
     <string name="give_time">效果时间</string>
     <string name="give_damage">伤害量</string>

@@ -178,6 +178,7 @@ fun SkillAction.getGiveValueIndependentVariable(): D {
                 13 -> D.Join(arrayOf(getTarget(depend), D.Format(R.string.hp_lost_ratio)))
                 15 -> D.Format(R.string.hp_remnant_without_self_friendly)
                 16 -> D.Format(R.string.energy_consumption_target1, arrayOf(getTarget(depend)))
+                17 -> D.Format(R.string.debuff_types_count_target1, arrayOf(getTarget(depend)))
                 else -> D.Unknown
             }
         }

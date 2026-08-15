@@ -200,17 +200,28 @@ class ActionBuilder(
             }
             /** [getBranch] */
             else if (action.actionType in arrayOf(23, 28, 42, 53, 63)) {
-                val branch = action.getBranch(skillLevel, actions)
-                if (branch.isEmpty()) {
-                    if (action.actionDetail2 == 0 && action.actionDetail3 == 0) {
+                var pass = true
+                if (action.isBranch()) {
+                    if (actions.any { it.actionId > action.actionId && it.isBranch() &&
+                                (it.actionDetail2 == action.actionId || it.actionDetail3 == it.actionId)
+                    }) {
+                        pass = false
                         willRemoveIndexList.add(index)
-                    } else {
-                        originList[index] = action.getUnknown()
                     }
-                } else {
-                    willRemoveIndexList.add(index)
-                    branch.forEach { item ->
-                        branchModify.collectBranch(item.first, item.second, null)
+                }
+                if (pass) {
+                    val branch = action.getBranch(skillLevel, actions)
+                    if (branch.isEmpty()) {
+                        if (action.actionDetail2 == 0 && action.actionDetail3 == 0) {
+                            willRemoveIndexList.add(index)
+                        } else {
+                            originList[index] = action.getUnknown()
+                        }
+                    } else {
+                        willRemoveIndexList.add(index)
+                        branch.forEach { item ->
+                            branchModify.collectBranch(item.first, item.second, null)
+                        }
                     }
                 }
             }
