@@ -33,13 +33,15 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 
     var isAdditive = true
     var value2 = actionValue2 * giveValueCount
-    val value3 = actionValue3 * giveValueCount
+    var value3 = actionValue3 * giveValueCount
 
     /** actionValue2, actionValue3 常量（如：(10 + 10 × 技能等级)） */
     val constantVariable = if (value3 == 0.0) {
         var isPercent = false
         if (targetAction.actionType == 1 && actionDetail2 == 6) {
             value2 *= 100
+            isPercent = true
+        } else if (targetAction.actionType == 4 && targetAction.actionValue1 != 1.0) {
             isPercent = true
         } else if (targetAction.actionType == 10 && actionType != 27 && actionType != 74 && targetAction.isStatusPercent()) {
             isPercent = true
@@ -80,23 +82,24 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
         } else if (targetAction.actionType == 98  && actionDetail2 == 1) {
             val value = (value2 + value3 * skillLevel) * 100
             D.Text("${value.toNumStr()}%")
-        } else if (value2 > 0.0 || value3 > 0.0) {
-            D.Format(
+        } else {
+            var isPercent = false
+            if (targetAction.actionType == 4 && targetAction.actionValue1 != 1.0) {
+                isPercent = true
+            }
+            if (value2 < 0.0 || value3 < 0.0) {
+                isAdditive = false
+                value2 = -value2
+                value3 = -value3
+            }
+            val formula = D.Format(
                 R.string.sub_formula_base1_lv2,
                 arrayOf(
                     D.Text(value2.toNumStr()),
                     D.Text(value3.toNumStr())
                 )
             )
-        } else {
-            isAdditive = false
-            D.Format(
-                R.string.sub_formula_base1_lv2,
-                arrayOf(
-                    D.Text((-value2).toNumStr()),
-                    D.Text((-value3).toNumStr())
-                )
-            )
+            if (isPercent) formula.append(D.Text("%")) else formula
         }
     }
 
@@ -415,40 +418,14 @@ private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction):
     return if (actionValue4 == 0.0 && actionValue5 == 0.0) {
         null
     } else {
-//        if (actionValue5 == 0.0) {
-//            if (targetAction.actionType == 1 && actionDetail2 == 6) {
-//                D.Text("${(actionValue4 * 100 * level).toNumStr()}%")
-//            } else if (
-//                (targetAction.actionType == 10 && targetAction.isStatusPercent()) ||
-//                targetAction.actionType == 46
-//            ) {
-//                D.Text("${(actionValue4 * level).toNumStr()}%")
-//            } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
-//                D.Text((-actionValue4 * level).toNumStr())
-//            } else if (targetAction.actionType == 72) {
-//                var value = (actionValue4 * level).toNumStr()
-//                var isPercent = true
-//                if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
-//                    isPercent = false
-//                }
-//                if (isPercent) {
-//                    value += "%"
-//                }
-//                D.Text(value)
-//            } else {
-//                D.Text((actionValue4 * level).toNumStr())
-//            }
-//        } else {
-//            if (actionValue4 > 0.0 && actionValue5 > 0.0) {
-//                D.Text(ceil((actionValue4 + actionValue5 * skillLevel) * level).toNumStr())// TODO 不确定的取整方式
-//            } else {
-//                D.Text(ceil(((-actionValue4) + (-actionValue5) * skillLevel) * level).toNumStr())// TODO 不确定的取整方式
-//            }
-//        }
         val maxValue = (actionValue4 + actionValue5 * skillLevel).absoluteValue
-        if (targetAction.actionType == 1 && actionDetail2 == 6) {
+        if (
+            (targetAction.actionType == 1 && actionDetail2 == 6) ||
+            (targetAction.actionType == 98  && actionDetail2 == 1)
+        ) {
             D.Text("${(maxValue * 100 * level).toNumStr()}%")
-        } else if (
+        }else if (
+            (targetAction.actionType == 4 && targetAction.actionValue1 != 1.0) ||
             (targetAction.actionType == 10 && targetAction.isStatusPercent()) ||
             targetAction.actionType == 46
         ) {
