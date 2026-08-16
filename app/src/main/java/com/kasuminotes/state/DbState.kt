@@ -35,6 +35,8 @@ class DbState(
         private set
     var dbVersion by mutableStateOf(appRepository.getDbVersion(dbServer))
         private set
+    var dbSource by mutableStateOf(appRepository.getDbSource())
+        private set
     var newDbVersion by mutableStateOf<String?>(null)
         private set
     var newAppReleaseInfo by mutableStateOf<AppReleaseInfo?>(null)
@@ -71,6 +73,13 @@ class DbState(
         if (otherServer != dbServer) {
             userState.clearAllUser()
             updateDbState(otherServer, appRepository.getDbVersion(otherServer))
+        }
+    }
+
+    fun changeDbSource(otherSource: Int) {
+        if (otherSource != dbSource) {
+            dbSource = otherSource
+            appRepository.setDbSource(otherSource)
         }
     }
 
@@ -138,9 +147,9 @@ class DbState(
             scope.launch(Dispatchers.IO) {
                 try {
                     lastVersionFetching = true
-                    val lastDbVersion = appRepository.fetchLastDbVersion(dbServer)
+                    val lastDbVersion = appRepository.fetchLastDbVersion(dbServer, dbSource)
                     lastVersionFetching = false
-                    if (lastDbVersion != dbVersion) {
+                    if ((lastDbVersion.toIntOrNull() ?: 0) > (dbVersion.toIntOrNull() ?: 0)) {
                         newDbVersion = lastDbVersion
                     } else if (mutableIsLastDb) {
                         isLastDb = true
@@ -190,7 +199,7 @@ class DbState(
             downloadState = DownloadState.Loading
             downloadingDbServer = server
             downloadingDbVersion = version
-            appRepository.downloadTempDbFile(server).collect { state ->
+            appRepository.downloadTempDbFile(server, dbSource).collect { state ->
                 downloadState = state
                 if (state is DownloadState.Success) {
                     initDb(server, version, state.dbFile)
@@ -206,7 +215,7 @@ class DbState(
         val backupDbFile = appRepository.getBackupDbFile(server)
         if (version == "0") {
             try {
-                lastDbVersion = appRepository.fetchLastDbVersion(server)
+                lastDbVersion = appRepository.fetchLastDbVersion(server, dbSource)
                 tempDbFile.renameTo(dbFile)
                 DatabaseTableCopier.copyTablesFromEN(server, appRepository)
                 db = appRepository.getDatabase(dbFile.name)

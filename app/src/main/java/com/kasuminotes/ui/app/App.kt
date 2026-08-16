@@ -4,6 +4,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -23,6 +24,8 @@ import com.kasuminotes.ui.app.exEquip.ExEquip
 import com.kasuminotes.ui.app.home.Home
 import com.kasuminotes.ui.app.dashboard.Dashboard
 import com.kasuminotes.ui.app.enhance.Enhance
+import com.kasuminotes.ui.app.errorScreen.ErrorScreen
+import com.kasuminotes.ui.app.errorScreen.SQLiteErrorHandler
 import com.kasuminotes.ui.app.mirageQuest.MirageQuest
 import com.kasuminotes.ui.app.quest.Quest
 import com.kasuminotes.ui.app.summons.Summons
@@ -37,7 +40,7 @@ fun App(appViewModel: AppViewModel = viewModel()) {
     val uiState = appViewModel.uiState
     val dbState = appViewModel.dbState
     val userState = dbState.userState
-
+    val errorState = SQLiteErrorHandler.errorState.collectAsState()
     val navController = rememberNavController()
     
     LaunchedEffect(appViewModel) {
@@ -53,6 +56,15 @@ fun App(appViewModel: AppViewModel = viewModel()) {
         }
     }
 
+    LaunchedEffect(errorState.value) {
+        if (errorState.value != null) {
+            navController.navigate(AppNavData.ErrorScreen.route) {
+//                popUpTo(AppNavData.Home) { inclusive = true }
+                launchSingleTop = true
+            }
+        }
+    }
+
     KasumiNotesTheme(uiState.themeIndex, uiState.darkTheme) {
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val scope = rememberCoroutineScope()
@@ -62,6 +74,20 @@ fun App(appViewModel: AppViewModel = viewModel()) {
         val navigateToHomeAndOpenDrawer = remember {{
             appViewModel.navigateTo(0)
             openDrawer()
+        }}
+        val handleErrorScreenBack = remember {{
+            SQLiteErrorHandler.clearError()
+            var backCount = 0
+            repeat(2) {
+                if (navController.popBackStack()) {
+                    backCount++
+                }
+            }
+            if (backCount == 0) {
+                navController.navigate(AppNavData.Home.route) {
+                    popUpTo(AppNavData.Home.route) { inclusive = true }
+                }
+            }
         }}
 
         NavHost(
@@ -87,6 +113,16 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                     appViewModel::navigateToAbout,
                     appViewModel::navigateTo,
                     openDrawer
+                )
+            }
+            composable(
+                route = AppNavData.ErrorScreen.route,
+                enterTransition = AppNavData.ErrorScreen.enterTransition,
+                exitTransition = AppNavData.ErrorScreen.exitTransition
+            ) {
+                ErrorScreen(
+                    error = errorState.value ?: Exception("unknown error"),
+                    onBack = handleErrorScreenBack
                 )
             }
             composable(

@@ -1,6 +1,5 @@
 package com.kasuminotes.utils
 
-import android.util.Base64
 import com.kasuminotes.BuildConfig
 import com.kasuminotes.common.DbServer
 import com.kasuminotes.common.DownloadState
@@ -50,7 +49,7 @@ object HttpUtil {
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    fun downloadDbFile(url: String, brFile: File): Flow<DownloadState> = flow {
+    fun downloadDbFile(url: String, file: File, isBrFile: Boolean): Flow<DownloadState> = flow {
         var call: Call? = null
         var response: Response? = null
         var fis: InputStream? = null
@@ -68,7 +67,7 @@ object HttpUtil {
             val contentLength = body.contentLength()
             emit(DownloadState.Progress(bytesRead, contentLength))
             fis = body.byteStream()
-            fos = FileOutputStream(brFile)
+            fos = FileOutputStream(file)
             val buf = ByteArray(8192)
             var len: Int
             while (fis.read(buf).also { len = it } != -1) {
@@ -77,7 +76,7 @@ object HttpUtil {
                 emit(DownloadState.Progress(bytesRead, contentLength))
             }
             fos.flush()
-            val dbFile = decompress(brFile)
+            val dbFile = if (isBrFile) decompress(file) else file
             emit(DownloadState.Success(dbFile))
         } catch (e: Throwable) {
             call?.cancel()
@@ -140,21 +139,21 @@ object HttpUtil {
     }
 
     @Throws(Throwable::class)
-    fun fetchLastDbVersion(url: String): String {
+    fun fetchCialloworldLastDbVersion(url: String, server: DbServer): String {
+        val region = if (server == DbServer.CN) "cn" else "jp"
         var call: Call? = null
         var response: Response? = null
         try {
             val client = OkHttpClient.Builder().build()
             val request = Request.Builder()
-                .url(url)
-                .header("User-Agent", userAgent)
+                .url("$url?region=$region")
                 .build()
             call = client.newCall(request)
             response = call.execute()
-            val body = response.body
-            val pattern = "\"TruthVersion\"\\s*:\\s*\"(\\d+)\""
-            val matchResult = Regex(pattern).find(body.string()) ?: throw Exception("regex match error")
-            return matchResult.groupValues[1]
+            val responseJson = JSONObject(response.body.string())
+            return responseJson.getJSONObject("latest")
+                .getJSONObject(region)
+                .getString("version")
         } catch (e: Throwable) {
             call?.cancel()
             throw e
@@ -164,21 +163,21 @@ object HttpUtil {
     }
 
     @Throws(Throwable::class)
-    fun fetchLastRainbowJson(url: String): JSONObject {
+    fun fetchEstertionLastDbVersion(url: String, server: DbServer): String {
         var call: Call? = null
         var response: Response? = null
         try {
             val client = OkHttpClient.Builder().build()
             val request = Request.Builder()
-                .url(url)
+                .url("$url/last_version_${if (server == DbServer.CN) "cn" else "jp"}.json")
                 .header("User-Agent", userAgent)
                 .build()
             call = client.newCall(request)
             response = call.execute()
-            val body = response.body.string()
-            val content = JSONObject(body).getString("content")
-            val contentJsonStr = String(Base64.decode(content, Base64.DEFAULT))
-            return JSONObject(contentJsonStr)
+            val body = response.body
+            val pattern = "\"TruthVersion\"\\s*:\\s*\"(\\d+)\""
+            val matchResult = Regex(pattern).find(body.string()) ?: throw Exception("regex match error")
+            return matchResult.groupValues[1]
         } catch (e: Throwable) {
             call?.cancel()
             throw e
@@ -264,82 +263,3 @@ object HttpUtil {
         }
     }
 }
-
-//    private class DownloadResponseBody(
-//        private val responseBody: ResponseBody,
-//        private val offer: (DownloadState) -> Unit
-//    ) : ResponseBody() {
-//
-//        private val bufferedSource: BufferedSource by lazy {
-//            object : ForwardingSource(responseBody.source()) {
-//                private var bytesRead = 0L
-//
-//                override fun read(sink: Buffer, byteCount: Long): Long {
-//                    val read = super.read(sink, byteCount)
-//                    if (read != -1L) {
-//                        bytesRead += read
-//                        offer(DownloadState.Progress(bytesRead, responseBody.contentLength()))
-//                    }
-//                    return read
-//                }
-//            }.buffer()
-//        }
-//
-//        override fun contentLength(): Long = responseBody.contentLength()
-//
-//        override fun contentType(): MediaType? = responseBody.contentType()
-//
-//        override fun source(): BufferedSource = bufferedSource
-//    }
-//
-//    private class DownloadInterceptor(
-//        private val offer: (DownloadState) -> Unit
-//    ) : Interceptor {
-//
-//        override fun intercept(chain: Interceptor.Chain): Response {
-//            val response = chain.proceed(chain.request())
-//            val body = response.body ?: return response
-//            return response.newBuilder()
-//                .body(DownloadResponseBody(body, offer))
-//                .build()
-//        }
-//    }
-
-//    @Suppress("BlockingMethodInNonBlockingContext")
-//    @Throws(Throwable::class)
-//    fun downloadDbFile(url: String, brFile: File): Flow<DownloadState> = callbackFlow {
-//        var call: Call? = null
-//        var response: Response? = null
-//        var fis: InputStream? = null
-//        var fos: FileOutputStream? = null
-//        try {
-//            val client = OkHttpClient.Builder()
-//                .addNetworkInterceptor(DownloadInterceptor(::offer))
-//                .build()
-//            val request = Request.Builder()
-//                .url(url)
-//                .header("User-Agent", userAgent)
-//                .build()
-//            call = client.newCall(request)
-//            response = call.execute()
-//            val body = response.body ?: throw Exception("body is null")
-//            fis = body.byteStream()
-//            fos = FileOutputStream(brFile)
-//            val buf = ByteArray(8192)
-//            var len: Int
-//            while (fis.read(buf).also { len = it } != -1) {
-//                fos.write(buf, 0, len)
-//            }
-//            fos.flush()
-//            val dbFile = decompress(brFile)
-//            offer(DownloadState.Success(dbFile))
-//        } catch (e: Throwable) {
-//            call?.cancel()
-//            offer(DownloadState.Error(e))
-//        } finally {
-//            response?.close()
-//            fis?.close()
-//            fos?.close()
-//            close()
-//        }
-//    }

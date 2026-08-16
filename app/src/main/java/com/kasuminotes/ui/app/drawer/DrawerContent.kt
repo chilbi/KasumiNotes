@@ -31,6 +31,7 @@ fun DrawerContent(
     maxUserData: MaxUserData?,
     dbServer: DbServer,
     dbVersion: String,
+    dbSource: Int,
     appAutoUpdate: Boolean,
     dbAutoUpdate: Boolean,
     lastVersionFetching: Boolean,
@@ -41,6 +42,7 @@ fun DrawerContent(
     onImageClick: () -> Unit,
     onLogOut: () -> Unit,
     onDbServerChange: (DbServer) -> Unit,
+    onDbSourceChange: (Int) -> Unit,
     onLastDbVersionFetch: () -> Unit,
     onDbAutoUpdateToggle: () -> Unit,
     onLanguageChange: (Language) -> Unit,
@@ -88,9 +90,11 @@ fun DrawerContent(
             DatabaseMenuList(
                 dbServer,
                 dbVersion,
+                dbSource,
                 dbAutoUpdate,
                 lastVersionFetching,
                 onDbServerChange,
+                onDbSourceChange,
                 onLastDbVersionFetch,
                 onDbAutoUpdateToggle
             )

@@ -19,6 +19,8 @@ import org.json.JSONObject
 import java.io.File
 import java.util.Locale
 import androidx.core.net.toUri
+import com.kasuminotes.common.DownloadState
+import kotlinx.coroutines.flow.Flow
 
 class AppRepository(
     private val context: Context = MainApplication.context,
@@ -62,6 +64,12 @@ class AppRepository(
             DbServer.JP -> context.dbVersionJPSP = version
             DbServer.EN -> context.dbVersionENSP = version
         }
+    }
+
+    fun getDbSource() = context.dbSourceSP
+
+    fun setDbSource(source: Int) {
+        context.dbSourceSP = source
     }
 
     fun getImageVariant() = ImageVariant.valueOf(context.imageVariantSP)
@@ -147,23 +155,36 @@ class AppRepository(
 
     fun getDatabase() = AppDatabase.getInstance(context.applicationContext)
 
-    fun fetchLastDbVersion(server: DbServer): String = if (server == DbServer.EN) {
-        HttpUtil.fetchRoboninonLastDbVersion(UrlUtil.roboninonLastVersionApiUrl)
-    } else if (UrlUtil.useWtheeDb) {
-        HttpUtil.fetchWtheeLastDbVersion(UrlUtil.wtheeLastVersionApiUrl, server)
-    } else {
-        HttpUtil.fetchLastDbVersion(UrlUtil.lastVersionUrl[server]!!)
+    fun fetchLatestAppReleaseInfo(): AppReleaseInfo? = HttpUtil.fetchLatestAppReleaseInfo(UrlUtil.APP_RELEASE_URL)
+
+    fun fetchLastDbVersion(dbServer: DbServer, dbSource: Int): String {
+        return if (dbServer == DbServer.EN) {
+            HttpUtil.fetchRoboninonLastDbVersion(UrlUtil.roboninonLastVersionApiUrl)
+        } else if (dbSource == 0) {
+            HttpUtil.fetchWtheeLastDbVersion(UrlUtil.wtheeLastVersionApiUrl, dbServer)
+        } else if (dbSource == 1) {
+            HttpUtil.fetchCialloworldLastDbVersion(UrlUtil.cialloworldLastVersionApiUrl, dbServer)
+        } else {
+            HttpUtil.fetchEstertionLastDbVersion(UrlUtil.estertionLastVersionApiUrl, dbServer)
+        }
     }
 
-    fun fetchRainbowJson(): JSONObject = HttpUtil.fetchLastRainbowJson(UrlUtil.RainbowJsonUrl)
-
-    fun fetchLatestAppReleaseInfo(): AppReleaseInfo? =
-        HttpUtil.fetchLatestAppReleaseInfo(UrlUtil.APP_RELEASE_URL)
-
-    fun downloadTempDbFile(server: DbServer) = HttpUtil.downloadDbFile(
-        UrlUtil.dbFileUrlMap[server]!!,
-        context.getDatabasePath("temp_${UrlUtil.dbFileNameMap[server]!!}.br")
-    )
+    fun downloadTempDbFile(dbServer: DbServer, dbSource: Int): Flow<DownloadState> {
+        val suffix = ".br"//if (dbSource == 1 && dbServer != DbServer.EN) "" else ".br"
+        val file = context.getDatabasePath("temp_${UrlUtil.dbFileNameMap[dbServer]!!}$suffix")
+        return if (dbServer == DbServer.EN) {
+            HttpUtil.downloadDbFile(UrlUtil.ROBONINON_DB_FILE_URL_EN, file, true)
+        } else if (dbSource == 0) {
+            val url = if (dbServer == DbServer.CN) UrlUtil.WTHEE_DB_FILE_URL_CN else UrlUtil.WThEE_DB_FILE_URL_JP
+            HttpUtil.downloadDbFile(url, file, true)
+        } else if (dbSource == 1) {
+            val url = if (dbServer == DbServer.CN) UrlUtil.CIALLOWORLD_DB_FILE_URL_CN else UrlUtil.CIALLOWORLD_DB_FILE_URL_JP
+            HttpUtil.downloadDbFile(url, file, true)
+        } else {
+            val url = if (dbServer == DbServer.CN) UrlUtil.ESTERTION_DB_FILE_URL_CN else UrlUtil.ESTERTION_DB_FILE_URL_JP
+            HttpUtil.downloadDbFile(url, file, true)
+        }
+    }
 
     fun downloadApp(info: AppReleaseInfo) {
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager

@@ -5,28 +5,33 @@ import com.kasuminotes.common.DbServer
 import java.util.Locale
 
 object UrlUtil {
-    const val useWtheeDb = true
     const val useWtheeRes = true
     // API URL
     private const val ESTERTION_API_URL = "https://redive.estertion.win"
     private const val WTHEE_API_URL = "https://wthee.xyz"
     private const val ROBONINON_API_URL = "https://roboninon.win"
+    private const val CIALLOWORLD_API_URL = "https://pcr.cialloworld.com"
+    // /api/databases
+    // ?region=cn (tw|jp，返回的JSON结构:latest.cn.version)
+    // ?region=jp&download=1 (下载的并不是.br压缩文件，是.db文件)
     private const val WTHEE_API_RESOURCE_URL = "$WTHEE_API_URL/redive/jp/resource"
     private val RES_URL = if (useWtheeRes) WTHEE_API_RESOURCE_URL else ESTERTION_API_URL
 
-    //  CN database
+    // CN database
     private const val DB_FILE_NAME_CN = "redive_cn.db"
-    private val DB_FILE_URL_CN = "${if (useWtheeDb) WTHEE_API_URL else ESTERTION_API_URL}/db/$DB_FILE_NAME_CN.br"
-    private const val LAST_VERSION_URL_CN = "$ESTERTION_API_URL/last_version_cn.json"
+    val ESTERTION_DB_FILE_URL_CN = "$ESTERTION_API_URL/db/$DB_FILE_NAME_CN.br"
+    val WTHEE_DB_FILE_URL_CN = "$WTHEE_API_URL/db/$DB_FILE_NAME_CN.br"
+    val CIALLOWORLD_DB_FILE_URL_CN = "$CIALLOWORLD_API_URL/api/databases?region=cn&compression=br&download=1"
 
-    //  JP database
+    // JP database
     private const val DB_FILE_NAME_JP = "redive_jp.db"
-    private val DB_FILE_URL_JP = "${if (useWtheeDb) WTHEE_API_URL else ESTERTION_API_URL}/db/$DB_FILE_NAME_JP.br"
-    private const val LAST_VERSION_URL_JP = "$ESTERTION_API_URL/last_version_jp.json"
+    val ESTERTION_DB_FILE_URL_JP = "$ESTERTION_API_URL/db/$DB_FILE_NAME_JP.br"
+    val WThEE_DB_FILE_URL_JP = "$WTHEE_API_URL/db/$DB_FILE_NAME_JP.br"
+    val CIALLOWORLD_DB_FILE_URL_JP = "$CIALLOWORLD_API_URL/api/databases?region=jp&compression=br&download=1"
 
-    // cn database
+    // EN database
     private const val DB_FILE_NAME_EN = "redive_en.db"
-    private val DB_FILE_URL_EN = "$ROBONINON_API_URL/db/download?compressed=true"
+    val ROBONINON_DB_FILE_URL_EN = "$ROBONINON_API_URL/db/download?compressed=true"
 
     //  Resource URL
     private val STILL_UNIT_URL = "$RES_URL/card/full/%d.webp"
@@ -41,18 +46,17 @@ object UrlUtil {
     private val ICON_EX_EQUIPMENT_URL = "$WTHEE_API_RESOURCE_URL/icon/ex_equipment/%d.webp"
     private val ICON_EX_EQUIPMENT_CATEGORY_URL = "$WTHEE_API_RESOURCE_URL/icon/ex_equipment/category/%d.webp"
 
-//    const val StringsJsonUrl = "https://api.github.com/repos/chilbi/KasumiNotes/contents/app/src/main/res/json/strings.json"
     // App Release URL
     const val APP_RELEASE_URL = "https://api.github.com/repos/chilbi/KasumiNotes/releases/latest"
-    // hashed TableNames ColumnNames
-    const val RainbowJsonUrl = "https://api.github.com/repos/MalitsPlus/ShizuruNotes/contents/app/src/main/res/raw/rainbow.json"
 
+    // DB Last Version
+    const val estertionLastVersionApiUrl = ESTERTION_API_URL// /last_version_{cn|jp}.json
     const val wtheeLastVersionApiUrl = "$WTHEE_API_URL/pcr/api/v1/db/info/v2"
+    const val cialloworldLastVersionApiUrl = "$CIALLOWORLD_API_URL/api/databases"// ?region={cn|jp}
     const val roboninonLastVersionApiUrl = "$ROBONINON_API_URL/db/version"
 
     val dbFileNameMap = mapOf(DbServer.CN to DB_FILE_NAME_CN, DbServer.JP to DB_FILE_NAME_JP, DbServer.EN to DB_FILE_NAME_EN)
-    val dbFileUrlMap = mapOf(DbServer.CN to DB_FILE_URL_CN, DbServer.JP to DB_FILE_URL_JP, DbServer.EN to DB_FILE_URL_EN)
-    val lastVersionUrl = mapOf(DbServer.CN to LAST_VERSION_URL_CN, DbServer.JP to LAST_VERSION_URL_JP)
+//    val dbFileUrlMap = mapOf(DbServer.CN to DB_FILE_URL_CN, DbServer.JP to DB_FILE_URL_JP, DbServer.EN to DB_FILE_URL_EN)
 
 //    const val summonIconUrl = "$API_URL/icon/unit/000001.webp"
 

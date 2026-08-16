@@ -13,6 +13,7 @@
 - [wthee.xyz/redive/](https://wthee.xyz/redive/)
 - [roboninon.win数据库版本](https://roboninon.win/db/version)
 - [roboninon.win数据库下载](https://roboninon.win/db/download?compressed=true)
+- [priconne-database](https://github.com/SonderXiaoming/priconne-database)
 
 ## 许可证
 Apache License 2.0

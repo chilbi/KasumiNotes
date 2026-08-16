@@ -22,6 +22,10 @@ sealed class AppNavData(
         child = listOf("chara", "about")
     )
 
+    data object  ErrorScreen : AppNavData(
+        route = "errorScreen"
+    )
+
     data object Dashboard : AppNavData(
         route = "dashboard",
         child = listOf("quest", "clanBattle", "dungeon", "talentQuest", "abyssQuest", "mirageQuest", "enhance")

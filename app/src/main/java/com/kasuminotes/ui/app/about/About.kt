@@ -101,6 +101,11 @@ fun About(
                     text = "https://roboninon.win",
                     onClick = { onLinkTo("https://roboninon.win/db/version") }
                 )
+                Spacer(Modifier.height(8.dp))
+                TextLink(
+                    text = "https://pcr.cialloworld.com",
+                    onClick = { onLinkTo("https://pcr.cialloworld.com/api/databases") }
+                )
 
                 Spacer(Modifier.height(24.dp))
                 Spacer(Modifier.weight(1f))

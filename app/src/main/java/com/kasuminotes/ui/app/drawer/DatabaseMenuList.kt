@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.DonutSmall
+import androidx.compose.material.icons.filled.Source
 import androidx.compose.material.icons.filled.Update
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -16,14 +17,17 @@ import androidx.compose.ui.res.stringResource
 import com.kasuminotes.R
 import com.kasuminotes.common.DbServer
 import com.kasuminotes.ui.components.SyncIcon
+import kotlin.enums.enumEntries
 
 @Composable
 fun DatabaseMenuList(
     dbServer: DbServer,
     dbVersion: String,
+    dbSource: Int,
     dbAutoUpdate: Boolean,
     lastVersionFetching: Boolean,
     onDbServerChange: (DbServer) -> Unit,
+    onDbSourceChange: (Int) -> Unit,
     onLastDbVersionFetch: () -> Unit,
     onDbAutoUpdateToggle: () -> Unit
 ) {
@@ -33,7 +37,7 @@ fun DatabaseMenuList(
         iconVector = Icons.Filled.Cloud,
         text = stringResource(dbServer.strId)
     ) { onCollapse ->
-        val allServer = enumValues<DbServer>().toMutableList()
+        val allServer = enumEntries<DbServer>().toMutableList()
         allServer.remove(dbServer)
         allServer.add(0, dbServer)
         allServer.forEach { server ->
@@ -55,6 +59,25 @@ fun DatabaseMenuList(
         trailingContent = { SyncIcon(lastVersionFetching) }
     )
 
+    ListItemWithDropdownMenu(
+        iconVector = Icons.Filled.Source,
+        text = getDbSourceText(dbSource)
+    ) { onCollapse ->
+        val allSource = mutableListOf(0, 1)
+        allSource.remove(dbSource)
+        allSource.add(0, dbSource)
+        allSource.forEach { source ->
+            DropdownMenuItem(
+                text = { MenuItemText(getDbSourceText(source)) },
+                onClick = {
+                    onDbSourceChange(source)
+                    onCollapse()
+                },
+                trailingIcon = if (source == dbSource) { { CheckIcon()} } else null
+            )
+        }
+    }
+
     ListItem(
         headlineContent = { Text(stringResource(R.string.auto_update)) },
         modifier = Modifier.clickable(onClick = onDbAutoUpdateToggle),
@@ -66,4 +89,9 @@ fun DatabaseMenuList(
             )
         }
     )
+}
+
+private fun getDbSourceText(dbSource: Int) = when (dbSource) {
+    1 -> "pcr.cialloworld.com"
+    else -> "wthee.xyz"
 }
