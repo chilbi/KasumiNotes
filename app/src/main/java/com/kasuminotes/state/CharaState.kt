@@ -40,7 +40,21 @@ class CharaState(
         private set
     var rankBonusProperty by mutableStateOf<Property?>(null)
         private set
+    var includeExSkill by mutableStateOf(appRepository.getIncludeExSkill())
+        private set
+    var includeExEquip by mutableStateOf(appRepository.getIncludeExEquip())
+        private set
+    var includeExEquipSkill by mutableStateOf(appRepository.getIncludeExEquipSkill())
+        private set
+    var includeConnectRank by mutableStateOf(appRepository.getIncludeConnectRank())
+        private set
     var exSkillProperty by mutableStateOf(Property.zero)
+        private set
+    var exEquipProperty by mutableStateOf(Property.zero)
+        private set
+    var exEquipSkillProperty by mutableStateOf(Property.zero)
+        private set
+    var connectRankProperty by mutableStateOf(Property.zero)
         private set
     //rarity+promotionStatus+promotion+unique1&2+story+bonus++exUnique1
     var baseProperty by mutableStateOf(Property.zero)
@@ -283,6 +297,31 @@ class CharaState(
         }
     }
 
+    fun changeIncludeExSkill(value: Boolean) {
+        includeExSkill = value
+        calcProperty()
+        appRepository.setIncludeExSkill(value)
+    }
+
+    fun changeIncludeExEquip(value: Boolean) {
+        includeExEquip = value
+        calcProperty()
+        appRepository.setIncludeExEquip(value)
+
+    }
+
+    fun changeIncludeExEquipSkill(value: Boolean) {
+        includeExEquipSkill = value
+        calcProperty()
+        appRepository.setIncludeExEquipSkill(value)
+    }
+
+    fun changeIncludeConnectRank(value: Boolean) {
+        includeConnectRank = value
+        calcProperty()
+        appRepository.setIncludeConnectRank(value)
+    }
+
     fun destroy() {
         restore()
         connectRankData = null
@@ -337,8 +376,17 @@ class CharaState(
             userProfile!!.unitData.atkType
         ) ?: Property.zero
         exSkillProperty = exSkill
+        exEquipProperty = exEquip
+        exEquipSkillProperty = exEquipSkill
+        connectRankProperty = connectRankStatus
         baseProperty = base
-        totalProperty = Property { i -> base[i] + exSkill[i] + exEquip[i] + exEquipSkill[i] + connectRankStatus[i] }
+        totalProperty = Property { i ->
+            base[i] +
+                    (if (includeExSkill) exSkill[i] else 0.0) +
+                    (if (includeExEquip) exEquip[i] else 0.0) +
+                    (if (includeExEquipSkill) exEquipSkill[i] else 0.0) +
+                    (if (includeConnectRank) connectRankStatus[i] else 0.0)
+        }
     }
 
     private fun changeState() {

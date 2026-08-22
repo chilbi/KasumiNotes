@@ -40,6 +40,13 @@
     <string name="functionality_not_implemented">功能尚未实现</string>
     <string name="prev_page">上一页</string>
     <string name="next_page">下一页</string>
+    <string name="more">查看更多</string>
+    <string name="base_property">基础属性</string>
+    <string name="rank_bonus_property">RANK奖励属性</string>
+    <string name="ex_skill_property">EX技能属性</string>
+    <string name="ex_equip_property">EX装备属性</string>
+    <string name="ex_equip_skill_property">EX装备技能属性</string>
+    <string name="connect_rank_property">连结RANK属性</string>
 
     <string name="connect">连结</string>
     <string name="level">LEVEL</string>

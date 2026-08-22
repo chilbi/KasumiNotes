@@ -43,7 +43,7 @@ data class UserProfile(
     //rarity+promotionStatus+promotion+unique1&2+story+bonus
     var baseProperty: Property? = null
         private set
-    //base+exSkill+exEquip
+    //base+exSkill+exEquip+exEquipSkill+connectRankStatus
     var totalProperty: Property? = null
         private set
 

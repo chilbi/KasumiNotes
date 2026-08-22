@@ -25,8 +25,6 @@ import kotlinx.coroutines.flow.Flow
 class AppRepository(
     private val context: Context = MainApplication.context,
 ) {
-    val applicationContext: Context get() = context.applicationContext
-
     fun getUserId() = context.userIdSP
 
     fun setUserId(value: Int) {
@@ -144,6 +142,53 @@ class AppRepository(
             val searches = item.second
             "$id," + searches.joinToString(",")
         }
+    }
+
+
+    fun getIncludeExSkill(): Boolean {
+        val includeProperties = context.includeProperties.split(",")
+        return includeProperties.getOrNull(0) == "1"
+    }
+
+    fun getIncludeExEquip(): Boolean {
+        val includeProperties = context.includeProperties.split(",")
+        return includeProperties.getOrNull(1) == "1"
+
+    }
+
+    fun getIncludeExEquipSkill(): Boolean {
+        val includeProperties = context.includeProperties.split(",")
+        return includeProperties.getOrNull(2) == "1"
+    }
+
+    fun getIncludeConnectRank(): Boolean {
+        val includeProperties = context.includeProperties.split(",")
+        return includeProperties.getOrNull(3) == "1"
+    }
+
+    fun setIncludeExSkill(value: Boolean) {
+        val includeProperties = context.includeProperties.split(",").toMutableList()
+        includeProperties[0] = if (value) "1" else "0"
+        context.includeProperties = includeProperties.joinToString(",")
+    }
+
+    fun setIncludeExEquip(value: Boolean) {
+        val includeProperties = context.includeProperties.split(",").toMutableList()
+        includeProperties[1] = if (value) "1" else "0"
+        context.includeProperties = includeProperties.joinToString(",")
+
+    }
+
+    fun setIncludeExEquipSkill(value: Boolean) {
+        val includeProperties = context.includeProperties.split(",").toMutableList()
+        includeProperties[2] = if (value) "1" else "0"
+        context.includeProperties = includeProperties.joinToString(",")
+    }
+
+    fun setIncludeConnectRank(value: Boolean) {
+        val includeProperties = context.includeProperties.split(",").toMutableList()
+        includeProperties[3] = if (value) "1" else "0"
+        context.includeProperties = includeProperties.joinToString(",")
     }
 
     fun getDbFile(server: DbServer): File = context.getDatabasePath(UrlUtil.dbFileNameMap[server]!!)

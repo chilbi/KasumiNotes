@@ -115,6 +115,7 @@ fun Chara(
         },
         backLayerContent = {
             CharaBackLayer(
+                charaState,
                 userData,
                 unitData,
                 maxUserData,
@@ -122,7 +123,6 @@ fun Chara(
                 userProfile.unique1Data,
                 userProfile.unique2Data,
                 userProfile.exEquipSlots,
-                charaState.rankBonusProperty,
                 property,
                 originProperty,
                 userProfile.userData,
@@ -134,17 +134,7 @@ fun Chara(
                 onUniqueClick,
                 onExEquipClick,
                 onEquipChange,
-                onUniqueChange,
-                charaState::changeCharaLevel,
-                charaState::changeRarity,
-//                charaState::changeUniqueLevel,
-                charaState::changeConnectRank,
-                charaState::changeLoveLevel,
-                charaState::changePromotionLevel,
-                charaState::changeSkillLevel,
-                charaState::changeLvLimitBreak,
-                charaState::cancel,
-                charaState::save
+                onUniqueChange
             )
         },
         frontLayerContent = {
@@ -154,13 +144,9 @@ fun Chara(
                 maxUserData,
                 userProfile.charaStoryStatus,
                 userProfile.sharedProfiles,
-//                userProfile.unique1Data,
-//                userProfile.promotions,
                 userProfile.getRealUnitAttackPatternList(userData.rarity),
                 userProfile.getRealUnitSkillData(userData.rarity),
                 property,
-//                onEquipClick,
-//                onUniqueClick,
                 onSummonsClick,
                 onCharaChange,
                 onToggle

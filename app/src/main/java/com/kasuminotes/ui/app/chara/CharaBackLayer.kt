@@ -18,13 +18,15 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -40,7 +42,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -57,11 +58,11 @@ import com.kasuminotes.data.UnitData
 import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.UnitPromotion
 import com.kasuminotes.data.UserData
+import com.kasuminotes.state.CharaState
 import com.kasuminotes.ui.app.DefaultUserId
 import com.kasuminotes.ui.components.Alert
 import com.kasuminotes.ui.components.Container
 import com.kasuminotes.ui.components.ImageSize
-import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.PropertyTable
 import com.kasuminotes.ui.components.TranslucentBackButton
 import com.kasuminotes.ui.components.Severity
@@ -76,6 +77,7 @@ import com.kasuminotes.utils.UrlUtil
 
 @Composable
 fun CharaBackLayer(
+    charaState: CharaState,
     userData: UserData,
     unitData: UnitData,
     maxUserData: MaxUserData,
@@ -83,7 +85,6 @@ fun CharaBackLayer(
     unique1Data: UniqueData?,
     unique2Data: UniqueData?,
     exEquipSlots: List<ExEquipSlot>,
-    rankBonusProperty: Property?,
     property: Property,
     originProperty: Property,
     originUserData: UserData,
@@ -95,17 +96,7 @@ fun CharaBackLayer(
     onUniqueClick: (uniqueData: UniqueData, slot: Int) -> Unit,
     onExEquipClick: (ExEquipSlot) -> Unit,
     onEquipChange: (equip: Boolean, slot: Int) -> Unit,
-    onUniqueChange: (equip: Boolean, slot: Int) -> Unit,
-    onCharaLevelChange: (Int) -> Unit,
-    onRarityChange: (Int) -> Unit,
-//    onUniqueLevelChange: (value: Int, slot: Int) -> Unit,
-    onConnectRankChange: (value: Int, maxUserData: MaxUserData) -> Unit,
-    onLoveLevelChange: (Int) -> Unit,
-    onPromotionLevelChange: (Int) -> Unit,
-    onSkillLevelChange: (value: Int, labelText: String) -> Unit,
-    onLvLimitBreakChange: (maxUserData: MaxUserData) -> Unit,
-    onCancel: () -> Unit,
-    onSave: () -> Unit
+    onUniqueChange: (equip: Boolean, slot: Int) -> Unit
 ) {
     Column(Modifier.verticalScroll(rememberScrollState())) {
         CharaHeader(
@@ -137,14 +128,14 @@ fun CharaBackLayer(
                         onExEquipClick,
                         onEquipChange,
                         onUniqueChange,
-                        onCharaLevelChange,
-                        onRarityChange,
-//                        onUniqueLevelChange,
-                        onConnectRankChange,
-                        onLoveLevelChange,
-                        onPromotionLevelChange,
-                        onSkillLevelChange,
-                        onLvLimitBreakChange,
+                        charaState::changeCharaLevel,
+                        charaState::changeRarity,
+//                        charaState::changeUniqueLevel,
+                        charaState::changeConnectRank,
+                        charaState::changeLoveLevel,
+                        charaState::changePromotionLevel,
+                        charaState::changeSkillLevel,
+                        charaState::changeLvLimitBreak
                     )
                 }
                 1 -> {
@@ -154,57 +145,48 @@ fun CharaBackLayer(
                                 property = property,
                                 originProperty = originProperty,
                             )
-                            RankBonusButton(rankBonusProperty)
+                            MorePropertyButton(charaState)
                         }
                     }
                 }
             }
         }
 
-        AlertMessage(userData.userId, saveVisible, onCancel, onSave)
+        AlertMessage(userData.userId, saveVisible, charaState::cancel, charaState::save)
 
         Spacer(Modifier.height(headerHeight))
     }
 }
 
 @Composable
-private fun BoxScope.RankBonusButton(rankBonusProperty: Property?) {
+private fun BoxScope.MorePropertyButton(charaState: CharaState) {
     var visible by rememberSaveable { mutableStateOf(false) }
     val onOpen = remember {{ visible = true }}
     val onClose = remember {{ visible = false }}
-    val label = "${stringResource(R.string.rank)} ${stringResource(R.string.bonus)}"
-    val hasBonus = rankBonusProperty != null
 
     TextButton(
         onClick = onOpen,
         modifier = Modifier
             .align(Alignment.BottomEnd)
             .offset(0.dp, 8.dp),
-        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.tertiary),
-        enabled = hasBonus
+        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.tertiary)
     ) {
-        Icon(if (hasBonus) Icons.Filled.Check else Icons.Filled.Close, null)
-        Text(
-            text = label,
-            textDecoration = TextDecoration.Underline
-        )
+        Text(stringResource(R.string.more))
+        Icon(Icons.Filled.MoreHoriz, null)
     }
 
-    if (visible && hasBonus) {
+    if (visible) {
         Dialog(onClose) {
-            LabelContainer(
-                label = label,
-                color = MaterialTheme.colorScheme.primary,
-                padding = 12.dp
+            Surface(
+                shape = MaterialTheme.shapes.medium,
+                tonalElevation = AlertDialogDefaults.TonalElevation
             ) {
-                PropertyTable(
-                    property = rankBonusProperty!!,
-                    indices = rankBonusProperty.nonzeroIndices
-                )
+                MoreProperty(charaState)
             }
         }
     }
 }
+
 
 @Composable
 private fun CharaHeader(

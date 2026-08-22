@@ -40,6 +40,13 @@
     <string name="functionality_not_implemented">機能はまだ実装されていません</string>
     <string name="prev_page">前のページ</string>
     <string name="next_page">次のページ</string>
+    <string name="more">もっと見る</string>
+    <string name="base_property">基礎ステータス</string>
+    <string name="rank_bonus_property">RANKボーナスステータス</string>
+    <string name="ex_skill_property">EXスキルステータス</string>
+    <string name="ex_equip_property">EX装備ステータス</string>
+    <string name="ex_equip_skill_property">EX装備スキルステータス</string>
+    <string name="connect_rank_property">コネクトRANKステータス</string>
 
     <string name="connect">コネクト</string>
     <string name="level">LEVEL</string>

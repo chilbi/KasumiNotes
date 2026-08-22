@@ -14,7 +14,6 @@ import com.kasuminotes.db.getEquipmentPairList
 import com.kasuminotes.db.getMemoryPieces
 import com.kasuminotes.db.getQuestDataList
 import com.kasuminotes.ui.app.AppRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
