@@ -26,9 +26,11 @@ FROM unit_attack_pattern WHERE unit_id=$unitId ORDER BY pattern_id ASC"""
                 while (i < 20) {
                     val atkPattern = it.getInt(i++)
 //                    if (atkPattern == 0) break
-                    atkPatternList.add(atkPattern)
+                    if (atkPattern != 0) {
+                        atkPatternList.add(atkPattern)
+                    }
                 }
-                atkPatternList = atkPatternList.filter { atkPattern -> atkPattern != 0 }.toMutableList()
+//                atkPatternList = atkPatternList.filter { atkPattern -> atkPattern != 0 }.toMutableList()
 
                 i = 20
 
@@ -36,11 +38,11 @@ FROM unit_attack_pattern WHERE unit_id=$unitId ORDER BY pattern_id ASC"""
                 var loopStart = it.getInt(i++)
                 var loopEnd = it.getInt(i)
 
-//                if (atkPatternList.size > loopEnd) {
-//                    atkPatternList = atkPatternList.subList(0, loopEnd)
-//                }
                 if (loopEnd > atkPatternList.size) {
                     loopEnd = atkPatternList.size
+                }
+                if (atkPatternList.size > loopEnd) {
+                    atkPatternList = atkPatternList.subList(0, loopEnd)
                 }
                 if (loopStart < 1 || loopStart >= loopEnd) {
                     loopStart = 1

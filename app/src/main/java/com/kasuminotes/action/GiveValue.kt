@@ -21,19 +21,19 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 //        null
 //    }
 
-    var giveValueCount = 1
-    // 击杀数动作会叠算
-    if (actionType == 26 && actionValue1 == 2.0) {
-        var count = 0
-        actions.forEach { action ->
-            if (action.actionType == 26 && action.actionValue1 == 2.0) count++
-        }
-        giveValueCount = count
-    }
+//    var giveValueCount = 1
+//    // 击杀数动作会叠算
+//    if (actionType == 26 && actionValue1 == 2.0) {
+//        var count = 0
+//        actions.forEach { action ->
+//            if (action.actionType == 26 && action.actionValue1 == 2.0) count++
+//        }
+//        giveValueCount = count
+//    }
 
     var isAdditive = true
-    var value2 = actionValue2 * giveValueCount
-    var value3 = actionValue3 * giveValueCount
+    var value2 = actionValue2// * giveValueCount
+    var value3 = actionValue3// * giveValueCount
 
     /** actionValue2, actionValue3 常量（如：(10 + 10 × 技能等级)） */
     val constantVariable = if (value3 == 0.0) {
