@@ -4,16 +4,9 @@ import androidx.annotation.StringRes
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
 import com.kasuminotes.data.SkillEffect
-import kotlin.math.absoluteValue
 import kotlin.math.ceil
 
 fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
-    /** actionDetail1：修饰的目标动作 */
-    val targetAction = actions.find { it.actionId == actionDetail1 }
-    if (targetAction == null) {
-        return D.Text("")
-    }
-
     /** 嵌套修饰的目标动作 */
 //    val nestTargetAction = if (targetAction.actionType == 26 || targetAction.actionType == 27) {
 //        actions.find { it.actionId == targetAction.actionDetail1 }!!
@@ -31,86 +24,30 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 //        giveValueCount = count
 //    }
 
-    var isAdditive = true
-    var value2 = actionValue2// * giveValueCount
-    var value3 = actionValue3// * giveValueCount
-
-    /** actionValue2, actionValue3 常量（如：(10 + 10 × 技能等级)） */
-    val constantVariable = if (value3 == 0.0) {
-        var isPercent = false
-        if (targetAction.actionType == 1 && actionDetail2 == 6) {
-            value2 *= 100
-            isPercent = true
-        } else if (targetAction.actionType == 4 && targetAction.actionValue1 != 1.0) {
-            isPercent = true
-        } else if (targetAction.actionType == 10 && actionType != 27 && actionType != 74 && targetAction.isStatusPercent()) {
-            isPercent = true
-        } else if (targetAction.actionType == 72) {
-            isPercent = true
-            if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
-                isPercent = false
-            }
-        } else if (targetAction.actionType == 98  && actionDetail2 == 1) {
-            value2 *= 100
-            isPercent = true
-        }
-        if (value2 < 0.0) {
-            if (!(targetAction.actionType == 35 && actionDetail2 == 4)) {
-                isAdditive = false
-            }
-            if (targetAction.actionType != 16 &&
-                (targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 2) &&
-                actionDetail2 == 1
-            ) {
-                value2 *= 100
-                isPercent = true
-            }
-            value2 *= -1
-        }
-        D.Text(value2.toNumStr() + if (isPercent) "%" else "")
-    } else {
-        if (targetAction.actionType == 72) {
-            var isPercent = true
-            var value = (value2 + value3 * skillLevel).toNumStr()
-            if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
-                isPercent = false
-            }
-            if (isPercent) {
-                value += "%"
-            }
-            D.Text(value)
-        } else if (targetAction.actionType == 98  && actionDetail2 == 1) {
-            val value = (value2 + value3 * skillLevel) * 100
-            D.Text("${value.toNumStr()}%")
-        } else {
-            var isPercent = false
-            if (targetAction.actionType == 4 && targetAction.actionValue1 != 1.0) {
-                isPercent = true
-            }
-            if (value2 < 0.0 || value3 < 0.0) {
-                isAdditive = false
-                value2 = -value2
-                value3 = -value3
-            }
-            val formula = D.Format(
-                R.string.sub_formula_base1_lv2,
-                arrayOf(
-                    D.Text(value2.toNumStr()),
-                    D.Text(value3.toNumStr())
-                )
-            )
-            if (isPercent) formula.append(D.Text("%")) else formula
-        }
+    /** actionDetail1：修饰的目标动作 */
+    val targetAction = actions.find { it.actionId == actionDetail1 }
+    if (targetAction == null) {
+        return D.Text("")
     }
 
-    val independentVariable = getGiveValueIndependentVariable()
-
+    // actionDetail2：修饰动作的类型（如：伤害的物理攻击力倍率）
     val content = getGiveValueContent(targetAction)
 
-    val formula = getGiveValueFormula(targetAction, constantVariable, independentVariable, null)
+    // actionValue1：自变量（如：敌人全体的数量）
+    val independentVariable = getGiveValueIndependentVariable()
 
-    val maxValue = getMaxValue(skillLevel, targetAction)
-    val maxIndependentVariable = getMaxIndependentVariable(skillLevel, targetAction)
+    // actionValue2, actionValue3 常量（如：(10 + 10 × 技能等级)）
+    val giveValueFormat = getGiveValueFormat(targetAction, skillLevel)
+
+    // actionValue4, actionValue5 上限值
+    val maxValue = getMaxValue(targetAction, skillLevel, giveValueFormat)
+
+    // 达到上限值时的自变量值
+    val maxIndependentVariable = getMaxIndependentVariable(targetAction, skillLevel)
+
+    // 公式（如：{ 物理攻击力 * 敌人全体的数量 }）
+    val formula = getGiveValueFormula(targetAction, giveValueFormat.constantVariable, independentVariable, null)
+
     @StringRes
     val actionRes: Int
     @StringRes
@@ -118,7 +55,7 @@ fun SkillAction.getGiveValue(skillLevel: Int, actions: List<SkillAction>): D {
 
     when (actionType) {
         26 -> {
-            if (isAdditive) {
+            if (giveValueFormat.isAdditive) {
                 actionRes = R.string.action_additive_content1_formula2
                 maxRes = R.string.action_additive_max1_content2_value3
             } else {
@@ -186,6 +123,95 @@ fun SkillAction.getGiveValueIndependentVariable(): D {
             }
         }
     }
+}
+
+private data class GiveValueFormat(
+    val constantVariable: D,
+    val isAdditive: Boolean,
+    val isPercent: Boolean,
+    val shouldMultiplyBy100: Boolean
+)
+
+/** actionValue2, actionValue3 常量（如：(10 + 10 × 技能等级)） */
+private fun SkillAction.getGiveValueFormat(targetAction: SkillAction, skillLevel: Int): GiveValueFormat {
+    var isAdditive = true
+    var isPercent = false
+    var shouldMultiplyBy100 = false
+    var value2 = actionValue2// * giveValueCount
+    var value3 = actionValue3// * giveValueCount
+
+    if ((value2 + value3 * skillLevel) < 0.0) {
+        isAdditive = false
+    }
+
+    if (targetAction.actionType == 1 && actionDetail2 == 6) {
+        isPercent = true
+        shouldMultiplyBy100 = true
+    } else if (targetAction.actionType == 4 && targetAction.actionValue1 != 1.0) {
+        isPercent = true
+    } else if (targetAction.actionType == 10 &&
+        actionType != 27 &&
+        actionType != 74 &&
+        targetAction.isStatusPercent()
+    ) {
+        isPercent = true
+    } else if (targetAction.actionType == 46) {
+        isPercent = true
+    } else if (targetAction.actionType == 72 &&
+        !(targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5)
+    ) {
+        isPercent = true
+    } else if (targetAction.actionType == 98 && actionDetail2 == 1) {
+        isPercent = true
+        if (targetAction.actionDetail1 == 0) {
+            shouldMultiplyBy100 = true
+        }
+    } else if (targetAction.actionType == 110 && actionDetail2 == 1) {
+        isPercent = true
+    } else if (value3 == 0.0 &&//不明
+        value2 < 0.0 &&
+        targetAction.actionType != 16 &&
+        (targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 2) &&
+        actionDetail2 == 1
+    ) {
+        isPercent = true
+        shouldMultiplyBy100 = true
+    }
+
+    if (!isAdditive) {
+        value2 = -value2
+        value3 = -value3
+    }
+
+    if (shouldMultiplyBy100) {
+        value2 *= 100
+        value3 *= 100
+    }
+
+    val formula: D = if (value3 == 0.0) {
+        D.Text(value2.toNumStr())
+    } else {
+        D.Format(
+            R.string.sub_formula_base1_lv2,
+            arrayOf(
+                D.Text(value2.toNumStr()),
+                D.Text(value3.toNumStr())
+            )
+        )
+    }
+
+    val constantVariable = if (isPercent) {
+        formula.append(D.Text("%"))
+    } else {
+        formula
+    }
+
+    return GiveValueFormat(
+        constantVariable,
+        isAdditive,
+        isPercent,
+        shouldMultiplyBy100
+    )
 }
 
 /**
@@ -279,8 +305,16 @@ private fun SkillAction.getGiveValueContent(targetAction: SkillAction): D {
             3 -> D.Format(R.string.give_time)
             else -> D.Unknown
         }
-        98 -> if (actionDetail2 == 1) D.Format(R.string.give_energy_cut_effect)
-        else D.Format(R.string.give_time)
+        98 -> if (actionDetail2 == 1) D.Format(
+            if (targetAction.actionDetail1 == 0) R.string.give_energy_down_cut
+            else R.string.give_energy_down_limit
+        ) else D.Format(R.string.give_time)
+        110 -> when (actionDetail2) {
+            1 -> D.Format(R.string.give_damage_up)
+            2 -> D.Format(R.string.give_time)
+            7 -> D.Format(R.string.give_max_damage_up)
+            else -> D.Unknown
+        }
         else -> D.Unknown
     }
 }
@@ -340,13 +374,13 @@ private fun SkillAction.getGiveValueFormula(
             3 -> getAtkType(targetAction.actionDetail1)
             else -> D.Unknown
         }
-        59, 72, 98 -> null
+        59, 72, 98, 110 -> null
         else -> D.Unknown
     }
     val nonNullElements = listOfNotNull(
         constantVariable, otherConstantVariable, independentVariable, nestIndependentVariable
     ).toTypedArray()
-    val result = D.Format(
+    return D.Format(
         when (nonNullElements.size) {
             2 -> R.string.formula_m1_m2
             3 -> R.string.formula_m1_m2_m3
@@ -354,18 +388,18 @@ private fun SkillAction.getGiveValueFormula(
         },
         nonNullElements
     )
-    return if (targetAction.actionType == 46) {
-        D.Format(
-            if (targetAction.actionDetail1 == 2) R.string.content_hp_ratio1
-            else R.string.content_max_hp_ratio1,
-            arrayOf(result.append(D.Text("%")))
-        )
-    } else {
-        result
-    }
+//    return if (targetAction.actionType == 46) {
+//        D.Format(
+//            if (targetAction.actionDetail1 == 2) R.string.content_hp_ratio1
+//            else R.string.content_max_hp_ratio1,
+//            arrayOf(result.append(D.Text("%")))
+//        )
+//    } else {
+//        result
+//    }
 }
 
-private fun SkillAction.getDependSkillLevel(skillLevel: Int, targetAction: SkillAction): Int {
+private fun SkillAction.getDependSkillLevel(targetAction: SkillAction, skillLevel: Int): Int {
     return when (targetAction.actionType) {
         1 -> when (actionDetail2) {
             2, 4 -> skillLevel
@@ -413,44 +447,36 @@ private fun SkillAction.getDependSkillLevel(skillLevel: Int, targetAction: Skill
 }
 
 /** actionValue4, actionValue5：上限值 */
-private fun SkillAction.getMaxValue(skillLevel: Int, targetAction: SkillAction): D? {
-    val level = getDependSkillLevel(skillLevel, targetAction)
+private fun SkillAction.getMaxValue(
+    targetAction: SkillAction,
+    skillLevel: Int,
+    giveValueFormat: GiveValueFormat
+): D? {
+    val dependSkillLevel = getDependSkillLevel(targetAction, skillLevel)
     return if (actionValue4 == 0.0 && actionValue5 == 0.0) {
         null
     } else {
-        val maxValue = (actionValue4 + actionValue5 * skillLevel).absoluteValue
-        if (
-            (targetAction.actionType == 1 && actionDetail2 == 6) ||
-            (targetAction.actionType == 98  && actionDetail2 == 1)
+        var maxValue = (actionValue4 + actionValue5 * skillLevel) * dependSkillLevel
+        if (!giveValueFormat.isAdditive ||
+            (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0)//不明
         ) {
-            D.Text("${(maxValue * 100 * level).toNumStr()}%")
-        }else if (
-            (targetAction.actionType == 4 && targetAction.actionValue1 != 1.0) ||
-            (targetAction.actionType == 10 && targetAction.isStatusPercent()) ||
-            targetAction.actionType == 46
-        ) {
-            D.Text("${(maxValue * level).toNumStr()}%")
-        } else if (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0) {
-            D.Text((-maxValue * level).toNumStr())
-        } else if (targetAction.actionType == 72) {
-            var value = (maxValue * level).toNumStr()
-            var isPercent = true
-            if (targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) {
-                isPercent = false
-            }
-            if (isPercent) {
-                value += "%"
-            }
-            D.Text(value)
+            maxValue = -maxValue
+        }
+        if (giveValueFormat.shouldMultiplyBy100) {
+            maxValue *= 100
+        }
+        if (giveValueFormat.isPercent) {
+            D.Text("${maxValue.toNumStr()}%")
         } else {
-            D.Text((maxValue * level).toNumStr())
+            D.Text(maxValue.toNumStr())
         }
     }
 }
 
-private fun SkillAction.getMaxIndependentVariable(skillLevel: Int, targetAction: SkillAction): D {
+/** 达到上限值时的自变量值 */
+private fun SkillAction.getMaxIndependentVariable(targetAction: SkillAction, skillLevel: Int): D {
 //    var otherVariable: D? = null
-    val max = actionValue4 + actionValue5 * skillLevel * getDependSkillLevel(skillLevel, targetAction)
+    val max = actionValue4 + actionValue5 * skillLevel * getDependSkillLevel(targetAction, skillLevel)
     val constantVariable = actionValue2 + actionValue3 * skillLevel
     return D.Text((ceil(max / constantVariable * 10000.0) / 10000.0).toNumStr())
 }

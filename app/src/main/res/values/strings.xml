@@ -301,7 +301,8 @@
     <string name="action_energy_down_target1_formula2">使%1$s的TP降低%2$s。</string>
     <string name="action_hp_recovery_target1_formula2">%1$s的HP回复%2$s。</string>
     <string name="action_speed_target1_formula2_time3">%1$s的行动速度变为原来的%2$s，效果时间%3$s秒。</string>
-    <string name="action_energy_cut_target1_formula2_time3">%1$s受到的TP降低效果变为原来的%2$s，效果时间%3$s秒。</string>
+    <string name="action_energy_down_cut_target1_formula2_time3">%1$s受到的TP降低效果变为原来的%2$s，效果时间%3$s秒。</string>
+    <string name="action_energy_down_limit_target1_formula2_time3">%1$s受到的TP降低上限变为%2$s，效果时间%3$s秒。</string>
     <string name="action_energy_restriction_target1_formula2_time3">%1$s的TP上升的上限限制为%2$s，效果时间%3$s秒。</string>
     <string name="action_abnormal_target1_content2_time3">使%1$s陷入%2$s状态，效果时间%3$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_time4">使%1$s陷入%2$s状态，每秒造成%3$s%2$s伤害，效果时间%4$s秒。</string>
@@ -394,7 +395,7 @@
     <string name="action_akinesia_invalid_target1_time2">赋予%1$s可无效化受到的行动不能的状态，效果时间%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">赋予%1$s可无效化最多%2$s次受到的行动不能的状态，效果时间%3$s秒。</string>
     <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$s受到的伤害量提升%2$s，最大提升%3$s，效果时间%4$s秒。</string>
-    <string name="action_dot_damage_up_target1_content2_formula3_max4_time5">%1$s受到的%2$s伤害提升%3$s，最大提升到%4$s，效果时间%5$s秒。</string>
+    <string name="action_dot_damage_up_target1_content2_formula3_max4_time5">%1$s受到的%2$s伤害提升%3$s，最大伤害提升到%4$s，效果时间%5$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_time3">%1$s每次行动时就会受到最大HP的%2$s伤害，效果时间%3$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$s每次行动时都会受到最大HP的%2$s伤害（每次最多受到%3$s伤害），效果时间%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">使%1$s处于【%2$s】环境，效果时间%3$s秒。</string>
@@ -717,7 +718,8 @@
     <string name="give_hp_recovery">HP的回复量</string>
     <string name="give_hp_recovery_down">HP回复的降低量</string>
 <!--    <string name="give_hp_decrement">HP的降低量</string>-->
-    <string name="give_energy_cut_effect">受到的TP降低效果</string>
+    <string name="give_energy_down_cut">受到的TP降低效果</string>
+    <string name="give_energy_down_limit">受到的TP降低上限</string>
     <string name="give_energy_recovery">TP的回复量</string>
     <string name="give_energy_decrement">TP的降低量</string>
     <string name="give_hp_regeneration">HP的持续回复量</string>
@@ -733,12 +735,15 @@
     <string name="give_speed">行动速度</string>
     <string name="give_base_value1">基础值{ %s }</string>
     <string name="give_damage_cut1">受到的%s降低量</string>
+    <string name="give_damage_up">伤害提升量</string>
+    <string name="give_max_damage_up">最大伤害提升量</string>
 
     <string name="effect_damage_attenuation">受到的伤害衰减</string>
     <string name="effect_damage_attenuation_limit1_convergence2">%1$s万以上收敛于%2$s万</string>
     <string name="effect_const">固定</string>
     <string name="effect_down">降低</string>
-    <string name="effect_energy_cut">受到的TP降低效果</string>
+    <string name="effect_energy_down_cut">受到的TP降低效果</string>
+    <string name="effect_energy_down_limit">受到的TP降低上限</string>
     <string name="effect_damage_cut_content1">受到的%s降低</string>
     <string name="effect_speed">行动速度</string>
     <string name="effect_abnormal_damage1">持续%s伤害</string>

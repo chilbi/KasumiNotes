@@ -301,7 +301,8 @@
     <string name="action_energy_down_target1_formula2">%1$sのＴＰを%2$sダウンさせる。</string>
     <string name="action_hp_recovery_target1_formula2">%1$sのＨＰを%2$s回復する。</string>
     <string name="action_speed_target1_formula2_time3">%1$sの行動速度を本来の%2$sにする、効果時間%3$s秒。</string>
-    <string name="action_energy_cut_target1_formula2_time3">%1$sに受けるＴＰダウン効果を本来の%2$sにする、効果時間%3$s秒。</string>
+    <string name="action_energy_down_cut_target1_formula2_time3">%1$sに受けるＴＰダウン効果を本来の%2$sにする、効果時間%3$s秒。</string>
+    <string name="action_energy_down_limit_target1_formula2_time3">%1$sに受けるＴＰダウン上限を%2$sにする、効果時間%3$s秒。</string>
     <string name="action_energy_restriction_target1_formula2_time3">%1$sのＴＰ上昇の上限を%2$sに制限する、効果時間%3$s秒。</string>
     <string name="action_abnormal_target1_content2_time3">%1$sを%2$s状態にする、効果時間%3$s秒。</string>
     <string name="action_abnormal_target1_content2_formula3_time4">%1$sを%2$s状態にする、毎秒%3$s%2$sダメージを与える、効果時間%4$s秒。</string>
@@ -394,7 +395,7 @@
     <string name="action_akinesia_invalid_target1_time2">%1$sに受ける行動不能を無効化できる状態を付与する、効果時間%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">%1$sに受ける行動不能を最大%2$s回まで無効化できる状態を付与する、効果時間%3$s秒。</string>
     <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$sに与えらるダメージの量を%2$sアップさせる、最大%3$sアップさせる、効果時間%4$s秒。</string>
-    <string name="action_dot_damage_up_target1_content2_formula3_max4_time5">%1$sに与えられる%2$sダメージを%3$sアップさせる、最大%4$sまでアップさせる、効果時間%5$s秒。</string>
+    <string name="action_dot_damage_up_target1_content2_formula3_max4_time5">%1$sに与えられる%2$sダメージを%3$sアップさせる、ダメージが最大%4$sまでアップさせる、効果時間%5$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_time3">%1$sが行動する度に最大ＨＰの%2$sダメージを受ける、効果時間%3$s秒。</string>
     <string name="action_fixed_damage_target1_formula2_max3_time4">%1$sが行動する度に最大ＨＰの%2$sダメージを受ける（毎回最大%3$sダメージを受ける）、効果時間%4$s秒。</string>
     <string name="action_environment_target1_content2_time3">%1$sのいる環境を【%2$s】にする、効果時間%3$s秒。</string>
@@ -671,7 +672,7 @@
     <string name="curse_or_beshrew">呪いか呪詛</string>
     <string name="poison_or_fierce_poison">毒か猛毒</string>
     <string name="dot">継続ダメージ</string>
-    <string name="charm">魅了</string>
+    <string name="charm">誘惑</string>
     <string name="confusion">混乱</string>
     <string name="puppet">操糸</string>
     <string name="darkness">暗闇</string>
@@ -717,7 +718,8 @@
     <string name="give_hp_recovery">ＨＰの回復量</string>
     <string name="give_hp_recovery_down">ＨＰ回復の下降量</string>
 <!--    <string name="give_hp_decrement">ＨＰの下降量</string>-->
-    <string name="give_energy_cut_effect">受けるＴＰダウン効果</string>
+    <string name="give_energy_down_cut">受けるＴＰダウン効果</string>
+    <string name="give_energy_down_limit">受けるＴＰダウン上限</string>
     <string name="give_energy_recovery">ＴＰの回復量</string>
     <string name="give_energy_decrement">ＴＰの下降量</string>
     <string name="give_hp_regeneration">継続ＨＰ回復量</string>
@@ -733,12 +735,15 @@
     <string name="give_speed">行動速度</string>
     <string name="give_base_value1">基礎値{ %s }</string>
     <string name="give_damage_cut1">受ける%s下降量</string>
+    <string name="give_damage_up">ダメージアップ量</string>
+    <string name="give_max_damage_up">最大ダメージアップ量</string>
 
     <string name="effect_damage_attenuation">受けるダメージ減衰</string>
     <string name="effect_damage_attenuation_limit1_convergence2">%1$s万以上%2$s万に収束</string>
     <string name="effect_const">固定</string>
     <string name="effect_down">下降</string>
-    <string name="effect_energy_cut">受けるＴＰダウン効果</string>
+    <string name="effect_energy_down_cut">受けるＴＰダウン効果</string>
+    <string name="effect_energy_down_limit">受けるＴＰダウン上限</string>
     <string name="effect_damage_cut_content1">受ける%s下降</string>
     <string name="effect_speed">行動速度</string>
     <string name="effect_abnormal_damage1">継続%sダメージ</string>

@@ -28,6 +28,15 @@ private fun getString(type: String, id: String): String? {
     }
 }
 
+fun getResistance(details: String): D {
+    val resistance: String? = getString("resistance", details)
+    return if (resistance == null) {
+        D.Text("???")
+    } else {
+        D.Text(resistance)
+    }
+}
+
 fun getAbnormalContent(detail: Int): D {
     val abnormal: String? = getString("abnormal", detail.toString())
     return if (abnormal == null) {
