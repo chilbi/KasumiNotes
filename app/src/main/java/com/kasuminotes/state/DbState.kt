@@ -149,7 +149,7 @@ class DbState(
                     lastVersionFetching = true
                     val lastDbVersion = appRepository.fetchLastDbVersion(dbServer, dbSource)
                     lastVersionFetching = false
-                    if ((lastDbVersion.toIntOrNull() ?: 0) > (dbVersion.toIntOrNull() ?: 0)) {
+                    if (lastDbVersion > dbVersion) {
                         newDbVersion = lastDbVersion
                     } else if (mutableIsLastDb) {
                         isLastDb = true
