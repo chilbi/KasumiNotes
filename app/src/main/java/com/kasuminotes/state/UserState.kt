@@ -11,12 +11,16 @@ import com.kasuminotes.data.UserProfile
 import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.db.deleteUser
 import com.kasuminotes.db.deleteUserData
+import com.kasuminotes.db.deleteUserKnightEnhance
 import com.kasuminotes.db.getAllUser
 import com.kasuminotes.db.getMaxUserData
+import com.kasuminotes.db.getUserKnightEnhance
 import com.kasuminotes.db.getUserList
 import com.kasuminotes.db.getUserName
 import com.kasuminotes.db.getUserProfileList
 import com.kasuminotes.db.putUserDataList
+import com.kasuminotes.db.putUserKnightEnhance
+import com.kasuminotes.db.putUserKnightEnhanceList
 import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.ui.app.DefaultUserId
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +30,8 @@ import kotlinx.coroutines.launch
 
 class UserState(
     private val appRepository: AppRepository,
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
+    private val onInitEnhanceState: (userId: Int) -> Unit
 ) {
     var allProfiles by mutableStateOf<List<UserProfile>?>(null)
         private set
@@ -108,6 +113,7 @@ class UserState(
         scope.launch {
             val db = appRepository.getDatabase()
             db.putUserDataList(profilesData.userDataList)
+            onInitEnhanceState(user)
         }
     }
 
@@ -129,6 +135,7 @@ class UserState(
                 userList = null
 
                 appRepository.setUserId(user.userId)
+                onInitEnhanceState(user.userId)
             }
         }
     }
@@ -142,6 +149,7 @@ class UserState(
         scope.launch {
             val db = appRepository.getDatabase()
             db.deleteUser(user.userId)
+            db.deleteUserKnightEnhance(user.userId)
         }
     }
 
@@ -231,6 +239,13 @@ class UserState(
             val db = appRepository.getDatabase()
             db.putUserDataList(userDataList)
             db.deleteUser(originUser)
+            var userKnightEnhance = db.getUserKnightEnhance(originUser)
+            if (userKnightEnhance != null) {
+                userKnightEnhance = userKnightEnhance.copy(userId = id)
+                db.putUserKnightEnhance(userKnightEnhance)
+                db.deleteUserKnightEnhance(originUser)
+            }
+            onInitEnhanceState(id)
         }
     }
 
@@ -257,7 +272,8 @@ class UserState(
             val list = listOf(
                 async { db.getUserName(user) },
                 async { db.getMaxUserData(user) },
-                async { db.getUserProfileList(user) }
+                async { db.getUserProfileList(user) },
+                async { onInitEnhanceState(user) }
             ).awaitAll()
             userName = list[0] as String
             maxUserData = list[1] as MaxUserData

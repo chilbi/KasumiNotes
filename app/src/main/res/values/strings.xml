@@ -38,6 +38,7 @@
     <string name="swipe_equip_info">横向滑动装备槽可以装卸装备</string>
     <string name="default_user_warning">默认用户的档案在数据库更新时会被自动MAX强化！</string>
     <string name="functionality_not_implemented">功能尚未实现</string>
+    <string name="clear_enhance">清空强化</string>
     <string name="prev_page">上一页</string>
     <string name="next_page">下一页</string>
     <string name="more">查看更多</string>
@@ -47,6 +48,8 @@
     <string name="ex_equip_property">EX装备属性</string>
     <string name="ex_equip_skill_property">EX装备技能属性</string>
     <string name="connect_rank_property">连结RANK属性</string>
+    <string name="knight_enhance_property">骑士强化属性</string>
+    <string name="enhance_save_message">有未保存的更改，是否保存？</string>
 
     <string name="connect">连结</string>
     <string name="level">LEVEL</string>

@@ -2,6 +2,7 @@ package com.kasuminotes.data
 
 import com.kasuminotes.R
 import com.kasuminotes.action.toNumStr
+import com.kasuminotes.common.AtkType
 
 enum class SkillNode(
     val parameterType: Int,
@@ -38,9 +39,24 @@ enum class SkillNode(
     fun valueDisplay(enhanceValue: Int): String = when (valueDisplayMode) {
         2 -> "${(enhanceValue.toDouble() / 100.0).toNumStr()}%"
         3 -> "$enhanceValue%"
-        4 -> (enhanceValue.toDouble() / 10).toNumStr()
-        5 -> (enhanceValue.toDouble() / 100).toNumStr()
+        4 -> (enhanceValue.toDouble() / 10.0).toNumStr()
+        5 -> (enhanceValue.toDouble() / 100.0).toNumStr()
         else -> enhanceValue.toString()//1
+    }
+
+    fun getPropertyPair(base: Property, enhanceValue: Int, atkType: Int): Pair<Int, Double> {
+        return when (parameterType) {
+            -1 -> (if (AtkType.isPhysical(atkType)) 2 else 4) to enhanceValue.toDouble()
+            in 1..17 -> {
+                val value = if (valueDisplayMode == 2) {
+                    base[parameterType - 1] * enhanceValue.toDouble() / 10000.0
+                } else {//valueDisplayMode == 1
+                    enhanceValue.toDouble()
+                }
+                parameterType to value
+            }
+            else -> 1 to 0.0
+        }
     }
 
     companion object {

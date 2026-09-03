@@ -2,6 +2,7 @@ package com.kasuminotes.data
 
 import com.kasuminotes.R
 import com.kasuminotes.action.toNumStr
+import com.kasuminotes.common.AtkType
 
 enum class RoleSlot(
     val parameterType: Int,
@@ -27,9 +28,21 @@ enum class RoleSlot(
     fun valueDisplay(enhanceValue: Int): String = when (valueDisplayMode) {
         2 -> "${(enhanceValue.toDouble() / 100.0).toNumStr()}%"
         3 -> "$enhanceValue%"
-        4 -> (enhanceValue.toDouble() / 10).toNumStr()
-        5 -> (enhanceValue.toDouble() / 100).toNumStr()
+        4 -> (enhanceValue.toDouble() / 10.0).toNumStr()
+        5 -> (enhanceValue.toDouble() / 100.0).toNumStr()
         else -> enhanceValue.toString()//1
+    }
+
+    fun getPropertyPair(base: Property, enhanceValue: Int, atkType: Int): Pair<Int, Double> {
+        fun getPair(first: Int) = first to base[first - 1] * enhanceValue.toDouble() / 10000.0
+        return when (parameterType) {
+            1 -> getPair(1)
+            2 -> if (AtkType.isPhysical(atkType)) getPair(2) else getPair(4)
+            3 -> getPair(3)
+            4 -> getPair(5)
+            5 -> if (AtkType.isPhysical(atkType)) getPair(6) else getPair(7)
+            else -> 1 to 0.0
+        }
     }
 
     companion object {

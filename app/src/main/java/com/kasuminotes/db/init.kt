@@ -303,6 +303,8 @@ max_chara_level + $lv AS ub_level,max_chara_level + $lv AS skill1_level,max_char
 '' AS sub_percent_json
 FROM chara_data LEFT JOIN max_data"""
     )
+
+    createUserKnightEnhance()
 }
 
 suspend fun AppDatabase.initQuestDropData() {

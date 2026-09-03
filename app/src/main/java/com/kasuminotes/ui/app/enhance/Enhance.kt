@@ -1,5 +1,6 @@
 package com.kasuminotes.ui.app.enhance
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -13,9 +14,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Save
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgeDefaults
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -49,6 +59,11 @@ fun Enhance(
     val bottomSheetTitles = remember { listOf(R.string.all, R.string.talent_level, R.string.talent_skill, R.string.team_skill, R.string.role_mastery) }
     val bottomSheetPagerState = rememberPagerState { bottomSheetTitles.size }
     var showBottomSheet by remember { mutableStateOf(false) }
+    var showSaveDialog by remember { mutableStateOf(false) }
+
+    BackHandler(enhanceState.saveable) {
+        showSaveDialog = true
+    }
 
     Scaffold(
         topBar = {
@@ -58,6 +73,23 @@ fun Enhance(
                 },
                 navigationIcon = {
                     BackButton(onBack)
+                },
+                actions = {
+                    IconButton(
+                        onClick = enhanceState::save,
+                        enabled = enhanceState.saveable
+                    ) {
+                        BadgedBox(
+                            badge = {
+                                Badge(
+                                    containerColor = if (enhanceState.saveable) BadgeDefaults.containerColor
+                                    else Color.Transparent
+                                )
+                            }
+                        ) {
+                            Icon(Icons.Filled.Save, null)
+                        }
+                    }
                 }
             )
         },
@@ -102,6 +134,37 @@ fun Enhance(
                 enhanceState
             )
         }
+    }
+
+    if (showSaveDialog) {
+        AlertDialog(
+            onDismissRequest = { showSaveDialog = false },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        enhanceState.save()
+                        showSaveDialog = false
+                        onBack()
+                    }
+                ) {
+                    Text(stringResource(R.string.save_edit))
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        enhanceState.cancelSave()
+                        showSaveDialog = false
+                        onBack()
+                    }
+                ) {
+                    Text(stringResource(R.string.cancel))
+                }
+            },
+            text = {
+                Text(stringResource(R.string.enhance_save_message))
+            }
+        )
     }
 }
 
@@ -172,6 +235,11 @@ private fun TalentSkillFAB(
         expanded = expanded,
         onDismissRequest = { expanded = false }
     ) {
+        DropdownMenuItem(
+            text= { Text(stringResource(R.string.clear_enhance)) },
+            onClick = enhanceState::clearEnhanceTalentNode,
+            enabled = enhanceState.enhancedTalentSkillNodeList.isNotEmpty()
+        )
         DropdownMenuItem(
             text= { Text(stringResource(R.string.prev_page)) },
             onClick = enhanceState::prevPage,

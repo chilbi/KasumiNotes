@@ -137,6 +137,26 @@ fun MoreProperty(charaState: CharaState) {
                 }
             }
         }
+
+        CheckboxContainer(
+            checked = charaState.includeKnightEnhance,
+            onCheckedChange = charaState::changeIncludeKnightEnhance
+        ) {
+            LabelContainer(
+                label = stringResource(R.string.knight_enhance_property),
+                color = MaterialTheme.colorScheme.primary,
+                padding = 12.dp
+            ) {
+                if (charaState.knightEnhanceProperty == Property.zero) {
+                    Text(stringResource(R.string.no_data))
+                } else {
+                    PropertyTable(
+                        property = charaState.knightEnhanceProperty,
+                        indices = charaState.knightEnhanceProperty.nonzeroIndices
+                    )
+                }
+            }
+        }
     }
 }
 

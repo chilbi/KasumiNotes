@@ -9,9 +9,12 @@ import com.kasuminotes.data.AppReleaseInfo
 import com.kasuminotes.db.AppDatabase
 import com.kasuminotes.db.DatabaseTableCopier
 import com.kasuminotes.db.getBackupUserDataList
+import com.kasuminotes.db.getBackupUserKnightEnhanceList
 import com.kasuminotes.db.initDatabase
 import com.kasuminotes.db.initQuestDropData
 import com.kasuminotes.db.putUserDataList
+import com.kasuminotes.db.putUserKnightEnhance
+import com.kasuminotes.db.putUserKnightEnhanceList
 import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.ui.app.DefaultUserId
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +24,8 @@ import java.io.File
 
 class DbState(
     private val appRepository: AppRepository,
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
+    private val onInitEnhanceState: (userId: Int) -> Unit
 ) {
     var downloadingDbServer by mutableStateOf<DbServer?>(null)
         private set
@@ -54,7 +58,7 @@ class DbState(
     var questInitializing by mutableStateOf(false)
         private set
 
-    val userState = UserState(appRepository, scope)
+    val userState = UserState(appRepository, scope, onInitEnhanceState)
 
     fun init() {
         scope.launch(Dispatchers.IO) {
@@ -234,10 +238,12 @@ class DbState(
                 lastDbVersion = version
                 db = appRepository.getDatabase(dbFile.name)
                 val backupUserDataList = db.getBackupUserDataList(DefaultUserId)
+                val backupUserKnightEnhanceList = db.getBackupUserKnightEnhanceList()
                 tempDbFile.renameTo(dbFile)
                 DatabaseTableCopier.copyTablesFromEN(server, appRepository)
                 db.initDatabase(DefaultUserId)
                 db.putUserDataList(backupUserDataList)
+                db.putUserKnightEnhanceList(backupUserKnightEnhanceList)
             } catch (e: Throwable) {
                 downloadState = DownloadState.Error(e)
                 if (backupDbFile.exists()) {

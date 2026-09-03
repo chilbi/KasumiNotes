@@ -26,8 +26,9 @@ import kotlinx.coroutines.launch
 class CharaState(
     private val appRepository: AppRepository,
     private val scope: CoroutineScope,
-    private var onMaxUserDataChange: (userUniqueDiff: Int, userRarity6Diff: Int) -> Unit
+    private val onMaxUserDataChange: (userUniqueDiff: Int, userRarity6Diff: Int) -> Unit
 ) {
+    private lateinit var knightEnhanceState: EnhanceState
     private var connectRankData: ConnectRankData? = null
     private var backupUnitRarity: UnitRarity? = null
     private var backupUnitPromotionStatus: UnitPromotionStatus? = null
@@ -48,6 +49,8 @@ class CharaState(
         private set
     var includeConnectRank by mutableStateOf(appRepository.getIncludeConnectRank())
         private set
+    var includeKnightEnhance by mutableStateOf(appRepository.getIncludeKnightEnhance())
+        private set
     var exSkillProperty by mutableStateOf(Property.zero)
         private set
     var exEquipProperty by mutableStateOf(Property.zero)
@@ -55,6 +58,8 @@ class CharaState(
     var exEquipSkillProperty by mutableStateOf(Property.zero)
         private set
     var connectRankProperty by mutableStateOf(Property.zero)
+        private set
+    var knightEnhanceProperty by mutableStateOf(Property.zero)
         private set
     //rarity+promotionStatus+promotion+unique1&2+story+bonus++exUnique1
     var baseProperty by mutableStateOf(Property.zero)
@@ -65,9 +70,15 @@ class CharaState(
     var saveVisible by mutableStateOf(false)
         private set
 
-    fun initUserProfile(profile: UserProfile, profiles: List<UserProfile>, maxUserData: MaxUserData) {
+    fun initUserProfile(
+        profile: UserProfile,
+        profiles: List<UserProfile>,
+        maxUserData: MaxUserData,
+        enhanceState: EnhanceState
+    ) {
         restore()
         connectRankData = maxUserData.connectRankData
+        knightEnhanceState = enhanceState
         if (profile.userData.lvLimitBreak == 0 &&
             profile.userData.charaLevel > maxUserData.maxCharaLevel + (maxUserData.connectRankData?.sumBonusCharaLevel ?: 0)) {
             profile.userData = profile.userData.copy(lvLimitBreak = 10)
@@ -307,7 +318,6 @@ class CharaState(
         includeExEquip = value
         calcProperty()
         appRepository.setIncludeExEquip(value)
-
     }
 
     fun changeIncludeExEquipSkill(value: Boolean) {
@@ -320,6 +330,12 @@ class CharaState(
         includeConnectRank = value
         calcProperty()
         appRepository.setIncludeConnectRank(value)
+    }
+
+    fun changeIncludeKnightEnhance(value: Boolean) {
+        includeKnightEnhance = value
+        calcProperty()
+        appRepository.setIncludeKnightEnhance(value)
     }
 
     fun destroy() {
@@ -375,17 +391,25 @@ class CharaState(
             userProfile!!.unitData.unitRoleId,
             userProfile!!.unitData.atkType
         ) ?: Property.zero
+        val enhanceProperty = knightEnhanceState.getProperty(
+            base,
+            userProfile!!.unitData.talentId,
+            userProfile!!.unitData.unitRoleId,
+            userProfile!!.unitData.atkType
+        )
         exSkillProperty = exSkill
         exEquipProperty = exEquip
         exEquipSkillProperty = exEquipSkill
         connectRankProperty = connectRankStatus
+        knightEnhanceProperty = enhanceProperty
         baseProperty = base
         totalProperty = Property { i ->
             base[i] +
                     (if (includeExSkill) exSkill[i] else 0.0) +
                     (if (includeExEquip) exEquip[i] else 0.0) +
                     (if (includeExEquipSkill) exEquipSkill[i] else 0.0) +
-                    (if (includeConnectRank) connectRankStatus[i] else 0.0)
+                    (if (includeConnectRank) connectRankStatus[i] else 0.0) +
+                    (if (includeKnightEnhance) enhanceProperty[i] else 0.0)
         }
     }
 

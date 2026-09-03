@@ -22,7 +22,8 @@ import com.kasuminotes.data.Property
 
 class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel() {
     val uiState = UiState(appRepository)
-    val dbState = DbState(appRepository, viewModelScope)
+    val enhanceState = EnhanceState(appRepository, viewModelScope)
+    val dbState = DbState(appRepository, viewModelScope, enhanceState::initState)
     val charaState = CharaState(appRepository, viewModelScope, dbState.userState::changeMaxUserData)
     val equipState = EquipState(appRepository, viewModelScope)
     val questState = QuestState(appRepository, viewModelScope)
@@ -34,7 +35,6 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
     val talentQuestState = TalentQuestState(appRepository, viewModelScope)
     val abyssQuestState = AbyssQuestState(appRepository, viewModelScope)
     val mirageQuestState = MirageQuestState(appRepository, viewModelScope)
-    val enhanceState = EnhanceState(appRepository, viewModelScope)
 
     private var lastNavigationTime = 0L
     private val navigationThrottleTime = 500L
@@ -105,7 +105,7 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
 
     fun navigateToEnhance() {
         canNavigate {
-            enhanceState.initState()
+            enhanceState.initState(dbState.userState.userId)
             navController.navigate(AppNavData.Enhance.route)
         }
     }
@@ -121,7 +121,8 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
             charaState.initUserProfile(
                 userProfile,
                 dbState.userState.charaListState.profiles,
-                dbState.userState.maxUserData!!
+                dbState.userState.maxUserData!!,
+                enhanceState
             )
             navController.navigate(AppNavData.Chara.route)
         }

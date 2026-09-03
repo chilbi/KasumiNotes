@@ -47,7 +47,7 @@ class Property(init: (Int) -> Double) {
 
     override fun equals(other: Any?) = other is Property && arr.contentEquals(other.arr)
 
-    override fun hashCode() = arr.hashCode()
+    override fun hashCode() = arr.contentHashCode()
 
     companion object {
         const val SIZE = 17

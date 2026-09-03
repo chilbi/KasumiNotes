@@ -151,12 +151,13 @@ fun App(appViewModel: AppViewModel = viewModel()) {
                 Chara(
                     appViewModel.charaState,
                     appViewModel.dbState,
+                    appViewModel.enhanceState,
                     userState.maxUserData!!,
                     appViewModel::popBackStack,
                     appViewModel::navigateToEquip,
                     appViewModel::navigateToUnique,
                     appViewModel::navigateToExEquip,
-                    appViewModel::navigateToSummons
+                    appViewModel::navigateToSummons,
                 )
             }
             composable(

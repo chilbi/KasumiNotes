@@ -38,6 +38,7 @@
     <string name="swipe_equip_info">装備スロットを横スライドさせて装備が着脱できる</string>
     <string name="default_user_warning">デフォルトユーザーのプロフィールがデータベース更新の時に自動的にMAX強化される！</string>
     <string name="functionality_not_implemented">機能はまだ実装されていません</string>
+    <string name="clear_enhance">強化クリア</string>
     <string name="prev_page">前のページ</string>
     <string name="next_page">次のページ</string>
     <string name="more">もっと見る</string>
@@ -47,6 +48,8 @@
     <string name="ex_equip_property">EX装備ステータス</string>
     <string name="ex_equip_skill_property">EX装備スキルステータス</string>
     <string name="connect_rank_property">コネクトRANKステータス</string>
+    <string name="knight_enhance_property">騎士強化ステータス</string>
+    <string name="enhance_save_message">未保存の変更があります。保存しますか？</string>
 
     <string name="connect">コネクト</string>
     <string name="level">LEVEL</string>

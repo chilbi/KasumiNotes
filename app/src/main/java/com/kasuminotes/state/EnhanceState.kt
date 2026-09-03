@@ -5,21 +5,27 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.kasuminotes.data.ExperienceTalentLevel
+import com.kasuminotes.data.Property
 import com.kasuminotes.data.RoleMasteryData
+import com.kasuminotes.data.RoleSlot
 import com.kasuminotes.data.SkillNode
 import com.kasuminotes.data.TalentSkillNode
 import com.kasuminotes.data.TeamSkillNode
+import com.kasuminotes.data.UserKnightEnhance
 import com.kasuminotes.db.getTalentLevelPair
 import com.kasuminotes.db.getMaxTalentLevel
 import com.kasuminotes.db.getRoleMasteryDataMap
 import com.kasuminotes.db.getTalentSkillNodeList
 import com.kasuminotes.db.getTeamSkillNodeList
+import com.kasuminotes.db.getUserKnightEnhance
+import com.kasuminotes.db.putUserKnightEnhance
 import com.kasuminotes.ui.app.AppRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlin.math.min
 
 class EnhanceState(
     private val appRepository: AppRepository,
@@ -27,10 +33,16 @@ class EnhanceState(
 ) {
     private lateinit var talentSkillNodeList: List<TalentSkillNode>
     private lateinit var pagedTalentSkillNode: Map<Int, List<TalentSkillNode>>
+    private lateinit var userKnightEnhance: UserKnightEnhance
+    private var backupUserKnightEnhance: UserKnightEnhance? = null
 
+    var saveable by mutableStateOf(false)
+        private set
+//############################################################################
     var groupedTalentEnhancedMap by mutableStateOf<Map<Int/*talentId*/, List<Pair<Int/*parameterType*/, Int>>>>(emptyMap())
         private set
     var talentConsumeMap by mutableStateOf<Map<Int/*itemId*/, Int>>(emptyMap())
+//############################################################################
     var maxTalentLevel by mutableStateOf<Int?>(null)
         private set
     var talentLevelMap by mutableStateOf<Map<Int/*talentId*/, Pair<ExperienceTalentLevel, ExperienceTalentLevel>>?>(null)//talentId
@@ -89,27 +101,50 @@ class EnhanceState(
     var roleConsumeMapEntries by mutableStateOf<List<Map.Entry<Int, Int>>>(emptyList())
         private set
 
-    fun initState() {
+    fun initState(userId: Int) {
         talentLevelMap = null
         currentPageNodeList = null
         teamSkillNodeList = null
         roleMasteryDataMap = null
+        saveable = false
 
         scope.launch(Dispatchers.IO) {
             val db = appRepository.getDatabase()
+            val userEnhance = db.getUserKnightEnhance(userId)
+            val isNullUserEnhance = userEnhance == null
+            userKnightEnhance = if (isNullUserEnhance) {
+                UserKnightEnhance(
+                    userId,
+                    emptyList(),
+                    emptyList(),
+                    0,
+                    emptyMap()
+                )
+            } else {
+                userEnhance
+            }
+
             awaitAll(
                 async {
                     maxTalentLevel = db.getMaxTalentLevel()
                     if (maxTalentLevel != null) {
-                        val talentLevelPair = db.getTalentLevelPair(maxTalentLevel!!, maxTalentLevel!!)
-                        if (talentLevelPair != null) {
-                            val map = mutableMapOf<Int, Pair<ExperienceTalentLevel, ExperienceTalentLevel>>()
-                            (1..5).forEach { talentId ->
+                        userKnightEnhance = if (isNullUserEnhance) {
+                            val talentLevels = List(5) { maxTalentLevel!! }
+                            userKnightEnhance.copy(talentLevels = talentLevels)
+                        } else {
+                            val talentLevels = userKnightEnhance.talentLevels.map { min(it, maxTalentLevel!!) }
+                            userKnightEnhance.copy(talentLevels = talentLevels)
+                        }
+                        val map = mutableMapOf<Int, Pair<ExperienceTalentLevel, ExperienceTalentLevel>>()
+                        userKnightEnhance.talentLevels.forEachIndexed { index, talentLevel ->
+                            val talentLevelPair = db.getTalentLevelPair(talentLevel, maxTalentLevel!!)
+                            if (talentLevelPair != null) {
+                                val talentId = index + 1
                                 map[talentId] = talentLevelPair
                             }
-                            talentLevelMap = map
-                            totalTalentLevelEnhance()
                         }
+                        talentLevelMap = map
+                        totalTalentLevelEnhance()
                     }
                 },
                 async {
@@ -118,14 +153,32 @@ class EnhanceState(
                         talentSkillNodeList = nodeList
                         val grouped = nodeList.groupBy { it.pageNum }
                         val maxPage = grouped.entries.maxOf { it.key }
-                        val curPageNodeList = grouped[maxPage]
+                        val enhancedNodeList: List<Pair<TalentSkillNode, Int>>
                         val finishNode = nodeList[0]
-                        val enhancedNodeList = listOf(finishNode to finishNode.maxLevel)
+                        userKnightEnhance = if (isNullUserEnhance) {
+                            val talentNodes = listOf(finishNode.nodeId to finishNode.maxLevel)
+                            enhancedNodeList = listOf(finishNode to finishNode.maxLevel)
+                            userKnightEnhance.copy(talentNodes = talentNodes)
+                        } else {
+                            val talentNodes: List<Pair<Int, Int>>
+                            if (userKnightEnhance.talentNodes.any { it.first > finishNode.nodeId }) {
+                                talentNodes = listOf(finishNode.nodeId to finishNode.maxLevel)
+                                enhancedNodeList = listOf(finishNode to finishNode.maxLevel)
+                            } else {
+                                talentNodes = userKnightEnhance.talentNodes
+                                enhancedNodeList = talentNodes.map { pair ->
+                                    nodeList.find { it.nodeId == pair.first }!! to pair.second
+                                }
+                            }
+                            userKnightEnhance.copy(talentNodes = talentNodes)
+                        }
+                        val curPageNum = if (enhancedNodeList.isEmpty()) 1 else enhancedNodeList[0].first.pageNum
+                        val curPageNodeList = grouped[curPageNum]
                         changeConnectionNode(curPageNodeList!!, enhancedNodeList)
                         pagedTalentSkillNode = grouped
                         enhancedTalentSkillNodeList = enhancedNodeList
                         maxPageNum = maxPage
-                        currentPageNum = maxPage
+                        currentPageNum = curPageNum
                         currentPageNodeList = curPageNodeList
                         totalTalentSkillEnhance()
                     }
@@ -133,15 +186,25 @@ class EnhanceState(
                 async {
                     val nodeList = db.getTeamSkillNodeList()
                     if (!nodeList.isNullOrEmpty()) {
+                        val enhancedNode = if (isNullUserEnhance) {
+                            nodeList[0]
+                        } else {
+                            if (userKnightEnhance.teamNode == 0) {
+                                null
+                            } else {
+                                nodeList.find { it.nodeId == userKnightEnhance.teamNode } ?: nodeList[0]
+                            }
+                        }
+                        userKnightEnhance = userKnightEnhance.copy(teamNode = enhancedNode?.nodeId ?: 0)
                         teamSkillNodeList = nodeList
-                        enhancedTeamSkillNode = nodeList[0]
+                        enhancedTeamSkillNode = enhancedNode
                         totalTeamSkillEnhance()
                     }
                 },
                 async {
                     val roleMap = db.getRoleMasteryDataMap()
                     if (!roleMap.isNullOrEmpty()) {
-                        val enhanceMap = mutableMapOf<Int/*roleId*/, Map<Int/*slotId*/, Pair<Int/*slotLevel*/, Int/*enhanceLevel*/>>>()
+                        val maxEnhanceMap = mutableMapOf<Int/*roleId*/, Map<Int/*slotId*/, Pair<Int/*slotLevel*/, Int/*enhanceLevel*/>>>()
                         roleMap.forEach { (roleId, roleMasteryData) ->
                             val slotIdEnhanceMap = mutableMapOf<Int, Pair<Int, Int>>()
                             roleMasteryData.slotIdMap.forEach { (slotId, roleSlotData) ->
@@ -150,13 +213,107 @@ class EnhanceState(
                                 val enhanceLevel = roleSlotLevel.maxEnhanceLevel
                                 slotIdEnhanceMap[slotId] = slotLevel to enhanceLevel
                             }
-                            enhanceMap[roleId] = slotIdEnhanceMap
+                            maxEnhanceMap[roleId] = slotIdEnhanceMap
+                        }
+                        val enhanceMap: Map<Int/*roleId*/, Map<Int/*slotId*/, Pair<Int/*slotLevel*/, Int/*enhanceLevel*/>>>
+                        userKnightEnhance = if (isNullUserEnhance) {
+                            enhanceMap = maxEnhanceMap
+                            userKnightEnhance.copy(roles = enhanceMap)
+                        } else {
+                            val clampedRoles = mutableMapOf<Int, MutableMap<Int, Pair<Int, Int>>>()
+                            for ((roleId, slotMap) in userKnightEnhance.roles) {
+                                val maxSlotMap = maxEnhanceMap[roleId] ?: continue
+                                val clampedSlots = mutableMapOf<Int, Pair<Int, Int>>()
+                                for ((slotId, pair) in slotMap) {
+                                    val maxPair = maxSlotMap[slotId]
+                                    clampedSlots[slotId] = if (maxPair != null && pair.first > maxPair.first) {
+                                        maxPair
+                                    } else {
+                                        pair
+                                    }
+                                }
+                                clampedRoles[roleId] = clampedSlots
+                            }
+                            enhanceMap = clampedRoles
+                            userKnightEnhance.copy(roles = enhanceMap)
                         }
                         roleIdList = roleMap.keys.toList()
                         selectedRoleId = roleIdList[0]
                         selectedSlotId = roleMap[selectedRoleId]!!.slotIdMap.keys.first()
                         roleMasteryDataMap = roleMap
                         roleEnhanceMap = enhanceMap
+                        totalRoleEnhance()
+                    }
+                }
+            )
+            totalTalentEnhance()
+            backupUserKnightEnhance = userKnightEnhance
+        }
+    }
+
+    fun save() {
+        saveable = false
+        scope.launch(Dispatchers.IO) {
+            val db = appRepository.getDatabase()
+            db.putUserKnightEnhance(userKnightEnhance)
+            backupUserKnightEnhance = userKnightEnhance
+        }
+    }
+
+    fun cancelSave() {
+        saveable = false
+        if (backupUserKnightEnhance == null) {
+            return
+        }
+        userKnightEnhance = backupUserKnightEnhance!!
+        scope.launch(Dispatchers.IO) {
+            val db = appRepository.getDatabase()
+            awaitAll(
+                async {
+                    if (maxTalentLevel != null) {
+                        val map = mutableMapOf<Int, Pair<ExperienceTalentLevel, ExperienceTalentLevel>>()
+                        userKnightEnhance.talentLevels.forEachIndexed { index, talentLevel ->
+                            val talentLevelPair =
+                                db.getTalentLevelPair(talentLevel, maxTalentLevel!!)
+                            if (talentLevelPair != null) {
+                                val talentId = index + 1
+                                map[talentId] = talentLevelPair
+                            }
+                        }
+                        talentLevelMap = map
+                        totalTalentLevelEnhance()
+                    }
+                },
+                async {
+                    val nodeList = talentSkillNodeList
+                    if (nodeList.isNotEmpty()) {
+                        val enhancedNodeList = userKnightEnhance.talentNodes.map { pair ->
+                            nodeList.find { it.nodeId == pair.first }!! to pair.second
+                        }
+                        val curPageNum = if (enhancedNodeList.isEmpty()) 1 else enhancedNodeList[0].first.pageNum
+                        val curPageNodeList = pagedTalentSkillNode[curPageNum]
+                        changeConnectionNode(curPageNodeList!!, enhancedNodeList)
+                        enhancedTalentSkillNodeList = enhancedNodeList
+                        currentPageNum = curPageNum
+                        currentPageNodeList = curPageNodeList
+                        totalTalentSkillEnhance()
+                    }
+                },
+                async {
+                    val nodeList = teamSkillNodeList
+                    if (!nodeList.isNullOrEmpty()) {
+                        val enhancedNode = if (userKnightEnhance.teamNode == 0) {
+                            null
+                        } else {
+                            nodeList.find { it.nodeId == userKnightEnhance.teamNode } ?: nodeList[0]
+                        }
+                        enhancedTeamSkillNode = enhancedNode
+                        totalTeamSkillEnhance()
+                    }
+                },
+                async {
+                    if (!roleMasteryDataMap.isNullOrEmpty()) {
+                        roleEnhanceMap = userKnightEnhance.roles.toMap()
                         totalRoleEnhance()
                     }
                 }
@@ -175,6 +332,12 @@ class EnhanceState(
                 talentLevelMap = newTalentLevelMap
                 totalTalentLevelEnhance()
                 totalTalentEnhance()
+                if (userKnightEnhance.talentLevels[talentId - 1] != talentLevel) {
+                    val talentLevels = userKnightEnhance.talentLevels.toMutableList()
+                    talentLevels[talentId - 1] = talentLevel
+                    userKnightEnhance = userKnightEnhance.copy(talentLevels = talentLevels)
+                    saveable = userKnightEnhance != backupUserKnightEnhance
+                }
             }
         }
     }
@@ -206,6 +369,20 @@ class EnhanceState(
         enhancedTalentSkillNodeList = newEnhancedList
         totalTalentSkillEnhance()
         totalTalentEnhance()
+        val talentNodes = newEnhancedList.map { it.first.nodeId to it.second }
+        userKnightEnhance = userKnightEnhance.copy(talentNodes = talentNodes)
+        saveable = userKnightEnhance != backupUserKnightEnhance
+    }
+
+    fun clearEnhanceTalentNode() {
+        val newEnhancedList = emptyList<Pair<TalentSkillNode, Int>>()
+        changeConnectionNode(currentPageNodeList!!, newEnhancedList)
+        enhancedTalentSkillNodeList = newEnhancedList
+        totalTalentSkillEnhance()
+        totalTalentEnhance()
+        changeCurrentPageNum(1)
+        userKnightEnhance = userKnightEnhance.copy(talentNodes = emptyList())
+        saveable = userKnightEnhance != backupUserKnightEnhance
     }
 
     fun prevPage() {
@@ -217,14 +394,18 @@ class EnhanceState(
     }
 
     fun enhanceTeamNode(node: TeamSkillNode?) {
-        if (node == null) {
-            enhancedTeamSkillNode = null
+        val newEnhancedNode = if (node == null) {
+            null
         } else {
             val shouldCancel = enhancedTeamSkillNode != null && enhancedTeamSkillNode!!.nodeId == 1 && node.nodeId == 1
-            enhancedTeamSkillNode = if (shouldCancel) null else node
+            if (shouldCancel) null else node
         }
+        enhancedTeamSkillNode = newEnhancedNode
         totalTeamSkillEnhance()
         totalTalentEnhance()
+        val teamNode = newEnhancedNode?.nodeId ?: 0
+        userKnightEnhance = userKnightEnhance.copy(teamNode = teamNode)
+        saveable = userKnightEnhance != backupUserKnightEnhance
     }
 
     fun selectRoleId(roleId: Int) {
@@ -245,6 +426,34 @@ class EnhanceState(
         newRoleEnhanceMap[selectedRoleId] = newSlotIdMap
         roleEnhanceMap = newRoleEnhanceMap.toMap()
         totalRoleEnhance()
+        userKnightEnhance = userKnightEnhance.copy(roles = roleEnhanceMap!!)
+        saveable = userKnightEnhance != backupUserKnightEnhance
+    }
+
+    fun getProperty(base: Property, talentId: Int, roleId: Int, atkType: Int): Property {
+        val talentEnhancedList = groupedTalentEnhancedMap[talentId]
+        val talentProperty = if (talentEnhancedList.isNullOrEmpty()) {
+            Property.zero
+        } else {
+            val talentPropertyPairList = talentEnhancedList.map { talentEnhanced ->
+                SkillNode.fromId(talentEnhanced.first)
+                    ?.getPropertyPair(base, talentEnhanced.second, atkType)
+                    ?: (1 to 0.0)
+            }
+            Property(talentPropertyPairList, true)
+        }
+        val roleEnhancedList = groupedRoleEnhancedMap[roleId]
+        val roleProperty = if (roleEnhancedList.isNullOrEmpty()) {
+            Property.zero
+        } else {
+            val rolePropertyPairList = roleEnhancedList.map { roleEnhanced ->
+                RoleSlot.fromId(roleEnhanced.first)
+                    ?.getPropertyPair(base, roleEnhanced.second, atkType)
+                    ?: (1 to 0.0)
+            }
+            Property(rolePropertyPairList, true)
+        }
+        return Property { index -> talentProperty[index] + roleProperty[index] }
     }
 
     private fun changeCurrentPageNum(value: Int) {

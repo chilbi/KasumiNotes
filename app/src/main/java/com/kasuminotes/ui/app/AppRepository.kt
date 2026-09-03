@@ -166,28 +166,39 @@ class AppRepository(
         return includeProperties.getOrNull(3) == "1"
     }
 
+    fun getIncludeKnightEnhance(): Boolean {
+        val includeProperties = context.includeProperties.split(",")
+        return includeProperties.getOrNull(4) == "1"
+    }
+
     fun setIncludeExSkill(value: Boolean) {
         val includeProperties = context.includeProperties.split(",").toMutableList()
-        includeProperties[0] = if (value) "1" else "0"
+        includeProperties.setOrAdd(0,if (value) "1" else "0")
         context.includeProperties = includeProperties.joinToString(",")
     }
 
     fun setIncludeExEquip(value: Boolean) {
         val includeProperties = context.includeProperties.split(",").toMutableList()
-        includeProperties[1] = if (value) "1" else "0"
+        includeProperties.setOrAdd(1,if (value) "1" else "0")
         context.includeProperties = includeProperties.joinToString(",")
 
     }
 
     fun setIncludeExEquipSkill(value: Boolean) {
         val includeProperties = context.includeProperties.split(",").toMutableList()
-        includeProperties[2] = if (value) "1" else "0"
+        includeProperties.setOrAdd(2,if (value) "1" else "0")
         context.includeProperties = includeProperties.joinToString(",")
     }
 
     fun setIncludeConnectRank(value: Boolean) {
         val includeProperties = context.includeProperties.split(",").toMutableList()
-        includeProperties[3] = if (value) "1" else "0"
+        includeProperties.setOrAdd(3,if (value) "1" else "0")
+        context.includeProperties = includeProperties.joinToString(",")
+    }
+
+    fun setIncludeKnightEnhance(value: Boolean) {
+        val includeProperties = context.includeProperties.split(",").toMutableList()
+        includeProperties.setOrAdd(4,if (value) "1" else "0")
         context.includeProperties = includeProperties.joinToString(",")
     }
 
@@ -303,5 +314,14 @@ class AppRepository(
             map[langKey] = langMap
         }
         MainApplication.strings = map
+    }
+}
+
+private fun MutableList<String>.setOrAdd(index: Int, value: String) {
+    if (index < size) {
+        this[index] = value
+    } else {
+        repeat(index - size) { this.add("0") }
+        this.add(value)
     }
 }
