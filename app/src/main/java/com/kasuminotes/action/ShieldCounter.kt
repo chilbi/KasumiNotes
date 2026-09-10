@@ -6,7 +6,16 @@ import com.kasuminotes.data.SkillAction
 
 fun SkillAction.getShieldCounter(skillLevel: Int, property: Property, actions: List<SkillAction>): D {
     val target = getTarget(depend)
-    val content = getMarkContent(if (actionId / 1000 == 104401) 119 else actionDetail2)// 104401 イリヤ
+    val detail2 = if (actionDetail2 == 6) {
+        try {
+            "6${actionId.toString().substring(0, 4)}".toInt()
+        } catch (_: Throwable) {
+            actionDetail2
+        }
+    } else {
+        actionDetail2
+    }
+    val content = getMarkContent(detail2)
     val type = if (actionDetail1 == 5) D.Text("") else getDamageType(actionDetail1)
     val desc = if (actionValue3 > 1.0) {
         val add = D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)

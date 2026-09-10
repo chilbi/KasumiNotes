@@ -219,7 +219,12 @@ class ActionBuilder(
                         }
                     } else {
                         willRemoveIndexList.add(index)
-                        branch.forEach { item ->
+                        val andBranch = if (action.depend == null) {
+                            branch
+                        } else {
+                            action.getAndBranch(skillLevel, actions, branch)
+                        }
+                        andBranch.forEach { item ->
                             branchModify.collectBranch(item.first, item.second, null)
                         }
                     }
@@ -315,7 +320,7 @@ class ActionBuilder(
             32 -> getLifeSteal(skillLevel)
             33 -> getShieldCounter(skillLevel, property, actions)
             34, 102 -> getAccumulativeDamage(skillLevel)
-            35 -> getChangeMark()
+            35 -> getChangeMark(skillLevel, actions)
             36 -> getDamageField(skillLevel, property)
             37 -> getHealField(skillLevel, property)
             38 -> getStatusField(skillLevel)

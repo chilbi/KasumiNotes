@@ -14,6 +14,52 @@ fun SkillAction.getBranch(skillLevel: Int, actions: List<SkillAction>): Array<Pa
     }
 }
 
+fun SkillAction.getAndBranch(
+    skillLevel: Int,
+    actions: List<SkillAction>,
+    branch: Array<Pair<Int, D>>
+): Array<Pair<Int, D>> {
+    val dependActionIdList = mutableListOf<Int>()
+    var dependBranchAction: SkillAction? = null
+    var action = this
+    var i = 0
+    while (i < actions.size) {
+        if (action.depend == null) {
+            break
+        }
+        action = action.depend!!
+        dependBranchAction = action
+        dependActionIdList.add(action.actionId)
+        if (action.isBranch()) {
+            break
+        }
+        i++
+    }
+    if (dependBranchAction == null) {
+        return branch
+    }
+    val andBranchSkillAction: SkillAction? = if (dependBranchAction.isBranch()) {
+        dependBranchAction
+    } else {
+        actions.find { it.isBranch() &&
+                (it.actionDetail2 == dependBranchAction.actionId ||
+                        it.actionDetail3 == dependBranchAction.actionId)
+        }
+    }
+    if (andBranchSkillAction == null) {
+        return branch
+    }
+    val andBranch = andBranchSkillAction.getBranch(skillLevel, actions)
+    val andBranchContent = andBranch.find { it.first in dependActionIdList }?.second
+    if (andBranchContent == null) {
+        return  branch
+    }
+    return branch.map {
+        val content = D.Join(arrayOf(andBranchContent, D.Format(R.string.action_branch_and), it.second))
+        it.first to content
+    }.toTypedArray()
+}
+
 private val SkillAction.finalDepend: SkillAction?
     get() = if (depend == null) this else if (depend!!.actionType == 7) null else depend!!.finalDepend
 

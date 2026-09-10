@@ -142,6 +142,11 @@ private fun SkillAction.getGiveValueFormat(targetAction: SkillAction, skillLevel
 
     if ((value2 + value3 * skillLevel) < 0.0) {
         isAdditive = false
+        if (targetAction.actionType == 35 && actionDetail2 == 4) {
+            isAdditive = true
+            value2 = -value2
+            value3 = -value3
+        }
     }
 
     if (targetAction.actionType == 1 && actionDetail2 == 6) {
@@ -168,7 +173,7 @@ private fun SkillAction.getGiveValueFormat(targetAction: SkillAction, skillLevel
         }
     } else if (targetAction.actionType == 110 && actionDetail2 == 1) {
         isPercent = true
-    } else if (value3 == 0.0 &&//不明
+    }/* else if (value3 == 0.0 &&//不明
         value2 < 0.0 &&
         targetAction.actionType != 16 &&
         (targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 2) &&
@@ -176,7 +181,7 @@ private fun SkillAction.getGiveValueFormat(targetAction: SkillAction, skillLevel
     ) {
         isPercent = true
         shouldMultiplyBy100 = true
-    }
+    }*/
 
     if (!isAdditive) {
         value2 = -value2
@@ -457,8 +462,9 @@ private fun SkillAction.getMaxValue(
         null
     } else {
         var maxValue = (actionValue4 + actionValue5 * skillLevel) * dependSkillLevel
-        if (!giveValueFormat.isAdditive ||
-            (targetAction.actionType == 35 && actionDetail2 == 4 && actionValue2 < 0.0)//不明
+        if (targetAction.actionType == 35 &&
+            actionDetail2 == 4 &&
+            (actionValue2 + actionValue3 * skillLevel) < 0.0
         ) {
             maxValue = -maxValue
         }
