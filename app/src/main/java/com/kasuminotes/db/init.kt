@@ -322,24 +322,35 @@ suspend fun AppDatabase.initQuestDropData() {
             pieceSet.add(item.rewardImageList[0])
         }
 
-        var memoryPieceSql = "REPLACE INTO `memory_piece`\nSELECT ${pieceSet.elementAt(0)}"
-        val pieceSize = pieceSet.size
-        var i = 1
-
-        while (i < pieceSize) {
-            memoryPieceSql += "\nUNION SELECT ${pieceSet.elementAt(i++)}"
+        val memoryPieceSqlBuilder = StringBuilder()
+        memoryPieceSqlBuilder.append("REPLACE INTO `memory_piece` (id)\nVALUES ")
+        if (pieceSet.isNotEmpty()) {
+            val lastIndex = pieceSet.size - 1
+            for (i in pieceSet.indices) {
+                memoryPieceSqlBuilder.append("(${pieceSet.elementAt(i)})")
+                if (i < lastIndex) {
+                    memoryPieceSqlBuilder.append(",\n")
+                }
+            }
         }
 
-        vhQuestList.forEach { item ->
-            val rewardImage = item.rewardImageList[0]
-            if (rewardImage > 0) {
-                memoryPieceSql += "\nUNION SELECT $rewardImage"
+        val nonZeroVhQuestList = vhQuestList.filter { it.rewardImageList[0] > 0 }
+        if (nonZeroVhQuestList.isNotEmpty()) {
+            if (pieceSet.isNotEmpty()) {
+                memoryPieceSqlBuilder.append(",\n")
+            }
+            val lastIndex = nonZeroVhQuestList.size - 1
+            for (i in nonZeroVhQuestList.indices) {
+                memoryPieceSqlBuilder.append("(${nonZeroVhQuestList[i].rewardImageList[0]})")
+                if (i < lastIndex) {
+                    memoryPieceSqlBuilder.append(",\n")
+                }
             }
         }
 
         useDatabase {
             execSQL("CREATE TABLE `memory_piece`('id' INTEGER NOT NULL,PRIMARY KEY('id'))")
-            execSQL(memoryPieceSql)
+            execSQL(memoryPieceSqlBuilder.toString())
         }
     }
 }

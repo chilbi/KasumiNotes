@@ -127,15 +127,17 @@ VALUES (${userKnightEnhance.stringValues})""")
 
 fun AppDatabase.putUserKnightEnhanceList(userKnightEnhanceList: List<UserKnightEnhance>) {
     if (userKnightEnhanceList.isEmpty()) return
-    var sql = "REPLACE INTO `user_knight_enhance` (user_id,talent_levels,talent_nodes,team_node,roles)\nSELECT ${userKnightEnhanceList[0].stringValues}"
-    val len = userKnightEnhanceList.size
-    var i = 1
-    while (i < len) {
-        sql += "\nUNION SELECT ${userKnightEnhanceList[i].stringValues}"
-        i++
+    val sqlBuilder = StringBuilder()
+    sqlBuilder.append("REPLACE INTO `user_knight_enhance` (user_id,talent_levels,talent_nodes,team_node,roles)\nVALUES ")
+    val lastIndex = userKnightEnhanceList.size - 1
+    for (i in userKnightEnhanceList.indices) {
+        sqlBuilder.append("(${userKnightEnhanceList[i].stringValues})")
+        if (i < lastIndex) {
+            sqlBuilder.append(",\n")
+        }
     }
     useDatabase {
-        execSQL(sql)
+        execSQL(sqlBuilder.toString())
     }
 }
 

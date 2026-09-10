@@ -21,15 +21,17 @@ fun AppDatabase.putUserData(userData: UserData) {
 
 fun AppDatabase.putUserDataList(userDataList: List<UserData>) {
     if (userDataList.isEmpty()) return
-    var sql = "REPLACE INTO `user_data` (${UserData.getFields(pk = true, fk = true)})\nSELECT ${userDataList[0].stringValues}"
-    val len = userDataList.size
-    var i = 1
-    while (i < len) {
-        sql += "\nUNION SELECT ${userDataList[i].stringValues}"
-        i++
+    val sqlBuilder = StringBuilder()
+    sqlBuilder.append("REPLACE INTO `user_data` (${UserData.getFields(pk = true, fk = true)})\nVALUES ")
+    val lastIndex = userDataList.size - 1
+    for (i in userDataList.indices) {
+        sqlBuilder.append("(${userDataList[i].stringValues})")
+        if (i < lastIndex) {
+            sqlBuilder.append(",\n")
+        }
     }
     useDatabase {
-        execSQL(sql)
+        execSQL(sqlBuilder.toString())
     }
 }
 
