@@ -61,9 +61,9 @@ fun Enhance(
     var showBottomSheet by remember { mutableStateOf(false) }
     var showSaveDialog by remember { mutableStateOf(false) }
 
-    BackHandler(enhanceState.saveable) {
-        showSaveDialog = true
-    }
+    val openSaveDialog = remember {{ showSaveDialog = true }}
+
+    BackHandler(enhanceState.saveable, openSaveDialog)
 
     Scaffold(
         topBar = {
@@ -72,7 +72,7 @@ fun Enhance(
                     Text(stringResource(R.string.knight_enhance))
                 },
                 navigationIcon = {
-                    BackButton(onBack)
+                    BackButton(if (enhanceState.saveable) openSaveDialog else onBack)
                 },
                 actions = {
                     IconButton(
