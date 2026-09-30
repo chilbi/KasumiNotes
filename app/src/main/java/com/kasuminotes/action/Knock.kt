@@ -2,6 +2,7 @@ package com.kasuminotes.action
 
 import com.kasuminotes.R
 import com.kasuminotes.data.SkillAction
+import kotlin.math.absoluteValue
 
 fun SkillAction.getKnock(): D {
     val target = getTarget(depend)
@@ -29,7 +30,7 @@ fun SkillAction.getKnock(): D {
                     R.string.action_haulin_target1_formula2,
                     arrayOf(
                         target,
-                        D.Text((-actionValue1).toNumStr()).style(primary = true, bold = true)
+                        D.Text(actionValue1.absoluteValue.toNumStr()).style(primary = true, bold = true)
                     )
                 )
             }

@@ -21,7 +21,7 @@ fun SkillAction.getDamageCut(skillLevel: Int): D {
             getTarget(depend),
             content.style(underline = true),
             formula.style(primary = true, bold = true),
-            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
+            getBaseLvFormula(actionValue3, actionValue4, skillLevel)
         )
     )
 }
@@ -51,7 +51,7 @@ fun SkillAction.getDamageCutEffect(skillLevel: Int): SkillEffect {
         getTarget(null),
         D.Format(R.string.effect_damage_cut_content1, arrayOf(content)),
         D.Text(formula),
-        actionValue3,
+        actionValue3 + actionValue4 * skillLevel,
         0.5f,
         SkillEffect.damageCut
     )

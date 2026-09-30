@@ -9,16 +9,12 @@ fun SkillAction.getRegeneration(skillLevel: Int, property: Property): D {
     val content: D
     val formula: D
     when (actionDetail2) {
-        2 -> {
-            content = D.Format(R.string.energy)
+        2, 4 -> {
+            content = if (actionDetail2 == 2) D.Format(R.string.energy) else D.Join(arrayOf(D.Format(R.string.content_fixed), D.Format(R.string.energy)))
             formula = getBaseLvFormula(actionValue1, actionValue2, skillLevel)
         }
-        4 -> {
-            content = D.Join(arrayOf(D.Format(R.string.content_fixed), D.Format(R.string.energy)))
-            formula = getBaseLvFormula(actionValue1, actionValue2, skillLevel)
-        }
-        else -> {//1
-            content = D.Format(R.string.hp)
+        else -> {//1, 3
+            content = if (actionDetail2 == 1) D.Format(R.string.hp) else D.Join(arrayOf(D.Format(R.string.content_fixed), D.Format(R.string.hp)))
             formula = getBaseLvAtkFormula(actionDetail1, actionValue1, actionValue2, actionValue3, actionValue4, skillLevel, property)
         }
     }
@@ -29,7 +25,7 @@ fun SkillAction.getRegeneration(skillLevel: Int, property: Property): D {
             getTarget(depend),
             content,
             formula,
-            D.Text(actionValue5.toNumStr()).style(primary = true, bold = true)
+            getBaseLvFormula(actionValue5, actionValue6, skillLevel)
         )
     )
 }
@@ -37,6 +33,7 @@ fun SkillAction.getRegeneration(skillLevel: Int, property: Property): D {
 fun SkillAction.getRegenerationEffect(skillLevel: Int): SkillEffect {
     val label = when (actionDetail2) {
         2 -> D.Format(R.string.effect_energy_regeneration)
+        3 -> D.Format(R.string.effect_fixed_hp_regeneration)
         4 -> D.Format(R.string.effect_fixed_energy_regeneration)
         else -> D.Format(R.string.effect_hp_regeneration)//1
     }
@@ -45,7 +42,7 @@ fun SkillAction.getRegenerationEffect(skillLevel: Int): SkillEffect {
         getTarget(null),
         label,
         D.Text((actionValue1 + actionValue2 * skillLevel).toNumStr()),
-        actionValue5,
+        actionValue5 + actionValue6 * skillLevel,
         0.5f,
         SkillEffect.regeneration
     )

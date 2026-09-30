@@ -17,7 +17,7 @@ fun SkillAction.getDamageField(skillLevel: Int, property: Property): D {
             D.Text(actionValue7.toNumStr()),
             getBaseLvAtkFormula(detail1, actionValue1, actionValue2, actionValue3, actionValue4, skillLevel, property),
             content,
-            D.Text(actionValue5.toNumStr()).style(primary = true, bold = true)
+            getBaseLvFormula(actionValue5, actionValue6, skillLevel)
         )
     )
 

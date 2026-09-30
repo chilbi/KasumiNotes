@@ -13,14 +13,14 @@ fun SkillAction.getDotDamageUp(): D {
                 dot = if (dot == null) {
                     getAbnormalDamageContent(value.toInt())
                 } else {
-                    dot!!.append(D.Join(arrayOf(
+                    dot.append(D.Join(arrayOf(
                         D.Format(R.string.comma),
                         getAbnormalDamageContent(value.toInt())
                     )))
                 }
             }
         }
-        if (dot != null) dot!! else D.Format(R.string.content_dot)
+        if (dot != null) dot else D.Format(R.string.content_dot)
     }
     return D.Format(
         R.string.action_dot_damage_up_target1_content2_formula3_max4_time5,

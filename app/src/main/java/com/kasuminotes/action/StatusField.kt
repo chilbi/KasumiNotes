@@ -32,7 +32,7 @@ fun SkillAction.getStatusField(skillLevel: Int): D {
             getTarget(depend),
             D.Text(actionValue5.toNumStr()),
             content,
-            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
+            getBaseLvFormula(actionValue3, actionValue4, skillLevel)
         )
     )
 }

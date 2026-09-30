@@ -228,6 +228,16 @@ private fun SkillAction.getDependBranch(target: D): Array<Pair<Int, D>> {
                 D.Format(id, arrayOf(target, D.Format(R.string.action_branch_hp_max_no).tag(false)))
             )
         }
+        // サレン（ガンナー）
+        770 -> {
+            val value = D.Text(actionValue3.toNumStr())
+            val id = R.string.action_branch_debuff_types_target1_count2_p3
+            setBranch(
+                branch,
+                D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_gt).tag(true))),
+                D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_lt).tag(false)))
+            )
+        }
         // ホマレ
         721 -> {
             setStateBranch(branch, actionValue3.toInt(), actionValue4)
@@ -451,8 +461,8 @@ private fun SkillAction.setAbnormalDamageBranch(branch: MutableList<Pair<Int, D>
         1 -> D.Format(R.string.curse)
         2 -> D.Format(R.string.poison)
         3 -> D.Format(R.string.fierce_poison)
-        4 -> D.Format(R.string.beshrew)
-        11 -> D.Format(R.string.curse_or_beshrew)
+        4 -> D.Format(R.string.imprecation)
+        11 -> D.Format(R.string.curse_or_imprecation)
         12 -> D.Format(R.string.poison_or_fierce_poison)
         99 -> D.Format(R.string.dot)
         else -> D.Unknown

@@ -500,6 +500,7 @@
     <string name="action_branch_target1_talent2_p3">%1$s%3$s%2$s属性时，</string>
     <string name="action_branch_talent_yes">是</string>
     <string name="action_branch_talent_no">不是</string>
+    <string name="action_branch_debuff_types_target1_count2_p3">%1$s的弱体效果的种类的数量%3$s%2$s时，</string>
 
     <string name="summon_id1">召唤%s</string>
     <string name="summon_403101">召唤一个能够攻击前方一名敌人的骷髅老爹</string>
@@ -670,9 +671,9 @@
     <string name="burn">火伤</string>
     <string name="curse">诅咒</string>
     <string name="fierce_poison">猛毒</string>
-    <string name="beshrew">恶咒</string>
+    <string name="imprecation">毒咒</string>
     <string name="black_fire">黑炎</string>
-    <string name="curse_or_beshrew">诅咒或恶咒</string>
+    <string name="curse_or_imprecation">诅咒或毒咒</string>
     <string name="poison_or_fierce_poison">毒或猛毒</string>
     <string name="dot">持续伤害</string>
     <string name="charm">魅惑</string>
@@ -712,7 +713,9 @@
 
     <string name="give_time">效果时间</string>
     <string name="give_damage">伤害量</string>
+    <string name="give_max_ratio_damage">最多造成伤害量</string>
     <string name="give_dot_damage">持续伤害量</string>
+    <string name="give_dot_damage_rate1">持续伤害的%s倍率</string>
     <string name="give_damage_rate1">伤害的%s倍率</string>
     <string name="give_hp_recovery_rate1">HP回复的%s倍率</string>
     <string name="give_critical1">暴击率（初始值为%s，当值为-1或1时必定暴击）</string>
@@ -727,6 +730,8 @@
     <string name="give_energy_decrement">TP的降低量</string>
     <string name="give_hp_regeneration">HP的持续回复量</string>
     <string name="give_energy_regeneration">TP的持续回复量</string>
+    <string name="give_hp_regeneration_rate1">HP持续回复的%s倍率</string>
+    <string name="give_energy_regeneration_rate1">TP持续回复的%s倍率</string>
     <string name="give_barrier_guard">屏障的无效伤害量</string>
     <string name="give_barrier_drain">屏障的吸收伤害量</string>
     <string name="give_up_amount_content1">%s的提升量</string>
@@ -735,6 +740,8 @@
     <string name="give_mark_consume_state1">【%s】的消費数量</string>
     <string name="give_mark_max_state1">【%s】的最多追加数量</string>
     <string name="give_distance">距离</string>
+    <string name="give_height">高度</string>
+    <string name="give_range">范围</string>
     <string name="give_speed">行动速度</string>
     <string name="give_base_value1">基础值{ %s }</string>
     <string name="give_damage_cut1">受到的%s降低量</string>
@@ -754,6 +761,7 @@
     <string name="effect_energy_recovery">TP回复</string>
     <string name="effect_energy_down">TP降低</string>
     <string name="effect_hp_regeneration">持续HP回复</string>
+    <string name="effect_fixed_hp_regeneration">持续固定HP回复</string>
     <string name="effect_energy_regeneration">持续TP回复</string>
     <string name="effect_fixed_energy_regeneration">持续固定TP回复</string>
     <string name="effect_hp_recovery_down">HP回复量降低</string>

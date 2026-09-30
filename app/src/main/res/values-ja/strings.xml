@@ -500,6 +500,7 @@
     <string name="action_branch_target1_talent2_p3">%1$sが%2$s属性%3$s場合、</string>
     <string name="action_branch_talent_yes">の</string>
     <string name="action_branch_talent_no">でない</string>
+    <string name="action_branch_debuff_types_target1_count2_p3">%1$sの弱体効果の種類の数が%3$s%2$sの場合、</string>
 
     <string name="summon_id1">%sを召喚する</string>
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
@@ -670,9 +671,9 @@
     <string name="burn">火傷</string>
     <string name="curse">呪い</string>
     <string name="fierce_poison">猛毒</string>
-    <string name="beshrew">呪詛</string>
+    <string name="imprecation">呪詛</string>
     <string name="black_fire">黒炎</string>
-    <string name="curse_or_beshrew">呪いか呪詛</string>
+    <string name="curse_or_imprecation">呪いか呪詛</string>
     <string name="poison_or_fierce_poison">毒か猛毒</string>
     <string name="dot">継続ダメージ</string>
     <string name="charm">誘惑</string>
@@ -712,7 +713,9 @@
 
     <string name="give_time">効果時間</string>
     <string name="give_damage">ダメージ量</string>
+    <string name="give_max_ratio_damage">最大ダメージ量</string>
     <string name="give_dot_damage">継続ダメージ量</string>
+    <string name="give_dot_damage_rate1">継続ダメージの%s倍率</string>
     <string name="give_damage_rate1">ダメージの%s倍率</string>
     <string name="give_hp_recovery_rate1">ＨＰ回復の%s倍率</string>
     <string name="give_critical1">クリティカル（初期値は%s、-1か1になると必ずクリティカルする）</string>
@@ -727,6 +730,8 @@
     <string name="give_energy_decrement">ＴＰの下降量</string>
     <string name="give_hp_regeneration">継続ＨＰ回復量</string>
     <string name="give_energy_regeneration">継続ＴＰ回復量</string>
+    <string name="give_hp_regeneration_rate1">継続ＨＰ回復の%s倍率</string>
+    <string name="give_energy_regeneration_rate1">継続ＴＰ回復の%s倍率</string>
     <string name="give_barrier_guard">バリアの無効ダメージ量</string>
     <string name="give_barrier_drain">バリアの吸収ダメージ量</string>
     <string name="give_up_amount_content1">%sの上昇量</string>
@@ -735,6 +740,8 @@
     <string name="give_mark_consume_state1">【%s】の消費数</string>
     <string name="give_mark_max_state1">【%s】の最大追加数</string>
     <string name="give_distance">距離</string>
+    <string name="give_height">高度</string>
+    <string name="give_range">範囲</string>
     <string name="give_speed">行動速度</string>
     <string name="give_base_value1">基礎値{ %s }</string>
     <string name="give_damage_cut1">受ける%s下降量</string>
@@ -754,6 +761,7 @@
     <string name="effect_energy_recovery">ＴＰ回復</string>
     <string name="effect_energy_down">ＴＰ下降</string>
     <string name="effect_hp_regeneration">継続ＨＰ回復</string>
+    <string name="effect_fixed_hp_regeneration">継続固定ＨＰ回復</string>
     <string name="effect_energy_regeneration">継続ＴＰ回復</string>
     <string name="effect_fixed_energy_regeneration">継続固定ＴＰ回復</string>
     <string name="effect_hp_recovery_down">ＨＰ回復量下降</string>

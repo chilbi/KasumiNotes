@@ -16,10 +16,10 @@ fun SkillAction.getRatioDamage(skillLevel: Int, target: D = getTarget(depend)): 
         arrayOf(target, formula, getDamageType(actionDetail2))
     )
 
-    val damage = if (actionValue3 > 0.0) {
+    val damage = if (actionValue3 > 0.0 || actionValue4 > 0.0) {
         desc.append(D.Format(
             R.string.action_max_ratio_damage1,
-            arrayOf(D.Text(actionValue3.toNumStr()).style(primary = true, bold = true))
+            arrayOf(getBaseLvFormula(actionValue3, actionValue4, skillLevel))
         ))
     } else {
         desc

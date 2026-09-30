@@ -24,7 +24,7 @@ fun SkillAction.getBarrier(skillLevel: Int): D {
             getTarget(depend),
             getBaseLvFormula(actionValue1, actionValue2, skillLevel),
             content.style(underline = true),
-            D.Text(actionValue3.toNumStr()).style(primary = true, bold = true)
+            getBaseLvFormula(actionValue3, actionValue4, skillLevel)
         )
     )
 }

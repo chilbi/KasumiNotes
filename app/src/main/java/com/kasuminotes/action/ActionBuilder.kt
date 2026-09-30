@@ -347,7 +347,7 @@ class ActionBuilder(
             78 -> getPassiveDamageUp()
             79 -> getFixedDamage()
             82 -> getEffectResistance()
-            83 -> getSpeedOverlay()
+            83 -> getSpeedOverlay(skillLevel)
             92 -> D.Unknown/** [getInjuredEnergy] */
             93 -> D.Unknown/** [getIgnoreProvocation] */
             95 -> getHiding()
