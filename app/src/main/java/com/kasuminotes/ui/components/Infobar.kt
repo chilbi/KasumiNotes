@@ -1,11 +1,14 @@
 package com.kasuminotes.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
@@ -135,7 +138,8 @@ private fun InfobarImpl(
                     text = stringValue,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding())
+                        .basicMarquee(Int.MAX_VALUE),
                     textAlign = TextAlign.End,
                     overflow = TextOverflow.Ellipsis,
                     softWrap = false,
@@ -147,7 +151,8 @@ private fun InfobarImpl(
                     text = annotatedStringValue,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding())
+                        .basicMarquee(Int.MAX_VALUE),
                     textAlign = TextAlign.End,
                     overflow = TextOverflow.Ellipsis,
                     softWrap = false,

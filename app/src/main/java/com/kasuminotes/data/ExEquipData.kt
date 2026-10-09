@@ -5,7 +5,7 @@ import com.kasuminotes.action.isBranch
 import com.kasuminotes.action.isSelf
 import kotlin.math.ceil
 import kotlin.math.min
-import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 import kotlin.random.Random
 
 data class ExEquipData(
@@ -79,7 +79,7 @@ data class ExEquipData(
         return Property { index ->
             val value = percentProperty[index] + subPercentProperty[index]
             if (index < 7) {
-                (baseProperty[index] * value / 10000).roundToInt().toDouble()// TODO 不确定的取整方式
+                (baseProperty[index] * value / 10000).roundToLong().toDouble()// TODO 不确定的取整方式
             } else {
                 value
             }
@@ -144,7 +144,7 @@ data class ExEquipData(
                         if (statusAction.actionDetail1 % 10 != 0) {
                             value *= -1
                         }
-                        pairs.add(key + 1 to value.roundToInt().toDouble())// TODO 不确定的取整方式
+                        pairs.add(key + 1 to value.roundToLong().toDouble())// TODO 不确定的取整方式
                     }
                 }
             }

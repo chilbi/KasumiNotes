@@ -4,7 +4,7 @@ import com.kasuminotes.R
 import com.kasuminotes.data.Property
 import com.kasuminotes.data.SkillAction
 import com.kasuminotes.data.SkillEffect
-import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 fun SkillAction.getStatus(skillLevel: Int, actions: List<SkillAction>, property: Property?): D {
     val arr = getStatusArray(skillLevel, actions, property)
@@ -99,13 +99,13 @@ fun SkillAction.getStatusArray(skillLevel: Int, actions: List<SkillAction>, prop
 
     val formula = if (isPercent) {
         val percent = if (value3 == 0.0) {
-            var str = "${value2.roundToInt()}%"// TODO 不确定的取整方式
+            var str = "${value2.roundToLong()}%"// TODO 不确定的取整方式
             // 计算EX装备被动技能加的百分比数值
             if (isSelf()) {
                 val index = getStatusIndex(detail1 / 10)
                 if (property != null && index != null) {
                     str += if (isUp) "(+" else "(-"
-                    str += "${(property[index] * value2 / 100).roundToInt()})"// TODO 不确定的取整方式
+                    str += "${(property[index] * value2 / 100).roundToLong()})"// TODO 不确定的取整方式
                 }
             }
             D.Text(str).style(primary = true, bold = true)

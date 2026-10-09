@@ -12,8 +12,7 @@ import androidx.compose.ui.text.withStyle
 import com.kasuminotes.R
 import com.kasuminotes.data.Property
 import java.math.BigDecimal
-import java.util.Locale
-import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 private val propertyIndices: List<Int> = listOf(
     1, 3, 5, 6, 2, 4, 11, 12, 16, 7, 0, 8, 9, 10, 13, 15, 14
@@ -34,7 +33,7 @@ fun PropertyTable(
     ) { i ->
         val index = indices[i]
         val label = stringResource(Property.getStrRes(index))
-        val value = property[index].roundToInt()// TODO 不确定的取整方式
+        val value = property[index].roundToLong()// TODO 不确定的取整方式
         val valueDisplay = if (index == 0) value.formatHP(context) else value.toString()//HP
 
         if (originProperty == null) {
@@ -43,10 +42,10 @@ fun PropertyTable(
                 value = valueDisplay
             )
         } else {
-            val originValue = originProperty[index].roundToInt()// TODO 不确定的取整方式
+            val originValue = originProperty[index].roundToLong()// TODO 不确定的取整方式
             val diffValue = value - originValue
 
-            if (diffValue == 0) {
+            if (diffValue == 0L) {
                 Infobar(
                     label = label,
                     value = valueDisplay
@@ -57,14 +56,14 @@ fun PropertyTable(
                     value = buildAnnotatedString {
                         withStyle(
                             SpanStyle(
-                                color = if (diffValue > 0) {
+                                color = if (diffValue > 0L) {
                                     MaterialTheme.colorScheme.onPrimaryContainer
                                 } else {
                                     MaterialTheme.colorScheme.onTertiaryContainer
                                 }
                             )
                         ) {
-                            if (diffValue > 0) append("+")
+                            if (diffValue > 0L) append("+")
                             append("$diffValue ) ")
                         }
                         append(value.toString())
@@ -75,7 +74,7 @@ fun PropertyTable(
     }
 }
 
-fun Int.formatHP(context: Context): String {
+fun Long.formatHP(context: Context): String {
     return when {
         this >= 1_0000_0000 -> {
             formatWithDivisor(
@@ -95,7 +94,7 @@ fun Int.formatHP(context: Context): String {
     }
 }
 
-private fun Int.formatWithDivisor(context: Context, divisor: Int, unitResId: Int): String {
+private fun Long.formatWithDivisor(context: Context, divisor: Int, unitResId: Int): String {
     val unit = context.getString(unitResId)
     val value = BigDecimal(this).divide(BigDecimal(divisor))
     return value.stripTrailingZeros().toPlainString() + unit

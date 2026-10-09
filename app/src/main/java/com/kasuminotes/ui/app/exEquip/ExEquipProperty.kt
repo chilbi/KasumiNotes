@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kasuminotes.R
-import com.kasuminotes.action.toNumStr
 import com.kasuminotes.data.Property
 import com.kasuminotes.ui.components.FixedWidthLabel
 import com.kasuminotes.ui.components.Infobar
@@ -18,7 +17,6 @@ import com.kasuminotes.ui.components.Rarities
 import com.kasuminotes.ui.components.LabelContainer
 import com.kasuminotes.ui.components.VerticalGrid
 import com.kasuminotes.ui.components.VerticalGridCells
-import kotlin.math.roundToInt
 
 @Composable
 fun ExEquipProperty(

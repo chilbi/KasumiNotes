@@ -169,7 +169,7 @@ private fun EnemyListItem(
 
         Row {
             Box(Modifier.weight(1f)) {
-                val hpDisplay = enemyData.property.hp.toInt().formatHP(context)
+                val hpDisplay = enemyData.property.hp.toLong().formatHP(context)
                 Infobar(
                     label = stringResource(Property.getStrRes(0)),
                     value = hpDisplay

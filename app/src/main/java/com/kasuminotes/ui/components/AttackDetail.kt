@@ -7,7 +7,7 @@ import com.kasuminotes.common.AtkType
 import com.kasuminotes.common.Label
 import com.kasuminotes.data.Property
 import com.kasuminotes.utils.UrlUtil
-import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 @Composable
 fun AttackDetail(
@@ -36,7 +36,7 @@ fun AttackDetail(
     val description = stringResource(
         R.string.action_damage_target1_formula2_content3,
         target,
-        damage.roundToInt().toString(),// TODO 不确定的取整方式
+        damage.roundToLong().toString(),// TODO 不确定的取整方式
         atkTypeText
     )
 

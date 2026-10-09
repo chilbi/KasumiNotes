@@ -18,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 class ExEquipState(
     private val appRepository: AppRepository,
@@ -180,9 +180,9 @@ class ExEquipState(
 
     fun valueDisplay(index: Int, value: Double): String {
         return if (index < 7) {
-            "${(value / 100).toNumStr()}%(+${(baseProperty[index] * value / 10000).roundToInt()})"// TODO 不确定的取整方式
+            "${(value / 100).toNumStr()}%(+${(baseProperty[index] * value / 10000).roundToLong()})"// TODO 不确定的取整方式
         } else {
-            value.roundToInt().toString()// TODO 不确定的取整方式
+            value.roundToLong().toString()// TODO 不确定的取整方式
         }
     }
 
