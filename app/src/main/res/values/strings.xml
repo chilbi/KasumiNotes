@@ -483,6 +483,7 @@
     <string name="action_branch_status_change_yes">已处于</string>
     <string name="action_branch_status_change_no">未处于</string>
     <string name="action_branch_barrier_target1_p2">%1$s%2$s屏障展开时，</string>
+    <string name="action_branch_barrier_target1_type2_p3">%1$s%3$s%2$s无效或吸收屏障展开时，</string>
     <string name="action_branch_barrier_yes">有</string>
     <string name="action_branch_barrier_no">没有</string>
     <string name="action_branch_break_target1_p2">%1$s的目标%2$sBreak状态时，</string>
@@ -501,6 +502,7 @@
     <string name="action_branch_talent_yes">是</string>
     <string name="action_branch_talent_no">不是</string>
     <string name="action_branch_debuff_types_target1_count2_p3">%1$s的弱体效果的种类的数量%3$s%2$s时，</string>
+    <string name="action_branch_barrier_target1_count2_p3">%1$s上展开中的屏障的数量%3$s%2$s时，</string>
 
     <string name="summon_id1">召唤%s</string>
     <string name="summon_403101">召唤一个能够攻击前方一名敌人的骷髅老爹</string>

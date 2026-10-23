@@ -238,6 +238,25 @@ private fun SkillAction.getDependBranch(target: D): Array<Pair<Int, D>> {
                 D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_lt).tag(false)))
             )
         }
+        in 761..769 -> {
+            val barrierType = D.Format(if (actionDetail1 - 760 == 1) R.string.physical else R.string.magic)//1物理,2魔法
+            val id = R.string.action_branch_barrier_target1_type2_p3
+            setBranch(
+                branch,
+                D.Format(id, arrayOf(target, barrierType, D.Format(R.string.action_branch_barrier_yes).tag(true))),
+                D.Format(id, arrayOf(target, barrierType, D.Format(R.string.action_branch_barrier_no).tag(false)))
+            )
+        }
+        //アグライア
+        750 -> {
+            val value = D.Text(actionValue3.toNumStr())
+            val id = R.string.action_branch_barrier_target1_count2_p3
+            setBranch(
+                branch,
+                D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_gt).tag(true))),
+                D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_lt).tag(false)))
+            )
+        }
         // ホマレ
         721 -> {
             setStateBranch(branch, actionValue3.toInt(), actionValue4)

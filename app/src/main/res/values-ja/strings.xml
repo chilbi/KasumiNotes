@@ -483,6 +483,7 @@
     <string name="action_branch_status_change_yes">の</string>
     <string name="action_branch_status_change_no">でない</string>
     <string name="action_branch_barrier_target1_p2">%1$sはバリアが展開されて%2$s場合、</string>
+    <string name="action_branch_barrier_target1_type2_p3">%1$sは%2$s無効または吸収バリアが展開されて%3$s場合、</string>
     <string name="action_branch_barrier_yes">いる</string>
     <string name="action_branch_barrier_no">いない</string>
     <string name="action_branch_break_target1_p2">%1$sのターゲットがBreak状態%2$s場合、</string>
@@ -501,6 +502,7 @@
     <string name="action_branch_talent_yes">の</string>
     <string name="action_branch_talent_no">でない</string>
     <string name="action_branch_debuff_types_target1_count2_p3">%1$sの弱体効果の種類の数が%3$s%2$sの場合、</string>
+    <string name="action_branch_barrier_target1_count2_p3">%1$sに展開中のバリアの数が%3$s%2$sの場合、</string>
 
     <string name="summon_id1">%sを召喚する</string>
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
