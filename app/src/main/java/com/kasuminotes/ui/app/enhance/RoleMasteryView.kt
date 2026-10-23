@@ -48,8 +48,8 @@ import kotlin.collections.component2
 fun RoleMasteryView(
     enhanceState: EnhanceState
 ) {
-    val roleMasteryDataMap = enhanceState.roleMasteryDataMap!!
-    val roleEnhanceMap = enhanceState.roleEnhanceMap!!
+    val roleMasteryDataMap = enhanceState.roleMasteryDataMap ?: return
+    val roleEnhanceMap = enhanceState.roleEnhanceMap ?: return
 
     Column(
         Modifier
