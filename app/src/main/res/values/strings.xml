@@ -326,10 +326,10 @@
     <string name="action_reduce_content1_formula2">使%1$s减少%2$s</string>
     <string name="action_multiply_content1_formula2">使%1$s变为基础值的%2$s倍</string>
     <string name="action_divide_content1_formula2">使%1$s变为基础值的%2$s分之一</string>
-    <string name="action_additive_max1_content2_value3">，最多增加%1$s（%2$s≧%3$s时）。</string>
-    <string name="action_reduce_max1_content2_value3">，最多减少%s（%2$s≧%3$s时）。</string>
-    <string name="action_multiply_max1_content2_value3">，最多变为%s倍（%2$s≧%3$s时）。</string>
-    <string name="action_divide_max1_content2_value3">，最多变为%s分之一（%2$s≧%3$s时）。</string>
+    <string name="action_additive_max1_content2_value3">，最多增加%1$s（%2$s ≧ %3$s时）。</string>
+    <string name="action_reduce_max1_content2_value3">，最多减少%s（%2$s ≧ %3$s时）。</string>
+    <string name="action_multiply_max1_content2_value3">，最多变为%s倍（%2$s ≧ %3$s时）。</string>
+    <string name="action_divide_max1_content2_value3">，最多变为%s分之一（%2$s ≧ %3$s时）。</string>
     <string name="action_physical_darkness_formula1">使物理攻击命中率降低到%s。</string>
     <string name="action_magic_darkness_formula1">使魔法攻击命中率降低到%s。</string>
     <string name="action_life_steal_target1_formula2">赋予%1$s下次攻击提升%2$sHP吸收效果。</string>
@@ -444,8 +444,8 @@
     <string name="action_branch_mark_target1_state2_p3">%1$s%3$s【%2$s】时，</string>
     <string name="action_branch_mark_yes">持有</string>
     <string name="action_branch_mark_no">未持有</string>
-    <string name="action_branch_gt">≧</string>
-    <string name="action_branch_lt">＜</string>
+    <string name="action_branch_gt"><![CDATA[&#160;≧&#160;]]></string>
+    <string name="action_branch_lt"><![CDATA[&#160;&lt;&#160;]]></string>
     <string name="action_branch_mark_target1_state2_count3_p4">%1$s的【%2$s】的数量%4$s%3$s时，</string>
     <string name="action_branch_counter1_count2_p3">【%1$s】的数量%3$s%2$s时，</string>
     <string name="action_branch_hp_target1_value2_p3">%1$s的残余的HP%3$s%2$s时，</string>
@@ -506,7 +506,7 @@
     <string name="action_branch_talent_no">不是</string>
     <string name="action_branch_debuff_types_target1_count2_p3">%1$s的弱体效果的种类的数量%3$s%2$s时，</string>
     <string name="action_branch_barrier_target1_count2_p3">%1$s上展开中的屏障的数量%3$s%2$s时，</string>
-    <string name="action_branch_battle_time_value1_p2">战斗剩余时间%2$s%1$s时，</string>
+    <string name="action_branch_battle_time1_p2">战斗剩余时间%2$s%1$s秒时，</string>
     <string name="action_branch_higher_target1_status2_assignment3_p4">%1$s中%4$s比自身的%2$s更高的%3$s时，</string>
     <string name="action_branch_higher_yes">有</string>
     <string name="action_branch_higher_no">没有</string>

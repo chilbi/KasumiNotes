@@ -272,7 +272,7 @@ private fun SkillAction.getDependBranch(target: D): Array<Pair<Int, D>> {
         //ゴールドシップ
         730 -> {
             val value = D.Text(actionValue3.toNumStr())
-            val id = R.string.action_branch_battle_time_value1_p2
+            val id = R.string.action_branch_battle_time1_p2
             setBranch(
                 branch,
                 D.Format(id, arrayOf(value, D.Format(R.string.action_branch_lt).tag(true))),

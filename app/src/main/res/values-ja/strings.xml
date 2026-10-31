@@ -326,10 +326,10 @@
     <string name="action_reduce_content1_formula2">%1$sを%2$s減少させる</string>
     <string name="action_multiply_content1_formula2">%1$sを基礎値の%2$s倍にする</string>
     <string name="action_divide_content1_formula2">%1$sを基礎値の%2$s分の一にする</string>
-    <string name="action_additive_max1_content2_value3">、最大%sまで増加させる（%2$s≧%3$sの時）。</string>
-    <string name="action_reduce_max1_content2_value3">、最大%sまで減少させる（%2$s≧%3$sの時）。</string>
-    <string name="action_multiply_max1_content2_value3">、最大%s倍にする（%2$s≧%3$sの時）。</string>
-    <string name="action_divide_max1_content2_value3">、最大%s分の一にする（%2$s≧%3$sの時）。</string>
+    <string name="action_additive_max1_content2_value3">、最大%sまで増加させる（%2$s ≧ %3$sの時）。</string>
+    <string name="action_reduce_max1_content2_value3">、最大%sまで減少させる（%2$s ≧ %3$sの時）。</string>
+    <string name="action_multiply_max1_content2_value3">、最大%s倍にする（%2$s ≧ %3$sの時）。</string>
+    <string name="action_divide_max1_content2_value3">、最大%s分の一にする（%2$s ≧ %3$sの時）。</string>
     <string name="action_physical_darkness_formula1">物理攻撃の命中率を%sにする。</string>
     <string name="action_magic_darkness_formula1">魔法攻撃の命中率を%sにする。</string>
     <string name="action_life_steal_target1_formula2">%1$sの次の攻撃に%2$sＨＰ吸収をアップさせる効果を付与する。</string>
@@ -444,8 +444,8 @@
     <string name="action_branch_mark_target1_state2_p3">%1$sが【%2$s】を%3$s場合、</string>
     <string name="action_branch_mark_yes">持っている</string>
     <string name="action_branch_mark_no">持っていない</string>
-    <string name="action_branch_gt">≧</string>
-    <string name="action_branch_lt">＜</string>
+    <string name="action_branch_gt"><![CDATA[&#160;≧&#160;]]></string>
+    <string name="action_branch_lt"><![CDATA[&#160;&lt;&#160;]]></string>
     <string name="action_branch_mark_target1_state2_count3_p4">%1$sの【%2$s】の数が%4$s%3$sの場合、</string>
     <string name="action_branch_counter1_count2_p3">【%1$s】の数が%3$s%2$sの場合、</string>
     <string name="action_branch_hp_target1_value2_p3">%1$sの残りＨＰが%3$s%2$sの場合、</string>
@@ -506,7 +506,7 @@
     <string name="action_branch_talent_no">でない</string>
     <string name="action_branch_debuff_types_target1_count2_p3">%1$sの弱体効果の種類の数が%3$s%2$sの場合、</string>
     <string name="action_branch_barrier_target1_count2_p3">%1$sに展開中のバリアの数が%3$s%2$sの場合、</string>
-    <string name="action_branch_battle_time_value1_p2">バトルの残り時間が%2$s%1$sの場合、</string>
+    <string name="action_branch_battle_time1_p2">バトルの残り時間が%2$s%1$s秒の場合、</string>
     <string name="action_branch_higher_target1_status2_assignment3_p4">%1$sの中に自分より%2$sが高い%3$sが%4$s場合、</string>
     <string name="action_branch_higher_yes">いる</string>
     <string name="action_branch_higher_no">いない</string>
