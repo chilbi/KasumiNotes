@@ -8,8 +8,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.core.content.FileProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +20,7 @@ import com.kasuminotes.utils.LocaleUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
 
 class MainActivity : ComponentActivity() {
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -58,27 +61,59 @@ class MainActivity : ComponentActivity() {
         finish()
     }
 
-    fun listenerDownload(id: Long) {
-        if (broadcastReceiver != null) {
-            unregisterReceiver(broadcastReceiver)
+    fun listenerDownload(id: Long, apkFile: File) {
+        broadcastReceiver?.let {
+            runCatching { unregisterReceiver(it) }
         }
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-                if (downloadId == id) {
-                    val downloadManager = context.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-                    val downloadUri = downloadManager.getUriForDownloadedFile(downloadId)
+                val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L)
+
+                if (downloadId != id) return
+                runCatching { unregisterReceiver(this) }
+                broadcastReceiver = null
+
+                val downloadManager = context.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+                downloadManager.query(DownloadManager.Query().setFilterById(downloadId))?.use { cursor ->
+                    if (!cursor.moveToFirst()) return
+                    val statusIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
+                    val status = if (statusIndex > -1) cursor.getInt(statusIndex) else -1
+
+                    if (status != DownloadManager.STATUS_SUCCESSFUL) {
+                        runCatching { apkFile.delete() }
+                        Toast.makeText(context, "DOWNLOAD_FAILED", Toast.LENGTH_SHORT).show()
+                        return
+                    }
+                }
+
+                if (!apkFile.exists() || apkFile.length() == 0L) {
+                    Toast.makeText(context, "DOWNLOAD_FAILED", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                try {
+                    val downloadUri = FileProvider.getUriForFile(
+                        context,
+                        "${context.packageName}.fileprovider",
+                        apkFile
+                    )
                     val install = Intent(Intent.ACTION_VIEW).apply {
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         setDataAndType(downloadUri, "application/vnd.android.package-archive")
                     }
-                    unregisterReceiver(broadcastReceiver)
                     context.startActivity(install)
+                } catch (e: Throwable) {
+                    Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                 }
             }
         }
-        registerReceiver(broadcastReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        val intentFilter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        if (Build.VERSION.SDK_INT >= 33) {
+            registerReceiver(broadcastReceiver, intentFilter, Context.RECEIVER_EXPORTED)
+        } else {
+            registerReceiver(broadcastReceiver, intentFilter)
+        }
     }
 
     companion object {

@@ -243,21 +243,18 @@ class AppRepository(
     }
 
     fun downloadApp(info: AppReleaseInfo) {
+        val mainActivity = MainActivity.instance ?: return
+        val fileName = "kasuminotes-release-${info.versionName}.apk"
+        val apkFile = File(context.getExternalFilesDir(null), fileName)
+        if (apkFile.exists()) apkFile.delete()
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request = DownloadManager.Request(info.downloadURL.toUri()).apply {
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             setMimeType("application/vnd.android.package-archive")
-            setDestinationInExternalFilesDir(
-                context,
-                context.filesDir.absolutePath,
-                "kasuminotes-release-${info.versionName}.apk"
-            )
+            setDestinationInExternalFilesDir(context, null, fileName)
         }
-        val file =
-            File("${context.filesDir.absolutePath}/kasuminotes-release-${info.versionName}.apk")
-        if (file.exists()) file.delete()
         val downloadId = downloadManager.enqueue(request)
-        MainActivity.instance.listenerDownload(downloadId)
+        mainActivity.listenerDownload(downloadId, apkFile)
     }
 
     fun syncStrings() {
