@@ -195,6 +195,11 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 2 -> charaState.userData!!.exEquip2Level
                 else -> charaState.userData!!.exEquip3Level
             }
+            val originRank = when (slotNum) {
+                1 -> charaState.userData!!.exEquip1Rank
+                2 -> charaState.userData!!.exEquip2Rank
+                else -> charaState.userData!!.exEquip3Rank
+            }
             val base = charaState.baseProperty
             val exSkill = charaState.exSkillProperty
             val slots = charaState.userProfile!!.exEquipSlots
@@ -206,6 +211,8 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                     if (slot.exEquipData == null || slotNum == index + 1) {
                         Property.zero
                     } else {
+                        val subPercentList = userData.subPercentMap
+                            .getOrElse(index + 1) { null } ?: emptyList()
                         val percent = slot.exEquipData.getPercentProperty(
                             when (index) {
                                 0 -> userData.exEquip1Level
@@ -213,9 +220,15 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                                 else -> userData.exEquip3Level
                             }
                         )
-                        val subPercentList = userData.subPercentMap
-                            .getOrElse(index + 1) { null } ?: emptyList()
-                        slot.exEquipData.getExEquipProperty(subPercentList, percent, base)
+                        val exceedLimitPercent = slot.exEquipData.getExceedLimitPercentProperty(
+                            when (index) {
+                                0 -> userData.exEquip1Rank
+                                1 -> userData.exEquip2Rank
+                                else -> userData.exEquip3Rank
+                            }
+                        )
+                        val totalPercent = Property { i -> percent[i] + exceedLimitPercent[i] }
+                        slot.exEquipData.getExEquipProperty(subPercentList, totalPercent, base)
                     }
                 }
                 Property { i -> propertyList.sumOf { it[i] } }
@@ -230,8 +243,10 @@ class AppViewModel(appRepository: AppRepository = AppRepository()) : ViewModel()
                 withoutSelfBattleProperty,
                 originSubPercentList,
                 originLevel,
+                originRank,
                 charaState::changeExEquip,
                 charaState::changeExEquipLevel,
+                charaState::changeExEquipRank,
                 charaState::changeSubPercentList
             )
             navController.navigate(AppNavData.ExEquip.route)

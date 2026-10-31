@@ -61,7 +61,7 @@ fun SkillAction.getAndBranch(
 }
 
 private val SkillAction.finalDepend: SkillAction?
-    get() = if (depend == null) this else if (depend!!.actionType == 7) null else depend!!.finalDepend
+    get() = if (depend == null) this else if (depend!!.isBranch()) this else if (depend!!.actionType == 7) null else depend!!.finalDepend
 
 private fun SkillAction.getDependBranch(target: D): Array<Pair<Int, D>> {
     val branch = mutableListOf<Pair<Int, D>>()
@@ -255,6 +255,28 @@ private fun SkillAction.getDependBranch(target: D): Array<Pair<Int, D>> {
                 branch,
                 D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_gt).tag(true))),
                 D.Format(id, arrayOf(target, value, D.Format(R.string.action_branch_lt).tag(false)))
+            )
+        }
+        //アーモンドアイ
+        in 740..749 -> {
+            val newTarget = this.copy(actionType = 0).getTarget(null)
+            val status = getStatusContent(actionDetail1 - 740)
+            val assignment = getAssignment()
+            val id = R.string.action_branch_higher_target1_status2_assignment3_p4
+            setBranch(
+                branch,
+                D.Format(id, arrayOf(newTarget, status, assignment, D.Format(R.string.action_branch_higher_yes).tag(true))),
+                D.Format(id, arrayOf(newTarget, status, assignment, D.Format(R.string.action_branch_higher_no).tag(false)))
+            )
+        }
+        //ゴールドシップ
+        730 -> {
+            val value = D.Text(actionValue3.toNumStr())
+            val id = R.string.action_branch_battle_time_value1_p2
+            setBranch(
+                branch,
+                D.Format(id, arrayOf(value, D.Format(R.string.action_branch_lt).tag(true))),
+                D.Format(id, arrayOf(value, D.Format(R.string.action_branch_gt).tag(false)))
             )
         }
         // ホマレ

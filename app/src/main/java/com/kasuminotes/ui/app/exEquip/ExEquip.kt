@@ -26,12 +26,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
+import androidx.compose.ui.unit.min
 import com.kasuminotes.R
 import com.kasuminotes.state.ExEquipState
 import com.kasuminotes.ui.components.BackButton
 import com.kasuminotes.ui.components.TopBar
 import com.kasuminotes.ui.components.PlaceImage
 import com.kasuminotes.utils.UrlUtil
+import kotlin.math.max
 
 @Composable
 fun ExEquip(
@@ -108,6 +111,25 @@ fun ExEquip(
                             exEquipData.passiveSkill2,
                             exEquipState.battleProperty
                         )
+                    }
+
+                    if (exEquipData.exceedLimit != null) {
+                        if (exEquipData.exceedLimit.statusList.isNotEmpty()) {
+                            ExEquipExceedLimitStatus(
+                                exEquipState.exceedLimitPercentProperty,
+                                exEquipState.maxRank,
+                                exEquipState.rank,
+                                exEquipState::valueDisplay,
+                                exEquipState::changeRank
+                            )
+                        }
+
+                        if (exEquipData.exceedLimit.skillList.isNotEmpty()) {
+                            val skillData = exEquipData.exceedLimit.skillList.getOrNull(exEquipState.rank - 1)
+                            if (skillData != null) {
+                                ExEquipExceedLimitSkill(skillData, exEquipState.battleProperty)
+                            }
+                        }
                     }
                 }
 

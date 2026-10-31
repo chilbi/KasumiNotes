@@ -77,7 +77,11 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false, talent
             }
         } else if (depend.isBranch()) {
             if (depend.targetCount > 1) {
-                getDependMultiTarget(D.Format(R.string.target_eligible))
+                if (depend.depend != null && depend.depend!!.isBranch()) {
+                    depend.depend!!.getTarget(depend.depend!!.depend, focused, talent)
+                } else {
+                    getDependMultiTarget(D.Format(R.string.target_eligible))
+                }
             } else if (depend.depend != null) {
                 if (depend.targetAssignment == 1 && depend.depend!!.actionType == 17 && depend.depend!!.actionDetail1 == 14) {
                     depend.getTarget(depend.depend, focused, talent)
@@ -301,40 +305,39 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false, talent
             }
         }
         4 -> {
-            val farthestTarget = if (targetNumber > 0) {
-                D.Format(
-                    R.string.target_far_number1_assignment2,
-                    arrayOf(
-                        getNumber(),
-                        getAssignment()
+            if ((targetCount == 99 || targetCount == 0) && isFullRangeTarget() && targetArea != 1) {
+                D.Format(R.string.target_all_content1, arrayOf(getAssignmentSide()))
+            } else {
+                val farthestTarget = if (targetNumber > 0) {
+                    D.Format(
+                        R.string.target_far_number1_assignment2,
+                        arrayOf(
+                            getNumber(),
+                            getAssignment()
+                        )
                     )
-                )
-            } else if (targetCount == 1) {
-                D.Format(
-                    R.string.target_farthest_assignment1,
-                    arrayOf(getAssignmentOne())
-                )
-            } else {
-                D.Format(
-                    R.string.target_farthest_assignment_count1,
-                    arrayOf(getAssignmentCount())
-                )
-            }
-            val rangeFarthestTarget = if (isFullRangeTarget()) {
-                farthestTarget
-            } else {
-                D.Format(
-                    R.string.target_range1_content2,
-                    arrayOf(
-                        D.Text(targetRange.toString()),
-                        farthestTarget
+                } else {
+                    D.Format(
+                        R.string.target_farthest_assignment_count1,
+                        arrayOf(getAssignmentCount())
                     )
-                )
-            }
-            if (targetArea == 1) {
-                D.Join(arrayOf(D.Format(R.string.target_front), rangeFarthestTarget))
-            } else {
-                rangeFarthestTarget
+                }
+                val rangeFarthestTarget = if (isFullRangeTarget()) {
+                    farthestTarget
+                } else {
+                    D.Format(
+                        R.string.target_range1_content2,
+                        arrayOf(
+                            D.Text(targetRange.toString()),
+                            farthestTarget
+                        )
+                    )
+                }
+                if (targetArea == 1) {
+                    D.Join(arrayOf(D.Format(R.string.target_front), rangeFarthestTarget))
+                } else {
+                    rangeFarthestTarget
+                }
             }
         }
         9 -> D.Format(R.string.target_last_assignment_count1, arrayOf(getAssignmentCount()))
@@ -362,11 +365,13 @@ fun SkillAction.getTarget(depend: SkillAction?, focused: Boolean = false, talent
                 else -> R.string.magic_def//in magicDefTypes
             }
             val mostTarget = D.Format(
-                R.string.target_most_content1_extent2_assignment_count3,
+                if (targetNumber == 0) R.string.target_most_content1_extent2_assignment_count3
+                else R.string.target_most_content1_extent2_assignment_count3_number4,
                 arrayOf(
                     D.Format(content),
                     D.Format(if (allMostHighTypes.contains(targetType)) R.string.target_high else R.string.target_low),
-                    getAssignmentCount()
+                    getAssignmentCount(),
+                    getNumber()
                 )
             )
             val manyTarget = if (isFullRangeTarget()) {
@@ -552,6 +557,11 @@ private fun SkillAction.getAssignmentCount(): D {
                     3 -> R.string.target_count3
                     4 -> R.string.target_count4
                     5 -> R.string.target_count5
+                    6 -> R.string.target_count6
+                    7 -> R.string.target_count7
+                    8 -> R.string.target_count8
+                    9 -> R.string.target_count9
+                    10 -> R.string.target_count10
                     else -> R.string.target_range_all_content1
                 },
                 arrayOf(D.Text(""))
@@ -573,7 +583,12 @@ private fun SkillAction.getNumber(): D {
             1 -> R.string.target_number2
             2 -> R.string.target_number3
             3 -> R.string.target_number4
-            else -> R.string.target_number5
+            4 -> R.string.target_number5
+            5 -> R.string.target_number6
+            6 -> R.string.target_number7
+            7 -> R.string.target_number8
+            8 -> R.string.target_number9
+            else -> R.string.target_number10
         }
     )
 }

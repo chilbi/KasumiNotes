@@ -265,6 +265,9 @@
     <string name="sub_property">サブステータス</string>
     <string name="forge">錬成</string>
     <string name="equip_skill">装備スキル</string>
+    <string name="exceed_limit">超越錬醒</string>
+    <string name="exceed_limit_rank">錬醒段階</string>
+    <string name="exceed_limit_skill">超越スキル</string>
     <string name="comma">、</string>
     <string name="full_stop">。</string>
 
@@ -294,8 +297,8 @@
     <string name="action_down_target1_received_content2_formula3">%1$sが%2$sを%3$sダウンさせる</string>
     <string name="action_received_up_target1_content2_formula3_time4">%1$sに受ける%2$sを%3$sアップさせる、効果時間%4$s秒。</string>
     <string name="action_received_down_target1_content2_formula3_time4">%1$sに受ける%2$sを%3$sダウンさせる、効果時間%4$s秒。</string>
-    <string name="action_const_up_content1">（この%1$sアップ効果で上昇した%1$sは、バトル中に受ける%1$sダウンスキルの影響を受けない。）</string>
-    <string name="action_const_down_content1">（この%1$sダウン効果で下降した%1$sは、バトル中に受ける%1$sアップスキルの影響を受けない。）</string>
+    <string name="action_const_up_content1">（この効果で上昇した%1$sはバトル中に受ける%1$sダウンスキルの影響を受けない）</string>
+    <string name="action_const_down_content1">（この効果で下降した%1$sはバトル中に受ける%1$sアップスキルの影響を受けない）</string>
     <string name="action_sustain_time1">モーションを%s秒維持する</string>
     <string name="action_sustain_damage_rate1">、次の攻撃ダメージを{ %s × この間に受けたダメージ }アップさせる。</string>
     <string name="action_sustain_status_content1_count2">、この間%1$s、%2$s回攻撃を受けるとモーションが中断される。</string>
@@ -394,7 +397,7 @@
     <string name="action_passive_battle_remaining_time1">バトルの残り時間が%s秒を切る時に</string>
     <string name="action_damage_attenuation_target1_limit2_time3_n4_r5_n6_r7_n8_r9">%1$sにリミットバリアを展開し、アクション毎に受けたダメージが%2$s万を超えた時、ダメージが減衰される、効果時間%3$s秒。\nf(%4$s万)=%5$s万; f(%6$s万)=%7$s万; f(%8$s万)=%9$s万</string>
     <string name="action_stealth_time1">【潜伏】状態に入る、効果時間%s秒。</string>
-    <string name="action_ignore_provocation">挑発を無視して、</string>
+    <string name="action_ignore_provocation">（挑発無視）</string>
     <string name="action_akinesia_invalid_target1_time2">%1$sに受ける行動不能を無効化できる状態を付与する、効果時間%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">%1$sに受ける行動不能を最大%2$s回まで無効化できる状態を付与する、効果時間%3$s秒。</string>
     <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$sに与えらるダメージの量を%2$sアップさせる、最大%3$sアップさせる、効果時間%4$s秒。</string>
@@ -503,6 +506,10 @@
     <string name="action_branch_talent_no">でない</string>
     <string name="action_branch_debuff_types_target1_count2_p3">%1$sの弱体効果の種類の数が%3$s%2$sの場合、</string>
     <string name="action_branch_barrier_target1_count2_p3">%1$sに展開中のバリアの数が%3$s%2$sの場合、</string>
+    <string name="action_branch_battle_time_value1_p2">バトルの残り時間が%2$s%1$sの場合、</string>
+    <string name="action_branch_higher_target1_status2_assignment3_p4">%1$sの中に自分より%2$sが高い%3$sが%4$s場合、</string>
+    <string name="action_branch_higher_yes">いる</string>
+    <string name="action_branch_higher_no">いない</string>
 
     <string name="summon_id1">%sを召喚する</string>
     <string name="summon_403101">目の前の敵１キャラを攻撃するドクロ父親を召喚する</string>
@@ -564,6 +571,8 @@
     <string name="content_system_down">自分が【システムダウン】状態になり、</string>
     <string name="content_dot">継続</string>
     <string name="content_fixed">固定</string>
+    <string name="content_ub_damage">UBのダメージ</string>
+    <string name="content_skill_damage">スキルのダメージ</string>
 
     <string name="mark_unknown">マーク%s</string>
     <string name="brackets">【%s】</string>
@@ -594,11 +603,21 @@
     <string name="target_count3">３キャラ</string>
     <string name="target_count4">４キャラ</string>
     <string name="target_count5">５キャラ</string>
+    <string name="target_count6">６キャラ</string>
+    <string name="target_count7">７キャラ</string>
+    <string name="target_count8">８キャラ</string>
+    <string name="target_count9">９キャラ</string>
+    <string name="target_count10">１０キャラ</string>
     <string name="target_number1">１番目</string>
     <string name="target_number2">２番目</string>
     <string name="target_number3">３番目</string>
     <string name="target_number4">４番目</string>
     <string name="target_number5">５番目</string>
+    <string name="target_number6">６番目</string>
+    <string name="target_number7">７番目</string>
+    <string name="target_number8">８番目</string>
+    <string name="target_number9">９番目</string>
+    <string name="target_number10">１０番目</string>
     <string name="target_nearest">最も近くの</string>
     <string name="target_farthest">最も遠くの</string>
     <string name="target_low">低い</string>
@@ -621,6 +640,7 @@
     <string name="target_first_assignment_count1">最も前の%s</string>
     <string name="target_last_assignment_count1">最も後ろの%s</string>
     <string name="target_most_content1_extent2_assignment_count3">%1$sが最も%2$s%3$s</string>
+    <string name="target_most_content1_extent2_assignment_count3_number4">%1$sが%4$s%2$s%3$s</string>
     <string name="target_without_self">自分以外の</string>
     <string name="target_atk_content1">物理攻撃をする%sのうち</string>
     <string name="target_magic_content1">魔法攻撃をする%sのうち</string>
@@ -684,8 +704,8 @@
     <string name="darkness">暗闇</string>
     <string name="silence">沈黙</string>
     <string name="invincible">無敵</string>
-    <string name="physical_invalid">全ての物理攻撃を回避する</string>
-    <string name="magic_invalid">全ての魔法攻撃を回避する</string>
+    <string name="physical_invalid">物理攻撃回避</string>
+    <string name="magic_invalid">魔法攻撃回避</string>
     <string name="break_immunity">Break免疫</string>
     <string name="provoke">挑発</string>
     <string name="fear">恐慌</string>

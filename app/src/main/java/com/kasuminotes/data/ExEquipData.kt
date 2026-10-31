@@ -23,7 +23,8 @@ data class ExEquipData(
     val maxProperty: Property,
     val passiveSkill1: SkillData?,
     val passiveSkill2: SkillData?,
-    val subStatusList: List<ExEquipSubStatus>?
+    val subStatusList: List<ExEquipSubStatus>?,
+    val exceedLimit: ExEquip5ExceedLimit?
 ) {
     val maxEnhanceLevel: Int = if (rarity > 2) 5 else rarity + 2
 
@@ -70,9 +71,19 @@ data class ExEquipData(
         }
     }
 
+    fun getExceedLimitPercentProperty(rank: Int): Property {
+        if (rank < 1 || exceedLimit == null || exceedLimit.statusList.isEmpty()) return Property.zero
+        val exceedLimitProperty = exceedLimit.statusList.getOrNull(rank - 1)
+        return if (exceedLimitProperty == null) {
+            Property.zero
+        } else {
+            Property { i -> exceedLimitProperty[i] - maxProperty[i] }
+        }
+    }
+
     fun getExEquipProperty(
         subPercentList: List<Pair<Int, Double>>,
-        percentProperty: Property,
+        percentProperty: Property,//mainPercent+exceedLimitPercent
         baseProperty: Property,
     ): Property {
         val subPercentProperty = Property(subPercentList, true)
@@ -87,24 +98,33 @@ data class ExEquipData(
     }
 
     fun getExEquipSkillProperty(
+        exceedLimitSkill: SkillData?,
         baseProperty: Property,
         exSkillProperty: Property,
         exEquipProperty: Property,
         talentId: Int
     ): Property {
+        if (passiveSkill1 == null && passiveSkill2 == null && exceedLimitSkill == null) {
+            return Property.zero
+        }
         val battleProperty = Property { i ->
             baseProperty[i] + exSkillProperty[i] + exEquipProperty[i]
         }
-        return if (passiveSkill1 == null && passiveSkill2 == null) {
+        val exceedLimitSkillProperty = if (exceedLimitSkill == null) {
             Property.zero
-        } else if (passiveSkill1 != null && passiveSkill2 == null) {
-            getPassive90SkillProperty(passiveSkill1, battleProperty, talentId)
+        } else {
+            getPassive90SkillProperty(exceedLimitSkill, battleProperty, talentId)
+        }
+        return if (passiveSkill1 != null && passiveSkill2 == null) {
+            val p1 = getPassive90SkillProperty(passiveSkill1, battleProperty, talentId)
+            Property {i -> p1[i] + exceedLimitSkillProperty[i] }
         } else if (passiveSkill1 == null && passiveSkill2 != null) {
-            getPassive90SkillProperty(passiveSkill2, battleProperty, talentId)
+            val p2 = getPassive90SkillProperty(passiveSkill2, battleProperty, talentId)
+            Property {i -> p2[i] + exceedLimitSkillProperty[i] }
         } else {
             val p1 = getPassive90SkillProperty(passiveSkill1!!, battleProperty, talentId)
             val p2 = getPassive90SkillProperty(passiveSkill2!!, battleProperty, talentId)
-            Property { i -> p1[i] + p2[i] }
+            Property { i -> p1[i] + p2[i] + exceedLimitSkillProperty[i] }
         }
     }
 

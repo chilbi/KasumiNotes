@@ -265,6 +265,9 @@
     <string name="sub_property">副属性</string>
     <string name="forge">炼成</string>
     <string name="equip_skill">装备技能</string>
+    <string name="exceed_limit">超越炼醒</string>
+    <string name="exceed_limit_rank">炼醒阶段</string>
+    <string name="exceed_limit_skill">超越技能</string>
     <string name="comma">、</string>
     <string name="full_stop">。</string>
 
@@ -294,8 +297,8 @@
     <string name="action_down_target1_received_content2_formula3">%1$s%2$s降低%3$s</string>
     <string name="action_received_up_target1_content2_formula3_time4">%1$s受到的%2$s提升%3$s，效果时间%4$s秒。</string>
     <string name="action_received_down_target1_content2_formula3_time4">%1$s受到的%2$s降低%3$s，效果时间%4$s秒。</string>
-    <string name="action_const_up_content1">（此%1$s提升效果所提升的%1$s，在战斗中不受%1$s降低技能的影响。）</string>
-    <string name="action_const_down_content1">（此%1$s降低效果所降低的%1$s，在战斗中不受%1$s提升技能的影响。）</string>
+    <string name="action_const_up_content1">（此效果所提升的%1$s在战斗中不受%1$s降低技能的影响）</string>
+    <string name="action_const_down_content1">（此效果所降低的%1$s在战斗中不受%1$s提升技能的影响）</string>
     <string name="action_sustain_time1">维持动作%s秒</string>
     <string name="action_sustain_damage_rate1">，使下次攻击伤害提升{ %s × 期间受到的伤害 }。</string>
     <string name="action_sustain_status_content1_count2">，期间%1$s，受到%2$s次攻击就会中断此动作。</string>
@@ -394,7 +397,7 @@
     <string name="action_passive_battle_remaining_time1">战斗时间剩余%s秒时</string>
     <string name="action_damage_attenuation_target1_limit2_time3_n4_r5_n6_r7_n8_r9">对%1$s展开限制盾，受到每个动作的伤害超过%2$s万时，伤害将会被衰减，效果时间%3$s秒。\nf(%4$s万)=%5$s万; f(%6$s万)=%7$s万; f(%8$s万)=%9$s万</string>
     <string name="action_stealth_time1">进入【潜伏】状态，效果时间%s秒。</string>
-    <string name="action_ignore_provocation">无视挑衅，</string>
+    <string name="action_ignore_provocation">（无视挑衅）</string>
     <string name="action_akinesia_invalid_target1_time2">赋予%1$s可无效化受到的行动不能的状态，效果时间%2$s秒。</string>
     <string name="action_akinesia_invalid_target1_count2_time3">赋予%1$s可无效化最多%2$s次受到的行动不能的状态，效果时间%3$s秒。</string>
     <string name="action_passive_damage_up_target1_formula2_max3_time4">%1$s受到的伤害量提升%2$s，最大提升%3$s，效果时间%4$s秒。</string>
@@ -503,6 +506,10 @@
     <string name="action_branch_talent_no">不是</string>
     <string name="action_branch_debuff_types_target1_count2_p3">%1$s的弱体效果的种类的数量%3$s%2$s时，</string>
     <string name="action_branch_barrier_target1_count2_p3">%1$s上展开中的屏障的数量%3$s%2$s时，</string>
+    <string name="action_branch_battle_time_value1_p2">战斗剩余时间%2$s%1$s时，</string>
+    <string name="action_branch_higher_target1_status2_assignment3_p4">%1$s中%4$s比自身的%2$s更高的%3$s时，</string>
+    <string name="action_branch_higher_yes">有</string>
+    <string name="action_branch_higher_no">没有</string>
 
     <string name="summon_id1">召唤%s</string>
     <string name="summon_403101">召唤一个能够攻击前方一名敌人的骷髅老爹</string>
@@ -564,6 +571,8 @@
     <string name="content_system_down">使自身陷入【系统宕机】状态，</string>
     <string name="content_dot">持续</string>
     <string name="content_fixed">固定</string>
+    <string name="content_ub_damage">UB伤害</string>
+    <string name="content_skill_damage">技能伤害</string>
 
     <string name="mark_unknown">标记%s</string>
     <string name="brackets">【%s】</string>
@@ -594,11 +603,21 @@
     <string name="target_count3">三名</string>
     <string name="target_count4">四名</string>
     <string name="target_count5">五名</string>
+    <string name="target_count6">六名</string>
+    <string name="target_count7">七名</string>
+    <string name="target_count8">八名</string>
+    <string name="target_count9">九名</string>
+    <string name="target_count10">十名</string>
     <string name="target_number1">第一</string>
     <string name="target_number2">第二</string>
     <string name="target_number3">第三</string>
     <string name="target_number4">第四</string>
     <string name="target_number5">第五</string>
+    <string name="target_number6">第六</string>
+    <string name="target_number7">第七</string>
+    <string name="target_number8">第八</string>
+    <string name="target_number9">第九</string>
+    <string name="target_number10">第十</string>
     <string name="target_nearest">最近的</string>
     <string name="target_farthest">最远的</string>
     <string name="target_low">低</string>
@@ -621,6 +640,7 @@
     <string name="target_first_assignment_count1">最前方的%s</string>
     <string name="target_last_assignment_count1">最后方的%s</string>
     <string name="target_most_content1_extent2_assignment_count3">%1$s最%2$s的%3$s</string>
+    <string name="target_most_content1_extent2_assignment_count3_number4">%1$s%4$s%2$s的%3$s</string>
     <string name="target_without_self">自身以外的</string>
     <string name="target_atk_content1">使用物理攻击的%s角色中</string>
     <string name="target_magic_content1">使用魔法攻击的%s角色中</string>
@@ -684,12 +704,12 @@
     <string name="darkness">黑暗</string>
     <string name="silence">沉默</string>
     <string name="invincible">无敌</string>
-    <string name="physical_invalid">回避所有的物理攻击的</string>
-    <string name="magic_invalid">回避所有的魔法攻击的</string>
+    <string name="physical_invalid">回避物理攻击</string>
+    <string name="magic_invalid">回避魔法攻击</string>
     <string name="break_immunity">Break免疫</string>
     <string name="provoke">挑衅</string>
     <string name="fear">恐慌</string>
-    <string name="deactivate">隔绝的操线</string>
+    <string name="deactivate">断绝的提线</string>
     <string name="persistence">执着</string>
     <string name="harmed_remove_content1">%s只当受到攻击时才能解除。</string>
 

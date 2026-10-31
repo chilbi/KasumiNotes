@@ -26,6 +26,7 @@ class ExEquipState(
 ) {
     private var onExEquipDataChange: ((slotNum: Int, exEquip: ExEquipData?) -> Unit)? = null
     private var onEnhanceLevelChange: ((slotNum: Int, level: Int) -> Unit)? = null
+    private var onRankChange: ((slotNum: Int, rank: Int) -> Unit)? = null
     private var onSubPercentListChange: ((slotNum: Int, subPercentList: List<Pair<Int, Double>>) -> Unit)? = null
     private var slotNum = 0
     private var withoutSelfBattleProperty = Property.zero
@@ -33,6 +34,7 @@ class ExEquipState(
 //    private var otherExEquipProperty = Property.zero
     private var originSubPercentList: List<Pair<Int, Double>> = emptyList()
     private var originEnhanceLevel = 0
+    private var originRank = 0
 
     var exEquipSlot by mutableStateOf<ExEquipSlot?>(null)
         private set
@@ -43,6 +45,8 @@ class ExEquipState(
     var equippableExList by mutableStateOf<List<Int>>(emptyList())
         private set
     var percentProperty by mutableStateOf(Property.zero)
+        private set
+    var exceedLimitPercentProperty by mutableStateOf(Property.zero)
         private set
     var subPercentList by mutableStateOf<List<Pair<Int, Double>>>(emptyList())
         private set
@@ -56,6 +60,10 @@ class ExEquipState(
         private set
     var enhanceLevel by mutableIntStateOf(0)
         private set
+    var maxRank by mutableIntStateOf(0)
+        private set
+    var rank by mutableIntStateOf(0)
+        private set
 
     fun initExEquipSlot(
         slotN: Int,
@@ -64,8 +72,10 @@ class ExEquipState(
         otherBattleProperty: Property,
         originSubStatusPercentList: List<Pair<Int, Double>> = emptyList(),
         originLevel: Int = 0,
+        originExceedLimitRank: Int = -1,
         onExEquipChange: ((slotNum: Int, exEquip: ExEquipData?) -> Unit)? = null,
         onLevelChange: ((slotNum: Int, level: Int) -> Unit)? = null,
+        onExceedLimitRankChange: ((slotNum: Int, rank: Int) -> Unit)? = null,
         onSubChange: ((slotNum: Int, subPercentList: List<Pair<Int, Double>>) -> Unit)? = null
     ) {
         scope.launch(Dispatchers.IO) {
@@ -83,17 +93,24 @@ class ExEquipState(
             subPercentList = originSubStatusPercentList
             enhanceLevel = originLevel
             originEnhanceLevel = originLevel
+            rank = originExceedLimitRank
+            originRank = originExceedLimitRank
             isEquipping = false
             onExEquipDataChange = onExEquipChange
             onEnhanceLevelChange = onLevelChange
+            onRankChange = onExceedLimitRankChange
             onSubPercentListChange = onSubChange
             exEquipCategory = list[0] as ExEquipCategory
             @Suppress("UNCHECKED_CAST")
             equippableExList = list[1] as List<Int>
             if (slot.exEquipData != null) {
                 exEquipData = slot.exEquipData
-                percentProperty = slot.exEquipData.getPercentProperty(originEnhanceLevel)
+                percentProperty = slot.exEquipData.getPercentProperty(originLevel)
                 maxEnhanceLevel = slot.exEquipData.maxEnhanceLevel
+                if (slot.exEquipData.exceedLimit != null) {
+                    exceedLimitPercentProperty = slot.exEquipData.getExceedLimitPercentProperty(originExceedLimitRank)
+                    maxRank = slot.exEquipData.exceedLimit.statusList.size
+                }
                 isEquipping = true
                 totalBattleProperty()
             }
@@ -105,12 +122,17 @@ class ExEquipState(
             val db = appRepository.getDatabase()
             val exEquip = db.getExEquipData(exEquipId)
             exEquipData = exEquip
-            percentProperty = exEquip.getPercentProperty(exEquip.maxEnhanceLevel)
             maxEnhanceLevel = exEquip.maxEnhanceLevel
             if (exEquipSlot!!.exEquipData != null) {
                 isEquipping = exEquip.exEquipmentId == exEquipSlot!!.exEquipData!!.exEquipmentId
             }
             enhanceLevel = if (isEquipping) originEnhanceLevel else exEquip.maxEnhanceLevel
+            percentProperty = exEquip.getPercentProperty(enhanceLevel)
+            if (exEquip.exceedLimit != null) {
+                maxRank = exEquip.exceedLimit.statusList.size
+                rank = if (isEquipping) originRank else maxRank
+                exceedLimitPercentProperty = exEquip.getExceedLimitPercentProperty(rank)
+            }
             subPercentList = if (exEquip.subStatusList == null) {
                 emptyList()
             } else {
@@ -159,13 +181,23 @@ class ExEquipState(
         totalBattleProperty()
     }
 
+    fun changeRank(newRank: Int) {
+        exceedLimitPercentProperty = exEquipData!!.getExceedLimitPercentProperty(newRank)
+        rank = newRank
+        if (onRankChange != null && isEquipping) {
+            onRankChange!!(slotNum, newRank)
+        }
+        totalBattleProperty()
+    }
+
     fun changeExEquip() {
-        if (onExEquipDataChange != null && onEnhanceLevelChange != null && onSubPercentListChange != null) {
+        if (onExEquipDataChange != null && onEnhanceLevelChange != null && onRankChange != null && onSubPercentListChange != null) {
             if (isEquipping) {
                 isEquipping = false
                 exEquipSlot = exEquipSlot!!.copy(exEquipData = null)
                 onExEquipDataChange!!(slotNum, null)
                 onEnhanceLevelChange!!(slotNum, -1)
+                onRankChange!!(slotNum, 0)
                 onSubPercentListChange!!(slotNum, emptyList())
             } else {
                 isEquipping = true
@@ -173,6 +205,7 @@ class ExEquipState(
                 originEnhanceLevel = enhanceLevel
                 onExEquipDataChange!!(slotNum, exEquipData)
                 onEnhanceLevelChange!!(slotNum, enhanceLevel)
+                onRankChange!!(slotNum, rank)
                 onSubPercentListChange!!(slotNum, subPercentList)
             }
         }
@@ -205,9 +238,10 @@ class ExEquipState(
     }
 
     private fun totalBattleProperty() {
+        val totalPercentProperty = Property { i -> percentProperty[i] + exceedLimitPercentProperty[i] }
         val selfExEquipProperty = exEquipData!!.getExEquipProperty(
             subPercentList,
-            percentProperty,
+            totalPercentProperty,
             baseProperty
         )
         battleProperty = Property { i -> withoutSelfBattleProperty[i] + selfExEquipProperty[i] }

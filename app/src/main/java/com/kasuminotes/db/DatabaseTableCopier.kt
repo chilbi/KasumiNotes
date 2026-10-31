@@ -79,14 +79,24 @@ object DatabaseTableCopier {
             //专1SP
             "ex_unique_equipment_1"
         )
+        val exceedLimitTables = listOf(
+            //EX装备超越炼醒
+            "ex_equip_5_exceed_limit_group",
+            "ex_equip_5_exceed_limit_status",
+            "ex_equip_5_exceed_limit_skill"
+        )
         if (server == DbServer.JP) {
-            val allTables = commonTables.plus(connectRankTables)
+            val allTables = commonTables.plus(connectRankTables).plus(exceedLimitTables)
             copyTables(sourceDbPath, targetDbPath, allTables)
         } else if (server == DbServer.CN) {
             copyTables(sourceDbPath, targetDbPath, commonTables)
             //ネフィ＝ネラ（鬼面仏心）id:138201卡池实装连结RANK
             if (existsChara(138201, targetDbPath)) {
                 copyTables(sourceDbPath, targetDbPath, connectRankTables)
+            }
+            //サレン（ガンナー）id:140701卡池实装EX装备超越炼醒
+            if (existsChara(140701, targetDbPath)) {
+                copyTables(sourceDbPath, targetDbPath, exceedLimitTables)
             }
         }
     }

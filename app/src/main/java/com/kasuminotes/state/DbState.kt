@@ -248,6 +248,7 @@ class DbState(
                 downloadState = DownloadState.Error(e)
                 if (backupDbFile.exists()) {
                     backupDbFile.copyTo(dbFile, true)
+                    backupDbFile.delete()
                     return
                 } else {
                     if (dbFile.exists()) {
@@ -266,6 +267,9 @@ class DbState(
         questInitializing = true
         db.initQuestDropData()
         questInitializing = false
+        if (backupDbFile.exists()) {
+            backupDbFile.delete()
+        }
     }
 
     private fun syncDbServerVersion(server: DbServer, version: String) {

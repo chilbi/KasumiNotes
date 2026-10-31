@@ -40,6 +40,8 @@ fun CharaExEquipSlots(
             ExEquipIcon(
                 userData.exEquip1Level,
                 originUserData.exEquip1Level,
+                userData.exEquip1Rank,
+                originUserData.exEquip1Rank,
                 originUserData.exEquip1,
                 if (hasExEquipSlots) exEquipSlots[0] else null,
                 onExEquipClick
@@ -49,6 +51,8 @@ fun CharaExEquipSlots(
             ExEquipIcon(
                 userData.exEquip2Level,
                 originUserData.exEquip2Level,
+                userData.exEquip2Rank,
+                originUserData.exEquip2Rank,
                 originUserData.exEquip2,
                 if (hasExEquipSlots) exEquipSlots[1] else null,
                 onExEquipClick
@@ -58,6 +62,8 @@ fun CharaExEquipSlots(
             ExEquipIcon(
                 userData.exEquip3Level,
                 originUserData.exEquip3Level,
+                userData.exEquip3Rank,
+                originUserData.exEquip3Rank,
                 originUserData.exEquip3,
                 if (hasExEquipSlots) exEquipSlots[2] else null,
                 onExEquipClick
@@ -70,6 +76,8 @@ fun CharaExEquipSlots(
 private fun ExEquipIcon(
     exEquipLevel: Int,
     originExEquipLevel: Int,
+    exEquipRank: Int,
+    originExEquipRank: Int,
     originExEquipId: Int,
     exEquipSlot: ExEquipSlot?,
     onExEquipClick: (ExEquipSlot) -> Unit
@@ -85,6 +93,7 @@ private fun ExEquipIcon(
         val containerColor: Color
         val text: String
         if (
+            exEquipRank != originExEquipRank ||
             exEquipLevel != originExEquipLevel ||
             (exEquip == null && originExEquipId != 0) ||
             (exEquip != null && originExEquipId == 0) ||

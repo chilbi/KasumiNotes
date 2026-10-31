@@ -176,11 +176,9 @@ private fun SkillAction.getGiveValueFormat(targetAction: SkillAction, skillLevel
         !(targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5)
     ) {
         isPercent = true
-    } else if (targetAction.actionType == 98 && actionDetail2 == 1) {
+    } else if (targetAction.actionType == 98 && targetAction.actionDetail1 == 0 && actionDetail2 == 1) {
         isPercent = true
-        if (targetAction.actionDetail1 == 0) {
-            shouldMultiplyBy100 = true
-        }
+        shouldMultiplyBy100 = true
     } else if (targetAction.actionType == 110 && actionDetail2 == 1) {
         isPercent = true
     }/* else if (value3 == 0.0 &&//不明
@@ -470,6 +468,9 @@ private fun SkillAction.getMaxValue(
             actionDetail2 == 4 &&
             (actionValue2 + actionValue3 * skillLevel) < 0.0
         ) {
+            maxValue = -maxValue
+        }
+        if (!giveValueFormat.isAdditive) {
             maxValue = -maxValue
         }
         if (giveValueFormat.shouldMultiplyBy100) {

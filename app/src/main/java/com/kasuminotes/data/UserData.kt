@@ -30,6 +30,9 @@ data class UserData(
     val exEquip1Level: Int = -1,
     val exEquip2Level: Int = -1,
     val exEquip3Level: Int = -1,
+    val exEquip1Rank: Int = 0,
+    val exEquip2Rank: Int = 0,
+    val exEquip3Rank: Int = 0,
     val subPercentJson: String = ""
 ) {
     val subPercentMap: Map<Int, List<Pair<Int, Double>>> = toSubPercentMap(subPercentJson)
@@ -68,6 +71,9 @@ data class UserData(
             exEquip1Level,
             exEquip2Level,
             exEquip3Level,
+            exEquip1Rank,
+            exEquip2Rank,
+            exEquip3Rank,
             "'$subPercentJson'"
         ).joinToString(",")
 
@@ -109,6 +115,9 @@ data class UserData(
                         "ex_equip1_level," +
                         "ex_equip2_level," +
                         "ex_equip3_level," +
+                        "ex_equip1_rank," +
+                        "ex_equip2_rank," +
+                        "ex_equip3_rank," +
                         "sub_percent_json"
             }
             return (if (pk) "user_id," else "") + (if (fk) "unit_id," else "") + fields

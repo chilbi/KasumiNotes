@@ -142,6 +142,15 @@ class CharaState(
         changeState()
     }
 
+    fun changeExEquipRank(slotNum: Int, rank: Int) {
+        userData = when (slotNum) {
+            1 -> userData!!.copy(exEquip1Rank = rank)
+            2 -> userData!!.copy(exEquip2Rank = rank)
+            else -> userData!!.copy(exEquip3Rank = rank)
+        }
+        changeState()
+    }
+
     fun changeLvLimitBreak(maxUserData: MaxUserData) {
         val lvLimitBreak = if (userData!!.lvLimitBreak > 0) 0 else 10
         val value = maxUserData.getLevelLimit(lvLimitBreak, userData!!.connectRank)
@@ -383,7 +392,8 @@ class CharaState(
             base,
             exSkill,
             exEquip,
-            userProfile!!.unitData.talentId
+            userProfile!!.unitData.talentId,
+            userData!!
         )
         val connectRankStatus = connectRankData?.getStatusProperty(
             base,

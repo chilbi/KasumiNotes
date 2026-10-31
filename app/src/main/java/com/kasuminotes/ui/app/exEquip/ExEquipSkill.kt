@@ -55,14 +55,27 @@ fun ExEquipSkill(
 }
 
 @Composable
+fun ExEquipExceedLimitSkill(
+    skillData: SkillData,
+    battleProperty: Property
+) {
+    LabelContainer(
+        label = stringResource(R.string.exceed_limit_skill),
+        color = MaterialTheme.colorScheme.primary
+    ) {
+        ExEquipSkillItem(skillData, battleProperty)
+    }
+}
+
+@Composable
 private fun ExEquipSkillItem(
-    passiveSkill: SkillData,
+    skillData: SkillData,
     battleProperty: Property
 ) {
     var visible by remember { mutableStateOf(false) }
-    val descriptionList: List<D> by remember(passiveSkill, battleProperty) {
+    val descriptionList: List<D> by remember(skillData, battleProperty) {
         derivedStateOf {
-            ActionBuilder(passiveSkill.rawDepends, passiveSkill.actions, true)
+            ActionBuilder(skillData.rawDepends, skillData.actions, true)
                 .buildDescriptionList(0, battleProperty)
         }
     }
@@ -72,10 +85,10 @@ private fun ExEquipSkillItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(Modifier.size(32.dp)) {
-            PlaceImage(UrlUtil.getSkillIconUrl(passiveSkill.iconType))
+            PlaceImage(UrlUtil.getSkillIconUrl(skillData.iconType))
         }
         Text(
-            text = passiveSkill.name,
+            text = skillData.name,
             modifier = Modifier.padding(start = 4.dp),
             style = MaterialTheme.typography.bodyLarge
         )
@@ -89,11 +102,11 @@ private fun ExEquipSkillItem(
 
     if (visible) {
         Text(
-            text = passiveSkill.description,
+            text = skillData.description,
             modifier = Modifier.padding(4.dp),
             style = MaterialTheme.typography.bodyMedium
         )
-        passiveSkill.actions.forEachIndexed { index, action ->
+        skillData.actions.forEachIndexed { index, action ->
             Row(Modifier.padding(4.dp)) {
                 ActionLabel(index + 1)
                 Text(

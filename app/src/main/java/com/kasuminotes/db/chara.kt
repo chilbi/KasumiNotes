@@ -24,6 +24,11 @@ suspend fun AppDatabase.getUserProfileList(userId: Int): List<UserProfile> {
         if (!existsColumn("user_data", "sub_percent_json")) {
             execSQL("ALTER TABLE user_data ADD COLUMN sub_percent_json TEXT NOT NULL DEFAULT ''")
         }
+        if (!existsColumn("user_data", "ex_equip1_rank")) {
+            execSQL("ALTER TABLE user_data ADD COLUMN ex_equip1_rank INTEGER NOT NULL DEFAULT 0")
+            execSQL("ALTER TABLE user_data ADD COLUMN ex_equip2_rank INTEGER NOT NULL DEFAULT 0")
+            execSQL("ALTER TABLE user_data ADD COLUMN ex_equip3_rank INTEGER NOT NULL DEFAULT 0")
+        }
 
         if (!existsTable("unit_talent")) {
             execSQL(
@@ -64,6 +69,9 @@ WHERE user_id=$userId"""
                 val userData = UserData(
                     userId,//同参数userId
                     unitId,//i=0
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
@@ -155,6 +163,9 @@ FROM user_data WHERE user_id!=$defaultUserId"""
                 var i = 0
 
                 val userProfile = UserData(
+                    it.getInt(i++),
+                    it.getInt(i++),
+                    it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),
                     it.getInt(i++),

@@ -81,23 +81,47 @@ data class UserProfile(
                             else -> user.exEquip3Level
                         }
                     )
+                    val exceedLimitPercent = slot.exEquipData.getExceedLimitPercentProperty(
+                        when (index) {
+                            0 -> user.exEquip1Rank
+                            1 -> user.exEquip2Rank
+                            else -> user.exEquip3Rank
+                        }
+                    )
+                    val totalPercent = Property { i -> percent[i] + exceedLimitPercent[i] }
                     val subPercentList = user.subPercentMap.getOrElse(index + 1) { emptyList() }
-                    slot.exEquipData.getExEquipProperty(subPercentList, percent, base)
+                    slot.exEquipData.getExEquipProperty(subPercentList, totalPercent, base)
                 }
             }
             Property { i -> propertyList.sumOf { it[i] } }
         }
     }
 
-    fun getExEquipSkillProperty(base: Property, exSkill: Property, exEquip: Property, talentId: Int): Property {
+    fun getExEquipSkillProperty(base: Property, exSkill: Property, exEquip: Property, talentId: Int, user: UserData): Property {
         return if (exEquipSlots.isEmpty()) {
             Property.zero
         } else {
-            val skillPropertyList = exEquipSlots.map { slot ->
+            val skillPropertyList = exEquipSlots.mapIndexed { index, slot ->
                 if (slot.exEquipData == null) {
                     Property.zero
                 } else {
-                    slot.exEquipData.getExEquipSkillProperty(base, exSkill, exEquip, talentId)
+                    val exceedLimitSkill = if (slot.exEquipData.exceedLimit == null) {
+                        null
+                    } else {
+                        val rank = when (index) {
+                            0 -> userData.exEquip1Rank
+                            1 -> userData.exEquip2Rank
+                            else -> userData.exEquip3Rank
+                        }
+                        slot.exEquipData.exceedLimit.skillList.getOrNull(rank - 1)
+                    }
+                    slot.exEquipData.getExEquipSkillProperty(
+                        exceedLimitSkill,
+                        base,
+                        exSkill,
+                        exEquip,
+                        talentId
+                    )
                 }
             }
             Property { i -> skillPropertyList.sumOf { it[i] } }

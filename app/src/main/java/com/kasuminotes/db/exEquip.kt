@@ -1,10 +1,12 @@
 package com.kasuminotes.db
 
+import com.kasuminotes.data.ExEquip5ExceedLimit
 import com.kasuminotes.data.ExEquipCategory
 import com.kasuminotes.data.ExEquipData
 import com.kasuminotes.data.ExEquipSlot
 import com.kasuminotes.data.ExEquipSubStatus
 import com.kasuminotes.data.Property
+import com.kasuminotes.data.SkillData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -66,7 +68,7 @@ suspend fun AppDatabase.getExEquipData(exEquipId: Int): ExEquipData {
     val sql = """SELECT ${ExEquipData.getFields()}
 FROM ex_equipment_data WHERE ex_equipment_id=$exEquipId"""
 
-    val exEquipData = useDatabase {
+    var exEquipData = useDatabase {
         rawQuery(sql, null).use {
             it.moveToFirst()
             var i = 0
@@ -94,12 +96,17 @@ FROM ex_equipment_data WHERE ex_equipment_id=$exEquipId"""
                 maxProperty,
                 null,
                 null,
+                null,
                 null
             )
         }
     }
 
     val subStatusList = getSubStatusList(exEquipData)
+    val exceedLimit = getExceedLimit(exEquipData)
+    if (exceedLimit != null) {
+        exEquipData = exEquipData.copy(exceedLimit = exceedLimit)
+    }
 
     val passiveSkillId1 = exEquipData.passiveSkillId1
     val passiveSkillId2 = exEquipData.passiveSkillId2
@@ -151,3 +158,71 @@ WHERE a.ex_equipment_id=${exEquipData.exEquipmentId}"""
         null
     }
 }
+
+private suspend fun AppDatabase.getExceedLimit(exEquipData: ExEquipData): ExEquip5ExceedLimit? {
+    return if (
+        exEquipData.rarity > 4 &&
+        existsTables(listOf("ex_equip_5_exceed_limit_group", "ex_equip_5_exceed_limit_status", "ex_equip_5_exceed_limit_skill"))
+    ) {
+        val sql = """SELECT type_1,value_1,type_2,value_2,type_3,value_3,type_4,value_4,IFNULL(skill_id, 0) AS skill_id
+FROM ex_equip_5_exceed_limit_group AS a
+LEFT JOIN ex_equip_5_exceed_limit_status AS b ON a.status_group_id=b.status_group_id
+LEFT JOIN ex_equip_5_exceed_limit_skill AS c ON a.skill_group_id=c.group_id AND b.rank=c.rank
+WHERE a.ex_equipment_id=${exEquipData.exEquipmentId}
+ORDER BY b.rank ASC
+"""
+        val rawList = useDatabase {
+             rawQuery(sql, null).use {
+                 val list = mutableListOf<RawExEquip5ExceedLimit>()
+                 while (it.moveToNext()) {
+                     var i = 0
+                     val pairs = mutableListOf<Pair<Int, Double>>()
+                     for (j in 1..4) {
+                         val type = it.getInt(i++)
+                         val value = it.getInt(i++).toDouble()
+                         if (type > 0) {
+                             pairs.add(type to value)
+                         }
+                     }
+                     list.add(RawExEquip5ExceedLimit(
+                         it.getInt(i),
+                         Property(pairs),
+                         null
+                     ))
+                 }
+                 list
+             }
+        }
+
+        if (rawList.isEmpty()) {
+            null
+        } else {
+            withContext(Dispatchers.IO) {
+                val list = rawList.map { raw ->
+                    async {
+                        raw.skillData = getSkillData(raw.skillId)
+                        raw
+                    }
+                }.awaitAll()
+                val skillList = mutableListOf<SkillData?>()
+                val statusList = mutableListOf<Property>()
+                for (item in list) {
+                    skillList.add(item.skillData)
+                    statusList.add(item.status)
+                }
+                ExEquip5ExceedLimit(skillList, statusList)
+            }
+        }
+    } else {
+        null
+    }
+}
+
+private data class RawExEquip5ExceedLimit(
+//    val statusGroupId: Int,
+//    val skillGroupId: Int,
+//    val rank: Int,
+    val skillId: Int,
+    val status: Property,
+    var skillData: SkillData?
+)
