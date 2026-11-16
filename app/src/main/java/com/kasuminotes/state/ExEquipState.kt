@@ -203,6 +203,7 @@ class ExEquipState(
                 isEquipping = true
                 exEquipSlot = exEquipSlot!!.copy(exEquipData = exEquipData)
                 originEnhanceLevel = enhanceLevel
+                originRank = rank
                 onExEquipDataChange!!(slotNum, exEquipData)
                 onEnhanceLevelChange!!(slotNum, enhanceLevel)
                 onRankChange!!(slotNum, rank)
