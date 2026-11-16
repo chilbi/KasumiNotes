@@ -13,13 +13,13 @@ import com.kasuminotes.db.getBackupUserKnightEnhanceList
 import com.kasuminotes.db.initDatabase
 import com.kasuminotes.db.initQuestDropData
 import com.kasuminotes.db.putUserDataList
-import com.kasuminotes.db.putUserKnightEnhance
 import com.kasuminotes.db.putUserKnightEnhanceList
 import com.kasuminotes.ui.app.AppRepository
 import com.kasuminotes.ui.app.DefaultUserId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.Call
 import java.io.File
 
 class DbState(
@@ -27,6 +27,8 @@ class DbState(
     private val scope: CoroutineScope,
     private val onInitEnhanceState: (userId: Int) -> Unit
 ) {
+    private var call: Call? = null
+
     var downloadingDbServer by mutableStateOf<DbServer?>(null)
         private set
     var downloadingDbVersion by mutableStateOf<String?>(null)
@@ -94,6 +96,7 @@ class DbState(
     }
 
     fun cancelDownload() {
+        call?.cancel()
         downloadingDbServer = null
         downloadingDbVersion = null
         downloadState = null
@@ -200,13 +203,18 @@ class DbState(
 
     private fun downloadDbFile(server: DbServer, version: String) {
         scope.launch(Dispatchers.IO) {
-            downloadState = DownloadState.Loading
+            downloadState = DownloadState.Loading(null)
             downloadingDbServer = server
             downloadingDbVersion = version
             appRepository.downloadTempDbFile(server, dbSource).collect { state ->
                 downloadState = state
                 if (state is DownloadState.Success) {
                     initDb(server, version, state.dbFile)
+                } else if (state is DownloadState.Loading) {
+                    call = state.call
+                } else if (state is DownloadState.Cancelled) {
+                    call = null
+                    downloadState = null
                 }
             }
         }

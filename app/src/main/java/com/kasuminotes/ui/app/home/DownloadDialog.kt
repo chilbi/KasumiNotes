@@ -38,7 +38,7 @@ fun DownloadDialog(dbState: DbState) {
         dismissButton = {
             TextButton(
                 onClick = dbState::cancelDownload,
-                enabled = state is DownloadState.Error
+                enabled = state is DownloadState.Progress || (state is DownloadState.Loading && state.call != null)
             ) {
                 Text(stringResource(R.string.cancel))
             }
@@ -69,6 +69,10 @@ private fun DownloadDialogContent(state: DownloadState) {
         is DownloadState.Error -> {
             progress = 0f
             text = stringResource(R.string.download_failed, state.e.message.toString())
+        }
+        else -> {
+            progress = null
+            text = ""
         }
     }
 

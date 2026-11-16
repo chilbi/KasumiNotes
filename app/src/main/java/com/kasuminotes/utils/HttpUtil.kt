@@ -61,6 +61,7 @@ object HttpUtil {
                 .header("User-Agent", userAgent)
                 .build()
             call = client.newCall(request)
+            emit(DownloadState.Loading(call))
             response = call.execute()
             val body = response.body
             var bytesRead: Long = 0
@@ -79,8 +80,15 @@ object HttpUtil {
             val dbFile = if (isBrFile) decompress(file) else file
             emit(DownloadState.Success(dbFile))
         } catch (e: Throwable) {
-            call?.cancel()
-            emit(DownloadState.Error(e))
+            if (call?.isCanceled() == true) {
+                emit(DownloadState.Cancelled)
+            } else {
+                emit(DownloadState.Error(e))
+            }
+            runCatching {
+                file.delete()
+                call?.cancel()
+            }
         } finally {
             response?.close()
             fis?.close()
