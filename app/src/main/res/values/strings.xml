@@ -431,7 +431,7 @@
 
     <string name="action_branch_unknown">每当？？？时，</string>
     <string name="action_branch_and">且</string>
-    <string name="action_branch_status_up_target1_max2">每当%1$s受到状态提升效果时（最多%2$s次），</string>
+    <string name="action_branch_status_up_target1_max2">每当%1$s受到属性值提升效果时（最多%2$s次），</string>
     <string name="action_branch_attack_critical_target1">每当%s的攻击暴击时，</string>
     <string name="action_branch_striked_time1">%s秒的动作期间内受到攻击时，</string>
     <string name="action_branch_controled_time1">%s秒的动作期间内受到行动不能、击飞、拉近时，</string>
@@ -550,17 +550,17 @@
     <string name="content_attack_hit_enemy_target1">每当%s的攻击命中敌人时，就会为被命中的目标</string>
     <string name="content_attack_hit_target1">每当%s的攻击命中敌人时，就会为自身</string>
     <string name="content_attack_critical_target1">每当%s的攻击暴击时，就会为自身</string>
-    <string name="content_status_up_target1">每当%s受到状态提升效果时，就会为自身</string>
-    <string name="content_status_down_target1">每当%s受到状态降低效果时，就会为该目标</string>
-    <string name="content_status_down_self_target1">每当%s受到状态降低效果时，就会为自身</string>
+    <string name="content_status_up_target1">每当%s受到属性值提升效果时，就会为自身</string>
+    <string name="content_status_down_target1">每当%s受到属性值降低效果时，就会为该目标</string>
+    <string name="content_status_down_self_target1">每当%s受到属性值降低效果时，就会为自身</string>
     <string name="content_damage_received_target1">每当%s受到伤害时，就会为自身</string>
     <string name="content_ub_counter_target1">每当己方使用UB时，就会为%s</string>
     <string name="content_initial_value1">初始值的%s</string>
     <string name="content_current_value1">现在值的%s</string>
-    <string name="content_lower_defense">物理、魔法防御力中较低一方的防御力作为防御的</string>
+    <string name="content_lower_defense">以较低防御力类型进行防御的</string>
     <string name="content_disregard_def1_value_2">无视%2$s%1$s的</string>
-    <string name="content_status_up_effect">状态提升效果</string>
-    <string name="content_status_down_effect">状态降低效果</string>
+    <string name="content_status_up_effect">属性值提升效果</string>
+    <string name="content_status_down_effect">属性值降低效果</string>
     <string name="content_up">提升</string>
     <string name="content_down">降低</string>
     <string name="content_barrier">屏障</string>
@@ -690,7 +690,7 @@
     <string name="energy_down">TP降低效果</string>
     <string name="detention_damage">拘留（伤害）</string>
     <string name="poison">毒</string>
-    <string name="burn">火伤</string>
+    <string name="burn">烧伤</string>
     <string name="curse">诅咒</string>
     <string name="fierce_poison">猛毒</string>
     <string name="imprecation">毒咒</string>
@@ -729,7 +729,7 @@
     <string name="counter_num1">计数器%s</string>
     <string name="of_s1_s2">%1$s的%2$s</string>
     <string name="atk_or_magic_str">物理攻击力或者魔法攻击力</string>
-    <string name="count_of_abnormal_state_and_status_down_effect_target1">%s的状态异常效果和状态降低效果的数量</string>
+    <string name="count_of_abnormal_state_and_status_down_effect_target1">%s的状态异常效果和属性值降低效果的数量</string>
     <string name="energy_consumption_target1">%s消耗的TP量</string>
     <string name="debuff_types_count_target1">%s的弱体效果的种类的数量</string>
 
