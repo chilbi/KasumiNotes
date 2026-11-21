@@ -26,7 +26,7 @@ fun SkillAction.getDotDamageUp(): D {
         R.string.action_dot_damage_up_target1_content2_formula3_max4_time5,
         arrayOf(
             getTarget(depend),
-            content,
+            content.style(underline = true),
             D.Text("${actionValue1.toNumStr()}%").style(primary = true, bold = true),
             D.Text(actionValue7.toNumStr()).style(primary = true, bold = true),
             D.Text(actionValue2.toNumStr()).style(primary = true, bold = true)

@@ -44,7 +44,7 @@ fun SkillAction.getDurationExtension(skillLevel: Int): D {
                 resId,
                 arrayOf(
                     getTarget(depend),
-                    abnormal,
+                    abnormal.style(underline = true),
                     valueDesc
                 )
             )

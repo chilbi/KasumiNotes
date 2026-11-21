@@ -369,6 +369,7 @@ class ActionBuilder(
             116 -> getPersistence(skillLevel)
             117 -> getForceChangeSpeed(skillLevel)
             118 -> getGuts(skillLevel, property)
+            119 -> getAbnormalStateForceHit()
             121 -> getTriggeredWhenHpZero()
             123 -> getDamageCutState()
             124 -> getFriendlyBarrier()

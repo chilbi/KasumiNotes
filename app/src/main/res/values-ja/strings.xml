@@ -334,17 +334,20 @@
     <string name="action_magic_darkness_formula1">魔法攻撃の命中率を%sにする。</string>
     <string name="action_life_steal_target1_formula2">%1$sの次の攻撃に%2$sＨＰ吸収をアップさせる効果を付与する。</string>
     <string name="action_regeneration_target1_content2_formula3_time4">%1$sに毎秒%2$sを%3$s回復する継続%2$s回復状態を付与する、効果時間%4$s秒。</string>
-    <string name="action_trigger_hp_target1_formula2">%1$sのＨＰが最大のＨＰの%2$s以下になった時に発動する。</string>
-    <string name="action_trigger_dead">死亡時に発動する。</string>
-    <string name="action_trigger_received_critical_damage_target1">%sがクリティカルを受ける時に発動する。</string>
-    <string name="action_trigger_battle_beginning">バトル開始時に発動する。</string>
-    <string name="action_trigger_battle_began_passed_time1">バトル開始後%s秒経過時に発動する。</string>
-    <string name="action_trigger_battle_remaining_time1">バトルの残り時間が%s秒を切る時に発動する。</string>
-    <string name="action_trigger_stealth">潜伏状態になる時に発動する。</string>
-    <string name="action_trigger_break">Break状態になる時に発動する。</string>
-    <string name="action_trigger_all_break">すべてのターゲットがBreak状態になる時に発動する。</string>
-    <string name="action_trigger_attacked_target1">%sが敵から攻撃を受けた時に発動する。</string>
-    <string name="action_trigger_dot_target1">%sが継続ダメージ状態になる時に発動する。</string>
+    <string name="action_trigger_received_damage_target1">【%sがダメージを受けた時に発動する】</string>
+    <string name="action_trigger_hp_ratio_target1_formula2">【%1$sのＨＰが最大のＨＰの%2$s以下になった時に発動する】</string>
+    <string name="action_trigger_dead">【死亡時に発動する】</string>
+    <string name="action_trigger_received_critical_damage_target1">【%sがクリティカルダメージを受けた時に発動する】</string>
+    <string name="action_trigger_battle_beginning">【バトル開始時に発動する】</string>
+<!--    <string name="action_trigger_battle_began_passed_time1">【バトル開始後%s秒経過時に発動する】</string>-->
+    <string name="action_trigger_battle_remaining_time1">【バトルの残り時間が%s秒を切った時に発動する】</string>
+    <string name="action_trigger_stealth">【潜伏状態になった時に発動する】</string>
+    <string name="action_trigger_break">【Break状態になった時に発動する】</string>
+    <string name="action_trigger_received_abnormal_damage_target1">【%sが継続ダメージを受けた時に発動する】</string>
+    <string name="action_trigger_all_break">【すべてのターゲットがBreak状態になった時に発動する】</string>
+    <string name="action_trigger_hp_target1_formula2">【%1$sのＨＰが%2$sを減った時に発動する】</string>
+    <string name="action_trigger_attacked_target1">【%sが敵から攻撃を受けた時に発動する】</string>
+    <string name="action_trigger_abnormal_damage_state_target1">【%sが継続ダメージ状態になった時に発動する】</string>
     <string name="action_destroy_target1">%sを戦闘不能状態にする。</string>
     <string name="action_accumulative_damage_formula1_tier2">敵を攻撃する度に、その敵に与えるダメージを%1$s増加させる。この効果は最大%2$s回まで累積する。</string>
     <string name="action_barrier_guard_target1_formula2_content3_time4">%1$sに%2$sダメージ分の%3$s無効バリアを展開する、効果時間%4$s秒。</string>
@@ -428,6 +431,7 @@
     <string name="action_loop_motion_repeat_duration1_repeat2_damage3">%1$s秒の間に%2$s秒毎にアクションを実行する。（期間内に累計受けたダメージが%3$sを超えると中断する）\n</string>
     <string name="action_follow_up_damage_target1_percent2_type3_time4">%1$sを%2$sの%3$s追撃状態にする、効果時間%4$s秒。追撃状態中、敵に通常攻撃またはスキルでダメージを与えた時、追加のダメージが発生する。</string>
     <string name="action_effect_resistance_target1_content2_time3">%1$sの受ける%2$s効果を無効化する、効果時間%3$s秒。</string>
+    <string name="action_abnormal_state_force_hit_target1_state2">%1$sの受ける%2$s状態を強制命中させる。</string>
 
     <string name="action_branch_unknown">？？？度に、</string>
     <string name="action_branch_and">且つ</string>
@@ -577,7 +581,7 @@
     <string name="mark_unknown">マーク%s</string>
     <string name="brackets">【%s】</string>
     <string name="summon_unknown">【id:%s】</string>
-    <string name="abnormal_unknown">【異常状態%s】</string>
+    <string name="abnormal_unknown">【行動不能状態%s】</string>
     <string name="dot_unknown">【継続ダメージ%s】</string>
 
     <string name="target">対象</string>

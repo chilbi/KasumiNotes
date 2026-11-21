@@ -149,37 +149,54 @@ private fun SkillAction.getGiveValueFormat(targetAction: SkillAction, skillLevel
         }
     }
 
-    if (targetAction.actionType == 1 && actionDetail2 == 6) {
+    if (targetAction.actionType == 1 &&
+        actionDetail2 == 6
+    ) {
         isPercent = true
         shouldMultiplyBy100 = true
     } else if (targetAction.actionType == 4 && targetAction.actionValue1 != 1.0) {
         isPercent = true
-    } else if ((targetAction.actionType == 8 || targetAction.actionType == 83) &&
-        (targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 2)
+    } else if (((targetAction.actionType == 8 && (targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 2)) ||
+                targetAction.actionType == 83) &&
+        (actionDetail2 == 1 || actionDetail2 == 2)
     ) {
         isPercent = true
         shouldMultiplyBy100 = true
     } else if (targetAction.actionType == 10 &&
         actionType != 27 &&
         actionType != 74 &&
-        targetAction.isStatusPercent()
+        targetAction.isStatusPercent() &&
+        (actionDetail2 == 2 || actionDetail2 == 3)
     ) {
         isPercent = true
-    } else if (targetAction.actionType == 46) {
+    } else if (targetAction.actionType == 38 &&
+        targetAction.actionDetail2 == 2 &&
+        (actionDetail2 == 1 || actionDetail2 == 2)
+    ) {
+        isPercent = true
+    } else if (targetAction.actionType == 46 &&
+        (actionDetail2 == 1 || actionDetail2 == 2)
+    ) {
         isPercent = true
     } else if ((targetAction.actionType == 59) &&
-        (targetAction.actionDetail1 == 1 || targetAction.actionDetail1 == 4)
+        (actionDetail2 == 1 || actionDetail2 == 4)
     ) {
         isPercent = true
         shouldMultiplyBy100 = true
     } else if (targetAction.actionType == 72 &&
-        !(targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5)
+        !(targetAction.actionDetail1 == 4 || targetAction.actionDetail1 == 5) &&
+        (actionDetail2 == 1 || actionDetail2 == 2)
     ) {
         isPercent = true
-    } else if (targetAction.actionType == 98 && targetAction.actionDetail1 == 0 && actionDetail2 == 1) {
+    } else if (targetAction.actionType == 98 &&
+        targetAction.actionDetail1 == 0 &&
+        actionDetail2 == 1
+    ) {
         isPercent = true
         shouldMultiplyBy100 = true
-    } else if (targetAction.actionType == 110 && actionDetail2 == 1) {
+    } else if (targetAction.actionType == 110 &&
+        actionDetail2 == 1
+    ) {
         isPercent = true
     }/* else if (value3 == 0.0 &&//不明
         value2 < 0.0 &&
